@@ -3,7 +3,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ThemeProvider } from "@/hooks/useTheme";
 import { AuthProvider } from "@/contexts/AuthContext";
 
@@ -36,6 +36,7 @@ const App = () => (
               {/* Rutas protegidas dentro del layout principal */}
               <Route element={<MainLayout />}>
                 <Route path="/" element={<Dashboard />} />
+                <Route index element={<Navigate to="/" replace />} />
                 
                 {/* Rutas de Biblioteca */}
                 <Route path="/biblioteca/libros" element={<LibrosList />} />

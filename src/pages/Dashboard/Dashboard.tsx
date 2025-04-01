@@ -4,6 +4,7 @@ import ContentCategoryCard from "@/components/dashboard/ContentCategoryCard";
 import PieChartCard from "@/components/dashboard/PieChartCard";
 import BarChartCard from "@/components/dashboard/BarChartCard";
 import BookCard from "@/components/dashboard/BookCard";
+import LineChartCard from "@/components/dashboard/LineChartCard";
 import { 
   CHART_CONFIG, 
   getStatsData, 
@@ -11,12 +12,14 @@ import {
   getPieChartData, 
   getBarChartData 
 } from "@/components/dashboard/dashboardData";
+import { getLineChartData } from "@/components/dashboard/lineChartData";
 
 const Dashboard = () => {
   const stats = getStatsData();
   const contentCategories = getContentCategoriesData();
   const pieChartData = getPieChartData();
   const barChartData = getBarChartData();
+  const lineChartData = getLineChartData();
 
   return (
     <div className="animate-fade-in">
@@ -57,6 +60,15 @@ const Dashboard = () => {
             />
           );
         })}
+      </div>
+
+      <div className="mt-6">
+        <LineChartCard
+          title="📈 Balance Mensual"
+          description="Seguimiento de ingresos y gastos mensuales"
+          data={lineChartData}
+          chartConfig={CHART_CONFIG}
+        />
       </div>
 
       <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
