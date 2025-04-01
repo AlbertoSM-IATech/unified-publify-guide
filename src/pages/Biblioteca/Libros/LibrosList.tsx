@@ -12,6 +12,7 @@ const librosSimulados = [
     isbn: "978-3-16-148410-0",
     asin: "B01N9VSOYB",
     estado: "Publicado",
+    contenido: "Alto Contenido",
     fechaPublicacion: "2023-05-15",
     imageUrl: ""
   },
@@ -23,6 +24,7 @@ const librosSimulados = [
     isbn: "978-3-16-148410-1",
     asin: "B08N5M7KTS",
     estado: "Borrador",
+    contenido: "Medio Contenido",
     fechaPublicacion: null,
     imageUrl: ""
   },
@@ -34,6 +36,7 @@ const librosSimulados = [
     isbn: "978-3-16-148410-2",
     asin: "B07F7TDMCD",
     estado: "Publicado",
+    contenido: "Alto Contenido",
     fechaPublicacion: "2023-02-10",
     imageUrl: ""
   },
@@ -45,6 +48,7 @@ const librosSimulados = [
     isbn: "978-3-16-148410-3",
     asin: "B08ZHPKH56",
     estado: "Revisión",
+    contenido: "Bajo Contenido",
     fechaPublicacion: null,
     imageUrl: ""
   },
@@ -56,6 +60,7 @@ const librosSimulados = [
     isbn: "978-3-16-148410-4",
     asin: "B01F7TQ86A",
     estado: "Publicado",
+    contenido: "Medio Contenido",
     fechaPublicacion: "2022-11-20",
     imageUrl: ""
   },
@@ -67,6 +72,7 @@ const librosSimulados = [
     isbn: "978-3-16-148410-5",
     asin: "B07Z4RVN9L",
     estado: "Publicado",
+    contenido: "Alto Contenido",
     fechaPublicacion: "2022-09-05",
     imageUrl: ""
   }
@@ -97,6 +103,20 @@ const LibrosList = () => {
         return "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300";
       default:
         return "bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300";
+    }
+  };
+  
+  // Definir el color según el nivel de contenido
+  const getContentColor = (contenido: string) => {
+    switch (contenido) {
+      case "Alto Contenido":
+        return "bg-green-50 text-green-700 dark:bg-green-900/30 dark:text-green-300";
+      case "Medio Contenido":
+        return "bg-amber-50 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300";
+      case "Bajo Contenido":
+        return "bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300";
+      default:
+        return "bg-gray-50 text-gray-700 dark:bg-gray-900/30 dark:text-gray-300";
     }
   };
 
@@ -157,56 +177,58 @@ const LibrosList = () => {
 
       {/* Lista de libros */}
       {viewMode === "grid" ? (
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {filteredLibros.map((libro) => (
             <div
               key={libro.id}
               className="card-hover group rounded-lg border bg-card shadow-sm"
             >
-              {/* Portada del libro */}
-              <div className="relative h-48 rounded-t-lg bg-muted">
-                <div className="flex h-full items-center justify-center text-muted-foreground/50">
-                  {libro.imageUrl ? (
-                    <img
-                      src={libro.imageUrl}
-                      alt={libro.titulo}
-                      className="h-full w-full rounded-t-lg object-cover"
-                    />
-                  ) : (
-                    <BookOpen size={60} />
-                  )}
+              <div className="flex h-32 overflow-hidden">
+                {/* Portada del libro */}
+                <div className="relative h-full w-28 bg-muted">
+                  <div className="flex h-full items-center justify-center text-muted-foreground/50">
+                    {libro.imageUrl ? (
+                      <img
+                        src={libro.imageUrl}
+                        alt={libro.titulo}
+                        className="h-full w-full object-cover"
+                      />
+                    ) : (
+                      <BookOpen size={40} />
+                    )}
+                  </div>
                 </div>
-                <div className="absolute right-2 top-2">
-                  <span
-                    className={`rounded-full px-2 py-1 text-xs font-medium ${getStatusColor(
-                      libro.estado
-                    )}`}
-                  >
-                    {libro.estado}
-                  </span>
-                </div>
-              </div>
-              
-              {/* Información del libro */}
-              <div className="p-4">
-                <h3 className="line-clamp-1 font-medium">{libro.titulo}</h3>
-                {libro.subtitulo && (
-                  <p className="line-clamp-1 text-sm text-muted-foreground">
-                    {libro.subtitulo}
-                  </p>
-                )}
-                <p className="mt-1 text-sm">{libro.autor}</p>
-                <div className="mt-2 flex flex-wrap gap-1 text-xs text-muted-foreground">
-                  <span>ISBN: {libro.isbn}</span>
-                  {libro.asin && <span className="ml-1">ASIN: {libro.asin}</span>}
-                </div>
-                <div className="mt-4 flex justify-between">
-                  <button className="text-xs font-medium text-primary hover:underline">
-                    Ver detalles
-                  </button>
-                  <button className="text-xs font-medium text-primary hover:underline">
-                    Editar
-                  </button>
+                
+                {/* Información del libro */}
+                <div className="flex flex-1 flex-col justify-between p-3">
+                  <div>
+                    <h3 className="line-clamp-1 font-medium">{libro.titulo}</h3>
+                    {libro.subtitulo && (
+                      <p className="line-clamp-1 text-sm text-muted-foreground">
+                        {libro.subtitulo}
+                      </p>
+                    )}
+                    <p className="mt-1 text-sm">{libro.autor}</p>
+                    <div className="mt-2 flex flex-wrap gap-1">
+                      <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${getStatusColor(libro.estado)}`}>
+                        {libro.estado}
+                      </span>
+                      <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${getContentColor(libro.contenido)}`}>
+                        {libro.contenido}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="mt-2 flex justify-between text-xs">
+                    <span className="text-muted-foreground">ISBN: {libro.isbn.substring(0, 8)}...</span>
+                    <div className="space-x-2">
+                      <button className="font-medium text-primary hover:underline">
+                        Ver
+                      </button>
+                      <button className="font-medium text-primary hover:underline">
+                        Editar
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -225,6 +247,9 @@ const LibrosList = () => {
                 </th>
                 <th scope="col" className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">
                   Estado
+                </th>
+                <th scope="col" className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                  Contenido
                 </th>
                 <th scope="col" className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">
                   Fecha
@@ -254,6 +279,15 @@ const LibrosList = () => {
                       )}`}
                     >
                       {libro.estado}
+                    </span>
+                  </td>
+                  <td className="whitespace-nowrap px-4 py-4 text-sm">
+                    <span
+                      className={`rounded-full px-2 py-1 text-xs font-medium ${getContentColor(
+                        libro.contenido
+                      )}`}
+                    >
+                      {libro.contenido}
                     </span>
                   </td>
                   <td className="whitespace-nowrap px-4 py-4 text-sm text-muted-foreground">

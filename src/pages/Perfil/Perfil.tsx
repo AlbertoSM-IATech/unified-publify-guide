@@ -1,9 +1,64 @@
 
-import { User, Mail, Key, ImageIcon } from "lucide-react";
+import { useState } from "react";
+import { User, Mail, Key, ImageIcon, Save, Upload } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
+import { useToast } from "@/hooks/use-toast";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const Perfil = () => {
   const { user } = useAuth();
+  const { toast } = useToast();
+  
+  const [formData, setFormData] = useState({
+    nombre: user?.nombre || "",
+    email: user?.email || "",
+    password: "",
+    confirmPassword: ""
+  });
+  
+  const [profileImage, setProfileImage] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, value } = e.target;
+    setFormData(prev => ({ ...prev, [id]: value }));
+  };
+  
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        setProfileImage(event.target?.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+  
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    
+    // Validate password match if changing password
+    if (formData.password && formData.password !== formData.confirmPassword) {
+      toast({
+        title: "Error",
+        description: "Las contraseñas no coinciden",
+        variant: "destructive"
+      });
+      setIsSubmitting(false);
+      return;
+    }
+    
+    // Simulate API call
+    setTimeout(() => {
+      toast({
+        title: "Perfil actualizado",
+        description: "Los cambios han sido guardados correctamente",
+      });
+      setIsSubmitting(false);
+    }, 1000);
+  };
 
   return (
     <div className="animate-fade-in">
@@ -17,16 +72,30 @@ const Perfil = () => {
         <div className="rounded-lg border bg-card shadow-sm md:col-span-4">
           <div className="flex flex-col items-center p-6">
             {/* Avatar */}
-            <div className="flex h-24 w-24 items-center justify-center rounded-full bg-muted">
-              <User size={40} className="text-muted-foreground" />
-            </div>
+            <Avatar className="h-24 w-24">
+              {profileImage ? (
+                <AvatarImage src={profileImage} alt="Profile" />
+              ) : (
+                <AvatarFallback>
+                  <User size={40} className="text-muted-foreground" />
+                </AvatarFallback>
+              )}
+            </Avatar>
             <h2 className="mt-4 text-lg font-medium">
-              {user?.nombre || "Usuario"}
+              {formData.nombre || "Usuario"}
             </h2>
-            <p className="text-muted-foreground">{user?.email || "usuario@ejemplo.com"}</p>
-            <button className="mt-4 w-full rounded-md border border-input bg-background px-4 py-2 text-sm hover:bg-muted">
+            <p className="text-muted-foreground">{formData.email || "usuario@ejemplo.com"}</p>
+            
+            <label className="mt-4 flex w-full cursor-pointer items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm hover:bg-muted">
+              <Upload size={16} className="mr-2" />
               Cambiar imagen
-            </button>
+              <input 
+                type="file" 
+                accept="image/*" 
+                className="hidden" 
+                onChange={handleImageChange}
+              />
+            </label>
           </div>
         </div>
 
@@ -38,7 +107,7 @@ const Perfil = () => {
               Actualiza tu información personal y cómo quieres que se muestre
             </p>
 
-            <form className="mt-6 space-y-4">
+            <form className="mt-6 space-y-4" onSubmit={handleSubmit}>
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div>
                   <label htmlFor="nombre" className="mb-1 block text-sm font-medium">
@@ -53,7 +122,8 @@ const Perfil = () => {
                       id="nombre"
                       className="w-full rounded-md border border-input bg-background py-2 pl-10 pr-4 text-sm placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
                       placeholder="Tu nombre"
-                      defaultValue={user?.nombre || ""}
+                      value={formData.nombre}
+                      onChange={handleInputChange}
                     />
                   </div>
                 </div>
@@ -70,7 +140,8 @@ const Perfil = () => {
                       id="email"
                       className="w-full rounded-md border border-input bg-background py-2 pl-10 pr-4 text-sm placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
                       placeholder="tu@email.com"
-                      defaultValue={user?.email || ""}
+                      value={formData.email}
+                      onChange={handleInputChange}
                     />
                   </div>
                 </div>
@@ -78,7 +149,7 @@ const Perfil = () => {
 
               <div>
                 <label htmlFor="password" className="mb-1 block text-sm font-medium">
-                  Contraseña
+                  Nueva contraseña
                 </label>
                 <div className="relative">
                   <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
@@ -89,19 +160,48 @@ const Perfil = () => {
                     id="password"
                     className="w-full rounded-md border border-input bg-background py-2 pl-10 pr-4 text-sm placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
                     placeholder="••••••••"
+                    value={formData.password}
+                    onChange={handleInputChange}
                   />
                 </div>
                 <p className="mt-1 text-xs text-muted-foreground">
                   Deja en blanco si no quieres cambiar tu contraseña
                 </p>
               </div>
+              
+              <div>
+                <label htmlFor="confirmPassword" className="mb-1 block text-sm font-medium">
+                  Confirmar nueva contraseña
+                </label>
+                <div className="relative">
+                  <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                    <Key size={16} className="text-muted-foreground" />
+                  </div>
+                  <input
+                    type="password"
+                    id="confirmPassword"
+                    className="w-full rounded-md border border-input bg-background py-2 pl-10 pr-4 text-sm placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+                    placeholder="••••••••"
+                    value={formData.confirmPassword}
+                    onChange={handleInputChange}
+                  />
+                </div>
+              </div>
 
               <div className="flex justify-end pt-4">
                 <button
                   type="submit"
-                  className="rounded-md bg-primary px-4 py-2 text-sm text-primary-foreground hover:bg-primary/90"
+                  className="inline-flex items-center rounded-md bg-primary px-4 py-2 text-sm text-primary-foreground hover:bg-primary/90 disabled:opacity-70"
+                  disabled={isSubmitting}
                 >
-                  Guardar Cambios
+                  {isSubmitting ? (
+                    <>Guardando...</>
+                  ) : (
+                    <>
+                      <Save size={16} className="mr-2" />
+                      Guardar Cambios
+                    </>
+                  )}
                 </button>
               </div>
             </form>

@@ -2,6 +2,8 @@
 import { Bell, Menu, User, Sun, Moon } from "lucide-react";
 import { useTheme } from "@/hooks/useTheme";
 import { useAuth } from "@/contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const Header = ({ 
   toggleSidebar, 
@@ -12,11 +14,16 @@ const Header = ({
 }) => {
   const { theme, toggleTheme } = useTheme();
   const { user } = useAuth();
+  const navigate = useNavigate();
+
+  const handleProfileClick = () => {
+    navigate("/perfil");
+  };
 
   return (
     <header className="flex h-14 items-center border-b border-border px-4 py-2">
       <button
-        className="rounded p-1.5 text-foreground hover:bg-muted lg:hidden"
+        className="rounded p-1.5 text-muted-foreground hover:bg-muted lg:hidden"
         onClick={toggleSidebar}
       >
         <Menu size={20} />
@@ -42,14 +49,19 @@ const Header = ({
         </button>
         
         {/* Avatar del usuario */}
-        <div className="flex items-center space-x-1 rounded-full p-1 hover:bg-muted">
-          <div className="h-8 w-8 overflow-hidden rounded-full bg-secondary">
-            <User size={20} className="h-full w-full p-1" />
-          </div>
+        <button 
+          onClick={handleProfileClick}
+          className="flex cursor-pointer items-center space-x-1 rounded-full p-1 hover:bg-muted"
+        >
+          <Avatar className="h-8 w-8">
+            <AvatarFallback>
+              <User size={20} className="text-muted-foreground" />
+            </AvatarFallback>
+          </Avatar>
           <span className="ml-1 hidden text-sm md:inline-block">
             {user?.nombre || "Usuario"}
           </span>
-        </div>
+        </button>
       </div>
     </header>
   );
