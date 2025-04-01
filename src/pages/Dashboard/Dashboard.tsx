@@ -28,29 +28,35 @@ const Dashboard = () => {
       </div>
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
-        {stats.map((stat, index) => (
-          <StatsCard
-            key={index}
-            title={stat.title}
-            value={stat.value}
-            icon={stat.icon}
-            change={stat.change}
-          />
-        ))}
+        {stats.map((stat, index) => {
+          const Icon = stat.icon;
+          return (
+            <StatsCard
+              key={index}
+              title={stat.title}
+              value={stat.value}
+              icon={<Icon size={20} />}
+              change={stat.change}
+            />
+          );
+        })}
       </div>
 
       <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-3">
-        {contentCategories.map((category, index) => (
-          <ContentCategoryCard
-            key={index}
-            title={category.title}
-            description={category.description}
-            color={category.color}
-            icon={category.icon}
-            count={category.count}
-            statusData={category.statusData}
-          />
-        ))}
+        {contentCategories.map((category, index) => {
+          const Icon = category.icon;
+          return (
+            <ContentCategoryCard
+              key={index}
+              title={category.title}
+              description={category.description}
+              color={category.color}
+              icon={<Icon size={20} className={`text-${category.color.replace('bg-', '')}`} />}
+              count={category.count}
+              statusData={category.statusData}
+            />
+          );
+        })}
       </div>
 
       <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
