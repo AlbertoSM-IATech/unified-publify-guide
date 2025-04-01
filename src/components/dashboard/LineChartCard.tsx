@@ -60,18 +60,11 @@ const LineChartCard = ({
               <Legend />
               <Line
                 type="monotone"
-                dataKey="ingresos"
-                stroke="#10b981"
+                dataKey="balance"
+                stroke="#6366f1"
                 activeDot={{ r: 8 }}
                 strokeWidth={2}
-                name="Ingresos"
-              />
-              <Line
-                type="monotone"
-                dataKey="gastos"
-                stroke="#ef4444"
-                strokeWidth={2}
-                name="Gastos"
+                name="Balance"
               />
             </LineChart>
           </ResponsiveContainer>

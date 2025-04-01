@@ -34,6 +34,7 @@ const BarChartCard = ({
 }: BarChartCardProps) => {
   return (
     <div className="rounded-lg border bg-card p-4 shadow-sm">
+      <h2 className="font-heading text-lg font-medium">{title}</h2>
       <p className="text-xs text-muted-foreground">{description}</p>
       
       <div className="mt-4 h-64">

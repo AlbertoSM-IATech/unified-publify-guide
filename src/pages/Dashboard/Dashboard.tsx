@@ -17,7 +17,10 @@ import {
   BarChart3, 
   BookOpen, 
   LineChart, 
-  PieChart
+  PieChart,
+  BookText,
+  BookMarked,
+  BookType
 } from "lucide-react";
 
 const Dashboard = () => {
@@ -52,20 +55,30 @@ const Dashboard = () => {
       </div>
 
       <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-3">
-        {contentCategories.map((category, index) => {
-          const Icon = category.icon;
-          return (
-            <ContentCategoryCard
-              key={index}
-              title={category.title}
-              description={category.description}
-              color={category.color}
-              icon={<Icon size={20} className={`text-${category.color.replace('bg-', '')}`} />}
-              count={category.count}
-              statusData={category.statusData}
-            />
-          );
-        })}
+        <ContentCategoryCard
+          title="Alto Contenido"
+          description="Libros con más de 100 páginas"
+          color="bg-blue-500"
+          icon={<BookText size={20} className="text-white" />}
+          count={contentCategories[0].count}
+          statusData={contentCategories[0].statusData}
+        />
+        <ContentCategoryCard
+          title="Medio Contenido"
+          description="Libros entre 30-100 páginas"
+          color="bg-orange-500"
+          icon={<BookMarked size={20} className="text-white" />}
+          count={contentCategories[1].count}
+          statusData={contentCategories[1].statusData}
+        />
+        <ContentCategoryCard
+          title="Bajo Contenido"
+          description="Libros con menos de 30 páginas"
+          color="bg-green-500"
+          icon={<BookType size={20} className="text-white" />}
+          count={contentCategories[2].count}
+          statusData={contentCategories[2].statusData}
+        />
       </div>
 
       <div className="mt-6">
@@ -75,7 +88,7 @@ const Dashboard = () => {
         </div>
         <LineChartCard
           title="Balance Mensual"
-          description="Seguimiento de ingresos y gastos mensuales"
+          description="Seguimiento de balance mensual"
           data={lineChartData}
           chartConfig={CHART_CONFIG}
         />

@@ -1,6 +1,6 @@
 
 import { LucideIcon } from "lucide-react";
-import { BookOpen, Users, TrendingUp, TrendingDown, BarChart3 } from "lucide-react";
+import { BookOpen, Users, TrendingUp, TrendingDown } from "lucide-react";
 
 // Chart configuration
 export const CHART_CONFIG = {
@@ -11,6 +11,7 @@ export const CHART_CONFIG = {
   enRevision: { theme: { light: "#f59e0b", dark: "#f59e0b" } },
   borradores: { theme: { light: "#6366f1", dark: "#6366f1" } },
   sinEmpezar: { theme: { light: "#ef4444", dark: "#ef4444" } },
+  balance: { theme: { light: "#6366f1", dark: "#6366f1" } }, // Añadido para el gráfico de balance
 };
 
 // Stats data structure
@@ -32,7 +33,7 @@ export interface ContentCategory {
   title: string;
   description: string;
   color: string;
-  icon: LucideIcon;
+  icon?: LucideIcon; // Ahora es opcional ya que se definen directamente en Dashboard.tsx
   count: number;
   statusData: StatusData[];
 }
@@ -58,7 +59,6 @@ export const getContentCategoriesData = (): ContentCategory[] => [
     title: "Alto Contenido",
     description: "Libros con más de 100 páginas",
     color: "bg-blue-500",
-    icon: BarChart3,
     count: 1,
     statusData: [
       { label: "Publicados", count: 1, percentage: 100 },
@@ -71,7 +71,6 @@ export const getContentCategoriesData = (): ContentCategory[] => [
     title: "Medio Contenido",
     description: "Libros entre 30-100 páginas",
     color: "bg-orange-500",
-    icon: BarChart3,
     count: 1,
     statusData: [
       { label: "Publicados", count: 0, percentage: 0 },
@@ -84,7 +83,6 @@ export const getContentCategoriesData = (): ContentCategory[] => [
     title: "Bajo Contenido",
     description: "Libros con menos de 30 páginas",
     color: "bg-green-500", // Cambiado a verde
-    icon: BarChart3,
     count: 0,
     statusData: [
       { label: "Publicados", count: 0, percentage: 0 },

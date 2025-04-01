@@ -41,7 +41,13 @@ const ContentCategoryCard = ({
         {statusData.map((status, statusIndex) => (
           <div key={statusIndex}>
             <div className="flex justify-between text-xs">
-              <span>{status.label}</span>
+              <span className="flex items-center gap-1">
+                {status.label === "Publicados" && <span className="inline-block w-3 h-3 rounded-full bg-green-500"></span>}
+                {status.label === "En revisión" && <span className="inline-block w-3 h-3 rounded-full bg-amber-500"></span>}
+                {status.label === "Borradores" && <span className="inline-block w-3 h-3 rounded-full bg-indigo-500"></span>}
+                {status.label === "Sin empezar" && <span className="inline-block w-3 h-3 rounded-full bg-red-500"></span>}
+                {status.label}
+              </span>
               <span>{status.count} · {status.percentage}%</span>
             </div>
             <div className="mt-1 h-1.5 w-full overflow-hidden rounded-full bg-muted">

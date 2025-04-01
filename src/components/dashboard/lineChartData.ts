@@ -2,62 +2,50 @@
 export const getLineChartData = () => [
   {
     name: "Ene",
-    ingresos: 4000,
-    gastos: 2400,
+    balance: 1600,
   },
   {
     name: "Feb",
-    ingresos: 3000,
-    gastos: 1398,
+    balance: 1602,
   },
   {
     name: "Mar",
-    ingresos: 2000,
-    gastos: 9800,
+    balance: -7800,
   },
   {
     name: "Abr",
-    ingresos: 2780,
-    gastos: 3908,
+    balance: -1128,
   },
   {
     name: "May",
-    ingresos: 1890,
-    gastos: 4800,
+    balance: -2910,
   },
   {
     name: "Jun",
-    ingresos: 2390,
-    gastos: 3800,
+    balance: -1410,
   },
   {
     name: "Jul",
-    ingresos: 3490,
-    gastos: 4300,
+    balance: -810,
   },
   {
     name: "Ago",
-    ingresos: 5490,
-    gastos: 4100,
+    balance: 1390,
   },
   {
     name: "Sep",
-    ingresos: 4590,
-    gastos: 3200,
+    balance: 1390,
   },
   {
     name: "Oct",
-    ingresos: 6500,
-    gastos: 3500,
+    balance: 3000,
   },
   {
     name: "Nov",
-    ingresos: 7200,
-    gastos: 4100,
+    balance: 3100,
   },
   {
     name: "Dic",
-    ingresos: 8200,
-    gastos: 5000,
+    balance: 3200,
   },
 ];
