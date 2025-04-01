@@ -1,6 +1,5 @@
-
 import { 
-  BookOpen, Users, TrendingUp, PieChart, LineChart, Calendar, 
+  BookOpen, Users, TrendingUp, Calendar, 
   BarChart3, TrendingDown, BarChart4
 } from "lucide-react";
 
@@ -24,8 +23,9 @@ import {
   YAxis,
 } from "recharts";
 
+import { PieChart as LucidePieChart, LineChart } from "lucide-react";
+
 const Dashboard = () => {
-  // Estos datos serían reemplazados por datos reales más adelante
   const stats = [
     { title: "Libros", value: "12", icon: <BookOpen size={20} />, change: "+2" },
     { title: "Colecciones", value: "4", icon: <Users size={20} />, change: "+1" },
@@ -33,7 +33,6 @@ const Dashboard = () => {
     { title: "Gastos", value: "€1,890", icon: <TrendingDown size={20} />, change: "-5%" },
   ];
 
-  // Datos de contenido (Alto, Medio, Bajo)
   const contentCategories = [
     {
       title: "Alto Contenido",
@@ -76,7 +75,6 @@ const Dashboard = () => {
     }
   ];
 
-  // Datos para los gráficos
   const pieChartData = [
     { name: "Publicados", value: 1, color: "#10b981" },
     { name: "En revisión", value: 1, color: "#f59e0b" },
@@ -109,7 +107,6 @@ const Dashboard = () => {
         </p>
       </div>
 
-      {/* Tarjetas de estadísticas */}
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
         {stats.map((stat, index) => (
           <div
@@ -135,7 +132,6 @@ const Dashboard = () => {
         ))}
       </div>
 
-      {/* Categorías de contenido */}
       <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-3">
         {contentCategories.map((category, index) => (
           <div
@@ -153,7 +149,6 @@ const Dashboard = () => {
               <div className="ml-auto text-2xl font-bold">{category.count}</div>
             </div>
             
-            {/* Estado de los libros en cada categoría */}
             <div className="space-y-3">
               {category.statusData.map((status, statusIndex) => (
                 <div key={statusIndex}>
@@ -174,9 +169,7 @@ const Dashboard = () => {
         ))}
       </div>
 
-      {/* Gráficos */}
       <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
-        {/* Distribución por Estado */}
         <div className="rounded-lg border bg-card p-4 shadow-sm">
           <h2 className="font-heading text-lg font-medium">📊 Distribución por Estado</h2>
           <p className="text-xs text-muted-foreground">Proporción de libros según su estado de publicación</p>
@@ -227,7 +220,6 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* Distribución por Contenido */}
         <div className="rounded-lg border bg-card p-4 shadow-sm">
           <h2 className="font-heading text-lg font-medium">📚 Distribución por Contenido</h2>
           <p className="text-xs text-muted-foreground">Libros distribuidos por longitud de contenido</p>
@@ -253,7 +245,6 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* Libros recientes */}
       <div className="mt-6">
         <h2 className="font-heading text-lg font-medium">Libros Recientes</h2>
         <div className="mt-3 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
@@ -262,7 +253,6 @@ const Dashboard = () => {
               key={index}
               className="card-hover rounded-lg border bg-card shadow-sm"
             >
-              {/* Placeholder para portada de libro (1600 x 2560 px proportion) */}
               <div className="relative pb-[160%] rounded-t-lg bg-muted overflow-hidden">
                 <div className="absolute inset-0 flex items-center justify-center">
                   <BookOpen size={50} className="text-muted-foreground/50" />
