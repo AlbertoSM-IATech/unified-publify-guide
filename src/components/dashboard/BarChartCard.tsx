@@ -12,6 +12,7 @@ import {
   XAxis,
   YAxis,
   ResponsiveContainer,
+  Legend,
 } from "recharts";
 
 interface BarChartItem {
@@ -38,18 +39,20 @@ const BarChartCard = ({
       <h2 className="font-heading text-lg font-medium">{title}</h2>
       <p className="text-xs text-muted-foreground">{description}</p>
       
-      <div className="mt-4 h-64">
+      <div className="mt-4 h-72">
         <ChartContainer config={chartConfig}>
           <ResponsiveContainer width="100%" height="100%">
             <BarChart 
               data={data}
-              margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
+              margin={{ top: 20, right: 30, left: 20, bottom: 40 }}
+              barSize={60}
             >
               <XAxis 
                 dataKey="name" 
                 fontSize={12}
                 tickLine={false}
                 axisLine={false}
+                dy={10}
               />
               <YAxis 
                 fontSize={12}
@@ -62,7 +65,8 @@ const BarChartCard = ({
                   <ChartTooltipContent />
                 }
               />
-              <Bar dataKey="value">
+              <Legend verticalAlign="bottom" height={36} />
+              <Bar dataKey="value" name="Cantidad">
                 {data.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={entry.color} />
                 ))}

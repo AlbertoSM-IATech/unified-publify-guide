@@ -6,11 +6,11 @@ export const getLineChartData = () => [
   },
   {
     name: "Feb",
-    balance: 1602,
+    balance: 1600,
   },
   {
     name: "Mar",
-    balance: -7800,
+    balance: -7000,
   },
   {
     name: "Abr",

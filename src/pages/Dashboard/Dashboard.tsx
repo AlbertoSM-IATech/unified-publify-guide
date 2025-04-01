@@ -31,7 +31,7 @@ const Dashboard = () => {
   const lineChartData = getLineChartData();
 
   return (
-    <div className="p-4 animate-fade-in space-y-8">
+    <div className="p-4 animate-fade-in space-y-6">
       <div className="mb-4">
         <h1 className="font-heading text-2xl font-bold md:text-3xl">Dashboard</h1>
         <p className="mt-1 text-muted-foreground">
@@ -84,7 +84,7 @@ const Dashboard = () => {
       </div>
 
       {/* Line Chart */}
-      <div>
+      <div className="mb-8">
         <div className="flex items-center gap-2 mb-4">
           <LineChart size={20} className="text-primary" />
           <h2 className="font-heading text-lg font-medium">Balance Mensual</h2>
@@ -129,7 +129,7 @@ const Dashboard = () => {
       </div>
 
       {/* Recent Books */}
-      <div>
+      <div className="mt-8 mb-6">
         <div className="flex items-center gap-2 mb-4">
           <BookOpen size={20} className="text-orange-500" />
           <h2 className="font-heading text-lg font-medium">Libros Recientes</h2>
