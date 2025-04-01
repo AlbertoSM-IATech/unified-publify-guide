@@ -1,114 +1,82 @@
+
 import * as React from "react"
-import { TooltipProvider } from "@/components/ui/tooltip"
-import { cn } from "@/lib/utils"
-import { useIsMobile } from "@/hooks/use-mobile"
-import { SidebarContext, SIDEBAR_WIDTH, SIDEBAR_WIDTH_ICON, SIDEBAR_COOKIE_NAME, SIDEBAR_KEYBOARD_SHORTCUT } from "./use-sidebar"
+import { useMediaQuery } from "@/hooks/use-media-query"
+import { SidebarContext, SIDEBAR_COOKIE_NAME, SIDEBAR_KEYBOARD_SHORTCUT } from "./use-sidebar"
+import Cookies from "js-cookie"
+import { useHotkeys } from "react-hotkeys-hook"
 
-export const SidebarProvider = React.forwardRef<
-  HTMLDivElement,
-  React.ComponentProps<"div"> & {
-    defaultOpen?: boolean
-    open?: boolean
-    onOpenChange?: (open: boolean) => void
+export interface SidebarProviderProps {
+  children: React.ReactNode
+  /**
+   * The default expanded state of the sidebar.
+   * @default true
+   */
+  defaultExpanded?: boolean
+  /**
+   * Define a custom condition to determine if the sidebar should have a collapsed width.
+   */
+  hasCollapsedWidth?: boolean
+}
+
+export function SidebarProvider({
+  children,
+  defaultExpanded = true,
+  hasCollapsedWidth = false,
+}: SidebarProviderProps) {
+  const [expanded, setExpanded] = React.useState(defaultExpanded)
+  const isDesktop = useMediaQuery("(min-width: 768px)")
+
+  React.useEffect(() => {
+    const savedExpanded = Cookies.get(SIDEBAR_COOKIE_NAME)
+    if (savedExpanded) {
+      setExpanded(savedExpanded === "true")
+    }
+  }, [])
+
+  React.useEffect(() => {
+    // If the screen size changes to mobile, collapse the sidebar
+    if (!isDesktop) {
+      setExpanded(false)
+    }
+  }, [isDesktop])
+
+  function toggleExpanded() {
+    setExpanded((prev) => {
+      const next = !prev
+      Cookies.set(SIDEBAR_COOKIE_NAME, String(next), { expires: 365 })
+      return next
+    })
   }
->(
-  (
-    {
-      defaultOpen = true,
-      open: openProp,
-      onOpenChange: setOpenProp,
-      className,
-      style,
-      children,
-      ...props
+
+  function hide() {
+    setExpanded(false)
+  }
+
+  function show() {
+    setExpanded(true)
+  }
+
+  // Toggle sidebar with keyboard shortcut
+  useHotkeys(
+    SIDEBAR_KEYBOARD_SHORTCUT,
+    (event) => {
+      event.preventDefault()
+      toggleExpanded()
     },
-    ref
-  ) => {
-    const isMobile = useIsMobile()
-    const [openMobile, setOpenMobile] = React.useState(false)
+    [toggleExpanded]
+  )
 
-    // This is the internal state of the sidebar.
-    // We use openProp and setOpenProp for control from outside the component.
-    const [_open, _setOpen] = React.useState(defaultOpen)
-    const open = openProp ?? _open
-    const setOpen = React.useCallback(
-      (value: boolean | ((value: boolean) => boolean)) => {
-        const openState = typeof value === "function" ? value(open) : value
-        if (setOpenProp) {
-          setOpenProp(openState)
-        } else {
-          _setOpen(openState)
-        }
-
-        // This sets the cookie to keep the sidebar state.
-        document.cookie = `${SIDEBAR_COOKIE_NAME}=${openState}; path=/; max-age=${60 * 60 * 24 * 7}`
-      },
-      [setOpenProp, open]
-    )
-
-    // Helper to toggle the sidebar.
-    const toggleSidebar = React.useCallback(() => {
-      return isMobile
-        ? setOpenMobile((open) => !open)
-        : setOpen((open) => !open)
-    }, [isMobile, setOpen, setOpenMobile])
-
-    // Adds a keyboard shortcut to toggle the sidebar.
-    React.useEffect(() => {
-      const handleKeyDown = (event: KeyboardEvent) => {
-        if (
-          event.key === SIDEBAR_KEYBOARD_SHORTCUT &&
-          (event.metaKey || event.ctrlKey)
-        ) {
-          event.preventDefault()
-          toggleSidebar()
-        }
-      }
-
-      window.addEventListener("keydown", handleKeyDown)
-      return () => window.removeEventListener("keydown", handleKeyDown)
-    }, [toggleSidebar])
-
-    // We add a state so that we can do data-state="expanded" or "collapsed".
-    // This makes it easier to style the sidebar with Tailwind classes.
-    const state = open ? "expanded" : "collapsed"
-
-    const contextValue = React.useMemo<SidebarContext>(
-      () => ({
-        state,
-        open,
-        setOpen,
-        isMobile,
-        openMobile,
-        setOpenMobile,
-        toggleSidebar,
-      }),
-      [state, open, setOpen, isMobile, openMobile, setOpenMobile, toggleSidebar]
-    )
-
-    return (
-      <SidebarContext.Provider value={contextValue}>
-        <TooltipProvider delayDuration={0}>
-          <div
-            style={
-              {
-                "--sidebar-width": SIDEBAR_WIDTH,
-                "--sidebar-width-icon": SIDEBAR_WIDTH_ICON,
-                ...style,
-              } as React.CSSProperties
-            }
-            className={cn(
-              "group/sidebar-wrapper flex min-h-svh w-full has-[[data-variant=inset]]:bg-sidebar",
-              className
-            )}
-            ref={ref}
-            {...props}
-          >
-            {children}
-          </div>
-        </TooltipProvider>
-      </SidebarContext.Provider>
-    )
-  }
-)
-SidebarProvider.displayName = "SidebarProvider"
+  return (
+    <SidebarContext.Provider
+      value={{
+        expanded,
+        toggleExpanded,
+        hasCollapsedWidth: hasCollapsedWidth,
+        hide,
+        show,
+      }}
+    >
+      {children}
+    </SidebarContext.Provider>
+  )
+}

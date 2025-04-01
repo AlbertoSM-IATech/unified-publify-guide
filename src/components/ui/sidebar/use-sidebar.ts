@@ -1,34 +1,25 @@
 
-import * as React from "react"
-import { useIsMobile } from "@/hooks/use-mobile"
+import { createContext, useContext } from "react"
 
-const SIDEBAR_COOKIE_NAME = "sidebar:state"
-const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7
-const SIDEBAR_KEYBOARD_SHORTCUT = "b"
+export const SIDEBAR_COOKIE_NAME = "sidebar-expanded"
+export const SIDEBAR_KEYBOARD_SHORTCUT = "mod+b" // Cmd/Ctrl+B
 
-export const SIDEBAR_WIDTH = "16rem"
-export const SIDEBAR_WIDTH_MOBILE = "18rem"
-export const SIDEBAR_WIDTH_ICON = "3rem"
-
-type SidebarContext = {
-  state: "expanded" | "collapsed"
-  open: boolean
-  setOpen: (open: boolean) => void
-  openMobile: boolean
-  setOpenMobile: (open: boolean) => void
-  isMobile: boolean
-  toggleSidebar: () => void
+type SidebarState = {
+  expanded: boolean
+  hasCollapsedWidth: boolean
+  toggleExpanded: () => void
+  hide: () => void
+  show: () => void
 }
 
-const SidebarContext = React.createContext<SidebarContext | null>(null)
+export const SidebarContext = createContext<SidebarState | null>(null)
 
 export function useSidebar() {
-  const context = React.useContext(SidebarContext)
+  const context = useContext(SidebarContext)
+
   if (!context) {
-    throw new Error("useSidebar must be used within a SidebarProvider.")
+    throw new Error("useSidebar must be used within a SidebarProvider")
   }
 
   return context
 }
-
-export { SidebarContext }
