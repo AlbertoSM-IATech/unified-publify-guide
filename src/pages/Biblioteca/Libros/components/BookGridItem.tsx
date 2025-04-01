@@ -22,9 +22,9 @@ interface BookGridItemProps {
 export const BookGridItem = ({ libro, getStatusColor, getContentColor }: BookGridItemProps) => {
   return (
     <div className="card-hover group rounded-lg border bg-card shadow-sm">
-      <div className="flex h-36 overflow-hidden">
+      <div className="flex h-40 overflow-hidden">
         {/* Portada del libro con proporciones correctas (16:25.6) */}
-        <div className="relative h-full w-24 bg-muted flex-shrink-0">
+        <div className="relative h-full w-28 bg-muted flex-shrink-0">
           {libro.imageUrl ? (
             <div className="h-full w-full overflow-hidden">
               <AspectRatio ratio={16/25.6} className="h-full">
@@ -43,16 +43,16 @@ export const BookGridItem = ({ libro, getStatusColor, getContentColor }: BookGri
         </div>
         
         {/* Información del libro con mejor espaciado */}
-        <div className="flex flex-1 flex-col justify-between p-4">
-          <div className="space-y-2">
-            <h3 className="line-clamp-1 font-medium">{libro.titulo}</h3>
+        <div className="flex flex-1 flex-col justify-between p-5">
+          <div className="space-y-2.5">
+            <h3 className="line-clamp-1 font-medium text-base">{libro.titulo}</h3>
             {libro.subtitulo && (
               <p className="line-clamp-1 text-sm text-muted-foreground">
                 {libro.subtitulo}
               </p>
             )}
-            <p className="text-sm">{libro.autor}</p>
-            <div className="mt-2 flex flex-wrap gap-2">
+            <p className="text-sm text-muted-foreground/80">{libro.autor}</p>
+            <div className="mt-3 flex flex-wrap gap-2">
               <span className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${getStatusColor(libro.estado)}`}>
                 {libro.estado}
               </span>
@@ -61,9 +61,9 @@ export const BookGridItem = ({ libro, getStatusColor, getContentColor }: BookGri
               </span>
             </div>
           </div>
-          <div className="mt-3 flex justify-between text-xs">
+          <div className="mt-4 flex justify-between text-xs">
             <span className="text-muted-foreground">ISBN: {libro.isbn.substring(0, 8)}...</span>
-            <div className="space-x-3">
+            <div className="space-x-4">
               <button className="font-medium text-primary hover:underline">
                 Ver
               </button>
