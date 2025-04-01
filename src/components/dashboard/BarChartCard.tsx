@@ -41,6 +41,7 @@ const BarChartCard = ({
       
       <div className="mt-4 h-72">
         <ChartContainer config={chartConfig}>
+          {/* Single component as child to satisfy type requirements */}
           <ResponsiveContainer width="100%" height="100%">
             <BarChart 
               data={data}

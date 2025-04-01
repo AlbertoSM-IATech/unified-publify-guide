@@ -36,7 +36,7 @@ const PieChartCard = ({
   totalLabel, 
   totalValue 
 }: PieChartCardProps) => {
-  // Calcular colores para la leyenda
+  // Calculate colors for the legend
   const renderColorfulLegendText = (value: string, entry: any) => {
     const { color } = entry;
     return <span style={{ color }}>{value}</span>;
@@ -49,6 +49,7 @@ const PieChartCard = ({
       
       <div className="mt-4 h-72 relative">
         <ChartContainer config={chartConfig}>
+          {/* Wrap the entire chart in a single element to satisfy the type requirement */}
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
               <Pie
