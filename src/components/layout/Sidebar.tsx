@@ -1,4 +1,3 @@
-
 import { Link, useLocation } from "react-router-dom";
 import { 
   Home, BookOpen, LineChart, PieChart, Settings, 
@@ -20,20 +19,20 @@ const Sidebar = ({
   const [bibliotecaExpanded, setBibliotecaExpanded] = useState(true);
 
   const menuItems = [
-    { path: "/", icon: <Home size={20} className="text-blue-500" />, label: "Dashboard" },
+    { path: "/", icon: <Home size={20} className="text-gray-500" />, label: "Dashboard" },
     { 
       path: "/biblioteca", 
-      icon: <BookOpen size={20} className="text-indigo-500" />, 
+      icon: <BookOpen size={20} className="text-gray-500" />, 
       label: "Biblioteca",
       subItems: [
-        { path: "/biblioteca/libros", icon: <BookText size={18} className="text-indigo-500" />, label: "Libros" },
-        { path: "/biblioteca/colecciones", icon: <FolderIcon size={18} className="text-teal-500" />, label: "Colecciones" },
-        { path: "/biblioteca/investigaciones", icon: <FileSearch size={18} className="text-emerald-500" />, label: "Investigaciones" },
+        { path: "/biblioteca/libros", icon: <BookText size={18} className="text-gray-500" />, label: "Libros" },
+        { path: "/biblioteca/colecciones", icon: <FolderIcon size={18} className="text-gray-500" />, label: "Colecciones" },
+        { path: "/biblioteca/investigaciones", icon: <FileSearch size={18} className="text-gray-500" />, label: "Investigaciones" },
       ]
     },
-    { path: "/marketing", icon: <MegaphoneIcon size={20} className="text-amber-500" />, label: "Marketing" },
-    { path: "/finanzas", icon: <PieChart size={20} className="text-rose-500" />, label: "Finanzas" },
-    { path: "/perfil", icon: <User size={20} className="text-violet-500" />, label: "Perfil" },
+    { path: "/marketing", icon: <MegaphoneIcon size={20} className="text-gray-500" />, label: "Marketing" },
+    { path: "/finanzas", icon: <PieChart size={20} className="text-gray-500" />, label: "Finanzas" },
+    { path: "/perfil", icon: <User size={20} className="text-gray-500" />, label: "Perfil" },
     { path: "/configuracion", icon: <Settings size={20} className="text-gray-500" />, label: "Configuración" },
   ];
 
@@ -66,7 +65,7 @@ const Sidebar = ({
         <div className="flex h-full flex-col border-r border-sidebar-border">
           {/* Header del sidebar */}
           <div className="flex h-14 items-center border-b border-sidebar-border px-4">
-            <Link to="/" className="flex items-center">
+            <Link to="/landing" className="flex items-center">
               <span className="font-heading text-xl font-bold text-sidebar-foreground">
                 Publify
               </span>
@@ -76,7 +75,7 @@ const Sidebar = ({
               className="ml-auto rounded-full p-1 hover:bg-sidebar-accent lg:hidden" 
               onClick={onClose}
             >
-              <X size={18} />
+              <X size={18} className="text-gray-500" />
             </button>
           </div>
           
