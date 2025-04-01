@@ -2,8 +2,10 @@
 import { Link, useLocation } from "react-router-dom";
 import { 
   Home, BookOpen, LineChart, PieChart, Settings, 
-  User, BookMarked, LayoutGrid, X, MegaphoneIcon 
+  User, BookMarked, LayoutGrid, X, MegaphoneIcon,
+  BookText, FolderIcon, FileSearch
 } from "lucide-react";
+import { useState } from "react";
 
 const Sidebar = ({ 
   open, 
@@ -14,6 +16,9 @@ const Sidebar = ({
 }) => {
   const location = useLocation();
   
+  // Estado para controlar si el submenú de biblioteca está expandido
+  const [bibliotecaExpanded, setBibliotecaExpanded] = useState(true);
+
   const menuItems = [
     { path: "/", icon: <Home size={20} />, label: "Dashboard" },
     { 
@@ -21,9 +26,9 @@ const Sidebar = ({
       icon: <BookOpen size={20} />, 
       label: "Biblioteca",
       subItems: [
-        { path: "/biblioteca/libros", label: "Libros" },
-        { path: "/biblioteca/colecciones", label: "Colecciones" },
-        { path: "/biblioteca/investigaciones", label: "Investigaciones" },
+        { path: "/biblioteca/libros", icon: <BookText size={18} />, label: "Libros" },
+        { path: "/biblioteca/colecciones", icon: <FolderIcon size={18} />, label: "Mis Colecciones" },
+        { path: "/biblioteca/investigaciones", icon: <FileSearch size={18} />, label: "Mis Investigaciones" },
       ]
     },
     { path: "/marketing", icon: <MegaphoneIcon size={20} />, label: "Marketing" },
@@ -37,12 +42,9 @@ const Sidebar = ({
            (path !== "/" && location.pathname.startsWith(path));
   };
 
-  // Determinar si un submenú debe estar abierto
-  const shouldExpandSubmenu = (item: typeof menuItems[0]) => {
-    if ('subItems' in item) {
-      return item.subItems?.some(subItem => location.pathname.includes(subItem.path));
-    }
-    return false;
+  // Determinar si el menú de biblioteca debe estar expandido basado en la ruta actual
+  const shouldExpandBiblioteca = () => {
+    return location.pathname.startsWith("/biblioteca") || bibliotecaExpanded;
   };
 
   return (
@@ -82,26 +84,38 @@ const Sidebar = ({
           <nav className="flex-1 space-y-1 px-2 py-4">
             {menuItems.map((item) => (
               <div key={item.path} className="mb-2">
-                <Link
-                  to={item.path}
-                  className={`sidebar-link ${isActive(item.path) ? "active" : ""}`}
-                >
-                  {item.icon}
-                  <span>{item.label}</span>
-                </Link>
+                {/* Enlace del menú principal */}
+                {item.path === "/biblioteca" ? (
+                  <button
+                    onClick={() => setBibliotecaExpanded(!bibliotecaExpanded)}
+                    className={`sidebar-link w-full text-left ${isActive(item.path) ? "active" : ""}`}
+                  >
+                    {item.icon}
+                    <span>{item.label}</span>
+                  </button>
+                ) : (
+                  <Link
+                    to={item.path}
+                    className={`sidebar-link ${isActive(item.path) ? "active" : ""}`}
+                  >
+                    {item.icon}
+                    <span>{item.label}</span>
+                  </Link>
+                )}
                 
-                {/* Submenús en caso de existir */}
-                {'subItems' in item && shouldExpandSubmenu(item) && (
+                {/* Submenús para biblioteca */}
+                {'subItems' in item && shouldExpandBiblioteca() && (
                   <div className="ml-6 mt-1 space-y-1">
                     {item.subItems?.map((subItem) => (
                       <Link
                         key={subItem.path}
                         to={subItem.path}
-                        className={`sidebar-link text-xs ${
+                        className={`sidebar-link ${
                           location.pathname === subItem.path ? "active" : ""
                         }`}
                       >
-                        <span>{subItem.label}</span>
+                        {subItem.icon}
+                        <span className="ml-2">{subItem.label}</span>
                       </Link>
                     ))}
                   </div>

@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import Header from "./Header";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -8,6 +8,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 const MainLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const isMobile = useIsMobile();
+  const location = useLocation();
   
   // Cerrar automáticamente el sidebar en dispositivos móviles
   useEffect(() => {
@@ -17,6 +18,13 @@ const MainLayout = () => {
       setSidebarOpen(true);
     }
   }, [isMobile]);
+
+  // Cerrar el sidebar en móviles al cambiar de ruta
+  useEffect(() => {
+    if (isMobile) {
+      setSidebarOpen(false);
+    }
+  }, [location.pathname, isMobile]);
 
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
