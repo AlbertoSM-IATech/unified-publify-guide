@@ -1,7 +1,28 @@
 
 import { 
-  BookOpen, Users, TrendingUp, PieChart, LineChart, Calendar 
+  BookOpen, Users, TrendingUp, PieChart, LineChart, Calendar, 
+  BarChart3, TrendingDown, BarChart4
 } from "lucide-react";
+
+import { 
+  ChartContainer, 
+  ChartTooltip, 
+  ChartTooltipContent,
+  ChartLegend,
+  ChartLegendContent 
+} from "@/components/ui/chart";
+
+import {
+  Bar,
+  BarChart,
+  Cell,
+  Pie,
+  PieChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
 
 const Dashboard = () => {
   // Estos datos serían reemplazados por datos reales más adelante
@@ -9,8 +30,75 @@ const Dashboard = () => {
     { title: "Libros", value: "12", icon: <BookOpen size={20} />, change: "+2" },
     { title: "Colecciones", value: "4", icon: <Users size={20} />, change: "+1" },
     { title: "Ingresos", value: "€2,430", icon: <TrendingUp size={20} />, change: "+15%" },
-    { title: "Gastos", value: "€1,890", icon: <PieChart size={20} />, change: "-5%" },
+    { title: "Gastos", value: "€1,890", icon: <TrendingDown size={20} />, change: "-5%" },
   ];
+
+  // Datos de contenido (Alto, Medio, Bajo)
+  const contentCategories = [
+    {
+      title: "Alto Contenido",
+      description: "Libros con más de 100 páginas",
+      color: "bg-blue-500",
+      icon: <BarChart3 size={20} className="text-blue-500" />,
+      count: 1,
+      statusData: [
+        { label: "Publicados", count: 1, percentage: 100 },
+        { label: "En revisión", count: 0, percentage: 0 },
+        { label: "Borradores", count: 0, percentage: 0 },
+        { label: "Sin empezar", count: 0, percentage: 0 },
+      ]
+    },
+    {
+      title: "Medio Contenido",
+      description: "Libros entre 30-100 páginas",
+      color: "bg-orange-500",
+      icon: <BarChart3 size={20} className="text-orange-500" />,
+      count: 1,
+      statusData: [
+        { label: "Publicados", count: 0, percentage: 0 },
+        { label: "En revisión", count: 1, percentage: 100 },
+        { label: "Borradores", count: 0, percentage: 0 },
+        { label: "Sin empezar", count: 0, percentage: 0 },
+      ]
+    },
+    {
+      title: "Bajo Contenido",
+      description: "Libros con menos de 30 páginas",
+      color: "bg-gray-500",
+      icon: <BarChart3 size={20} className="text-gray-500" />,
+      count: 0,
+      statusData: [
+        { label: "Publicados", count: 0, percentage: 0 },
+        { label: "En revisión", count: 0, percentage: 0 },
+        { label: "Borradores", count: 0, percentage: 0 },
+        { label: "Sin empezar", count: 0, percentage: 0 },
+      ]
+    }
+  ];
+
+  // Datos para los gráficos
+  const pieChartData = [
+    { name: "Publicados", value: 1, color: "#10b981" },
+    { name: "En revisión", value: 1, color: "#f59e0b" },
+    { name: "Borradores", value: 0, color: "#6366f1" },
+    { name: "Sin empezar", value: 0, color: "#ef4444" },
+  ];
+
+  const barChartData = [
+    { name: "Alto Contenido", value: 1, color: "#3b82f6" },
+    { name: "Medio Contenido", value: 1, color: "#f97316" },
+    { name: "Bajo Contenido", value: 0, color: "#6b7280" },
+  ];
+
+  const CHART_CONFIG = {
+    altoContenido: { theme: { light: "#3b82f6", dark: "#3b82f6" } },
+    medioContenido: { theme: { light: "#f97316", dark: "#f97316" } },
+    bajoContenido: { theme: { light: "#6b7280", dark: "#6b7280" } },
+    publicados: { theme: { light: "#10b981", dark: "#10b981" } },
+    enRevision: { theme: { light: "#f59e0b", dark: "#f59e0b" } },
+    borradores: { theme: { light: "#6366f1", dark: "#6366f1" } },
+    sinEmpezar: { theme: { light: "#ef4444", dark: "#ef4444" } },
+  };
 
   return (
     <div className="animate-fade-in">
@@ -47,39 +135,120 @@ const Dashboard = () => {
         ))}
       </div>
 
-      {/* Gráficos y detalles adicionales */}
+      {/* Categorías de contenido */}
+      <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-3">
+        {contentCategories.map((category, index) => (
+          <div
+            key={index}
+            className="rounded-lg border bg-card p-4 shadow-sm"
+          >
+            <div className="mb-2 flex items-center">
+              <div className={`mr-2 rounded ${category.color} p-1 text-white`}>
+                {category.icon}
+              </div>
+              <div>
+                <h3 className="font-heading font-medium">{category.title}</h3>
+                <p className="text-xs text-muted-foreground">{category.description}</p>
+              </div>
+              <div className="ml-auto text-2xl font-bold">{category.count}</div>
+            </div>
+            
+            {/* Estado de los libros en cada categoría */}
+            <div className="space-y-3">
+              {category.statusData.map((status, statusIndex) => (
+                <div key={statusIndex}>
+                  <div className="flex justify-between text-xs">
+                    <span>{status.label}</span>
+                    <span>{status.count} · {status.percentage}%</span>
+                  </div>
+                  <div className="mt-1 h-1.5 w-full overflow-hidden rounded-full bg-muted">
+                    <div
+                      className={`h-full ${category.color}`}
+                      style={{ width: `${status.percentage}%` }}
+                    ></div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Gráficos */}
       <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
-        {/* Actividad reciente */}
+        {/* Distribución por Estado */}
         <div className="rounded-lg border bg-card p-4 shadow-sm">
-          <h2 className="font-heading text-lg font-medium">Actividad Reciente</h2>
-          <div className="mt-3 space-y-4">
-            {[1, 2, 3].map((_, index) => (
-              <div key={index} className="flex items-start space-x-3">
-                <div className="mt-0.5 rounded-full bg-primary/10 p-2">
-                  <Calendar size={16} className="text-primary" />
-                </div>
-                <div>
-                  <p className="text-sm font-medium">
-                    Actualización del libro "Título del Libro {index + 1}"
-                  </p>
-                  <p className="text-xs text-muted-foreground">hace {index + 1} días</p>
-                </div>
+          <h2 className="font-heading text-lg font-medium">📊 Distribución por Estado</h2>
+          <p className="text-xs text-muted-foreground">Proporción de libros según su estado de publicación</p>
+          
+          <div className="mt-4 h-64">
+            <ChartContainer config={CHART_CONFIG}>
+              <PieChart>
+                <Pie
+                  data={pieChartData}
+                  cx="50%"
+                  cy="50%"
+                  innerRadius={60}
+                  outerRadius={80}
+                  paddingAngle={2}
+                  dataKey="value"
+                  label={({ name, percent }) => 
+                    `${name}: ${Math.round(percent * 100)}%`
+                  }
+                  labelLine={false}
+                >
+                  {pieChartData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={entry.color} />
+                  ))}
+                </Pie>
+                <ChartTooltip
+                  content={
+                    <ChartTooltipContent />
+                  }
+                />
+              </PieChart>
+            </ChartContainer>
+          </div>
+          
+          <div className="mt-2 flex flex-wrap justify-center gap-3">
+            {pieChartData.map((entry, index) => (
+              <div key={index} className="flex items-center">
+                <div 
+                  className="mr-1 h-3 w-3 rounded-sm" 
+                  style={{ backgroundColor: entry.color }}
+                ></div>
+                <span className="text-xs">{entry.name}: {entry.value}</span>
               </div>
             ))}
           </div>
+          
+          <div className="mt-4 text-center text-sm">
+            <span className="font-medium">2</span> Total libros
+          </div>
         </div>
 
-        {/* Ingresos mensuales */}
+        {/* Distribución por Contenido */}
         <div className="rounded-lg border bg-card p-4 shadow-sm">
-          <h2 className="font-heading text-lg font-medium">Ingresos Mensuales</h2>
-          <div className="mt-6 h-52 w-full">
-            {/* Placeholder para gráficos */}
-            <div className="flex h-full w-full flex-col items-center justify-center rounded-md border border-dashed border-border bg-muted/40 p-8 text-center">
-              <LineChart size={30} className="mb-2 text-muted-foreground" />
-              <p className="text-sm text-muted-foreground">
-                Los gráficos de ingresos se mostrarán aquí
-              </p>
-            </div>
+          <h2 className="font-heading text-lg font-medium">📚 Distribución por Contenido</h2>
+          <p className="text-xs text-muted-foreground">Libros distribuidos por longitud de contenido</p>
+          
+          <div className="mt-4 h-64">
+            <ChartContainer config={CHART_CONFIG}>
+              <BarChart data={barChartData}>
+                <XAxis dataKey="name" />
+                <YAxis />
+                <ChartTooltip
+                  content={
+                    <ChartTooltipContent />
+                  }
+                />
+                <Bar dataKey="value">
+                  {barChartData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={entry.color} />
+                  ))}
+                </Bar>
+              </BarChart>
+            </ChartContainer>
           </div>
         </div>
       </div>
@@ -88,22 +257,24 @@ const Dashboard = () => {
       <div className="mt-6">
         <h2 className="font-heading text-lg font-medium">Libros Recientes</h2>
         <div className="mt-3 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-          {[1, 2, 3, 4].map((index) => (
+          {[1, 2].map((index) => (
             <div
               key={index}
               className="card-hover rounded-lg border bg-card shadow-sm"
             >
-              {/* Placeholder para portada de libro */}
-              <div className="h-40 rounded-t-lg bg-muted">
-                <div className="flex h-full items-center justify-center">
+              {/* Placeholder para portada de libro (1600 x 2560 px proportion) */}
+              <div className="relative pb-[160%] rounded-t-lg bg-muted overflow-hidden">
+                <div className="absolute inset-0 flex items-center justify-center">
                   <BookOpen size={50} className="text-muted-foreground/50" />
                 </div>
               </div>
               <div className="p-3">
                 <h3 className="font-medium">Título del Libro {index}</h3>
-                <p className="text-xs text-muted-foreground">Serie: Colección {index}</p>
+                <p className="text-xs text-muted-foreground">
+                  {index === 1 ? "Alto Contenido" : "Medio Contenido"}
+                </p>
                 <div className="mt-2 flex justify-between text-xs">
-                  <span>Ventas: {index * 10}</span>
+                  <span>Estado: {index === 1 ? "Publicado" : "En revisión"}</span>
                   <span className="text-primary">Ver detalles</span>
                 </div>
               </div>

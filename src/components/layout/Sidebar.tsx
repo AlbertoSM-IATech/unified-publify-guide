@@ -20,21 +20,21 @@ const Sidebar = ({
   const [bibliotecaExpanded, setBibliotecaExpanded] = useState(true);
 
   const menuItems = [
-    { path: "/", icon: <Home size={20} />, label: "Dashboard" },
+    { path: "/", icon: <Home size={20} className="text-blue-500" />, label: "Dashboard" },
     { 
       path: "/biblioteca", 
-      icon: <BookOpen size={20} />, 
+      icon: <BookOpen size={20} className="text-indigo-500" />, 
       label: "Biblioteca",
       subItems: [
-        { path: "/biblioteca/libros", icon: <BookText size={18} />, label: "Libros" },
-        { path: "/biblioteca/colecciones", icon: <FolderIcon size={18} />, label: "Mis Colecciones" },
-        { path: "/biblioteca/investigaciones", icon: <FileSearch size={18} />, label: "Mis Investigaciones" },
+        { path: "/biblioteca/libros", icon: <BookText size={18} className="text-indigo-500" />, label: "Libros" },
+        { path: "/biblioteca/colecciones", icon: <FolderIcon size={18} className="text-teal-500" />, label: "Colecciones" },
+        { path: "/biblioteca/investigaciones", icon: <FileSearch size={18} className="text-emerald-500" />, label: "Investigaciones" },
       ]
     },
-    { path: "/marketing", icon: <MegaphoneIcon size={20} />, label: "Marketing" },
-    { path: "/finanzas", icon: <PieChart size={20} />, label: "Finanzas" },
-    { path: "/perfil", icon: <User size={20} />, label: "Perfil" },
-    { path: "/configuracion", icon: <Settings size={20} />, label: "Configuración" },
+    { path: "/marketing", icon: <MegaphoneIcon size={20} className="text-amber-500" />, label: "Marketing" },
+    { path: "/finanzas", icon: <PieChart size={20} className="text-rose-500" />, label: "Finanzas" },
+    { path: "/perfil", icon: <User size={20} className="text-violet-500" />, label: "Perfil" },
+    { path: "/configuracion", icon: <Settings size={20} className="text-gray-500" />, label: "Configuración" },
   ];
 
   const isActive = (path: string) => {
