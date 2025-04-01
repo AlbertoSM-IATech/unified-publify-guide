@@ -64,11 +64,7 @@ const LineChartCard = ({
                 width={80}
                 domain={[minValue, maxValue]}
               />
-              <ChartTooltip
-                content={
-                  <ChartTooltipContent />
-                }
-              />
+              <ChartTooltip content={<ChartTooltipContent />} />
               <Legend 
                 verticalAlign="bottom" 
                 height={36}

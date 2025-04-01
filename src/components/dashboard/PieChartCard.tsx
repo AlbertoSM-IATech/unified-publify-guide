@@ -78,9 +78,7 @@ const PieChartCard = ({
                 wrapperStyle={{ bottom: 0, left: 0, right: 0, paddingTop: 20 }}
                 formatter={renderColorfulLegendText}
               />
-              <ChartTooltip
-                content={<ChartTooltipContent />}
-              />
+              <ChartTooltip content={<ChartTooltipContent />} />
             </PieChart>
           </ResponsiveContainer>
         </ChartContainer>
