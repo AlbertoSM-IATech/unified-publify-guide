@@ -1,15 +1,8 @@
-
 import { useState } from "react";
-import { 
-  Settings, Key, Globe, Database, Bell, Download, 
-  Upload, ExternalLink, Trash2, AlertTriangle
-} from "lucide-react";
-
+import { Settings, Key, Globe, Database, Bell, Download, Upload, ExternalLink, Trash2, AlertTriangle } from "lucide-react";
 const Configuracion = () => {
   const [activeTab, setActiveTab] = useState("general");
-
-  return (
-    <div className="animate-fade-in">
+  return <div className="animate-fade-in">
       <div className="mb-6">
         <h1 className="font-heading text-2xl font-bold md:text-3xl">Configuración</h1>
         <p className="mt-1 text-muted-foreground">
@@ -26,26 +19,30 @@ const Configuracion = () => {
                 Ajustes
               </h2>
               <nav className="mt-2 flex flex-col space-y-1">
-                {[
-                  { id: "general", label: "General", icon: <Settings size={16} /> },
-                  { id: "integraciones", label: "Integraciones", icon: <ExternalLink size={16} /> },
-                  { id: "datos", label: "Datos y Seguridad", icon: <Database size={16} /> },
-                  { id: "notificaciones", label: "Notificaciones", icon: <Bell size={16} /> },
-                  { id: "cuenta", label: "Cuenta", icon: <Key size={16} /> },
-                ].map((tab) => (
-                  <button
-                    key={tab.id}
-                    className={`flex items-center rounded-md px-3 py-2 text-sm font-medium transition-colors ${
-                      activeTab === tab.id
-                        ? "bg-primary text-primary-foreground"
-                        : "text-muted-foreground hover:bg-muted"
-                    }`}
-                    onClick={() => setActiveTab(tab.id)}
-                  >
+                {[{
+                id: "general",
+                label: "General",
+                icon: <Settings size={16} />
+              }, {
+                id: "integraciones",
+                label: "Integraciones",
+                icon: <ExternalLink size={16} />
+              }, {
+                id: "datos",
+                label: "Datos y Seguridad",
+                icon: <Database size={16} />
+              }, {
+                id: "notificaciones",
+                label: "Notificaciones",
+                icon: <Bell size={16} />
+              }, {
+                id: "cuenta",
+                label: "Cuenta",
+                icon: <Key size={16} />
+              }].map(tab => <button key={tab.id} className={`flex items-center rounded-md px-3 py-2 text-sm font-medium transition-colors ${activeTab === tab.id ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:bg-muted"}`} onClick={() => setActiveTab(tab.id)}>
                     <span className="mr-2">{tab.icon}</span>
                     {tab.label}
-                  </button>
-                ))}
+                  </button>)}
               </nav>
             </div>
           </div>
@@ -54,20 +51,12 @@ const Configuracion = () => {
         {/* Contenido de la configuración */}
         <div className="md:col-span-9">
           <div className="rounded-lg border bg-card shadow-sm">
-            {activeTab === "general" && (
-              <div className="p-6">
+            {activeTab === "general" && <div className="p-6">
                 <h2 className="font-heading text-lg font-medium">Configuración General</h2>
                 <div className="mt-6 space-y-6">
                   <div>
-                    <label htmlFor="nombreApp" className="mb-1 block text-sm font-medium">
-                      Nombre de la Aplicación
-                    </label>
-                    <input
-                      type="text"
-                      id="nombreApp"
-                      className="w-full rounded-md border border-input bg-background px-4 py-2 text-sm placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
-                      defaultValue="Publify"
-                    />
+                    <label htmlFor="nombreApp" className="mb-1 block text-sm font-medium">Nombre de la Editorial</label>
+                    <input type="text" id="nombreApp" className="w-full rounded-md border border-input bg-background px-4 py-2 text-sm placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary" defaultValue="Publify" />
                     <p className="mt-1 text-xs text-muted-foreground">
                       Este nombre se mostrará en el encabezado y título de la página
                     </p>
@@ -81,11 +70,7 @@ const Configuracion = () => {
                       <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                         <Globe size={16} className="text-muted-foreground" />
                       </div>
-                      <select
-                        id="idioma"
-                        className="w-full rounded-md border border-input bg-background py-2 pl-10 pr-4 text-sm placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
-                        defaultValue="es"
-                      >
+                      <select id="idioma" className="w-full rounded-md border border-input bg-background py-2 pl-10 pr-4 text-sm placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary" defaultValue="es">
                         <option value="es">Español</option>
                         <option value="en">Inglés</option>
                         <option value="fr">Francés</option>
@@ -127,11 +112,9 @@ const Configuracion = () => {
                     </button>
                   </div>
                 </div>
-              </div>
-            )}
+              </div>}
 
-            {activeTab === "datos" && (
-              <div className="p-6">
+            {activeTab === "datos" && <div className="p-6">
                 <h2 className="font-heading text-lg font-medium">Datos y Seguridad</h2>
                 <p className="text-sm text-muted-foreground">
                   Gestiona tus datos y opciones de seguridad
@@ -192,35 +175,24 @@ const Configuracion = () => {
                     </div>
                   </div>
                 </div>
-              </div>
-            )}
+              </div>}
 
-            {(activeTab === "integraciones" || activeTab === "notificaciones" || activeTab === "cuenta") && (
-              <div className="flex h-64 flex-col items-center justify-center p-6 text-center">
+            {(activeTab === "integraciones" || activeTab === "notificaciones" || activeTab === "cuenta") && <div className="flex h-64 flex-col items-center justify-center p-6 text-center">
                 <div className="rounded-full bg-muted/70 p-4 text-muted-foreground">
                   {activeTab === "integraciones" && <ExternalLink size={32} />}
                   {activeTab === "notificaciones" && <Bell size={32} />}
                   {activeTab === "cuenta" && <Key size={32} />}
                 </div>
                 <h3 className="mt-4 text-lg font-medium">
-                  Configuración de {
-                    activeTab === "integraciones" ? "Integraciones" :
-                    activeTab === "notificaciones" ? "Notificaciones" : "Cuenta"
-                  }
+                  Configuración de {activeTab === "integraciones" ? "Integraciones" : activeTab === "notificaciones" ? "Notificaciones" : "Cuenta"}
                 </h3>
                 <p className="mt-2 max-w-md text-sm text-muted-foreground">
-                  Esta sección estará disponible próximamente. Aquí podrás gestionar tus {
-                    activeTab === "integraciones" ? "conexiones con servicios externos" :
-                    activeTab === "notificaciones" ? "preferencias de notificaciones" : "datos de cuenta y suscripción"
-                  }.
+                  Esta sección estará disponible próximamente. Aquí podrás gestionar tus {activeTab === "integraciones" ? "conexiones con servicios externos" : activeTab === "notificaciones" ? "preferencias de notificaciones" : "datos de cuenta y suscripción"}.
                 </p>
-              </div>
-            )}
+              </div>}
           </div>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default Configuracion;
