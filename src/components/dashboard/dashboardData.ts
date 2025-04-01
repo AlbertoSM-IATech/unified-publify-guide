@@ -6,7 +6,7 @@ import { BookOpen, Users, TrendingUp, TrendingDown, BarChart3 } from "lucide-rea
 export const CHART_CONFIG = {
   altoContenido: { theme: { light: "#3b82f6", dark: "#3b82f6" } },
   medioContenido: { theme: { light: "#f97316", dark: "#f97316" } },
-  bajoContenido: { theme: { light: "#10b981", dark: "#10b981" } }, // Changed to green
+  bajoContenido: { theme: { light: "#10b981", dark: "#10b981" } }, // Verde
   publicados: { theme: { light: "#10b981", dark: "#10b981" } },
   enRevision: { theme: { light: "#f59e0b", dark: "#f59e0b" } },
   borradores: { theme: { light: "#6366f1", dark: "#6366f1" } },
@@ -83,7 +83,7 @@ export const getContentCategoriesData = (): ContentCategory[] => [
   {
     title: "Bajo Contenido",
     description: "Libros con menos de 30 páginas",
-    color: "bg-green-500", // Changed to green
+    color: "bg-green-500", // Cambiado a verde
     icon: BarChart3,
     count: 0,
     statusData: [
@@ -107,5 +107,5 @@ export const getPieChartData = (): ChartItem[] => [
 export const getBarChartData = (): ChartItem[] => [
   { name: "Alto Contenido", value: 1, color: "#3b82f6" },
   { name: "Medio Contenido", value: 1, color: "#f97316" },
-  { name: "Bajo Contenido", value: 0, color: "#10b981" }, // Changed to green
+  { name: "Bajo Contenido", value: 0, color: "#10b981" }, // Cambiado a verde
 ];

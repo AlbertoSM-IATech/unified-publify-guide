@@ -1,4 +1,6 @@
 
+import { LucideIcon } from "lucide-react";
+
 interface StatusData {
   label: string;
   count: number;
