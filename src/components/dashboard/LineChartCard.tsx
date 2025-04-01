@@ -34,56 +34,52 @@ const LineChartCard = ({
   const maxValue = Math.max(...data.map(item => item.balance)) + 500;
 
   return (
-    <div className="rounded-lg border bg-card p-4 shadow-sm">
-      <h2 className="font-heading text-lg font-medium">{title}</h2>
-      <p className="text-xs text-muted-foreground">{description}</p>
-      
-      <div className="mt-4 h-80">
-        <ChartContainer config={chartConfig}>
-          <ResponsiveContainer width="100%" height="100%">
-            <LineChart 
-              data={data}
-              margin={{ top: 20, right: 30, left: 20, bottom: 40 }}
-            >
-              <CartesianGrid strokeDasharray="3 3" stroke="#374151" opacity={0.2} />
-              <XAxis 
-                dataKey="name" 
-                stroke="#888888" 
-                fontSize={12} 
-                tickLine={false} 
-                axisLine={false}
-                padding={{ left: 10, right: 10 }}
-                dy={10}
-              />
-              <YAxis
-                stroke="#888888"
-                fontSize={12}
-                tickLine={false}
-                axisLine={false}
-                tickFormatter={(value) => `€${value}`}
-                width={80}
-                domain={[minValue, maxValue]}
-              />
-              <ChartTooltip content={<ChartTooltipContent />} />
-              <Legend 
-                verticalAlign="bottom" 
-                height={36}
-                wrapperStyle={{ paddingTop: 20 }}
-              />
-              <ReferenceLine y={0} stroke="#666" strokeDasharray="3 3" />
-              <Line
-                type="monotone"
-                dataKey="balance"
-                stroke="#6366f1"
-                activeDot={{ r: 8 }}
-                strokeWidth={2}
-                name="Balance"
-                dot={{ stroke: '#6366f1', strokeWidth: 2, r: 4, fill: '#fff' }}
-              />
-            </LineChart>
-          </ResponsiveContainer>
-        </ChartContainer>
-      </div>
+    <div className="w-full h-full">
+      <ChartContainer config={chartConfig}>
+        <ResponsiveContainer width="100%" height="100%">
+          <LineChart 
+            data={data}
+            margin={{ top: 20, right: 30, left: 20, bottom: 40 }}
+          >
+            <CartesianGrid strokeDasharray="3 3" stroke="#374151" opacity={0.2} />
+            <XAxis 
+              dataKey="name" 
+              stroke="#888888" 
+              fontSize={12} 
+              tickLine={false} 
+              axisLine={false}
+              padding={{ left: 10, right: 10 }}
+              dy={10}
+            />
+            <YAxis
+              stroke="#888888"
+              fontSize={12}
+              tickLine={false}
+              axisLine={false}
+              tickFormatter={(value) => `€${value}`}
+              width={80}
+              domain={[minValue, maxValue]}
+            />
+            <ChartTooltip content={<ChartTooltipContent />} />
+            <Legend 
+              verticalAlign="bottom" 
+              height={36}
+              wrapperStyle={{ paddingTop: 20 }}
+              formatter={(value) => <span className="text-sm font-medium">{value}</span>}
+            />
+            <ReferenceLine y={0} stroke="#666" strokeDasharray="3 3" />
+            <Line
+              type="monotone"
+              dataKey="balance"
+              stroke="#6366f1"
+              activeDot={{ r: 8 }}
+              strokeWidth={2}
+              name="Balance"
+              dot={{ stroke: '#6366f1', strokeWidth: 2, r: 4, fill: '#fff' }}
+            />
+          </LineChart>
+        </ResponsiveContainer>
+      </ChartContainer>
     </div>
   );
 };

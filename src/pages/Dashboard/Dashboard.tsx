@@ -22,6 +22,7 @@ import {
   BookMarked,
   BookType
 } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 
 const Dashboard = () => {
   const stats = getStatsData();
@@ -31,16 +32,17 @@ const Dashboard = () => {
   const lineChartData = getLineChartData();
 
   return (
-    <div className="p-4 animate-fade-in space-y-6">
-      <div className="mb-4">
+    <div className="p-4 animate-fade-in space-y-8">
+      {/* Header */}
+      <div className="mb-6">
         <h1 className="font-heading text-2xl font-bold md:text-3xl">Dashboard</h1>
         <p className="mt-1 text-muted-foreground">
           Resumen de tu actividad editorial
         </p>
       </div>
 
-      {/* Stats Cards */}
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+      {/* Stats Cards - 4 columnas en desktop, 2 en tablet, 1 en móvil */}
+      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {stats.map((stat, index) => {
           const Icon = stat.icon;
           return (
@@ -55,8 +57,8 @@ const Dashboard = () => {
         })}
       </div>
 
-      {/* Content Categories */}
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+      {/* Content Categories - 3 columnas en desktop, 1 en móvil */}
+      <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
         <ContentCategoryCard
           title="Alto Contenido"
           description="Libros con más de 100 páginas"
@@ -83,63 +85,105 @@ const Dashboard = () => {
         />
       </div>
 
-      {/* Line Chart */}
-      <div className="mb-8">
-        <div className="flex items-center gap-2 mb-4">
-          <LineChart size={20} className="text-primary" />
-          <h2 className="font-heading text-lg font-medium">Balance Mensual</h2>
-        </div>
-        <LineChartCard
-          title="Balance Mensual"
-          description="Seguimiento de balance mensual"
-          data={lineChartData}
-          chartConfig={CHART_CONFIG}
-        />
-      </div>
-
-      {/* Charts section */}
-      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-        <div>
-          <div className="flex items-center gap-2 mb-4">
-            <PieChart size={20} className="text-green-500" />
-            <h2 className="font-heading text-lg font-medium">Distribución por Estado</h2>
+      {/* Line Chart - Ancho completo */}
+      <Card className="overflow-hidden">
+        <CardHeader className="flex flex-row items-center justify-between pb-2">
+          <div className="space-y-1">
+            <CardTitle className="text-lg font-medium flex items-center gap-2">
+              <LineChart size={20} className="text-primary" />
+              Balance Mensual
+            </CardTitle>
+            <CardDescription>
+              Seguimiento de ingresos y gastos mensuales
+            </CardDescription>
           </div>
-          <PieChartCard
-            title="Distribución por Estado"
-            description="Proporción de libros según su estado de publicación"
-            data={pieChartData}
-            chartConfig={CHART_CONFIG}
-            totalLabel="Total libros"
-            totalValue={2}
-          />
-        </div>
-
-        <div>
-          <div className="flex items-center gap-2 mb-4">
-            <BarChart3 size={20} className="text-blue-500" />
-            <h2 className="font-heading text-lg font-medium">Distribución por Contenido</h2>
+        </CardHeader>
+        <CardContent className="pb-4">
+          <div className="h-[350px]">
+            <LineChartCard
+              title="Balance Mensual"
+              description="Seguimiento de balance mensual"
+              data={lineChartData}
+              chartConfig={CHART_CONFIG}
+            />
           </div>
-          <BarChartCard
-            title="Distribución por Contenido"
-            description="Libros distribuidos por longitud de contenido"
-            data={barChartData}
-            chartConfig={CHART_CONFIG}
-          />
-        </div>
+        </CardContent>
+      </Card>
+
+      {/* Charts section - 2 columnas en desktop, 1 en móvil */}
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+        {/* Pie Chart */}
+        <Card className="overflow-hidden">
+          <CardHeader className="flex flex-row items-center justify-between pb-2">
+            <div className="space-y-1">
+              <CardTitle className="text-lg font-medium flex items-center gap-2">
+                <PieChart size={20} className="text-green-500" />
+                Distribución por Estado
+              </CardTitle>
+              <CardDescription>
+                Proporción de libros según su estado de publicación
+              </CardDescription>
+            </div>
+          </CardHeader>
+          <CardContent className="pb-4">
+            <div className="h-[350px]">
+              <PieChartCard
+                title="Distribución por Estado"
+                description="Proporción de libros según su estado de publicación"
+                data={pieChartData}
+                chartConfig={CHART_CONFIG}
+                totalLabel="Total libros"
+                totalValue={2}
+              />
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Bar Chart */}
+        <Card className="overflow-hidden">
+          <CardHeader className="flex flex-row items-center justify-between pb-2">
+            <div className="space-y-1">
+              <CardTitle className="text-lg font-medium flex items-center gap-2">
+                <BarChart3 size={20} className="text-blue-500" />
+                Distribución por Contenido
+              </CardTitle>
+              <CardDescription>
+                Libros distribuidos por longitud de contenido
+              </CardDescription>
+            </div>
+          </CardHeader>
+          <CardContent className="pb-4">
+            <div className="h-[350px]">
+              <BarChartCard
+                title="Distribución por Contenido"
+                description="Libros distribuidos por longitud de contenido"
+                data={barChartData}
+                chartConfig={CHART_CONFIG}
+              />
+            </div>
+          </CardContent>
+        </Card>
       </div>
 
-      {/* Recent Books */}
-      <div className="mt-8 mb-6">
-        <div className="flex items-center gap-2 mb-4">
-          <BookOpen size={20} className="text-orange-500" />
-          <h2 className="font-heading text-lg font-medium">Libros Recientes</h2>
-        </div>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-          {[1, 2].map((index) => (
-            <BookCard key={index} index={index} />
-          ))}
-        </div>
-      </div>
+      {/* Recent Books - 4 columnas en desktop, 2 en tablet, 1 en móvil */}
+      <Card>
+        <CardHeader className="pb-3">
+          <CardTitle className="text-lg font-medium flex items-center gap-2">
+            <BookOpen size={20} className="text-orange-500" />
+            Libros Recientes
+          </CardTitle>
+          <CardDescription>
+            Los últimos libros añadidos a tu biblioteca
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            {[1, 2].map((index) => (
+              <BookCard key={index} index={index} />
+            ))}
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 };

@@ -43,54 +43,49 @@ const PieChartCard = ({
   };
 
   return (
-    <div className="rounded-lg border bg-card p-4 shadow-sm">
-      <h2 className="font-heading text-lg font-medium">{title}</h2>
-      <p className="text-xs text-muted-foreground">{description}</p>
+    <div className="w-full h-full relative">
+      <ChartContainer config={chartConfig}>
+        <ResponsiveContainer width="100%" height="100%">
+          <PieChart margin={{ top: 20, right: 30, left: 20, bottom: 40 }}>
+            <Pie
+              data={data}
+              cx="50%"
+              cy="50%"
+              innerRadius={70}
+              outerRadius={100}
+              startAngle={180}
+              endAngle={0}
+              paddingAngle={3}
+              dataKey="value"
+              labelLine={false}
+            >
+              {data.map((entry, index) => (
+                <Cell 
+                  key={`cell-${index}`} 
+                  fill={entry.color} 
+                  stroke="none"
+                />
+              ))}
+            </Pie>
+            <Legend 
+              verticalAlign="bottom" 
+              align="center"
+              layout="horizontal"
+              wrapperStyle={{ bottom: 0, left: 0, right: 0, paddingTop: 20 }}
+              formatter={(value: string) => <span className="text-sm font-medium">{value}</span>}
+            />
+            <ChartTooltip content={<ChartTooltipContent />} />
+          </PieChart>
+        </ResponsiveContainer>
+      </ChartContainer>
       
-      <div className="mt-4 h-72 relative">
-        <ChartContainer config={chartConfig}>
-          <ResponsiveContainer width="100%" height="100%">
-            <PieChart>
-              <Pie
-                data={data}
-                cx="50%"
-                cy="60%"
-                innerRadius={70}
-                outerRadius={90}
-                startAngle={180}
-                endAngle={0}
-                paddingAngle={3}
-                dataKey="value"
-                labelLine={false}
-              >
-                {data.map((entry, index) => (
-                  <Cell 
-                    key={`cell-${index}`} 
-                    fill={entry.color} 
-                    stroke="none"
-                  />
-                ))}
-              </Pie>
-              <Legend 
-                verticalAlign="bottom" 
-                align="center"
-                layout="horizontal"
-                wrapperStyle={{ bottom: 0, left: 0, right: 0, paddingTop: 20 }}
-                formatter={renderColorfulLegendText}
-              />
-              <ChartTooltip content={<ChartTooltipContent />} />
-            </PieChart>
-          </ResponsiveContainer>
-        </ChartContainer>
-        
-        {/* Total value in center of semicircle */}
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/4 text-center">
-          <span className="text-2xl font-bold">{totalValue}</span>
-          <p className="text-xs text-muted-foreground mt-1">{totalLabel}</p>
-        </div>
+      {/* Total value in center of semicircle */}
+      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/3 text-center">
+        <span className="text-3xl font-bold">{totalValue}</span>
+        <p className="text-xs text-muted-foreground mt-1">{totalLabel}</p>
       </div>
       
-      <div className="mt-2 grid grid-cols-4 gap-2">
+      <div className="mt-4 grid grid-cols-4 gap-2">
         {data.map((entry, index) => (
           <div key={index} className="text-center">
             <div className="flex items-center justify-center gap-1 mb-1">
