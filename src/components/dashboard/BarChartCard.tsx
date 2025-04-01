@@ -41,7 +41,6 @@ const BarChartCard = ({
       
       <div className="mt-4 h-72">
         <ChartContainer config={chartConfig}>
-          {/* Single component as child to satisfy type requirements */}
           <ResponsiveContainer width="100%" height="100%">
             <BarChart 
               data={data}
@@ -61,11 +60,7 @@ const BarChartCard = ({
                 axisLine={false}
                 width={40}
               />
-              <ChartTooltip
-                content={
-                  <ChartTooltipContent />
-                }
-              />
+              <ChartTooltip content={<ChartTooltipContent />} />
               <Legend verticalAlign="bottom" height={36} />
               <Bar dataKey="value" name="Cantidad">
                 {data.map((entry, index) => (

@@ -49,7 +49,6 @@ const PieChartCard = ({
       
       <div className="mt-4 h-72 relative">
         <ChartContainer config={chartConfig}>
-          {/* Wrap the entire chart in a single element to satisfy the type requirement */}
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
               <Pie
@@ -80,19 +79,17 @@ const PieChartCard = ({
                 formatter={renderColorfulLegendText}
               />
               <ChartTooltip
-                content={
-                  <ChartTooltipContent />
-                }
+                content={<ChartTooltipContent />}
               />
             </PieChart>
           </ResponsiveContainer>
-          
-          {/* Total value in center of semicircle */}
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/4 text-center">
-            <span className="text-2xl font-bold">{totalValue}</span>
-            <p className="text-xs text-muted-foreground mt-1">{totalLabel}</p>
-          </div>
         </ChartContainer>
+        
+        {/* Total value in center of semicircle */}
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/4 text-center">
+          <span className="text-2xl font-bold">{totalValue}</span>
+          <p className="text-xs text-muted-foreground mt-1">{totalLabel}</p>
+        </div>
       </div>
       
       <div className="mt-2 grid grid-cols-4 gap-2">
