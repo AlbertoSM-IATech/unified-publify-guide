@@ -35,9 +35,10 @@ const App = () => (
               
               {/* Rutas protegidas dentro del layout principal */}
               <Route element={<MainLayout />}>
+                {/* Corrigiendo la ruta del Dashboard */}
                 <Route path="/" element={<Dashboard />} />
+                <Route path="/dashboard" element={<Navigate to="/" replace />} />
                 <Route path="/index" element={<Navigate to="/" replace />} />
-                <Route index element={<Navigate to="/" replace />} />
                 
                 {/* Rutas de Biblioteca */}
                 <Route path="/biblioteca/libros" element={<LibrosList />} />
