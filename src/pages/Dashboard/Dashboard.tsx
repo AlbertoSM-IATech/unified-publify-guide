@@ -31,14 +31,15 @@ const Dashboard = () => {
   const lineChartData = getLineChartData();
 
   return (
-    <div className="p-4 animate-fade-in">
-      <div className="mb-6">
+    <div className="p-4 animate-fade-in space-y-8">
+      <div className="mb-4">
         <h1 className="font-heading text-2xl font-bold md:text-3xl">Dashboard</h1>
         <p className="mt-1 text-muted-foreground">
           Resumen de tu actividad editorial
         </p>
       </div>
 
+      {/* Stats Cards */}
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
         {stats.map((stat, index) => {
           const Icon = stat.icon;
@@ -54,7 +55,8 @@ const Dashboard = () => {
         })}
       </div>
 
-      <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-3">
+      {/* Content Categories */}
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
         <ContentCategoryCard
           title="Alto Contenido"
           description="Libros con más de 100 páginas"
@@ -81,8 +83,9 @@ const Dashboard = () => {
         />
       </div>
 
-      <div className="mt-6">
-        <div className="flex items-center gap-2 mb-2">
+      {/* Line Chart */}
+      <div>
+        <div className="flex items-center gap-2 mb-4">
           <LineChart size={20} className="text-primary" />
           <h2 className="font-heading text-lg font-medium">Balance Mensual</h2>
         </div>
@@ -94,9 +97,10 @@ const Dashboard = () => {
         />
       </div>
 
-      <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
+      {/* Charts section */}
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
         <div>
-          <div className="flex items-center gap-2 mb-2">
+          <div className="flex items-center gap-2 mb-4">
             <PieChart size={20} className="text-green-500" />
             <h2 className="font-heading text-lg font-medium">Distribución por Estado</h2>
           </div>
@@ -111,7 +115,7 @@ const Dashboard = () => {
         </div>
 
         <div>
-          <div className="flex items-center gap-2 mb-2">
+          <div className="flex items-center gap-2 mb-4">
             <BarChart3 size={20} className="text-blue-500" />
             <h2 className="font-heading text-lg font-medium">Distribución por Contenido</h2>
           </div>
@@ -124,12 +128,13 @@ const Dashboard = () => {
         </div>
       </div>
 
-      <div className="mt-6">
-        <div className="flex items-center gap-2 mb-2">
+      {/* Recent Books */}
+      <div>
+        <div className="flex items-center gap-2 mb-4">
           <BookOpen size={20} className="text-orange-500" />
           <h2 className="font-heading text-lg font-medium">Libros Recientes</h2>
         </div>
-        <div className="mt-3 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {[1, 2].map((index) => (
             <BookCard key={index} index={index} />
           ))}

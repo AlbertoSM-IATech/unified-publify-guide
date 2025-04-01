@@ -11,6 +11,7 @@ import {
   Cell,
   XAxis,
   YAxis,
+  ResponsiveContainer,
 } from "recharts";
 
 interface BarChartItem {
@@ -39,20 +40,35 @@ const BarChartCard = ({
       
       <div className="mt-4 h-64">
         <ChartContainer config={chartConfig}>
-          <BarChart data={data}>
-            <XAxis dataKey="name" />
-            <YAxis />
-            <ChartTooltip
-              content={
-                <ChartTooltipContent />
-              }
-            />
-            <Bar dataKey="value">
-              {data.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={entry.color} />
-              ))}
-            </Bar>
-          </BarChart>
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart 
+              data={data}
+              margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
+            >
+              <XAxis 
+                dataKey="name" 
+                fontSize={12}
+                tickLine={false}
+                axisLine={false}
+              />
+              <YAxis 
+                fontSize={12}
+                tickLine={false}
+                axisLine={false}
+                width={40}
+              />
+              <ChartTooltip
+                content={
+                  <ChartTooltipContent />
+                }
+              />
+              <Bar dataKey="value">
+                {data.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={entry.color} />
+                ))}
+              </Bar>
+            </BarChart>
+          </ResponsiveContainer>
         </ChartContainer>
       </div>
     </div>

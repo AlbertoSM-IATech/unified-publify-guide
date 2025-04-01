@@ -33,17 +33,21 @@ const LineChartCard = ({
       <h2 className="font-heading text-lg font-medium">{title}</h2>
       <p className="text-xs text-muted-foreground">{description}</p>
       
-      <div className="mt-4 h-80">
+      <div className="mt-4 h-72">
         <ChartContainer config={chartConfig}>
           <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={data}>
+            <LineChart 
+              data={data}
+              margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
+            >
               <CartesianGrid strokeDasharray="3 3" stroke="#374151" opacity={0.2} />
               <XAxis 
                 dataKey="name" 
                 stroke="#888888" 
                 fontSize={12} 
                 tickLine={false} 
-                axisLine={false} 
+                axisLine={false}
+                padding={{ left: 10, right: 10 }}
               />
               <YAxis
                 stroke="#888888"
@@ -51,13 +55,14 @@ const LineChartCard = ({
                 tickLine={false}
                 axisLine={false}
                 tickFormatter={(value) => `€${value}`}
+                width={80}
               />
               <ChartTooltip
                 content={
                   <ChartTooltipContent />
                 }
               />
-              <Legend />
+              <Legend wrapperStyle={{ paddingTop: 10 }} />
               <Line
                 type="monotone"
                 dataKey="balance"
