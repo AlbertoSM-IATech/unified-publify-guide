@@ -1,59 +1,47 @@
-
 import { useState } from "react";
 import { BookOpen, FileText, Plus, Search, Filter, ArrowLeft } from "lucide-react";
 
 // Datos simulados para investigaciones
-const investigacionesSimuladas = [
-  {
-    id: 1,
-    titulo: "Investigación para El Arte de la Estrategia",
-    descripcion: "Notas y fuentes para el libro",
-    libroId: 1,
-    libroTitulo: "El Arte de la Estrategia",
-    fechaActualizacion: "2023-05-10",
-    contenido: "Contenido de la investigación..."
-  },
-  {
-    id: 2,
-    titulo: "Investigación para Finanzas para Emprendedores",
-    descripcion: "Referencias y estudios de caso",
-    libroId: 2,
-    libroTitulo: "Finanzas para Emprendedores",
-    fechaActualizacion: "2023-04-15",
-    contenido: "Contenido de la investigación..."
-  },
-  {
-    id: 3,
-    titulo: "Investigación para Marketing Digital",
-    descripcion: "Tendencias y estadísticas actuales",
-    libroId: 3,
-    libroTitulo: "Marketing Digital",
-    fechaActualizacion: "2023-03-20",
-    contenido: "Contenido de la investigación..."
-  },
-  {
-    id: 4,
-    titulo: "Investigación para Desarrollo Personal",
-    descripcion: "Técnicas y metodologías",
-    libroId: 4,
-    libroTitulo: "Desarrollo Personal",
-    fechaActualizacion: "2023-02-25",
-    contenido: "Contenido de la investigación..."
-  }
-];
-
+const investigacionesSimuladas = [{
+  id: 1,
+  titulo: "Investigación para El Arte de la Estrategia",
+  descripcion: "Notas y fuentes para el libro",
+  libroId: 1,
+  libroTitulo: "El Arte de la Estrategia",
+  fechaActualizacion: "2023-05-10",
+  contenido: "Contenido de la investigación..."
+}, {
+  id: 2,
+  titulo: "Investigación para Finanzas para Emprendedores",
+  descripcion: "Referencias y estudios de caso",
+  libroId: 2,
+  libroTitulo: "Finanzas para Emprendedores",
+  fechaActualizacion: "2023-04-15",
+  contenido: "Contenido de la investigación..."
+}, {
+  id: 3,
+  titulo: "Investigación para Marketing Digital",
+  descripcion: "Tendencias y estadísticas actuales",
+  libroId: 3,
+  libroTitulo: "Marketing Digital",
+  fechaActualizacion: "2023-03-20",
+  contenido: "Contenido de la investigación..."
+}, {
+  id: 4,
+  titulo: "Investigación para Desarrollo Personal",
+  descripcion: "Técnicas y metodologías",
+  libroId: 4,
+  libroTitulo: "Desarrollo Personal",
+  fechaActualizacion: "2023-02-25",
+  contenido: "Contenido de la investigación..."
+}];
 const InvestigacionesList = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [investigaciones, setInvestigaciones] = useState(investigacionesSimuladas);
   const [selectedInvestigacion, setSelectedInvestigacion] = useState<typeof investigacionesSimuladas[0] | null>(null);
 
   // Filtrar investigaciones por búsqueda
-  const filteredInvestigaciones = investigaciones.filter(
-    (investigacion) =>
-      investigacion.titulo.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      investigacion.descripcion.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      investigacion.libroTitulo.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredInvestigaciones = investigaciones.filter(investigacion => investigacion.titulo.toLowerCase().includes(searchQuery.toLowerCase()) || investigacion.descripcion.toLowerCase().includes(searchQuery.toLowerCase()) || investigacion.libroTitulo.toLowerCase().includes(searchQuery.toLowerCase()));
 
   // Manejar la selección de una investigación
   const handleSelectInvestigacion = (investigacion: typeof investigacionesSimuladas[0]) => {
@@ -67,13 +55,9 @@ const InvestigacionesList = () => {
 
   // Si hay una investigación seleccionada, mostrar el editor
   if (selectedInvestigacion) {
-    return (
-      <div className="animate-fade-in h-full">
+    return <div className="animate-fade-in h-full">
         <div className="mb-4 flex items-center">
-          <button
-            onClick={handleVolver}
-            className="mr-4 flex items-center text-sm text-muted-foreground hover:text-foreground"
-          >
+          <button onClick={handleVolver} className="mr-4 flex items-center text-sm text-muted-foreground hover:text-foreground">
             <ArrowLeft size={16} className="mr-1" /> Volver
           </button>
           <h2 className="text-xl font-medium">{selectedInvestigacion.titulo}</h2>
@@ -109,12 +93,9 @@ const InvestigacionesList = () => {
             </div>
           </div>
         </div>
-      </div>
-    );
+      </div>;
   }
-
-  return (
-    <div className="animate-fade-in">
+  return <div className="animate-fade-in">
       <div className="mb-6 flex flex-col justify-between md:flex-row md:items-center">
         <div>
           <h1 className="font-heading text-2xl font-bold md:text-3xl">Investigaciones</h1>
@@ -134,13 +115,7 @@ const InvestigacionesList = () => {
           <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
             <Search size={16} className="text-muted-foreground" />
           </div>
-          <input
-            type="text"
-            className="w-full rounded-md border border-input bg-background py-2 pl-10 pr-4 text-sm placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
-            placeholder="Buscar por título o libro..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
+          <input type="text" className="w-full rounded-md border border-input bg-background py-2 pl-10 pr-4 text-sm placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary" placeholder="Buscar por título o libro..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)} />
         </div>
         <div className="flex items-center space-x-2">
           <button className="inline-flex items-center rounded-md border border-input bg-background px-3 py-2 text-sm hover:bg-muted">
@@ -152,18 +127,13 @@ const InvestigacionesList = () => {
 
       {/* Lista de investigaciones */}
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {filteredInvestigaciones.map((investigacion) => (
-          <div
-            key={investigacion.id}
-            className="card-hover group cursor-pointer rounded-lg border bg-card p-5 shadow-sm"
-            onClick={() => handleSelectInvestigacion(investigacion)}
-          >
+        {filteredInvestigaciones.map(investigacion => <div key={investigacion.id} className="card-hover group cursor-pointer rounded-lg border bg-card p-5 shadow-sm" onClick={() => handleSelectInvestigacion(investigacion)}>
             <div className="flex items-start justify-between">
               <div className="flex items-center space-x-2">
                 <div className="rounded-full bg-primary/10 p-2">
                   <FileText size={18} className="text-primary" />
                 </div>
-                <div className="rounded-md bg-secondary px-2 py-1 text-xs">
+                <div className="rounded-md px-2 py-1 text-xs bg-transparent">
                   Libro: {investigacion.libroTitulo}
                 </div>
               </div>
@@ -180,11 +150,8 @@ const InvestigacionesList = () => {
                 Abrir investigación
               </span>
             </div>
-          </div>
-        ))}
+          </div>)}
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default InvestigacionesList;
