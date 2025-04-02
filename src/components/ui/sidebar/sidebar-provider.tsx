@@ -4,6 +4,7 @@ import { useMediaQuery } from "@/hooks/use-media-query"
 import { SidebarContext, SIDEBAR_COOKIE_NAME, SIDEBAR_KEYBOARD_SHORTCUT } from "./use-sidebar"
 import Cookies from "js-cookie"
 import { useHotkeys } from "react-hotkeys-hook"
+import { useIsMobile } from "@/hooks/use-mobile"
 
 export interface SidebarProviderProps {
   children: React.ReactNode
@@ -24,7 +25,9 @@ export function SidebarProvider({
   hasCollapsedWidth = false,
 }: SidebarProviderProps) {
   const [expanded, setExpanded] = React.useState(defaultExpanded)
+  const [openMobile, setOpenMobile] = React.useState(false)
   const isDesktop = useMediaQuery("(min-width: 768px)")
+  const isMobile = useIsMobile()
 
   React.useEffect(() => {
     const savedExpanded = Cookies.get(SIDEBAR_COOKIE_NAME)
@@ -48,6 +51,10 @@ export function SidebarProvider({
     })
   }
 
+  function toggleSidebar() {
+    toggleExpanded()
+  }
+
   function hide() {
     setExpanded(false)
   }
@@ -66,14 +73,22 @@ export function SidebarProvider({
     [toggleExpanded]
   )
 
+  const state = expanded ? "expanded" : "collapsed"
+
   return (
     <SidebarContext.Provider
       value={{
         expanded,
         toggleExpanded,
-        hasCollapsedWidth: hasCollapsedWidth,
+        hasCollapsedWidth,
         hide,
         show,
+        // Additional properties
+        isMobile,
+        state,
+        openMobile,
+        setOpenMobile,
+        toggleSidebar,
       }}
     >
       {children}

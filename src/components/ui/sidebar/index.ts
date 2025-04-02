@@ -8,3 +8,4 @@ export * from "./sidebar-menu";
 export * from "./sidebar-group";
 export * from "./sidebar-footer";
 export * from "./use-sidebar";
+export * from "./sidebar-rail";
