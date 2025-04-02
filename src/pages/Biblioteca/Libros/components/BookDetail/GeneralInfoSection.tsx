@@ -176,12 +176,12 @@ export const GeneralInfoSection = ({ book, isEditing }: GeneralInfoSectionProps)
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
               <div className="grid gap-3">
                 <Label htmlFor="investigacion">Investigación Relacionada</Label>
-                <Select defaultValue={book.investigacionId?.toString() || ""}>
+                <Select defaultValue={book.investigacionId?.toString() || "none"}>
                   <SelectTrigger id="investigacion">
                     <SelectValue placeholder="Seleccionar investigación" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">Ninguna</SelectItem>
+                    <SelectItem value="none">Ninguna</SelectItem>
                     <SelectItem value="1">Investigación #1</SelectItem>
                     <SelectItem value="2">Investigación #2</SelectItem>
                   </SelectContent>
@@ -190,12 +190,12 @@ export const GeneralInfoSection = ({ book, isEditing }: GeneralInfoSectionProps)
 
               <div className="grid gap-3">
                 <Label htmlFor="proyecto">Proyecto Relacionado</Label>
-                <Select defaultValue={book.proyectoId?.toString() || ""}>
+                <Select defaultValue={book.proyectoId?.toString() || "none"}>
                   <SelectTrigger id="proyecto">
                     <SelectValue placeholder="Seleccionar proyecto" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">Ninguno</SelectItem>
+                    <SelectItem value="none">Ninguno</SelectItem>
                     <SelectItem value="1">Proyecto #1</SelectItem>
                     <SelectItem value="2">Proyecto #2</SelectItem>
                   </SelectContent>
