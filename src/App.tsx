@@ -11,6 +11,7 @@ import MainLayout from "./components/layout/MainLayout";
 import LandingPage from "./pages/LandingPage/LandingPage";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import LibrosList from "./pages/Biblioteca/Libros/LibrosList";
+import BookDetail from "./pages/Biblioteca/Libros/BookDetail";
 import ColeccionesList from "./pages/Biblioteca/Colecciones/ColeccionesList";
 import InvestigacionesList from "./pages/Biblioteca/Investigaciones/InvestigacionesList";
 import Marketing from "./pages/Marketing/Marketing";
@@ -42,6 +43,7 @@ const App = () => (
                 
                 {/* Rutas de Biblioteca */}
                 <Route path="/biblioteca/libros" element={<LibrosList />} />
+                <Route path="/biblioteca/libros/:id" element={<BookDetail />} />
                 <Route path="/biblioteca/colecciones" element={<ColeccionesList />} />
                 <Route path="/biblioteca/investigaciones" element={<InvestigacionesList />} />
                 

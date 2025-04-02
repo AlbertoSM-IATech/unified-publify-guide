@@ -1,4 +1,6 @@
 
+import { Link } from "react-router-dom";
+
 interface BookListItemProps {
   libro: {
     id: number;
@@ -53,12 +55,18 @@ export const BookListItem = ({ libro, getStatusColor, getContentColor }: BookLis
           : "No publicado"}
       </td>
       <td className="whitespace-nowrap px-4 py-4 text-right text-sm">
-        <button className="mr-2 font-medium text-primary hover:underline">
+        <Link
+          to={`/biblioteca/libros/${libro.id}`}
+          className="mr-2 font-medium text-primary hover:underline"
+        >
           Ver
-        </button>
-        <button className="font-medium text-primary hover:underline">
+        </Link>
+        <Link
+          to={`/biblioteca/libros/${libro.id}`}
+          className="font-medium text-primary hover:underline"
+        >
           Editar
-        </button>
+        </Link>
       </td>
     </tr>
   );
