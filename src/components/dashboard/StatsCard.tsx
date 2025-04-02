@@ -1,16 +1,17 @@
-
 import { LucideIcon } from "lucide-react";
-
 interface StatsCardProps {
   title: string;
   value: string;
   icon: React.ReactNode;
   change: string;
 }
-
-const StatsCard = ({ title, value, icon, change }: StatsCardProps) => {
-  return (
-    <div className="card-hover rounded-lg border bg-card p-4 shadow-sm">
+const StatsCard = ({
+  title,
+  value,
+  icon,
+  change
+}: StatsCardProps) => {
+  return <div className="card-hover rounded-lg border p-4 shadow-sm bg-gray-900">
       <div className="flex items-center justify-between">
         <div>
           <p className="text-sm text-muted-foreground">{title}</p>
@@ -26,8 +27,6 @@ const StatsCard = ({ title, value, icon, change }: StatsCardProps) => {
         </span>
         <span className="ml-1 text-muted-foreground">desde el mes pasado</span>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default StatsCard;

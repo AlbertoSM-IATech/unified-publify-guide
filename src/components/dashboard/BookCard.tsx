@@ -1,18 +1,15 @@
-
 import { BookOpen } from "lucide-react";
-
 interface BookCardProps {
   index: number;
 }
-
-const BookCard = ({ index }: BookCardProps) => {
+const BookCard = ({
+  index
+}: BookCardProps) => {
   // Determine content level and status color based on index
   const contentLevel = index === 1 ? "Alto Contenido" : "Medio Contenido";
   const statusColor = index === 1 ? "bg-green-100 text-green-800" : "bg-amber-100 text-amber-800";
   const publishStatus = index === 1 ? "Publicado" : "En revisión";
-  
-  return (
-    <div className="card-hover rounded-lg border bg-card shadow-sm">
+  return <div className="card-hover rounded-lg border bg-card shadow-sm">
       <div className="flex h-32 overflow-hidden">
         {/* Book cover image/placeholder */}
         <div className="relative h-full w-28 bg-muted">
@@ -22,7 +19,7 @@ const BookCard = ({ index }: BookCardProps) => {
         </div>
         
         {/* Book information */}
-        <div className="flex flex-1 flex-col justify-between p-3">
+        <div className="flex flex-1 flex-col justify-between p-3 bg-gray-900">
           <div>
             <h3 className="font-medium">Título del Libro {index}</h3>
             <div className="mt-1 flex items-center space-x-2">
@@ -40,8 +37,6 @@ const BookCard = ({ index }: BookCardProps) => {
           </div>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default BookCard;
