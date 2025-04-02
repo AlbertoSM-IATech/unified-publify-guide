@@ -1,4 +1,5 @@
 
+import { useState } from "react";
 import { CalendarIcon } from "lucide-react";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
@@ -28,6 +29,10 @@ interface GeneralInfoSectionProps {
 }
 
 export const GeneralInfoSection = ({ book, isEditing }: GeneralInfoSectionProps) => {
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(
+    book.fechaPublicacion ? new Date(book.fechaPublicacion) : undefined
+  );
+
   return (
     <Card>
       <CardContent className="p-6">
@@ -141,8 +146,8 @@ export const GeneralInfoSection = ({ book, isEditing }: GeneralInfoSectionProps)
                     className="w-full justify-start text-left font-normal"
                   >
                     <CalendarIcon className="mr-2 h-4 w-4" />
-                    {book.fechaPublicacion ? (
-                      format(new Date(book.fechaPublicacion), "PPP", { locale: es })
+                    {selectedDate ? (
+                      format(selectedDate, "PPP", { locale: es })
                     ) : (
                       <span>Seleccionar fecha</span>
                     )}
@@ -151,7 +156,8 @@ export const GeneralInfoSection = ({ book, isEditing }: GeneralInfoSectionProps)
                 <PopoverContent className="w-auto p-0" align="start">
                   <Calendar
                     mode="single"
-                    selected={book.fechaPublicacion ? new Date(book.fechaPublicacion) : undefined}
+                    selected={selectedDate}
+                    onSelect={setSelectedDate}
                     initialFocus
                   />
                 </PopoverContent>
@@ -164,6 +170,39 @@ export const GeneralInfoSection = ({ book, isEditing }: GeneralInfoSectionProps)
               </div>
             )}
           </div>
+
+          {/* Relaciones con Investigación y Proyecto */}
+          {isEditing && (
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+              <div className="grid gap-3">
+                <Label htmlFor="investigacion">Investigación Relacionada</Label>
+                <Select defaultValue={book.investigacionId?.toString() || ""}>
+                  <SelectTrigger id="investigacion">
+                    <SelectValue placeholder="Seleccionar investigación" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="">Ninguna</SelectItem>
+                    <SelectItem value="1">Investigación #1</SelectItem>
+                    <SelectItem value="2">Investigación #2</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="grid gap-3">
+                <Label htmlFor="proyecto">Proyecto Relacionado</Label>
+                <Select defaultValue={book.proyectoId?.toString() || ""}>
+                  <SelectTrigger id="proyecto">
+                    <SelectValue placeholder="Seleccionar proyecto" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="">Ninguno</SelectItem>
+                    <SelectItem value="1">Proyecto #1</SelectItem>
+                    <SelectItem value="2">Proyecto #2</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+          )}
         </div>
       </CardContent>
     </Card>

@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Book, BookFormat } from "../../BookDetail";
-import { File, Link, Upload } from "lucide-react";
+import { File, Image, Link, Upload, X } from "lucide-react";
 
 interface FormatSectionProps {
   book: Book;
@@ -28,7 +28,17 @@ const FormatTabContent = ({
   if (!format) {
     return (
       <div className="flex h-48 items-center justify-center text-muted-foreground">
-        No hay información para este formato
+        {isEditing ? (
+          <div className="text-center">
+            <p className="mb-4">No hay información para este formato</p>
+            <Button variant="outline" size="sm">
+              Añadir información para {formatType === "hardcover" ? "Tapa Dura" : 
+                formatType === "paperback" ? "Tapa Blanda" : "eBook"}
+            </Button>
+          </div>
+        ) : (
+          <div>No hay información para este formato</div>
+        )}
       </div>
     );
   }
@@ -148,7 +158,7 @@ const FormatTabContent = ({
         </CardContent>
       </Card>
 
-      {/* Archivos adjuntos */}
+      {/* Archivos adjuntos - Improved version */}
       <div className="grid gap-3">
         <Label>Archivos adjuntos</Label>
         {isEditing ? (
@@ -160,9 +170,16 @@ const FormatTabContent = ({
                   <p className="text-sm font-medium">Arrastra archivos aquí o haz clic para cargar</p>
                   <p className="text-xs text-muted-foreground">Manuscrito, portada, contraportada, ilustraciones, códigos QR</p>
                 </div>
-                <Button size="sm" variant="secondary" className="mt-2">
-                  Seleccionar archivos
-                </Button>
+                <div className="mt-2 flex gap-2">
+                  <Button size="sm" variant="outline">
+                    <File className="mr-2 h-4 w-4" />
+                    Manuscrito
+                  </Button>
+                  <Button size="sm" variant="outline">
+                    <Image className="mr-2 h-4 w-4" />
+                    Imágenes
+                  </Button>
+                </div>
               </div>
             </div>
             {format.files && format.files.length > 0 && (
@@ -175,9 +192,7 @@ const FormatTabContent = ({
                     </div>
                     <Button size="sm" variant="ghost" className="h-8 w-8 p-0">
                       <span className="sr-only">Eliminar</span>
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4">
-                        <path d="M18 6L6 18M6 6l12 12"></path>
-                      </svg>
+                      <X className="h-4 w-4" />
                     </Button>
                   </div>
                 ))}
@@ -202,7 +217,7 @@ const FormatTabContent = ({
         )}
       </div>
 
-      {/* Enlaces */}
+      {/* Enlaces - Improved UI */}
       <div className="grid gap-4">
         <Label>Enlaces</Label>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">

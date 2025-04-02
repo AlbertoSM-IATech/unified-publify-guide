@@ -149,7 +149,7 @@ const BookDetail = () => {
     });
   };
 
-  // Calculate net royalties for each format
+  // Update this function to always return a string
   const calculateNetRoyalties = (format?: BookFormat): string => {
     if (!format || !format.price || !format.royaltyPercentage) return "0.00";
     const priceWithoutVat = format.price / 1.21; // Assuming 21% VAT
@@ -210,22 +210,34 @@ const BookDetail = () => {
       </div>
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-        {/* Left column: Book cover and basic info card */}
+        {/* Left column: Book cover and basic info card - Make cover smaller */}
         <div className="lg:col-span-1">
           <Card className="overflow-hidden">
             <div className="bg-muted p-4">
               {bookData.imageUrl ? (
-                <AspectRatio ratio={1600/2560} className="overflow-hidden rounded-md border border-border bg-muted">
-                  <img
-                    src={bookData.imageUrl}
-                    alt={bookData.titulo}
-                    className="h-full w-full object-cover"
-                  />
-                </AspectRatio>
+                <div className="mx-auto max-w-[250px]">
+                  <AspectRatio ratio={1600/2560} className="overflow-hidden rounded-md border border-border bg-muted">
+                    <img
+                      src={bookData.imageUrl}
+                      alt={bookData.titulo}
+                      className="h-full w-full object-cover"
+                    />
+                  </AspectRatio>
+                </div>
               ) : (
-                <AspectRatio ratio={1600/2560} className="flex items-center justify-center rounded-md border border-border bg-muted">
-                  <BookOpen size={60} className="text-muted-foreground/50" />
-                </AspectRatio>
+                <div className="mx-auto max-w-[250px]">
+                  <AspectRatio ratio={1600/2560} className="flex items-center justify-center rounded-md border border-border bg-muted">
+                    <BookOpen size={60} className="text-muted-foreground/50" />
+                  </AspectRatio>
+                </div>
+              )}
+              {isEditing && (
+                <div className="mt-4">
+                  <Button className="w-full" variant="secondary" size="sm">
+                    <File className="mr-2 h-4 w-4" />
+                    Subir Imagen de Portada
+                  </Button>
+                </div>
               )}
             </div>
             <div className="p-4">
