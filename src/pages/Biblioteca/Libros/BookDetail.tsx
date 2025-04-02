@@ -1,68 +1,18 @@
 
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { ArrowLeft, BookOpen, Calendar, File, Link, PenTool, Save, Trash } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { Separator } from "@/components/ui/separator";
 import { toast } from "@/hooks/use-toast";
 import { librosSimulados, getContentColor, getStatusColor } from "./utils/librosUtils";
 import { GeneralInfoSection } from "./components/BookDetail/GeneralInfoSection";
 import { FormatSection } from "./components/BookDetail/FormatSection";
 import { NotesSection } from "./components/BookDetail/NotesSection";
-
-// Book interface - can be moved to a types file later
-export interface BookNote {
-  id: number;
-  text: string;
-  date: string;
-}
-
-export interface BookFormat {
-  dimensions?: string;
-  isbn?: string;
-  asin?: string;
-  pages?: number;
-  files?: {id: number; name: string; type: string}[];
-  price?: number;
-  royaltyPercentage?: number;
-  printingCost?: number;
-  links?: {
-    amazon?: string;
-    presale?: string;
-    reviews?: string;
-    h10Canonical?: string;
-    affiliate?: string;
-    leadMagnet?: string;
-    newsletter?: string;
-    landingPage?: string;
-    authorCentral?: string;
-  };
-  strategy?: string;
-}
-
-export interface Book {
-  id: number;
-  titulo: string;
-  subtitulo?: string;
-  descripcion?: string;
-  autor: string;
-  isbn: string;
-  asin: string;
-  estado: string;
-  contenido: string;
-  fechaPublicacion: string | null;
-  imageUrl: string;
-  investigacionId?: number;
-  proyectoId?: number;
-  hardcover?: BookFormat;
-  paperback?: BookFormat;
-  ebook?: BookFormat;
-  notes?: BookNote[];
-}
+import { BookHeader } from "./components/BookDetail/BookHeader";
+import { BookCover } from "./components/BookDetail/BookCover";
+import { BookInfo } from "./components/BookDetail/BookInfo";
+import { calculateNetRoyalties } from "./utils/bookDetailUtils";
+import { Book } from "./types/bookTypes";
 
 const BookDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -149,166 +99,28 @@ const BookDetail = () => {
     });
   };
 
-  // Update this function to always return a string
-  const calculateNetRoyalties = (format?: BookFormat): string => {
-    if (!format || !format.price || !format.royaltyPercentage) return "0.00";
-    const priceWithoutVat = format.price / 1.21; // Assuming 21% VAT
-    return (priceWithoutVat * format.royaltyPercentage - (format.printingCost || 0)).toFixed(2);
-  };
-
   return (
     <div className="animate-fade-in">
-      {/* Header with back button and actions */}
-      <div className="mb-6 flex flex-col justify-between gap-4 md:flex-row md:items-center">
-        <div className="flex items-center">
-          <Button 
-            variant="ghost" 
-            size="sm" 
-            className="mr-2" 
-            onClick={handleGoBack}
-          >
-            <ArrowLeft className="mr-1 h-4 w-4" />
-            Volver
-          </Button>
-          <h1 className="font-heading text-2xl font-bold md:text-3xl">
-            {isEditing ? "Editar Libro" : "Detalles del Libro"}
-          </h1>
-        </div>
-        <div className="flex flex-wrap gap-2">
-          {isEditing ? (
-            <>
-              <Button variant="outline" onClick={handleCancel}>
-                Cancelar
-              </Button>
-              <Button 
-                variant="default" 
-                onClick={handleSave}
-              >
-                <Save className="mr-2 h-4 w-4" />
-                Guardar Cambios
-              </Button>
-            </>
-          ) : (
-            <>
-              <Button 
-                variant="outline" 
-                onClick={handleEdit}
-              >
-                <PenTool className="mr-2 h-4 w-4" />
-                Editar
-              </Button>
-              <Button 
-                variant="destructive" 
-                onClick={handleDelete}
-              >
-                <Trash className="mr-2 h-4 w-4" />
-                Eliminar
-              </Button>
-            </>
-          )}
-        </div>
-      </div>
+      <BookHeader 
+        isEditing={isEditing}
+        onGoBack={handleGoBack}
+        onEdit={handleEdit}
+        onSave={handleSave}
+        onDelete={handleDelete}
+        onCancel={handleCancel}
+      />
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-        {/* Left column: Book cover and basic info card - Make cover smaller */}
+        {/* Left column: Book cover and basic info card */}
         <div className="lg:col-span-1">
           <Card className="overflow-hidden">
-            <div className="bg-muted p-4">
-              {bookData.imageUrl ? (
-                <div className="mx-auto max-w-[250px]">
-                  <AspectRatio ratio={1600/2560} className="overflow-hidden rounded-md border border-border bg-muted">
-                    <img
-                      src={bookData.imageUrl}
-                      alt={bookData.titulo}
-                      className="h-full w-full object-cover"
-                    />
-                  </AspectRatio>
-                </div>
-              ) : (
-                <div className="mx-auto max-w-[250px]">
-                  <AspectRatio ratio={1600/2560} className="flex items-center justify-center rounded-md border border-border bg-muted">
-                    <BookOpen size={60} className="text-muted-foreground/50" />
-                  </AspectRatio>
-                </div>
-              )}
-              {isEditing && (
-                <div className="mt-4">
-                  <Button className="w-full" variant="secondary" size="sm">
-                    <File className="mr-2 h-4 w-4" />
-                    Subir Imagen de Portada
-                  </Button>
-                </div>
-              )}
-            </div>
-            <div className="p-4">
-              <div className="mb-3 space-y-3">
-                <div className="flex flex-wrap gap-2">
-                  <Badge className={getStatusColor(bookData.estado)}>
-                    {bookData.estado}
-                  </Badge>
-                  <Badge className={getContentColor(bookData.contenido)}>
-                    {bookData.contenido}
-                  </Badge>
-                </div>
-                <div className="flex items-center text-sm text-muted-foreground">
-                  <Calendar className="mr-2 h-4 w-4" />
-                  {bookData.fechaPublicacion 
-                    ? new Date(bookData.fechaPublicacion).toLocaleDateString() 
-                    : "Sin fecha de publicación"}
-                </div>
-              </div>
-              <Separator className="my-3" />
-              <div className="space-y-3">
-                <div>
-                  <div className="text-sm font-medium text-muted-foreground">ISBN</div>
-                  <div>{bookData.isbn}</div>
-                </div>
-                <div>
-                  <div className="text-sm font-medium text-muted-foreground">ASIN</div>
-                  <div>{bookData.asin}</div>
-                </div>
-                <div>
-                  <div className="text-sm font-medium text-muted-foreground">Regalías Netas</div>
-                  <div className="flex flex-col gap-1 text-sm">
-                    {bookData.hardcover && (
-                      <div className="flex justify-between">
-                        <span>Tapa Dura:</span>
-                        <span className="font-medium text-green-600">
-                          {calculateNetRoyalties(bookData.hardcover)}€
-                        </span>
-                      </div>
-                    )}
-                    {bookData.paperback && (
-                      <div className="flex justify-between">
-                        <span>Tapa Blanda:</span>
-                        <span className="font-medium text-green-600">
-                          {calculateNetRoyalties(bookData.paperback)}€
-                        </span>
-                      </div>
-                    )}
-                    {bookData.ebook && (
-                      <div className="flex justify-between">
-                        <span>eBook:</span>
-                        <span className="font-medium text-green-600">
-                          {calculateNetRoyalties(bookData.ebook)}€
-                        </span>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-              <Separator className="my-3" />
-              <div className="flex flex-wrap gap-2">
-                <Button variant="outline" size="sm" className="w-full">
-                  <File className="mr-2 h-4 w-4" />
-                  Ver Investigación
-                </Button>
-                <Button variant="outline" size="sm" className="w-full">
-                  <Link className="mr-2 h-4 w-4" />
-                  Ver Proyecto
-                </Button>
-              </div>
-            </div>
+            <BookCover book={bookData} isEditing={isEditing} />
+            <BookInfo 
+              book={bookData} 
+              getStatusColor={getStatusColor} 
+              getContentColor={getContentColor}
+              calculateNetRoyalties={calculateNetRoyalties}
+            />
           </Card>
         </div>
 

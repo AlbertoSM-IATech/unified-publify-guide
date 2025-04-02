@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { Book, BookFormat } from "../../BookDetail";
+import { Book, BookFormat } from "../../types/bookTypes";
 import { File, Image, Link, Upload, X } from "lucide-react";
 
 interface FormatSectionProps {

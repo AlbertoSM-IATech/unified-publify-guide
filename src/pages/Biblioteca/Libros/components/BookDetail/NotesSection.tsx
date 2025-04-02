@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Book, BookNote } from "../../BookDetail";
+import { Book, BookNote } from "../../types/bookTypes";
 import { PenLine, Plus } from "lucide-react";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";

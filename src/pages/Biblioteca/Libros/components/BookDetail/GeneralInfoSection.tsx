@@ -21,7 +21,7 @@ import {
 } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
-import { Book } from "../../BookDetail";
+import { Book } from "../../types/bookTypes";
 
 interface GeneralInfoSectionProps {
   book: Book;
