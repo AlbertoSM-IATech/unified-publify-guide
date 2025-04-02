@@ -8,9 +8,24 @@ interface LinksSectionProps {
   formatType: string;
   format: BookFormat;
   isEditing: boolean;
+  onUpdateFormat?: (formatType: string, updatedData: Partial<BookFormat>) => void;
 }
 
-export const LinksSection = ({ formatType, format, isEditing }: LinksSectionProps) => {
+export const LinksSection = ({ 
+  formatType, 
+  format, 
+  isEditing,
+  onUpdateFormat
+}: LinksSectionProps) => {
+  
+  const handleLinkChange = (linkKey: string, value: string) => {
+    if (onUpdateFormat) {
+      const links = { ...(format.links || {}) };
+      links[linkKey] = value;
+      onUpdateFormat(formatType, { links });
+    }
+  };
+
   return (
     <div className="grid gap-4">
       <Label>Enlaces</Label>
@@ -33,6 +48,7 @@ export const LinksSection = ({ formatType, format, isEditing }: LinksSectionProp
                 id={`${formatType}-${item.key}`}
                 defaultValue={format.links?.[item.key as keyof typeof format.links]}
                 placeholder={`URL de ${item.label}`}
+                onChange={(e) => handleLinkChange(item.key, e.target.value)}
               />
             ) : (
               <div className="overflow-hidden text-ellipsis whitespace-nowrap text-sm">

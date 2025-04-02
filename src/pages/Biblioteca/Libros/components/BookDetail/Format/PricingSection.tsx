@@ -9,15 +9,25 @@ interface PricingSectionProps {
   format: BookFormat;
   isEditing: boolean;
   calculateNetRoyalties: (format?: BookFormat) => string;
+  onUpdateFormat?: (formatType: string, updatedData: Partial<BookFormat>) => void;
 }
 
 export const PricingSection = ({ 
   formatType, 
   format, 
   isEditing, 
-  calculateNetRoyalties 
+  calculateNetRoyalties,
+  onUpdateFormat
 }: PricingSectionProps) => {
   const netRoyalties = calculateNetRoyalties(format);
+
+  const handleInputChange = (field: keyof BookFormat, value: number) => {
+    if (onUpdateFormat) {
+      const updateData: Partial<BookFormat> = {};
+      updateData[field] = value;
+      onUpdateFormat(formatType, updateData);
+    }
+  };
 
   return (
     <Card className="border border-border">
@@ -32,7 +42,8 @@ export const PricingSection = ({
                 type="number"
                 step="0.01"
                 defaultValue={format.price} 
-                placeholder="Ej. 24.99" 
+                placeholder="Ej. 24.99"
+                onChange={(e) => handleInputChange('price', parseFloat(e.target.value))}
               />
             ) : (
               <div>{format.price ? `${format.price}€` : "No definido"}</div>
@@ -46,7 +57,8 @@ export const PricingSection = ({
                 type="number"
                 step="0.01"
                 defaultValue={format.royaltyPercentage ? format.royaltyPercentage * 100 : ""} 
-                placeholder="Ej. 60" 
+                placeholder="Ej. 60"
+                onChange={(e) => handleInputChange('royaltyPercentage', parseFloat(e.target.value) / 100)}
               />
             ) : (
               <div>{format.royaltyPercentage ? `${format.royaltyPercentage * 100}%` : "No definido"}</div>
@@ -60,7 +72,8 @@ export const PricingSection = ({
                 type="number"
                 step="0.01"
                 defaultValue={format.printingCost} 
-                placeholder="Ej. 5.50" 
+                placeholder="Ej. 5.50"
+                onChange={(e) => handleInputChange('printingCost', parseFloat(e.target.value))}
               />
             ) : (
               <div>{format.printingCost !== undefined ? `${format.printingCost}€` : "No definido"}</div>
@@ -70,7 +83,7 @@ export const PricingSection = ({
         <div className="mt-4 rounded-md bg-muted p-3">
           <div className="flex justify-between">
             <span className="font-medium">Regalías netas:</span>
-            <span className="font-medium text-green-600">{netRoyalties}€</span>
+            <span className="font-semibold text-xl font-secondary text-green-600">{netRoyalties}€</span>
           </div>
           <div className="mt-1 text-xs text-muted-foreground">
             Fórmula: Precio venta sin IVA x % de regalías - precio de impresión

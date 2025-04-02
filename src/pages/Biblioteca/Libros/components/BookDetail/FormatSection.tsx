@@ -1,4 +1,5 @@
 
+import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
 import { Book, BookFormat } from "../../types/bookTypes";
@@ -8,11 +9,32 @@ interface FormatSectionProps {
   book: Book;
   isEditing: boolean;
   calculateNetRoyalties: (format?: BookFormat) => string;
+  onUpdateBook?: (updatedData: Partial<Book>) => void;
 }
 
-export const FormatSection = ({ book, isEditing, calculateNetRoyalties }: FormatSectionProps) => {
+export const FormatSection = ({ 
+  book, 
+  isEditing, 
+  calculateNetRoyalties,
+  onUpdateBook
+}: FormatSectionProps) => {
+  const [activeTab, setActiveTab] = useState("hardcover");
+
+  const handleUpdateFormat = (formatType: string, formatData: Partial<BookFormat>) => {
+    if (onUpdateBook) {
+      const updatedBook: Partial<Book> = {
+        [formatType]: { ...book[formatType as keyof Book] as BookFormat, ...formatData }
+      };
+      onUpdateBook(updatedBook);
+    }
+  };
+
   return (
-    <Tabs defaultValue="hardcover" className="w-full">
+    <Tabs 
+      defaultValue="hardcover" 
+      className="w-full"
+      onValueChange={(value) => setActiveTab(value)}
+    >
       <TabsList className="mb-4 grid w-full grid-cols-3">
         <TabsTrigger value="hardcover">Tapa Dura</TabsTrigger>
         <TabsTrigger value="paperback">Tapa Blanda</TabsTrigger>
@@ -26,7 +48,8 @@ export const FormatSection = ({ book, isEditing, calculateNetRoyalties }: Format
               formatType="hardcover" 
               format={book.hardcover} 
               isEditing={isEditing} 
-              calculateNetRoyalties={calculateNetRoyalties} 
+              calculateNetRoyalties={calculateNetRoyalties}
+              onUpdateFormat={handleUpdateFormat}
             />
           </TabsContent>
           
@@ -36,6 +59,7 @@ export const FormatSection = ({ book, isEditing, calculateNetRoyalties }: Format
               format={book.paperback} 
               isEditing={isEditing} 
               calculateNetRoyalties={calculateNetRoyalties} 
+              onUpdateFormat={handleUpdateFormat}
             />
           </TabsContent>
           
@@ -45,6 +69,7 @@ export const FormatSection = ({ book, isEditing, calculateNetRoyalties }: Format
               format={book.ebook} 
               isEditing={isEditing} 
               calculateNetRoyalties={calculateNetRoyalties} 
+              onUpdateFormat={handleUpdateFormat}
             />
           </TabsContent>
         </CardContent>
