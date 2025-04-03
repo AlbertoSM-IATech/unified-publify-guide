@@ -1,7 +1,7 @@
 
 import { MegaphoneIcon, Link2, FileBarChart, ExternalLink } from "lucide-react";
 
-const Marketing = () => {
+export const Marketing = () => {
   return (
     <div className="animate-fade-in">
       <div className="mb-6">
