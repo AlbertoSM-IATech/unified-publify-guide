@@ -1,6 +1,7 @@
+
 import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
-import { MainLayout } from "@/layouts/MainLayout";
+import MainLayout from "@/components/layout/MainLayout";
 import { LandingPage } from "@/pages/LandingPage";
 import { Dashboard } from "@/pages/Dashboard/Dashboard";
 import { LibrosList } from "@/pages/Biblioteca/Libros/LibrosList";
