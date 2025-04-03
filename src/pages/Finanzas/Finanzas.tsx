@@ -1,11 +1,10 @@
-
 import { useState } from "react";
 import { 
   Upload, PieChart, BarChart, Calculator, 
   TrendingUp, TrendingDown, DollarSign, FilePlus2
 } from "lucide-react";
 
-const Finanzas = () => {
+export const Finanzas = () => {
   const [activeTab, setActiveTab] = useState("resumen");
 
   // Datos simulados para finanzas
