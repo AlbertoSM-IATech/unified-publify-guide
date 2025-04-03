@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import MainLayout from "@/components/layout/MainLayout";
-import { LandingPage } from "@/pages/LandingPage";
+import { LandingPage } from "@/pages/LandingPage/LandingPage";
 import { Dashboard } from "@/pages/Dashboard/Dashboard";
 import { LibrosList } from "@/pages/Biblioteca/Libros/LibrosList";
 import BookDetail from "@/pages/Biblioteca/Libros/BookDetail";
