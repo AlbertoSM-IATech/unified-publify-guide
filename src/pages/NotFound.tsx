@@ -1,9 +1,8 @@
-
 import { useLocation, Link } from "react-router-dom";
 import { useEffect } from "react";
 import { ArrowLeft } from "lucide-react";
 
-const NotFound = () => {
+export const NotFound = () => {
   const location = useLocation();
 
   useEffect(() => {
