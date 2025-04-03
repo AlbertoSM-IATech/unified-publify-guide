@@ -1,9 +1,21 @@
 
+import { AlertTriangle, ArrowLeft, Check, FileEdit, Save, Trash, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, PenTool, Save, Trash } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 interface BookHeaderProps {
   isEditing: boolean;
+  isSaving?: boolean; // Add loading state prop
   onGoBack: () => void;
   onEdit: () => void;
   onSave: () => void;
@@ -11,59 +23,107 @@ interface BookHeaderProps {
   onCancel: () => void;
 }
 
-export const BookHeader = ({
-  isEditing,
-  onGoBack,
-  onEdit,
-  onSave,
-  onDelete,
-  onCancel
+export const BookHeader = ({ 
+  isEditing, 
+  isSaving = false, // Default to false
+  onGoBack, 
+  onEdit, 
+  onSave, 
+  onDelete, 
+  onCancel 
 }: BookHeaderProps) => {
   return (
-    <div className="mb-6 flex flex-col justify-between gap-4 md:flex-row md:items-center">
+    <div className="mb-6 flex flex-col space-y-4 md:flex-row md:items-center md:justify-between md:space-y-0">
       <div className="flex items-center">
-        <Button 
-          variant="ghost" 
-          size="sm" 
-          className="mr-2" 
+        <Button
+          variant="ghost"
+          size="sm"
+          className="mr-2"
           onClick={onGoBack}
         >
-          <ArrowLeft className="mr-1 h-4 w-4" />
-          Volver
+          <ArrowLeft className="h-5 w-5" />
+          <span className="ml-2">Volver</span>
         </Button>
-        <h1 className="font-heading text-2xl font-bold md:text-3xl">
-          {isEditing ? "Editar Libro" : "Detalles del Libro"}
-        </h1>
       </div>
-      <div className="flex flex-wrap gap-2">
+
+      <div className="flex space-x-2">
         {isEditing ? (
           <>
-            <Button variant="outline" onClick={onCancel}>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={onCancel}
+              className="md:w-auto"
+              disabled={isSaving}
+            >
+              <X className="mr-2 h-4 w-4" />
               Cancelar
             </Button>
-            <Button 
-              variant="default" 
+            <Button
+              variant="default"
+              size="sm"
               onClick={onSave}
+              className="bg-green-600 hover:bg-green-700 md:w-auto"
+              disabled={isSaving}
             >
-              <Save className="mr-2 h-4 w-4" />
-              Guardar Cambios
+              {isSaving ? (
+                // Show a loading spinner or text when saving
+                <>
+                  <span className="mr-2 inline-block h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent"></span>
+                  Guardando...
+                </>
+              ) : (
+                <>
+                  <Save className="mr-2 h-4 w-4" />
+                  Guardar Cambios
+                </>
+              )}
             </Button>
           </>
         ) : (
           <>
-            <Button 
-              variant="outline" 
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="text-red-500 hover:bg-red-50 hover:text-red-600 md:w-auto"
+                >
+                  <Trash className="mr-2 h-4 w-4" />
+                  Eliminar Libro
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>
+                    <div className="flex items-center text-red-500">
+                      <AlertTriangle className="mr-2 h-5 w-5" />
+                      ¿Estás seguro?
+                    </div>
+                  </AlertDialogTitle>
+                  <AlertDialogDescription>
+                    Esta acción no se puede deshacer. El libro será eliminado permanentemente de tu biblioteca.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                  <AlertDialogAction
+                    onClick={onDelete}
+                    className="bg-red-500 text-white hover:bg-red-600"
+                  >
+                    Eliminar
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+            <Button
+              variant="default"
+              size="sm"
               onClick={onEdit}
+              className="md:w-auto"
             >
-              <PenTool className="mr-2 h-4 w-4" />
-              Editar
-            </Button>
-            <Button 
-              variant="destructive" 
-              onClick={onDelete}
-            >
-              <Trash className="mr-2 h-4 w-4" />
-              Eliminar
+              <FileEdit className="mr-2 h-4 w-4" />
+              Editar Libro
             </Button>
           </>
         )}

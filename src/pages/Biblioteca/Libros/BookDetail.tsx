@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card } from "@/components/ui/card";
@@ -19,14 +19,15 @@ const BookDetail = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [isEditing, setIsEditing] = useState(false);
+  const [saving, setSaving] = useState(false);
   
   // Find book from simulated data (in a real app, this would fetch from an API)
   const bookId = parseInt(id || "0");
-  const libro = librosSimulados.find((libro) => libro.id === bookId);
+  const libroOriginal = librosSimulados.find((libro) => libro.id === bookId);
 
   // Extend the book data with additional fields for the detail view
   const [bookData, setBookData] = useState<Book>({
-    ...libro!,
+    ...libroOriginal!,
     descripcion: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     hardcover: {
       dimensions: "15.24 x 22.86 cm",
@@ -69,7 +70,12 @@ const BookDetail = () => {
   // Form state for edits
   const [formData, setFormData] = useState<Partial<Book>>({});
 
-  if (!libro) {
+  // Update the form data when bookData changes
+  useEffect(() => {
+    setFormData({});
+  }, [bookData]);
+
+  if (!libroOriginal) {
     return <div className="p-6">Libro no encontrado</div>;
   }
 
@@ -85,9 +91,34 @@ const BookDetail = () => {
 
   const handleSave = async () => {
     try {
+      setSaving(true);
+      
       // Update book data with form changes
       const updatedBook = { ...bookData, ...formData };
       setBookData(updatedBook);
+      
+      // Update in librosSimulados for demo purposes (in a real app, this would save to an API)
+      const bookIndex = librosSimulados.findIndex(libro => libro.id === bookId);
+      if (bookIndex !== -1) {
+        // Update the book in the simulated data array
+        librosSimulados[bookIndex] = {
+          ...librosSimulados[bookIndex],
+          titulo: updatedBook.titulo,
+          subtitulo: updatedBook.subtitulo,
+          autor: updatedBook.autor,
+          estado: updatedBook.estado,
+          contenido: updatedBook.contenido,
+          fechaPublicacion: updatedBook.fechaPublicacion,
+          imageUrl: updatedBook.imageUrl,
+          investigacionId: updatedBook.investigacionId,
+          proyectoId: updatedBook.proyectoId,
+          isbn: updatedBook.isbn,
+          asin: updatedBook.asin
+        };
+      }
+      
+      // Simulate API call delay
+      await new Promise(resolve => setTimeout(resolve, 500));
       
       // In a real app, this would save to an API
       // await supabaseService.saveData('libros', updatedBook);
@@ -105,6 +136,10 @@ const BookDetail = () => {
         description: "Hubo un problema al guardar los cambios. Por favor, inténtalo de nuevo.",
         variant: "destructive",
       });
+    } finally {
+      setSaving(false);
+      // Reset form data after saving
+      setFormData({});
     }
   };
 
@@ -113,6 +148,12 @@ const BookDetail = () => {
       // In a real app, this would delete from an API
       // await supabaseService.deleteData('libros', bookId);
       console.log("Deleting book:", bookId);
+      
+      // Remove from librosSimulados for demo purposes
+      const bookIndex = librosSimulados.findIndex(libro => libro.id === bookId);
+      if (bookIndex !== -1) {
+        librosSimulados.splice(bookIndex, 1);
+      }
       
       toast({
         title: "Libro eliminado",
@@ -157,13 +198,18 @@ const BookDetail = () => {
         onSave={handleSave}
         onDelete={handleDelete}
         onCancel={handleCancel}
+        isSaving={saving}
       />
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         {/* Left column: Book cover and basic info card */}
         <div className="lg:col-span-1">
           <Card className="overflow-hidden">
-            <BookCover book={bookData} isEditing={isEditing} />
+            <BookCover 
+              book={bookData} 
+              isEditing={isEditing}
+              onUpdateBook={handleUpdateBook}
+            />
             <BookInfo 
               book={bookData} 
               getStatusColor={getStatusColor} 

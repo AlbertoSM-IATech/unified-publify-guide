@@ -1,4 +1,4 @@
-import { Card, CardContent } from "@/components/ui/card";
+
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -44,8 +44,8 @@ export const FormatTabContent = ({
 
   const handleInputChange = (field: keyof BookFormat, value: string | number) => {
     if (onUpdateFormat) {
-      const updateData: Partial<BookFormat> = {} as Partial<BookFormat>;
-      updateData[field] = value as any;
+      const updateData = {} as Partial<BookFormat>;
+      updateData[field] = value;
       onUpdateFormat(formatType, updateData);
     }
   };

@@ -1,3 +1,4 @@
+
 import { Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -22,7 +23,7 @@ export const PricingSection = ({
 
   const handleInputChange = (field: keyof BookFormat, value: number) => {
     if (onUpdateFormat) {
-      const updateData: Partial<BookFormat> = {} as Partial<BookFormat>;
+      const updateData = {} as Partial<BookFormat>;
       updateData[field] = value;
       onUpdateFormat(formatType, updateData);
     }
