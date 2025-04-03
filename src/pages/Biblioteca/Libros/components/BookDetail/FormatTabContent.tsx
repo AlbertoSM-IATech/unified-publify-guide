@@ -43,10 +43,11 @@ export const FormatTabContent = ({
     );
   }
 
-  const handleInputChange = (field: string, value: string | number) => {
+  const handleInputChange = (field: keyof BookFormat, value: string | number) => {
     if (onUpdateFormat) {
       const updateData: Partial<BookFormat> = {};
-      updateData[field as keyof BookFormat] = value;
+      // Use type assertion to fix the type error
+      updateData[field] = value as any;
       onUpdateFormat(formatType, updateData);
     }
   };

@@ -12,9 +12,10 @@ import { Separator } from "@/components/ui/separator";
 interface NotesSectionProps {
   book: Book;
   isEditing: boolean;
+  onUpdateBook?: (updatedData: Partial<Book>) => void;
 }
 
-export const NotesSection = ({ book, isEditing }: NotesSectionProps) => {
+export const NotesSection = ({ book, isEditing, onUpdateBook }: NotesSectionProps) => {
   const [notes, setNotes] = useState<BookNote[]>(book.notes || []);
   const [isAddingNote, setIsAddingNote] = useState(false);
   const [newNoteText, setNewNoteText] = useState("");
@@ -30,9 +31,15 @@ export const NotesSection = ({ book, isEditing }: NotesSectionProps) => {
         text: newNoteText,
         date: new Date().toISOString(),
       };
-      setNotes([newNote, ...notes]);
+      const updatedNotes = [newNote, ...notes];
+      setNotes(updatedNotes);
       setNewNoteText("");
       setIsAddingNote(false);
+      
+      // Update parent component with new notes
+      if (onUpdateBook) {
+        onUpdateBook({ notes: updatedNotes });
+      }
     }
   };
 

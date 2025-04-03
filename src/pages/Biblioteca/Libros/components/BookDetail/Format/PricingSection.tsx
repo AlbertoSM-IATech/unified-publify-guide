@@ -24,7 +24,8 @@ export const PricingSection = ({
   const handleInputChange = (field: keyof BookFormat, value: number) => {
     if (onUpdateFormat) {
       const updateData: Partial<BookFormat> = {};
-      updateData[field] = value;
+      // Use type assertion to fix the type error
+      updateData[field] = value as any;
       onUpdateFormat(formatType, updateData);
     }
   };
