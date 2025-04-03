@@ -1,11 +1,10 @@
-
 import { useState } from "react";
 import { User, Mail, Key, ImageIcon, Save, Upload } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-const Perfil = () => {
+export const Perfil = () => {
   const { user } = useAuth();
   const { toast } = useToast();
   
