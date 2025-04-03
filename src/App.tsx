@@ -8,7 +8,7 @@ import { LibrosList } from "@/pages/Biblioteca/Libros/LibrosList";
 import BookDetail from "@/pages/Biblioteca/Libros/BookDetail";
 import ColeccionesList from "@/pages/Biblioteca/Colecciones/ColeccionesList";
 import ColeccionDetail from "@/pages/Biblioteca/Colecciones/ColeccionDetail";
-import { InvestigacionesList } from "@/pages/Investigaciones/InvestigacionesList";
+import { InvestigacionesList } from "@/pages/Biblioteca/Investigaciones/InvestigacionesList";
 import { Marketing } from "@/pages/Marketing/Marketing";
 import { Finanzas } from "@/pages/Finanzas/Finanzas";
 import { Configuracion } from "@/pages/Configuracion/Configuracion";
