@@ -1,6 +1,8 @@
+
 import { useLocation, Link } from "react-router-dom";
 import { useEffect } from "react";
 import { ArrowLeft } from "lucide-react";
+import { Button } from "@/components/common/Button";
 
 export const NotFound = () => {
   const location = useLocation();
@@ -21,13 +23,12 @@ export const NotFound = () => {
           Lo sentimos, la página que estás buscando no existe o ha sido movida.
         </p>
         <div className="mt-8">
-          <Link
-            to="/"
-            className="inline-flex items-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90"
-          >
-            <ArrowLeft size={16} className="mr-2" />
-            Volver al inicio
-          </Link>
+          <Button asChild variant="default">
+            <Link to="/">
+              <ArrowLeft size={16} className="mr-2" />
+              Volver al inicio
+            </Link>
+          </Button>
         </div>
       </div>
     </div>

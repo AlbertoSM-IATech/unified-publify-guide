@@ -5,13 +5,16 @@ import App from './App.tsx'
 import './index.css'
 import { ThemeProvider } from './hooks/useTheme.tsx'
 import { AuthProvider } from './contexts/AuthContext';
+import { UserProvider } from './contexts/UserContext';
 
 createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
     <AuthProvider>
-      <ThemeProvider>
-        <App />
-      </ThemeProvider>
+      <UserProvider>
+        <ThemeProvider>
+          <App />
+        </ThemeProvider>
+      </UserProvider>
     </AuthProvider>
   </BrowserRouter>
 );

@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import MainLayout from "@/components/layout/MainLayout";
 import { LandingPage } from "@/pages/LandingPage/LandingPage";
@@ -16,6 +16,7 @@ import { Perfil } from "@/pages/Perfil/Perfil";
 import { NotFound } from "@/pages/NotFound";
 import { useTheme } from "@/hooks/useTheme";
 import { Toaster } from "@/components/ui/toaster";
+import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import clsx from "clsx";
 
 function App() {
@@ -27,23 +28,41 @@ function App() {
   }, [isDark]);
 
   return (
-    <div className={clsx("relative", isDark && "dark-theme")}>
+    <div className={clsx("relative min-h-screen", isDark && "dark-theme")}>
       <Toaster />
       
       <Routes>
+        {/* Public routes */}
         <Route path="/" element={<LandingPage />} />
-        <Route element={<MainLayout />}>
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/biblioteca/libros" element={<LibrosList />} />
-          <Route path="/biblioteca/libros/:id" element={<BookDetail />} />
-          <Route path="/biblioteca/colecciones" element={<ColeccionesList />} />
-          <Route path="/biblioteca/colecciones/:id" element={<ColeccionDetail />} />
-          <Route path="/biblioteca/investigaciones" element={<InvestigacionesList />} />
-          <Route path="/marketing" element={<Marketing />} />
-          <Route path="/finanzas" element={<Finanzas />} />
-          <Route path="/configuracion" element={<Configuracion />} />
-          <Route path="/perfil" element={<Perfil />} />
+        
+        {/* Protected routes */}
+        <Route element={<ProtectedRoute />}>
+          <Route element={<MainLayout />}>
+            {/* Dashboard */}
+            <Route path="/dashboard" element={<Dashboard />} />
+            
+            {/* Biblioteca section */}
+            <Route path="/biblioteca">
+              <Route path="libros" element={<LibrosList />} />
+              <Route path="libros/:id" element={<BookDetail />} />
+              <Route path="colecciones" element={<ColeccionesList />} />
+              <Route path="colecciones/:id" element={<ColeccionDetail />} />
+              <Route path="investigaciones" element={<InvestigacionesList />} />
+            </Route>
+            
+            {/* Marketing section */}
+            <Route path="/marketing" element={<Marketing />} />
+            
+            {/* Finanzas section */}
+            <Route path="/finanzas" element={<Finanzas />} />
+            
+            {/* Settings & profile */}
+            <Route path="/configuracion" element={<Configuracion />} />
+            <Route path="/perfil" element={<Perfil />} />
+          </Route>
         </Route>
+        
+        {/* 404 catch-all route */}
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
