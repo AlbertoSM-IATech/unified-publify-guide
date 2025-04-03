@@ -26,7 +26,7 @@ import {
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { librosSimulados } from "../Biblioteca/Libros/utils/librosUtils";
 
-const Dashboard = () => {
+export const Dashboard = () => {
   // Use state to hold dashboard data
   const [stats, setStats] = useState(getStatsData());
   const [contentCategories, setContentCategories] = useState(getContentCategoriesData());
