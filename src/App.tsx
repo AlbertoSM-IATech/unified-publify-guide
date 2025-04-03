@@ -14,7 +14,7 @@ import { Finanzas } from "@/pages/Finanzas/Finanzas";
 import { Configuracion } from "@/pages/Configuracion/Configuracion";
 import { Perfil } from "@/pages/Perfil/Perfil";
 import { NotFound } from "@/pages/NotFound";
-import { useTheme } from "@/hooks/use-theme";
+import { useTheme } from "@/hooks/useTheme";
 import { Toaster } from "@/components/ui/toaster";
 import clsx from "clsx";
 
