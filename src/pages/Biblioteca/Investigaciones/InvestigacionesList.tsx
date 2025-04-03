@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { BookOpen, FileText, Plus, Search, Filter, ArrowLeft } from "lucide-react";
 
@@ -35,7 +36,8 @@ const investigacionesSimuladas = [{
   fechaActualizacion: "2023-02-25",
   contenido: "Contenido de la investigación..."
 }];
-const InvestigacionesList = () => {
+
+export const InvestigacionesList = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [investigaciones, setInvestigaciones] = useState(investigacionesSimuladas);
   const [selectedInvestigacion, setSelectedInvestigacion] = useState<typeof investigacionesSimuladas[0] | null>(null);
@@ -154,4 +156,5 @@ const InvestigacionesList = () => {
       </div>
     </div>;
 };
+
 export default InvestigacionesList;
