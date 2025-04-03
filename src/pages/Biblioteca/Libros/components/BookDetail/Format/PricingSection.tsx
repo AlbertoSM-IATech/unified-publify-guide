@@ -1,4 +1,3 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -23,9 +22,8 @@ export const PricingSection = ({
 
   const handleInputChange = (field: keyof BookFormat, value: number) => {
     if (onUpdateFormat) {
-      const updateData: Partial<BookFormat> = {};
-      // Use type assertion to fix the type error
-      updateData[field] = value as any;
+      const updateData: Partial<BookFormat> = {} as Partial<BookFormat>;
+      updateData[field] = value;
       onUpdateFormat(formatType, updateData);
     }
   };
