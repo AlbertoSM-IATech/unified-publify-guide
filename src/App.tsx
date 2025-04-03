@@ -1,69 +1,52 @@
-
+import { useState, useEffect } from "react";
+import { Routes, Route } from "react-router-dom";
+import { MainLayout } from "@/layouts/MainLayout";
+import { LandingPage } from "@/pages/LandingPage";
+import { Dashboard } from "@/pages/Dashboard/Dashboard";
+import { LibrosList } from "@/pages/Biblioteca/Libros/LibrosList";
+import BookDetail from "@/pages/Biblioteca/Libros/BookDetail";
+import ColeccionesList from "@/pages/Biblioteca/Colecciones/ColeccionesList";
+import ColeccionDetail from "@/pages/Biblioteca/Colecciones/ColeccionDetail";
+import { InvestigacionesList } from "@/pages/Investigaciones/InvestigacionesList";
+import { Marketing } from "@/pages/Marketing/Marketing";
+import { Finanzas } from "@/pages/Finanzas/Finanzas";
+import { Configuracion } from "@/pages/Configuracion/Configuracion";
+import { Perfil } from "@/pages/Perfil/Perfil";
+import { NotFound } from "@/pages/NotFound";
+import { useTheme } from "@/hooks/use-theme";
 import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { ThemeProvider } from "@/hooks/useTheme";
-import { AuthProvider } from "@/contexts/AuthContext";
+import clsx from "clsx";
 
-import MainLayout from "./components/layout/MainLayout";
-import LandingPage from "./pages/LandingPage/LandingPage";
-import Dashboard from "./pages/Dashboard/Dashboard";
-import LibrosList from "./pages/Biblioteca/Libros/LibrosList";
-import BookDetail from "./pages/Biblioteca/Libros/BookDetail";
-import ColeccionesList from "./pages/Biblioteca/Colecciones/ColeccionesList";
-import InvestigacionesList from "./pages/Biblioteca/Investigaciones/InvestigacionesList";
-import Marketing from "./pages/Marketing/Marketing";
-import Finanzas from "./pages/Finanzas/Finanzas";
-import Perfil from "./pages/Perfil/Perfil";
-import Configuracion from "./pages/Configuracion/Configuracion";
-import NotFound from "./pages/NotFound";
+function App() {
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
 
-const queryClient = new QueryClient();
+  useEffect(() => {
+    document.documentElement.classList.toggle("dark", isDark);
+  }, [isDark]);
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <ThemeProvider>
-      <AuthProvider>
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-            <Routes>
-              {/* Ruta para la landing page */}
-              <Route path="/landing" element={<LandingPage />} />
-              
-              {/* Rutas protegidas dentro del layout principal */}
-              <Route element={<MainLayout />}>
-                {/* Corrigiendo la ruta del Dashboard */}
-                <Route path="/" element={<Dashboard />} />
-                <Route path="/dashboard" element={<Navigate to="/" replace />} />
-                <Route path="/index" element={<Navigate to="/" replace />} />
-                
-                {/* Rutas de Biblioteca */}
-                <Route path="/biblioteca/libros" element={<LibrosList />} />
-                <Route path="/biblioteca/libros/:id" element={<BookDetail />} />
-                <Route path="/biblioteca/colecciones" element={<ColeccionesList />} />
-                <Route path="/biblioteca/investigaciones" element={<InvestigacionesList />} />
-                
-                {/* Rutas de Marketing y Finanzas */}
-                <Route path="/marketing" element={<Marketing />} />
-                <Route path="/finanzas" element={<Finanzas />} />
-                
-                {/* Rutas de Perfil y Configuración */}
-                <Route path="/perfil" element={<Perfil />} />
-                <Route path="/configuracion" element={<Configuracion />} />
-              </Route>
-              
-              {/* Ruta 404 */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </BrowserRouter>
-        </TooltipProvider>
-      </AuthProvider>
-    </ThemeProvider>
-  </QueryClientProvider>
-);
+  return (
+    <div className={clsx("relative", isDark && "dark-theme")}>
+      <Toaster />
+      
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route element={<MainLayout />}>
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/biblioteca/libros" element={<LibrosList />} />
+          <Route path="/biblioteca/libros/:id" element={<BookDetail />} />
+          <Route path="/biblioteca/colecciones" element={<ColeccionesList />} />
+          <Route path="/biblioteca/colecciones/:id" element={<ColeccionDetail />} />
+          <Route path="/biblioteca/investigaciones" element={<InvestigacionesList />} />
+          <Route path="/marketing" element={<Marketing />} />
+          <Route path="/finanzas" element={<Finanzas />} />
+          <Route path="/configuracion" element={<Configuracion />} />
+          <Route path="/perfil" element={<Perfil />} />
+        </Route>
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </div>
+  );
+}
 
 export default App;

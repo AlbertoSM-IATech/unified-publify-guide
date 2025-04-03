@@ -1,21 +1,47 @@
 
 import { BookFormat } from "../types/bookTypes";
 
-// Calculate net royalties with improved accuracy
+// Calcular las regalías netas
 export const calculateNetRoyalties = (format?: BookFormat): string => {
-  if (!format) return "0.00";
-  
-  // Check if all required fields are present
-  if (format.price === undefined || 
-      format.royaltyPercentage === undefined) {
+  if (!format || !format.price || !format.royaltyPercentage) {
     return "0.00";
   }
+
+  // Precio sin IVA (asumiendo un IVA del 21%)
+  const priceWithoutVAT = format.price / 1.21;
   
-  // Calculate net royalties with VAT adjustment
-  const priceWithoutVat = format.price / 1.21; // 21% VAT
-  const printingCost = format.printingCost || 0;
-  const netRoyalty = (priceWithoutVat * format.royaltyPercentage) - printingCost;
+  // Regalías brutas
+  const royalties = priceWithoutVAT * format.royaltyPercentage;
   
-  // Return the result with 2 decimal places
-  return Math.max(0, netRoyalty).toFixed(2);
+  // Restar costo de impresión si existe
+  const netRoyalties = format.printingCost !== undefined ? 
+    royalties - format.printingCost : 
+    royalties;
+  
+  // Devolver con dos decimales
+  return netRoyalties.toFixed(2);
+};
+
+// Otras funciones de utilidad para detalles de libros
+export const getFormatAvailability = (format?: BookFormat): boolean => {
+  return !!format && !!format.price;
+};
+
+// Función para generar un enlace a Amazon
+export const generateAmazonLink = (asin?: string): string => {
+  if (!asin) return "";
+  
+  return `https://amazon.com/dp/${asin}`;
+};
+
+// Convertir fecha a formato legible
+export const formatDate = (date: string | null): string => {
+  if (!date) return "No disponible";
+  
+  const dateObj = new Date(date);
+  return dateObj.toLocaleDateString('es-ES', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric'
+  });
 };

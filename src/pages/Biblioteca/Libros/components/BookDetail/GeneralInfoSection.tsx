@@ -41,7 +41,13 @@ export const GeneralInfoSection = ({
             />
             
             {/* Relation Fields - Only shown in edit mode */}
-            {isEditing && <RelationFields form={form} />}
+            {isEditing ? (
+              <RelationFields form={form} book={book} />
+            ) : (
+              book.investigacionId || book.proyectoId ? (
+                <RelationFields form={form} book={book} />
+              ) : null
+            )}
           </div>
         </Form>
       </CardContent>

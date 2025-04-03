@@ -1,6 +1,20 @@
 
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { BookOpen, FolderIcon, GridIcon, List, Plus, Search, Filter } from "lucide-react";
+import { toast } from "@/hooks/use-toast";
+import { 
+  Dialog, 
+  DialogContent, 
+  DialogDescription, 
+  DialogFooter, 
+  DialogHeader, 
+  DialogTitle
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 
 // Datos simulados para colecciones
 const coleccionesSimuladas = [
@@ -42,6 +56,11 @@ const ColeccionesList = () => {
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [searchQuery, setSearchQuery] = useState("");
   const [colecciones, setColecciones] = useState(coleccionesSimuladas);
+  const [isCreatingCollection, setIsCreatingCollection] = useState(false);
+  const [newCollection, setNewCollection] = useState({
+    nombre: "",
+    descripcion: ""
+  });
 
   // Filtrar colecciones por búsqueda
   const filteredColecciones = colecciones.filter(
@@ -50,6 +69,53 @@ const ColeccionesList = () => {
       coleccion.descripcion.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  const handleOpenCreateDialog = () => {
+    setIsCreatingCollection(true);
+  };
+
+  const handleCloseCreateDialog = () => {
+    setIsCreatingCollection(false);
+    // Reiniciar formulario
+    setNewCollection({
+      nombre: "",
+      descripcion: ""
+    });
+  };
+
+  const handleCreateCollection = () => {
+    // Validar campos requeridos
+    if (!newCollection.nombre) {
+      toast({
+        title: "Campo requerido",
+        description: "Por favor introduce un nombre para la colección.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    // Crear nueva colección
+    const newId = Math.max(...colecciones.map(col => col.id), 0) + 1;
+    const newCol = {
+      id: newId,
+      nombre: newCollection.nombre,
+      descripcion: newCollection.descripcion,
+      cantidadLibros: 0,
+      fechaCreacion: new Date().toISOString().split('T')[0],
+      libros: []
+    };
+
+    // Añadir a colecciones simuladas
+    coleccionesSimuladas.push(newCol);
+    setColecciones([...coleccionesSimuladas]);
+
+    toast({
+      title: "Colección creada",
+      description: `La colección "${newCol.nombre}" ha sido creada con éxito.`
+    });
+
+    handleCloseCreateDialog();
+  };
+
   return (
     <div className="animate-fade-in">
       <div className="mb-6 flex flex-col justify-between md:flex-row md:items-center">
@@ -57,7 +123,10 @@ const ColeccionesList = () => {
           <h1 className="font-heading text-2xl font-bold md:text-3xl">Colecciones</h1>
           <p className="mt-1 text-muted-foreground">Organiza tus libros en colecciones temáticas</p>
         </div>
-        <button className="mt-4 flex items-center rounded-md bg-primary px-4 py-2 text-primary-foreground hover:bg-primary/90 md:mt-0">
+        <button 
+          className="mt-4 flex items-center rounded-md bg-primary px-4 py-2 text-primary-foreground hover:bg-primary/90 md:mt-0"
+          onClick={handleOpenCreateDialog}
+        >
           <Plus size={18} className="mr-2" />
           Nueva Colección
         </button>
@@ -145,9 +214,12 @@ const ColeccionesList = () => {
                   <span className="text-xs text-muted-foreground">
                     Creada: {new Date(coleccion.fechaCreacion).toLocaleDateString()}
                   </span>
-                  <button className="text-xs font-medium text-primary hover:underline">
+                  <Link 
+                    to={`/biblioteca/colecciones/${coleccion.id}`}
+                    className="text-xs font-medium text-primary hover:underline"
+                  >
                     Ver detalles
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -193,12 +265,18 @@ const ColeccionesList = () => {
                     {new Date(coleccion.fechaCreacion).toLocaleDateString()}
                   </td>
                   <td className="whitespace-nowrap px-4 py-4 text-right text-sm">
-                    <button className="mr-2 font-medium text-primary hover:underline">
+                    <Link 
+                      to={`/biblioteca/colecciones/${coleccion.id}`}
+                      className="mr-2 font-medium text-primary hover:underline"
+                    >
                       Ver
-                    </button>
-                    <button className="font-medium text-primary hover:underline">
+                    </Link>
+                    <Link 
+                      to={`/biblioteca/colecciones/${coleccion.id}`}
+                      className="font-medium text-primary hover:underline"
+                    >
                       Editar
-                    </button>
+                    </Link>
                   </td>
                 </tr>
               ))}
@@ -206,6 +284,43 @@ const ColeccionesList = () => {
           </table>
         </div>
       )}
+
+      {/* Create Collection Dialog */}
+      <Dialog open={isCreatingCollection} onOpenChange={handleCloseCreateDialog}>
+        <DialogContent className="sm:max-w-[500px]">
+          <DialogHeader>
+            <DialogTitle>Crear Nueva Colección</DialogTitle>
+            <DialogDescription>
+              Introduce la información para crear una nueva colección. Podrás añadir libros a la colección más adelante.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <div className="grid gap-2">
+              <Label htmlFor="nombre">Nombre</Label>
+              <Input
+                id="nombre"
+                value={newCollection.nombre}
+                onChange={(e) => setNewCollection({ ...newCollection, nombre: e.target.value })}
+                placeholder="Nombre de la colección"
+              />
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="descripcion">Descripción</Label>
+              <Textarea
+                id="descripcion"
+                value={newCollection.descripcion}
+                onChange={(e) => setNewCollection({ ...newCollection, descripcion: e.target.value })}
+                placeholder="Descripción de la colección"
+                rows={4}
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={handleCloseCreateDialog}>Cancelar</Button>
+            <Button onClick={handleCreateCollection}>Crear Colección</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

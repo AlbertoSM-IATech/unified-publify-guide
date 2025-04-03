@@ -1,119 +1,84 @@
 
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
-import { Calendar, File, Link } from "lucide-react";
-import { Book, BookFormat } from "../../types/bookTypes";
-import { useNavigate } from "react-router-dom";
+import { Eye, ExternalLink, Tag } from "lucide-react";
+import { Book } from "../../types/bookTypes";
+import { generateAmazonLink } from "../../utils/bookDetailUtils";
 
 interface BookInfoProps {
   book: Book;
-  getStatusColor: (estado: string) => string;
-  getContentColor: (contenido: string) => string;
-  calculateNetRoyalties: (format?: BookFormat) => string;
+  getStatusColor: (status: string) => string;
+  getContentColor: (content: string) => string;
+  calculateNetRoyalties: (format?: any) => string;
 }
 
 export const BookInfo = ({
   book,
   getStatusColor,
   getContentColor,
-  calculateNetRoyalties
+  calculateNetRoyalties,
 }: BookInfoProps) => {
-  const navigate = useNavigate();
-  
-  // Navigate to related pages
-  const goToInvestigacion = () => {
-    if (book.investigacionId) {
-      navigate(`/biblioteca/investigaciones/${book.investigacionId}`);
-    }
-  };
-  
-  const goToColeccion = () => {
-    if (book.proyectoId) {
-      navigate(`/biblioteca/colecciones/${book.proyectoId}`);
-    }
-  };
+  // Obtener el formato principal para mostrar ASIN
+  const primaryFormat = book.hardcover || book.paperback || book.ebook;
+  const asin = primaryFormat?.asin || book.asin;
+  const amazonLink = generateAmazonLink(asin);
 
   return (
-    <div className="p-4">
-      <div className="mb-3 space-y-3">
-        <div className="flex flex-wrap gap-2">
-          <Badge className={getStatusColor(book.estado)}>
-            {book.estado}
-          </Badge>
-          <Badge className={getContentColor(book.contenido)}>
-            {book.contenido}
-          </Badge>
-        </div>
-        <div className="flex items-center text-sm text-muted-foreground">
-          <Calendar className="mr-2 h-4 w-4" />
-          {book.fechaPublicacion 
-            ? new Date(book.fechaPublicacion).toLocaleDateString() 
-            : "Sin fecha de publicación"}
-        </div>
-      </div>
-      <Separator className="my-3" />
-      <div className="space-y-3">
-        <div>
-          <div className="text-sm font-medium text-muted-foreground">ISBN</div>
-          <div>{book.isbn}</div>
-        </div>
-        <div>
-          <div className="text-sm font-medium text-muted-foreground">ASIN</div>
-          <div>{book.asin}</div>
-        </div>
-        <div>
-          <div className="text-sm font-medium text-muted-foreground">Regalías Netas</div>
-          <div className="flex flex-col gap-1 text-sm">
-            {book.hardcover && (
-              <div className="flex justify-between">
-                <span>Tapa Dura:</span>
-                <span className="font-semibold text-lg font-secondary text-green-600">
-                  {calculateNetRoyalties(book.hardcover)}€
-                </span>
-              </div>
-            )}
-            {book.paperback && (
-              <div className="flex justify-between">
-                <span>Tapa Blanda:</span>
-                <span className="font-semibold text-lg font-secondary text-green-600">
-                  {calculateNetRoyalties(book.paperback)}€
-                </span>
-              </div>
-            )}
-            {book.ebook && (
-              <div className="flex justify-between">
-                <span>eBook:</span>
-                <span className="font-semibold text-lg font-secondary text-green-600">
-                  {calculateNetRoyalties(book.ebook)}€
-                </span>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-      <Separator className="my-3" />
-      <div className="flex flex-wrap gap-2">
-        <Button 
-          variant="outline" 
-          size="sm" 
-          className="w-full"
-          onClick={goToInvestigacion}
-          disabled={!book.investigacionId}
+    <div className="p-4 space-y-3">
+      <h2 className="font-bold text-xl">{book.titulo}</h2>
+      {book.subtitulo && <p className="text-sm text-muted-foreground">{book.subtitulo}</p>}
+      <p className="text-base font-semibold">Por {book.autor}</p>
+
+      <div className="flex flex-wrap gap-2 mt-2">
+        <span
+          className={`inline-flex items-center rounded-full px-2 py-1 text-xs font-medium ${getStatusColor(
+            book.estado
+          )}`}
         >
-          <File className="mr-2 h-4 w-4" />
-          Ver Investigación
-        </Button>
-        <Button 
-          variant="outline" 
-          size="sm" 
-          className="w-full"
-          onClick={goToColeccion}
-          disabled={!book.proyectoId}
+          {book.estado}
+        </span>
+        <span
+          className={`inline-flex items-center rounded-full px-2 py-1 text-xs font-medium ${getContentColor(
+            book.contenido
+          )}`}
         >
-          <Link className="mr-2 h-4 w-4" />
-          Ver Colección
-        </Button>
+          {book.contenido}
+        </span>
+      </div>
+
+      {asin && (
+        <div className="flex items-center gap-2 text-sm">
+          <Tag size={14} className="text-muted-foreground" />
+          <span>ASIN: {asin}</span>
+        </div>
+      )}
+
+      {book.isbn && (
+        <div className="flex items-center gap-2 text-sm">
+          <Tag size={14} className="text-muted-foreground" />
+          <span>ISBN: {book.isbn}</span>
+        </div>
+      )}
+
+      {amazonLink && (
+        <div className="mt-3">
+          <a
+            href={amazonLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center text-primary hover:underline"
+          >
+            <ExternalLink size={14} className="mr-1" />
+            Ver en Amazon
+          </a>
+        </div>
+      )}
+
+      <div className="border-t border-border pt-3 mt-3">
+        <div className="flex items-center justify-between">
+          <span className="text-sm font-medium">Regalías netas (estimado):</span>
+          <span className="text-lg font-semibold text-green-600">
+            {calculateNetRoyalties(primaryFormat)}€
+          </span>
+        </div>
       </div>
     </div>
   );

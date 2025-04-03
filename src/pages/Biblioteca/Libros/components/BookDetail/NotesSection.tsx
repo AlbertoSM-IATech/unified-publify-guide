@@ -8,6 +8,7 @@ import { PenLine, Plus, Trash } from "lucide-react";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
 import { Separator } from "@/components/ui/separator";
+import { toast } from "@/hooks/use-toast";
 import { 
   AlertDialog,
   AlertDialogAction,
@@ -49,7 +50,7 @@ export const NotesSection = ({ book, isEditing, onUpdateBook }: NotesSectionProp
         text: newNoteText,
         date: new Date().toISOString(),
       };
-      const updatedNotes = [newNote, ...notes];
+      const updatedNotes = [newNote, ...notes]; // Más reciente primero
       setNotes(updatedNotes);
       setNewNoteText("");
       setIsAddingNote(false);
@@ -57,6 +58,12 @@ export const NotesSection = ({ book, isEditing, onUpdateBook }: NotesSectionProp
       // Update parent component with new notes
       if (onUpdateBook) {
         onUpdateBook({ notes: updatedNotes });
+        
+        // Mostrar confirmación
+        toast({
+          title: "Nota guardada",
+          description: "La nota ha sido añadida con éxito."
+        });
       }
     }
   };
@@ -89,6 +96,12 @@ export const NotesSection = ({ book, isEditing, onUpdateBook }: NotesSectionProp
       // Update parent component with edited notes
       if (onUpdateBook) {
         onUpdateBook({ notes: updatedNotes });
+        
+        // Mostrar confirmación
+        toast({
+          title: "Nota actualizada",
+          description: "La nota ha sido actualizada con éxito."
+        });
       }
     }
   };
@@ -105,8 +118,20 @@ export const NotesSection = ({ book, isEditing, onUpdateBook }: NotesSectionProp
     // Update parent component with deleted note
     if (onUpdateBook) {
       onUpdateBook({ notes: updatedNotes });
+      
+      // Mostrar confirmación
+      toast({
+        title: "Nota eliminada",
+        description: "La nota ha sido eliminada con éxito.",
+        variant: "destructive"
+      });
     }
   };
+
+  // Ordenar notas por fecha (más reciente primero)
+  const sortedNotes = [...notes].sort((a, b) => {
+    return new Date(b.date).getTime() - new Date(a.date).getTime();
+  });
 
   return (
     <Card>
@@ -146,13 +171,13 @@ export const NotesSection = ({ book, isEditing, onUpdateBook }: NotesSectionProp
           </div>
         )}
 
-        {notes.length === 0 ? (
+        {sortedNotes.length === 0 ? (
           <div className="flex h-24 items-center justify-center text-muted-foreground">
             No hay notas para este libro
           </div>
         ) : (
           <div className="space-y-4">
-            {notes.map((note, index) => (
+            {sortedNotes.map((note, index) => (
               <div key={note.id}>
                 {editingNoteId === note.id ? (
                   <div className="space-y-4 rounded-md border p-4">
@@ -219,7 +244,7 @@ export const NotesSection = ({ book, isEditing, onUpdateBook }: NotesSectionProp
                     <p className="text-sm">{note.text}</p>
                   </div>
                 )}
-                {index < notes.length - 1 && <Separator className="my-4" />}
+                {index < sortedNotes.length - 1 && <Separator className="my-4" />}
               </div>
             ))}
           </div>
