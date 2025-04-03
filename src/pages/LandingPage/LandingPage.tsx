@@ -1,10 +1,9 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { BookOpen, ChevronRight, BookMarked, LineChart, Settings, Menu, X } from "lucide-react";
 import { useTheme } from "@/hooks/useTheme";
 
-const LandingPage = () => {
+export const LandingPage = () => {
   const navigate = useNavigate();
   const { theme, toggleTheme } = useTheme();
   const [menuOpen, setMenuOpen] = useState(false);
