@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { Settings, Key, Globe, Database, Bell, Download, Upload, ExternalLink, Trash2, AlertTriangle } from "lucide-react";
-const Configuracion = () => {
+
+export const Configuracion = () => {
   const [activeTab, setActiveTab] = useState("general");
+  
   return <div className="animate-fade-in">
       <div className="mb-6">
         <h1 className="font-heading text-2xl font-bold md:text-3xl">Configuración</h1>
@@ -11,7 +13,6 @@ const Configuracion = () => {
       </div>
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-12">
-        {/* Menú de navegación */}
         <div className="md:col-span-3">
           <div className="rounded-lg border bg-card shadow-sm">
             <div className="p-4">
@@ -48,7 +49,6 @@ const Configuracion = () => {
           </div>
         </div>
 
-        {/* Contenido de la configuración */}
         <div className="md:col-span-9">
           <div className="rounded-lg border bg-card shadow-sm">
             {activeTab === "general" && <div className="p-6">
@@ -195,4 +195,5 @@ const Configuracion = () => {
       </div>
     </div>;
 };
+
 export default Configuracion;
