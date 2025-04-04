@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Plus } from "lucide-react";
@@ -85,7 +84,7 @@ export const LibrosList = () => {
       contenido: newBook.contenido,
       fechaPublicacion: null,
       imageUrl: "", // Placeholder, would be updated with actual image upload in real app
-      subtitulo: "" // Add this field to comply with the Book type
+      subtitulo: "" // Add default value for subtitulo
     };
 
     // Add to simulated books array (in a real app, would send to API)

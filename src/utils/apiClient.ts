@@ -1,12 +1,13 @@
+
 // This is just a placeholder as we don't have access to the original file
 // We'll fix the Authorization header issue
 
 const apiClient = {
-  get: async (url: string, options = {}) => {
+  get: async (url: string, options: { headers?: Record<string, string> } = {}) => {
     try {
       const headers: Record<string, string> = {
         'Content-Type': 'application/json',
-        ...options.headers,
+        ...(options.headers || {})
       };
       
       // Add token to headers if available
@@ -23,11 +24,11 @@ const apiClient = {
     }
   },
   
-  post: async (url: string, data: any, options = {}) => {
+  post: async (url: string, data: any, options: { headers?: Record<string, string> } = {}) => {
     try {
       const headers: Record<string, string> = {
         'Content-Type': 'application/json',
-        ...options.headers,
+        ...(options.headers || {})
       };
       
       // Add token to headers if available
@@ -44,11 +45,11 @@ const apiClient = {
     }
   },
   
-  put: async (url: string, data: any, options = {}) => {
+  put: async (url: string, data: any, options: { headers?: Record<string, string> } = {}) => {
     try {
       const headers: Record<string, string> = {
         'Content-Type': 'application/json',
-        ...options.headers,
+        ...(options.headers || {})
       };
       
       // Add token to headers if available
@@ -65,11 +66,11 @@ const apiClient = {
     }
   },
   
-  delete: async (url: string, options = {}) => {
+  delete: async (url: string, options: { headers?: Record<string, string> } = {}) => {
     try {
       const headers: Record<string, string> = {
         'Content-Type': 'application/json',
-        ...options.headers,
+        ...(options.headers || {})
       };
       
       // Add token to headers if available

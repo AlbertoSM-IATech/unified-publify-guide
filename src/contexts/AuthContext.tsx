@@ -23,6 +23,7 @@ type AuthActions = {
   signup: (email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
   resetPassword: (email: string) => Promise<void>;
+  updateUser: (userData: Partial<User>) => Promise<void>; // Add the updateUser method
 };
 
 // Contexto completo
@@ -88,6 +89,27 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     // Esta funcionalidad se implementará con Supabase
   };
 
+  // Implementación de actualización de usuario
+  const updateUser = async (userData: Partial<User>) => {
+    if (!authState.user) return;
+    
+    setAuthState((prev) => ({ ...prev, isLoading: true }));
+    
+    // Simulamos actualización del usuario
+    console.log(`Actualización de usuario: ${JSON.stringify(userData)}`);
+    
+    const updatedUser = {
+      ...authState.user,
+      ...userData
+    };
+    
+    setAuthState({
+      user: updatedUser,
+      isAuthenticated: true,
+      isLoading: false,
+    });
+  };
+
   // Exportar todo el estado y las acciones
   const authContextValue: AuthContextType = {
     ...authState,
@@ -95,6 +117,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     signup,
     logout,
     resetPassword,
+    updateUser,
   };
 
   return <AuthContext.Provider value={authContextValue}>{children}</AuthContext.Provider>;
