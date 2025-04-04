@@ -24,6 +24,7 @@ export const useBookDetail = () => {
   // Initialize book data when component mounts
   useEffect(() => {
     if (libroOriginal) {
+      // Ensure we're extending the libro with proper properties
       const extendedBookData: Book = {
         ...libroOriginal,
         descripcion: libroOriginal.descripcion || "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
@@ -63,6 +64,7 @@ export const useBookDetail = () => {
           { id: 1, text: "Contactar a diseñador para mejorar la portada", date: "2023-11-15" },
           { id: 2, text: "Verificar disponibilidad en tiendas físicas", date: "2023-10-30" },
         ],
+        subtitulo: libroOriginal.subtitulo || "",
       };
       
       setBookData(extendedBookData);

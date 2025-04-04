@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Plus } from "lucide-react";
@@ -18,12 +19,13 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Book } from "./types/bookTypes";
 
 export const LibrosList = () => {
   const navigate = useNavigate();
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [searchQuery, setSearchQuery] = useState("");
-  const [libros, setLibros] = useState(librosSimulados);
+  const [libros, setLibros] = useState<Book[]>(librosSimulados);
   const [isCreatingBook, setIsCreatingBook] = useState(false);
   const [newBook, setNewBook] = useState({
     titulo: "",
@@ -73,7 +75,7 @@ export const LibrosList = () => {
 
     // Create new book
     const newId = Math.max(...libros.map(libro => libro.id), 0) + 1;
-    const libro = {
+    const libro: Book = {
       id: newId,
       titulo: newBook.titulo,
       autor: newBook.autor,
@@ -82,7 +84,8 @@ export const LibrosList = () => {
       estado: newBook.estado,
       contenido: newBook.contenido,
       fechaPublicacion: null,
-      imageUrl: "" // Placeholder, would be updated with actual image upload in real app
+      imageUrl: "", // Placeholder, would be updated with actual image upload in real app
+      subtitulo: "" // Add this field to comply with the Book type
     };
 
     // Add to simulated books array (in a real app, would send to API)

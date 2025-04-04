@@ -1,13 +1,13 @@
 
 import { useState } from "react";
 
-type ValidationRule<T> = {
+type ValidationRule<T extends Record<string, any>> = {
   test: (value: any, formValues: T) => boolean;
   message: string;
 };
 
-type ValidationRules<T> = {
-  [K in keyof T]?: ValidationRule[];
+type ValidationRules<T extends Record<string, any>> = {
+  [K in keyof T]?: ValidationRule<T>[];
 };
 
 /**

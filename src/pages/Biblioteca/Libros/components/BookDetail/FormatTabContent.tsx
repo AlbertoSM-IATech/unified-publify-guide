@@ -44,8 +44,8 @@ export const FormatTabContent = ({
 
   const handleInputChange = (field: keyof BookFormat, value: string | number) => {
     if (onUpdateFormat) {
-      const updateData = {} as Partial<BookFormat>;
-      updateData[field] = value;
+      const updateData: Partial<BookFormat> = {};
+      updateData[field as keyof BookFormat] = value as any;
       onUpdateFormat(formatType, updateData);
     }
   };

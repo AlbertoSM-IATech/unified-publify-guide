@@ -39,13 +39,18 @@ export function useAuthentication() {
   
   /**
    * Update user profile with error handling
+   * Note: This assumes auth context has a profile update method
    */
   const updateProfile = async (userData: Partial<typeof auth.user>) => {
     return handleAsync(
       async () => {
-        const result = await auth.updateProfile(userData);
-        toastService.success("Perfil actualizado", "Tus datos han sido guardados correctamente");
-        return result;
+        // Check if updateProfile exists on auth context
+        if (typeof auth.updateUser === 'function') {
+          const result = await auth.updateUser(userData);
+          toastService.success("Perfil actualizado", "Tus datos han sido guardados correctamente");
+          return result;
+        }
+        throw new Error("Update profile method not available");
       },
       "Error al actualizar el perfil. Por favor, intenta de nuevo."
     );

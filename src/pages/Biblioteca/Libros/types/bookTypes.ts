@@ -24,8 +24,10 @@ export interface BookFormat {
     newsletter?: string;
     landingPage?: string;
     authorCentral?: string;
+    [key: string]: string | undefined;
   };
   strategy?: string;
+  [key: string]: any;
 }
 
 export interface Book {

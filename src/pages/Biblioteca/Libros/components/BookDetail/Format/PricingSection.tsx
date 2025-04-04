@@ -23,7 +23,7 @@ export const PricingSection = ({
 
   const handleInputChange = (field: keyof BookFormat, value: number) => {
     if (onUpdateFormat) {
-      const updateData = {} as Partial<BookFormat>;
+      const updateData: Partial<BookFormat> = {};
       updateData[field] = value;
       onUpdateFormat(formatType, updateData);
     }
