@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "@/hooks/use-toast";
@@ -24,11 +25,11 @@ export const useBookDetail = () => {
   useEffect(() => {
     if (libroOriginal) {
       // Ensure we're extending the libro with proper properties
-      // Cast libroOriginal explicitly to Book type to avoid type issues
       const libro = libroOriginal as unknown as Book;
       
       const extendedBookData: Book = {
         ...libro,
+        subtitulo: libro.subtitulo || "", // Ensure subtitulo is always set
         descripcion: libro.descripcion || "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
         hardcover: libro.hardcover || {
           dimensions: "15.24 x 22.86 cm",
@@ -65,8 +66,7 @@ export const useBookDetail = () => {
         notes: libro.notes || [
           { id: 1, text: "Contactar a diseñador para mejorar la portada", date: "2023-11-15" },
           { id: 2, text: "Verificar disponibilidad en tiendas físicas", date: "2023-10-30" },
-        ],
-        subtitulo: libro.subtitulo || "",
+        ]
       };
       
       setBookData(extendedBookData);
@@ -79,7 +79,7 @@ export const useBookDetail = () => {
   }, [bookData]);
 
   const handleGoBack = () => {
-    navigate(-1);
+    navigate('/biblioteca/libros');
   };
 
   const handleEdit = () => {

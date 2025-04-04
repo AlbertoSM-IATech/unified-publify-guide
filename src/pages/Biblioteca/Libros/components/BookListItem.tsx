@@ -13,7 +13,11 @@ export const BookListItem = ({ libro, getStatusColor, getContentColor }: BookLis
     <tr className="hover:bg-muted/50">
       <td className="whitespace-nowrap px-4 py-4">
         <div>
-          <div className="font-medium">{libro.titulo}</div>
+          <div className="font-medium">
+            <Link to={`/biblioteca/libros/${libro.id}`} className="hover:underline">
+              {libro.titulo}
+            </Link>
+          </div>
           <div className="text-sm text-muted-foreground">{libro.autor}</div>
         </div>
       </td>
@@ -47,15 +51,9 @@ export const BookListItem = ({ libro, getStatusColor, getContentColor }: BookLis
       <td className="whitespace-nowrap px-4 py-4 text-right text-sm">
         <Link
           to={`/biblioteca/libros/${libro.id}`}
-          className="mr-2 font-medium text-primary hover:underline"
-        >
-          Ver
-        </Link>
-        <Link
-          to={`/biblioteca/libros/${libro.id}`}
           className="font-medium text-primary hover:underline"
         >
-          Editar
+          Ver detalles
         </Link>
       </td>
     </tr>

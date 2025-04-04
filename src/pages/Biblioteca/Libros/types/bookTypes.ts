@@ -33,7 +33,7 @@ export interface BookFormat {
 export interface Book {
   id: number;
   titulo: string;
-  subtitulo: string; // Changed from optional to required
+  subtitulo: string; // Required field
   descripcion?: string;
   autor: string;
   isbn: string;

@@ -19,11 +19,11 @@ const BookDetail = () => {
   } = useBookDetail();
 
   if (!libroOriginal || !bookData) {
-    return <div className="p-6">Libro no encontrado</div>;
+    return <div className="p-6">Cargando libro...</div>;
   }
 
   return (
-    <div className="animate-fade-in">
+    <div className="animate-fade-in p-6">
       <BookHeader 
         isEditing={isEditing}
         onGoBack={handleGoBack}

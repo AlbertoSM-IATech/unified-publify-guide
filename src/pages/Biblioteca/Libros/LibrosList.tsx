@@ -23,7 +23,7 @@ import { Book } from "./types/bookTypes";
 
 export const LibrosList = () => {
   const navigate = useNavigate();
-  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+  const [viewMode, setViewMode] = useState<"grid" | "list">("list"); // Set default to list view
   const [searchQuery, setSearchQuery] = useState("");
   const [libros, setLibros] = useState<Book[]>(librosSimulados);
   const [isCreatingBook, setIsCreatingBook] = useState(false);
@@ -74,7 +74,7 @@ export const LibrosList = () => {
     const libro: Book = {
       id: newId,
       titulo: newBook.titulo,
-      subtitulo: "", // This field must be explicitly set
+      subtitulo: "", // Ensure subtitulo is always set
       autor: newBook.autor,
       isbn: newBook.isbn || `ISBN-${newId}`,
       asin: newBook.asin || `ASIN-${newId}`,
