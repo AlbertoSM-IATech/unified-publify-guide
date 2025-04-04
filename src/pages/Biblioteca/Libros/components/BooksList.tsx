@@ -5,7 +5,7 @@ interface BooksListProps {
   libros: Array<{
     id: number;
     titulo: string;
-    subtitulo?: string;
+    subtitulo?: string; // Make subtitulo optional
     autor: string;
     isbn: string;
     asin: string;
