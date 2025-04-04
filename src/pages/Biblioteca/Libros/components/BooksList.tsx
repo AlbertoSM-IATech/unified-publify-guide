@@ -1,11 +1,10 @@
-
 import { BookListItem } from "./BookListItem";
 import { Book } from "../types/bookTypes";
 
 interface BooksListProps {
   libros: Book[];
-  getStatusColor: (estado: string) => string;
-  getContentColor: (contenido: string) => string;
+  getStatusColor: (status: string) => string;
+  getContentColor: (content: string) => string;
 }
 
 export const BooksList = ({ libros, getStatusColor, getContentColor }: BooksListProps) => {

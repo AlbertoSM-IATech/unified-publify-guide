@@ -1,4 +1,3 @@
-
 import { BookOpen } from "lucide-react";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Link } from "react-router-dom";
@@ -6,15 +5,11 @@ import { Book } from "../types/bookTypes";
 
 interface BookGridItemProps {
   libro: Book;
-  getStatusColor: (estado: string) => string;
-  getContentColor: (contenido: string) => string;
+  getStatusColor: (status: string) => string;
+  getContentColor: (content: string) => string;
 }
 
-export const BookGridItem = ({
-  libro,
-  getStatusColor,
-  getContentColor
-}: BookGridItemProps) => {
+export const BookGridItem = ({ libro, getStatusColor, getContentColor }: BookGridItemProps) => {
   return (
     <div className="card-hover group rounded-lg border bg-card shadow-sm">
       <div className="flex h-40 overflow-hidden">

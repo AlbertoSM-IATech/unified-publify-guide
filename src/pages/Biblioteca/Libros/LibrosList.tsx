@@ -35,7 +35,6 @@ export const LibrosList = () => {
     contenido: "Medio Contenido"
   });
 
-  // Filter books by search
   const filteredLibros = libros.filter(
     (libro) =>
       libro.titulo.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -50,7 +49,6 @@ export const LibrosList = () => {
 
   const handleCloseCreateDialog = () => {
     setIsCreatingBook(false);
-    // Reset form
     setNewBook({
       titulo: "",
       autor: "",
@@ -62,7 +60,6 @@ export const LibrosList = () => {
   };
 
   const handleCreateBook = () => {
-    // Validate required fields
     if (!newBook.titulo || !newBook.autor) {
       toast({
         title: "Campos requeridos",
@@ -72,11 +69,11 @@ export const LibrosList = () => {
       return;
     }
 
-    // Create new book
     const newId = Math.max(...libros.map(libro => libro.id), 0) + 1;
     const libro: Book = {
       id: newId,
       titulo: newBook.titulo,
+      subtitulo: "",
       autor: newBook.autor,
       isbn: newBook.isbn || `ISBN-${newId}`,
       asin: newBook.asin || `ASIN-${newId}`,
@@ -86,7 +83,6 @@ export const LibrosList = () => {
       imageUrl: ""
     };
 
-    // Add to simulated books array (in a real app, would send to API)
     librosSimulados.push(libro);
     setLibros([...librosSimulados]);
 
@@ -96,7 +92,6 @@ export const LibrosList = () => {
     });
 
     handleCloseCreateDialog();
-    // Navigate to the new book
     navigate(`/biblioteca/libros/${newId}`);
   };
 
@@ -116,7 +111,6 @@ export const LibrosList = () => {
         </button>
       </div>
 
-      {/* Filters and search bar */}
       <BooksToolbar 
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
@@ -124,7 +118,6 @@ export const LibrosList = () => {
         setViewMode={setViewMode}
       />
 
-      {/* Book list */}
       {viewMode === "grid" ? (
         <BooksGrid 
           libros={filteredLibros} 
@@ -139,7 +132,6 @@ export const LibrosList = () => {
         />
       )}
 
-      {/* Create Book Dialog */}
       <Dialog open={isCreatingBook} onOpenChange={handleCloseCreateDialog}>
         <DialogContent className="sm:max-w-[500px]">
           <DialogHeader>
