@@ -1,19 +1,9 @@
 
 import { BookGridItem } from "./BookGridItem";
+import { Book } from "../types/bookTypes";
 
 interface BooksGridProps {
-  libros: Array<{
-    id: number;
-    titulo: string;
-    subtitulo?: string; // Make subtitulo optional
-    autor: string;
-    isbn: string;
-    asin: string;
-    estado: string;
-    contenido: string;
-    fechaPublicacion: string | null;
-    imageUrl: string;
-  }>;
+  libros: Book[];
   getStatusColor: (estado: string) => string;
   getContentColor: (contenido: string) => string;
 }

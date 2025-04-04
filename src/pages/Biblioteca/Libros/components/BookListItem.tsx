@@ -1,19 +1,9 @@
 
 import { Link } from "react-router-dom";
+import { Book } from "../types/bookTypes";
 
 interface BookListItemProps {
-  libro: {
-    id: number;
-    titulo: string;
-    subtitulo?: string; // Make subtitulo optional
-    autor: string;
-    isbn: string;
-    asin: string;
-    estado: string;
-    contenido: string;
-    fechaPublicacion: string | null;
-    imageUrl: string;
-  };
+  libro: Book;
   getStatusColor: (estado: string) => string;
   getContentColor: (contenido: string) => string;
 }
