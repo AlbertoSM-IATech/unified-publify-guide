@@ -84,7 +84,7 @@ export const LibrosList = () => {
       contenido: newBook.contenido,
       fechaPublicacion: null,
       imageUrl: "", // Placeholder, would be updated with actual image upload in real app
-      subtitulo: "" // Add default value for subtitulo
+      subtitulo: "" // Provide an empty string as default value
     };
 
     // Add to simulated books array (in a real app, would send to API)
