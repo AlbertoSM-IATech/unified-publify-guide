@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Plus } from "lucide-react";
@@ -73,7 +74,7 @@ export const LibrosList = () => {
     const libro: Book = {
       id: newId,
       titulo: newBook.titulo,
-      subtitulo: "",
+      subtitulo: "", // Explicitly set subtitulo to empty string
       autor: newBook.autor,
       isbn: newBook.isbn || `ISBN-${newId}`,
       asin: newBook.asin || `ASIN-${newId}`,
