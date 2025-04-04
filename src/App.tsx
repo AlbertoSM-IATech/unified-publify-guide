@@ -1,8 +1,9 @@
 
 import { useEffect } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import MainLayout from "@/components/layout/MainLayout";
 import { LandingPage } from "@/pages/LandingPage/LandingPage";
+import { Login } from "@/pages/Auth/Login";
 import { Dashboard } from "@/pages/Dashboard/Dashboard";
 import { LibrosList } from "@/pages/Biblioteca/Libros/LibrosList";
 import BookDetail from "@/pages/Biblioteca/Libros/BookDetail";
@@ -34,6 +35,7 @@ function App() {
       <Routes>
         {/* Public routes */}
         <Route path="/" element={<LandingPage />} />
+        <Route path="/login" element={<Login />} />
         
         {/* Protected routes */}
         <Route element={<ProtectedRoute />}>
@@ -61,6 +63,9 @@ function App() {
             <Route path="/perfil" element={<Perfil />} />
           </Route>
         </Route>
+        
+        {/* Redirect from /login to /dashboard if already authenticated */}
+        <Route path="/index.html" element={<Navigate to="/" replace />} />
         
         {/* 404 catch-all route */}
         <Route path="*" element={<NotFound />} />

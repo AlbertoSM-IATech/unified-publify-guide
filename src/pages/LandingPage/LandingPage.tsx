@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { BookOpen, ChevronRight, BookMarked, LineChart, Settings, Menu, X } from "lucide-react";
 import { useTheme } from "@/hooks/useTheme";
 
@@ -9,11 +9,11 @@ export const LandingPage = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const handleLogin = () => {
-    navigate("/");
+    navigate("/login");
   };
 
   const handleRegister = () => {
-    navigate("/");
+    navigate("/login");
   };
 
   const features = [
