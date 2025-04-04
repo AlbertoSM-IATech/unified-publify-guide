@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Plus } from "lucide-react";
 import { BooksToolbar } from "./components/BooksToolbar";
@@ -23,7 +23,13 @@ import { Book } from "./types/bookTypes";
 
 export const LibrosList = () => {
   const navigate = useNavigate();
-  const [viewMode, setViewMode] = useState<"grid" | "list">("list"); // Set default to list view
+  
+  // Retrieve view mode from localStorage or default to "grid"
+  const [viewMode, setViewMode] = useState<"grid" | "list">(() => {
+    const savedMode = localStorage.getItem("libroViewMode");
+    return (savedMode === "list" || savedMode === "grid") ? savedMode : "grid";
+  });
+  
   const [searchQuery, setSearchQuery] = useState("");
   const [libros, setLibros] = useState<Book[]>(librosSimulados);
   const [isCreatingBook, setIsCreatingBook] = useState(false);
@@ -35,6 +41,11 @@ export const LibrosList = () => {
     estado: "Borrador",
     contenido: "Medio Contenido"
   });
+
+  // Persist view mode in localStorage
+  useEffect(() => {
+    localStorage.setItem("libroViewMode", viewMode);
+  }, [viewMode]);
 
   const filteredLibros = libros.filter(
     (libro) =>
