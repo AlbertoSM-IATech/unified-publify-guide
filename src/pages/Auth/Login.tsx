@@ -11,8 +11,8 @@ export const Login = () => {
   const navigate = useNavigate();
   const { login } = useAuth();
   const { toast } = useToast();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("demo@publify.com");
+  const [password, setPassword] = useState("password");
   const [isLoading, setIsLoading] = useState(false);
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -20,14 +20,15 @@ export const Login = () => {
     setIsLoading(true);
     
     try {
-      // For demo purposes, we're just simulating a login
+      // TEMPORARY: Authentication is disabled, just simulate login
       await login(email, password);
       toast({
         title: "Inicio de sesión exitoso",
-        description: "Bienvenido a Publify",
+        description: "Modo de desarrollo: Autenticación desactivada temporalmente",
       });
       navigate("/dashboard");
     } catch (error) {
+      // This should never happen in dev mode
       toast({
         title: "Error de inicio de sesión",
         description: "Credenciales inválidas. Por favor, inténtalo de nuevo.",
@@ -36,6 +37,15 @@ export const Login = () => {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  // TEMPORARY: Direct access to dashboard without login
+  const handleDirectAccess = () => {
+    toast({
+      title: "Acceso directo activado",
+      description: "Modo de desarrollo: Navegando directamente al dashboard",
+    });
+    navigate("/dashboard");
   };
 
   return (
@@ -93,6 +103,15 @@ export const Login = () => {
             disabled={isLoading}
           >
             {isLoading ? "Iniciando sesión..." : "Iniciar sesión"}
+          </Button>
+          
+          {/* TEMPORARY: Direct access button for development */}
+          <Button
+            type="button"
+            className="w-full bg-emerald-600 hover:bg-emerald-700"
+            onClick={handleDirectAccess}
+          >
+            Acceso Directo (Modo Desarrollo)
           </Button>
         </form>
 

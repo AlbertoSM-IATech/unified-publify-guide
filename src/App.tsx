@@ -37,7 +37,7 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<Login />} />
         
-        {/* Protected routes */}
+        {/* All routes are now accessible without authentication */}
         <Route element={<ProtectedRoute />}>
           <Route element={<MainLayout />}>
             {/* Dashboard */}
@@ -64,7 +64,7 @@ function App() {
           </Route>
         </Route>
         
-        {/* Redirect from /login to /dashboard if already authenticated */}
+        {/* Redirects */}
         <Route path="/index.html" element={<Navigate to="/" replace />} />
         
         {/* 404 catch-all route */}

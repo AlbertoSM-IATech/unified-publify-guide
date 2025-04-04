@@ -1,25 +1,14 @@
 
-import { Navigate, Outlet, useLocation } from "react-router-dom";
-import { useAuth } from "@/contexts/AuthContext";
-import { LoadingState } from "@/components/common/LoadingState";
+import { Outlet } from "react-router-dom";
 
 /**
- * Protected route component to restrict access to authenticated users
+ * Protected route component - TEMPORARILY DISABLED
+ * Currently allows all access without authentication checks
  */
 export const ProtectedRoute = () => {
-  const { isAuthenticated, isLoading } = useAuth();
-  const location = useLocation();
-
-  // Show loading state while checking authentication
-  if (isLoading) {
-    return <LoadingState fullPage text="Verificando autenticación..." />;
-  }
-
-  // Redirect to login if not authenticated
-  if (!isAuthenticated) {
-    return <Navigate to="/login" state={{ from: location }} replace />;
-  }
-
-  // Render children if authenticated
+  // TEMPORARY: Allow access to all routes without authentication
+  console.log("Authentication check bypassed - temporary development mode");
+  
+  // Always render the protected content without checking authentication
   return <Outlet />;
 };

@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState } from "react";
 
 // Tipos de usuario
@@ -23,7 +22,7 @@ type AuthActions = {
   signup: (email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
   resetPassword: (email: string) => Promise<void>;
-  updateUser: (userData: Partial<User>) => Promise<void>; // Add the updateUser method
+  updateUser: (userData: Partial<User>) => Promise<void>;
 };
 
 // Contexto completo
@@ -34,11 +33,11 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 // Proveedor del contexto
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  // Por ahora simulamos un estado inicial - luego lo integraremos con Supabase
+  // TEMPORARY: Set default authentication state to authenticated with a mock user
   const [authState, setAuthState] = useState<AuthState>({
-    user: null, // Usuario actual
-    isAuthenticated: false, // ¿Está autenticado?
-    isLoading: false, // ¿Está cargando?
+    user: { id: "temp-user-id", email: "demo@publify.com", nombre: "Usuario Temporal" },
+    isAuthenticated: true, // Always authenticated by default
+    isLoading: false,
   });
 
   // Placeholder para las funciones de autenticación
@@ -46,11 +45,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const login = async (email: string, password: string) => {
     setAuthState((prev) => ({ ...prev, isLoading: true }));
     
-    // Simulación de login exitoso (se reemplazará con Supabase)
-    console.log(`Login intento con: ${email}`);
+    // TEMPORARY: Always succeed with login
+    console.log(`Login simulado con: ${email}`);
     
     // Simulación de usuario
-    const user = { id: "123", email };
+    const user = { id: "temp-user-id", email, nombre: "Usuario Temporal" };
     
     setAuthState({
       user,
@@ -64,7 +63,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     console.log(`Registro intento con: ${email}`);
     
     // Simulación de usuario nuevo
-    const user = { id: "123", email };
+    const user = { id: "temp-user-id", email };
     
     setAuthState({
       user,
