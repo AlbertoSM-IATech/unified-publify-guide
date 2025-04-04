@@ -74,7 +74,7 @@ export const LibrosList = () => {
     const libro: Book = {
       id: newId,
       titulo: newBook.titulo,
-      subtitulo: "", // Explicitly set subtitulo to empty string
+      subtitulo: "", // This field must be explicitly set
       autor: newBook.autor,
       isbn: newBook.isbn || `ISBN-${newId}`,
       asin: newBook.asin || `ASIN-${newId}`,
