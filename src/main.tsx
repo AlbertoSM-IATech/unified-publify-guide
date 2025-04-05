@@ -7,7 +7,15 @@ import { ThemeProvider } from './hooks/useTheme.tsx'
 import { AuthProvider } from './contexts/AuthContext';
 import { UserProvider } from './contexts/UserContext';
 
-createRoot(document.getElementById("root")!).render(
+const container = document.getElementById('root');
+
+if (!container) {
+  throw new Error('Root element not found. Cannot mount React application.');
+}
+
+const root = createRoot(container);
+
+root.render(
   <BrowserRouter>
     <AuthProvider>
       <UserProvider>
