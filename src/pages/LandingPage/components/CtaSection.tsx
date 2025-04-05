@@ -13,6 +13,19 @@ const fadeIn = {
   }
 };
 
+// Pulsing animation keyframes
+const pulseAnimation = {
+  initial: { boxShadow: "0 0 0 0 rgba(59, 130, 246, 0.4)" },
+  animate: {
+    boxShadow: "0 0 0 15px rgba(59, 130, 246, 0)",
+    transition: {
+      repeat: Infinity,
+      duration: 2,
+      ease: "easeInOut"
+    }
+  }
+};
+
 export const CtaSection = () => {
   const navigate = useNavigate();
 
@@ -42,13 +55,20 @@ export const CtaSection = () => {
           whileHover={{ scale: 1.05 }}
           transition={{ type: "spring", stiffness: 400, damping: 10 }}
         >
-          <Button 
-            onClick={handleGetStarted}
-            className="text-lg px-8 py-6 shadow-lg"
-            size="lg"
+          <motion.div
+            initial="initial"
+            animate="animate"
+            variants={pulseAnimation}
+            className="inline-block rounded-md"
           >
-            Solicitar acceso anticipado
-          </Button>
+            <Button 
+              onClick={handleGetStarted}
+              className="text-lg px-8 py-6 shadow-lg"
+              size="lg"
+            >
+              Solicitar acceso anticipado
+            </Button>
+          </motion.div>
         </motion.div>
       </motion.div>
     </section>

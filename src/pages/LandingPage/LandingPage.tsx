@@ -6,6 +6,8 @@ import { FeaturesSection } from "./components/FeaturesSection";
 import { FeaturesGrid } from "./components/FeaturesGrid";
 import { BenefitsSection } from "./components/BenefitsSection";
 import { FinanceSection } from "./components/FinanceSection";
+import { TestimonialsSection } from "./components/TestimonialsSection";
+import { VisualsSection } from "./components/VisualsSection";
 import { CtaSection } from "./components/CtaSection";
 import { FaqSection } from "./components/FaqSection";
 import { Footer } from "./components/Footer";
@@ -19,6 +21,8 @@ export const LandingPage = () => {
       <FeaturesSection />
       <FeaturesGrid />
       <BenefitsSection />
+      <TestimonialsSection />
+      <VisualsSection />
       <FinanceSection />
       <CtaSection />
       <FaqSection />
