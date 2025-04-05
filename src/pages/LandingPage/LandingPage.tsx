@@ -1,4 +1,5 @@
 
+import { motion } from "framer-motion";
 import { Header } from "./components/Header";
 import { Hero } from "./components/Hero";
 import { ChaosSection } from "./components/ChaosSection";
@@ -12,9 +13,25 @@ import { CtaSection } from "./components/CtaSection";
 import { FaqSection } from "./components/FaqSection";
 import { Footer } from "./components/Footer";
 
+// Animation variants for page sections
+const pageVariants = {
+  hidden: { opacity: 0 },
+  visible: { 
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.2
+    }
+  }
+};
+
 export const LandingPage = () => {
   return (
-    <div className="flex min-h-screen flex-col bg-background font-sans">
+    <motion.div 
+      className="flex min-h-screen flex-col bg-background font-sans"
+      initial="hidden"
+      animate="visible"
+      variants={pageVariants}
+    >
       <Header />
       <Hero />
       <ChaosSection />
@@ -27,7 +44,7 @@ export const LandingPage = () => {
       <CtaSection />
       <FaqSection />
       <Footer />
-    </div>
+    </motion.div>
   );
 };
 
