@@ -71,7 +71,7 @@ const Header = ({
           whileTap={{ scale: 0.95 }}
         >
           <Avatar className="h-8 w-8">
-            <AvatarImage src={user?.imageUrl || undefined} alt={user?.nombre || "Usuario"} />
+            <AvatarImage src={user?.avatarUrl || undefined} alt={user?.nombre || "Usuario"} />
             <AvatarFallback>
               <User size={20} className="text-muted-foreground" />
             </AvatarFallback>

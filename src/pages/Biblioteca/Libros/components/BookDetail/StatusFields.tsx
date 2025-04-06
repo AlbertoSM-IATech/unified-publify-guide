@@ -1,5 +1,5 @@
 
-import { Book } from "../../../types/bookTypes";
+import { Book } from "../../types/bookTypes";
 import { Label } from "@/components/ui/label";
 import { FormField } from "@/components/ui/form";
 import { UseFormReturn } from "react-hook-form";

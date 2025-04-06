@@ -1,5 +1,5 @@
 
-import { Book } from "../../../types/bookTypes";
+import { Book } from "../../types/bookTypes";
 import { Link } from "react-router-dom";
 import { Label } from "@/components/ui/label";
 import { FormField } from "@/components/ui/form";
