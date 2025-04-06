@@ -5,6 +5,7 @@ import { Book } from "../../types/bookTypes";
 import { BookOpen, Upload, UploadCloud } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/hooks/use-toast";
+import { motion } from "framer-motion";
 
 interface BookCoverProps {
   book: Book;
@@ -63,22 +64,26 @@ export const BookCover = ({ book, isEditing, onUpdateBook }: BookCoverProps) => 
   };
   
   return (
-    <div className="relative overflow-hidden rounded-t-lg bg-muted">
-      <AspectRatio ratio={3/4} className="w-full">
+    <motion.div 
+      className="relative overflow-hidden rounded-t-lg bg-muted"
+      whileHover={{ boxShadow: "0 0 15px rgba(251, 146, 60, 0.5), 0 0 20px rgba(251, 146, 60, 0.3)" }}
+      transition={{ duration: 0.3 }}
+    >
+      <AspectRatio ratio={1600/2560} className="w-full">
         {coverPreview ? (
           <img 
             src={coverPreview} 
             alt={book.titulo} 
-            className="h-full w-full object-cover transition-all hover:scale-105" 
+            className="h-full w-full object-cover transition-all duration-300 hover:scale-105" 
           />
         ) : (
-          <div className="flex h-full w-full items-center justify-center bg-muted">
+          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-secondary/20 to-background">
             <BookOpen className="h-20 w-20 text-muted-foreground/30" />
           </div>
         )}
         
         {isEditing && (
-          <div className="absolute inset-0 flex items-center justify-center bg-black/70">
+          <div className="absolute inset-0 flex items-center justify-center bg-black/70 opacity-0 hover:opacity-100 transition-opacity duration-300">
             <label htmlFor="cover-upload" className="cursor-pointer">
               <div className="flex flex-col items-center space-y-2 rounded-md bg-background/10 p-4 text-white backdrop-blur-sm">
                 <UploadCloud className="h-10 w-10" />
@@ -100,6 +105,6 @@ export const BookCover = ({ book, isEditing, onUpdateBook }: BookCoverProps) => 
           </div>
         )}
       </AspectRatio>
-    </div>
+    </motion.div>
   );
 };

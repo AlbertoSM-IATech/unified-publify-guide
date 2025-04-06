@@ -21,6 +21,10 @@ const Header = ({
     navigate("/perfil");
   };
 
+  const handleDashboardClick = () => {
+    navigate("/dashboard");
+  };
+
   return (
     <motion.header 
       initial={{ y: -20, opacity: 0 }}
@@ -38,7 +42,14 @@ const Header = ({
       </motion.button>
       
       <div className="ml-4 mr-auto">
-        {/* Se puede agregar un buscador o título de página aquí */}
+        <motion.button 
+          onClick={handleDashboardClick}
+          className="text-foreground font-medium hover:text-primary transition-colors"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          Dashboard
+        </motion.button>
       </div>
       
       <div className="flex items-center space-x-2">

@@ -11,7 +11,7 @@ const containerVariants = {
     opacity: 1,
     transition: { 
       when: "beforeChildren",
-      staggerChildren: 0.1,
+      staggerChildren: 0.15,
       duration: 0.5
     }
   }
@@ -66,38 +66,44 @@ const BookDetail = () => {
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      className="animate-fade-in p-6"
+      className="p-6 relative"
     >
-      <motion.div variants={itemVariants}>
-        <BookHeader 
-          isEditing={isEditing}
-          onGoBack={handleGoBack}
-          onEdit={handleEdit}
-          onSave={handleSave}
-          onDelete={handleDelete}
-          onCancel={handleCancel}
-          isSaving={saving}
-        />
-      </motion.div>
-
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-        {/* Left column: Book cover and basic info card */}
-        <motion.div variants={itemVariants} className="lg:col-span-1">
-          <BookSidebar 
-            book={bookData} 
-            isEditing={isEditing} 
-            onUpdateBook={handleUpdateBook} 
+      {/* Animated background gradient */}
+      <div className="absolute top-24 -left-20 w-72 h-72 bg-[#FB923C]/10 rounded-full filter blur-3xl animate-pulse-soft" />
+      <div className="absolute bottom-20 -right-20 w-80 h-80 bg-[#3B82F6]/10 rounded-full filter blur-3xl animate-pulse-soft [animation-delay:-.5s]" />
+      
+      <div className="relative z-10">
+        <motion.div variants={itemVariants}>
+          <BookHeader 
+            isEditing={isEditing}
+            onGoBack={handleGoBack}
+            onEdit={handleEdit}
+            onSave={handleSave}
+            onDelete={handleDelete}
+            onCancel={handleCancel}
+            isSaving={saving}
           />
         </motion.div>
 
-        {/* Right column: Tabs with detailed information */}
-        <motion.div variants={itemVariants} className="lg:col-span-2">
-          <DetailedTabs 
-            book={bookData} 
-            isEditing={isEditing} 
-            onUpdateBook={handleUpdateBook} 
-          />
-        </motion.div>
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+          {/* Left column: Book cover and basic info card */}
+          <motion.div variants={itemVariants} className="lg:col-span-1">
+            <BookSidebar 
+              book={bookData} 
+              isEditing={isEditing} 
+              onUpdateBook={handleUpdateBook} 
+            />
+          </motion.div>
+
+          {/* Right column: Tabs with detailed information */}
+          <motion.div variants={itemVariants} className="lg:col-span-2">
+            <DetailedTabs 
+              book={bookData} 
+              isEditing={isEditing} 
+              onUpdateBook={handleUpdateBook} 
+            />
+          </motion.div>
+        </div>
       </div>
     </motion.div>
   );
