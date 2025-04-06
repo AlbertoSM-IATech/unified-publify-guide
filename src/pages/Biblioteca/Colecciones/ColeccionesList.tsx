@@ -15,6 +15,8 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { motion } from "framer-motion";
+import { ResponsiveGrid } from "@/components/layout/ResponsiveGrid";
 
 // Datos simulados para colecciones
 const coleccionesSimuladas = [
@@ -176,55 +178,73 @@ const ColeccionesList = () => {
 
       {/* Lista de colecciones */}
       {viewMode === "grid" ? (
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <ResponsiveGrid 
+          columns={{ sm: 1, md: 2, lg: 2, xl: 2 }}
+          gap="lg"
+          className="mt-6"
+        >
           {filteredColecciones.map((coleccion) => (
-            <div
+            <motion.div
               key={coleccion.id}
-              className="card-hover group rounded-lg border bg-card shadow-sm"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+              whileHover={{ 
+                y: -5,
+                transition: { duration: 0.2 }
+              }}
+              className="h-full"
             >
-              <div className="p-6">
-                <div className="flex items-start justify-between">
-                  <div className="rounded-full bg-primary/10 p-3">
-                    <FolderIcon size={24} className="text-primary" />
+              <div className="card-hover group rounded-lg border bg-card shadow-sm h-full flex overflow-hidden">
+                {/* Left side - Icon */}
+                <div className="bg-primary/10 flex items-center justify-center p-6 w-1/4">
+                  <FolderIcon size={48} className="text-primary" />
+                </div>
+                
+                {/* Right side - Content */}
+                <div className="p-6 flex flex-col justify-between flex-1">
+                  <div>
+                    <div className="flex justify-between items-center mb-2">
+                      <h3 className="font-medium text-lg">{coleccion.nombre}</h3>
+                      <span className="flex items-center rounded-full bg-muted px-2.5 py-0.5 text-xs font-medium">
+                        {coleccion.cantidadLibros} libros
+                      </span>
+                    </div>
+                    <p className="mt-1 text-sm text-muted-foreground line-clamp-2">
+                      {coleccion.descripcion}
+                    </p>
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      {coleccion.libros.slice(0, 3).map((libroId) => (
+                        <div
+                          key={libroId}
+                          className="flex h-8 w-8 items-center justify-center rounded-full bg-secondary text-secondary-foreground"
+                        >
+                          <BookOpen size={14} />
+                        </div>
+                      ))}
+                      {coleccion.libros.length > 3 && (
+                        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-muted text-xs font-medium">
+                          +{coleccion.libros.length - 3}
+                        </div>
+                      )}
+                    </div>
                   </div>
-                  <span className="flex items-center rounded-full bg-muted px-2.5 py-0.5 text-xs font-medium">
-                    {coleccion.cantidadLibros} libros
-                  </span>
-                </div>
-                <h3 className="mt-4 font-medium">{coleccion.nombre}</h3>
-                <p className="mt-1 text-sm text-muted-foreground">
-                  {coleccion.descripcion}
-                </p>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {coleccion.libros.slice(0, 3).map((libroId) => (
-                    <div
-                      key={libroId}
-                      className="flex h-8 w-8 items-center justify-center rounded-full bg-secondary text-secondary-foreground"
+                  <div className="mt-4 flex justify-between border-t border-border pt-4">
+                    <span className="text-xs text-muted-foreground">
+                      Creada: {new Date(coleccion.fechaCreacion).toLocaleDateString()}
+                    </span>
+                    <Link 
+                      to={`/biblioteca/colecciones/${coleccion.id}`}
+                      className="text-xs font-medium text-primary hover:underline"
                     >
-                      <BookOpen size={14} />
-                    </div>
-                  ))}
-                  {coleccion.libros.length > 3 && (
-                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-muted text-xs font-medium">
-                      +{coleccion.libros.length - 3}
-                    </div>
-                  )}
-                </div>
-                <div className="mt-4 flex justify-between border-t border-border pt-4">
-                  <span className="text-xs text-muted-foreground">
-                    Creada: {new Date(coleccion.fechaCreacion).toLocaleDateString()}
-                  </span>
-                  <Link 
-                    to={`/biblioteca/colecciones/${coleccion.id}`}
-                    className="text-xs font-medium text-primary hover:underline"
-                  >
-                    Ver detalles
-                  </Link>
+                      Ver detalles
+                    </Link>
+                  </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </ResponsiveGrid>
       ) : (
         <div className="rounded-lg border bg-card shadow-sm">
           <table className="min-w-full divide-y divide-border">

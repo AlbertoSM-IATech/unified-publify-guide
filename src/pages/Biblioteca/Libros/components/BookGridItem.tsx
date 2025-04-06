@@ -26,12 +26,12 @@ export const BookGridItem = ({ libro, getStatusColor, getContentColor }: BookGri
     >
       <Card className="overflow-hidden transition-all duration-300 hover:shadow-lg dark:hover:shadow-primary/10 h-full bg-card border border-border relative group">
         <CardContent className="p-0 h-full">
-          <div className="flex flex-col h-full">
+          <div className="flex flex-row h-full">
             {/* Book cover with proper aspect ratio 1600x2560 */}
-            <div className="relative w-full bg-muted flex-shrink-0 overflow-hidden">
+            <div className="relative w-1/3 bg-muted flex-shrink-0 overflow-hidden">
               {libro.imageUrl ? (
-                <div className="w-full overflow-hidden">
-                  <AspectRatio ratio={1600/2560} className="w-full">
+                <div className="h-full overflow-hidden">
+                  <AspectRatio ratio={1600/2560} className="h-full">
                     <motion.img 
                       src={libro.imageUrl} 
                       alt={libro.titulo} 
@@ -42,7 +42,7 @@ export const BookGridItem = ({ libro, getStatusColor, getContentColor }: BookGri
                   </AspectRatio>
                 </div>
               ) : (
-                <AspectRatio ratio={1600/2560} className="w-full">
+                <AspectRatio ratio={1600/2560} className="h-full">
                   <motion.div 
                     className="flex h-full w-full items-center justify-center bg-gradient-to-br from-secondary/30 to-accent/10"
                     whileHover={{ 
