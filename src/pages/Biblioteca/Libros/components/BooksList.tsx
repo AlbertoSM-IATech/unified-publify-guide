@@ -1,5 +1,7 @@
+
 import { BookListItem } from "./BookListItem";
 import { Book } from "../types/bookTypes";
+import { motion } from "framer-motion";
 
 interface BooksListProps {
   libros: Book[];
@@ -7,9 +9,33 @@ interface BooksListProps {
   getContentColor: (content: string) => string;
 }
 
+const tableVariants = {
+  hidden: { opacity: 0 },
+  visible: { 
+    opacity: 1,
+    transition: {
+      when: "beforeChildren",
+      staggerChildren: 0.1
+    }
+  }
+};
+
+const rowVariants = {
+  hidden: { y: 20, opacity: 0 },
+  visible: { 
+    y: 0, 
+    opacity: 1,
+    transition: { 
+      type: "spring",
+      stiffness: 100,
+      damping: 15
+    }
+  }
+};
+
 export const BooksList = ({ libros, getStatusColor, getContentColor }: BooksListProps) => {
   return (
-    <div className="rounded-lg border bg-card shadow-sm">
+    <div className="rounded-lg border bg-card shadow-sm overflow-hidden">
       <table className="min-w-full divide-y divide-border">
         <thead className="bg-muted/50">
           <tr>
@@ -33,16 +59,22 @@ export const BooksList = ({ libros, getStatusColor, getContentColor }: BooksList
             </th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-border bg-background">
+        <motion.tbody 
+          className="divide-y divide-border bg-background"
+          variants={tableVariants}
+          initial="hidden"
+          animate="visible"
+        >
           {libros.map((libro) => (
-            <BookListItem 
-              key={libro.id} 
-              libro={libro} 
-              getStatusColor={getStatusColor}
-              getContentColor={getContentColor}
-            />
+            <motion.tr key={libro.id} variants={rowVariants}>
+              <BookListItem 
+                libro={libro} 
+                getStatusColor={getStatusColor}
+                getContentColor={getContentColor}
+              />
+            </motion.tr>
           ))}
-        </tbody>
+        </motion.tbody>
       </table>
     </div>
   );

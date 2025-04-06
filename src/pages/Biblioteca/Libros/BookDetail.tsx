@@ -3,6 +3,32 @@ import { useBookDetail } from "./hooks/useBookDetail";
 import { BookHeader } from "./components/BookDetail/BookHeader";
 import { BookSidebar } from "./components/BookDetail/BookSidebar";
 import { DetailedTabs } from "./components/BookDetail/DetailedTabs";
+import { motion } from "framer-motion";
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: { 
+    opacity: 1,
+    transition: { 
+      when: "beforeChildren",
+      staggerChildren: 0.1,
+      duration: 0.5
+    }
+  }
+};
+
+const itemVariants = {
+  hidden: { y: 20, opacity: 0 },
+  visible: { 
+    y: 0, 
+    opacity: 1,
+    transition: {
+      type: "spring",
+      stiffness: 100,
+      damping: 15
+    }
+  }
+};
 
 const BookDetail = () => {
   const {
@@ -19,41 +45,61 @@ const BookDetail = () => {
   } = useBookDetail();
 
   if (!libroOriginal || !bookData) {
-    return <div className="p-6">Cargando libro...</div>;
+    return (
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="p-6 flex justify-center items-center h-64"
+      >
+        <div className="animate-pulse flex space-x-3">
+          <div className="h-4 w-4 bg-primary rounded-full animate-bounce"></div>
+          <div className="h-4 w-4 bg-primary rounded-full animate-bounce [animation-delay:-.3s]"></div>
+          <div className="h-4 w-4 bg-primary rounded-full animate-bounce [animation-delay:-.5s]"></div>
+        </div>
+        <span className="ml-3">Cargando libro...</span>
+      </motion.div>
+    );
   }
 
   return (
-    <div className="animate-fade-in p-6">
-      <BookHeader 
-        isEditing={isEditing}
-        onGoBack={handleGoBack}
-        onEdit={handleEdit}
-        onSave={handleSave}
-        onDelete={handleDelete}
-        onCancel={handleCancel}
-        isSaving={saving}
-      />
+    <motion.div 
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      className="animate-fade-in p-6"
+    >
+      <motion.div variants={itemVariants}>
+        <BookHeader 
+          isEditing={isEditing}
+          onGoBack={handleGoBack}
+          onEdit={handleEdit}
+          onSave={handleSave}
+          onDelete={handleDelete}
+          onCancel={handleCancel}
+          isSaving={saving}
+        />
+      </motion.div>
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         {/* Left column: Book cover and basic info card */}
-        <div className="lg:col-span-1">
+        <motion.div variants={itemVariants} className="lg:col-span-1">
           <BookSidebar 
             book={bookData} 
             isEditing={isEditing} 
             onUpdateBook={handleUpdateBook} 
           />
-        </div>
+        </motion.div>
 
         {/* Right column: Tabs with detailed information */}
-        <div className="lg:col-span-2">
+        <motion.div variants={itemVariants} className="lg:col-span-2">
           <DetailedTabs 
             book={bookData} 
             isEditing={isEditing} 
             onUpdateBook={handleUpdateBook} 
           />
-        </div>
+        </motion.div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

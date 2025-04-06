@@ -70,6 +70,18 @@ export default {
           'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
           border: 'hsl(var(--sidebar-border))',
           ring: 'hsl(var(--sidebar-ring))'
+        },
+        // Add the custom color palette
+        status: {
+          published: '#10B981', // Green
+          draft: '#6366F1',     // Indigo
+          review: '#F59E0B',    // Amber
+          archived: '#EF4444'   // Red
+        },
+        content: {
+          high: '#3B82F6',    // Blue
+          medium: '#FB923C',  // Coral Orange
+          low: '#10B981'      // Green
         }
       },
       borderRadius: {
@@ -98,6 +110,22 @@ export default {
           '0%': { transform: 'scale(0.95)', opacity: '0' },
           '100%': { transform: 'scale(1)', opacity: '1' },
         },
+        'float': {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-5px)' },
+        },
+        'pulse-soft': {
+          '0%, 100%': { opacity: '1' },
+          '50%': { opacity: '0.8' },
+        },
+        'glow': {
+          '0%, 100%': { 
+            boxShadow: '0 0 5px rgba(251, 146, 60, 0.5), 0 0 10px rgba(251, 146, 60, 0.3)' 
+          },
+          '50%': { 
+            boxShadow: '0 0 15px rgba(251, 146, 60, 0.8), 0 0 20px rgba(251, 146, 60, 0.5)' 
+          },
+        }
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
@@ -105,6 +133,9 @@ export default {
         'fade-in': 'fade-in 0.3s ease-out',
         'fade-out': 'fade-out 0.3s ease-out',
         'scale-in': 'scale-in 0.2s ease-out',
+        'float': 'float 3s ease-in-out infinite',
+        'pulse-soft': 'pulse-soft 2s ease-in-out infinite',
+        'glow': 'glow 2s ease-in-out infinite',
       },
     },
   },

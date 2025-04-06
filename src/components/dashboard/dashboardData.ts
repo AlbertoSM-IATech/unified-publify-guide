@@ -2,16 +2,16 @@
 import { LucideIcon } from "lucide-react";
 import { BookOpen, Users, TrendingUp, TrendingDown } from "lucide-react";
 
-// Chart configuration
+// Chart configuration with consistent colors
 export const CHART_CONFIG = {
-  altoContenido: { theme: { light: "#3b82f6", dark: "#3b82f6" } },
-  medioContenido: { theme: { light: "#f97316", dark: "#f97316" } },
-  bajoContenido: { theme: { light: "#10b981", dark: "#10b981" } }, // Verde
-  publicados: { theme: { light: "#10b981", dark: "#10b981" } },
-  enRevision: { theme: { light: "#f59e0b", dark: "#f59e0b" } },
-  borradores: { theme: { light: "#6366f1", dark: "#6366f1" } },
-  sinEmpezar: { theme: { light: "#ef4444", dark: "#ef4444" } },
-  balance: { theme: { light: "#6366f1", dark: "#6366f1" } }, // Añadido para el gráfico de balance
+  altoContenido: { theme: { light: "#3B82F6", dark: "#3B82F6" } }, // Blue
+  medioContenido: { theme: { light: "#FB923C", dark: "#FB923C" } }, // Coral Orange
+  bajoContenido: { theme: { light: "#10B981", dark: "#10B981" } }, // Green
+  publicados: { theme: { light: "#10B981", dark: "#10B981" } }, // Green
+  enRevision: { theme: { light: "#F59E0B", dark: "#F59E0B" } }, // Amber
+  borradores: { theme: { light: "#6366F1", dark: "#6366F1" } }, // Indigo
+  sinEmpezar: { theme: { light: "#EF4444", dark: "#EF4444" } }, // Red
+  balance: { theme: { light: "#6366F1", dark: "#6366F1" } }, // Indigo for balance
 };
 
 // Stats data structure

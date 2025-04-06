@@ -1,4 +1,3 @@
-
 import { Book } from "../types/bookTypes";
 
 // Mock data for books
@@ -78,31 +77,31 @@ export const librosSimulados: Book[] = [
 ];
 
 // Function to get status color
-export const getStatusColor = (status: string) => {
+export function getStatusColor(status: string): string {
   switch (status) {
     case "Publicado":
-      return "bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-300";
+      return "#10B981"; // Green
     case "En revisión":
-      return "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-300";
+      return "#F59E0B"; // Amber
     case "Borrador":
-      return "bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-300";
+      return "#6366F1"; // Indigo
     case "Archivado":
-      return "bg-gray-100 text-gray-800 dark:bg-gray-800/50 dark:text-gray-300";
+      return "#EF4444"; // Red
     default:
-      return "bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-300";
+      return "#6B7280"; // Gray
   }
-};
+}
 
 // Function to get content level color
-export const getContentColor = (content: string) => {
+export function getContentColor(content: string): string {
   switch (content) {
     case "Alto Contenido":
-      return "bg-purple-100 text-purple-800 dark:bg-purple-900/20 dark:text-purple-300";
+      return "#3B82F6"; // Blue
     case "Medio Contenido":
-      return "bg-indigo-100 text-indigo-800 dark:bg-indigo-900/20 dark:text-indigo-300";
+      return "#FB923C"; // Coral Orange
     case "Bajo Contenido":
-      return "bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-300";
+      return "#10B981"; // Green
     default:
-      return "bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-300";
+      return "#6B7280"; // Gray
   }
-};
+}

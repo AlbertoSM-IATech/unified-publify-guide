@@ -66,8 +66,6 @@ function App() {
         
         {/* Redirects */}
         <Route path="/index.html" element={<Navigate to="/" replace />} />
-        
-        {/* 404 catch-all route */}
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>

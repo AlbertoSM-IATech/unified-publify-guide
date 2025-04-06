@@ -27,7 +27,6 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { librosSimulados } from "../Biblioteca/Libros/utils/librosUtils";
 
 export const Dashboard = () => {
-  // Use state to hold dashboard data
   const [stats, setStats] = useState(getStatsData());
   const [contentCategories, setContentCategories] = useState(getContentCategoriesData());
   const [pieChartData, setPieChartData] = useState(getPieChartData());
@@ -35,28 +34,35 @@ export const Dashboard = () => {
   const [lineChartData, setLineChartData] = useState(getLineChartData());
   const [libros, setLibros] = useState(librosSimulados);
 
-  // Update dashboard data based on current library
   useEffect(() => {
-    // Update stats with actual book count
     const updatedStats = [...stats];
     updatedStats[0].value = libros.length.toString();
     setStats(updatedStats);
 
-    // Count books by content category
     const altoContenido = libros.filter(libro => libro.contenido === "Alto Contenido").length;
     const medioContenido = libros.filter(libro => libro.contenido === "Medio Contenido").length;
     const bajoContenido = libros.filter(libro => libro.contenido === "Bajo Contenido").length;
 
-    // Count books by status
     const publicados = libros.filter(libro => libro.estado === "Publicado").length;
     const enRevision = libros.filter(libro => libro.estado === "En revisión").length;
     const borradores = libros.filter(libro => libro.estado === "Borrador").length;
     const archivados = libros.filter(libro => libro.estado === "Archivado").length;
     
-    // Update content categories with actual counts
     const updatedContentCategories = [...contentCategories];
     
-    // Update Alto Contenido
+    const statusColors = {
+      "Publicado": "#10B981",
+      "En revisión": "#F59E0B",
+      "Borrador": "#6366F1",
+      "Archivado": "#EF4444"
+    };
+    
+    const contentColors = {
+      "Alto Contenido": "#3B82F6",
+      "Medio Contenido": "#FB923C",
+      "Bajo Contenido": "#10B981"
+    };
+    
     updatedContentCategories[0].count = altoContenido;
     updatedContentCategories[0].statusData = [
       { 
@@ -89,7 +95,6 @@ export const Dashboard = () => {
       }
     ];
     
-    // Update Medio Contenido
     updatedContentCategories[1].count = medioContenido;
     updatedContentCategories[1].statusData = [
       { 
@@ -122,7 +127,6 @@ export const Dashboard = () => {
       }
     ];
     
-    // Update Bajo Contenido
     updatedContentCategories[2].count = bajoContenido;
     updatedContentCategories[2].statusData = [
       { 
@@ -157,20 +161,18 @@ export const Dashboard = () => {
     
     setContentCategories(updatedContentCategories);
     
-    // Update pie chart data with actual counts
     const updatedPieChartData = [
-      { name: "Publicados", value: publicados, color: "#10b981" },
-      { name: "En revisión", value: enRevision, color: "#f59e0b" },
-      { name: "Borradores", value: borradores, color: "#6366f1" },
-      { name: "Archivados", value: archivados, color: "#ef4444" }
+      { name: "Publicados", value: publicados, color: statusColors["Publicado"] },
+      { name: "En revisión", value: enRevision, color: statusColors["En revisión"] },
+      { name: "Borradores", value: borradores, color: statusColors["Borrador"] },
+      { name: "Archivados", value: archivados, color: statusColors["Archivado"] }
     ];
     setPieChartData(updatedPieChartData);
     
-    // Update bar chart data with actual counts
     const updatedBarChartData = [
-      { name: "Alto Contenido", value: altoContenido, color: "#3b82f6" },
-      { name: "Medio Contenido", value: medioContenido, color: "#f97316" },
-      { name: "Bajo Contenido", value: bajoContenido, color: "#10b981" }
+      { name: "Alto Contenido", value: altoContenido, color: contentColors["Alto Contenido"] },
+      { name: "Medio Contenido", value: medioContenido, color: contentColors["Medio Contenido"] },
+      { name: "Bajo Contenido", value: bajoContenido, color: contentColors["Bajo Contenido"] }
     ];
     setBarChartData(updatedBarChartData);
     
@@ -178,7 +180,6 @@ export const Dashboard = () => {
 
   return (
     <div className="p-4 animate-fade-in space-y-8">
-      {/* Header */}
       <div className="mb-6">
         <h1 className="font-heading text-2xl font-bold md:text-3xl">Dashboard</h1>
         <p className="mt-1 text-muted-foreground">
@@ -186,7 +187,6 @@ export const Dashboard = () => {
         </p>
       </div>
 
-      {/* Stats Cards - 4 columnas en desktop, 2 en tablet, 1 en móvil */}
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {stats.map((stat, index) => {
           const Icon = stat.icon;
@@ -202,7 +202,6 @@ export const Dashboard = () => {
         })}
       </div>
 
-      {/* Content Categories - 3 columnas en desktop, 1 en móvil */}
       <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
         <ContentCategoryCard 
           title="Alto Contenido" 
@@ -230,7 +229,6 @@ export const Dashboard = () => {
         />
       </div>
 
-      {/* Line Chart - Ancho completo */}
       <Card className="overflow-hidden">
         <CardHeader className="flex flex-row items-center justify-between pb-2 bg-gray-900">
           <div className="space-y-1">
@@ -255,9 +253,7 @@ export const Dashboard = () => {
         </CardContent>
       </Card>
 
-      {/* Charts section - 2 columnas en desktop, 1 en móvil */}
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-        {/* Pie Chart */}
         <Card className="overflow-hidden">
           <CardHeader className="flex flex-row items-center justify-between pb-2 bg-gray-900">
             <div className="space-y-1">
@@ -284,7 +280,6 @@ export const Dashboard = () => {
           </CardContent>
         </Card>
 
-        {/* Bar Chart */}
         <Card className="overflow-hidden">
           <CardHeader className="flex flex-row items-center justify-between pb-2 bg-gray-900">
             <div className="space-y-1">
@@ -310,7 +305,6 @@ export const Dashboard = () => {
         </Card>
       </div>
 
-      {/* Recent Books - 2 columnas en desktop, 2 en tablet, 1 en móvil */}
       <Card>
         <CardHeader className="pb-3 bg-gray-900">
           <CardTitle className="text-lg font-medium flex items-center gap-2">
@@ -323,10 +317,8 @@ export const Dashboard = () => {
         </CardHeader>
         <CardContent className="my-[31px]">
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-            {/* Display the 6 most recent books */}
             {libros
               .sort((a, b) => {
-                // Sort by most recent (by id for now, should use date in real app)
                 return b.id - a.id;
               })
               .slice(0, 6)
