@@ -10,6 +10,7 @@ export const useBookDetail = () => {
   const navigate = useNavigate();
   const [isEditing, setIsEditing] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [loading, setLoading] = useState(true);
   
   // Find book from simulated data
   const bookId = parseInt(id || "0");
@@ -23,63 +24,77 @@ export const useBookDetail = () => {
 
   // Initialize book data when component mounts
   useEffect(() => {
-    if (libroOriginal) {
-      // Ensure we're extending the libro with proper properties
-      const libro = libroOriginal;
-      
-      const extendedBookData: Book = {
-        ...libro,
-        subtitulo: libro.subtitulo || "", // Ensure subtitulo is always set
-        descripcion: libro.descripcion || "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        hardcover: libro.hardcover || {
-          dimensions: "15.24 x 22.86 cm",
-          isbn: "978-1234567890",
-          asin: "B01ABCDEFG",
-          pages: 300,
-          price: 24.99,
-          royaltyPercentage: 0.60,
-          printingCost: 5.50,
-          files: [
-            { id: 1, name: "manuscrito.pdf", type: "document" },
-            { id: 2, name: "portada.jpg", type: "image" },
-          ],
-          links: {
-            amazon: "https://amazon.com/book1",
-          },
-          strategy: "Enfocarse en ventas directas y posicionamiento en Amazon.",
-        },
-        paperback: libro.paperback || {
-          dimensions: "12.7 x 20.32 cm",
-          isbn: "978-0987654321",
-          asin: "B09HIJKLMN",
-          pages: 300,
-          price: 14.99,
-          royaltyPercentage: 0.70,
-          printingCost: 3.20,
-        },
-        ebook: libro.ebook || {
-          asin: "B01234ABCD",
-          price: 9.99,
-          royaltyPercentage: 0.70,
-          printingCost: 0,
-        },
-        notes: libro.notes || [
-          { id: 1, text: "Contactar a diseñador para mejorar la portada", date: "2023-11-15" },
-          { id: 2, text: "Verificar disponibilidad en tiendas físicas", date: "2023-10-30" },
-        ]
-      };
-      
-      setBookData(extendedBookData);
-    } else {
-      // Mostrar un mensaje si el libro no se encuentra
-      toast({
-        title: "Libro no encontrado",
-        description: `No se encontró un libro con el ID: ${bookId}`,
-        variant: "destructive",
-      });
-      // Redirigir a la lista de libros después de un breve retraso
-      setTimeout(() => navigate('/biblioteca/libros'), 2000);
-    }
+    const fetchBook = async () => {
+      setLoading(true);
+      try {
+        if (libroOriginal) {
+          // Ensure we're extending the libro with proper properties
+          const libro = libroOriginal;
+          
+          const extendedBookData: Book = {
+            ...libro,
+            subtitulo: libro.subtitulo || "", // Ensure subtitulo is always set
+            descripcion: libro.descripcion || "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+            hardcover: libro.hardcover || {
+              dimensions: "15.24 x 22.86 cm",
+              isbn: "978-1234567890",
+              asin: "B01ABCDEFG",
+              pages: 300,
+              price: 24.99,
+              royaltyPercentage: 0.60,
+              printingCost: 5.50,
+              files: [
+                { id: 1, name: "manuscrito.pdf", type: "document" },
+                { id: 2, name: "portada.jpg", type: "image" },
+              ],
+              links: {
+                amazon: "https://amazon.com/book1",
+              },
+              strategy: "Enfocarse en ventas directas y posicionamiento en Amazon.",
+            },
+            paperback: libro.paperback || {
+              dimensions: "12.7 x 20.32 cm",
+              isbn: "978-0987654321",
+              asin: "B09HIJKLMN",
+              pages: 300,
+              price: 14.99,
+              royaltyPercentage: 0.70,
+              printingCost: 3.20,
+            },
+            ebook: libro.ebook || {
+              asin: "B01234ABCD",
+              price: 9.99,
+              royaltyPercentage: 0.70,
+              printingCost: 0,
+            },
+            notes: libro.notes || [
+              { id: 1, text: "Contactar a diseñador para mejorar la portada", date: "2023-11-15" },
+              { id: 2, text: "Verificar disponibilidad en tiendas físicas", date: "2023-10-30" },
+            ]
+          };
+          
+          setBookData(extendedBookData);
+        } else if (bookId !== 0) {
+          // Solo mostrar mensaje de error si hay un ID válido pero no se encuentra el libro
+          toast({
+            title: "Libro no encontrado",
+            description: `No se encontró un libro con el ID: ${bookId}`,
+            variant: "destructive",
+          });
+        }
+      } catch (error) {
+        console.error("Error al cargar el libro:", error);
+        toast({
+          title: "Error",
+          description: "No se pudo cargar la información del libro",
+          variant: "destructive",
+        });
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBook();
   }, [libroOriginal, bookId, navigate]);
 
   // Reset form data when book data changes
@@ -188,6 +203,7 @@ export const useBookDetail = () => {
     bookData,
     isEditing,
     saving,
+    loading,
     formData,
     libroOriginal,
     handleGoBack,

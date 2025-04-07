@@ -3,9 +3,9 @@ import { Link, useLocation } from "react-router-dom";
 import { 
   Home, BookOpen, LineChart, PieChart, Settings, 
   User, BookMarked, LayoutGrid, X, MegaphoneIcon,
-  BookText, FolderIcon, FileSearch
+  BookText, FolderIcon, FileSearch, ChevronDown, ChevronUp
 } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
 const Sidebar = ({ 
@@ -18,7 +18,14 @@ const Sidebar = ({
   const location = useLocation();
   
   // Estado para controlar si el submenú de biblioteca está expandido
-  const [bibliotecaExpanded, setBibliotecaExpanded] = useState(true);
+  const [bibliotecaExpanded, setBibliotecaExpanded] = useState(false);
+
+  // Determinar si el menú de biblioteca debe estar expandido basado en la ruta actual
+  useEffect(() => {
+    if (location.pathname.startsWith("/biblioteca")) {
+      setBibliotecaExpanded(true);
+    }
+  }, [location.pathname]);
 
   const menuItems = [
     { path: "/dashboard", icon: <Home size={20} className="text-gray-500" />, label: "Dashboard" },
@@ -41,11 +48,6 @@ const Sidebar = ({
   const isActive = (path: string) => {
     return location.pathname === path || 
            (path !== "/" && location.pathname.startsWith(path));
-  };
-
-  // Determinar si el menú de biblioteca debe estar expandido basado en la ruta actual
-  const shouldExpandBiblioteca = () => {
-    return location.pathname.startsWith("/biblioteca") || bibliotecaExpanded;
   };
 
   const sidebarVariants = {
@@ -99,7 +101,7 @@ const Sidebar = ({
           
           {/* Navegación */}
           <motion.nav 
-            className="flex-1 space-y-1 px-2 py-4"
+            className="flex-1 space-y-1 px-2 py-4 overflow-y-auto scrollbar-hide"
             variants={containerVariants}
             initial="closed"
             animate="open"
@@ -108,45 +110,57 @@ const Sidebar = ({
               <motion.div key={item.path} className="mb-2" variants={itemVariants}>
                 {/* Enlace del menú principal */}
                 {item.path === "/biblioteca" ? (
-                  <button
-                    onClick={() => setBibliotecaExpanded(!bibliotecaExpanded)}
-                    className={`sidebar-link w-full text-left ${isActive(item.path) ? "active" : ""}`}
-                  >
-                    {item.icon}
-                    <span>{item.label}</span>
-                  </button>
+                  <div className="space-y-1">
+                    <button
+                      onClick={() => setBibliotecaExpanded(!bibliotecaExpanded)}
+                      className={`sidebar-link w-full text-left flex items-center justify-between ${isActive(item.path) ? "active" : ""}`}
+                    >
+                      <div className="flex items-center">
+                        {item.icon}
+                        <span className="ml-2">{item.label}</span>
+                      </div>
+                      {bibliotecaExpanded ? (
+                        <ChevronUp size={16} className="text-gray-500" />
+                      ) : (
+                        <ChevronDown size={16} className="text-gray-500" />
+                      )}
+                    </button>
+                  
+                    {/* Submenús para biblioteca siempre visibles si están expandidos */}
+                    {bibliotecaExpanded && item.subItems && (
+                      <motion.div 
+                        className="ml-6 mt-1 space-y-1"
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        {item.subItems.map((subItem) => (
+                          <Link
+                            key={subItem.path}
+                            to={subItem.path}
+                            className={`sidebar-link ${
+                              location.pathname === subItem.path 
+                                ? "active"
+                                : location.pathname.startsWith(subItem.path) && subItem.path !== "/biblioteca"
+                                ? "active" 
+                                : ""
+                            } hover:bg-sidebar-accent/30 transition-colors duration-200`}
+                          >
+                            {subItem.icon}
+                            <span className="ml-2">{subItem.label}</span>
+                          </Link>
+                        ))}
+                      </motion.div>
+                    )}
+                  </div>
                 ) : (
                   <Link
                     to={item.path}
                     className={`sidebar-link ${isActive(item.path) ? "active" : ""} hover:bg-sidebar-accent/50 transition-colors duration-200`}
                   >
                     {item.icon}
-                    <span>{item.label}</span>
+                    <span className="ml-2">{item.label}</span>
                   </Link>
-                )}
-                
-                {/* Submenús para biblioteca */}
-                {'subItems' in item && shouldExpandBiblioteca() && (
-                  <motion.div 
-                    className="ml-6 mt-1 space-y-1"
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: 'auto', opacity: 1 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    {item.subItems?.map((subItem) => (
-                      <motion.div key={subItem.path} variants={itemVariants}>
-                        <Link
-                          to={subItem.path}
-                          className={`sidebar-link ${
-                            location.pathname === subItem.path ? "active" : ""
-                          } hover:bg-sidebar-accent/30 transition-colors duration-200`}
-                        >
-                          {subItem.icon}
-                          <span className="ml-2">{subItem.label}</span>
-                        </Link>
-                      </motion.div>
-                    ))}
-                  </motion.div>
                 )}
               </motion.div>
             ))}

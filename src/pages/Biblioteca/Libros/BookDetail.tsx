@@ -4,6 +4,8 @@ import { BookHeader } from "./components/BookDetail/BookHeader";
 import { BookSidebar } from "./components/BookDetail/BookSidebar";
 import { DetailedTabs } from "./components/BookDetail/DetailedTabs";
 import { motion } from "framer-motion";
+import { useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -31,6 +33,16 @@ const itemVariants = {
 };
 
 const BookDetail = () => {
+  const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
+  
+  // Redirigir si no hay ID
+  useEffect(() => {
+    if (!id) {
+      navigate('/biblioteca/libros');
+    }
+  }, [id, navigate]);
+
   const {
     bookData,
     isEditing,
@@ -41,11 +53,12 @@ const BookDetail = () => {
     handleSave,
     handleDelete,
     handleCancel,
-    handleUpdateBook
+    handleUpdateBook,
+    loading
   } = useBookDetail();
 
   // Muestra un indicador de carga mientras se obtienen los datos del libro
-  if (!bookData) {
+  if (loading) {
     return (
       <motion.div 
         initial={{ opacity: 0 }}
@@ -58,6 +71,25 @@ const BookDetail = () => {
           <div className="h-4 w-4 bg-primary rounded-full animate-bounce [animation-delay:-.5s]"></div>
         </div>
         <span className="ml-3 mt-3">Cargando libro...</span>
+      </motion.div>
+    );
+  }
+
+  // Si no hay datos después de cargar, puede ser un error
+  if (!bookData && !loading) {
+    return (
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="p-6 flex flex-col justify-center items-center h-64"
+      >
+        <p className="text-destructive">No se pudo cargar la información del libro.</p>
+        <button 
+          onClick={() => navigate('/biblioteca/libros')}
+          className="mt-4 px-4 py-2 bg-primary text-primary-foreground rounded hover:bg-primary/90"
+        >
+          Volver a la lista
+        </button>
       </motion.div>
     );
   }
@@ -90,7 +122,7 @@ const BookDetail = () => {
           {/* Left column: Book cover and basic info card */}
           <motion.div variants={itemVariants} className="lg:col-span-1">
             <BookSidebar 
-              book={bookData} 
+              book={bookData!} 
               isEditing={isEditing} 
               onUpdateBook={handleUpdateBook} 
             />
@@ -99,7 +131,7 @@ const BookDetail = () => {
           {/* Right column: Tabs with detailed information */}
           <motion.div variants={itemVariants} className="lg:col-span-2">
             <DetailedTabs 
-              book={bookData} 
+              book={bookData!} 
               isEditing={isEditing} 
               onUpdateBook={handleUpdateBook} 
             />
