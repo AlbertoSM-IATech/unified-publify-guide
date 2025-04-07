@@ -6,6 +6,7 @@ import { DetailedTabs } from "./components/BookDetail/DetailedTabs";
 import { motion } from "framer-motion";
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { ErrorState } from "@/components/common/ErrorState";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -39,6 +40,7 @@ const BookDetail = () => {
   // Redirigir si no hay ID
   useEffect(() => {
     if (!id) {
+      console.error("No se proporcionó ID de libro, redirigiendo a la lista");
       navigate('/biblioteca/libros');
     }
   }, [id, navigate]);
@@ -56,6 +58,8 @@ const BookDetail = () => {
     handleUpdateBook,
     loading
   } = useBookDetail();
+
+  console.log("BookDetail - Datos recibidos:", { bookData, loading, id });
 
   // Muestra un indicador de carga mientras se obtienen los datos del libro
   if (loading) {
@@ -78,22 +82,16 @@ const BookDetail = () => {
   // Si no hay datos después de cargar, puede ser un error
   if (!bookData && !loading) {
     return (
-      <motion.div 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        className="p-6 flex flex-col justify-center items-center h-64"
-      >
-        <p className="text-destructive">No se pudo cargar la información del libro.</p>
-        <button 
-          onClick={() => navigate('/biblioteca/libros')}
-          className="mt-4 px-4 py-2 bg-primary text-primary-foreground rounded hover:bg-primary/90"
-        >
-          Volver a la lista
-        </button>
-      </motion.div>
+      <ErrorState 
+        title="Libro no encontrado"
+        message="No pudimos encontrar el libro que estás buscando."
+        onRetry={() => navigate('/biblioteca/libros')}
+        fullPage={true}
+      />
     );
   }
 
+  // Si tenemos datos del libro, mostrar la interfaz normal
   return (
     <motion.div 
       variants={containerVariants}

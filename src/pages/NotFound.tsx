@@ -24,9 +24,9 @@ export const NotFound = () => {
         </p>
         <div className="mt-8">
           <Button asChild variant="default">
-            <Link to="/">
+            <Link to="/biblioteca/libros">
               <ArrowLeft size={16} className="mr-2" />
-              Volver al inicio
+              Volver a la biblioteca
             </Link>
           </Button>
         </div>

@@ -11,6 +11,7 @@ export const useBookDetail = () => {
   // Use the specialized hooks
   const { bookData, setBookData, loading, bookId, libroOriginal } = useBookData();
   
+  // Solo inicializar useBookForm y useBookActions si tenemos datos del libro
   const {
     isEditing,
     setIsEditing,

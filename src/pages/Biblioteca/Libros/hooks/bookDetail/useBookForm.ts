@@ -1,6 +1,7 @@
 
 import { useState, useEffect } from "react";
 import { Book } from "../../types/bookTypes";
+import { toast } from "@/hooks/use-toast";
 
 /**
  * Hook for managing book form state during editing
@@ -50,6 +51,3 @@ export const useBookForm = (bookData: Book | null) => {
     handleUpdateBook
   };
 };
-
-// Import for toast used in handleCancel
-import { toast } from "@/hooks/use-toast";

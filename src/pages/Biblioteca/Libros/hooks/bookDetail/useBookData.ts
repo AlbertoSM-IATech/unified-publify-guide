@@ -14,7 +14,7 @@ export const useBookData = () => {
   const [loading, setLoading] = useState(true);
   
   // Find book from simulated data
-  const bookId = parseInt(id || "0");
+  const bookId = id ? parseInt(id) : 0;
   const libroOriginal = librosSimulados.find((libro) => libro.id === bookId);
   
   // Extended book data for the detail view
@@ -25,6 +25,9 @@ export const useBookData = () => {
     const fetchBook = async () => {
       setLoading(true);
       try {
+        console.log("Fetching book with ID:", bookId);
+        console.log("Libro original encontrado:", libroOriginal);
+        
         if (libroOriginal) {
           // Ensure we're extending the libro with proper properties
           const libro = libroOriginal;
@@ -72,13 +75,19 @@ export const useBookData = () => {
           };
           
           setBookData(extendedBookData);
-        } else if (bookId !== 0) {
+        } else {
+          console.error("Libro no encontrado con ID:", bookId);
           // Solo mostrar mensaje de error si hay un ID válido pero no se encuentra el libro
           toast({
             title: "Libro no encontrado",
             description: `No se encontró un libro con el ID: ${bookId}`,
             variant: "destructive",
           });
+          
+          // Redirigir a la lista de libros si no se encuentra el libro
+          setTimeout(() => {
+            navigate('/biblioteca/libros');
+          }, 2000);
         }
       } catch (error) {
         console.error("Error al cargar el libro:", error);
@@ -92,12 +101,10 @@ export const useBookData = () => {
       }
     };
 
-    fetchBook();
-  }, [libroOriginal, bookId, navigate]);
-
-  // Redirigir si no hay ID
-  useEffect(() => {
-    if (!id) {
+    if (id) {
+      fetchBook();
+    } else {
+      console.error("No se proporcionó un ID de libro");
       navigate('/biblioteca/libros');
     }
   }, [id, navigate]);
