@@ -1,5 +1,5 @@
 
-import { useBookDetail } from "./hooks/useBookDetail";
+import { useBookDetail } from "./hooks/bookDetail";
 import { BookHeader } from "./components/BookDetail/BookHeader";
 import { BookSidebar } from "./components/BookDetail/BookSidebar";
 import { DetailedTabs } from "./components/BookDetail/DetailedTabs";
