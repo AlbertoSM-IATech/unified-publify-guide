@@ -20,14 +20,21 @@ export const useBookActions = (
   const navigate = useNavigate();
 
   const handleGoBack = () => {
-    navigate('/biblioteca/libros');
+    // First check if we're in edit mode
+    if (isEditing) {
+      setIsEditing(false);
+    } else {
+      navigate('/biblioteca/libros');
+    }
   };
 
   const handleSave = async () => {
     try {
       setSaving(true);
       
-      if (!bookData) return;
+      if (!bookData) {
+        throw new Error("No hay datos del libro para guardar");
+      }
       
       // Update book data with form changes
       const updatedBook = { ...bookData, ...formData };
@@ -41,6 +48,8 @@ export const useBookActions = (
           ...librosSimulados[bookIndex],
           ...updatedBook
         };
+      } else {
+        console.warn("Libro no encontrado en los datos simulados para actualizar");
       }
       
       // Simulate API call delay
@@ -75,14 +84,17 @@ export const useBookActions = (
       const bookIndex = librosSimulados.findIndex(libro => libro.id === bookId);
       if (bookIndex !== -1) {
         librosSimulados.splice(bookIndex, 1);
+        
+        toast({
+          title: "Libro eliminado",
+          description: "El libro ha sido eliminado con éxito.",
+        });
+        
+        // Navigate back to the list after successful deletion
+        navigate("/biblioteca/libros");
+      } else {
+        throw new Error("No se pudo encontrar el libro para eliminar");
       }
-      
-      toast({
-        title: "Libro eliminado",
-        description: "El libro ha sido eliminado con éxito.",
-        variant: "destructive",
-      });
-      navigate("/biblioteca/libros");
     } catch (error) {
       console.error("Error deleting book:", error);
       toast({

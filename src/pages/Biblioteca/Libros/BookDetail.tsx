@@ -49,17 +49,18 @@ const BookDetail = () => {
     bookData,
     isEditing,
     saving,
+    error,
+    loading,
     libroOriginal,
     handleGoBack,
     handleEdit,
     handleSave,
     handleDelete,
     handleCancel,
-    handleUpdateBook,
-    loading
+    handleUpdateBook
   } = useBookDetail();
 
-  console.log("BookDetail - Datos recibidos:", { bookData, loading, id });
+  console.log("BookDetail - Datos recibidos:", { bookData, loading, error, id });
 
   // Muestra un indicador de carga mientras se obtienen los datos del libro
   if (loading) {
@@ -79,12 +80,12 @@ const BookDetail = () => {
     );
   }
 
-  // Si no hay datos después de cargar, puede ser un error
-  if (!bookData && !loading) {
+  // Si hay un error o no hay datos después de cargar, mostrar el error
+  if ((error || !bookData) && !loading) {
     return (
       <ErrorState 
         title="Libro no encontrado"
-        message="No pudimos encontrar el libro que estás buscando."
+        message={error || "No pudimos encontrar el libro que estás buscando."}
         onRetry={() => navigate('/biblioteca/libros')}
         fullPage={true}
       />

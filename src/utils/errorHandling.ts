@@ -58,3 +58,10 @@ export function withErrorHandling<T extends (...args: any[]) => any>(
     }
   };
 }
+
+// Add a function to safely parse IDs from URLs
+export function safeParseId(id: string | undefined): number | null {
+  if (!id) return null;
+  const parsed = parseInt(id);
+  return isNaN(parsed) ? null : parsed;
+}

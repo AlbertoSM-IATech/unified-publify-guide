@@ -2,7 +2,7 @@
 import { useLocation, Link } from "react-router-dom";
 import { useEffect } from "react";
 import { ArrowLeft } from "lucide-react";
-import { Button } from "@/components/common/Button";
+import { Button } from "@/components/ui/button";
 
 export const NotFound = () => {
   const location = useLocation();

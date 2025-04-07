@@ -9,9 +9,9 @@ import { useBookActions } from './useBookActions';
  */
 export const useBookDetail = () => {
   // Use the specialized hooks
-  const { bookData, setBookData, loading, bookId, libroOriginal } = useBookData();
+  const { bookData, setBookData, loading, error, bookId, libroOriginal } = useBookData();
   
-  // Solo inicializar useBookForm y useBookActions si tenemos datos del libro
+  // Only initialize useBookForm and useBookActions if we have book data
   const {
     isEditing,
     setIsEditing,
@@ -44,6 +44,7 @@ export const useBookDetail = () => {
     isEditing,
     saving,
     loading,
+    error,
     formData,
     libroOriginal,
     handleGoBack,

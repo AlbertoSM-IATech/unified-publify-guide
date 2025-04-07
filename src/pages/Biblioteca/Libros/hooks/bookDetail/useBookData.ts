@@ -19,13 +19,23 @@ export const useBookData = () => {
   
   // Extended book data for the detail view
   const [bookData, setBookData] = useState<Book | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   // Initialize book data when component mounts
   useEffect(() => {
     const fetchBook = async () => {
       setLoading(true);
+      setError(null);
+      
       try {
         console.log("Fetching book with ID:", bookId);
+        
+        if (!id) {
+          console.error("No se proporcionó un ID de libro");
+          setError("No se proporcionó un ID de libro");
+          return;
+        }
+        
         console.log("Libro original encontrado:", libroOriginal);
         
         if (libroOriginal) {
@@ -77,20 +87,18 @@ export const useBookData = () => {
           setBookData(extendedBookData);
         } else {
           console.error("Libro no encontrado con ID:", bookId);
-          // Solo mostrar mensaje de error si hay un ID válido pero no se encuentra el libro
+          setError(`No se encontró un libro con el ID: ${bookId}`);
+          
           toast({
             title: "Libro no encontrado",
             description: `No se encontró un libro con el ID: ${bookId}`,
             variant: "destructive",
           });
-          
-          // Redirigir a la lista de libros si no se encuentra el libro
-          setTimeout(() => {
-            navigate('/biblioteca/libros');
-          }, 2000);
         }
       } catch (error) {
         console.error("Error al cargar el libro:", error);
+        setError("Error al cargar la información del libro");
+        
         toast({
           title: "Error",
           description: "No se pudo cargar la información del libro",
@@ -101,18 +109,14 @@ export const useBookData = () => {
       }
     };
 
-    if (id) {
-      fetchBook();
-    } else {
-      console.error("No se proporcionó un ID de libro");
-      navigate('/biblioteca/libros');
-    }
-  }, [id, navigate]);
+    fetchBook();
+  }, [id, bookId, navigate]);
 
   return {
     bookData,
     setBookData,
     loading,
+    error,
     bookId,
     libroOriginal
   };
