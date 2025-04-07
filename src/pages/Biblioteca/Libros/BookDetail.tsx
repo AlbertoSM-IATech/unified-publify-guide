@@ -44,19 +44,20 @@ const BookDetail = () => {
     handleUpdateBook
   } = useBookDetail();
 
-  if (!libroOriginal || !bookData) {
+  // Muestra un indicador de carga mientras se obtienen los datos del libro
+  if (!bookData) {
     return (
       <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="p-6 flex justify-center items-center h-64"
+        className="p-6 flex flex-col justify-center items-center h-64"
       >
         <div className="animate-pulse flex space-x-3">
           <div className="h-4 w-4 bg-primary rounded-full animate-bounce"></div>
           <div className="h-4 w-4 bg-primary rounded-full animate-bounce [animation-delay:-.3s]"></div>
           <div className="h-4 w-4 bg-primary rounded-full animate-bounce [animation-delay:-.5s]"></div>
         </div>
-        <span className="ml-3">Cargando libro...</span>
+        <span className="ml-3 mt-3">Cargando libro...</span>
       </motion.div>
     );
   }

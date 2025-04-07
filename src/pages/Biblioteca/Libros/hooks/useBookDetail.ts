@@ -25,7 +25,7 @@ export const useBookDetail = () => {
   useEffect(() => {
     if (libroOriginal) {
       // Ensure we're extending the libro with proper properties
-      const libro = libroOriginal as unknown as Book;
+      const libro = libroOriginal;
       
       const extendedBookData: Book = {
         ...libro,
@@ -70,8 +70,17 @@ export const useBookDetail = () => {
       };
       
       setBookData(extendedBookData);
+    } else {
+      // Mostrar un mensaje si el libro no se encuentra
+      toast({
+        title: "Libro no encontrado",
+        description: `No se encontró un libro con el ID: ${bookId}`,
+        variant: "destructive",
+      });
+      // Redirigir a la lista de libros después de un breve retraso
+      setTimeout(() => navigate('/biblioteca/libros'), 2000);
     }
-  }, [libroOriginal]);
+  }, [libroOriginal, bookId, navigate]);
 
   // Reset form data when book data changes
   useEffect(() => {
