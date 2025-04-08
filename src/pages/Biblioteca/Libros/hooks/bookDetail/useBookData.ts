@@ -4,24 +4,25 @@ import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "@/hooks/use-toast";
 import { librosSimulados } from "../../utils/librosUtils";
 import { Book } from "../../types/bookTypes";
+import { handleAsync } from "@/utils/errorHandling";
 
 /**
- * Hook for fetching and managing book data
+ * Hook para obtener y gestionar los datos de un libro
  */
 export const useBookData = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   
-  // Find book from simulated data
-  const bookId = id ? parseInt(id) : 0;
-  const libroOriginal = librosSimulados.find((libro) => libro.id === bookId);
-  
-  // Extended book data for the detail view
+  // Validar el ID del libro
+  const bookId = id ? parseInt(id) : null;
   const [bookData, setBookData] = useState<Book | null>(null);
   const [error, setError] = useState<string | null>(null);
+  
+  // Buscar el libro en los datos simulados
+  const libroOriginal = bookId ? librosSimulados.find((libro) => libro.id === bookId) : null;
 
-  // Initialize book data when component mounts
+  // Inicializar los datos del libro cuando el componente se monta
   useEffect(() => {
     const fetchBook = async () => {
       setLoading(true);
@@ -30,23 +31,29 @@ export const useBookData = () => {
       try {
         console.log("Fetching book with ID:", bookId);
         
-        if (!id) {
-          console.error("No se proporcionó un ID de libro");
-          setError("No se proporcionó un ID de libro");
+        if (!bookId) {
+          const errorMsg = "No se proporcionó un ID de libro válido";
+          console.error(errorMsg);
+          setError(errorMsg);
+          toast({
+            title: "Error",
+            description: errorMsg,
+            variant: "destructive",
+          });
+          setLoading(false);
           return;
         }
         
-        console.log("Libro original encontrado:", libroOriginal);
-        
+        // Buscar el libro en los datos simulados
         if (libroOriginal) {
-          // Ensure we're extending the libro with proper properties
-          const libro = libroOriginal;
+          console.log("Libro original encontrado:", libroOriginal);
           
+          // Extender los datos del libro con propiedades adicionales
           const extendedBookData: Book = {
-            ...libro,
-            subtitulo: libro.subtitulo || "", // Ensure subtitulo is always set
-            descripcion: libro.descripcion || "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-            hardcover: libro.hardcover || {
+            ...libroOriginal,
+            subtitulo: libroOriginal.subtitulo || "", 
+            descripcion: libroOriginal.descripcion || "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+            hardcover: libroOriginal.hardcover || {
               dimensions: "15.24 x 22.86 cm",
               isbn: "978-1234567890",
               asin: "B01ABCDEFG",
@@ -63,7 +70,7 @@ export const useBookData = () => {
               },
               strategy: "Enfocarse en ventas directas y posicionamiento en Amazon.",
             },
-            paperback: libro.paperback || {
+            paperback: libroOriginal.paperback || {
               dimensions: "12.7 x 20.32 cm",
               isbn: "978-0987654321",
               asin: "B09HIJKLMN",
@@ -72,13 +79,13 @@ export const useBookData = () => {
               royaltyPercentage: 0.70,
               printingCost: 3.20,
             },
-            ebook: libro.ebook || {
+            ebook: libroOriginal.ebook || {
               asin: "B01234ABCD",
               price: 9.99,
               royaltyPercentage: 0.70,
               printingCost: 0,
             },
-            notes: libro.notes || [
+            notes: libroOriginal.notes || [
               { id: 1, text: "Contactar a diseñador para mejorar la portada", date: "2023-11-15" },
               { id: 2, text: "Verificar disponibilidad en tiendas físicas", date: "2023-10-30" },
             ]
@@ -86,12 +93,13 @@ export const useBookData = () => {
           
           setBookData(extendedBookData);
         } else {
-          console.error("Libro no encontrado con ID:", bookId);
-          setError(`No se encontró un libro con el ID: ${bookId}`);
+          const errorMsg = `No se encontró un libro con el ID: ${bookId}`;
+          console.error(errorMsg);
+          setError(errorMsg);
           
           toast({
             title: "Libro no encontrado",
-            description: `No se encontró un libro con el ID: ${bookId}`,
+            description: errorMsg,
             variant: "destructive",
           });
         }
@@ -109,8 +117,14 @@ export const useBookData = () => {
       }
     };
 
-    fetchBook();
-  }, [id, bookId, navigate]);
+    // Solo intentar cargar datos si tenemos un ID válido
+    if (bookId) {
+      fetchBook();
+    } else {
+      setLoading(false);
+      setError("ID de libro inválido");
+    }
+  }, [bookId, navigate]);
 
   return {
     bookData,

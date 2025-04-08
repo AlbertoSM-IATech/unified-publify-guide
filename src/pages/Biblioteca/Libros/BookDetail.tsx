@@ -37,7 +37,7 @@ const BookDetail = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   
-  // Redirigir si no hay ID
+  // Verificar que tenemos un ID válido
   useEffect(() => {
     if (!id) {
       console.error("No se proporcionó ID de libro, redirigiendo a la lista");
@@ -81,12 +81,24 @@ const BookDetail = () => {
   }
 
   // Si hay un error o no hay datos después de cargar, mostrar el error
-  if ((error || !bookData) && !loading) {
+  if (error || (!bookData && !loading)) {
     return (
       <ErrorState 
         title="Libro no encontrado"
         message={error || "No pudimos encontrar el libro que estás buscando."}
         onRetry={() => navigate('/biblioteca/libros')}
+        fullPage={true}
+      />
+    );
+  }
+
+  // Verificar que tenemos datos del libro antes de renderizar
+  if (!bookData) {
+    return (
+      <ErrorState 
+        title="Datos no disponibles"
+        message="No se pudieron cargar los datos del libro."
+        onRetry={() => window.location.reload()}
         fullPage={true}
       />
     );
@@ -121,7 +133,7 @@ const BookDetail = () => {
           {/* Left column: Book cover and basic info card */}
           <motion.div variants={itemVariants} className="lg:col-span-1">
             <BookSidebar 
-              book={bookData!} 
+              book={bookData} 
               isEditing={isEditing} 
               onUpdateBook={handleUpdateBook} 
             />
@@ -130,7 +142,7 @@ const BookDetail = () => {
           {/* Right column: Tabs with detailed information */}
           <motion.div variants={itemVariants} className="lg:col-span-2">
             <DetailedTabs 
-              book={bookData!} 
+              book={bookData} 
               isEditing={isEditing} 
               onUpdateBook={handleUpdateBook} 
             />
