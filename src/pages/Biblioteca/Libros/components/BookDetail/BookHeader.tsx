@@ -1,5 +1,5 @@
 
-import { AlertTriangle, ArrowLeft, Check, FileEdit, Save, Trash, X } from "lucide-react";
+import { AlertTriangle, ArrowLeft, FileEdit, Save, Trash, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   AlertDialog,
@@ -12,10 +12,11 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { motion } from "framer-motion";
 
 interface BookHeaderProps {
   isEditing: boolean;
-  isSaving?: boolean; // Add loading state prop
+  isSaving?: boolean;
   onGoBack: () => void;
   onEdit: () => void;
   onSave: () => void;
@@ -25,7 +26,7 @@ interface BookHeaderProps {
 
 export const BookHeader = ({ 
   isEditing, 
-  isSaving = false, // Default to false
+  isSaving = false,
   onGoBack, 
   onEdit, 
   onSave, 
@@ -33,101 +34,115 @@ export const BookHeader = ({
   onCancel 
 }: BookHeaderProps) => {
   return (
-    <div className="mb-6 flex flex-col space-y-4 md:flex-row md:items-center md:justify-between md:space-y-0">
+    <motion.div 
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4 }}
+      className="mb-8 flex flex-col space-y-4 md:flex-row md:items-center md:justify-between md:space-y-0"
+    >
       <div className="flex items-center">
         <Button
           variant="ghost"
           size="sm"
-          className="mr-2"
+          className="mr-2 group"
           onClick={onGoBack}
         >
-          <ArrowLeft className="h-5 w-5" />
-          <span className="ml-2">Volver</span>
+          <ArrowLeft className="h-5 w-5 mr-2 group-hover:translate-x-[-3px] transition-transform" />
+          <span className="font-medium">Volver a la biblioteca</span>
         </Button>
       </div>
 
-      <div className="flex space-x-2">
+      <div className="flex space-x-3">
         {isEditing ? (
           <>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={onCancel}
-              className="md:w-auto"
-              disabled={isSaving}
-            >
-              <X className="mr-2 h-4 w-4" />
-              Cancelar
-            </Button>
-            <Button
-              variant="default"
-              size="sm"
-              onClick={onSave}
-              className="bg-green-600 hover:bg-green-700 md:w-auto"
-              disabled={isSaving}
-            >
-              {isSaving ? (
-                // Show a loading spinner or text when saving
-                <>
-                  <span className="mr-2 inline-block h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent"></span>
-                  Guardando...
-                </>
-              ) : (
-                <>
-                  <Save className="mr-2 h-4 w-4" />
-                  Guardar Cambios
-                </>
-              )}
-            </Button>
+            <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={onCancel}
+                className="md:w-auto font-medium"
+                disabled={isSaving}
+              >
+                <X className="mr-2 h-4 w-4" />
+                Cancelar
+              </Button>
+            </motion.div>
+            
+            <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
+              <Button
+                variant="default"
+                size="sm"
+                onClick={onSave}
+                className="md:w-auto font-medium bg-[#3B82F6] hover:bg-[#3B82F6]/90 text-white"
+                disabled={isSaving}
+              >
+                {isSaving ? (
+                  <>
+                    <span className="mr-2 inline-block h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent"></span>
+                    Guardando...
+                  </>
+                ) : (
+                  <>
+                    <Save className="mr-2 h-4 w-4" />
+                    Guardar Cambios
+                  </>
+                )}
+              </Button>
+            </motion.div>
           </>
         ) : (
           <>
-            <AlertDialog>
-              <AlertDialogTrigger asChild>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="text-red-500 hover:bg-red-50 hover:text-red-600 md:w-auto"
-                >
-                  <Trash className="mr-2 h-4 w-4" />
-                  Eliminar Libro
-                </Button>
-              </AlertDialogTrigger>
-              <AlertDialogContent>
-                <AlertDialogHeader>
-                  <AlertDialogTitle>
-                    <div className="flex items-center text-red-500">
-                      <AlertTriangle className="mr-2 h-5 w-5" />
-                      ¿Estás seguro?
-                    </div>
-                  </AlertDialogTitle>
-                  <AlertDialogDescription>
-                    Esta acción no se puede deshacer. El libro será eliminado permanentemente de tu biblioteca.
-                  </AlertDialogDescription>
-                </AlertDialogHeader>
-                <AlertDialogFooter>
-                  <AlertDialogCancel>Cancelar</AlertDialogCancel>
-                  <AlertDialogAction
-                    onClick={onDelete}
-                    className="bg-red-500 text-white hover:bg-red-600"
+            <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="text-red-500 hover:bg-red-50 hover:text-red-600 border-red-200 md:w-auto font-medium"
                   >
+                    <Trash className="mr-2 h-4 w-4" />
                     Eliminar
-                  </AlertDialogAction>
-                </AlertDialogFooter>
-              </AlertDialogContent>
-            </AlertDialog>
-            <Button
-              variant="default"
-              size="sm"
-              onClick={onEdit}
-              className="md:w-auto"
-            >
-              <FileEdit className="mr-2 h-4 w-4" />
-              Editar Libro
-            </Button>
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent className="bg-white">
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>
+                      <div className="flex items-center text-red-500">
+                        <AlertTriangle className="mr-2 h-5 w-5" />
+                        ¿Estás seguro?
+                      </div>
+                    </AlertDialogTitle>
+                    <AlertDialogDescription>
+                      Esta acción no se puede deshacer. El libro será eliminado permanentemente de tu biblioteca.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                    <AlertDialogAction
+                      onClick={onDelete}
+                      className="bg-red-500 text-white hover:bg-red-600"
+                    >
+                      Eliminar
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            </motion.div>
+            
+            <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
+              <Button
+                variant="default"
+                size="sm"
+                onClick={onEdit}
+                className="md:w-auto font-medium bg-[#FB923C] hover:bg-[#FB923C]/90"
+              >
+                <FileEdit className="mr-2 h-4 w-4" />
+                Editar Libro
+              </Button>
+            </motion.div>
           </>
         )}
       </div>
-    </div>
+    </motion.div>
   );
 };

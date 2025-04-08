@@ -4,6 +4,8 @@ import { useBookData } from './useBookData';
 import { useBookForm } from './useBookForm';
 import { useBookActions } from './useBookActions';
 import { useNavigate } from 'react-router-dom';
+import { toast } from '@/hooks/use-toast';
+import { useEffect } from 'react';
 
 /**
  * Main hook for book detail page that composes specialized hooks
@@ -12,6 +14,17 @@ export const useBookDetail = () => {
   // Use the specialized hooks
   const { bookData, setBookData, loading, error, bookId, libroOriginal } = useBookData();
   const navigate = useNavigate();
+  
+  // Show error toast if there's an error loading the book
+  useEffect(() => {
+    if (error) {
+      toast({
+        variant: "destructive",
+        title: "Error al cargar el libro",
+        description: error
+      });
+    }
+  }, [error]);
   
   // Only initialize useBookForm and useBookActions if we have book data
   const {

@@ -5,6 +5,7 @@ import { BookInfo } from "./BookInfo";
 import { calculateNetRoyalties } from "../../utils/bookDetailUtils";
 import { getStatusColor, getContentColor } from "../../utils/librosUtils";
 import { Book } from "../../types/bookTypes";
+import { motion } from "framer-motion";
 
 interface BookSidebarProps {
   book: Book;
@@ -14,18 +15,24 @@ interface BookSidebarProps {
 
 export const BookSidebar = ({ book, isEditing, onUpdateBook }: BookSidebarProps) => {
   return (
-    <Card className="overflow-hidden">
-      <BookCover 
-        book={book} 
-        isEditing={isEditing}
-        onUpdateBook={onUpdateBook}
-      />
-      <BookInfo 
-        book={book} 
-        getStatusColor={getStatusColor} 
-        getContentColor={getContentColor}
-        calculateNetRoyalties={calculateNetRoyalties}
-      />
-    </Card>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      <Card className="overflow-hidden bg-card shadow-md">
+        <BookCover 
+          book={book} 
+          isEditing={isEditing}
+          onUpdateBook={onUpdateBook}
+        />
+        <BookInfo 
+          book={book} 
+          getStatusColor={getStatusColor} 
+          getContentColor={getContentColor}
+          calculateNetRoyalties={calculateNetRoyalties}
+        />
+      </Card>
+    </motion.div>
   );
 };

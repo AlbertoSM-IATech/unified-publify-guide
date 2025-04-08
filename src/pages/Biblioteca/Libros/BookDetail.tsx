@@ -94,17 +94,18 @@ const BookDetail = () => {
 
   // Si tenemos datos del libro, mostrar la interfaz normal
   return (
-    <motion.div 
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
-      className="p-6 relative"
-    >
-      {/* Animated background gradient */}
-      <div className="absolute top-24 -left-20 w-72 h-72 bg-[#FB923C]/10 rounded-full filter blur-3xl animate-pulse-soft" />
-      <div className="absolute bottom-20 -right-20 w-80 h-80 bg-[#3B82F6]/10 rounded-full filter blur-3xl animate-pulse-soft [animation-delay:-.5s]" />
+    <div className="relative overflow-x-hidden min-h-screen">
+      {/* Animated background gradients */}
+      <div className="absolute top-20 -left-20 w-96 h-96 bg-[#FB923C]/10 rounded-full filter blur-[80px] animate-pulse-soft" />
+      <div className="absolute bottom-20 -right-20 w-96 h-96 bg-[#3B82F6]/10 rounded-full filter blur-[80px] animate-pulse-soft [animation-delay:-.5s]" />
+      <div className="absolute top-1/3 right-1/4 w-64 h-64 bg-gradient-to-br from-[#FB923C]/5 to-[#3B82F6]/5 rounded-full filter blur-[60px] animate-pulse-soft [animation-delay:-.25s]" />
       
-      <div className="relative z-10">
+      <motion.div 
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="relative z-10 p-6"
+      >
         <motion.div variants={itemVariants}>
           <BookHeader 
             isEditing={isEditing}
@@ -117,7 +118,7 @@ const BookDetail = () => {
           />
         </motion.div>
 
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
           {/* Left column: Book cover and basic info card */}
           <motion.div variants={itemVariants} className="lg:col-span-1">
             <BookSidebar 
@@ -136,8 +137,8 @@ const BookDetail = () => {
             />
           </motion.div>
         </div>
-      </div>
-    </motion.div>
+      </motion.div>
+    </div>
   );
 };
 

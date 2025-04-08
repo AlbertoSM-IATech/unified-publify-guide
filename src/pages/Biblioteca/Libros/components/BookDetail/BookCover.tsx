@@ -65,31 +65,39 @@ export const BookCover = ({ book, isEditing, onUpdateBook }: BookCoverProps) => 
   
   return (
     <motion.div 
-      className="relative overflow-hidden rounded-t-lg bg-muted"
-      whileHover={{ boxShadow: "0 0 15px rgba(251, 146, 60, 0.5), 0 0 20px rgba(251, 146, 60, 0.3)" }}
+      className="relative overflow-hidden bg-muted"
+      whileHover={{ 
+        boxShadow: "0 0 15px rgba(251, 146, 60, 0.5), 0 0 20px rgba(251, 146, 60, 0.3)"
+      }}
       transition={{ duration: 0.3 }}
     >
       <AspectRatio ratio={1600/2560} className="w-full">
         {coverPreview ? (
-          <img 
+          <motion.img 
             src={coverPreview} 
             alt={book.titulo} 
-            className="h-full w-full object-cover transition-all duration-300 hover:scale-105" 
+            className="h-full w-full object-cover"
+            whileHover={{ scale: 1.05 }}
+            transition={{ duration: 0.5 }}
           />
         ) : (
-          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-secondary/20 to-background">
-            <BookOpen className="h-20 w-20 text-muted-foreground/30" />
+          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-[#FB923C]/10 to-[#3B82F6]/10 p-6">
+            <BookOpen className="h-20 w-20 text-muted-foreground/50" />
           </div>
         )}
         
         {isEditing && (
           <div className="absolute inset-0 flex items-center justify-center bg-black/70 opacity-0 hover:opacity-100 transition-opacity duration-300">
             <label htmlFor="cover-upload" className="cursor-pointer">
-              <div className="flex flex-col items-center space-y-2 rounded-md bg-background/10 p-4 text-white backdrop-blur-sm">
-                <UploadCloud className="h-10 w-10" />
-                <span className="text-sm font-medium">Subir Portada</span>
-                <span className="text-xs text-muted-foreground">JPG, PNG (Max. 5MB)</span>
-                <Button variant="outline" size="sm" className="mt-2 w-full">
+              <div className="flex flex-col items-center space-y-3 rounded-md bg-background/20 p-6 text-white backdrop-blur-md">
+                <UploadCloud className="h-12 w-12 text-[#FB923C]" />
+                <span className="text-lg font-medium">Subir Portada</span>
+                <span className="text-sm text-muted-foreground">JPG, PNG (Max. 5MB)</span>
+                <Button 
+                  variant="outline" 
+                  size="lg" 
+                  className="mt-2 w-full border-[#FB923C] text-[#FB923C] hover:bg-[#FB923C]/10"
+                >
                   <Upload className="mr-2 h-4 w-4" />
                   Seleccionar Archivo
                 </Button>

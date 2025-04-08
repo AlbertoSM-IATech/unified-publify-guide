@@ -2,7 +2,6 @@
 import { Book } from "../types/bookTypes";
 import { BookGridItem } from "./BookGridItem";
 import { motion } from "framer-motion";
-import { ResponsiveGrid } from "@/components/layout/ResponsiveGrid";
 
 interface BooksGridProps {
   libros: Book[];
@@ -20,6 +19,19 @@ const containerVariants = {
   }
 };
 
+const itemVariants = {
+  hidden: { y: 20, opacity: 0 },
+  show: { 
+    y: 0, 
+    opacity: 1,
+    transition: {
+      type: "spring",
+      stiffness: 100,
+      damping: 15
+    }
+  }
+};
+
 export const BooksGrid = ({ libros, getStatusColor, getContentColor }: BooksGridProps) => {
   return (
     <motion.div
@@ -33,20 +45,17 @@ export const BooksGrid = ({ libros, getStatusColor, getContentColor }: BooksGrid
           <p className="text-muted-foreground">No hay libros que coincidan con tu búsqueda</p>
         </div>
       ) : (
-        <ResponsiveGrid 
-          columns={{ sm: 1, md: 2, lg: 2, xl: 2 }}
-          gap="lg"
-          className="mt-6"
-        >
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
           {libros.map((libro) => (
-            <BookGridItem
-              key={libro.id}
-              libro={libro}
-              getStatusColor={getStatusColor}
-              getContentColor={getContentColor}
-            />
+            <motion.div key={libro.id} variants={itemVariants}>
+              <BookGridItem
+                libro={libro}
+                getStatusColor={getStatusColor}
+                getContentColor={getContentColor}
+              />
+            </motion.div>
           ))}
-        </ResponsiveGrid>
+        </div>
       )}
     </motion.div>
   );

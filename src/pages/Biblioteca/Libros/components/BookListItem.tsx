@@ -1,6 +1,8 @@
 
 import { Link } from "react-router-dom";
 import { Book } from "../types/bookTypes";
+import { Eye } from "lucide-react";
+import { motion } from "framer-motion";
 
 interface BookListItemProps {
   libro: Book;
@@ -10,15 +12,33 @@ interface BookListItemProps {
 
 export const BookListItem = ({ libro, getStatusColor, getContentColor }: BookListItemProps) => {
   return (
-    <tr className="hover:bg-muted/50">
+    <motion.tr 
+      className="hover:bg-muted/20 transition-colors"
+      whileHover={{ backgroundColor: "rgba(0,0,0,0.02)" }}
+    >
       <td className="whitespace-nowrap px-4 py-4">
-        <div>
-          <div className="font-medium">
-            <Link to={`/biblioteca/libros/${libro.id}`} className="hover:underline">
-              {libro.titulo}
-            </Link>
+        <div className="flex items-center space-x-3">
+          <div className="h-12 w-8 flex-shrink-0 overflow-hidden rounded-sm">
+            {libro.imageUrl ? (
+              <img 
+                src={libro.imageUrl} 
+                alt={libro.titulo} 
+                className="h-full w-full object-cover"
+              />
+            ) : (
+              <div className="h-full w-full bg-muted flex items-center justify-center">
+                <span className="text-xs text-muted-foreground">Sin portada</span>
+              </div>
+            )}
           </div>
-          <div className="text-sm text-muted-foreground">{libro.autor}</div>
+          <div>
+            <div className="font-medium text-[#3B82F6]">
+              <Link to={`/biblioteca/libros/${libro.id}`} className="hover:underline">
+                {libro.titulo}
+              </Link>
+            </div>
+            <div className="text-sm text-muted-foreground">{libro.autor}</div>
+          </div>
         </div>
       </td>
       <td className="whitespace-nowrap px-4 py-4 text-sm text-muted-foreground">
@@ -51,11 +71,11 @@ export const BookListItem = ({ libro, getStatusColor, getContentColor }: BookLis
       <td className="whitespace-nowrap px-4 py-4 text-right text-sm">
         <Link
           to={`/biblioteca/libros/${libro.id}`}
-          className="font-medium text-primary hover:underline"
+          className="inline-flex items-center font-medium text-[#FB923C] hover:underline"
         >
-          Ver detalles
+          <Eye className="mr-1 h-4 w-4" /> Ver detalles
         </Link>
       </td>
-    </tr>
+    </motion.tr>
   );
 };

@@ -3,10 +3,9 @@ import { Link } from "react-router-dom";
 import { Book } from "../types/bookTypes";
 import { 
   Card, 
-  CardContent,
-  CardFooter
+  CardContent
 } from "@/components/ui/card";
-import { Eye } from "lucide-react";
+import { Eye, Tag, Calendar } from "lucide-react";
 import { motion } from "framer-motion";
 
 interface BookGridItemProps {
@@ -20,52 +19,84 @@ export const BookGridItem = ({ libro, getStatusColor, getContentColor }: BookGri
     <Link to={`/biblioteca/libros/${libro.id}`} className="block focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-lg">
       <motion.div
         whileHover={{ y: -5, scale: 1.02 }}
+        whileTap={{ scale: 0.98 }}
         transition={{ duration: 0.2 }}
+        className="h-full"
       >
-        <Card className="h-full overflow-hidden hover:shadow-md transition-shadow duration-300">
-          {/* Book cover */}
-          <div className="relative aspect-[2/3] w-full overflow-hidden bg-muted">
-            {libro.imageUrl ? (
-              <img
-                src={libro.imageUrl}
-                alt={libro.titulo}
-                className="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
-              />
-            ) : (
-              <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-muted to-secondary/10">
-                <span className="font-heading text-xl font-semibold text-foreground/70">{libro.titulo}</span>
+        <Card className="overflow-hidden hover:shadow-lg transition-all duration-300 h-full flex flex-col md:flex-row">
+          {/* Book cover - Left side */}
+          <div className="relative md:w-1/3 w-full">
+            <div className="aspect-[1600/2560] w-full overflow-hidden bg-muted">
+              {libro.imageUrl ? (
+                <motion.img
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ duration: 0.3 }}
+                  src={libro.imageUrl}
+                  alt={libro.titulo}
+                  className="h-full w-full object-cover"
+                />
+              ) : (
+                <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-secondary/20 to-background p-4">
+                  <span className="text-center font-heading text-lg font-semibold text-foreground/70">{libro.titulo}</span>
+                </div>
+              )}
+              <div className="absolute bottom-0 left-0 right-0 flex justify-between p-2 bg-gradient-to-t from-black/60 to-transparent">
+                <motion.span
+                  whileHover={{ scale: 1.05 }}
+                  className={`inline-flex items-center rounded-full px-2 py-1 text-xs font-semibold ${getStatusColor(
+                    libro.estado
+                  )}`}
+                >
+                  {libro.estado}
+                </motion.span>
+                <motion.span
+                  whileHover={{ scale: 1.05 }}
+                  className={`inline-flex items-center rounded-full px-2 py-1 text-xs font-semibold ${getContentColor(
+                    libro.contenido
+                  )}`}
+                >
+                  {libro.contenido}
+                </motion.span>
               </div>
-            )}
-            <div className="absolute bottom-0 left-0 right-0 flex justify-between p-2">
-              <span
-                className={`inline-flex items-center rounded-full px-2 py-1 text-xs font-medium ${getStatusColor(
-                  libro.estado
-                )}`}
-              >
-                {libro.estado}
-              </span>
-              <span
-                className={`inline-flex items-center rounded-full px-2 py-1 text-xs font-medium ${getContentColor(
-                  libro.contenido
-                )}`}
-              >
-                {libro.contenido}
-              </span>
             </div>
           </div>
 
-          <CardContent className="p-3">
-            <h3 className="line-clamp-2 text-base font-semibold mt-1">{libro.titulo}</h3>
-            <p className="line-clamp-1 text-sm text-muted-foreground">{libro.autor}</p>
-          </CardContent>
+          {/* Book info - Right side */}
+          <CardContent className="flex flex-col justify-between p-4 md:w-2/3 w-full">
+            <div className="space-y-2">
+              <h3 className="line-clamp-2 text-lg font-heading font-semibold">{libro.titulo}</h3>
+              <p className="line-clamp-1 text-base text-muted-foreground">{libro.autor}</p>
+              
+              <div className="flex flex-col space-y-1 pt-1">
+                <div className="flex items-center text-xs text-muted-foreground">
+                  <Tag className="mr-1 h-3 w-3" />
+                  <span>ISBN: {libro.isbn}</span>
+                </div>
+                {libro.asin && (
+                  <div className="flex items-center text-xs text-muted-foreground">
+                    <Tag className="mr-1 h-3 w-3" />
+                    <span>ASIN: {libro.asin}</span>
+                  </div>
+                )}
+                {libro.fechaPublicacion && (
+                  <div className="flex items-center text-xs text-muted-foreground">
+                    <Calendar className="mr-1 h-3 w-3" />
+                    <span>{new Date(libro.fechaPublicacion).toLocaleDateString()}</span>
+                  </div>
+                )}
+              </div>
+            </div>
 
-          <CardFooter className="border-t p-3 flex justify-between items-center text-sm">
-            <span className="text-muted-foreground">{libro.isbn}</span>
-            <span className="flex items-center text-primary">
-              <Eye className="mr-1 h-3 w-3" />
-              Ver detalle
-            </span>
-          </CardFooter>
+            <div className="mt-4 flex items-center justify-end text-primary">
+              <motion.div 
+                whileHover={{ x: 3 }}
+                className="flex items-center font-medium"
+              >
+                <Eye className="mr-1 h-4 w-4" />
+                Ver detalle
+              </motion.div>
+            </div>
+          </CardContent>
         </Card>
       </motion.div>
     </Link>
