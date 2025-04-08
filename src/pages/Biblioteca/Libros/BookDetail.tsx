@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ErrorState } from "@/components/common/ErrorState";
+import { LoadingState } from "@/components/common/LoadingState";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -64,20 +65,7 @@ const BookDetail = () => {
 
   // Muestra un indicador de carga mientras se obtienen los datos del libro
   if (loading) {
-    return (
-      <motion.div 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        className="p-6 flex flex-col justify-center items-center h-64"
-      >
-        <div className="animate-pulse flex space-x-3">
-          <div className="h-4 w-4 bg-primary rounded-full animate-bounce"></div>
-          <div className="h-4 w-4 bg-primary rounded-full animate-bounce [animation-delay:-.3s]"></div>
-          <div className="h-4 w-4 bg-primary rounded-full animate-bounce [animation-delay:-.5s]"></div>
-        </div>
-        <span className="ml-3 mt-3">Cargando libro...</span>
-      </motion.div>
-    );
+    return <LoadingState text="Cargando libro..." fullPage={true} />;
   }
 
   // Si hay un error o no hay datos después de cargar, mostrar el error

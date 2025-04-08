@@ -1,6 +1,6 @@
 
 import { useEffect } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import MainLayout from "@/components/layout/MainLayout";
 import { LandingPage } from "@/pages/LandingPage/LandingPage";
 import { Login } from "@/pages/Auth/Login";
@@ -23,10 +23,16 @@ import clsx from "clsx";
 function App() {
   const { theme } = useTheme();
   const isDark = theme === "dark";
+  const location = useLocation();
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", isDark);
   }, [isDark]);
+
+  // Add debugging for route changes
+  useEffect(() => {
+    console.log("Current route:", location.pathname);
+  }, [location]);
 
   return (
     <div className={clsx("relative min-h-screen", isDark && "dark-theme")}>
@@ -45,6 +51,7 @@ function App() {
             
             {/* Biblioteca section */}
             <Route path="/biblioteca">
+              <Route index element={<Navigate to="/biblioteca/libros" replace />} />
               <Route path="libros" element={<LibrosList />} />
               <Route path="libros/:id" element={<BookDetail />} />
               <Route path="colecciones" element={<ColeccionesList />} />

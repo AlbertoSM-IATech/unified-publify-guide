@@ -3,6 +3,7 @@
 import { useBookData } from './useBookData';
 import { useBookForm } from './useBookForm';
 import { useBookActions } from './useBookActions';
+import { useNavigate } from 'react-router-dom';
 
 /**
  * Main hook for book detail page that composes specialized hooks
@@ -10,6 +11,7 @@ import { useBookActions } from './useBookActions';
 export const useBookDetail = () => {
   // Use the specialized hooks
   const { bookData, setBookData, loading, error, bookId, libroOriginal } = useBookData();
+  const navigate = useNavigate();
   
   // Only initialize useBookForm and useBookActions if we have book data
   const {
@@ -30,7 +32,7 @@ export const useBookDetail = () => {
   } = useBookActions(
     bookData,
     setBookData,
-    bookId,
+    bookId || 0,
     isEditing,
     setIsEditing,
     saving,

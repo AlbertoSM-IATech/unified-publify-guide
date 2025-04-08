@@ -21,6 +21,7 @@ export const NotFound = () => {
   if (isBookRoute && location.pathname.endsWith('/edit')) {
     const bookId = location.pathname.split('/').filter(Boolean)[2]; // Gets the ID from the URL
     if (bookId) {
+      console.log("Redirecting from edit route to book detail page:", bookId);
       // Redirect to the book detail page as editing is handled internally
       return <Navigate to={`/biblioteca/libros/${bookId}`} replace />;
     }

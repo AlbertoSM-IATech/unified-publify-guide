@@ -21,6 +21,56 @@ export const useBookData = () => {
   // Find original book in simulated data
   const libroOriginal = bookId ? librosSimulados.find((libro) => libro.id === bookId) : null;
 
+  useEffect(() => {
+    const fetchBook = async () => {
+      setLoading(true);
+      setError(null);
+      
+      try {
+        console.log("Fetching book with ID:", bookId);
+        
+        if (!bookId) {
+          const errorMsg = "No se proporcionó un ID de libro válido";
+          console.error(errorMsg);
+          setError(errorMsg);
+          toast({
+            title: errorMsg,
+            variant: "destructive",
+          });
+          return;
+        }
+        
+        if (libroOriginal) {
+          console.log("Libro original encontrado:", libroOriginal);
+          const extendedBookData = extendBookData(libroOriginal);
+          setBookData(extendedBookData);
+        } else {
+          const errorMsg = `No se encontró un libro con el ID: ${bookId}`;
+          console.error(errorMsg);
+          setError(errorMsg);
+          toast({
+            title: "Libro no encontrado",
+            description: errorMsg,
+            variant: "destructive",
+          });
+        }
+      } catch (error) {
+        console.error("Error al cargar el libro:", error);
+        setError("Error al cargar la información del libro");
+        toast({
+          title: "Error",
+          description: "No se pudo cargar la información del libro",
+          variant: "destructive",
+        });
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    // Only try to load data if we have a valid ID
+    fetchBook();
+  }, [bookId, libroOriginal]);
+
   // Create extended book data with defaults for missing properties
   const extendBookData = (originalBook: typeof libroOriginal): Book | null => {
     if (!originalBook) return null;
@@ -34,74 +84,6 @@ export const useBookData = () => {
       ebook: originalBook.ebook || createDefaultEbookFormat(),
       notes: originalBook.notes || createDefaultNotes()
     };
-  };
-
-  // Initialize the book data when component mounts
-  useEffect(() => {
-    const fetchBook = async () => {
-      setLoading(true);
-      setError(null);
-      
-      try {
-        console.log("Fetching book with ID:", bookId);
-        
-        if (!bookId) {
-          handleInvalidBookId();
-          return;
-        }
-        
-        if (libroOriginal) {
-          console.log("Libro original encontrado:", libroOriginal);
-          const extendedBookData = extendBookData(libroOriginal);
-          setBookData(extendedBookData);
-        } else {
-          handleBookNotFound();
-        }
-      } catch (error) {
-        handleFetchError(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    // Only try to load data if we have a valid ID
-    if (bookId) {
-      fetchBook();
-    } else {
-      setLoading(false);
-      setError("ID de libro inválido");
-    }
-  }, [bookId, navigate]);
-
-  // Helper functions for error handling
-  const handleInvalidBookId = () => {
-    const errorMsg = "No se proporcionó un ID de libro válido";
-    console.error(errorMsg);
-    setError(errorMsg);
-    showErrorToast(errorMsg);
-    setLoading(false);
-  };
-
-  const handleBookNotFound = () => {
-    const errorMsg = `No se encontró un libro con el ID: ${bookId}`;
-    console.error(errorMsg);
-    setError(errorMsg);
-    showErrorToast("Libro no encontrado", errorMsg);
-  };
-
-  const handleFetchError = (error: unknown) => {
-    console.error("Error al cargar el libro:", error);
-    setError("Error al cargar la información del libro");
-    showErrorToast("Error", "No se pudo cargar la información del libro");
-  };
-
-  // Helper function for showing toasts
-  const showErrorToast = (title: string, description?: string) => {
-    toast({
-      title,
-      description,
-      variant: "destructive",
-    });
   };
 
   return {
