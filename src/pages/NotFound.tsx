@@ -1,5 +1,5 @@
 
-import { useLocation, Link } from "react-router-dom";
+import { useLocation, Link, Navigate } from "react-router-dom";
 import { useEffect } from "react";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -16,6 +16,15 @@ export const NotFound = () => {
 
   // Determinar si estamos en una ruta de libro no encontrado
   const isBookRoute = location.pathname.includes('/biblioteca/libros/');
+  
+  // Check if this is an edit route that should be redirected
+  if (isBookRoute && location.pathname.endsWith('/edit')) {
+    const bookId = location.pathname.split('/').filter(Boolean)[2]; // Gets the ID from the URL
+    if (bookId) {
+      // Redirect to the book detail page as editing is handled internally
+      return <Navigate to={`/biblioteca/libros/${bookId}`} replace />;
+    }
+  }
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-background p-4 text-center">
