@@ -1,7 +1,5 @@
-
 import { BookOpen } from "lucide-react";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-
 interface BookCardProps {
   index: number;
   title: string;
@@ -10,7 +8,6 @@ interface BookCardProps {
   status: string;
   coverUrl?: string;
 }
-
 const BookCard = ({
   index,
   title,
@@ -34,29 +31,22 @@ const BookCard = ({
         return "bg-gray-100 text-gray-800";
     }
   };
-  
   const statusColor = getStatusColor(status);
-  
-  return (
-    <div className="card-hover rounded-lg border bg-card shadow-sm">
+  return <div className="card-hover rounded-lg border bg-card shadow-sm">
       <div className="flex h-32 overflow-hidden">
         {/* Book cover image/placeholder */}
         <div className="relative h-full w-28 bg-muted">
-          {coverUrl ? (
-            <div className="h-full w-full overflow-hidden">
+          {coverUrl ? <div className="h-full w-full overflow-hidden">
               <AspectRatio ratio={16 / 25.6} className="h-full">
                 <img src={coverUrl} alt={title} className="h-full w-full object-cover" />
               </AspectRatio>
-            </div>
-          ) : (
-            <div className="absolute inset-0 flex items-center justify-center">
+            </div> : <div className="absolute inset-0 flex items-center justify-center">
               <BookOpen size={40} className="text-muted-foreground/50" />
-            </div>
-          )}
+            </div>}
         </div>
         
         {/* Book information */}
-        <div className="flex flex-1 flex-col justify-between p-3 bg-gray-900">
+        <div className="flex flex-1 flex-col justify-between p-3 bg-white">
           <div>
             <h3 className="font-medium line-clamp-1">{title}</h3>
             <div className="mt-1 flex items-center space-x-2">
@@ -74,8 +64,6 @@ const BookCard = ({
           </div>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default BookCard;
