@@ -61,13 +61,21 @@ export const useGeneralInfoForm = (
   useEffect(() => {
     if (isEditing && onUpdateBook) {
       const subscription = form.watch((formData) => {
+        // Ensure contenidoAPlusFiles has the required properties (non-optional)
+        const processedFiles = formData.contenidoAPlusFiles?.map(file => ({
+          id: file.id || Date.now(), // Ensure id is not optional
+          name: file.name || "", // Ensure name is not optional
+          type: file.type || "document" // Ensure type is not optional with a default
+        })) || [];
+        
         const updatedData: Partial<Book> = {
           ...formData,
           fechaPublicacion: selectedDate ? selectedDate.toISOString() : null,
           fechaLanzamiento: selectedLaunchDate ? selectedLaunchDate.toISOString() : null,
           investigacionId: formData.investigacionId !== "none" ? parseInt(formData.investigacionId) : undefined,
           proyectoId: formData.proyectoId !== "none" ? parseInt(formData.proyectoId) : undefined,
-          bsr: formData.bsr ? Number(formData.bsr) : null
+          bsr: formData.bsr ? Number(formData.bsr) : null,
+          contenidoAPlusFiles: processedFiles
         };
         onUpdateBook(updatedData);
       });
