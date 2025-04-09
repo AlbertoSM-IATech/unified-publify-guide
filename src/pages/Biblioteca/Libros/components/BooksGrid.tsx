@@ -47,7 +47,11 @@ export const BooksGrid = ({ libros, getStatusColor, getContentColor }: BooksGrid
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
           {libros.map((libro) => (
-            <motion.div key={libro.id} variants={itemVariants}>
+            <motion.div 
+              key={libro.id} 
+              variants={itemVariants}
+              className="h-full"
+            >
               <BookGridItem
                 libro={libro}
                 getStatusColor={getStatusColor}
