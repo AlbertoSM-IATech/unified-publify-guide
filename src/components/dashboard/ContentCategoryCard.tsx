@@ -20,7 +20,7 @@ const ContentCategoryCard = ({
   count,
   statusData
 }: ContentCategoryCardProps) => {
-  return <div className="rounded-lg border p-4 shadow-sm bg-orange-200">
+  return <div className="rounded-lg border p-4 shadow-sm bg-gray-900">
       <div className="mb-2 flex items-center">
         
         <div>
