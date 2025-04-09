@@ -7,6 +7,7 @@ import { BasicInfoFields } from "./GeneralInfo/BasicInfoFields";
 import { StatusFields } from "./GeneralInfo/StatusFields";
 import { PublicationDateField } from "./GeneralInfo/PublicationDateField";
 import { RelationFields } from "./GeneralInfo/RelationFields";
+import { ContentAplusSection } from "./GeneralInfo/ContentAplusSection";
 
 interface GeneralInfoSectionProps {
   book: Book;
@@ -19,7 +20,7 @@ export const GeneralInfoSection = ({
   isEditing,
   onUpdateBook 
 }: GeneralInfoSectionProps) => {
-  const { form, selectedDate, handleDateChange } = useGeneralInfoForm(book, isEditing, onUpdateBook);
+  const { form, selectedDate, selectedLaunchDate, handleDateChange, handleLaunchDateChange } = useGeneralInfoForm(book, isEditing, onUpdateBook);
 
   return (
     <Card>
@@ -37,17 +38,16 @@ export const GeneralInfoSection = ({
               book={book} 
               isEditing={isEditing} 
               selectedDate={selectedDate}
+              selectedLaunchDate={selectedLaunchDate}
               onDateChange={handleDateChange}
+              onLaunchDateChange={handleLaunchDateChange}
             />
             
-            {/* Relation Fields - Only shown in edit mode */}
-            {isEditing ? (
-              <RelationFields form={form} book={book} />
-            ) : (
-              book.investigacionId || book.proyectoId ? (
-                <RelationFields form={form} book={book} />
-              ) : null
-            )}
+            {/* A+ Content section */}
+            <ContentAplusSection book={book} isEditing={isEditing} form={form} />
+            
+            {/* Relation Fields - Always shown */}
+            <RelationFields form={form} book={book} />
           </div>
         </Form>
       </CardContent>

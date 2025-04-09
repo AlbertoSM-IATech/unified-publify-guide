@@ -33,14 +33,20 @@ export interface BookFormat {
 export interface Book {
   id: number;
   titulo: string;
-  subtitulo: string; // Required field
+  subtitulo: string;
   descripcion?: string;
+  descripcionHtml?: string; // New field for HTML description
   autor: string;
   isbn: string;
   asin: string;
   estado: string;
   contenido: string;
   fechaPublicacion: string | null;
+  fechaLanzamiento?: string | null; // New field for launch date
+  bsr?: number | null; // New field for Best Seller Rank
+  landingPageUrl?: string; // New field for landing page URL
+  contenidoAPlus?: string; // New field for A+ content
+  contenidoAPlusFiles?: {id: number; name: string; type: string}[]; // New field for A+ content files
   imageUrl: string;
   investigacionId?: number;
   proyectoId?: number;

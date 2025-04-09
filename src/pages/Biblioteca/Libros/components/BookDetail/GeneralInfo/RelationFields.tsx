@@ -5,6 +5,9 @@ import { Label } from "@/components/ui/label";
 import { FormField } from "@/components/ui/form";
 import { UseFormReturn } from "react-hook-form";
 import { ExternalLink } from "lucide-react";
+import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { librosSimulados } from "../../../utils/librosUtils";
 import {
   Select,
   SelectContent,
@@ -18,7 +21,50 @@ interface RelationFieldsProps {
   book?: Book;
 }
 
+// Simulate fetching from database
+const fetchInvestigaciones = () => {
+  // This would be replaced with actual API call
+  return [
+    { id: 1, titulo: "Investigación: Mercado de libros de cocina" },
+    { id: 2, titulo: "Investigación: Tendencias en ciencia ficción" },
+    { id: 3, titulo: "Investigación: Marketing para autores" },
+  ];
+};
+
+const fetchColecciones = () => {
+  // This would be replaced with actual API call
+  return [
+    { id: 1, titulo: "Colección: Cocina mediterránea" },
+    { id: 2, titulo: "Colección: Aventuras espaciales" },
+    { id: 3, titulo: "Colección: Autoayuda para escritores" },
+  ];
+};
+
 export const RelationFields = ({ form, book }: RelationFieldsProps) => {
+  const [investigaciones, setInvestigaciones] = useState<{id: number, titulo: string}[]>([]);
+  const [colecciones, setColecciones] = useState<{id: number, titulo: string}[]>([]);
+  const [loading, setLoading] = useState(true);
+  
+  useEffect(() => {
+    // Simulate API loading
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const investigacionesData = await fetchInvestigaciones();
+        const coleccionesData = await fetchColecciones();
+        
+        setInvestigaciones(investigacionesData);
+        setColecciones(coleccionesData);
+      } catch (error) {
+        console.error("Error fetching relation data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    fetchData();
+  }, []);
+
   return (
     <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
       <div className="grid gap-3">
@@ -31,26 +77,35 @@ export const RelationFields = ({ form, book }: RelationFieldsProps) => {
               <Select 
                 onValueChange={field.onChange}
                 defaultValue={field.value}
+                disabled={loading}
               >
-                <SelectTrigger id="investigacion">
+                <SelectTrigger id="investigacion" className="hover:border-[#FB923C] transition-colors duration-200">
                   <SelectValue placeholder="Seleccionar investigación" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="none">Ninguna</SelectItem>
-                  <SelectItem value="1">Investigación #1</SelectItem>
-                  <SelectItem value="2">Investigación #2</SelectItem>
+                  {investigaciones.map((inv) => (
+                    <SelectItem key={inv.id} value={inv.id.toString()}>
+                      {inv.titulo}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
               {book?.investigacionId && field.value !== "none" && (
-                <div className="mt-2">
+                <motion.div 
+                  className="mt-2"
+                  initial={{ opacity: 0, y: 5 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3 }}
+                >
                   <Link 
                     to={`/biblioteca/investigaciones/${book.investigacionId}`}
-                    className="flex items-center text-sm text-primary hover:underline"
+                    className="flex items-center text-sm text-[#3B82F6] hover:underline hover:text-[#FB923C] transition-colors duration-200"
                   >
                     <ExternalLink size={14} className="mr-1" />
                     Ver investigación
                   </Link>
-                </div>
+                </motion.div>
               )}
             </>
           )}
@@ -67,26 +122,35 @@ export const RelationFields = ({ form, book }: RelationFieldsProps) => {
               <Select 
                 onValueChange={field.onChange}
                 defaultValue={field.value}
+                disabled={loading}
               >
-                <SelectTrigger id="proyecto">
+                <SelectTrigger id="proyecto" className="hover:border-[#FB923C] transition-colors duration-200">
                   <SelectValue placeholder="Seleccionar colección" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="none">Ninguna</SelectItem>
-                  <SelectItem value="1">Colección #1</SelectItem>
-                  <SelectItem value="2">Colección #2</SelectItem>
+                  {colecciones.map((col) => (
+                    <SelectItem key={col.id} value={col.id.toString()}>
+                      {col.titulo}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
               {book?.proyectoId && field.value !== "none" && (
-                <div className="mt-2">
+                <motion.div 
+                  className="mt-2"
+                  initial={{ opacity: 0, y: 5 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3 }}
+                >
                   <Link 
                     to={`/biblioteca/colecciones/${book.proyectoId}`}
-                    className="flex items-center text-sm text-primary hover:underline"
+                    className="flex items-center text-sm text-[#3B82F6] hover:underline hover:text-[#FB923C] transition-colors duration-200"
                   >
                     <ExternalLink size={14} className="mr-1" />
                     Ver colección
                   </Link>
-                </div>
+                </motion.div>
               )}
             </>
           )}

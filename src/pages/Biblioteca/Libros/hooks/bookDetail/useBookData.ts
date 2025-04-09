@@ -79,6 +79,12 @@ export const useBookData = () => {
       ...originalBook,
       subtitulo: originalBook.subtitulo || "", 
       descripcion: originalBook.descripcion || "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      descripcionHtml: originalBook.descripcionHtml || "",
+      bsr: originalBook.bsr || null,
+      fechaLanzamiento: originalBook.fechaLanzamiento || null,
+      landingPageUrl: originalBook.landingPageUrl || "",
+      contenidoAPlus: originalBook.contenidoAPlus || "",
+      contenidoAPlusFiles: originalBook.contenidoAPlusFiles || [],
       hardcover: originalBook.hardcover || createDefaultHardcoverFormat(),
       paperback: originalBook.paperback || createDefaultPaperbackFormat(),
       ebook: originalBook.ebook || createDefaultEbookFormat(),
@@ -112,6 +118,7 @@ function createDefaultHardcoverFormat() {
     ],
     links: {
       amazon: "https://amazon.com/book1",
+      landingPage: "https://miweb.com/libro1"
     },
     strategy: "Enfocarse en ventas directas y posicionamiento en Amazon.",
   };
@@ -126,6 +133,9 @@ function createDefaultPaperbackFormat() {
     price: 14.99,
     royaltyPercentage: 0.70,
     printingCost: 3.20,
+    links: {
+      amazon: "https://amazon.com/book1-paperback",
+    }
   };
 }
 
@@ -135,6 +145,9 @@ function createDefaultEbookFormat() {
     price: 9.99,
     royaltyPercentage: 0.70,
     printingCost: 0,
+    links: {
+      amazon: "https://amazon.com/book1-kindle",
+    }
   };
 }
 
