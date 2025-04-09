@@ -31,8 +31,8 @@
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
+    --border: 214.3 31.8% 85.4%;
+    --input: 214.3 31.8% 85.4%;
     --ring: 222.2 84% 4.9%;
 
     --radius: 0.5rem;
@@ -101,6 +101,11 @@
   .text-muted-foreground {
     @apply dark:text-slate-400 text-slate-600;
   }
+  
+  /* Improved card contrast in light mode */
+  .card {
+    @apply dark:shadow-md shadow-md;
+  }
 }
 
 @layer components {
@@ -116,13 +121,35 @@
     @apply bg-sidebar-accent text-sidebar-accent-foreground font-medium;
   }
   
-  /* New book card styles */
+  /* New book card styles with improved contrast */
   .book-card {
-    @apply border dark:border-slate-800 overflow-hidden bg-card transition-all duration-300 shadow-sm;
+    @apply border dark:border-slate-800 border-slate-300 overflow-hidden bg-card transition-all duration-300 shadow-md;
   }
   
   .book-card:hover {
     @apply shadow-lg shadow-[#FB923C]/15 border-[#FB923C]/30;
+  }
+  
+  /* Badge styles with improved contrast */
+  .badge-status {
+    @apply px-2.5 py-1 rounded-full text-xs font-medium;
+  }
+  
+  .badge-content {
+    @apply px-2.5 py-1 rounded-full text-xs font-medium;
+  }
+  
+  /* Button styles with better contrast */
+  .btn-primary {
+    @apply bg-[#3B82F6] text-white hover:bg-[#3B82F6]/90 shadow-sm;
+  }
+  
+  .btn-secondary {
+    @apply bg-[#FB923C] text-white hover:bg-[#FB923C]/90 shadow-sm;
+  }
+  
+  .btn-outline {
+    @apply border border-slate-300 dark:border-slate-700 hover:border-[#FB923C]/30 hover:bg-[#FB923C]/5;
   }
 }
 
@@ -144,13 +171,13 @@
     animation: glow 2s ease-in-out infinite;
   }
   
-  /* Custom box shadows */
+  /* Custom box shadows with improved visibility for light mode */
   .shadow-coral {
-    box-shadow: 0 4px 14px -2px rgba(251, 146, 60, 0.15);
+    @apply dark:shadow-[0_4px_14px_-2px_rgba(251,146,60,0.15)] shadow-[0_4px_14px_-2px_rgba(251,146,60,0.25)];
   }
   
   .shadow-blue {
-    box-shadow: 0 4px 14px -2px rgba(59, 130, 246, 0.15);
+    @apply dark:shadow-[0_4px_14px_-2px_rgba(59,130,246,0.15)] shadow-[0_4px_14px_-2px_rgba(59,130,246,0.25)];
   }
   
   /* Enhanced focus styles */

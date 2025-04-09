@@ -21,37 +21,59 @@ interface RelationFieldsProps {
   book?: Book;
 }
 
-// Simulate fetching from database
-const fetchInvestigaciones = () => {
-  // This would be replaced with actual API call
-  return [
-    { id: 1, titulo: "Investigación: Mercado de libros de cocina" },
-    { id: 2, titulo: "Investigación: Tendencias en ciencia ficción" },
-    { id: 3, titulo: "Investigación: Marketing para autores" },
-  ];
+// Define proper interfaces for related entities
+interface Investigacion {
+  id: number;
+  titulo: string;
+  // Add more fields as needed
+}
+
+interface Coleccion {
+  id: number;
+  titulo: string;
+  // Add more fields as needed
+}
+
+// Simulate fetching from database 
+// In a real application, this would be an API call to get actual data
+const fetchInvestigaciones = (): Promise<Investigacion[]> => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve([
+        { id: 1, titulo: "Investigación: Mercado de libros de cocina" },
+        { id: 2, titulo: "Investigación: Tendencias en ciencia ficción" },
+        { id: 3, titulo: "Investigación: Marketing para autores" },
+      ]);
+    }, 300);
+  });
 };
 
-const fetchColecciones = () => {
-  // This would be replaced with actual API call
-  return [
-    { id: 1, titulo: "Colección: Cocina mediterránea" },
-    { id: 2, titulo: "Colección: Aventuras espaciales" },
-    { id: 3, titulo: "Colección: Autoayuda para escritores" },
-  ];
+const fetchColecciones = (): Promise<Coleccion[]> => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve([
+        { id: 1, titulo: "Colección: Cocina mediterránea" },
+        { id: 2, titulo: "Colección: Aventuras espaciales" },
+        { id: 3, titulo: "Colección: Autoayuda para escritores" },
+      ]);
+    }, 300);
+  });
 };
 
 export const RelationFields = ({ form, book }: RelationFieldsProps) => {
-  const [investigaciones, setInvestigaciones] = useState<{id: number, titulo: string}[]>([]);
-  const [colecciones, setColecciones] = useState<{id: number, titulo: string}[]>([]);
+  const [investigaciones, setInvestigaciones] = useState<Investigacion[]>([]);
+  const [colecciones, setColecciones] = useState<Coleccion[]>([]);
   const [loading, setLoading] = useState(true);
   
   useEffect(() => {
-    // Simulate API loading
+    // Fetch the related data
     const fetchData = async () => {
       setLoading(true);
       try {
-        const investigacionesData = await fetchInvestigaciones();
-        const coleccionesData = await fetchColecciones();
+        const [investigacionesData, coleccionesData] = await Promise.all([
+          fetchInvestigaciones(),
+          fetchColecciones()
+        ]);
         
         setInvestigaciones(investigacionesData);
         setColecciones(coleccionesData);
@@ -79,7 +101,10 @@ export const RelationFields = ({ form, book }: RelationFieldsProps) => {
                 defaultValue={field.value}
                 disabled={loading}
               >
-                <SelectTrigger id="investigacion" className="hover:border-[#FB923C] transition-colors duration-200">
+                <SelectTrigger 
+                  id="investigacion" 
+                  className="hover:border-[#FB923C] transition-colors duration-200 border-slate-300 dark:border-slate-700"
+                >
                   <SelectValue placeholder="Seleccionar investigación" />
                 </SelectTrigger>
                 <SelectContent>
@@ -124,7 +149,10 @@ export const RelationFields = ({ form, book }: RelationFieldsProps) => {
                 defaultValue={field.value}
                 disabled={loading}
               >
-                <SelectTrigger id="proyecto" className="hover:border-[#FB923C] transition-colors duration-200">
+                <SelectTrigger 
+                  id="proyecto" 
+                  className="hover:border-[#FB923C] transition-colors duration-200 border-slate-300 dark:border-slate-700"
+                >
                   <SelectValue placeholder="Seleccionar colección" />
                 </SelectTrigger>
                 <SelectContent>

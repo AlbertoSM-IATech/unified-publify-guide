@@ -71,6 +71,7 @@ export const BookCover = ({ book, isEditing, onUpdateBook }: BookCoverProps) => 
       }}
       transition={{ duration: 0.3 }}
     >
+      {/* Using the proper book cover aspect ratio of 1600:2560 */}
       <AspectRatio ratio={1600/2560} className="w-full">
         {coverPreview ? (
           <motion.img 

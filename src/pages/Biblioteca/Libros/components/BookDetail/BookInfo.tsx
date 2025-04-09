@@ -1,11 +1,12 @@
 
-import { Eye, ExternalLink, Tag, Calendar, BookOpen } from "lucide-react";
+import { Eye, ExternalLink, Tag, Calendar, BookOpen, Copy } from "lucide-react";
 import { Book } from "../../types/bookTypes";
 import { generateAmazonLink } from "../../utils/bookDetailUtils";
 import { getContentHexColor } from "../../utils/librosUtils";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { toast } from "@/hooks/use-toast";
 
 interface BookInfoProps {
   book: Book;
@@ -29,6 +30,26 @@ export const BookInfo = ({
   
   // Get content specific color for styling
   const contentColor = getContentHexColor(book.contenido);
+
+  // Handle copying HTML code to clipboard
+  const handleCopyHtml = () => {
+    if (book.descripcionHtml) {
+      navigator.clipboard.writeText(book.descripcionHtml)
+        .then(() => {
+          toast({
+            title: "Código HTML copiado",
+            description: "El código HTML de la descripción ha sido copiado al portapapeles",
+          });
+        })
+        .catch(() => {
+          toast({
+            title: "Error al copiar",
+            description: "No se pudo copiar el código HTML",
+            variant: "destructive"
+          });
+        });
+    }
+  };
 
   return (
     <motion.div 
@@ -141,14 +162,28 @@ export const BookInfo = ({
             animate={{ opacity: 1 }}
             transition={{ delay: 0.7 }}
           >
-            <Button 
-              variant="outline" 
-              size="sm" 
-              onClick={() => setShowHtmlCode(!showHtmlCode)}
-              className="w-full text-[#3B82F6] border-[#3B82F6]/30 hover:bg-[#3B82F6]/5"
-            >
-              {showHtmlCode ? "Ocultar código HTML para Amazon" : "Mostrar código HTML para Amazon"}
-            </Button>
+            <div className="flex flex-row items-center justify-between mb-1">
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={() => setShowHtmlCode(!showHtmlCode)}
+                className="text-[#3B82F6] border-[#3B82F6]/30 hover:bg-[#3B82F6]/5"
+              >
+                {showHtmlCode ? "Ocultar código HTML para Amazon" : "Mostrar código HTML para Amazon"}
+              </Button>
+              
+              {showHtmlCode && (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleCopyHtml}
+                  className="text-[#FB923C] border-[#FB923C]/30 hover:bg-[#FB923C]/5"
+                >
+                  <Copy size={14} className="mr-1" />
+                  Copiar HTML
+                </Button>
+              )}
+            </div>
             
             {showHtmlCode && (
               <motion.div
@@ -156,7 +191,7 @@ export const BookInfo = ({
                 animate={{ height: "auto", opacity: 1 }}
                 exit={{ height: 0, opacity: 0 }}
                 transition={{ duration: 0.3 }}
-                className="mt-2 p-3 bg-black/5 dark:bg-white/5 rounded-md overflow-auto max-h-48 border border-border"
+                className="mt-1 p-3 bg-black/5 dark:bg-white/5 rounded-md overflow-auto max-h-48 border border-border"
               >
                 <pre className="text-xs text-muted-foreground whitespace-pre-wrap font-mono">
                   {book.descripcionHtml}

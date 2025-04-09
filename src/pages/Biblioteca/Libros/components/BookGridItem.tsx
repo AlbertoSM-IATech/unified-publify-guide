@@ -29,9 +29,9 @@ export const BookGridItem = ({ libro, getStatusColor, getContentColor }: BookGri
         className="h-full"
       >
         <Card className="overflow-hidden hover:shadow-lg hover:border-[#FB923C]/30 transition-all duration-300 h-full flex flex-col md:flex-row border dark:border-slate-800">
-          {/* Book cover - Left side */}
-          <div className="relative md:w-1/3 w-full">
-            <div className="aspect-[1600/2560] w-full overflow-hidden bg-muted">
+          {/* Book cover - Left side with proper aspect ratio */}
+          <div className="relative md:w-1/3 w-full flex-shrink-0">
+            <div className="aspect-[1600/2560] w-full h-full overflow-hidden bg-muted">
               {libro.imageUrl ? (
                 <motion.img
                   whileHover={{ scale: 1.05 }}

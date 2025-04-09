@@ -26,17 +26,21 @@ export const BookSidebar = ({ book, isEditing, onUpdateBook }: BookSidebarProps)
       className="transition-all duration-300"
     >
       <Card className="overflow-hidden bg-card shadow-md border dark:border-slate-800 hover:border-[#FB923C]/30">
-        <BookCover 
-          book={book} 
-          isEditing={isEditing}
-          onUpdateBook={onUpdateBook}
-        />
-        <BookInfo 
-          book={book} 
-          getStatusColor={getStatusColor} 
-          getContentColor={getContentColor}
-          calculateNetRoyalties={calculateNetRoyalties}
-        />
+        <div className="flex flex-col">
+          <div className="relative">
+            <BookCover 
+              book={book} 
+              isEditing={isEditing}
+              onUpdateBook={onUpdateBook}
+            />
+          </div>
+          <BookInfo 
+            book={book} 
+            getStatusColor={getStatusColor} 
+            getContentColor={getContentColor}
+            calculateNetRoyalties={calculateNetRoyalties}
+          />
+        </div>
       </Card>
     </motion.div>
   );
