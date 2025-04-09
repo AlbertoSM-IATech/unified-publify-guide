@@ -154,50 +154,57 @@ export const BookInfo = ({
           </motion.div>
         )}
         
-        {/* HTML Code Section - Always shown but collapsed by default */}
+        {/* HTML Code Section - Always shown with expandable UI */}
         {book.descripcionHtml && (
           <motion.div 
-            className="pt-2"
+            className="pt-4 mt-2 border-t border-border"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.7 }}
           >
-            <div className="flex flex-row items-center justify-between mb-1">
-              <Button 
-                variant="outline" 
-                size="sm" 
-                onClick={() => setShowHtmlCode(!showHtmlCode)}
-                className="text-[#3B82F6] border-[#3B82F6]/30 hover:bg-[#3B82F6]/5"
-              >
-                {showHtmlCode ? "Ocultar código HTML para Amazon" : "Mostrar código HTML para Amazon"}
-              </Button>
+            <div className="flex flex-row items-center justify-between mb-2">
+              <h3 className="text-sm font-semibold">Código HTML para Amazon</h3>
               
-              {showHtmlCode && (
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={handleCopyHtml}
-                  className="text-[#FB923C] border-[#FB923C]/30 hover:bg-[#FB923C]/5"
-                >
-                  <Copy size={14} className="mr-1" />
-                  Copiar HTML
-                </Button>
-              )}
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleCopyHtml}
+                className="text-[#FB923C] border-[#FB923C]/30 hover:bg-[#FB923C]/5"
+              >
+                <Copy size={14} className="mr-1" />
+                Copiar HTML
+              </Button>
             </div>
             
-            {showHtmlCode && (
-              <motion.div
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: "auto", opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                transition={{ duration: 0.3 }}
-                className="mt-1 p-3 bg-black/5 dark:bg-white/5 rounded-md overflow-auto max-h-48 border border-border"
-              >
-                <pre className="text-xs text-muted-foreground whitespace-pre-wrap font-mono">
-                  {book.descripcionHtml}
-                </pre>
-              </motion.div>
-            )}
+            <motion.div
+              initial={{ height: showHtmlCode ? "auto" : "48px", opacity: 1 }}
+              animate={{ height: showHtmlCode ? "auto" : "48px", opacity: 1 }}
+              className="mt-1 p-3 bg-black/5 dark:bg-white/5 rounded-md overflow-hidden border border-border relative"
+            >
+              <pre className="text-xs text-muted-foreground whitespace-pre-wrap font-mono max-h-48 overflow-auto">
+                {book.descripcionHtml}
+              </pre>
+              
+              {!showHtmlCode && (
+                <div className="absolute inset-0 flex items-end justify-center bg-gradient-to-t from-background/90 to-background/0 cursor-pointer"
+                     onClick={() => setShowHtmlCode(true)}>
+                  <Button variant="ghost" size="sm" className="mb-2">
+                    Mostrar todo
+                  </Button>
+                </div>
+              )}
+              
+              {showHtmlCode && (
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  onClick={() => setShowHtmlCode(false)}
+                  className="mt-2 w-full"
+                >
+                  Ocultar
+                </Button>
+              )}
+            </motion.div>
           </motion.div>
         )}
       </div>

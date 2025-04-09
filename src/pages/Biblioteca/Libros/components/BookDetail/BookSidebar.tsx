@@ -25,7 +25,7 @@ export const BookSidebar = ({ book, isEditing, onUpdateBook }: BookSidebarProps)
       }}
       className="transition-all duration-300"
     >
-      <Card className="overflow-hidden bg-card shadow-md border dark:border-slate-800 hover:border-[#FB923C]/30">
+      <Card className="overflow-hidden bg-card shadow-md border border-slate-200 dark:border-slate-800 hover:border-[#FB923C]/30">
         <div className="flex flex-col">
           <div className="relative">
             <BookCover 

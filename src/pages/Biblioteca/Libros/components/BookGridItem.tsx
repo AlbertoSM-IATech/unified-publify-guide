@@ -17,7 +17,7 @@ interface BookGridItemProps {
 
 export const BookGridItem = ({ libro, getStatusColor, getContentColor }: BookGridItemProps) => {
   return (
-    <Link to={`/biblioteca/libros/${libro.id}`} className="block focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-lg">
+    <Link to={`/biblioteca/libros/${libro.id}`} className="block focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-lg h-full">
       <motion.div
         whileHover={{ 
           y: -5, 
