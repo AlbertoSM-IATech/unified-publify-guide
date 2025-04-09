@@ -15,15 +15,17 @@ export const BookListItem = ({ libro, getStatusColor, getContentColor }: BookLis
     <motion.tr 
       className="hover:bg-muted/20 transition-colors"
       whileHover={{ 
-        backgroundColor: "rgba(0,0,0,0.02)",
-        boxShadow: "0 4px 12px -2px rgba(251, 146, 60, 0.1)"
+        backgroundColor: "rgba(251,146,60,0.05)",
+        boxShadow: "0 4px 12px -2px rgba(251, 146, 60, 0.15)"
       }}
     >
       <td className="whitespace-nowrap px-4 py-4">
         <div className="flex items-center space-x-3">
           <div className="h-12 w-8 flex-shrink-0 overflow-hidden rounded-sm">
             {libro.imageUrl ? (
-              <img 
+              <motion.img 
+                whileHover={{ scale: 1.1 }}
+                transition={{ duration: 0.2 }}
                 src={libro.imageUrl} 
                 alt={libro.titulo} 
                 className="h-full w-full object-cover"
@@ -36,7 +38,7 @@ export const BookListItem = ({ libro, getStatusColor, getContentColor }: BookLis
           </div>
           <div>
             <div className="font-medium text-[#3B82F6]">
-              <Link to={`/biblioteca/libros/${libro.id}`} className="hover:underline">
+              <Link to={`/biblioteca/libros/${libro.id}`} className="hover:underline focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-[#3B82F6] rounded-sm">
                 {libro.titulo}
               </Link>
             </div>
@@ -72,12 +74,14 @@ export const BookListItem = ({ libro, getStatusColor, getContentColor }: BookLis
           : "No publicado"}
       </td>
       <td className="whitespace-nowrap px-4 py-4 text-right text-sm">
-        <Link
-          to={`/biblioteca/libros/${libro.id}`}
-          className="inline-flex items-center font-medium text-[#FB923C] hover:underline"
-        >
-          <Eye className="mr-1 h-4 w-4" /> Ver detalles
-        </Link>
+        <motion.div whileHover={{ x: 3 }} transition={{ type: "spring", stiffness: 300 }}>
+          <Link
+            to={`/biblioteca/libros/${libro.id}`}
+            className="inline-flex items-center font-medium text-[#FB923C] hover:underline focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-[#FB923C] rounded-sm"
+          >
+            <Eye className="mr-1 h-4 w-4" /> Ver detalles
+          </Link>
+        </motion.div>
       </td>
     </motion.tr>
   );

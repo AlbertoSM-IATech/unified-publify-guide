@@ -42,7 +42,7 @@ export const BookInfo = ({
         {book.subtitulo && <p className="text-base text-muted-foreground italic">{book.subtitulo}</p>}
       </div>
       
-      <p className="text-lg font-medium">Por <span style={{color: contentColor}}>{book.autor}</span></p>
+      <p className="text-lg font-medium">Por <span className="text-foreground" style={{color: contentColor}}>{book.autor}</span></p>
 
       <div className="flex flex-wrap gap-2 mt-3">
         <motion.span
@@ -133,7 +133,7 @@ export const BookInfo = ({
           </motion.div>
         )}
         
-        {/* HTML Code Section */}
+        {/* HTML Code Section - Always shown but collapsed by default */}
         {book.descripcionHtml && (
           <motion.div 
             className="pt-2"
@@ -151,11 +151,17 @@ export const BookInfo = ({
             </Button>
             
             {showHtmlCode && (
-              <div className="mt-2 p-3 bg-black/5 dark:bg-white/5 rounded-md overflow-auto max-h-48">
-                <pre className="text-xs text-muted-foreground whitespace-pre-wrap">
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                className="mt-2 p-3 bg-black/5 dark:bg-white/5 rounded-md overflow-auto max-h-48 border border-border"
+              >
+                <pre className="text-xs text-muted-foreground whitespace-pre-wrap font-mono">
                   {book.descripcionHtml}
                 </pre>
-              </div>
+              </motion.div>
             )}
           </motion.div>
         )}
@@ -171,7 +177,7 @@ export const BookInfo = ({
               href={amazonLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center text-[#FB923C] hover:underline font-medium"
+              className="inline-flex items-center text-[#FB923C] hover:underline font-medium focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-[#FB923C] rounded-sm"
             >
               <ExternalLink size={16} className="mr-2" />
               Ver en Amazon
@@ -188,7 +194,7 @@ export const BookInfo = ({
               href={book.landingPageUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center text-[#3B82F6] hover:underline font-medium"
+              className="inline-flex items-center text-[#3B82F6] hover:underline font-medium focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-[#3B82F6] rounded-sm"
             >
               <ExternalLink size={16} className="mr-2" />
               Landing Page

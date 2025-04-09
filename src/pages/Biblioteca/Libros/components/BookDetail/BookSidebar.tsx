@@ -20,10 +20,12 @@ export const BookSidebar = ({ book, isEditing, onUpdateBook }: BookSidebarProps)
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
       whileHover={{ 
-        boxShadow: "0 10px 25px -5px rgba(251, 146, 60, 0.1), 0 8px 10px -6px rgba(251, 146, 60, 0.1)"
+        boxShadow: "0 10px 25px -5px rgba(251, 146, 60, 0.15), 0 8px 10px -6px rgba(251, 146, 60, 0.15)",
+        borderColor: "rgba(251, 146, 60, 0.3)"
       }}
+      className="transition-all duration-300"
     >
-      <Card className="overflow-hidden bg-card shadow-md border dark:border-slate-800">
+      <Card className="overflow-hidden bg-card shadow-md border dark:border-slate-800 hover:border-[#FB923C]/30">
         <BookCover 
           book={book} 
           isEditing={isEditing}

@@ -22,13 +22,13 @@ export const BookGridItem = ({ libro, getStatusColor, getContentColor }: BookGri
         whileHover={{ 
           y: -5, 
           scale: 1.02,
-          boxShadow: "0 10px 25px -5px rgba(251, 146, 60, 0.1), 0 8px 10px -6px rgba(251, 146, 60, 0.1)"
+          boxShadow: "0 10px 25px -5px rgba(251, 146, 60, 0.2), 0 8px 10px -6px rgba(251, 146, 60, 0.2)"
         }}
         whileTap={{ scale: 0.98 }}
         transition={{ duration: 0.2 }}
         className="h-full"
       >
-        <Card className="overflow-hidden hover:shadow-lg transition-all duration-300 h-full flex flex-col md:flex-row border dark:border-slate-800">
+        <Card className="overflow-hidden hover:shadow-lg hover:border-[#FB923C]/30 transition-all duration-300 h-full flex flex-col md:flex-row border dark:border-slate-800">
           {/* Book cover - Left side */}
           <div className="relative md:w-1/3 w-full">
             <div className="aspect-[1600/2560] w-full overflow-hidden bg-muted">
@@ -51,18 +51,18 @@ export const BookGridItem = ({ libro, getStatusColor, getContentColor }: BookGri
           {/* Book info - Right side */}
           <CardContent className="flex flex-col justify-between p-4 md:w-2/3 w-full">
             <div className="space-y-2">
-              <h3 className="line-clamp-2 text-lg font-heading font-semibold">{libro.titulo}</h3>
+              <h3 className="line-clamp-2 text-lg font-heading font-semibold text-foreground">{libro.titulo}</h3>
               <p className="line-clamp-1 text-base text-muted-foreground">{libro.autor}</p>
               
               {/* Status and content badges moved here */}
               <div className="flex flex-wrap gap-2 my-2">
                 <motion.div whileHover={{ scale: 1.05 }} className="inline-block">
-                  <span className={`inline-flex items-center rounded-full px-2 py-1 text-xs font-semibold ${getStatusColor(libro.estado)}`}>
+                  <span className={`inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium ${getStatusColor(libro.estado)}`}>
                     {libro.estado}
                   </span>
                 </motion.div>
                 <motion.div whileHover={{ scale: 1.05 }} className="inline-block">
-                  <span className={`inline-flex items-center rounded-full px-2 py-1 text-xs font-semibold ${getContentColor(libro.contenido)}`}>
+                  <span className={`inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium ${getContentColor(libro.contenido)}`}>
                     {libro.contenido}
                   </span>
                 </motion.div>
