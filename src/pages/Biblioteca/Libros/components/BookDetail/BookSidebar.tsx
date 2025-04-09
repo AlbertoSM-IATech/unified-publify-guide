@@ -19,11 +19,8 @@ export const BookSidebar = ({ book, isEditing, onUpdateBook }: BookSidebarProps)
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      whileHover={{ 
-        boxShadow: "0 10px 25px -5px rgba(251, 146, 60, 0.1), 0 8px 10px -6px rgba(251, 146, 60, 0.1)"
-      }}
     >
-      <Card className="overflow-hidden bg-card shadow-md border dark:border-slate-800">
+      <Card className="overflow-hidden bg-card shadow-md">
         <BookCover 
           book={book} 
           isEditing={isEditing}

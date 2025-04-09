@@ -14,10 +14,7 @@ export const BookListItem = ({ libro, getStatusColor, getContentColor }: BookLis
   return (
     <motion.tr 
       className="hover:bg-muted/20 transition-colors"
-      whileHover={{ 
-        backgroundColor: "rgba(0,0,0,0.02)",
-        boxShadow: "0 4px 12px -2px rgba(251, 146, 60, 0.1)"
-      }}
+      whileHover={{ backgroundColor: "rgba(0,0,0,0.02)" }}
     >
       <td className="whitespace-nowrap px-4 py-4">
         <div className="flex items-center space-x-3">
@@ -50,7 +47,7 @@ export const BookListItem = ({ libro, getStatusColor, getContentColor }: BookLis
       </td>
       <td className="whitespace-nowrap px-4 py-4 text-sm">
         <span
-          className={`rounded-full px-2.5 py-1 text-xs font-medium ${getStatusColor(
+          className={`rounded-full px-2 py-1 text-xs font-medium ${getStatusColor(
             libro.estado
           )}`}
         >
@@ -59,7 +56,7 @@ export const BookListItem = ({ libro, getStatusColor, getContentColor }: BookLis
       </td>
       <td className="whitespace-nowrap px-4 py-4 text-sm">
         <span
-          className={`rounded-full px-2.5 py-1 text-xs font-medium ${getContentColor(
+          className={`rounded-full px-2 py-1 text-xs font-medium ${getContentColor(
             libro.contenido
           )}`}
         >

@@ -96,11 +96,6 @@
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
-  
-  /* Improved text contrast for light mode */
-  .text-muted-foreground {
-    @apply dark:text-slate-400 text-slate-600;
-  }
 }
 
 @layer components {
@@ -115,42 +110,4 @@
   .sidebar-link.active {
     @apply bg-sidebar-accent text-sidebar-accent-foreground font-medium;
   }
-  
-  /* New book card styles */
-  .book-card {
-    @apply border dark:border-slate-800 overflow-hidden bg-card transition-all duration-300;
-  }
-  
-  .book-card:hover {
-    @apply shadow-lg shadow-[#FB923C]/10;
-  }
 }
-
-@layer utilities {
-  /* Animation utilities */
-  .animate-fade-in {
-    animation: fade-in 0.3s ease-out;
-  }
-  
-  .animate-float {
-    animation: float 3s ease-in-out infinite;
-  }
-  
-  .animate-pulse-soft {
-    animation: pulse-soft 2s ease-in-out infinite;
-  }
-  
-  .animate-glow {
-    animation: glow 2s ease-in-out infinite;
-  }
-  
-  /* Custom box shadows */
-  .shadow-coral {
-    box-shadow: 0 4px 14px -2px rgba(251, 146, 60, 0.15);
-  }
-  
-  .shadow-blue {
-    box-shadow: 0 4px 14px -2px rgba(59, 130, 246, 0.15);
-  }
-}
-

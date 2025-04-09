@@ -42,47 +42,47 @@ export const sortLibros = (libros: Book[], sortBy: string, sortOrder: string): B
   return sortedLibros;
 };
 
-// Get status color class
-export const getStatusColor = (status: string): string => {
-  switch (status.toLowerCase()) {
-    case "publicado":
-      return "bg-green-100 text-green-800 border border-green-200 dark:bg-green-900/30 dark:text-green-300 dark:border-green-800";
-    case "borrador":
-      return "bg-indigo-100 text-indigo-800 border border-indigo-200 dark:bg-indigo-900/30 dark:text-indigo-300 dark:border-indigo-800";
-    case "en revisión":
-      return "bg-amber-100 text-amber-800 border border-amber-200 dark:bg-amber-900/30 dark:text-amber-300 dark:border-amber-800";
-    case "archivado":
-      return "bg-red-100 text-red-800 border border-red-200 dark:bg-red-900/30 dark:text-red-300 dark:border-red-800";
+// Get the color class for a book status
+export const getStatusColor = (status: string) => {
+  switch (status) {
+    case "Publicado":
+      return "bg-status-published text-white";
+    case "Borrador":
+      return "bg-status-draft text-white";
+    case "En revisión":
+      return "bg-status-review text-white";
+    case "Archivado":
+      return "bg-status-archived text-white";
     default:
-      return "bg-gray-100 text-gray-800 border border-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700";
+      return "bg-gray-200 text-gray-800";
   }
 };
 
-// Get content color class
-export const getContentColor = (content: string): string => {
-  switch (content.toLowerCase()) {
-    case "alto contenido":
-      return "bg-blue-100 text-[#3B82F6] border border-blue-200 dark:bg-blue-900/30 dark:text-blue-300 dark:border-blue-800";
-    case "medio contenido":
-      return "bg-orange-100 text-[#FB923C] border border-orange-200 dark:bg-orange-900/30 dark:text-orange-300 dark:border-orange-800";
-    case "bajo contenido":
-      return "bg-emerald-100 text-[#10B981] border border-emerald-200 dark:bg-emerald-900/30 dark:text-emerald-300 dark:border-emerald-800";
+// Get the color class for a content type
+export const getContentColor = (content: string) => {
+  switch (content) {
+    case "Alto Contenido":
+      return "bg-content-high text-white";
+    case "Medio Contenido":
+      return "bg-content-medium text-white";
+    case "Bajo Contenido":
+      return "bg-content-low text-white";
     default:
-      return "bg-gray-100 text-gray-800 border border-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700";
+      return "bg-gray-200 text-gray-800";
   }
 };
 
-// Get content hex color for text styling
-export const getContentHexColor = (content: string): string => {
-  switch (content.toLowerCase()) {
-    case "alto contenido":
+// Hex color values for content types (for direct styling)
+export const getContentHexColor = (content: string) => {
+  switch (content) {
+    case "Alto Contenido":
       return "#3B82F6"; // Blue
-    case "medio contenido":
-      return "#FB923C"; // Coral/Orange
-    case "bajo contenido":
+    case "Medio Contenido":
+      return "#FB923C"; // Coral
+    case "Bajo Contenido":
       return "#10B981"; // Green
     default:
-      return "#64748b"; // Slate
+      return "#94a3b8"; // Default gray
   }
 };
 

@@ -4,8 +4,6 @@ import { Book } from "../../types/bookTypes";
 import { generateAmazonLink } from "../../utils/bookDetailUtils";
 import { getContentHexColor } from "../../utils/librosUtils";
 import { motion } from "framer-motion";
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
 
 interface BookInfoProps {
   book: Book;
@@ -20,8 +18,6 @@ export const BookInfo = ({
   getContentColor,
   calculateNetRoyalties,
 }: BookInfoProps) => {
-  const [showHtmlCode, setShowHtmlCode] = useState(false);
-  
   // Obtener el formato principal para mostrar ASIN
   const primaryFormat = book.hardcover || book.paperback || book.ebook;
   const asin = primaryFormat?.asin || book.asin;
@@ -130,33 +126,6 @@ export const BookInfo = ({
                 <p className="text-sm text-muted-foreground">{book.descripcion}</p>
               )}
             </div>
-          </motion.div>
-        )}
-        
-        {/* HTML Code Section */}
-        {book.descripcionHtml && (
-          <motion.div 
-            className="pt-2"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.7 }}
-          >
-            <Button 
-              variant="outline" 
-              size="sm" 
-              onClick={() => setShowHtmlCode(!showHtmlCode)}
-              className="w-full text-[#3B82F6] border-[#3B82F6]/30 hover:bg-[#3B82F6]/5"
-            >
-              {showHtmlCode ? "Ocultar código HTML para Amazon" : "Mostrar código HTML para Amazon"}
-            </Button>
-            
-            {showHtmlCode && (
-              <div className="mt-2 p-3 bg-black/5 dark:bg-white/5 rounded-md overflow-auto max-h-48">
-                <pre className="text-xs text-muted-foreground whitespace-pre-wrap">
-                  {book.descripcionHtml}
-                </pre>
-              </div>
-            )}
           </motion.div>
         )}
       </div>

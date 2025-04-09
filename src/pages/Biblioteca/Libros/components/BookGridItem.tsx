@@ -7,7 +7,6 @@ import {
 } from "@/components/ui/card";
 import { Eye, Tag, Calendar } from "lucide-react";
 import { motion } from "framer-motion";
-import { StatusBadge } from "@/components/common/StatusBadge";
 
 interface BookGridItemProps {
   libro: Book;
@@ -19,16 +18,12 @@ export const BookGridItem = ({ libro, getStatusColor, getContentColor }: BookGri
   return (
     <Link to={`/biblioteca/libros/${libro.id}`} className="block focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-lg">
       <motion.div
-        whileHover={{ 
-          y: -5, 
-          scale: 1.02,
-          boxShadow: "0 10px 25px -5px rgba(251, 146, 60, 0.1), 0 8px 10px -6px rgba(251, 146, 60, 0.1)"
-        }}
+        whileHover={{ y: -5, scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
         transition={{ duration: 0.2 }}
         className="h-full"
       >
-        <Card className="overflow-hidden hover:shadow-lg transition-all duration-300 h-full flex flex-col md:flex-row border dark:border-slate-800">
+        <Card className="overflow-hidden hover:shadow-lg transition-all duration-300 h-full flex flex-col md:flex-row">
           {/* Book cover - Left side */}
           <div className="relative md:w-1/3 w-full">
             <div className="aspect-[1600/2560] w-full overflow-hidden bg-muted">
@@ -45,6 +40,24 @@ export const BookGridItem = ({ libro, getStatusColor, getContentColor }: BookGri
                   <span className="text-center font-heading text-lg font-semibold text-foreground/70">{libro.titulo}</span>
                 </div>
               )}
+              <div className="absolute bottom-0 left-0 right-0 flex justify-between p-2 bg-gradient-to-t from-black/60 to-transparent">
+                <motion.span
+                  whileHover={{ scale: 1.05 }}
+                  className={`inline-flex items-center rounded-full px-2 py-1 text-xs font-semibold ${getStatusColor(
+                    libro.estado
+                  )}`}
+                >
+                  {libro.estado}
+                </motion.span>
+                <motion.span
+                  whileHover={{ scale: 1.05 }}
+                  className={`inline-flex items-center rounded-full px-2 py-1 text-xs font-semibold ${getContentColor(
+                    libro.contenido
+                  )}`}
+                >
+                  {libro.contenido}
+                </motion.span>
+              </div>
             </div>
           </div>
 
@@ -53,20 +66,6 @@ export const BookGridItem = ({ libro, getStatusColor, getContentColor }: BookGri
             <div className="space-y-2">
               <h3 className="line-clamp-2 text-lg font-heading font-semibold">{libro.titulo}</h3>
               <p className="line-clamp-1 text-base text-muted-foreground">{libro.autor}</p>
-              
-              {/* Status and content badges moved here */}
-              <div className="flex flex-wrap gap-2 my-2">
-                <motion.div whileHover={{ scale: 1.05 }} className="inline-block">
-                  <span className={`inline-flex items-center rounded-full px-2 py-1 text-xs font-semibold ${getStatusColor(libro.estado)}`}>
-                    {libro.estado}
-                  </span>
-                </motion.div>
-                <motion.div whileHover={{ scale: 1.05 }} className="inline-block">
-                  <span className={`inline-flex items-center rounded-full px-2 py-1 text-xs font-semibold ${getContentColor(libro.contenido)}`}>
-                    {libro.contenido}
-                  </span>
-                </motion.div>
-              </div>
               
               <div className="flex flex-col space-y-1 pt-1">
                 <div className="flex items-center text-xs text-muted-foreground">
