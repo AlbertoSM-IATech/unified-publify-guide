@@ -1,9 +1,11 @@
+
 import { useState } from "react";
 import { BookOpen, FileText, Plus, Search, Filter, ArrowLeft } from "lucide-react";
 import { motion } from "framer-motion";
 import { ResponsiveGrid } from "@/components/layout/ResponsiveGrid";
+import { Link } from "react-router-dom";
 
-// Datos simulados para investigaciones
+// Datos actualizados para investigaciones que coinciden con los datos de libros
 const investigacionesSimuladas = [
   {
     id: 1,
@@ -11,7 +13,7 @@ const investigacionesSimuladas = [
     descripcion: "Notas y fuentes para el libro",
     libroId: 1,
     libroTitulo: "El Arte de la Estrategia",
-    fechaActualizacion: "2023-05-10",
+    fechaActualizacion: "2023-10-05",
     contenido: "Contenido de la investigación..."
   },
   {
@@ -173,7 +175,9 @@ export const InvestigacionesList = () => {
                   <div className="flex justify-between items-center mb-2">
                     <h3 className="font-medium text-lg">{investigacion.titulo}</h3>
                     <div className="rounded-md px-2 py-1 text-xs bg-secondary/10 text-secondary-foreground">
-                      Libro: {investigacion.libroTitulo}
+                      <Link to={`/biblioteca/libros/${investigacion.libroId}`} className="hover:underline">
+                        {investigacion.libroTitulo}
+                      </Link>
                     </div>
                   </div>
                   <p className="mt-1 text-sm text-muted-foreground line-clamp-2">
@@ -198,3 +202,4 @@ export const InvestigacionesList = () => {
 };
 
 export default InvestigacionesList;
+

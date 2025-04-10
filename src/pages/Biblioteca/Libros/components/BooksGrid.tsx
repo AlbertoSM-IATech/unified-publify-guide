@@ -45,7 +45,7 @@ export const BooksGrid = ({ libros, getStatusColor, getContentColor }: BooksGrid
           <p className="text-muted-foreground">No hay libros que coincidan con tu búsqueda</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 mt-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-6 mt-6">
           {libros.map((libro) => (
             <motion.div 
               key={libro.id} 
