@@ -2,7 +2,7 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Book } from "../../types/bookTypes";
 import { FormatSection } from "./FormatSection";
-import { GeneralInfoSection } from "../BookDetail/GeneralInfoSection";
+import { GeneralInfoSection } from "./GeneralInfoSection";
 import { NotesSection } from "./NotesSection";
 import { RelationFields } from "./Relations/RelationFields";
 
