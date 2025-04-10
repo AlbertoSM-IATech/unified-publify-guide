@@ -1,7 +1,8 @@
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Book } from "../../types/bookTypes";
-import { FormatTabContent } from "./FormatTabContent";
-import { GeneralInfoSection } from "./GeneralInfo/GeneralInfoSection";
+import { FormatSection } from "./FormatSection";
+import { GeneralInfoSection } from "../BookDetail/GeneralInfoSection";
 import { NotesSection } from "./NotesSection";
 import { RelationFields } from "./Relations/RelationFields";
 
@@ -22,11 +23,11 @@ export const DetailedTabs = ({ book, isEditing, onUpdateBook }: DetailedTabsProp
       </TabsList>
       
       <TabsContent value="general">
-        <GeneralInfoSection book={book} />
+        <GeneralInfoSection book={book} isEditing={isEditing} onUpdateBook={onUpdateBook} />
       </TabsContent>
 
       <TabsContent value="formatos">
-        <FormatTabContent book={book} isEditing={isEditing} onUpdateBook={onUpdateBook} />
+        <FormatSection book={book} isEditing={isEditing} onUpdateBook={onUpdateBook} />
       </TabsContent>
 
       <TabsContent value="relaciones">

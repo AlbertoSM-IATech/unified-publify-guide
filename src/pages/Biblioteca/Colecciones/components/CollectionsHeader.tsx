@@ -1,12 +1,14 @@
 
 import { Plus } from "lucide-react";
 import { PageSection } from "@/components/layout/PageSection";
+import { ReactNode } from "react";
 
 interface CollectionsHeaderProps {
   onCreateCollection: () => void;
+  children?: ReactNode;
 }
 
-export const CollectionsHeader = ({ onCreateCollection }: CollectionsHeaderProps) => {
+export const CollectionsHeader = ({ onCreateCollection, children }: CollectionsHeaderProps) => {
   return (
     <PageSection
       title="Colecciones"
@@ -20,6 +22,8 @@ export const CollectionsHeader = ({ onCreateCollection }: CollectionsHeaderProps
           Nueva Colección
         </button>
       }
-    />
+    >
+      {children}
+    </PageSection>
   );
 };

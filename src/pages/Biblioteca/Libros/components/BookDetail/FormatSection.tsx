@@ -4,18 +4,17 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
 import { Book, BookFormat } from "../../types/bookTypes";
 import { FormatTabContent } from "./FormatTabContent";
+import { calculateNetRoyalties } from "../../utils/formatUtils";
 
 interface FormatSectionProps {
   book: Book;
   isEditing: boolean;
-  calculateNetRoyalties: (format?: BookFormat) => string;
   onUpdateBook?: (updatedData: Partial<Book>) => void;
 }
 
 export const FormatSection = ({ 
   book, 
   isEditing, 
-  calculateNetRoyalties,
   onUpdateBook
 }: FormatSectionProps) => {
   const [activeTab, setActiveTab] = useState("hardcover");
