@@ -2,8 +2,6 @@
 import { Book } from "../../types/bookTypes";
 import { Link } from "react-router-dom";
 import { Label } from "@/components/ui/label";
-import { FormField } from "@/components/ui/form";
-import { UseFormReturn } from "react-hook-form";
 import { ExternalLink } from "lucide-react";
 import { motion } from "framer-motion";
 import {
@@ -14,78 +12,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useEffect, useState } from "react";
-
-// Datos simulados para investigaciones (deben coincidir con los datos en InvestigacionesList.tsx)
-const investigacionesSimuladas = [
-  {
-    id: 1,
-    titulo: "Investigación para El Arte de la Estrategia",
-    descripcion: "Notas y fuentes para el libro",
-    libroId: 1,
-    libroTitulo: "El Arte de la Estrategia",
-    fechaActualizacion: "2023-10-05"
-  },
-  {
-    id: 2,
-    titulo: "Investigación para Finanzas para Emprendedores",
-    descripcion: "Referencias y estudios de caso",
-    libroId: 2,
-    libroTitulo: "Finanzas para Emprendedores",
-    fechaActualizacion: "2023-04-15"
-  },
-  {
-    id: 3,
-    titulo: "Investigación para Marketing Digital",
-    descripcion: "Tendencias y estadísticas actuales",
-    libroId: 3,
-    libroTitulo: "Marketing Digital",
-    fechaActualizacion: "2023-03-20"
-  },
-  {
-    id: 4,
-    titulo: "Investigación para Desarrollo Personal",
-    descripcion: "Técnicas y metodologías",
-    libroId: 4,
-    libroTitulo: "Desarrollo Personal",
-    fechaActualizacion: "2023-02-25"
-  }
-];
-
-// Datos simulados para colecciones (deben coincidir con los datos en ColeccionesList.tsx)
-const coleccionesSimuladas = [
-  {
-    id: 1,
-    nombre: "Serie Emprendimiento",
-    descripcion: "Libros sobre emprendimiento y negocios",
-    cantidadLibros: 3,
-    fechaCreacion: "2023-01-15",
-    libros: [1, 2, 7]
-  },
-  {
-    id: 2,
-    nombre: "Desarrollo Personal",
-    descripcion: "Libros de crecimiento y superación",
-    cantidadLibros: 2,
-    fechaCreacion: "2023-02-20",
-    libros: [4, 5]
-  },
-  {
-    id: 3,
-    nombre: "Marketing y Ventas",
-    descripcion: "Todo sobre marketing digital y técnicas de venta",
-    cantidadLibros: 1,
-    fechaCreacion: "2023-03-10",
-    libros: [3]
-  },
-  {
-    id: 4,
-    nombre: "Liderazgo",
-    descripcion: "Estrategias y consejos de liderazgo",
-    cantidadLibros: 1,
-    fechaCreacion: "2023-04-05",
-    libros: [6]
-  }
-];
+import { coleccionesSimuladas, investigacionesSimuladas } from "../../utils/librosUtils";
+import { Badge } from "@/components/ui/badge";
 
 interface RelationFieldsProps {
   book: Book;
@@ -175,19 +103,29 @@ export const RelationFields = ({ book, isEditing, onUpdateBook }: RelationFields
         
         {selectedInvestigacion && (
           <motion.div 
-            className="mt-2"
+            className="mt-2 p-3 bg-slate-50 dark:bg-slate-900/50 rounded-md border border-slate-200 dark:border-slate-800"
             initial={{ opacity: 0, y: 5 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
           >
-            <Link 
-              to={`/biblioteca/investigaciones`}
-              state={{ selectInvestigacion: selectedInvestigacion.id }}
-              className="flex items-center text-sm text-primary hover:underline hover:text-[#FB923C] transition-colors duration-200"
-            >
-              <ExternalLink size={14} className="mr-1" />
-              Ver investigación
-            </Link>
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <h4 className="text-sm font-medium">{selectedInvestigacion.titulo}</h4>
+              </div>
+              
+              <p className="text-xs text-muted-foreground line-clamp-2">
+                {selectedInvestigacion.descripcion}
+              </p>
+              
+              <Link 
+                to={`/biblioteca/investigaciones`}
+                state={{ selectInvestigacion: selectedInvestigacion.id }}
+                className="flex items-center text-sm text-primary hover:underline hover:text-[#FB923C] transition-colors duration-200"
+              >
+                <ExternalLink size={14} className="mr-1" />
+                Ver investigación
+              </Link>
+            </div>
           </motion.div>
         )}
       </div>
@@ -219,18 +157,29 @@ export const RelationFields = ({ book, isEditing, onUpdateBook }: RelationFields
         
         {selectedColeccion && (
           <motion.div 
-            className="mt-2"
+            className="mt-2 p-3 bg-slate-50 dark:bg-slate-900/50 rounded-md border border-slate-200 dark:border-slate-800"
             initial={{ opacity: 0, y: 5 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
           >
-            <Link 
-              to={`/biblioteca/colecciones/${selectedColeccion.id}`}
-              className="flex items-center text-sm text-primary hover:underline hover:text-[#FB923C] transition-colors duration-200"
-            >
-              <ExternalLink size={14} className="mr-1" />
-              Ver colección
-            </Link>
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <h4 className="text-sm font-medium">{selectedColeccion.nombre}</h4>
+                <Badge variant="outline" className="text-xs">{selectedColeccion.estado}</Badge>
+              </div>
+              
+              <p className="text-xs text-muted-foreground line-clamp-2">
+                {selectedColeccion.descripcion}
+              </p>
+              
+              <Link 
+                to={`/biblioteca/colecciones/${selectedColeccion.id}`}
+                className="flex items-center text-sm text-primary hover:underline hover:text-[#FB923C] transition-colors duration-200"
+              >
+                <ExternalLink size={14} className="mr-1" />
+                Ver colección
+              </Link>
+            </div>
           </motion.div>
         )}
       </div>

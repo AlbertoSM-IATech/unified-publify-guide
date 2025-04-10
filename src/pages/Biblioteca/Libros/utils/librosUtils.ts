@@ -87,7 +87,92 @@ export const getContentHexColor = (content: string): string => {
   }
 };
 
-// Simulate data for libros - Updated to match the collections and investigations shown in screenshots
+// Datos simulados para colecciones
+export const coleccionesSimuladas = [
+  {
+    id: 1,
+    nombre: "Serie Emprendimiento",
+    descripcion: "Libros sobre emprendimiento y negocios",
+    cantidadLibros: 3,
+    fechaCreacion: "2023-01-15",
+    libros: [1, 2, 7],
+    estado: "Activa"
+  },
+  {
+    id: 2,
+    nombre: "Desarrollo Personal",
+    descripcion: "Libros de crecimiento y superación",
+    cantidadLibros: 2,
+    fechaCreacion: "2023-02-20",
+    libros: [4, 5],
+    estado: "Activa"
+  },
+  {
+    id: 3,
+    nombre: "Marketing y Ventas",
+    descripcion: "Todo sobre marketing digital y técnicas de venta",
+    cantidadLibros: 1,
+    fechaCreacion: "2023-03-10",
+    libros: [3],
+    estado: "Activa"
+  },
+  {
+    id: 4,
+    nombre: "Liderazgo",
+    descripcion: "Estrategias y consejos de liderazgo",
+    cantidadLibros: 1,
+    fechaCreacion: "2023-04-05",
+    libros: [6],
+    estado: "Activa"
+  },
+  {
+    id: 5,
+    nombre: "Cocina mediterránea",
+    descripcion: "Colección de libros de cocina mediterránea",
+    cantidadLibros: 1,
+    fechaCreacion: "2023-05-15",
+    libros: [5],
+    estado: "Activa"
+  }
+];
+
+// Datos simulados para investigaciones
+export const investigacionesSimuladas = [
+  {
+    id: 1,
+    titulo: "Investigación para El Arte de la Estrategia",
+    descripcion: "Notas y fuentes para el libro",
+    libroId: 1,
+    libroTitulo: "El Arte de la Estrategia",
+    fechaActualizacion: "2023-10-05"
+  },
+  {
+    id: 2,
+    titulo: "Investigación para Finanzas para Emprendedores",
+    descripcion: "Referencias y estudios de caso",
+    libroId: 2,
+    libroTitulo: "Finanzas para Emprendedores",
+    fechaActualizacion: "2023-04-15"
+  },
+  {
+    id: 3,
+    titulo: "Investigación para Marketing Digital",
+    descripcion: "Tendencias y estadísticas actuales",
+    libroId: 3,
+    libroTitulo: "Marketing Digital",
+    fechaActualizacion: "2023-03-20"
+  },
+  {
+    id: 4,
+    titulo: "Investigación para Desarrollo Personal",
+    descripcion: "Técnicas y metodologías",
+    libroId: 4,
+    libroTitulo: "Desarrollo Personal",
+    fechaActualizacion: "2023-02-25"
+  }
+];
+
+// Simulate data for libros
 export const librosSimulados: Book[] = [
   {
     id: 1,
@@ -101,7 +186,8 @@ export const librosSimulados: Book[] = [
     fechaPublicacion: "2023-01-15",
     imageUrl: "https://m.media-amazon.com/images/I/71jLBXtWJHL._AC_UF1000,1000_QL80_.jpg",
     investigacionId: 1,
-    proyectoId: 1, // Serie Emprendimiento
+    proyectoId: 1,
+    descripcionHtml: "<h2>El Arte de la Estrategia</h2><p>Este libro te enseñará los fundamentos de la estrategia empresarial con ejemplos prácticos.</p><ul><li>Capítulo 1: Fundamentos</li><li>Capítulo 2: Análisis competitivo</li><li>Capítulo 3: Implementación</li></ul>"
   },
   {
     id: 2,
@@ -115,7 +201,8 @@ export const librosSimulados: Book[] = [
     fechaPublicacion: "2023-02-10",
     imageUrl: "https://images.unsplash.com/photo-1554224155-6726b3ff858f",
     investigacionId: 2,
-    proyectoId: 1, // Serie Emprendimiento
+    proyectoId: 1,
+    descripcionHtml: "<h2>Finanzas para Emprendedores</h2><p>Una guía esencial para manejar las finanzas de tu negocio desde cero.</p><ul><li>Contabilidad básica</li><li>Flujo de caja</li><li>Estrategias de inversión</li></ul>"
   },
   {
     id: 3,
@@ -129,7 +216,8 @@ export const librosSimulados: Book[] = [
     fechaPublicacion: "2023-03-20",
     imageUrl: "https://images.unsplash.com/photo-1557838923-2985c318be48",
     investigacionId: 3,
-    proyectoId: 3, // Marketing y Ventas
+    proyectoId: 3,
+    descripcionHtml: "<h2>Marketing Digital</h2><p>Descubre las estrategias más efectivas de marketing online para tu negocio.</p><ul><li>SEO y SEM</li><li>Redes sociales</li><li>Email marketing</li></ul>"
   },
   {
     id: 4,
@@ -143,7 +231,8 @@ export const librosSimulados: Book[] = [
     fechaPublicacion: "2023-02-25",
     imageUrl: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b",
     investigacionId: 4,
-    proyectoId: 2, // Desarrollo Personal
+    proyectoId: 2,
+    descripcionHtml: "<h2>Desarrollo Personal</h2><p>Aprende a potenciar tus habilidades y mejorar tu calidad de vida.</p><ul><li>Gestión del tiempo</li><li>Inteligencia emocional</li><li>Hábitos efectivos</li></ul>"
   },
   {
     id: 5,
@@ -156,7 +245,8 @@ export const librosSimulados: Book[] = [
     contenido: "Medio Contenido",
     fechaPublicacion: "2023-04-05",
     imageUrl: "https://images.unsplash.com/photo-1466637574441-749b8f19452f",
-    proyectoId: 2, // Desarrollo Personal
+    proyectoId: 5,
+    descripcionHtml: "<h2>Cocina Vegetariana</h2><p>Las mejores recetas vegetarianas para una alimentación saludable.</p><ul><li>Entradas</li><li>Platos principales</li><li>Postres</li></ul>"
   },
   {
     id: 6,
@@ -169,7 +259,8 @@ export const librosSimulados: Book[] = [
     contenido: "Bajo Contenido",
     fechaPublicacion: "2023-04-15",
     imageUrl: "https://images.unsplash.com/photo-1519389950473-47ba0277781c",
-    proyectoId: 4, // Liderazgo
+    proyectoId: 4,
+    descripcionHtml: "<h2>Liderazgo Efectivo</h2><p>Aprende a liderar equipos de trabajo y conseguir resultados extraordinarios.</p><ul><li>Comunicación efectiva</li><li>Delegación</li><li>Motivación de equipos</li></ul>"
   },
   {
     id: 7,
@@ -182,7 +273,7 @@ export const librosSimulados: Book[] = [
     contenido: "Alto Contenido",
     fechaPublicacion: "2023-05-20",
     imageUrl: "https://images.unsplash.com/photo-1533750349088-cd871a92f312",
-    proyectoId: 1, // Serie Emprendimiento
+    proyectoId: 1,
+    descripcionHtml: "<h2>Innovación Empresarial</h2><p>Estrategias para fomentar la innovación y creatividad en tu empresa.</p><ul><li>Cultura de innovación</li><li>Design thinking</li><li>Implementación de procesos creativos</li></ul>"
   },
 ];
-

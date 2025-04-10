@@ -1,54 +1,27 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { BookOpen, FileText, Plus, Search, Filter, ArrowLeft } from "lucide-react";
 import { motion } from "framer-motion";
 import { ResponsiveGrid } from "@/components/layout/ResponsiveGrid";
-import { Link } from "react-router-dom";
-
-// Datos actualizados para investigaciones que coinciden con los datos de libros
-const investigacionesSimuladas = [
-  {
-    id: 1,
-    titulo: "Investigación para El Arte de la Estrategia",
-    descripcion: "Notas y fuentes para el libro",
-    libroId: 1,
-    libroTitulo: "El Arte de la Estrategia",
-    fechaActualizacion: "2023-10-05",
-    contenido: "Contenido de la investigación..."
-  },
-  {
-    id: 2,
-    titulo: "Investigación para Finanzas para Emprendedores",
-    descripcion: "Referencias y estudios de caso",
-    libroId: 2,
-    libroTitulo: "Finanzas para Emprendedores",
-    fechaActualizacion: "2023-04-15",
-    contenido: "Contenido de la investigación..."
-  },
-  {
-    id: 3,
-    titulo: "Investigación para Marketing Digital",
-    descripcion: "Tendencias y estadísticas actuales",
-    libroId: 3,
-    libroTitulo: "Marketing Digital",
-    fechaActualizacion: "2023-03-20",
-    contenido: "Contenido de la investigación..."
-  },
-  {
-    id: 4,
-    titulo: "Investigación para Desarrollo Personal",
-    descripcion: "Técnicas y metodologías",
-    libroId: 4,
-    libroTitulo: "Desarrollo Personal",
-    fechaActualizacion: "2023-02-25",
-    contenido: "Contenido de la investigación..."
-  }
-];
+import { Link, useLocation } from "react-router-dom";
+import { investigacionesSimuladas } from "../Libros/utils/librosUtils";
 
 export const InvestigacionesList = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [investigaciones, setInvestigaciones] = useState(investigacionesSimuladas);
   const [selectedInvestigacion, setSelectedInvestigacion] = useState<typeof investigacionesSimuladas[0] | null>(null);
+  const location = useLocation();
+
+  // Manejar selección de investigación desde otra página
+  useEffect(() => {
+    if (location.state?.selectInvestigacion) {
+      const investigacionId = location.state.selectInvestigacion;
+      const investigacion = investigaciones.find(inv => inv.id === investigacionId);
+      if (investigacion) {
+        setSelectedInvestigacion(investigacion);
+      }
+    }
+  }, [location.state, investigaciones]);
 
   // Filtrar investigaciones por búsqueda
   const filteredInvestigaciones = investigaciones.filter(investigacion => 
@@ -202,4 +175,3 @@ export const InvestigacionesList = () => {
 };
 
 export default InvestigacionesList;
-
