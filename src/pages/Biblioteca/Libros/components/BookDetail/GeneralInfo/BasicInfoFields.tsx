@@ -11,6 +11,7 @@ import { toast } from "@/hooks/use-toast";
 import { motion } from "framer-motion";
 import { Separator } from "@/components/ui/separator";
 import { Card } from "@/components/ui/card";
+import { UseFormReturn } from "react-hook-form";
 
 interface BasicInfoFieldsProps {
   book: Book;
