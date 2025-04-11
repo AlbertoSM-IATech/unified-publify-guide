@@ -56,8 +56,8 @@ export const BookInfo = ({
     duration: 0.3
   }}>
       <div className="space-y-1">
-        <h2 className="font-bold text-2xl font-heading text-foreground">{book.titulo}</h2>
-        {book.subtitulo && <p className="text-base text-muted-foreground italic">{book.subtitulo}</p>}
+        <h2 className="font-bold text-2xl font-heading text-orange-400">{book.titulo}</h2>
+        {book.subtitulo && <p className="italic text-white font-normal text-base">{book.subtitulo}</p>}
       </div>
       
       <p className="text-lg font-medium">Por <span className="text-foreground" style={{
@@ -86,7 +86,7 @@ export const BookInfo = ({
         delay: 0.3
       }}>
             <Tag size={16} className="text-muted-foreground" />
-            <span>ASIN: <span className="font-medium">{asin}</span></span>
+            <span className="text-content-medium text-[FB923C]">ASIN: <span className="font-medium">{asin}</span></span>
           </motion.div>}
 
         {book.isbn && <motion.div className="flex items-center gap-2 text-sm" initial={{
@@ -97,7 +97,7 @@ export const BookInfo = ({
         delay: 0.4
       }}>
             <Tag size={16} className="text-muted-foreground" />
-            <span>ISBN: <span className="font-medium">{book.isbn}</span></span>
+            <span className="text-orange-400">ISBN: <span className="font-medium">{book.isbn}</span></span>
           </motion.div>}
         
         {book.fechaPublicacion && <motion.div className="flex items-center gap-2 text-sm" initial={{
