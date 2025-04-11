@@ -4,7 +4,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
 import { Book, BookFormat } from "../../types/bookTypes";
 import { FormatTabContent } from "./FormatTabContent";
-import { calculateNetRoyalties } from "../../utils/formatUtils";
+import { calculateNetRoyalties } from "../../utils/bookDetailUtils";
 
 interface FormatSectionProps {
   book: Book;

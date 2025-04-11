@@ -1,15 +1,14 @@
 
-import { Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { BookFormat } from "../../../types/bookTypes";
-import { calculateNetRoyalties } from "../../../utils/bookDetailUtils";
 import { Separator } from "@/components/ui/separator";
 
 interface PricingSectionProps {
   formatType: string;
   format: BookFormat;
   isEditing: boolean;
+  calculateNetRoyalties: (format?: BookFormat) => string;
   onUpdateFormat?: (formatType: string, updatedData: Partial<BookFormat>) => void;
 }
 
@@ -17,48 +16,96 @@ export const PricingSection = ({
   formatType,
   format,
   isEditing,
+  calculateNetRoyalties,
   onUpdateFormat
 }: PricingSectionProps) => {
-  const netRoyalties = calculateNetRoyalties(format);
-  
-  const handleInputChange = (field: keyof BookFormat, value: number) => {
+  const handleInputChange = (field: keyof BookFormat, value: string | number) => {
     if (onUpdateFormat) {
       const updateData: Partial<BookFormat> = {};
-      updateData[field] = value;
+      updateData[field as keyof BookFormat] = field === 'price' || field === 'royaltyPercentage' || field === 'printingCost'
+        ? parseFloat(value.toString())
+        : value;
       onUpdateFormat(formatType, updateData);
     }
   };
-  
-  return <Card className="border border-border">
-      <CardContent className="p-4">
-        <div className="flex items-center mb-4">
-          <h3 className="text-lg font-medium">Información de Precios</h3>
-          <Separator className="flex-grow ml-3" />
+
+  // Calculate the net royalties to display
+  const netRoyalties = calculateNetRoyalties(format);
+
+  return (
+    <div className="space-y-6">
+      <div className="flex items-center">
+        <h3 className="text-lg font-semibold">Información de Precios</h3>
+        <Separator className="flex-grow ml-3" />
+      </div>
+      
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+        {/* Precio */}
+        <div className="grid gap-3">
+          <Label htmlFor={`${formatType}-price`}>Precio</Label>
+          {isEditing ? (
+            <Input
+              id={`${formatType}-price`}
+              type="number"
+              step="0.01"
+              defaultValue={format.price}
+              placeholder="Ej. 19.99"
+              onChange={(e) => handleInputChange('price', parseFloat(e.target.value))}
+            />
+          ) : (
+            <div>{format.price ? `${format.price.toFixed(2)}€` : "No definido"}</div>
+          )}
         </div>
         
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-          <div className="grid gap-2">
-            <Label htmlFor={`${formatType}-price`}>Precio de venta sin IVA</Label>
-            {isEditing ? <Input id={`${formatType}-price`} type="number" step="0.01" defaultValue={format.price} placeholder="Ej. 24.99" onChange={e => handleInputChange('price', parseFloat(e.target.value))} /> : <div>{format.price ? `${format.price}€` : "No definido"}</div>}
-          </div>
-          <div className="grid gap-2">
-            <Label htmlFor={`${formatType}-royalty`}>% de regalías</Label>
-            {isEditing ? <Input id={`${formatType}-royalty`} type="number" step="0.01" defaultValue={format.royaltyPercentage ? format.royaltyPercentage * 100 : ""} placeholder="Ej. 60" onChange={e => handleInputChange('royaltyPercentage', parseFloat(e.target.value) / 100)} /> : <div>{format.royaltyPercentage ? `${format.royaltyPercentage * 100}%` : "No definido"}</div>}
-          </div>
-          <div className="grid gap-2">
-            <Label htmlFor={`${formatType}-printing`}>Costo de impresión</Label>
-            {isEditing ? <Input id={`${formatType}-printing`} type="number" step="0.01" defaultValue={format.printingCost} placeholder="Ej. 5.50" onChange={e => handleInputChange('printingCost', parseFloat(e.target.value))} /> : <div>{format.printingCost !== undefined ? `${format.printingCost}€` : "No definido"}</div>}
-          </div>
+        {/* Porcentaje de Regalías */}
+        <div className="grid gap-3">
+          <Label htmlFor={`${formatType}-royalty`}>Porcentaje de Regalías</Label>
+          {isEditing ? (
+            <div className="flex items-center">
+              <Input
+                id={`${formatType}-royalty`}
+                type="number"
+                step="0.01"
+                min="0"
+                max="1"
+                defaultValue={format.royaltyPercentage}
+                placeholder="Ej. 0.70"
+                onChange={(e) => handleInputChange('royaltyPercentage', parseFloat(e.target.value))}
+              />
+              <span className="ml-2">({format.royaltyPercentage ? (format.royaltyPercentage * 100).toFixed(0) : 0}%)</span>
+            </div>
+          ) : (
+            <div>{format.royaltyPercentage ? `${(format.royaltyPercentage * 100).toFixed(0)}%` : "No definido"}</div>
+          )}
         </div>
-        <div className="mt-4 rounded-md bg-muted p-3">
-          <div className="flex justify-between">
-            <span className="font-medium">Regalías netas:</span>
-            <span className="font-semibold text-xl font-secondary text-green-600">{netRoyalties}€</span>
+        
+        {/* Coste de impresión (solo para libros físicos) */}
+        {formatType !== "ebook" && (
+          <div className="grid gap-3">
+            <Label htmlFor={`${formatType}-printing-cost`}>Coste de Impresión</Label>
+            {isEditing ? (
+              <Input
+                id={`${formatType}-printing-cost`}
+                type="number"
+                step="0.01"
+                defaultValue={format.printingCost}
+                placeholder="Ej. 3.50"
+                onChange={(e) => handleInputChange('printingCost', parseFloat(e.target.value))}
+              />
+            ) : (
+              <div>{format.printingCost !== undefined ? `${format.printingCost.toFixed(2)}€` : "No definido"}</div>
+            )}
           </div>
-          <div className="mt-1 text-xs text-muted-foreground">
-            Fórmula: Precio venta sin IVA x % de regalías - precio de impresión
-          </div>
+        )}
+      </div>
+      
+      {/* Mostrar regalías netas calculadas */}
+      <div className="mt-4 p-3 bg-muted rounded-md">
+        <div className="flex items-center justify-between">
+          <span className="text-sm font-medium">Regalías netas (estimado):</span>
+          <span className="text-xl font-bold text-green-600">{netRoyalties}€</span>
         </div>
-      </CardContent>
-    </Card>;
+      </div>
+    </div>
+  );
 };

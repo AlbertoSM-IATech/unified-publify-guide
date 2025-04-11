@@ -1,3 +1,4 @@
+
 import { Book } from "../../../types/bookTypes";
 import { Link } from "react-router-dom";
 import { Label } from "@/components/ui/label";
@@ -8,6 +9,7 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+
 interface RelationFieldsProps {
   form: UseFormReturn<any>;
   book?: Book;
@@ -127,6 +129,7 @@ const fetchColeccionById = (id: number): Promise<Coleccion | null> => {
     }, 200);
   });
 };
+
 export const RelationFields = ({
   form,
   book
@@ -142,6 +145,7 @@ export const RelationFields = ({
     investigacion: false,
     coleccion: false
   });
+  
   useEffect(() => {
     // Fetch the related data
     const fetchData = async () => {
@@ -210,5 +214,94 @@ export const RelationFields = ({
     };
     fetchRelatedColeccion();
   }, [book?.proyectoId]);
-  return;
+
+  return (
+    <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+      {/* Investigación Relacionada */}
+      <div className="grid gap-3">
+        <Label>Investigación Relacionada</Label>
+        {loading ? (
+          <div className="flex items-center space-x-2">
+            <Loader2 className="h-4 w-4 animate-spin" />
+            <span className="text-sm text-muted-foreground">Cargando investigaciones...</span>
+          </div>
+        ) : (
+          <div className="rounded-md border border-input px-3 py-2 bg-muted/50">
+            {selectedInvestigacion ? selectedInvestigacion.titulo : "Ninguna investigación seleccionada"}
+          </div>
+        )}
+        
+        {selectedInvestigacion && (
+          <motion.div 
+            className="mt-2 p-3 bg-slate-50 dark:bg-slate-900/50 rounded-md border border-slate-200 dark:border-slate-800"
+            initial={{ opacity: 0, y: 5 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <h4 className="text-sm font-medium">{selectedInvestigacion.titulo}</h4>
+              </div>
+              
+              <p className="text-xs text-muted-foreground line-clamp-2">
+                {selectedInvestigacion.descripcion}
+              </p>
+              
+              <Link 
+                to={`/biblioteca/investigaciones`}
+                state={{ selectInvestigacion: selectedInvestigacion.id }}
+                className="flex items-center text-sm text-primary hover:underline hover:text-[#FB923C] transition-colors duration-200"
+              >
+                <ExternalLink size={14} className="mr-1" />
+                Ver investigación
+              </Link>
+            </div>
+          </motion.div>
+        )}
+      </div>
+
+      {/* Colección Relacionada */}
+      <div className="grid gap-3">
+        <Label>Colección Relacionada</Label>
+        {loading ? (
+          <div className="flex items-center space-x-2">
+            <Loader2 className="h-4 w-4 animate-spin" />
+            <span className="text-sm text-muted-foreground">Cargando colecciones...</span>
+          </div>
+        ) : (
+          <div className="rounded-md border border-input px-3 py-2 bg-muted/50">
+            {selectedColeccion ? selectedColeccion.titulo : "Ninguna colección seleccionada"}
+          </div>
+        )}
+        
+        {selectedColeccion && (
+          <motion.div 
+            className="mt-2 p-3 bg-slate-50 dark:bg-slate-900/50 rounded-md border border-slate-200 dark:border-slate-800"
+            initial={{ opacity: 0, y: 5 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <h4 className="text-sm font-medium">{selectedColeccion.titulo}</h4>
+                <Badge variant="outline" className="text-xs">{selectedColeccion.estado}</Badge>
+              </div>
+              
+              <p className="text-xs text-muted-foreground line-clamp-2">
+                {selectedColeccion.descripcion}
+              </p>
+              
+              <Link 
+                to={`/biblioteca/colecciones/${selectedColeccion.id}`}
+                className="flex items-center text-sm text-primary hover:underline hover:text-[#FB923C] transition-colors duration-200"
+              >
+                <ExternalLink size={14} className="mr-1" />
+                Ver colección
+              </Link>
+            </div>
+          </motion.div>
+        )}
+      </div>
+    </div>
+  );
 };

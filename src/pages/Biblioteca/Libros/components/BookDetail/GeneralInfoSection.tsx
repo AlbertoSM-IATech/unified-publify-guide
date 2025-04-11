@@ -6,7 +6,7 @@ import { useGeneralInfoForm } from "./GeneralInfo/useGeneralInfoForm";
 import { BasicInfoFields } from "./GeneralInfo/BasicInfoFields";
 import { StatusFields } from "./GeneralInfo/StatusFields";
 import { PublicationDateField } from "./GeneralInfo/PublicationDateField";
-import { RelationFields } from "./GeneralInfo/RelationFields";
+import { RelationFields } from "./Relations/RelationFields";
 import { ContentAplusSection } from "./GeneralInfo/ContentAplusSection";
 
 interface GeneralInfoSectionProps {
@@ -45,9 +45,6 @@ export const GeneralInfoSection = ({
             
             {/* A+ Content section */}
             <ContentAplusSection book={book} isEditing={isEditing} form={form} />
-            
-            {/* Relation Fields - Always shown */}
-            <RelationFields form={form} book={book} />
           </div>
         </Form>
       </CardContent>

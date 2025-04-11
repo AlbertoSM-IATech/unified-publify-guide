@@ -13,14 +13,16 @@ import { Separator } from "@/components/ui/separator";
 interface FormatTabContentProps { 
   formatType: string; 
   format?: BookFormat; 
-  isEditing: boolean; 
+  isEditing: boolean;
+  calculateNetRoyalties: (format?: BookFormat) => string; 
   onUpdateFormat?: (formatType: string, updatedData: Partial<BookFormat>) => void;
 }
 
 export const FormatTabContent = ({ 
   formatType, 
   format, 
-  isEditing, 
+  isEditing,
+  calculateNetRoyalties,
   onUpdateFormat
 }: FormatTabContentProps) => {
   if (!format) {
@@ -133,6 +135,7 @@ export const FormatTabContent = ({
         format={format}
         isEditing={isEditing}
         onUpdateFormat={onUpdateFormat}
+        calculateNetRoyalties={calculateNetRoyalties}
       />
 
       {/* Archivos adjuntos */}
