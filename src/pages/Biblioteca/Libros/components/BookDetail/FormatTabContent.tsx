@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { BookFormat } from "../../types/bookTypes";
 import { FileSection } from "./Format/FileSection";
 import { LinksSection } from "./Format/LinksSection";
-import { PricingSection } from "./Format/PricingSection";
+import { PricingSection } from "./Format/Pricing";
 import { Separator } from "@/components/ui/separator";
 
 interface FormatTabContentProps { 
