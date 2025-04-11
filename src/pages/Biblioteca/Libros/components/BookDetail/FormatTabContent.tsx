@@ -4,7 +4,6 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { BookFormat } from "../../types/bookTypes";
-import { File, Image, Link, Upload, X } from "lucide-react";
 import { FileSection } from "./Format/FileSection";
 import { LinksSection } from "./Format/LinksSection";
 import { PricingSection } from "./Format/PricingSection";

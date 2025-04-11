@@ -3,6 +3,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { BookFormat } from "../../../types/bookTypes";
 import { Separator } from "@/components/ui/separator";
+import { useEffect, useState } from "react";
 
 interface PricingSectionProps {
   formatType: string;
@@ -19,6 +20,13 @@ export const PricingSection = ({
   calculateNetRoyalties,
   onUpdateFormat
 }: PricingSectionProps) => {
+  const [netRoyalties, setNetRoyalties] = useState("0.00");
+  
+  // Update net royalties when format data changes
+  useEffect(() => {
+    setNetRoyalties(calculateNetRoyalties(format));
+  }, [format, calculateNetRoyalties]);
+
   const handleInputChange = (field: keyof BookFormat, value: string | number) => {
     if (onUpdateFormat) {
       const updateData: Partial<BookFormat> = {};
@@ -28,9 +36,6 @@ export const PricingSection = ({
       onUpdateFormat(formatType, updateData);
     }
   };
-
-  // Calculate the net royalties to display
-  const netRoyalties = calculateNetRoyalties(format);
 
   return (
     <div className="space-y-6">
