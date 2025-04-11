@@ -1,22 +1,26 @@
+
 import { Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { BookFormat } from "../../../types/bookTypes";
+import { calculateNetRoyalties } from "../../../utils/bookDetailUtils";
+import { Separator } from "@/components/ui/separator";
+
 interface PricingSectionProps {
   formatType: string;
   format: BookFormat;
   isEditing: boolean;
-  calculateNetRoyalties: (format?: BookFormat) => string;
   onUpdateFormat?: (formatType: string, updatedData: Partial<BookFormat>) => void;
 }
+
 export const PricingSection = ({
   formatType,
   format,
   isEditing,
-  calculateNetRoyalties,
   onUpdateFormat
 }: PricingSectionProps) => {
   const netRoyalties = calculateNetRoyalties(format);
+  
   const handleInputChange = (field: keyof BookFormat, value: number) => {
     if (onUpdateFormat) {
       const updateData: Partial<BookFormat> = {};
@@ -24,9 +28,14 @@ export const PricingSection = ({
       onUpdateFormat(formatType, updateData);
     }
   };
+  
   return <Card className="border border-border">
       <CardContent className="p-4">
-        <h3 className="mb-4 text-lg font-medium">Información de Precios</h3>
+        <div className="flex items-center mb-4">
+          <h3 className="text-lg font-medium">Información de Precios</h3>
+          <Separator className="flex-grow ml-3" />
+        </div>
+        
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
           <div className="grid gap-2">
             <Label htmlFor={`${formatType}-price`}>Precio de venta sin IVA</Label>

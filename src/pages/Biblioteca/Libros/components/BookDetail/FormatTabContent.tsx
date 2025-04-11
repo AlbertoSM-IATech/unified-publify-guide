@@ -8,12 +8,12 @@ import { File, Image, Link, Upload, X } from "lucide-react";
 import { FileSection } from "./Format/FileSection";
 import { LinksSection } from "./Format/LinksSection";
 import { PricingSection } from "./Format/PricingSection";
+import { Separator } from "@/components/ui/separator";
 
 interface FormatTabContentProps { 
   formatType: string; 
   format?: BookFormat; 
   isEditing: boolean; 
-  calculateNetRoyalties: (format?: BookFormat) => string;
   onUpdateFormat?: (formatType: string, updatedData: Partial<BookFormat>) => void;
 }
 
@@ -21,7 +21,6 @@ export const FormatTabContent = ({
   formatType, 
   format, 
   isEditing, 
-  calculateNetRoyalties,
   onUpdateFormat
 }: FormatTabContentProps) => {
   if (!format) {
@@ -52,73 +51,80 @@ export const FormatTabContent = ({
 
   return (
     <div className="grid gap-6">
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-        {/* Dimensiones */}
-        {formatType !== "ebook" && (
-          <div className="grid gap-3">
-            <Label htmlFor={`${formatType}-dimensions`}>Dimensiones</Label>
-            {isEditing ? (
-              <Input 
-                id={`${formatType}-dimensions`} 
-                defaultValue={format.dimensions} 
-                placeholder="Ej. 15.24 x 22.86 cm"
-                onChange={(e) => handleInputChange('dimensions', e.target.value)}
-              />
-            ) : (
-              <div>{format.dimensions || "No definidas"}</div>
-            )}
-          </div>
-        )}
-
-        {/* ISBN */}
-        {formatType !== "ebook" && (
-          <div className="grid gap-3">
-            <Label htmlFor={`${formatType}-isbn`}>ISBN</Label>
-            {isEditing ? (
-              <Input 
-                id={`${formatType}-isbn`}
-                defaultValue={format.isbn} 
-                placeholder="ISBN" 
-                onChange={(e) => handleInputChange('isbn', e.target.value)}
-              />
-            ) : (
-              <div>{format.isbn || "No definido"}</div>
-            )}
-          </div>
-        )}
+      <div className="space-y-6">
+        <div className="flex items-center">
+          <h3 className="text-lg font-semibold">Información General</h3>
+          <Separator className="flex-grow ml-3" />
+        </div>
         
-        {/* ASIN - Ahora para todos los formatos */}
-        <div className="grid gap-3">
-          <Label htmlFor={`${formatType}-asin`}>ASIN</Label>
-          {isEditing ? (
-            <Input 
-              id={`${formatType}-asin`} 
-              defaultValue={format.asin} 
-              placeholder="ASIN"
-              onChange={(e) => handleInputChange('asin', e.target.value)}
-            />
-          ) : (
-            <div>{format.asin || "No definido"}</div>
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+          {/* Dimensiones */}
+          {formatType !== "ebook" && (
+            <div className="grid gap-3">
+              <Label htmlFor={`${formatType}-dimensions`}>Dimensiones</Label>
+              {isEditing ? (
+                <Input 
+                  id={`${formatType}-dimensions`} 
+                  defaultValue={format.dimensions} 
+                  placeholder="Ej. 15.24 x 22.86 cm"
+                  onChange={(e) => handleInputChange('dimensions', e.target.value)}
+                />
+              ) : (
+                <div>{format.dimensions || "No definidas"}</div>
+              )}
+            </div>
+          )}
+
+          {/* ISBN */}
+          {formatType !== "ebook" && (
+            <div className="grid gap-3">
+              <Label htmlFor={`${formatType}-isbn`}>ISBN</Label>
+              {isEditing ? (
+                <Input 
+                  id={`${formatType}-isbn`}
+                  defaultValue={format.isbn} 
+                  placeholder="ISBN" 
+                  onChange={(e) => handleInputChange('isbn', e.target.value)}
+                />
+              ) : (
+                <div>{format.isbn || "No definido"}</div>
+              )}
+            </div>
+          )}
+          
+          {/* ASIN - Ahora para todos los formatos */}
+          <div className="grid gap-3">
+            <Label htmlFor={`${formatType}-asin`}>ASIN</Label>
+            {isEditing ? (
+              <Input 
+                id={`${formatType}-asin`} 
+                defaultValue={format.asin} 
+                placeholder="ASIN"
+                onChange={(e) => handleInputChange('asin', e.target.value)}
+              />
+            ) : (
+              <div>{format.asin || "No definido"}</div>
+            )}
+          </div>
+
+          {/* Número de páginas */}
+          {formatType !== "ebook" && (
+            <div className="grid gap-3">
+              <Label htmlFor={`${formatType}-pages`}>Número de páginas</Label>
+              {isEditing ? (
+                <Input 
+                  id={`${formatType}-pages`} 
+                  type="number"
+                  defaultValue={format.pages} 
+                  placeholder="Ej. 300"
+                  onChange={(e) => handleInputChange('pages', parseInt(e.target.value))}
+                />
+              ) : (
+                <div>{format.pages || "No definido"}</div>
+              )}
+            </div>
           )}
         </div>
-
-        {/* Número de páginas */}
-        {formatType !== "ebook" && (
-          <div className="grid gap-3">
-            <Label htmlFor={`${formatType}-pages`}>Número de páginas</Label>
-            {isEditing ? (
-              <Input 
-                id={`${formatType}-pages`} 
-                type="number"
-                defaultValue={format.pages} 
-                placeholder="Ej. 300"
-                onChange={(e) => handleInputChange('pages', parseInt(e.target.value))}
-              />
-            ) : (
-              <div>{format.pages || "No definido"}</div>
-            )}
-          </div>
-        )}
       </div>
 
       {/* Sección de precios */}
@@ -126,7 +132,6 @@ export const FormatTabContent = ({
         formatType={formatType}
         format={format}
         isEditing={isEditing}
-        calculateNetRoyalties={calculateNetRoyalties}
         onUpdateFormat={onUpdateFormat}
       />
 
@@ -146,21 +151,28 @@ export const FormatTabContent = ({
       />
 
       {/* Estrategia */}
-      <div className="grid gap-3">
-        <Label htmlFor={`${formatType}-strategy`}>Estrategia</Label>
-        {isEditing ? (
-          <Textarea
-            id={`${formatType}-strategy`}
-            defaultValue={format.strategy}
-            placeholder="Describe la estrategia de marketing, posicionamiento, etc."
-            rows={4}
-            onChange={(e) => handleInputChange('strategy', e.target.value)}
-          />
-        ) : (
-          <div className="rounded-md bg-muted p-3 text-sm">
-            {format.strategy || "No hay estrategia definida"}
-          </div>
-        )}
+      <div className="space-y-4">
+        <div className="flex items-center">
+          <h3 className="text-lg font-medium">Estrategia</h3>
+          <Separator className="flex-grow ml-3" />
+        </div>
+        
+        <div className="grid gap-3">
+          <Label htmlFor={`${formatType}-strategy`}>Estrategia</Label>
+          {isEditing ? (
+            <Textarea
+              id={`${formatType}-strategy`}
+              defaultValue={format.strategy}
+              placeholder="Describe la estrategia de marketing, posicionamiento, etc."
+              rows={4}
+              onChange={(e) => handleInputChange('strategy', e.target.value)}
+            />
+          ) : (
+            <div className="rounded-md bg-muted p-3 text-sm">
+              {format.strategy || "No hay estrategia definida"}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

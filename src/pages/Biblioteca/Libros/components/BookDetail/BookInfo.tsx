@@ -1,4 +1,5 @@
-import { Eye, ExternalLink, Tag, Calendar, BookOpen, Copy } from "lucide-react";
+
+import { Eye, ExternalLink, Tag, Calendar, BookOpen, Copy, CheckCheck } from "lucide-react";
 import { Book } from "../../types/bookTypes";
 import { generateAmazonLink } from "../../utils/bookDetailUtils";
 import { getContentHexColor } from "../../utils/librosUtils";
@@ -18,7 +19,7 @@ export const BookInfo = ({
   getContentColor,
   calculateNetRoyalties
 }: BookInfoProps) => {
-  const [showHtmlCode, setShowHtmlCode] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   // Obtener el formato principal para mostrar ASIN
   const primaryFormat = book.hardcover || book.paperback || book.ebook;
@@ -28,23 +29,25 @@ export const BookInfo = ({
   // Get content specific color for styling
   const contentColor = getContentHexColor(book.contenido);
 
-  // Handle copying HTML code to clipboard
-  const handleCopyHtml = () => {
-    if (book.descripcionHtml) {
-      navigator.clipboard.writeText(book.descripcionHtml).then(() => {
-        toast({
-          title: "Código HTML copiado",
-          description: "El código HTML de la descripción ha sido copiado al portapapeles"
-        });
-      }).catch(() => {
-        toast({
-          title: "Error al copiar",
-          description: "No se pudo copiar el código HTML",
-          variant: "destructive"
-        });
+  // Handle copying text to clipboard
+  const copyToClipboard = (text: string, message: string = "copiado") => {
+    if (!text) return;
+    
+    navigator.clipboard.writeText(text).then(() => {
+      setCopied(true);
+      toast({
+        description: `${message} al portapapeles`
       });
-    }
+      setTimeout(() => setCopied(false), 2000);
+    }).catch(() => {
+      toast({
+        title: "Error al copiar",
+        description: `No se pudo copiar ${message.toLowerCase()}`,
+        variant: "destructive"
+      });
+    });
   };
+
   return <motion.div className="p-6 space-y-4" initial={{
     opacity: 0,
     y: 10
@@ -86,7 +89,19 @@ export const BookInfo = ({
         delay: 0.3
       }}>
             <Tag size={16} className="text-muted-foreground" />
-            <span className="text-content-medium text-[FB923C]">ASIN: <span className="font-medium">{asin}</span></span>
+            <span className="text-content-medium text-[FB923C]">ASIN: 
+              <span className="font-medium ml-1">{asin}</span>
+              {amazonLink && (
+                <Button 
+                  variant="ghost" 
+                  size="icon" 
+                  className="h-6 w-6 ml-1 text-muted-foreground hover:text-[#FB923C]"
+                  onClick={() => copyToClipboard(amazonLink, "Enlace de Amazon")}
+                >
+                  {copied ? <CheckCheck size={14} /> : <Copy size={14} />}
+                </Button>
+              )}
+            </span>
           </motion.div>}
 
         {book.isbn && <motion.div className="flex items-center gap-2 text-sm" initial={{
@@ -121,24 +136,6 @@ export const BookInfo = ({
             <BookOpen size={16} className="text-muted-foreground" />
             <span>BSR: <span className="font-medium">#{book.bsr}</span></span>
           </motion.div>}
-        
-        {book.descripcion && <motion.div className="pt-2" initial={{
-        opacity: 0
-      }} animate={{
-        opacity: 1
-      }} transition={{
-        delay: 0.6
-      }}>
-            <div className="flex items-start gap-2">
-              <BookOpen size={16} className="text-muted-foreground mt-1" />
-              {book.descripcionHtml ? <p className="text-sm text-muted-foreground" dangerouslySetInnerHTML={{
-            __html: book.descripcionHtml
-          }} /> : <p className="text-sm text-muted-foreground">{book.descripcion}</p>}
-            </div>
-          </motion.div>}
-        
-        {/* HTML Code Section - Always shown with expandable UI */}
-        {book.descripcionHtml}
       </div>
 
       <div className="flex flex-wrap gap-3 pt-3">
@@ -159,11 +156,19 @@ export const BookInfo = ({
       }} transition={{
         type: "spring",
         stiffness: 300
-      }}>
+      }} className="flex items-center">
             <a href={book.landingPageUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center text-[#3B82F6] hover:underline font-medium focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-[#3B82F6] rounded-sm">
               <ExternalLink size={16} className="mr-2" />
               Landing Page
             </a>
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              className="h-6 w-6 ml-1 text-muted-foreground hover:text-[#3B82F6]"
+              onClick={() => copyToClipboard(book.landingPageUrl, "URL de Landing Page")}
+            >
+              <Copy size={14} />
+            </Button>
           </motion.div>}
       </div>
 
@@ -176,7 +181,7 @@ export const BookInfo = ({
     }}>
         <div className="flex items-center justify-between">
           <span className="text-sm font-medium">Regalías netas (estimado):</span>
-          <span className="text-xl font-bold text-[#3B82F6]">
+          <span className="text-xl font-bold text-green-600">
             {calculateNetRoyalties(primaryFormat)}€
           </span>
         </div>

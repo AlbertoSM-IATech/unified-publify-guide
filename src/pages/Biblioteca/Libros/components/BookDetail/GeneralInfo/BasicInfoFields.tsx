@@ -7,9 +7,11 @@ import { Textarea } from "@/components/ui/textarea";
 import { FormField, FormControl } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { UseFormReturn } from "react-hook-form";
-import { Code, Copy, FileText, CheckCheck } from "lucide-react";
+import { Code, Copy, FileText, CheckCheck, ExternalLink } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { motion } from "framer-motion";
+import { Separator } from "@/components/ui/separator";
+import { Card } from "@/components/ui/card";
 
 interface BasicInfoFieldsProps {
   book: Book;
@@ -19,7 +21,7 @@ interface BasicInfoFieldsProps {
 
 export const BasicInfoFields = ({ book, isEditing, form }: BasicInfoFieldsProps) => {
   const [htmlOutput, setHtmlOutput] = useState<string>(book.descripcionHtml || "");
-  const [showHtmlPreview, setShowHtmlPreview] = useState(false);
+  const [showHtmlPreview, setShowHtmlPreview] = useState(!!book.descripcionHtml);
   const [copied, setCopied] = useState(false);
 
   const generateHtml = () => {
@@ -64,53 +66,103 @@ export const BasicInfoFields = ({ book, isEditing, form }: BasicInfoFieldsProps)
     }, 2000);
   };
 
+  // Handle copying link to clipboard
+  const copyLink = (url: string, title: string = "Enlace") => {
+    if (!url) return;
+    
+    navigator.clipboard.writeText(url).then(() => {
+      toast({
+        description: `${title} copiado al portapapeles`
+      });
+    }).catch(() => {
+      toast({
+        title: "Error al copiar",
+        description: `No se pudo copiar el ${title.toLowerCase()}`,
+        variant: "destructive"
+      });
+    });
+  };
+
   return (
     <>
-      {/* Título */}
-      <div className="grid gap-3">
-        <Label htmlFor="titulo">Título</Label>
-        {isEditing ? (
-          <FormField
-            control={form.control}
-            name="titulo"
-            render={({ field }) => (
-              <Input 
-                id="titulo" 
-                placeholder="Título del libro"
-                {...field}
-              />
-            )}
-          />
-        ) : (
-          <div className="text-xl font-semibold">{book.titulo}</div>
-        )}
+      {/* Sección de Información Básica */}
+      <div className="space-y-6">
+        <div className="flex items-center">
+          <h3 className="text-lg font-semibold">Información Básica</h3>
+          <Separator className="flex-grow ml-3" />
+        </div>
+        
+        {/* Título */}
+        <div className="grid gap-3">
+          <Label htmlFor="titulo">Título</Label>
+          {isEditing ? (
+            <FormField
+              control={form.control}
+              name="titulo"
+              render={({ field }) => (
+                <Input 
+                  id="titulo" 
+                  placeholder="Título del libro"
+                  {...field}
+                />
+              )}
+            />
+          ) : (
+            <div className="text-xl font-semibold">{book.titulo}</div>
+          )}
+        </div>
+
+        {/* Subtítulo */}
+        <div className="grid gap-3">
+          <Label htmlFor="subtitulo">Subtítulo</Label>
+          {isEditing ? (
+            <FormField
+              control={form.control}
+              name="subtitulo"
+              render={({ field }) => (
+                <Input 
+                  id="subtitulo" 
+                  placeholder="Subtítulo del libro"
+                  {...field}
+                />
+              )}
+            />
+          ) : (
+            <div>{book.subtitulo || "No definido"}</div>
+          )}
+        </div>
+
+        {/* Autor */}
+        <div className="grid gap-3">
+          <Label htmlFor="autor">Autor</Label>
+          {isEditing ? (
+            <FormField
+              control={form.control}
+              name="autor"
+              render={({ field }) => (
+                <Input 
+                  id="autor" 
+                  placeholder="Nombre del autor"
+                  {...field}
+                />
+              )}
+            />
+          ) : (
+            <div>{book.autor}</div>
+          )}
+        </div>
       </div>
 
-      {/* Subtítulo */}
-      <div className="grid gap-3">
-        <Label htmlFor="subtitulo">Subtítulo</Label>
-        {isEditing ? (
-          <FormField
-            control={form.control}
-            name="subtitulo"
-            render={({ field }) => (
-              <Input 
-                id="subtitulo" 
-                placeholder="Subtítulo del libro"
-                {...field}
-              />
-            )}
-          />
-        ) : (
-          <div>{book.subtitulo || "No definido"}</div>
-        )}
-      </div>
-
-      {/* Descripción con generador HTML */}
-      <div className="grid gap-3">
-        <Label htmlFor="descripcion">Descripción</Label>
-        {isEditing ? (
-          <>
+      {/* Sección de Descripción */}
+      <div className="space-y-6 mt-8">
+        <div className="flex items-center">
+          <h3 className="text-lg font-semibold">Descripción</h3>
+          <Separator className="flex-grow ml-3" />
+        </div>
+        
+        <div className="grid gap-3">
+          <Label htmlFor="descripcion">Descripción</Label>
+          {isEditing ? (
             <FormField
               control={form.control}
               name="descripcion"
@@ -123,7 +175,15 @@ export const BasicInfoFields = ({ book, isEditing, form }: BasicInfoFieldsProps)
                 />
               )}
             />
-            <div className="flex flex-wrap gap-2 mt-1">
+          ) : (
+            <div className="text-sm text-muted-foreground whitespace-pre-wrap">{book.descripcion}</div>
+          )}
+        </div>
+
+        {/* HTML Preview */}
+        <div className="mt-4">
+          {isEditing ? (
+            <div className="flex flex-wrap gap-2">
               <Button 
                 type="button" 
                 size="sm"
@@ -135,137 +195,147 @@ export const BasicInfoFields = ({ book, isEditing, form }: BasicInfoFieldsProps)
                 Generar código HTML
               </Button>
             </div>
-            
-            {showHtmlPreview && (
-              <motion.div 
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
-                className="mt-3"
+          ) : (
+            book.descripcionHtml && (
+              <Button
+                type="button"
+                size="sm"
+                variant="outline"
+                className="flex items-center gap-1 mb-3"
+                onClick={() => setShowHtmlPreview(!showHtmlPreview)}
               >
-                <Label htmlFor="html-output">HTML generado</Label>
-                <div className="relative">
-                  <Textarea 
-                    id="html-output"
-                    value={htmlOutput}
-                    rows={6}
-                    className="font-mono text-sm bg-muted"
-                    readOnly
-                  />
+                <Code size={16} />
+                {showHtmlPreview ? "Ocultar código HTML" : "Ver código HTML"}
+              </Button>
+            )
+          )}
+            
+          {showHtmlPreview && book.descripcionHtml && (
+            <motion.div 
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              className="mt-3"
+            >
+              <Card className="p-4 bg-card border border-muted">
+                <div className="flex justify-between items-center mb-3">
+                  <Label className="text-sm font-medium">Código HTML</Label>
                   <Button
                     type="button"
                     size="sm"
                     variant="ghost"
-                    className="absolute top-2 right-2"
+                    className="h-8 flex items-center gap-1"
                     onClick={copyHtml}
                   >
                     {copied ? <CheckCheck size={16} /> : <Copy size={16} />}
+                    <span className="ml-1">Copiar</span>
                   </Button>
                 </div>
-                
-                <Label className="mt-3">Vista previa</Label>
-                <div 
-                  className="p-3 border rounded-md bg-card mt-1"
-                  dangerouslySetInnerHTML={{ __html: htmlOutput }}
+              
+                <Textarea 
+                  id="html-output"
+                  value={book.descripcionHtml || htmlOutput}
+                  rows={4}
+                  className="font-mono text-sm bg-muted mb-3"
+                  readOnly
                 />
-              </motion.div>
-            )}
-          </>
-        ) : (
-          book.descripcionHtml ? (
-            <div className="text-sm text-muted-foreground" dangerouslySetInnerHTML={{ __html: book.descripcionHtml }} />
-          ) : (
-            <div className="text-sm text-muted-foreground">{book.descripcion}</div>
-          )
-        )}
+                
+                <Label className="text-sm font-medium block mb-2">Vista previa</Label>
+                <div 
+                  className="p-3 border rounded-md bg-white dark:bg-slate-900 mt-1 text-sm"
+                  dangerouslySetInnerHTML={{ __html: book.descripcionHtml || htmlOutput }}
+                />
+              </Card>
+            </motion.div>
+          )}
+        </div>
       </div>
 
-      {/* Autor */}
-      <div className="grid gap-3">
-        <Label htmlFor="autor">Autor</Label>
-        {isEditing ? (
-          <FormField
-            control={form.control}
-            name="autor"
-            render={({ field }) => (
-              <Input 
-                id="autor" 
-                placeholder="Nombre del autor"
-                {...field}
-              />
-            )}
-          />
-        ) : (
-          <div>{book.autor}</div>
-        )}
-      </div>
-
-      {/* Best Seller Rank */}
-      <div className="grid gap-3">
-        <Label htmlFor="bsr">BSR (Best Seller Rank)</Label>
-        {isEditing ? (
-          <FormField
-            control={form.control}
-            name="bsr"
-            render={({ field }) => (
-              <Input 
-                id="bsr" 
-                placeholder="Ranking de ventas (p. ej. 12345)"
-                type="number"
-                {...field}
-                value={field.value || ''}
-                onChange={(e) => field.onChange(e.target.value ? parseInt(e.target.value) : null)}
-              />
-            )}
-          />
-        ) : (
-          <div>{book.bsr ? `#${book.bsr}` : "No disponible"}</div>
-        )}
-      </div>
-      
-      {/* Landing Page URL */}
-      <div className="grid gap-3">
-        <Label htmlFor="landingPageUrl">URL de Landing Page</Label>
-        {isEditing ? (
-          <FormField
-            control={form.control}
-            name="landingPageUrl"
-            render={({ field }) => (
-              <div className="flex gap-2">
+      {/* Sección de Metadatos */}
+      <div className="space-y-6 mt-8">
+        <div className="flex items-center">
+          <h3 className="text-lg font-semibold">Metadatos</h3>
+          <Separator className="flex-grow ml-3" />
+        </div>
+        
+        {/* Best Seller Rank */}
+        <div className="grid gap-3">
+          <Label htmlFor="bsr">BSR (Best Seller Rank)</Label>
+          {isEditing ? (
+            <FormField
+              control={form.control}
+              name="bsr"
+              render={({ field }) => (
                 <Input 
-                  id="landingPageUrl" 
-                  placeholder="https://mipagina.com/libro"
-                  type="url"
+                  id="bsr" 
+                  placeholder="Ranking de ventas (p. ej. 12345)"
+                  type="number"
                   {...field}
                   value={field.value || ''}
+                  onChange={(e) => field.onChange(e.target.value ? parseInt(e.target.value) : null)}
                 />
-                {field.value && (
-                  <Button
-                    type="button"
-                    size="icon"
-                    variant="outline"
-                    className="flex-shrink-0"
-                    onClick={() => window.open(field.value, '_blank')}
-                  >
-                    <FileText size={16} />
-                  </Button>
-                )}
-              </div>
-            )}
-          />
-        ) : (
-          book.landingPageUrl ? (
-            <a 
-              href={book.landingPageUrl} 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-[#3B82F6] hover:text-[#FB923C] hover:underline flex items-center gap-1"
-            >
-              <FileText size={16} /> Ver landing page
-            </a>
+              )}
+            />
           ) : (
-            <div>No definida</div>
-          )
-        )}
+            <div>{book.bsr ? `#${book.bsr}` : "No disponible"}</div>
+          )}
+        </div>
+        
+        {/* Landing Page URL */}
+        <div className="grid gap-3">
+          <Label htmlFor="landingPageUrl">URL de Landing Page</Label>
+          {isEditing ? (
+            <FormField
+              control={form.control}
+              name="landingPageUrl"
+              render={({ field }) => (
+                <div className="flex gap-2">
+                  <Input 
+                    id="landingPageUrl" 
+                    placeholder="https://mipagina.com/libro"
+                    type="url"
+                    {...field}
+                    value={field.value || ''}
+                  />
+                  {field.value && (
+                    <Button
+                      type="button"
+                      size="icon"
+                      variant="outline"
+                      className="flex-shrink-0"
+                      onClick={() => window.open(field.value, '_blank')}
+                    >
+                      <FileText size={16} />
+                    </Button>
+                  )}
+                </div>
+              )}
+            />
+          ) : (
+            book.landingPageUrl ? (
+              <div className="flex items-center gap-2">
+                <a 
+                  href={book.landingPageUrl} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-[#3B82F6] hover:text-[#FB923C] hover:underline flex items-center gap-1"
+                >
+                  <ExternalLink size={16} /> {book.landingPageUrl}
+                </a>
+                <Button
+                  type="button"
+                  size="sm"
+                  variant="ghost"
+                  className="h-7 px-2"
+                  onClick={() => copyLink(book.landingPageUrl, "URL de Landing Page")}
+                >
+                  <Copy size={14} />
+                </Button>
+              </div>
+            ) : (
+              <div>No definida</div>
+            )
+          )}
+        </div>
       </div>
     </>
   );
