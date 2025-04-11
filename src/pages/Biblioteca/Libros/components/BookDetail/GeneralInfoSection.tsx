@@ -3,7 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Form } from "@/components/ui/form";
 import { Book } from "../../types/bookTypes";
 import { useGeneralInfoForm } from "./GeneralInfo/useGeneralInfoForm";
-import { BasicInfoFields } from "./GeneralInfo/BasicInfoFields";
+import { BasicInfoFields } from "./GeneralInfo/BasicInfo";
 import { StatusFields } from "./GeneralInfo/StatusFields";
 import { PublicationDateField } from "./GeneralInfo/PublicationDateField";
 import { RelationFields } from "./Relations/RelationFields";
