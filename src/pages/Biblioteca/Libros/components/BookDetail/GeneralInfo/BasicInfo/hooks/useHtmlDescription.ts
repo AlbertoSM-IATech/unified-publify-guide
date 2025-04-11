@@ -20,12 +20,9 @@ export const useHtmlDescription = (book: Book, form: UseFormReturn<any>) => {
       return;
     }
     
-    // Simple HTML conversion (paragraphs, basic formatting)
-    let html = description
-      .split("\n\n").map(p => `<p>${p}</p>`) // Paragraphs
-      .join("\n")
-      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // Bold
-      .replace(/\*(.*?)\*/g, '<em>$1</em>'); // Italic
+    // Since we're using a rich text editor, the HTML is already generated
+    // We just need to clean it up a bit and set it to the description HTML field
+    let html = description;
     
     setHtmlOutput(html);
     form.setValue("descripcionHtml", html);

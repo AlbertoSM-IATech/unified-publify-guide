@@ -12,6 +12,7 @@ import { Separator } from "@/components/ui/separator";
 import { Card } from "@/components/ui/card";
 import { UseFormReturn } from "react-hook-form";
 import { useHtmlDescription } from "./hooks/useHtmlDescription";
+import { RichTextEditor } from "./components/RichTextEditor";
 
 interface DescriptionSectionProps {
   book: Book;
@@ -29,6 +30,11 @@ export const DescriptionSection = ({ book, isEditing, form }: DescriptionSection
     copyHtml 
   } = useHtmlDescription(book, form);
 
+  // Handle rich text editor changes
+  const handleEditorChange = (html: string) => {
+    form.setValue("descripcion", html);
+  };
+
   return (
     <div className="space-y-6 mt-8">
       <div className="flex items-center">
@@ -43,16 +49,19 @@ export const DescriptionSection = ({ book, isEditing, form }: DescriptionSection
             control={form.control}
             name="descripcion"
             render={({ field }) => (
-              <Textarea 
-                id="descripcion" 
-                placeholder="Descripción del libro"
-                rows={5}
-                {...field}
-              />
+              <FormControl>
+                <RichTextEditor 
+                  content={field.value || ""}
+                  onChange={handleEditorChange}
+                />
+              </FormControl>
             )}
           />
         ) : (
-          <div className="text-sm text-muted-foreground whitespace-pre-wrap">{book.descripcion}</div>
+          <div 
+            className="text-sm text-muted-foreground prose prose-sm max-w-none dark:prose-invert"
+            dangerouslySetInnerHTML={{ __html: book.descripcion }}
+          />
         )}
       </div>
 
@@ -105,7 +114,7 @@ export const DescriptionSection = ({ book, isEditing, form }: DescriptionSection
                   
                   <Label className="text-sm font-medium block mb-2">Vista previa</Label>
                   <div 
-                    className="p-3 border rounded-md bg-white dark:bg-slate-900 mt-1 text-sm"
+                    className="p-3 border rounded-md bg-white dark:bg-slate-900 mt-1 text-sm prose prose-sm max-w-none dark:prose-invert"
                     dangerouslySetInnerHTML={{ __html: htmlOutput || form.getValues("descripcionHtml") || "" }}
                   />
                 </Card>
@@ -157,7 +166,7 @@ export const DescriptionSection = ({ book, isEditing, form }: DescriptionSection
                     
                     <Label className="text-sm font-medium block mb-2">Vista previa</Label>
                     <div 
-                      className="p-3 border rounded-md bg-white dark:bg-slate-900 mt-1 text-sm"
+                      className="p-3 border rounded-md bg-white dark:bg-slate-900 mt-1 text-sm prose prose-sm max-w-none dark:prose-invert"
                       dangerouslySetInnerHTML={{ __html: book.descripcionHtml }}
                     />
                   </Card>
