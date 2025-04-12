@@ -90,13 +90,13 @@ export const BookInfo = ({
 
         {book.isbn}
         
-        {book.fechaPublicacion && <motion.div className="flex items-center gap-2 text-sm" initial={{
+        {book.fechaPublicacion && <motion.div initial={{
         opacity: 0
       }} animate={{
         opacity: 1
       }} transition={{
         delay: 0.5
-      }}>
+      }} className="flex items-center gap-2 text-sm my-[16px]">
             <Calendar size={16} className="text-muted-foreground" />
             <span>Publicado: <span className="font-medium">{new Date(book.fechaPublicacion).toLocaleDateString()}</span></span>
           </motion.div>}
@@ -151,7 +151,7 @@ export const BookInfo = ({
     }}>
         <div className="flex items-center justify-between">
           <span className="text-sm font-medium">Regalías netas (estimado):</span>
-          <span className="text-xl font-bold text-green-600">
+          <span className="font-bold text-green-600 text-3xl">
             {netRoyalties}€
           </span>
         </div>
