@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Book } from "../types/bookTypes";
 import { Eye } from "lucide-react";
 import { motion } from "framer-motion";
+import { calculateNetRoyalties } from "../utils/bookDetailUtils";
 
 interface BookListItemProps {
   libro: Book;
@@ -11,6 +12,11 @@ interface BookListItemProps {
 }
 
 export const BookListItem = ({ libro, getStatusColor, getContentColor }: BookListItemProps) => {
+  // Calculate net royalties for display
+  const netRoyalties = calculateNetRoyalties(
+    libro.hardcover || libro.paperback || libro.ebook
+  ).replace('.', ',');
+  
   return (
     <motion.tr 
       className="hover:bg-muted/20 transition-colors"
@@ -42,13 +48,16 @@ export const BookListItem = ({ libro, getStatusColor, getContentColor }: BookLis
                 {libro.titulo}
               </Link>
             </div>
+            {/* Added subtitle display */}
+            {libro.subtitulo && (
+              <div className="text-xs text-muted-foreground italic">{libro.subtitulo}</div>
+            )}
             <div className="text-sm text-muted-foreground">{libro.autor}</div>
           </div>
         </div>
       </td>
-      <td className="whitespace-nowrap px-4 py-4 text-sm text-muted-foreground">
-        <div>ISBN: {libro.isbn}</div>
-        {libro.asin && <div>ASIN: {libro.asin}</div>}
+      <td className="whitespace-nowrap px-4 py-4 text-sm text-green-500 font-medium">
+        {netRoyalties}€
       </td>
       <td className="whitespace-nowrap px-4 py-4 text-sm">
         <span

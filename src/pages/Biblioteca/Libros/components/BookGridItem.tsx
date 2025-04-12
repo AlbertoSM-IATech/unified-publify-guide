@@ -1,19 +1,28 @@
+
 import { Link } from "react-router-dom";
 import { Book } from "../types/bookTypes";
 import { Card, CardContent } from "@/components/ui/card";
-import { Eye, Tag, Calendar } from "lucide-react";
+import { Eye, Calendar } from "lucide-react";
 import { motion } from "framer-motion";
 import { StatusBadge } from "@/components/common/StatusBadge";
+import { calculateNetRoyalties } from "../utils/bookDetailUtils";
+
 interface BookGridItemProps {
   libro: Book;
   getStatusColor: (status: string) => string;
   getContentColor: (content: string) => string;
 }
+
 export const BookGridItem = ({
   libro,
   getStatusColor,
   getContentColor
 }: BookGridItemProps) => {
+  // Calculate net royalties for display
+  const netRoyalties = calculateNetRoyalties(
+    libro.hardcover || libro.paperback || libro.ebook
+  ).replace('.', ',');
+  
   return <Link to={`/biblioteca/libros/${libro.id}`} className="block focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-lg h-full">
       <motion.div whileHover={{
       y: -5,
@@ -42,6 +51,10 @@ export const BookGridItem = ({
           <CardContent className="flex flex-col justify-between p-4 md:w-2/3 w-full">
             <div className="space-y-2">
               <h3 className="line-clamp-2 font-heading font-semibold text-orange-400 text-2xl">{libro.titulo}</h3>
+              {/* Added subtitle display */}
+              {libro.subtitulo && (
+                <p className="line-clamp-2 text-muted-foreground italic text-sm">{libro.subtitulo}</p>
+              )}
               <p className="line-clamp-1 text-white text-sm">{libro.autor}</p>
               
               {/* Status and content badges moved here */}
@@ -63,18 +76,17 @@ export const BookGridItem = ({
               </div>
               
               <div className="flex flex-col space-y-1 pt-1">
-                <div className="flex items-center text-xs text-muted-foreground">
-                  <Tag className="mr-1 h-3 w-3" />
-                  <span>ISBN: {libro.isbn}</span>
-                </div>
-                {libro.asin && <div className="flex items-center text-xs text-muted-foreground">
-                    <Tag className="mr-1 h-3 w-3" />
-                    <span>ASIN: {libro.asin}</span>
-                  </div>}
+                {/* ISBN and ASIN fields removed */}
                 {libro.fechaPublicacion && <div className="flex items-center text-xs text-muted-foreground">
                     <Calendar className="mr-1 h-3 w-3" />
                     <span>{new Date(libro.fechaPublicacion).toLocaleDateString()}</span>
                   </div>}
+                  
+                {/* Add royalties display */}
+                <div className="flex items-center text-xs font-medium text-green-500 mt-2">
+                  <span className="mr-1">Regalías:</span>
+                  <span className="text-base">{netRoyalties}€</span>
+                </div>
               </div>
             </div>
 

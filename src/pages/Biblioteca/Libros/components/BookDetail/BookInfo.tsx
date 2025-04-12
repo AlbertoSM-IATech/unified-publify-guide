@@ -1,5 +1,5 @@
 
-import { Eye, ExternalLink, Tag, Calendar, BookOpen, Copy, CheckCheck, Euro } from "lucide-react";
+import { ExternalLink, Tag, Calendar, BookOpen, Copy, CheckCheck, Euro } from "lucide-react";
 import { Book } from "../../types/bookTypes";
 import { generateAmazonLink } from "../../utils/bookDetailUtils";
 import { getContentHexColor } from "../../utils/librosUtils";
@@ -7,19 +7,18 @@ import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/hooks/use-toast";
+import { calculateNetRoyalties } from "../../utils/bookDetailUtils";
 
 interface BookInfoProps {
   book: Book;
   getStatusColor: (status: string) => string;
   getContentColor: (content: string) => string;
-  calculateNetRoyalties: (format?: any) => string;
 }
 
 export const BookInfo = ({
   book,
   getStatusColor,
   getContentColor,
-  calculateNetRoyalties
 }: BookInfoProps) => {
   const [copied, setCopied] = useState(false);
   const [netRoyalties, setNetRoyalties] = useState("0,00");
@@ -38,7 +37,7 @@ export const BookInfo = ({
       // Replace dot with comma for display in Spanish format
       setNetRoyalties(calculateNetRoyalties(primaryFormat).replace('.', ','));
     }
-  }, [book, primaryFormat, calculateNetRoyalties]);
+  }, [book, primaryFormat]);
 
   // Handle copying text to clipboard
   const copyToClipboard = (text: string, message: string = "copiado") => {
@@ -90,8 +89,6 @@ export const BookInfo = ({
       </div>
 
       <div className="space-y-2 pt-2">
-        {/* ISBN and ASIN removed completely */}
-        
         {book.fechaPublicacion && (
           <motion.div 
             initial={{ opacity: 0 }}

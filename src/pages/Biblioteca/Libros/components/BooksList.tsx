@@ -44,7 +44,7 @@ export const BooksList = ({ libros, getStatusColor, getContentColor }: BooksList
                 Título / Autor
               </th>
               <th scope="col" className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">
-                ISBN / ASIN
+                Regalías
               </th>
               <th scope="col" className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">
                 Estado

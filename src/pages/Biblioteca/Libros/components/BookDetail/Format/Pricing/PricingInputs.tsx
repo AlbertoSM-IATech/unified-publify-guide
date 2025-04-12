@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useEffect } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { BookFormat } from "../../../../types/bookTypes";
@@ -31,7 +31,12 @@ export const PricingInputs = ({
       if (field === 'price' || field === 'royaltyPercentage' || field === 'printingCost') {
         // For decimal inputs, normalize the value
         if (typeof value === 'string') {
-          updateData[field as keyof BookFormat] = normalizeDecimal(value);
+          // Handle potential empty strings or invalid inputs
+          if (value === '' || isNaN(normalizeDecimal(value))) {
+            updateData[field as keyof BookFormat] = 0;
+          } else {
+            updateData[field as keyof BookFormat] = normalizeDecimal(value);
+          }
         } else {
           updateData[field as keyof BookFormat] = value;
         }
@@ -43,6 +48,12 @@ export const PricingInputs = ({
     }
   };
 
+  // Format display value for inputs (replace dot with comma for Spanish format)
+  const formatDisplayValue = (value: number | undefined): string => {
+    if (value === undefined) return "";
+    return value.toString().replace('.', ',');
+  };
+
   return (
     <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
       {/* Precio */}
@@ -52,7 +63,7 @@ export const PricingInputs = ({
           <Input 
             id={`${formatType}-price`} 
             type="text" 
-            defaultValue={format.price} 
+            defaultValue={formatDisplayValue(format.price)} 
             placeholder="Ej. 19,99" 
             onChange={e => handleInputChange('price', e.target.value)}
           />
@@ -71,7 +82,7 @@ export const PricingInputs = ({
             <Input 
               id={`${formatType}-royalty`} 
               type="text" 
-              defaultValue={format.royaltyPercentage} 
+              defaultValue={format.royaltyPercentage ? format.royaltyPercentage : ""} 
               placeholder="Ej. 0,70" 
               onChange={e => handleInputChange('royaltyPercentage', e.target.value)}
             />
@@ -91,7 +102,7 @@ export const PricingInputs = ({
             <Input 
               id={`${formatType}-printing-cost`} 
               type="text"
-              defaultValue={format.printingCost} 
+              defaultValue={formatDisplayValue(format.printingCost)} 
               placeholder="Ej. 3,50" 
               onChange={e => handleInputChange('printingCost', e.target.value)}
             />

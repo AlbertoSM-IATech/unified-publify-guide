@@ -19,7 +19,7 @@ export const PricingResults = ({
     const royaltiesValue = calculateNetRoyalties(format);
     // Replace dot with comma for display
     setNetRoyalties(royaltiesValue.replace('.', ','));
-  }, [format, calculateNetRoyalties]);
+  }, [format, calculateNetRoyalties, format.price, format.royaltyPercentage, format.printingCost]);
   
   return (
     <div className="mt-4 p-3 bg-muted rounded-md border shadow-sm">
