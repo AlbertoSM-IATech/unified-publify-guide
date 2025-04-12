@@ -64,7 +64,7 @@ export const BookInfo = ({
     duration: 0.3
   }}>
       <div className="space-y-1">
-        <h2 className="font-bold text-2xl font-heading text-orange-400">{book.titulo}</h2>
+        <h2 className="font-bold text-2xl font-heading text-blue-500">{book.titulo}</h2>
         {book.subtitulo && <p className="italic text-white font-normal text-base">{book.subtitulo}</p>}
       </div>
       
