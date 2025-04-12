@@ -84,7 +84,7 @@ export const FormatTabContent = ({
       {/* Estrategia */}
       <div className="space-y-4">
         <div className="flex items-center">
-          <h3 className="text-lg font-medium">Estrategia</h3>
+          <h3 className="text-lg font-medium text-blue-500">Estrategia</h3>
           <Separator className="flex-grow ml-3" />
         </div>
         
