@@ -1,10 +1,9 @@
 
 import { useState, useEffect } from "react";
-import { useEditor, EditorContent, Editor } from "@tiptap/react";
+import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Underline from "@tiptap/extension-underline";
 import Link from "@tiptap/extension-link";
-import Strike from "@tiptap/extension-strike";
 import TaskList from "@tiptap/extension-task-list";
 import TaskItem from "@tiptap/extension-task-item";
 import { Button } from "@/components/ui/button";
@@ -37,7 +36,6 @@ const RichTextEditor = ({ content, onChange, readOnly = false }: RichTextEditorP
     extensions: [
       StarterKit,
       Underline,
-      Strike,
       Link.configure({
         openOnClick: false,
         HTMLAttributes: {
@@ -69,6 +67,7 @@ const RichTextEditor = ({ content, onChange, readOnly = false }: RichTextEditorP
 
   const setLink = () => {
     if (linkUrl) {
+      // Use the correct method to set a link
       editor
         .chain()
         .focus()
@@ -137,7 +136,7 @@ const RichTextEditor = ({ content, onChange, readOnly = false }: RichTextEditorP
         </MenuButton>
         
         <MenuButton 
-          onClick={() => editor.chain().focus().toggleUnderline().run()}
+          onClick={() => editor.chain().focus().toggleMark('underline').run()}
           active={editor.isActive('underline')}
         >
           <UnderlineIcon className="h-4 w-4" />
