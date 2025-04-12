@@ -36,6 +36,7 @@ export const DescriptionSection = ({
   const handleEditorChange = (html: string) => {
     form.setValue("descripcion", html);
   };
+  
   return <div className="space-y-6 mt-8">
       <div className="flex items-center">
         <h3 className="text-lg text-blue-500 font-extrabold">Descripción</h3>
@@ -53,7 +54,7 @@ export const DescriptionSection = ({
       }} />}
       </div>
 
-      {/* HTML Preview - Now hidden by default with toggle button */}
+      {/* HTML Preview - Hidden by default with toggle button */}
       <div className="mt-4">
         {isEditing ? <>
             <div className="flex flex-wrap gap-2">
@@ -63,7 +64,6 @@ export const DescriptionSection = ({
               </Button>
             </div>
             
-            {/* Always show HTML preview in edit mode after generating */}
             {showHtmlPreview && <motion.div initial={{
           opacity: 0,
           height: 0

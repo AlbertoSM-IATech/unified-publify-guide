@@ -90,7 +90,7 @@ export const BookInfo = ({
       </div>
 
       <div className="space-y-2 pt-2">
-        {/* Removed ISBN and ASIN from summary view */}
+        {/* ISBN and ASIN removed completely */}
         
         {book.fechaPublicacion && (
           <motion.div 

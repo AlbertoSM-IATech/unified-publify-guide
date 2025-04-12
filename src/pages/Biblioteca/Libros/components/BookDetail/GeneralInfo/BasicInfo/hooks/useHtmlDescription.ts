@@ -6,7 +6,8 @@ import { UseFormReturn } from "react-hook-form";
 
 export const useHtmlDescription = (book: Book, form: UseFormReturn<any>) => {
   const [htmlOutput, setHtmlOutput] = useState<string>(book.descripcionHtml || "");
-  const [showHtmlPreview, setShowHtmlPreview] = useState(!!book.descripcionHtml);
+  // Ensure showHtmlPreview is false by default, regardless of whether there's HTML content
+  const [showHtmlPreview, setShowHtmlPreview] = useState(false);
   const [copied, setCopied] = useState(false);
 
   const generateHtml = () => {
