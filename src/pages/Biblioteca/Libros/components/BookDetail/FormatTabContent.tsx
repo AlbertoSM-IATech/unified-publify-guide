@@ -1,3 +1,4 @@
+
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -49,25 +50,13 @@ export const FormatTabContent = ({
           {/* Dimensiones */}
           {formatType !== "ebook" && <div className="grid gap-3">
               <Label htmlFor={`${formatType}-dimensions`}>Dimensiones</Label>
-              {isEditing ? <Input id={`${formatType}-dimensions`} defaultValue={format.dimensions} placeholder="Ej. 15.24 x 22.86 cm" onChange={e => handleInputChange('dimensions', e.target.value)} /> : <div>{format.dimensions || "No definidas"}</div>}
+              {isEditing ? <Input id={`${formatType}-dimensions`} defaultValue={format.dimensions} placeholder="Ej. 15.24 x 22.86 cm" onChange={e => handleInputChange('dimensions', e.target.value)} /> : <div className="border rounded-md p-2 bg-card shadow-sm text-sm">{format.dimensions || "No definidas"}</div>}
             </div>}
-
-          {/* ISBN */}
-          {formatType !== "ebook" && <div className="grid gap-3">
-              <Label htmlFor={`${formatType}-isbn`}>ISBN</Label>
-              {isEditing ? <Input id={`${formatType}-isbn`} defaultValue={format.isbn} placeholder="ISBN" onChange={e => handleInputChange('isbn', e.target.value)} /> : <div>{format.isbn || "No definido"}</div>}
-            </div>}
-          
-          {/* ASIN - Ahora para todos los formatos */}
-          <div className="grid gap-3">
-            <Label htmlFor={`${formatType}-asin`}>ASIN</Label>
-            {isEditing ? <Input id={`${formatType}-asin`} defaultValue={format.asin} placeholder="ASIN" onChange={e => handleInputChange('asin', e.target.value)} /> : <div>{format.asin || "No definido"}</div>}
-          </div>
 
           {/* Número de páginas */}
           {formatType !== "ebook" && <div className="grid gap-3">
               <Label htmlFor={`${formatType}-pages`}>Número de páginas</Label>
-              {isEditing ? <Input id={`${formatType}-pages`} type="number" defaultValue={format.pages} placeholder="Ej. 300" onChange={e => handleInputChange('pages', parseInt(e.target.value))} /> : <div>{format.pages || "No definido"}</div>}
+              {isEditing ? <Input id={`${formatType}-pages`} type="number" defaultValue={format.pages} placeholder="Ej. 300" onChange={e => handleInputChange('pages', parseInt(e.target.value))} /> : <div className="border rounded-md p-2 bg-card shadow-sm text-sm">{format.pages || "No definido"}</div>}
             </div>}
         </div>
       </div>
@@ -90,9 +79,7 @@ export const FormatTabContent = ({
         
         <div className="grid gap-3">
           <Label htmlFor={`${formatType}-strategy`}>Estrategia</Label>
-          {isEditing ? <Textarea id={`${formatType}-strategy`} defaultValue={format.strategy} placeholder="Describe la estrategia de marketing, posicionamiento, etc." rows={4} onChange={e => handleInputChange('strategy', e.target.value)} /> : <div className="rounded-md bg-muted p-3 text-sm">
-              {format.strategy || "No hay estrategia definida"}
-            </div>}
+          {isEditing ? <Textarea id={`${formatType}-strategy`} defaultValue={format.strategy} placeholder="Describe la estrategia de marketing, posicionamiento, etc." rows={4} onChange={e => handleInputChange('strategy', e.target.value)} /> : <div className="rounded-md border bg-card p-3 text-sm shadow-sm">{format.strategy || "No hay estrategia definida"}</div>}
         </div>
       </div>
     </div>;

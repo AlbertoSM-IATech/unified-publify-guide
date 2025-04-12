@@ -1,3 +1,4 @@
+
 import { Book } from "../../../../types/bookTypes";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -25,7 +26,7 @@ export const BasicInfoSection = ({
         <Label htmlFor="titulo">Título</Label>
         {isEditing ? <FormField control={form.control} name="titulo" render={({
         field
-      }) => <Input id="titulo" placeholder="Título del libro" {...field} />} /> : <div className="text-xl font-semibold">{book.titulo}</div>}
+      }) => <Input id="titulo" placeholder="Título del libro" {...field} />} /> : <div className="text-xl font-semibold border rounded-md p-2 bg-card shadow-sm">{book.titulo}</div>}
       </div>
 
       {/* Subtítulo */}
@@ -33,7 +34,7 @@ export const BasicInfoSection = ({
         <Label htmlFor="subtitulo">Subtítulo</Label>
         {isEditing ? <FormField control={form.control} name="subtitulo" render={({
         field
-      }) => <Input id="subtitulo" placeholder="Subtítulo del libro" {...field} />} /> : <div>{book.subtitulo || "No definido"}</div>}
+      }) => <Input id="subtitulo" placeholder="Subtítulo del libro" {...field} />} /> : <div className="border rounded-md p-2 bg-card shadow-sm">{book.subtitulo || "No definido"}</div>}
       </div>
 
       {/* Autor */}
@@ -41,7 +42,7 @@ export const BasicInfoSection = ({
         <Label htmlFor="autor">Autor</Label>
         {isEditing ? <FormField control={form.control} name="autor" render={({
         field
-      }) => <Input id="autor" placeholder="Nombre del autor" {...field} />} /> : <div>{book.autor}</div>}
+      }) => <Input id="autor" placeholder="Nombre del autor" {...field} />} /> : <div className="border rounded-md p-2 bg-card shadow-sm">{book.autor}</div>}
       </div>
     </div>;
 };

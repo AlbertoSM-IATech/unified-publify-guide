@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { BookFormat } from "../../../../types/bookTypes";
 interface PricingResultsProps {
@@ -8,13 +9,16 @@ export const PricingResults = ({
   format,
   calculateNetRoyalties
 }: PricingResultsProps) => {
-  const [netRoyalties, setNetRoyalties] = useState("0.00");
+  const [netRoyalties, setNetRoyalties] = useState("0,00");
 
   // Update net royalties when format data changes
   useEffect(() => {
-    setNetRoyalties(calculateNetRoyalties(format));
+    const royaltiesValue = calculateNetRoyalties(format);
+    // Replace dot with comma for display
+    setNetRoyalties(royaltiesValue.replace('.', ','));
   }, [format, calculateNetRoyalties]);
-  return <div className="mt-4 p-3 bg-muted rounded-md">
+  
+  return <div className="mt-4 p-3 bg-muted rounded-md border shadow-sm">
       <div className="flex items-center justify-between">
         <span className="text-sm font-medium">Regalías netas (estimado):</span>
         <span className="font-bold text-green-600 text-3xl">{netRoyalties}€</span>

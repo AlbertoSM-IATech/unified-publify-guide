@@ -17,12 +17,28 @@ export const PricingInputs = ({
   isEditing,
   onUpdateFormat
 }: PricingInputsProps) => {
+  // Function to normalize decimal input with comma or dot
+  const normalizeDecimal = (value: string): number => {
+    // Replace comma with dot for calculation
+    const normalized = value.replace(',', '.');
+    return parseFloat(normalized);
+  };
+
   const handleInputChange = (field: keyof BookFormat, value: string | number) => {
     if (onUpdateFormat) {
       const updateData: Partial<BookFormat> = {};
-      updateData[field as keyof BookFormat] = field === 'price' || field === 'royaltyPercentage' || field === 'printingCost' 
-        ? parseFloat(value.toString()) 
-        : value;
+      
+      if (field === 'price' || field === 'royaltyPercentage' || field === 'printingCost') {
+        // For decimal inputs, normalize the value
+        if (typeof value === 'string') {
+          updateData[field as keyof BookFormat] = normalizeDecimal(value);
+        } else {
+          updateData[field as keyof BookFormat] = value;
+        }
+      } else {
+        updateData[field as keyof BookFormat] = value;
+      }
+      
       onUpdateFormat(formatType, updateData);
     }
   };
@@ -35,14 +51,15 @@ export const PricingInputs = ({
         {isEditing ? (
           <Input 
             id={`${formatType}-price`} 
-            type="number" 
-            step="0.01" 
+            type="text" 
             defaultValue={format.price} 
-            placeholder="Ej. 19.99" 
-            onChange={e => handleInputChange('price', parseFloat(e.target.value))} 
+            placeholder="Ej. 19,99" 
+            onChange={e => handleInputChange('price', e.target.value)}
           />
         ) : (
-          <div>{format.price ? `${format.price.toFixed(2)}€` : "No definido"}</div>
+          <div className="border rounded-md p-2 bg-card shadow-sm text-sm">
+            {format.price ? `${format.price.toFixed(2).replace('.', ',')}€` : "No definido"}
+          </div>
         )}
       </div>
       
@@ -53,17 +70,16 @@ export const PricingInputs = ({
           <div className="flex items-center">
             <Input 
               id={`${formatType}-royalty`} 
-              type="number" 
-              step="0.01" 
-              min="0" 
-              max="1" 
+              type="text" 
               defaultValue={format.royaltyPercentage} 
-              placeholder="Ej. 0.70" 
-              onChange={e => handleInputChange('royaltyPercentage', parseFloat(e.target.value))} 
+              placeholder="Ej. 0,70" 
+              onChange={e => handleInputChange('royaltyPercentage', e.target.value)}
             />
           </div>
         ) : (
-          <div>{format.royaltyPercentage ? `${(format.royaltyPercentage * 100).toFixed(0)}%` : "No definido"}</div>
+          <div className="border rounded-md p-2 bg-card shadow-sm text-sm">
+            {format.royaltyPercentage ? `${(format.royaltyPercentage * 100).toFixed(0)}%` : "No definido"}
+          </div>
         )}
       </div>
       
@@ -74,14 +90,15 @@ export const PricingInputs = ({
           {isEditing ? (
             <Input 
               id={`${formatType}-printing-cost`} 
-              type="number" 
-              step="0.01" 
+              type="text"
               defaultValue={format.printingCost} 
-              placeholder="Ej. 3.50" 
-              onChange={e => handleInputChange('printingCost', parseFloat(e.target.value))} 
+              placeholder="Ej. 3,50" 
+              onChange={e => handleInputChange('printingCost', e.target.value)}
             />
           ) : (
-            <div>{format.printingCost !== undefined ? `${format.printingCost.toFixed(2)}€` : "No definido"}</div>
+            <div className="border rounded-md p-2 bg-card shadow-sm text-sm">
+              {format.printingCost !== undefined ? `${format.printingCost.toFixed(2).replace('.', ',')}€` : "No definido"}
+            </div>
           )}
         </div>
       )}

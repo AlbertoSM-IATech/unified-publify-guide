@@ -107,6 +107,16 @@ export const useNotes = (
     }
   };
 
+  // New function to handle reordering of notes
+  const handleReorderNotes = (reorderedNotes: BookNote[]) => {
+    setNotes(reorderedNotes);
+    
+    // Update parent component with reordered notes
+    if (onUpdateBook) {
+      onUpdateBook({ notes: reorderedNotes });
+    }
+  };
+
   return {
     notes,
     isAddingNote,
@@ -121,6 +131,7 @@ export const useNotes = (
     handleEditNote,
     handleSaveEditedNote,
     handleCancelEditNote,
-    handleDeleteNote
+    handleDeleteNote,
+    handleReorderNotes
   };
 };

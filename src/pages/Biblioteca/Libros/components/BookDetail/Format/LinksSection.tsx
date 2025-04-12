@@ -1,12 +1,12 @@
+
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { BookFormat } from "../../../types/bookTypes";
 import { Button } from "@/components/ui/button";
-import { Link, Copy, Check } from "lucide-react";
+import { BookFormat } from "../../../types/bookTypes";
+import { ExternalLink, Copy, CheckCheck } from "lucide-react";
 import { useState } from "react";
 import { toast } from "@/hooks/use-toast";
 import { Separator } from "@/components/ui/separator";
-
 interface LinksSectionProps {
   formatType: string;
   format: BookFormat;
@@ -20,87 +20,113 @@ export const LinksSection = ({
   isEditing,
   onUpdateFormat
 }: LinksSectionProps) => {
-  const [copiedLink, setCopiedLink] = useState<string | null>(null);
-
-  const handleLinkChange = (linkKey: string, value: string) => {
+  const [copied, setCopied] = useState<{[key: string]: boolean}>({});
+  
+  const handleInputChange = (field: string, value: string) => {
     if (onUpdateFormat) {
-      const links = {
-        ...(format.links || {})
-      };
-      links[linkKey] = value;
-      onUpdateFormat(formatType, {
-        links
-      });
+      const updateData: Partial<BookFormat> = { links: { ...format.links, [field]: value } };
+      onUpdateFormat(formatType, updateData);
     }
   };
-
-  const copyLink = (url: string, key: string) => {
-    if (!url) return;
-    navigator.clipboard.writeText(url).then(() => {
-      setCopiedLink(key);
+  
+  const copyToClipboard = (text: string, label: string) => {
+    navigator.clipboard.writeText(text).then(() => {
+      setCopied({...copied, [label]: true});
       toast({
-        description: "Enlace copiado al portapapeles"
+        description: `Enlace de ${label} copiado al portapapeles`
       });
       setTimeout(() => {
-        setCopiedLink(null);
+        setCopied({...copied, [label]: false});
       }, 2000);
-    }).catch(() => {
-      toast({
-        title: "Error al copiar",
-        description: "No se pudo copiar el enlace",
-        variant: "destructive"
-      });
     });
   };
-
-  return <div className="grid gap-4">
+  
+  return (
+    <div className="space-y-6">
       <div className="flex items-center">
-        <h3 className="text-lg font-medium text-blue-500">Enlaces</h3>
+        <h3 className="text-lg font-semibold text-blue-500">Enlaces</h3>
         <Separator className="flex-grow ml-3" />
       </div>
       
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {[{
-        key: 'amazon',
-        label: 'Amazon'
-      }, {
-        key: 'presale',
-        label: 'Preventa'
-      }, {
-        key: 'reviews',
-        label: 'Reseñas'
-      }, {
-        key: 'h10Canonical',
-        label: 'H10 Canónico'
-      }, {
-        key: 'affiliate',
-        label: 'Afiliado'
-      }, {
-        key: 'leadMagnet',
-        label: 'Lead Magnet'
-      }, {
-        key: 'newsletter',
-        label: 'Newsletter'
-      }, {
-        key: 'landingPage',
-        label: 'Landing Page'
-      }, {
-        key: 'authorCentral',
-        label: 'Author Central'
-      }].map(item => <div key={item.key} className="grid gap-2">
-            <Label htmlFor={`${formatType}-${item.key}`}>{item.label}</Label>
-            {isEditing ? <Input id={`${formatType}-${item.key}`} defaultValue={format.links?.[item.key as keyof typeof format.links]} placeholder={`URL de ${item.label}`} onChange={e => handleLinkChange(item.key, e.target.value)} /> : <div className="overflow-hidden text-ellipsis whitespace-nowrap text-sm flex items-center gap-1">
-                {format.links?.[item.key as keyof typeof format.links] ? <>
-                    <a href={format.links[item.key as keyof typeof format.links]} target="_blank" rel="noopener noreferrer" className="flex items-center text-primary hover:underline flex-1 truncate">
-                      <Link className="mr-1 h-3 w-3 flex-shrink-0" />
-                      <span className="truncate">{format.links[item.key as keyof typeof format.links]}</span>
-                    </a>
-                    <Button size="icon" variant="ghost" className="h-6 w-6 flex-shrink-0" onClick={() => copyLink(format.links?.[item.key as keyof typeof format.links] || "", item.key)}>
-                      {copiedLink === item.key ? <Check size={14} /> : <Copy size={14} />}
-                    </Button>
-                  </> : <span className="text-muted-foreground">No definido</span>}
-              </div>}
-          </div>)}
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+        {/* Amazon Link */}
+        <div className="grid gap-3">
+          <Label htmlFor={`${formatType}-amazon-link`}>Enlace de Amazon</Label>
+          {isEditing ? (
+            <Input 
+              id={`${formatType}-amazon-link`} 
+              defaultValue={format.links?.amazon || ""} 
+              placeholder="https://amazon.com/dp/ASIN"
+              onChange={e => handleInputChange('amazon', e.target.value)} 
+            />
+          ) : (
+            <div className="flex items-center gap-2">
+              {format.links?.amazon ? (
+                <>
+                  <a 
+                    href={format.links.amazon} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center text-[#3B82F6] hover:text-[#FB923C] hover:underline border rounded-md p-2 bg-card shadow-sm flex-grow"
+                  >
+                    <ExternalLink size={14} className="mr-2" />
+                    <span className="text-sm truncate">{format.links.amazon}</span>
+                  </a>
+                  <Button 
+                    variant="ghost" 
+                    size="icon" 
+                    className="flex-shrink-0"
+                    onClick={() => copyToClipboard(format.links.amazon, 'Amazon')}
+                  >
+                    {copied['Amazon'] ? <CheckCheck size={16} /> : <Copy size={16} />}
+                  </Button>
+                </>
+              ) : (
+                <div className="border rounded-md p-2 bg-card shadow-sm text-sm">No definido</div>
+              )}
+            </div>
+          )}
+        </div>
+        
+        {/* Landing Page Link */}
+        <div className="grid gap-3">
+          <Label htmlFor={`${formatType}-landing-link`}>Enlace de Landing Page</Label>
+          {isEditing ? (
+            <Input 
+              id={`${formatType}-landing-link`} 
+              defaultValue={format.links?.landingPage || ""} 
+              placeholder="https://mipagina.com/libro"
+              onChange={e => handleInputChange('landingPage', e.target.value)} 
+            />
+          ) : (
+            <div className="flex items-center gap-2">
+              {format.links?.landingPage ? (
+                <>
+                  <a 
+                    href={format.links.landingPage} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center text-[#3B82F6] hover:text-[#FB923C] hover:underline border rounded-md p-2 bg-card shadow-sm flex-grow"
+                  >
+                    <ExternalLink size={14} className="mr-2" />
+                    <span className="text-sm truncate">{format.links.landingPage}</span>
+                  </a>
+                  <Button 
+                    variant="ghost" 
+                    size="icon" 
+                    className="flex-shrink-0"
+                    onClick={() => copyToClipboard(format.links.landingPage, 'Landing Page')}
+                  >
+                    {copied['Landing Page'] ? <CheckCheck size={16} /> : <Copy size={16} />}
+                  </Button>
+                </>
+              ) : (
+                <div className="border rounded-md p-2 bg-card shadow-sm text-sm">No definido</div>
+              )}
+            </div>
+          )}
+        </div>
       </div>
-    </div>;
+    </div>
+  );
 };

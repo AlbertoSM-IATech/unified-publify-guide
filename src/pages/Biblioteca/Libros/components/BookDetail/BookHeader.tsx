@@ -1,4 +1,5 @@
-import { AlertTriangle, ArrowLeft, FileEdit, Save, Trash, X } from "lucide-react";
+
+import { AlertTriangle, ArrowLeft, FileEdit, Save, Trash, X, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { motion } from "framer-motion";
@@ -56,7 +57,7 @@ export const BookHeader = ({
         }}>
               <Button variant="default" size="sm" onClick={onSave} className="md:w-auto font-medium bg-[#3B82F6] hover:bg-[#3B82F6]/90 text-white" disabled={isSaving}>
                 {isSaving ? <>
-                    <span className="mr-2 inline-block h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent"></span>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                     Guardando...
                   </> : <>
                     <Save className="mr-2 h-4 w-4" />

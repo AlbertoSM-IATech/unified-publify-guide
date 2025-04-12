@@ -10,7 +10,7 @@ export const calculateNetRoyalties = (format?: BookFormat): string => {
   // Precio sin IVA - no aplicamos más transformaciones ya que asumimos que el precio que tenemos ya está sin IVA
   const priceWithoutVAT = format.price;
   
-  // Regalías brutas
+  // Regalías brutas (precio × porcentaje)
   const royalties = priceWithoutVAT * format.royaltyPercentage;
   
   // Restar costo de impresión si existe

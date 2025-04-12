@@ -1,3 +1,4 @@
+
 import { Book } from "../../../../types/bookTypes";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -31,7 +32,7 @@ export const MetadataSection = ({
         <Label htmlFor="bsr">BSR (Best Seller Rank)</Label>
         {isEditing ? <FormField control={form.control} name="bsr" render={({
         field
-      }) => <Input id="bsr" placeholder="Ranking de ventas (p. ej. 12345)" type="number" {...field} value={field.value || ''} onChange={e => field.onChange(e.target.value ? parseInt(e.target.value) : null)} />} /> : <div className="bg-inherit">{book.bsr ? `#${book.bsr}` : "No disponible"}</div>}
+      }) => <Input id="bsr" placeholder="Ranking de ventas (p. ej. 12345)" type="number" {...field} value={field.value || ''} onChange={e => field.onChange(e.target.value ? parseInt(e.target.value) : null)} />} /> : <div className="border rounded-md p-2 bg-card shadow-sm">{book.bsr ? `#${book.bsr}` : "No disponible"}</div>}
       </div>
       
       {/* Landing Page URL */}
@@ -45,13 +46,13 @@ export const MetadataSection = ({
                     <FileText size={16} />
                   </Button>}
               </div>} /> : book.landingPageUrl ? <div className="flex items-center gap-2">
-              <a href={book.landingPageUrl} target="_blank" rel="noopener noreferrer" className="text-[#3B82F6] hover:text-[#FB923C] hover:underline flex items-center gap-1">
+              <a href={book.landingPageUrl} target="_blank" rel="noopener noreferrer" className="text-[#3B82F6] hover:text-[#FB923C] hover:underline flex items-center gap-1 border rounded-md p-2 bg-card shadow-sm flex-grow">
                 <ExternalLink size={16} /> {book.landingPageUrl}
               </a>
-              <Button type="button" size="sm" variant="ghost" className="h-7 px-2" onClick={() => copyLink(book.landingPageUrl, "URL de Landing Page")}>
+              <Button type="button" size="sm" variant="ghost" className="h-7 px-2 flex-shrink-0" onClick={() => copyLink(book.landingPageUrl, "URL de Landing Page")}>
                 <Copy size={14} />
               </Button>
-            </div> : <div>No definida</div>}
+            </div> : <div className="border rounded-md p-2 bg-card shadow-sm">No definida</div>}
       </div>
     </div>;
 };

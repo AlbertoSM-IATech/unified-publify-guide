@@ -1,10 +1,11 @@
+
 import { useState } from "react";
 import { Book } from "../../../../types/bookTypes";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { FormField, FormControl } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
-import { Code, Copy, CheckCheck } from "lucide-react";
+import { Code, Copy, CheckCheck, Eye, EyeOff } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { motion } from "framer-motion";
 import { Separator } from "@/components/ui/separator";
@@ -47,12 +48,12 @@ export const DescriptionSection = ({
         field
       }) => <FormControl>
                 <RichTextEditor content={field.value || ""} onChange={handleEditorChange} />
-              </FormControl>} /> : <div className="text-sm text-muted-foreground prose prose-sm max-w-none dark:prose-invert" dangerouslySetInnerHTML={{
+              </FormControl>} /> : <div className="text-sm text-muted-foreground prose prose-sm max-w-none dark:prose-invert p-3 border rounded-md bg-card shadow-sm" dangerouslySetInnerHTML={{
         __html: book.descripcion
       }} />}
       </div>
 
-      {/* HTML Preview - Now shows in editing mode too */}
+      {/* HTML Preview - Now hidden by default with toggle button */}
       <div className="mt-4">
         {isEditing ? <>
             <div className="flex flex-wrap gap-2">
@@ -88,9 +89,15 @@ export const DescriptionSection = ({
                 </Card>
               </motion.div>}
           </> : book.descripcionHtml && <>
-              <Button type="button" size="sm" variant="outline" className="flex items-center gap-1 mb-3" onClick={() => setShowHtmlPreview(!showHtmlPreview)}>
-                <Code size={16} />
-                {showHtmlPreview ? "Ocultar código HTML" : "Ver código HTML"}
+              <Button 
+                type="button" 
+                size="sm" 
+                variant="outline" 
+                className="flex items-center gap-1 mb-3" 
+                onClick={() => setShowHtmlPreview(!showHtmlPreview)}
+              >
+                {showHtmlPreview ? <EyeOff size={16} /> : <Eye size={16} />}
+                {showHtmlPreview ? "Ocultar código HTML" : "Ver código HTML generado"}
               </Button>
               
               {showHtmlPreview && <motion.div initial={{

@@ -28,7 +28,8 @@ export const NotesSection = ({ book, isEditing, onUpdateBook }: NotesSectionProp
     handleEditNote,
     handleSaveEditedNote,
     handleCancelEditNote,
-    handleDeleteNote
+    handleDeleteNote,
+    handleReorderNotes
   } = useNotes(book, onUpdateBook);
 
   return (
@@ -72,6 +73,7 @@ export const NotesSection = ({ book, isEditing, onUpdateBook }: NotesSectionProp
             isEditing={isEditing}
             onEditNote={handleEditNote}
             onDeleteNote={handleDeleteNote}
+            onReorderNotes={handleReorderNotes}
           />
         )}
       </CardContent>

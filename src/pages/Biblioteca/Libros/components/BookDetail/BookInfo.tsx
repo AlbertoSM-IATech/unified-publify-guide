@@ -1,3 +1,4 @@
+
 import { Eye, ExternalLink, Tag, Calendar, BookOpen, Copy, CheckCheck } from "lucide-react";
 import { Book } from "../../types/bookTypes";
 import { generateAmazonLink } from "../../utils/bookDetailUtils";
@@ -86,9 +87,7 @@ export const BookInfo = ({
       </div>
 
       <div className="space-y-2 pt-2">
-        {asin}
-
-        {book.isbn}
+        {/* Removed ISBN and ASIN from summary view */}
         
         {book.fechaPublicacion && <motion.div initial={{
         opacity: 0
