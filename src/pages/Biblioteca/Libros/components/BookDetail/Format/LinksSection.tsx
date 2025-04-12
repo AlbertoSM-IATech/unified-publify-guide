@@ -6,12 +6,14 @@ import { Link, Copy, Check } from "lucide-react";
 import { useState } from "react";
 import { toast } from "@/hooks/use-toast";
 import { Separator } from "@/components/ui/separator";
+
 interface LinksSectionProps {
   formatType: string;
   format: BookFormat;
   isEditing: boolean;
   onUpdateFormat?: (formatType: string, updatedData: Partial<BookFormat>) => void;
 }
+
 export const LinksSection = ({
   formatType,
   format,
@@ -19,6 +21,7 @@ export const LinksSection = ({
   onUpdateFormat
 }: LinksSectionProps) => {
   const [copiedLink, setCopiedLink] = useState<string | null>(null);
+
   const handleLinkChange = (linkKey: string, value: string) => {
     if (onUpdateFormat) {
       const links = {
@@ -30,6 +33,7 @@ export const LinksSection = ({
       });
     }
   };
+
   const copyLink = (url: string, key: string) => {
     if (!url) return;
     navigator.clipboard.writeText(url).then(() => {
@@ -48,9 +52,10 @@ export const LinksSection = ({
       });
     });
   };
+
   return <div className="grid gap-4">
       <div className="flex items-center">
-        <Label className="text-lg font-medium bg-inherit">Enlaces</Label>
+        <h3 className="text-lg font-medium text-blue-500">Enlaces</h3>
         <Separator className="flex-grow ml-3" />
       </div>
       
