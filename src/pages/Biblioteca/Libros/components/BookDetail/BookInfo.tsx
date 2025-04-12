@@ -1,5 +1,5 @@
 
-import { Eye, ExternalLink, Tag, Calendar, BookOpen, Copy, CheckCheck } from "lucide-react";
+import { Eye, ExternalLink, Tag, Calendar, BookOpen, Copy, CheckCheck, Euro } from "lucide-react";
 import { Book } from "../../types/bookTypes";
 import { generateAmazonLink } from "../../utils/bookDetailUtils";
 import { getContentHexColor } from "../../utils/librosUtils";
@@ -7,12 +7,14 @@ import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/hooks/use-toast";
+
 interface BookInfoProps {
   book: Book;
   getStatusColor: (status: string) => string;
   getContentColor: (content: string) => string;
   calculateNetRoyalties: (format?: any) => string;
 }
+
 export const BookInfo = ({
   book,
   getStatusColor,
@@ -20,7 +22,7 @@ export const BookInfo = ({
   calculateNetRoyalties
 }: BookInfoProps) => {
   const [copied, setCopied] = useState(false);
-  const [netRoyalties, setNetRoyalties] = useState("0.00");
+  const [netRoyalties, setNetRoyalties] = useState("0,00");
 
   // Obtener el formato principal para mostrar ASIN
   const primaryFormat = book.hardcover || book.paperback || book.ebook;
@@ -33,7 +35,8 @@ export const BookInfo = ({
   // Update royalties when book data changes
   useEffect(() => {
     if (primaryFormat) {
-      setNetRoyalties(calculateNetRoyalties(primaryFormat));
+      // Replace dot with comma for display in Spanish format
+      setNetRoyalties(calculateNetRoyalties(primaryFormat).replace('.', ','));
     }
   }, [book, primaryFormat, calculateNetRoyalties]);
 
@@ -54,34 +57,34 @@ export const BookInfo = ({
       });
     });
   };
-  return <motion.div className="p-6 space-y-4" initial={{
-    opacity: 0,
-    y: 10
-  }} animate={{
-    opacity: 1,
-    y: 0
-  }} transition={{
-    delay: 0.2,
-    duration: 0.3
-  }}>
+
+  return (
+    <motion.div 
+      className="p-6 space-y-4"
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.2, duration: 0.3 }}
+    >
       <div className="space-y-1">
         <h2 className="font-bold text-2xl font-heading text-blue-500">{book.titulo}</h2>
         {book.subtitulo && <p className="italic text-white font-normal text-base">{book.subtitulo}</p>}
       </div>
       
-      <p className="text-lg font-medium">Por <span className="text-foreground" style={{
-        color: contentColor
-      }}>{book.autor}</span></p>
+      <p className="text-lg font-medium">
+        Por <span className="text-foreground" style={{ color: contentColor }}>{book.autor}</span>
+      </p>
 
       <div className="flex flex-wrap gap-2 mt-3">
-        <motion.span whileHover={{
-        scale: 1.05
-      }} className={`inline-flex items-center rounded-full px-3 py-1.5 text-sm font-medium ${getStatusColor(book.estado)}`}>
+        <motion.span 
+          whileHover={{ scale: 1.05 }} 
+          className={`inline-flex items-center rounded-full px-3 py-1.5 text-sm font-medium ${getStatusColor(book.estado)}`}
+        >
           {book.estado}
         </motion.span>
-        <motion.span whileHover={{
-        scale: 1.05
-      }} className={`inline-flex items-center rounded-full px-3 py-1.5 text-sm font-medium ${getContentColor(book.contenido)}`}>
+        <motion.span 
+          whileHover={{ scale: 1.05 }} 
+          className={`inline-flex items-center rounded-full px-3 py-1.5 text-sm font-medium ${getContentColor(book.contenido)}`}
+        >
           {book.contenido}
         </motion.span>
       </div>
@@ -89,65 +92,86 @@ export const BookInfo = ({
       <div className="space-y-2 pt-2">
         {/* Removed ISBN and ASIN from summary view */}
         
-        {book.fechaPublicacion && <motion.div initial={{
-        opacity: 0
-      }} animate={{
-        opacity: 1
-      }} transition={{
-        delay: 0.5
-      }} className="flex items-center gap-2 text-sm my-[16px]">
+        {book.fechaPublicacion && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5 }}
+            className="flex items-center gap-2 text-sm my-[16px]"
+          >
             <Calendar size={16} className="text-muted-foreground" />
-            <span>Publicado: <span className="font-medium">{new Date(book.fechaPublicacion).toLocaleDateString()}</span></span>
-          </motion.div>}
+            <span>
+              Publicado: <span className="font-medium">{new Date(book.fechaPublicacion).toLocaleDateString()}</span>
+            </span>
+          </motion.div>
+        )}
         
-        {book.bsr && <motion.div className="flex items-center gap-2 text-sm" initial={{
-        opacity: 0
-      }} animate={{
-        opacity: 1
-      }} transition={{
-        delay: 0.55
-      }}>
+        {book.bsr && (
+          <motion.div 
+            className="flex items-center gap-2 text-sm"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.55 }}
+          >
             <BookOpen size={16} className="text-muted-foreground" />
-            <span>BSR: <span className="font-medium">#{book.bsr}</span></span>
-          </motion.div>}
+            <span>
+              BSR: <span className="font-medium">#{book.bsr}</span>
+            </span>
+          </motion.div>
+        )}
       </div>
 
       <div className="flex flex-wrap gap-3 pt-3">
-        {amazonLink && <motion.div whileHover={{
-        x: 3
-      }} transition={{
-        type: "spring",
-        stiffness: 300
-      }}>
-            <a href={amazonLink} target="_blank" rel="noopener noreferrer" className="inline-flex items-center text-[#FB923C] hover:underline font-medium focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-[#FB923C] rounded-sm">
+        {amazonLink && (
+          <motion.div 
+            whileHover={{ x: 3 }}
+            transition={{ type: "spring", stiffness: 300 }}
+          >
+            <a 
+              href={amazonLink} 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="inline-flex items-center text-[#FB923C] hover:underline font-medium focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-[#FB923C] rounded-sm"
+            >
               <ExternalLink size={16} className="mr-2" />
               Ver en Amazon
             </a>
-          </motion.div>}
+          </motion.div>
+        )}
         
-        {book.landingPageUrl && <motion.div whileHover={{
-        x: 3
-      }} transition={{
-        type: "spring",
-        stiffness: 300
-      }} className="flex items-center">
-            <a href={book.landingPageUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center text-[#3B82F6] hover:underline font-medium focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-[#3B82F6] rounded-sm">
+        {book.landingPageUrl && (
+          <motion.div 
+            whileHover={{ x: 3 }}
+            transition={{ type: "spring", stiffness: 300 }}
+            className="flex items-center"
+          >
+            <a 
+              href={book.landingPageUrl} 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="inline-flex items-center text-[#3B82F6] hover:underline font-medium focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-[#3B82F6] rounded-sm"
+            >
               <ExternalLink size={16} className="mr-2" />
               Landing Page
             </a>
-            <Button variant="ghost" size="icon" className="h-6 w-6 ml-1 text-muted-foreground hover:text-[#3B82F6]" onClick={() => copyToClipboard(book.landingPageUrl, "URL de Landing Page")}>
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              className="h-6 w-6 ml-1 text-muted-foreground hover:text-[#3B82F6]"
+              onClick={() => copyToClipboard(book.landingPageUrl, "URL de Landing Page")}
+            >
               <Copy size={14} />
             </Button>
-          </motion.div>}
+          </motion.div>
+        )}
       </div>
 
-      <motion.div className="border-t border-border pt-4 mt-4" initial={{
-      opacity: 0
-    }} animate={{
-      opacity: 1
-    }} transition={{
-      delay: 0.7
-    }}>
+      <motion.div 
+        className="border-t border-border pt-4 mt-4"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.7 }}
+      >
         <div className="flex items-center justify-between">
           <span className="text-sm font-medium">Regalías netas (estimado):</span>
           <span className="font-bold text-green-600 text-3xl">
@@ -155,5 +179,6 @@ export const BookInfo = ({
           </span>
         </div>
       </motion.div>
-    </motion.div>;
+    </motion.div>
+  );
 };

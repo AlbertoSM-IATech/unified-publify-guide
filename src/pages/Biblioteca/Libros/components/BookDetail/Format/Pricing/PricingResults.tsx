@@ -1,10 +1,13 @@
 
 import { useEffect, useState } from "react";
 import { BookFormat } from "../../../../types/bookTypes";
+import { Euro } from "lucide-react";
+
 interface PricingResultsProps {
   format: BookFormat;
   calculateNetRoyalties: (format?: BookFormat) => string;
 }
+
 export const PricingResults = ({
   format,
   calculateNetRoyalties
@@ -18,10 +21,14 @@ export const PricingResults = ({
     setNetRoyalties(royaltiesValue.replace('.', ','));
   }, [format, calculateNetRoyalties]);
   
-  return <div className="mt-4 p-3 bg-muted rounded-md border shadow-sm">
+  return (
+    <div className="mt-4 p-3 bg-muted rounded-md border shadow-sm">
       <div className="flex items-center justify-between">
         <span className="text-sm font-medium">Regalías netas (estimado):</span>
-        <span className="font-bold text-green-600 text-3xl">{netRoyalties}€</span>
+        <span className="font-bold text-green-600 text-3xl flex items-center">
+          {netRoyalties}€
+        </span>
       </div>
-    </div>;
+    </div>
+  );
 };
