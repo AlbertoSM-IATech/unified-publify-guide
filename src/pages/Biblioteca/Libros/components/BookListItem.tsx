@@ -4,7 +4,8 @@ import { Book } from "../types/bookTypes";
 import { Eye } from "lucide-react";
 import { motion } from "framer-motion";
 import { calculateNetRoyalties } from "../utils/formatUtils";
-import { memo } from 'react';
+import { memo, useState } from 'react';
+import { generateAmazonLink } from "../utils/bookDetailUtils";
 
 interface BookListItemProps {
   libro: Book;
@@ -12,33 +13,54 @@ interface BookListItemProps {
   getContentColor: (content: string) => string;
 }
 
+// Simpler hover effect for better performance
+const simpleHoverEffect = {
+  initial: { backgroundColor: "transparent" },
+  hover: { backgroundColor: "rgba(251,146,60,0.05)" }
+};
+
 export const BookListItem = memo(({ libro, getStatusColor, getContentColor }: BookListItemProps) => {
+  const [imageLoaded, setImageLoaded] = useState(false);
+  
   // Calculate net royalties for display
   const netRoyalties = calculateNetRoyalties(
     libro.hardcover || libro.paperback || libro.ebook
   ).replace('.', ',');
   
+  // Generate Amazon link if ASIN is available
+  const amazonLink = generateAmazonLink(libro.asin);
+  
+  const handleImageLoad = () => {
+    setImageLoaded(true);
+  };
+  
+  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement>) => {
+    // Set a default background color on error
+    const target = e.target as HTMLImageElement;
+    target.style.backgroundColor = "#e5e7eb";
+    setImageLoaded(true);
+  };
+  
   return (
     <motion.tr 
       className="hover:bg-muted/20 transition-colors"
-      whileHover={{ 
-        backgroundColor: "rgba(251,146,60,0.05)",
-        boxShadow: "0 4px 12px -2px rgba(251, 146, 60, 0.15)"
-      }}
+      initial="initial"
+      whileHover="hover"
+      variants={simpleHoverEffect}
     >
       <td className="whitespace-nowrap px-4 py-4">
         <div className="flex items-center space-x-3">
           <div className="h-12 w-8 flex-shrink-0 overflow-hidden rounded-sm">
             {libro.imageUrl ? (
-              <motion.img 
-                whileHover={{ scale: 1.1 }}
-                transition={{ duration: 0.2 }}
+              <img 
                 src={libro.imageUrl} 
                 alt={libro.titulo} 
-                className="h-full w-full object-cover"
+                className={`h-full w-full object-cover transition-opacity duration-300 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
                 loading="lazy"
                 width={32}
                 height={48}
+                onLoad={handleImageLoad}
+                onError={handleImageError}
               />
             ) : (
               <div className="h-full w-full bg-muted flex items-center justify-center">
@@ -87,14 +109,12 @@ export const BookListItem = memo(({ libro, getStatusColor, getContentColor }: Bo
           : "No publicado"}
       </td>
       <td className="whitespace-nowrap px-4 py-4 text-right text-sm">
-        <motion.div whileHover={{ x: 3 }} transition={{ type: "spring", stiffness: 300 }}>
-          <Link
-            to={`/biblioteca/libros/${libro.id}`}
-            className="inline-flex items-center font-medium text-[#FB923C] hover:underline focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-[#FB923C] rounded-sm"
-          >
-            <Eye className="mr-1 h-4 w-4" /> Ver detalles
-          </Link>
-        </motion.div>
+        <Link
+          to={`/biblioteca/libros/${libro.id}`}
+          className="inline-flex items-center font-medium text-[#FB923C] hover:underline focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-[#FB923C] rounded-sm"
+        >
+          <Eye className="mr-1 h-4 w-4" /> Ver detalles
+        </Link>
       </td>
     </motion.tr>
   );

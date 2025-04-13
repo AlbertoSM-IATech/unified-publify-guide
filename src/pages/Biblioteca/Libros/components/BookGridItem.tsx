@@ -6,7 +6,8 @@ import { Eye, Calendar } from "lucide-react";
 import { motion } from "framer-motion";
 import { StatusBadge } from "@/components/common/StatusBadge";
 import { calculateNetRoyalties } from "../utils/formatUtils";
-import { memo } from 'react';
+import { memo, useState } from 'react';
+import { generateAmazonLink } from "../utils/bookDetailUtils";
 
 interface BookGridItemProps {
   libro: Book;
@@ -14,28 +15,59 @@ interface BookGridItemProps {
   getContentColor: (content: string) => string;
 }
 
+// Simpler animation variants for better performance
+const hoverMotion = {
+  rest: { 
+    scale: 1,
+    y: 0,
+    transition: { 
+      type: "spring", 
+      stiffness: 400, 
+      damping: 17 
+    } 
+  },
+  hover: { 
+    scale: 1.01, 
+    y: -3,
+    transition: { 
+      type: "spring", 
+      stiffness: 400, 
+      damping: 17 
+    }
+  }
+};
+
 export const BookGridItem = memo(({
   libro,
   getStatusColor,
   getContentColor
 }: BookGridItemProps) => {
+  const [imageLoaded, setImageLoaded] = useState(false);
+  
   // Calculate net royalties for display
   const netRoyalties = calculateNetRoyalties(libro.hardcover || libro.paperback || libro.ebook).replace('.', ',');
+  
+  // Generate Amazon link if ASIN is available
+  const amazonLink = generateAmazonLink(libro.asin);
+  
+  const handleImageLoad = () => {
+    setImageLoaded(true);
+  };
+  
+  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement>) => {
+    // Set a default background color on error
+    const target = e.target as HTMLImageElement;
+    target.style.backgroundColor = "#e5e7eb";
+    setImageLoaded(true);
+  };
   
   return (
     <Link to={`/biblioteca/libros/${libro.id}`} className="block focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-lg h-full">
       <motion.div 
-        whileHover={{
-          y: -5,
-          scale: 1.02,
-          boxShadow: "0 10px 25px -5px rgba(251, 146, 60, 0.2), 0 8px 10px -6px rgba(251, 146, 60, 0.2)"
-        }} 
-        whileTap={{
-          scale: 0.98
-        }} 
-        transition={{
-          duration: 0.2
-        }} 
+        initial="rest"
+        whileHover="hover"
+        animate="rest"
+        variants={hoverMotion}
         className="h-full"
       >
         <Card className="overflow-hidden hover:shadow-lg hover:border-[#FB923C]/30 transition-all duration-300 h-full flex flex-col md:flex-row border dark:border-slate-800">
@@ -43,19 +75,15 @@ export const BookGridItem = memo(({
           <div className="relative md:w-1/3 w-full flex-shrink-0">
             <div className="aspect-[1600/2560] w-full h-full overflow-hidden bg-muted">
               {libro.imageUrl ? (
-                <motion.img 
-                  whileHover={{
-                    scale: 1.05
-                  }} 
-                  transition={{
-                    duration: 0.3
-                  }} 
+                <img 
                   src={libro.imageUrl} 
                   alt={libro.titulo} 
-                  className="h-full w-full object-cover"
+                  className={`h-full w-full object-cover transition-opacity duration-300 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
                   loading="lazy"
                   width="160"
                   height="256"
+                  onLoad={handleImageLoad}
+                  onError={handleImageError}
                 />
               ) : (
                 <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-secondary/20 to-background p-4">
@@ -75,26 +103,12 @@ export const BookGridItem = memo(({
               
               {/* Status and content badges moved here */}
               <div className="flex flex-wrap gap-2 my-2 py-[15px]">
-                <motion.div 
-                  whileHover={{
-                    scale: 1.05
-                  }} 
-                  className="inline-block"
-                >
-                  <span className={`inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium ${getStatusColor(libro.estado)}`}>
-                    {libro.estado}
-                  </span>
-                </motion.div>
-                <motion.div 
-                  whileHover={{
-                    scale: 1.05
-                  }} 
-                  className="inline-block"
-                >
-                  <span className={`inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium ${getContentColor(libro.contenido)}`}>
-                    {libro.contenido}
-                  </span>
-                </motion.div>
+                <span className={`inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium ${getStatusColor(libro.estado)}`}>
+                  {libro.estado}
+                </span>
+                <span className={`inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium ${getContentColor(libro.contenido)}`}>
+                  {libro.contenido}
+                </span>
               </div>
               
               <div className="flex flex-col space-y-1 pt-1">
@@ -113,15 +127,10 @@ export const BookGridItem = memo(({
             </div>
 
             <div className="mt-4 flex items-center justify-end text-primary">
-              <motion.div 
-                whileHover={{
-                  x: 3
-                }} 
-                className="flex items-center font-medium"
-              >
+              <div className="flex items-center font-medium">
                 <Eye className="mr-1 h-4 w-4" />
                 Ver detalle
-              </motion.div>
+              </div>
             </div>
           </CardContent>
         </Card>

@@ -1,9 +1,10 @@
 
 import { BookListItem } from "./BookListItem";
 import { Book } from "../types/bookTypes";
-import { motion } from "framer-motion";
-import { memo } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { memo, useRef } from "react";
 import { FixedSizeList } from 'react-window';
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface BooksListProps {
   libros: Book[];
@@ -17,7 +18,7 @@ const tableVariants = {
     opacity: 1,
     transition: {
       when: "beforeChildren",
-      staggerChildren: 0.03 // Reduced from 0.05 for faster appearance
+      staggerChildren: 0.02 // Reduced for faster appearance
     }
   }
 };
@@ -25,7 +26,9 @@ const tableVariants = {
 // Memoize the BookListItem to prevent unnecessary re-renders
 const MemoizedBookListItem = memo(BookListItem);
 
-export const BooksList = ({ libros, getStatusColor, getContentColor }: BooksListProps) => {
+export const BooksList = memo(({ libros, getStatusColor, getContentColor }: BooksListProps) => {
+  const listRef = useRef<FixedSizeList>(null);
+  
   if (libros.length === 0) {
     return (
       <div className="rounded-lg border bg-card shadow-sm overflow-hidden dark:border-slate-800">
@@ -94,34 +97,36 @@ export const BooksList = ({ libros, getStatusColor, getContentColor }: BooksList
                 </th>
               </tr>
             </thead>
-            <motion.tbody 
-              className="divide-y divide-border bg-background"
-              variants={tableVariants}
-              initial="hidden"
-              animate="visible"
-            >
-              {libros.map((libro) => (
-                <MemoizedBookListItem 
-                  key={libro.id}
-                  libro={libro} 
-                  getStatusColor={getStatusColor}
-                  getContentColor={getContentColor}
-                />
-              ))}
-            </motion.tbody>
+            <AnimatePresence mode="wait">
+              <motion.tbody 
+                className="divide-y divide-border bg-background"
+                variants={tableVariants}
+                initial="hidden"
+                animate="visible"
+              >
+                {libros.map((libro) => (
+                  <MemoizedBookListItem 
+                    key={libro.id}
+                    libro={libro} 
+                    getStatusColor={getStatusColor}
+                    getContentColor={getContentColor}
+                  />
+                ))}
+              </motion.tbody>
+            </AnimatePresence>
           </table>
         </div>
       </div>
     );
   }
   
-  // For larger collections, use virtualization
+  // For larger collections, use optimized virtualization
   // Row renderer for virtualized list
   const Row = ({ index, style }: { index: number, style: React.CSSProperties }) => {
     const libro = libros[index];
     
     return (
-      <div style={style}>
+      <div style={style} className="border-b border-border">
         <MemoizedBookListItem 
           key={libro.id}
           libro={libro} 
@@ -131,6 +136,9 @@ export const BooksList = ({ libros, getStatusColor, getContentColor }: BooksList
       </div>
     );
   };
+  
+  // Memoize row renderer for better performance
+  const MemoizedRow = memo(Row);
 
   return (
     <div className="rounded-lg border bg-card shadow-sm overflow-hidden dark:border-slate-800">
@@ -159,15 +167,23 @@ export const BooksList = ({ libros, getStatusColor, getContentColor }: BooksList
             </tr>
           </thead>
         </table>
-        <FixedSizeList
-          height={500}
-          width="100%"
-          itemCount={libros.length}
-          itemSize={80}
-        >
-          {Row}
-        </FixedSizeList>
+        
+        <ScrollArea className="overflow-hidden h-[500px]">
+          <FixedSizeList
+            height={500}
+            width="100%"
+            itemCount={libros.length}
+            itemSize={80}
+            overscanCount={5} // Increase overscan for smoother scrolling
+            className="focus:outline-none"
+            ref={listRef}
+          >
+            {MemoizedRow}
+          </FixedSizeList>
+        </ScrollArea>
       </div>
     </div>
   );
-};
+});
+
+BooksList.displayName = 'BooksList';

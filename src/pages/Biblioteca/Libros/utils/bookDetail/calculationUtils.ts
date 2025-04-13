@@ -1,31 +1,61 @@
 
 /**
- * Utility functions for financial calculations related to books
+ * Utility functions for performing calculations related to book royalties and finances
  */
 
 import { BookFormat } from "../../types/bookTypes";
 
 /**
  * Calculate the net royalties for a book format
- * @param format The book format containing price, royalty percentage, and optional printing cost
- * @returns Formatted string representing the net royalties with two decimal places
+ * @param format The book format with pricing information
+ * @returns The calculated net royalties as a string with 2 decimal places, or "0.00" if no valid format
  */
 export const calculateNetRoyalties = (format?: BookFormat): string => {
   if (!format || !format.price || !format.royaltyPercentage) {
     return "0.00";
   }
 
-  // Precio sin IVA - no aplicamos más transformaciones ya que asumimos que el precio que tenemos ya está sin IVA
-  const price = parseFloat(format.price.toString());
+  // Calculate royalty amount
+  const royaltyAmount = format.price * (format.royaltyPercentage / 100);
   
-  // Regalías brutas (precio × porcentaje)
-  const royaltyPercentage = parseFloat(format.royaltyPercentage.toString());
-  const royalties = price * royaltyPercentage;
+  // If there's a printing cost, subtract it
+  const netRoyalty = format.printingCost 
+    ? royaltyAmount - format.printingCost
+    : royaltyAmount;
+
+  // Format to 2 decimal places
+  return netRoyalty.toFixed(2);
+};
+
+/**
+ * Calculate the gross revenue for a book format
+ * @param format The book format with pricing information
+ * @param salesCount Optional sales count (defaults to 1)
+ * @returns The calculated gross revenue or 0 if no valid format
+ */
+export const calculateGrossRevenue = (format?: BookFormat, salesCount: number = 1): number => {
+  if (!format || !format.price) {
+    return 0;
+  }
+
+  return format.price * salesCount;
+};
+
+/**
+ * Calculate profit margin as a percentage
+ * @param format The book format with pricing and cost information
+ * @returns Profit margin as a percentage or 0 if invalid data
+ */
+export const calculateProfitMargin = (format?: BookFormat): number => {
+  if (!format || !format.price || !format.royaltyPercentage) {
+    return 0;
+  }
+
+  const royaltyAmount = format.price * (format.royaltyPercentage / 100);
+  const cost = format.printingCost || 0;
   
-  // Restar costo de impresión si existe
-  const printingCost = format.printingCost !== undefined ? parseFloat(format.printingCost.toString()) : 0;
-  const netRoyalties = royalties - printingCost;
+  if (format.price === 0) return 0;
   
-  // Devolver con dos decimales
-  return netRoyalties.toFixed(2);
+  const margin = ((royaltyAmount - cost) / format.price) * 100;
+  return Math.max(0, margin); // Ensure we don't return negative margins
 };
