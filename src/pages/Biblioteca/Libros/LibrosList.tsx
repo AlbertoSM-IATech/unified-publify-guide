@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { BooksToolbar } from "./components/BooksToolbar";
 import { BooksGrid } from "./components/BooksGrid";
 import { BooksList } from "./components/BooksList";
@@ -26,32 +27,35 @@ export const LibrosList = () => {
     localStorage.setItem("libroViewMode", viewMode);
   }, [viewMode]);
 
-  const filteredLibros = libros.filter(
-    (libro) =>
-      libro.titulo.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      libro.autor.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      libro.isbn.includes(searchQuery) ||
-      libro.asin.includes(searchQuery)
-  );
+  // Memoize the filtered books to prevent unnecessary recalculations
+  const filteredLibros = useMemo(() => {
+    return libros.filter(
+      (libro) =>
+        libro.titulo.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        libro.autor.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (libro.isbn && libro.isbn.includes(searchQuery)) ||
+        (libro.asin && libro.asin.includes(searchQuery))
+    );
+  }, [libros, searchQuery]);
 
-  const handleOpenCreateDialog = () => {
+  // Use useCallback for event handlers
+  const handleOpenCreateDialog = useCallback(() => {
     setIsCreatingBook(true);
-  };
+  }, []);
 
-  const handleCloseCreateDialog = () => {
+  const handleCloseCreateDialog = useCallback(() => {
     setIsCreatingBook(false);
-  };
+  }, []);
 
-  const handleCreateBook = (newBook: Book) => {
+  const handleCreateBook = useCallback((newBook: Book) => {
     // Add the new book to the list
-    const updatedLibros = [...libros, newBook];
-    setLibros(updatedLibros);
+    setLibros((prev) => [...prev, newBook]);
     
     toast({
       title: "Libro creado",
       description: `El libro "${newBook.titulo}" ha sido creado con éxito.`
     });
-  };
+  }, [setLibros]);
 
   return (
     <div className="animate-fade-in">

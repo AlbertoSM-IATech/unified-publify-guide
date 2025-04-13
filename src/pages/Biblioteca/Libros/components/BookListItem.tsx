@@ -4,6 +4,7 @@ import { Book } from "../types/bookTypes";
 import { Eye } from "lucide-react";
 import { motion } from "framer-motion";
 import { calculateNetRoyalties } from "../utils/bookDetailUtils";
+import { memo } from 'react';
 
 interface BookListItemProps {
   libro: Book;
@@ -11,7 +12,7 @@ interface BookListItemProps {
   getContentColor: (content: string) => string;
 }
 
-export const BookListItem = ({ libro, getStatusColor, getContentColor }: BookListItemProps) => {
+export const BookListItem = memo(({ libro, getStatusColor, getContentColor }: BookListItemProps) => {
   // Calculate net royalties for display
   const netRoyalties = calculateNetRoyalties(
     libro.hardcover || libro.paperback || libro.ebook
@@ -35,6 +36,9 @@ export const BookListItem = ({ libro, getStatusColor, getContentColor }: BookLis
                 src={libro.imageUrl} 
                 alt={libro.titulo} 
                 className="h-full w-full object-cover"
+                loading="lazy"
+                width={32}
+                height={48}
               />
             ) : (
               <div className="h-full w-full bg-muted flex items-center justify-center">
@@ -94,4 +98,6 @@ export const BookListItem = ({ libro, getStatusColor, getContentColor }: BookLis
       </td>
     </motion.tr>
   );
-};
+});
+
+BookListItem.displayName = 'BookListItem';
