@@ -18,20 +18,20 @@ const containerVariants = {
   show: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.03 // Reduced from 0.05 for faster appearance
+      staggerChildren: 0.02 // Further reduced for faster appearance
     }
   }
 };
 
 const itemVariants = {
-  hidden: { y: 5, opacity: 0 }, // Reduced from y: 10 for lighter animation
+  hidden: { y: 3, opacity: 0 }, // Reduced from y: 5 for lighter animation
   show: { 
     y: 0, 
     opacity: 1,
     transition: {
       type: "spring",
       stiffness: 150,
-      damping: 15 // Increased damping for shorter animation
+      damping: 15
     }
   }
 };
@@ -61,7 +61,7 @@ export const BooksGrid = memo(({ libros, getStatusColor, getContentColor }: Book
         animate="show"
         className="w-full"
       >
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
           <AnimatePresence mode="wait">
             {libros.map((libro) => (
               <motion.div 
@@ -84,12 +84,17 @@ export const BooksGrid = memo(({ libros, getStatusColor, getContentColor }: Book
   }
   
   // For larger collections, use virtualization with optimized settings
-  const columnCount = windowSize.width && windowSize.width > 768 ? 2 : 1;
+  const columnCount = windowSize.width ? 
+    (windowSize.width > 1280 ? 3 : (windowSize.width > 768 ? 2 : 1)) : 1;
+    
   const rowCount = Math.ceil(libros.length / columnCount);
   
-  // Calculate item size (height depends on content but we estimate)
-  const itemWidth = windowSize.width ? (windowSize.width > 768 ? (windowSize.width * 0.7 - 40) / 2 : windowSize.width * 0.8) : 300;
-  const itemHeight = 320; // Fixed height estimation for each card
+  // Calculate item size (height optimized for reduced cards)
+  const itemWidth = windowSize.width ? 
+    ((windowSize.width * 0.85) / columnCount) - 16 : 300;
+  
+  // Reduced height for more compact display
+  const itemHeight = 260; // Reduced from 320 for more compact display
   
   // Cell renderer for virtualized grid with optimized rendering
   const Cell = ({ columnIndex, rowIndex, style }: any) => {
@@ -99,7 +104,7 @@ export const BooksGrid = memo(({ libros, getStatusColor, getContentColor }: Book
     const libro = libros[index];
     
     return (
-      <div style={{ ...style, padding: '10px' }}>
+      <div style={{ ...style, padding: '8px' }}>
         <MemoizedBookGridItem
           libro={libro}
           getStatusColor={getStatusColor}
@@ -118,15 +123,15 @@ export const BooksGrid = memo(({ libros, getStatusColor, getContentColor }: Book
   );
 
   return (
-    <ScrollArea className="w-full mt-6 rounded-md border">
-      <div className="p-4">
+    <ScrollArea className="w-full mt-4 rounded-md border">
+      <div className="p-3">
         <FixedSizeGrid
           columnCount={columnCount}
           columnWidth={itemWidth}
           height={gridHeight}
           rowCount={rowCount}
           rowHeight={itemHeight}
-          width={windowSize.width ? windowSize.width * 0.8 : 800}
+          width={windowSize.width ? windowSize.width * 0.85 : 800}
           overscanRowCount={2} // Overscan to improve perceived performance
           className="focus:outline-none"
           ref={gridRef}
