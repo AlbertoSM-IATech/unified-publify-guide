@@ -1,6 +1,7 @@
 
 // Utility functions for data manipulation and filtering
 import { Book } from "../types/bookTypes";
+import { librosSimulados } from "./mockData/librosData";
 
 // Function to fetch libros from an API
 export const fetchLibros = async (): Promise<Book[]> => {
