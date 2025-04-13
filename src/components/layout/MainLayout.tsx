@@ -1,15 +1,13 @@
-
 import { useState, useEffect } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import Header from "./Header";
 import { useIsMobile } from "@/hooks/use-mobile";
-
 const MainLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const isMobile = useIsMobile();
   const location = useLocation();
-  
+
   // Cerrar automáticamente el sidebar en dispositivos móviles
   useEffect(() => {
     if (isMobile) {
@@ -25,13 +23,10 @@ const MainLayout = () => {
       setSidebarOpen(false);
     }
   }, [location.pathname, isMobile]);
-
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
   };
-
-  return (
-    <div className="flex h-screen w-full overflow-hidden bg-background">
+  return <div className="flex h-screen w-full overflow-hidden bg-background">
       {/* Sidebar */}
       <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
       
@@ -40,12 +35,10 @@ const MainLayout = () => {
         <Header toggleSidebar={toggleSidebar} sidebarOpen={sidebarOpen} />
         
         {/* Contenido de la página */}
-        <main className="flex-1 overflow-y-auto p-4 md:p-6">
+        <main className="flex-1 overflow-y-auto p-4 md:p-6 py-[24px] px-0">
           <Outlet />
         </main>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default MainLayout;
