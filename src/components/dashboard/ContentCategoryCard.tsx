@@ -24,8 +24,8 @@ const ContentCategoryCard = ({
       <div className="mb-2 flex items-center">
         
         <div>
-          <h3 className="font-heading font-medium text-lg text-center">{title}</h3>
-          <p className="text-xs text-muted-foreground">{description}</p>
+          <h3 className="font-heading font-medium text-lg text-center py-[11px]">{title}</h3>
+          
         </div>
         <div className="ml-auto text-2xl font-bold bg-inherit">{count}</div>
       </div>
