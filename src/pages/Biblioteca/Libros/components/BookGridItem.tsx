@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { Book } from "../types/bookTypes";
 import { Card, CardContent } from "@/components/ui/card";
@@ -6,23 +5,18 @@ import { Eye, Calendar } from "lucide-react";
 import { motion } from "framer-motion";
 import { StatusBadge } from "@/components/common/StatusBadge";
 import { calculateNetRoyalties } from "../utils/bookDetailUtils";
-
 interface BookGridItemProps {
   libro: Book;
   getStatusColor: (status: string) => string;
   getContentColor: (content: string) => string;
 }
-
 export const BookGridItem = ({
   libro,
   getStatusColor,
   getContentColor
 }: BookGridItemProps) => {
   // Calculate net royalties for display
-  const netRoyalties = calculateNetRoyalties(
-    libro.hardcover || libro.paperback || libro.ebook
-  ).replace('.', ',');
-  
+  const netRoyalties = calculateNetRoyalties(libro.hardcover || libro.paperback || libro.ebook).replace('.', ',');
   return <Link to={`/biblioteca/libros/${libro.id}`} className="block focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-lg h-full">
       <motion.div whileHover={{
       y: -5,
@@ -52,9 +46,7 @@ export const BookGridItem = ({
             <div className="space-y-2">
               <h3 className="line-clamp-2 font-heading font-semibold text-orange-400 text-2xl">{libro.titulo}</h3>
               {/* Added subtitle display */}
-              {libro.subtitulo && (
-                <p className="line-clamp-2 text-muted-foreground italic text-sm">{libro.subtitulo}</p>
-              )}
+              {libro.subtitulo && <p className="line-clamp-2 text-muted-foreground italic text-sm">{libro.subtitulo}</p>}
               <p className="line-clamp-1 text-white text-sm">{libro.autor}</p>
               
               {/* Status and content badges moved here */}
@@ -84,8 +76,8 @@ export const BookGridItem = ({
                   
                 {/* Add royalties display */}
                 <div className="flex items-center text-xs font-medium text-green-500 mt-2">
-                  <span className="mr-1">Regalías:</span>
-                  <span className="text-base">{netRoyalties}€</span>
+                  
+                  
                 </div>
               </div>
             </div>
