@@ -12,7 +12,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useEffect, useState } from "react";
-import { investigacionesSimuladas } from "../../../utils/librosUtils";
+import { investigacionesSimuladas } from "../../../utils/mockData/investigacionesData";
 
 interface InvestigationRelationProps {
   book: Book;

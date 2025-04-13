@@ -3,7 +3,7 @@ import { Card } from "@/components/ui/card";
 import { BookCover } from "./BookCover";
 import { BookInfo } from "./BookInfo";
 import { calculateNetRoyalties } from "../../utils/bookDetailUtils";
-import { getStatusColor, getContentColor } from "../../utils/librosUtils";
+import { getStatusColor, getContentColor } from "../../utils/formatUtils";
 import { Book } from "../../types/bookTypes";
 import { motion } from "framer-motion";
 

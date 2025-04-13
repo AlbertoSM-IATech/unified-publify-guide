@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Book } from "../types/bookTypes";
 import { Eye } from "lucide-react";
 import { motion } from "framer-motion";
-import { calculateNetRoyalties } from "../utils/bookDetailUtils";
+import { calculateNetRoyalties } from "../utils/formatUtils";
 import { memo } from 'react';
 
 interface BookListItemProps {

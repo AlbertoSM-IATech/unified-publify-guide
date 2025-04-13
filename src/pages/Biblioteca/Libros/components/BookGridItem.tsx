@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Eye, Calendar } from "lucide-react";
 import { motion } from "framer-motion";
 import { StatusBadge } from "@/components/common/StatusBadge";
-import { calculateNetRoyalties } from "../utils/bookDetailUtils";
+import { calculateNetRoyalties } from "../utils/formatUtils";
 import { memo } from 'react';
 
 interface BookGridItemProps {

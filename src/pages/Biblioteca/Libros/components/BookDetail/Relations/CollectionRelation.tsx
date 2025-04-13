@@ -13,7 +13,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useEffect, useState } from "react";
-import { coleccionesSimuladas } from "../../../utils/librosUtils";
+import { coleccionesSimuladas } from "../../../utils/mockData/coleccionesData";
 
 interface CollectionRelationProps {
   book: Book;
