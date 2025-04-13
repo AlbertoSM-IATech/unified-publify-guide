@@ -48,14 +48,15 @@ export const LibrosList = () => {
   }, []);
 
   const handleCreateBook = useCallback((newBook: Book) => {
-    // Add the new book to the list
-    setLibros((prev) => [...prev, newBook]);
+    // Fix: Pass the new array directly instead of a function
+    const updatedBooks = [...libros, newBook];
+    setLibros(updatedBooks);
     
     toast({
       title: "Libro creado",
       description: `El libro "${newBook.titulo}" ha sido creado con éxito.`
     });
-  }, [setLibros]);
+  }, [libros, setLibros]);
 
   return (
     <div className="animate-fade-in">
