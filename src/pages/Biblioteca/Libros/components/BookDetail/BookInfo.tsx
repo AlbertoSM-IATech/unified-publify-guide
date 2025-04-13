@@ -1,24 +1,25 @@
 
 import { ExternalLink, Tag, Calendar, BookOpen, Copy, CheckCheck, Euro } from "lucide-react";
-import { Book } from "../../types/bookTypes";
+import { Book, BookFormat } from "../../types/bookTypes";
 import { generateAmazonLink } from "../../utils/bookDetailUtils";
 import { getContentHexColor } from "../../utils/librosUtils";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/hooks/use-toast";
-import { calculateNetRoyalties } from "../../utils/bookDetailUtils";
 
 interface BookInfoProps {
   book: Book;
   getStatusColor: (status: string) => string;
   getContentColor: (content: string) => string;
+  calculateNetRoyalties: (format?: BookFormat) => string;
 }
 
 export const BookInfo = ({
   book,
   getStatusColor,
   getContentColor,
+  calculateNetRoyalties,
 }: BookInfoProps) => {
   const [copied, setCopied] = useState(false);
   const [netRoyalties, setNetRoyalties] = useState("0,00");
