@@ -45,7 +45,15 @@ const BookCard = ({
           {coverUrl ? (
             <div className="h-full w-full overflow-hidden">
               <AspectRatio ratio={16 / 25.6} className="h-full">
-                <img src={coverUrl} alt={title} className="h-full w-full object-cover" />
+                <img 
+                  src={coverUrl} 
+                  alt={title} 
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.src = "/placeholders/default-book-cover.png";
+                  }}
+                  className="h-full w-full object-cover" 
+                />
               </AspectRatio>
             </div>
           ) : (

@@ -77,13 +77,21 @@ export const BookCover = ({ book, isEditing, onUpdateBook }: BookCoverProps) => 
           <motion.img 
             src={coverPreview} 
             alt={book.titulo} 
+            onError={(e) => {
+              const target = e.target as HTMLImageElement;
+              target.src = "/placeholders/default-book-cover.png";
+            }}
             className="h-full w-full object-cover"
             whileHover={{ scale: 1.05 }}
             transition={{ duration: 0.5 }}
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-[#FB923C]/10 to-[#3B82F6]/10 p-6">
-            <BookOpen className="h-20 w-20 text-muted-foreground/50" />
+            <img 
+              src="/placeholders/default-book-cover.png" 
+              alt="Default Book Cover" 
+              className="h-full w-full object-cover" 
+            />
           </div>
         )}
         
