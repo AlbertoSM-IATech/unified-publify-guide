@@ -1,3 +1,4 @@
+
 import { Link } from "react-router-dom";
 import { Book } from "../types/bookTypes";
 import { Card, CardContent } from "@/components/ui/card";
@@ -11,28 +12,6 @@ interface BookGridItemProps {
   getStatusColor: (status: string) => string;
   getContentColor: (content: string) => string;
 }
-
-// Simpler animation variants for better performance
-const hoverMotion = {
-  rest: {
-    scale: 1,
-    y: 0,
-    transition: {
-      type: "spring",
-      stiffness: 400,
-      damping: 17
-    }
-  },
-  hover: {
-    scale: 1.01,
-    y: -3,
-    transition: {
-      type: "spring",
-      stiffness: 400,
-      damping: 17
-    }
-  }
-};
 
 export const BookGridItem = memo(({
   libro,
@@ -57,8 +36,17 @@ export const BookGridItem = memo(({
 
   return (
     <Link to={`/biblioteca/libros/${libro.id}`} className="block focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-lg h-full">
-      <motion.div initial="rest" whileHover="hover" animate="rest" variants={hoverMotion} className="h-full">
-        <Card className="overflow-hidden hover:shadow-lg hover:border-[#FB923C]/30 transition-all duration-300 h-full flex flex-col md:flex-row border dark:border-slate-800">
+      <motion.div 
+        whileHover={{ 
+          y: -5, 
+          scale: 1.02,
+          boxShadow: "0 10px 25px -5px rgba(251, 146, 60, 0.3), 0 8px 10px -6px rgba(251, 146, 60, 0.2)",
+          borderColor: "rgba(251, 146, 60, 0.5)",
+          transition: { duration: 0.2, ease: "easeOut" }
+        }}
+        className="h-full"
+      >
+        <Card className="overflow-hidden transition-all duration-300 h-full flex flex-col md:flex-row border dark:border-slate-800">
           {/* Book cover - Left side with proper aspect ratio */}
           <div className="relative md:w-1/3 w-full flex-shrink-0">
             <div className="aspect-[1600/2560] w-full h-full overflow-hidden bg-muted">

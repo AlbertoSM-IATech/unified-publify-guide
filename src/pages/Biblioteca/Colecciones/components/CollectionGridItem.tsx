@@ -24,7 +24,9 @@ export const CollectionGridItem = ({ collection }: CollectionGridItemProps) => {
       transition={{ duration: 0.3 }}
       whileHover={{ 
         y: -5,
-        transition: { duration: 0.2 }
+        boxShadow: "0 10px 25px -5px rgba(251, 146, 60, 0.2), 0 8px 10px -6px rgba(251, 146, 60, 0.1)",
+        borderColor: "rgba(251, 146, 60, 0.4)",
+        transition: { duration: 0.2, ease: "easeOut" }
       }}
       className="h-full"
     >

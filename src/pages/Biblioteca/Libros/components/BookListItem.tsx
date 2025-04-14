@@ -1,3 +1,4 @@
+
 import { Link } from "react-router-dom";
 import { Book } from "../types/bookTypes";
 import { Eye } from "lucide-react";
@@ -31,6 +32,11 @@ export const BookListItem = memo(({ libro, getStatusColor, getContentColor }: Bo
   return (
     <motion.tr 
       className="hover:bg-muted/20 transition-colors"
+      whileHover={{
+        backgroundColor: "rgba(251, 146, 60, 0.05)",
+        boxShadow: "0 4px 12px -2px rgba(251, 146, 60, 0.15)",
+        transition: { duration: 0.2, ease: "easeOut" }
+      }}
     >
       <td className="whitespace-nowrap px-4 py-4">
         <div className="flex items-center space-x-3">
