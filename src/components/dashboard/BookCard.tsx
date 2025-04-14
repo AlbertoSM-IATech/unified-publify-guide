@@ -49,8 +49,14 @@ const BookCard = ({
               </AspectRatio>
             </div>
           ) : (
-            <div className="absolute inset-0 flex items-center justify-center">
-              <BookOpen size={40} className="text-muted-foreground/50" />
+            <div className="h-full w-full overflow-hidden">
+              <AspectRatio ratio={16 / 25.6} className="h-full">
+                <img 
+                  src="/placeholders/default-book-cover.png" 
+                  alt="Default Book Cover" 
+                  className="h-full w-full object-cover" 
+                />
+              </AspectRatio>
             </div>
           )}
         </div>

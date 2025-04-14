@@ -1,13 +1,10 @@
-
 import { Link } from "react-router-dom";
 import { Book } from "../types/bookTypes";
 import { Card, CardContent } from "@/components/ui/card";
 import { Eye, Calendar } from "lucide-react";
 import { motion } from "framer-motion";
-import { StatusBadge } from "@/components/common/StatusBadge";
 import { calculateNetRoyalties } from "../utils/formatUtils";
 import { memo, useState } from 'react';
-import { generateAmazonLink } from "../utils/bookDetailUtils";
 
 interface BookGridItemProps {
   libro: Book;
@@ -46,18 +43,15 @@ export const BookGridItem = memo(({
 
   // Calculate net royalties for display
   const netRoyalties = calculateNetRoyalties(libro.hardcover || libro.paperback || libro.ebook).replace('.', ',');
-
-  // Generate Amazon link if ASIN is available
-  const amazonLink = generateAmazonLink(libro.asin);
   
   const handleImageLoad = () => {
     setImageLoaded(true);
   };
   
   const handleImageError = (e: React.SyntheticEvent<HTMLImageElement>) => {
-    // Set a default background color on error
+    // Set default placeholder
     const target = e.target as HTMLImageElement;
-    target.style.backgroundColor = "#e5e7eb";
+    target.src = "/placeholders/default-book-cover.png";
     setImageLoaded(true);
   };
 
@@ -80,11 +74,12 @@ export const BookGridItem = memo(({
                   onError={handleImageError}
                 />
               ) : (
-                <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-secondary/20 to-background p-4">
-                  <span className="text-center font-heading text-lg font-semibold text-foreground/70">
-                    {libro.titulo}
-                  </span>
-                </div>
+                <img 
+                  src="/placeholders/default-book-cover.png" 
+                  alt="Default Book Cover" 
+                  className="h-full w-full object-cover"
+                  loading="lazy"
+                />
               )}
             </div>
           </div>

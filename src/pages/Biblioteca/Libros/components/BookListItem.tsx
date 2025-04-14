@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { Book } from "../types/bookTypes";
 import { Eye } from "lucide-react";
@@ -13,40 +12,25 @@ interface BookListItemProps {
   getContentColor: (content: string) => string;
 }
 
-// Simpler hover effect for better performance
-const simpleHoverEffect = {
-  initial: { backgroundColor: "transparent" },
-  hover: { backgroundColor: "rgba(251,146,60,0.05)" }
-};
-
 export const BookListItem = memo(({ libro, getStatusColor, getContentColor }: BookListItemProps) => {
   const [imageLoaded, setImageLoaded] = useState(false);
   
-  // Calculate net royalties for display
-  const netRoyalties = calculateNetRoyalties(
-    libro.hardcover || libro.paperback || libro.ebook
-  ).replace('.', ',');
-  
-  // Generate Amazon link if ASIN is available
-  const amazonLink = generateAmazonLink(libro.asin);
+  const netRoyalties = calculateNetRoyalties(libro.hardcover || libro.paperback || libro.ebook).replace('.', ',');
   
   const handleImageLoad = () => {
     setImageLoaded(true);
   };
   
   const handleImageError = (e: React.SyntheticEvent<HTMLImageElement>) => {
-    // Set a default background color on error
+    // Set default placeholder
     const target = e.target as HTMLImageElement;
-    target.style.backgroundColor = "#e5e7eb";
+    target.src = "/placeholders/default-book-cover.png";
     setImageLoaded(true);
   };
-  
+
   return (
     <motion.tr 
       className="hover:bg-muted/20 transition-colors"
-      initial="initial"
-      whileHover="hover"
-      variants={simpleHoverEffect}
     >
       <td className="whitespace-nowrap px-4 py-4">
         <div className="flex items-center space-x-3">
@@ -63,9 +47,12 @@ export const BookListItem = memo(({ libro, getStatusColor, getContentColor }: Bo
                 onError={handleImageError}
               />
             ) : (
-              <div className="h-full w-full bg-muted flex items-center justify-center">
-                <span className="text-xs text-muted-foreground">Sin portada</span>
-              </div>
+              <img 
+                src="/placeholders/default-book-cover.png" 
+                alt="Default Book Cover" 
+                className="h-full w-full object-cover"
+                loading="lazy"
+              />
             )}
           </div>
           <div>
@@ -74,7 +61,6 @@ export const BookListItem = memo(({ libro, getStatusColor, getContentColor }: Bo
                 {libro.titulo}
               </Link>
             </div>
-            {/* Added subtitle display */}
             {libro.subtitulo && (
               <div className="text-xs text-muted-foreground italic">{libro.subtitulo}</div>
             )}
