@@ -4,6 +4,8 @@ import { Button } from "@/components/common/Button";
 import { FormField } from "@/components/form/FormField";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/contexts/AuthContext";
+import { supabaseService } from "@/services/supabase";
 
 interface ProfileFormProps {
   initialData: {
@@ -15,6 +17,7 @@ interface ProfileFormProps {
 
 export const ProfileForm = ({ initialData, onSubmit }: ProfileFormProps) => {
   const { toast } = useToast();
+  const { user, updateUser } = useAuth();
   
   const [formData, setFormData] = useState({
     nombre: initialData.nombre || "",
@@ -30,7 +33,7 @@ export const ProfileForm = ({ initialData, onSubmit }: ProfileFormProps) => {
     setFormData(prev => ({ ...prev, [id]: value }));
   };
   
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     
@@ -45,13 +48,43 @@ export const ProfileForm = ({ initialData, onSubmit }: ProfileFormProps) => {
       return;
     }
     
-    // Call the parent onSubmit function
-    onSubmit(formData);
-    
-    // Simulate API call
-    setTimeout(() => {
+    try {
+      // Save to Supabase
+      if (user?.id) {
+        const updateData = {
+          nombre: formData.nombre,
+          email: formData.email,
+          ...(formData.password ? { password: formData.password } : {})
+        };
+        
+        await supabaseService.profile.update(user.id, updateData);
+        
+        // Update local user context
+        updateUser({
+          nombre: formData.nombre,
+          email: formData.email
+        });
+        
+        // Call the parent onSubmit function
+        onSubmit(formData);
+        
+        toast({
+          title: "Perfil actualizado",
+          description: "Los cambios han sido guardados correctamente",
+        });
+      } else {
+        throw new Error("No se encontró ID de usuario");
+      }
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      toast({
+        title: "Error",
+        description: "No se pudo actualizar el perfil",
+        variant: "destructive"
+      });
+    } finally {
       setIsSubmitting(false);
-    }, 1000);
+    }
   };
 
   return (

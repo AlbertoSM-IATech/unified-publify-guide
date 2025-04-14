@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Eye, Calendar } from "lucide-react";
 import { motion } from "framer-motion";
 import { calculateNetRoyalties } from "../utils/formatUtils";
-import { memo, useState } from 'react';
+import { memo } from 'react';
 
 interface BookGridItemProps {
   libro: Book;
@@ -18,21 +18,11 @@ export const BookGridItem = memo(({
   getStatusColor,
   getContentColor
 }: BookGridItemProps) => {
-  const [imageLoaded, setImageLoaded] = useState(false);
-
   // Calculate net royalties for display
   const netRoyalties = calculateNetRoyalties(libro.hardcover || libro.paperback || libro.ebook).replace('.', ',');
   
-  const handleImageLoad = () => {
-    setImageLoaded(true);
-  };
-  
-  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement>) => {
-    // Set default placeholder
-    const target = e.target as HTMLImageElement;
-    target.src = "/placeholders/default-book-cover.png";
-    setImageLoaded(true);
-  };
+  // Always use the default cover
+  const defaultCoverUrl = "/placeholders/portada-ejemplo.jpg";
 
   return (
     <Link to={`/biblioteca/libros/${libro.id}`} className="block focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-lg h-full">
@@ -50,25 +40,14 @@ export const BookGridItem = memo(({
           {/* Book cover - Left side with proper aspect ratio */}
           <div className="relative md:w-1/3 w-full flex-shrink-0">
             <div className="aspect-[1600/2560] w-full h-full overflow-hidden bg-muted">
-              {libro.imageUrl ? (
-                <img 
-                  src={libro.imageUrl} 
-                  alt={libro.titulo} 
-                  className={`h-full w-full object-cover transition-opacity duration-300 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
-                  loading="lazy" 
-                  width="160" 
-                  height="256"
-                  onLoad={handleImageLoad}
-                  onError={handleImageError}
-                />
-              ) : (
-                <img 
-                  src="/placeholders/default-book-cover.png" 
-                  alt="Default Book Cover" 
-                  className="h-full w-full object-cover"
-                  loading="lazy"
-                />
-              )}
+              <img 
+                src={defaultCoverUrl} 
+                alt={libro.titulo} 
+                className="h-full w-full object-cover"
+                loading="lazy" 
+                width="160" 
+                height="256"
+              />
             </div>
           </div>
 
@@ -88,7 +67,7 @@ export const BookGridItem = memo(({
               )}
               
               {/* Author with slightly reduced size */}
-              <p className="line-clamp-1 text-white text-xs">
+              <p className="line-clamp-1 text-foreground text-xs">
                 {libro.autor}
               </p>
               

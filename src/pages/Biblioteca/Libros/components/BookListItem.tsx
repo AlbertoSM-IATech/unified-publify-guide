@@ -4,8 +4,7 @@ import { Book } from "../types/bookTypes";
 import { Eye } from "lucide-react";
 import { motion } from "framer-motion";
 import { calculateNetRoyalties } from "../utils/formatUtils";
-import { memo, useState } from 'react';
-import { generateAmazonLink } from "../utils/bookDetailUtils";
+import { memo } from 'react';
 
 interface BookListItemProps {
   libro: Book;
@@ -14,20 +13,10 @@ interface BookListItemProps {
 }
 
 export const BookListItem = memo(({ libro, getStatusColor, getContentColor }: BookListItemProps) => {
-  const [imageLoaded, setImageLoaded] = useState(false);
-  
   const netRoyalties = calculateNetRoyalties(libro.hardcover || libro.paperback || libro.ebook).replace('.', ',');
   
-  const handleImageLoad = () => {
-    setImageLoaded(true);
-  };
-  
-  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement>) => {
-    // Set default placeholder
-    const target = e.target as HTMLImageElement;
-    target.src = "/placeholders/default-book-cover.png";
-    setImageLoaded(true);
-  };
+  // Always use the default cover
+  const defaultCoverUrl = "/placeholders/portada-ejemplo.jpg";
 
   return (
     <motion.tr 
@@ -41,25 +30,14 @@ export const BookListItem = memo(({ libro, getStatusColor, getContentColor }: Bo
       <td className="whitespace-nowrap px-4 py-4">
         <div className="flex items-center space-x-3">
           <div className="h-12 w-8 flex-shrink-0 overflow-hidden rounded-sm">
-            {libro.imageUrl ? (
-              <img 
-                src={libro.imageUrl} 
-                alt={libro.titulo} 
-                className={`h-full w-full object-cover transition-opacity duration-300 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
-                loading="lazy"
-                width={32}
-                height={48}
-                onLoad={handleImageLoad}
-                onError={handleImageError}
-              />
-            ) : (
-              <img 
-                src="/placeholders/default-book-cover.png" 
-                alt="Default Book Cover" 
-                className="h-full w-full object-cover"
-                loading="lazy"
-              />
-            )}
+            <img 
+              src={defaultCoverUrl} 
+              alt={libro.titulo} 
+              className="h-full w-full object-cover"
+              loading="lazy"
+              width={32}
+              height={48}
+            />
           </div>
           <div>
             <div className="font-medium text-[#3B82F6]">

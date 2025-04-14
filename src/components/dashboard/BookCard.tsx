@@ -17,25 +17,27 @@ const BookCard = ({
   author,
   contentLevel,
   status,
-  coverUrl
 }: BookCardProps) => {
   // Determine status color based on status
   const getStatusColor = (status: string): string => {
     switch (status) {
       case "Publicado":
-        return "bg-green-100 text-green-800";
+        return "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300";
       case "En revisión":
-        return "bg-amber-100 text-amber-800";
+        return "bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-300";
       case "Borrador":
-        return "bg-blue-100 text-blue-800";
+        return "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300";
       case "Archivado":
-        return "bg-red-100 text-red-800";
+        return "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300";
       default:
-        return "bg-gray-100 text-gray-800";
+        return "bg-gray-100 text-gray-800 dark:bg-gray-800/30 dark:text-gray-300";
     }
   };
   
   const statusColor = getStatusColor(status);
+  
+  // Always use the default cover
+  const defaultCoverUrl = "/placeholders/portada-ejemplo.jpg";
   
   return (
     <motion.div 
@@ -50,37 +52,21 @@ const BookCard = ({
       <div className="flex h-32 overflow-hidden">
         {/* Book cover image/placeholder */}
         <div className="relative h-full w-28 bg-muted">
-          {coverUrl ? (
-            <div className="h-full w-full overflow-hidden">
-              <AspectRatio ratio={16 / 25.6} className="h-full">
-                <img 
-                  src={coverUrl} 
-                  alt={title} 
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    target.src = "/placeholders/default-book-cover.png";
-                  }}
-                  className="h-full w-full object-cover" 
-                />
-              </AspectRatio>
-            </div>
-          ) : (
-            <div className="h-full w-full overflow-hidden">
-              <AspectRatio ratio={16 / 25.6} className="h-full">
-                <img 
-                  src="/placeholders/default-book-cover.png" 
-                  alt="Default Book Cover" 
-                  className="h-full w-full object-cover" 
-                />
-              </AspectRatio>
-            </div>
-          )}
+          <div className="h-full w-full overflow-hidden">
+            <AspectRatio ratio={16 / 25.6} className="h-full">
+              <img 
+                src={defaultCoverUrl} 
+                alt={title} 
+                className="h-full w-full object-cover" 
+              />
+            </AspectRatio>
+          </div>
         </div>
         
         {/* Book information */}
-        <div className="flex flex-1 flex-col justify-between p-3 bg-gray-900">
+        <div className="flex flex-1 flex-col justify-between p-3">
           <div>
-            <h3 className="font-medium line-clamp-1">{title}</h3>
+            <h3 className="font-medium line-clamp-1 text-foreground">{title}</h3>
             <div className="mt-1 flex items-center space-x-2">
               <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${statusColor}`}>
                 {status}

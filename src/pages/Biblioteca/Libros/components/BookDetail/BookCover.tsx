@@ -17,7 +17,7 @@ export const BookCover = ({
   onUpdateBook
 }: BookCoverProps) => {
   const [coverUrl, setCoverUrl] = useState(book.imageUrl || "");
-  const defaultCoverUrl = "/placeholders/default-book-cover.png";
+  const defaultCoverUrl = "/placeholders/portada-ejemplo.jpg";
   
   const handleCoverChange = (e: ChangeEvent<HTMLInputElement>) => {
     setCoverUrl(e.target.value);
@@ -27,10 +27,14 @@ export const BookCover = ({
   return (
     <Card className="overflow-hidden relative">
       <div className="aspect-[2/3] w-full relative">
-        <img 
+        <motion.img 
           src={defaultCoverUrl}
           alt={book.titulo || "Portada del libro"}
           className="w-full h-full object-cover"
+          whileHover={{
+            scale: 1.03,
+            transition: { duration: 0.2, ease: "easeOut" }
+          }}
         />
         
         {/* Input para cambiar URL de portada (solo en modo edición) */}
