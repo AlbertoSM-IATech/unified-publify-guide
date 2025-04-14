@@ -32,8 +32,9 @@ export const BookSidebar = ({
         duration: 0.5
       }} 
       whileHover={{
-        boxShadow: "0 10px 25px -5px rgba(251, 146, 60, 0.15), 0 8px 10px -6px rgba(251, 146, 60, 0.15)",
-        borderColor: "rgba(251, 146, 60, 0.3)"
+        boxShadow: "0 10px 25px -5px rgba(251, 146, 60, 0.2), 0 8px 10px -6px rgba(251, 146, 60, 0.2)",
+        borderColor: "rgba(251, 146, 60, 0.4)",
+        y: -5
       }} 
       className="transition-all duration-300"
     >

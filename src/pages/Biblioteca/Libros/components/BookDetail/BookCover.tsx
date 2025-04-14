@@ -1,127 +1,51 @@
 
-import { useEffect, useState } from "react";
-import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { Card } from "@/components/ui/card";
 import { Book } from "../../types/bookTypes";
-import { BookOpen, Upload, UploadCloud } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { toast } from "@/hooks/use-toast";
+import { Input } from "@/components/ui/input";
+import { ChangeEvent, useState } from "react";
 import { motion } from "framer-motion";
 
 interface BookCoverProps {
   book: Book;
   isEditing: boolean;
-  onUpdateBook?: (updatedData: Partial<Book>) => void;
+  onUpdateBook: (updatedData: Partial<Book>) => void;
 }
 
-export const BookCover = ({ book, isEditing, onUpdateBook }: BookCoverProps) => {
-  const [coverPreview, setCoverPreview] = useState<string | null>(book.imageUrl || null);
+export const BookCover = ({
+  book,
+  isEditing,
+  onUpdateBook
+}: BookCoverProps) => {
+  const [coverUrl, setCoverUrl] = useState(book.imageUrl || "");
+  const defaultCoverUrl = "/placeholders/default-book-cover.png";
   
-  // Update preview when book changes
-  useEffect(() => {
-    setCoverPreview(book.imageUrl || null);
-  }, [book.imageUrl]);
-  
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    
-    if (!file) {
-      return;
-    }
-    
-    // Check file size (max 5MB)
-    if (file.size > 5 * 1024 * 1024) {
-      toast({
-        title: "Archivo demasiado grande",
-        description: "La imagen no debe superar los 5MB.",
-        variant: "destructive",
-      });
-      return;
-    }
-    
-    // Check file type
-    if (!file.type.startsWith('image/')) {
-      toast({
-        title: "Formato no válido",
-        description: "Por favor, sube únicamente archivos de imagen (jpg, png, etc.)",
-        variant: "destructive",
-      });
-      return;
-    }
-    
-    // Create a preview URL
-    const reader = new FileReader();
-    reader.onload = () => {
-      const result = reader.result as string;
-      setCoverPreview(result);
-      
-      // In a real app, we would upload the file to a server and get a URL back
-      // For now, we'll just use the data URL as the imageUrl
-      if (onUpdateBook) {
-        onUpdateBook({ imageUrl: result });
-      }
-    };
-    reader.readAsDataURL(file);
+  const handleCoverChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setCoverUrl(e.target.value);
+    onUpdateBook({ imageUrl: e.target.value });
   };
   
   return (
-    <motion.div 
-      className="relative overflow-hidden bg-muted"
-      whileHover={{ 
-        boxShadow: "0 0 15px rgba(251, 146, 60, 0.5), 0 0 20px rgba(251, 146, 60, 0.3)"
-      }}
-      transition={{ duration: 0.3 }}
-    >
-      {/* Using the proper book cover aspect ratio of 1600:2560 */}
-      <AspectRatio ratio={1600/2560} className="w-full">
-        {coverPreview ? (
-          <motion.img 
-            src={coverPreview} 
-            alt={book.titulo} 
-            onError={(e) => {
-              const target = e.target as HTMLImageElement;
-              target.src = "/placeholders/default-book-cover.png";
-            }}
-            className="h-full w-full object-cover"
-            whileHover={{ scale: 1.05 }}
-            transition={{ duration: 0.5 }}
-          />
-        ) : (
-          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-[#FB923C]/10 to-[#3B82F6]/10 p-6">
-            <img 
-              src="/placeholders/default-book-cover.png" 
-              alt="Default Book Cover" 
-              className="h-full w-full object-cover" 
+    <Card className="overflow-hidden relative">
+      <div className="aspect-[2/3] w-full relative">
+        <img 
+          src={defaultCoverUrl}
+          alt={book.titulo || "Portada del libro"}
+          className="w-full h-full object-cover"
+        />
+        
+        {/* Input para cambiar URL de portada (solo en modo edición) */}
+        {isEditing && (
+          <div className="absolute inset-0 bg-black/60 flex items-center justify-center p-4">
+            <Input
+              type="text"
+              placeholder="URL de la portada"
+              value={coverUrl}
+              onChange={handleCoverChange}
+              className="bg-white/90 text-black"
             />
           </div>
         )}
-        
-        {isEditing && (
-          <div className="absolute inset-0 flex items-center justify-center bg-black/70 opacity-0 hover:opacity-100 transition-opacity duration-300">
-            <label htmlFor="cover-upload" className="cursor-pointer">
-              <div className="flex flex-col items-center space-y-3 rounded-md bg-background/20 p-6 text-white backdrop-blur-md">
-                <UploadCloud className="h-12 w-12 text-[#FB923C]" />
-                <span className="text-lg font-medium">Subir Portada</span>
-                <span className="text-sm text-muted-foreground">JPG, PNG (Max. 5MB)</span>
-                <Button 
-                  variant="outline" 
-                  size="lg" 
-                  className="mt-2 w-full border-[#FB923C] text-[#FB923C] hover:bg-[#FB923C]/10"
-                >
-                  <Upload className="mr-2 h-4 w-4" />
-                  Seleccionar Archivo
-                </Button>
-              </div>
-              <input 
-                id="cover-upload" 
-                type="file" 
-                accept="image/*" 
-                className="hidden" 
-                onChange={handleFileChange}
-              />
-            </label>
-          </div>
-        )}
-      </AspectRatio>
-    </motion.div>
+      </div>
+    </Card>
   );
 };
