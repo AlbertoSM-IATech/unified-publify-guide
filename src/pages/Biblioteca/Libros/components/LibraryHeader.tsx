@@ -17,7 +17,7 @@ export const LibraryHeader = ({
     ease: "easeOut"
   }}>
       <div>
-        <h1 className="font-heading text-2xl font-bold bg-clip-text bg-gradient-to-r from-primary to-[#FB923C] text-white md:text-3xl">
+        <h1 className="font-heading text-2xl font-bold bg-clip-text bg-gradient-to-r from-primary to-[#FB923C] text-inherit md:text-3xl">
           Biblioteca
         </h1>
         <p className="mt-1 text-muted-foreground">Gestiona tus libros y colecciones</p>
