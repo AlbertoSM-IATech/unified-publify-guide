@@ -40,8 +40,8 @@ const BookCard = ({
   
   const statusColor = getStatusColor(status);
   
-  // Use the provided cover URL or default to the Amazon KDP placeholder
-  const defaultCoverUrl = "https://edit.org/images/cat/portadas-libros-big-2019101610.jpg";
+  // Use the provided cover URL or default to local placeholder image
+  const defaultCoverUrl = "/placeholders/default-book-cover.png";
   const displayCoverUrl = coverUrl || defaultCoverUrl;
   
   return (

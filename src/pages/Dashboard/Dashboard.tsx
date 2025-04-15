@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import StatsCard from "@/components/dashboard/StatsCard";
@@ -287,7 +286,7 @@ export const Dashboard = () => {
                 author={libro.autor} 
                 contentLevel={libro.contenido} 
                 status={libro.estado} 
-                coverUrl={libro.imageUrl || "https://edit.org/images/cat/portadas-libros-big-2019101610.jpg"} 
+                coverUrl={libro.imageUrl || "/placeholders/default-book-cover.png"} 
                 id={libro.id}
               />
             ))}

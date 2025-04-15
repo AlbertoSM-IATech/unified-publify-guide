@@ -25,7 +25,7 @@ export const BookCover = ({
   const { user } = useAuth();
   
   // Always use the default cover as fallback
-  const defaultCoverUrl = "/placeholders/portada-ejemplo.jpg";
+  const defaultCoverUrl = "/placeholders/default-book-cover.png";
   
   const handleCoverChange = (e: ChangeEvent<HTMLInputElement>) => {
     setCoverUrl(e.target.value);

@@ -3,13 +3,22 @@ import { useState, useEffect } from "react";
 
 export const useViewMode = (defaultMode: "grid" | "list" = "grid") => {
   const [viewMode, setViewMode] = useState<"grid" | "list">(() => {
-    const savedMode = localStorage.getItem("coleccionViewMode");
-    return (savedMode === "list" || savedMode === "grid") ? savedMode : defaultMode;
+    try {
+      const savedMode = localStorage.getItem("coleccionViewMode");
+      return (savedMode === "list" || savedMode === "grid") ? savedMode : defaultMode;
+    } catch (e) {
+      console.error("Error accessing localStorage for viewMode:", e);
+      return defaultMode;
+    }
   });
   
   // Persist view mode in localStorage
   useEffect(() => {
-    localStorage.setItem("coleccionViewMode", viewMode);
+    try {
+      localStorage.setItem("coleccionViewMode", viewMode);
+    } catch (e) {
+      console.error("Error saving viewMode to localStorage:", e);
+    }
   }, [viewMode]);
   
   return [viewMode, setViewMode] as const;

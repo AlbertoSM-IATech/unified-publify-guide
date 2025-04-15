@@ -7,6 +7,7 @@ import { CreateCollectionDialog } from "./components/CreateCollectionDialog";
 import { filterObjectsBySearchQuery } from "@/utils/dataUtils";
 import { useCollections } from "./hooks/useCollections";
 import { useViewMode } from "./hooks/useViewMode";
+import { Collection } from "./types/collectionTypes";
 
 const ColeccionesList = () => {
   const [viewMode, setViewMode] = useViewMode("grid");
@@ -22,7 +23,7 @@ const ColeccionesList = () => {
   } = useCollections();
 
   // Filtrar colecciones por búsqueda
-  const filteredColecciones = filterObjectsBySearchQuery(
+  const filteredColecciones = filterObjectsBySearchQuery<Collection>(
     colecciones,
     searchQuery,
     ["nombre", "descripcion"]
