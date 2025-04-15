@@ -279,16 +279,16 @@ export const Dashboard = () => {
             {libros.sort((a, b) => {
               return b.id - a.id;
             }).slice(0, 6).map((libro, index) => (
-              <Link to={`/biblioteca/libros/${libro.id}`} key={libro.id}>
-                <BookCard 
-                  index={index + 1} 
-                  title={libro.titulo} 
-                  author={libro.autor} 
-                  contentLevel={libro.contenido} 
-                  status={libro.estado} 
-                  coverUrl="/placeholders/default-book-cover.png" 
-                />
-              </Link>
+              <BookCard 
+                key={libro.id}
+                index={index + 1} 
+                title={libro.titulo} 
+                author={libro.autor} 
+                contentLevel={libro.contenido} 
+                status={libro.estado} 
+                coverUrl={libro.portada || "https://edit.org/images/cat/portadas-libros-big-2019101610.jpg"} 
+                id={libro.id}
+              />
             ))}
           </div>
         </CardContent>

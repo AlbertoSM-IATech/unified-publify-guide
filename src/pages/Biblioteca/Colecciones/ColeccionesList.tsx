@@ -21,7 +21,7 @@ const ColeccionesList = () => {
   });
   
   const [searchQuery, setSearchQuery] = useState("");
-  const [colecciones, setColecciones] = useSyncedData<Collection[]>([], "coleccionesData");
+  const [colecciones, setColecciones] = useSyncedData<Collection[]>([] as Collection[], "coleccionesData");
   const [isCreatingCollection, setIsCreatingCollection] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
@@ -44,13 +44,13 @@ const ColeccionesList = () => {
         // If we get collections from Supabase, use them
         if (supabaseCollections && supabaseCollections.length > 0) {
           console.log("Collections loaded from Supabase:", supabaseCollections);
-          setColecciones(supabaseCollections);
+          setColecciones(supabaseCollections as Collection[]);
         } else {
           console.log("No collections found in Supabase, using mock data");
           // Check localStorage first
           const storedCollections = localStorage.getItem('coleccionesData');
           if (storedCollections) {
-            setColecciones(JSON.parse(storedCollections));
+            setColecciones(JSON.parse(storedCollections) as Collection[]);
           } else {
             setColecciones(coleccionesSimuladas);
             // Save mock data to localStorage for persistence
@@ -64,7 +64,7 @@ const ColeccionesList = () => {
         // Fallback to localStorage and then to mock data
         const storedCollections = localStorage.getItem('coleccionesData');
         if (storedCollections) {
-          setColecciones(JSON.parse(storedCollections));
+          setColecciones(JSON.parse(storedCollections) as Collection[]);
         } else {
           setColecciones(coleccionesSimuladas);
           localStorage.setItem('coleccionesData', JSON.stringify(coleccionesSimuladas));
@@ -121,7 +121,7 @@ const ColeccionesList = () => {
       let collectionToAdd = newCol;
       if (createdCollection) {
         console.log("Collection created in Supabase:", createdCollection);
-        collectionToAdd = createdCollection;
+        collectionToAdd = createdCollection as Collection;
       }
       
       // Update local state
