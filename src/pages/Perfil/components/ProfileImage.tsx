@@ -43,8 +43,9 @@ export const ProfileImage = ({ initialImage, onImageChange }: ProfileImageProps)
                 await supabaseService.profile.updateAvatar(user.id, image || '');
                 
                 // Update local user context
+                // Fix: Use avatarUrl instead of avatar to match User type
                 updateUser({
-                  avatar: image
+                  avatarUrl: image
                 });
                 
                 // Notify parent component
