@@ -286,7 +286,7 @@ export const Dashboard = () => {
                 author={libro.autor} 
                 contentLevel={libro.contenido} 
                 status={libro.estado} 
-                coverUrl={libro.portada || "https://edit.org/images/cat/portadas-libros-big-2019101610.jpg"} 
+                coverUrl={libro.imagen || "https://edit.org/images/cat/portadas-libros-big-2019101610.jpg"} 
                 id={libro.id}
               />
             ))}
