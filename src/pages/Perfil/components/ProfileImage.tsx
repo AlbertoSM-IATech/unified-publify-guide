@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { User, Upload } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { supabaseService } from "@/services/supabase";
+import { supabaseService } from "@/services/supabase"; // This import will work with our new structure
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
 

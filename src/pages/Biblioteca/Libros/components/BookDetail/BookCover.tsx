@@ -4,7 +4,7 @@ import { Book } from "../../types/bookTypes";
 import { Input } from "@/components/ui/input";
 import { ChangeEvent, useState } from "react";
 import { motion } from "framer-motion";
-import { supabaseService } from "@/services/supabase";
+import { supabaseService } from "@/services/supabase"; // This import will work with our new structure
 import { toast } from "@/hooks/use-toast";
 import { Upload } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";

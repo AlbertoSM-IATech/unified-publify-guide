@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from "react";
 import { Collection } from "../types/collectionTypes";
-import { supabaseService } from "@/services/supabase";
+import { supabaseService } from "@/services/supabase"; // This import will work with our new structure
 import { coleccionesSimuladas } from "../utils/collectionsUtils";
 import { useSyncedData } from "@/hooks/useSyncedData";
 import { toast } from "@/hooks/use-toast";

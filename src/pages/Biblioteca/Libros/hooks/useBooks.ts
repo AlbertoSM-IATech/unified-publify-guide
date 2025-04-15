@@ -3,7 +3,7 @@ import { useState, useCallback, useEffect } from "react";
 import { Book } from "../types/bookTypes";
 import { useSyncedData } from "@/hooks/useSyncedData";
 import { toast } from "@/hooks/use-toast";
-import { supabaseService } from "@/services/supabase";
+import { supabaseService } from "@/services/supabase"; // This import will work with our new structure
 import { librosSimulados } from "../utils/mockData/librosData";
 
 export const useBooks = () => {
