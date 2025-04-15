@@ -15,8 +15,8 @@ interface BookListItemProps {
 export const BookListItem = memo(({ libro, getStatusColor, getContentColor }: BookListItemProps) => {
   const netRoyalties = calculateNetRoyalties(libro.hardcover || libro.paperback || libro.ebook).replace('.', ',');
   
-  // Use the image URL from the book if available, otherwise use the default cover
-  const coverUrl = libro.imageUrl || "/placeholders/portada-ejemplo.jpg";
+  // Use the image URL from the book if available, otherwise use the Amazon KDP placeholder
+  const coverUrl = libro.imageUrl || "https://edit.org/images/cat/portadas-libros-big-2019101610.jpg";
 
   return (
     <motion.tr 
@@ -24,6 +24,7 @@ export const BookListItem = memo(({ libro, getStatusColor, getContentColor }: Bo
       whileHover={{
         backgroundColor: "rgba(251, 146, 60, 0.05)",
         boxShadow: "0 4px 12px -2px rgba(251, 146, 60, 0.15)",
+        borderColor: "rgba(251, 146, 60, 0.5)",
         transition: { duration: 0.2, ease: "easeOut" }
       }}
     >
@@ -37,6 +38,10 @@ export const BookListItem = memo(({ libro, getStatusColor, getContentColor }: Bo
               loading="lazy"
               width={32}
               height={48}
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.src = "https://edit.org/images/cat/portadas-libros-big-2019101610.jpg";
+              }}
             />
           </div>
           <div>

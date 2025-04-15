@@ -11,11 +11,23 @@ const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'your-supabase-ano
 // Create the Supabase client
 export const supabase: SupabaseClient = createClient(supabaseUrl, supabaseKey);
 
+// Helper to determine if we can connect to Supabase
+const canConnectToSupabase = (): boolean => {
+  return supabaseUrl !== 'https://your-supabase-url.supabase.co' && 
+         supabaseKey !== 'your-supabase-anon-key';
+}
+
 // Enhanced Supabase service with better error handling and data synchronization
 export const supabaseService = {
   // Generic function to get data from any table with optional query parameters
   getData: async <T>(tableName: string, queryParams?: any): Promise<T[]> => {
     try {
+      // Check if we can connect to Supabase
+      if (!canConnectToSupabase()) {
+        console.log(`Using mock data for ${tableName} (Supabase not configured)`);
+        throw new Error("Supabase not configured");
+      }
+      
       console.log(`Fetching data from ${tableName}`, queryParams);
       let query = supabase.from(tableName).select('*');
       
@@ -45,11 +57,6 @@ export const supabaseService = {
       return data as T[];
     } catch (error) {
       console.error(`Error in getData(${tableName}):`, error);
-      toast({
-        title: "Error al cargar datos",
-        description: `No se pudieron cargar los datos de ${tableName}`,
-        variant: "destructive",
-      });
       // Return empty array instead of throwing to prevent UI breaks
       return [];
     }
@@ -58,6 +65,12 @@ export const supabaseService = {
   // Get a single item by ID
   getById: async <T>(tableName: string, id: number | string): Promise<T | null> => {
     try {
+      // Check if we can connect to Supabase
+      if (!canConnectToSupabase()) {
+        console.log(`Using mock data for ${tableName} ID ${id} (Supabase not configured)`);
+        throw new Error("Supabase not configured");
+      }
+      
       console.log(`Fetching ${tableName} with ID ${id}`);
       const { data, error } = await supabase
         .from(tableName)
@@ -76,11 +89,6 @@ export const supabaseService = {
       return data as T;
     } catch (error) {
       console.error(`Error in getById(${tableName}, ${id}):`, error);
-      toast({
-        title: "Error al cargar datos",
-        description: `No se pudo cargar el elemento con ID ${id}`,
-        variant: "destructive",
-      });
       return null;
     }
   },
@@ -88,6 +96,12 @@ export const supabaseService = {
   // Create a new item
   create: async <T>(tableName: string, data: any): Promise<T | null> => {
     try {
+      // Check if we can connect to Supabase
+      if (!canConnectToSupabase()) {
+        console.log(`Using local storage for ${tableName} (Supabase not configured)`);
+        throw new Error("Supabase not configured");
+      }
+      
       console.log(`Creating new record in ${tableName}`, data);
       const { data: createdData, error } = await supabase
         .from(tableName)
@@ -107,11 +121,6 @@ export const supabaseService = {
       return createdData as T;
     } catch (error) {
       console.error(`Error in create(${tableName}):`, error);
-      toast({
-        title: "Error al crear",
-        description: `No se pudo crear el registro en ${tableName}`,
-        variant: "destructive",
-      });
       return null;
     }
   },
@@ -119,6 +128,12 @@ export const supabaseService = {
   // Update an existing item
   update: async <T>(tableName: string, id: number | string, data: any): Promise<T | null> => {
     try {
+      // Check if we can connect to Supabase
+      if (!canConnectToSupabase()) {
+        console.log(`Using local storage for ${tableName} (Supabase not configured)`);
+        throw new Error("Supabase not configured");
+      }
+      
       console.log(`Updating record ${id} in ${tableName}`, data);
       const { data: updatedData, error } = await supabase
         .from(tableName)
@@ -139,11 +154,6 @@ export const supabaseService = {
       return updatedData as T;
     } catch (error) {
       console.error(`Error in update(${tableName}, ${id}):`, error);
-      toast({
-        title: "Error al actualizar",
-        description: `No se pudo actualizar el registro en ${tableName}`,
-        variant: "destructive",
-      });
       return null;
     }
   },
@@ -151,6 +161,12 @@ export const supabaseService = {
   // Delete an item
   delete: async (tableName: string, id: number | string): Promise<boolean> => {
     try {
+      // Check if we can connect to Supabase
+      if (!canConnectToSupabase()) {
+        console.log(`Using local storage for ${tableName} (Supabase not configured)`);
+        throw new Error("Supabase not configured");
+      }
+      
       console.log(`Deleting record ${id} from ${tableName}`);
       const { error } = await supabase
         .from(tableName)
@@ -169,11 +185,6 @@ export const supabaseService = {
       return true;
     } catch (error) {
       console.error(`Error in delete(${tableName}, ${id}):`, error);
-      toast({
-        title: "Error al eliminar",
-        description: `No se pudo eliminar el registro de ${tableName}`,
-        variant: "destructive",
-      });
       return false;
     }
   },
@@ -181,23 +192,174 @@ export const supabaseService = {
   // Specific methods for books
   books: {
     getAll: async (): Promise<Book[]> => {
+      if (!canConnectToSupabase()) {
+        // Return from localStorage if available
+        const storedBooks = localStorage.getItem('librosData');
+        if (storedBooks) {
+          return JSON.parse(storedBooks);
+        }
+        
+        // Mock data as a fallback
+        const { librosSimulados } = await import('@/pages/Biblioteca/Libros/utils/mockData/librosData');
+        return librosSimulados;
+      }
+      
       return supabaseService.getData<Book>('libros');
     },
     
     getById: async (id: number): Promise<Book | null> => {
+      if (!canConnectToSupabase()) {
+        // Return from localStorage if available
+        const storedBooks = localStorage.getItem('librosData');
+        if (storedBooks) {
+          const books = JSON.parse(storedBooks) as Book[];
+          return books.find(book => book.id === id) || null;
+        }
+        
+        // Mock data as a fallback
+        const { librosSimulados } = await import('@/pages/Biblioteca/Libros/utils/mockData/librosData');
+        return librosSimulados.find(book => book.id === id) || null;
+      }
+      
       return supabaseService.getById<Book>('libros', id);
     },
     
     create: async (book: Omit<Book, 'id'>): Promise<Book | null> => {
+      if (!canConnectToSupabase()) {
+        // Use localStorage
+        const storedBooks = localStorage.getItem('librosData');
+        let books: Book[] = [];
+        
+        if (storedBooks) {
+          books = JSON.parse(storedBooks);
+        } else {
+          // Get mock data if there are no stored books
+          const { librosSimulados } = await import('@/pages/Biblioteca/Libros/utils/mockData/librosData');
+          books = librosSimulados;
+        }
+        
+        // Generate a new ID
+        const newId = Math.max(0, ...books.map(b => b.id)) + 1;
+        const newBook = { ...book, id: newId } as Book;
+        
+        // Add to books array
+        books.push(newBook);
+        
+        // Save to localStorage
+        localStorage.setItem('librosData', JSON.stringify(books));
+        
+        return newBook;
+      }
+      
       return supabaseService.create<Book>('libros', book);
     },
     
     update: async (id: number, bookData: Partial<Book>): Promise<Book | null> => {
+      if (!canConnectToSupabase()) {
+        // Use localStorage
+        const storedBooks = localStorage.getItem('librosData');
+        if (storedBooks) {
+          const books = JSON.parse(storedBooks) as Book[];
+          const index = books.findIndex(book => book.id === id);
+          
+          if (index !== -1) {
+            // Update the book
+            const updatedBook = { ...books[index], ...bookData };
+            books[index] = updatedBook;
+            
+            // Save to localStorage
+            localStorage.setItem('librosData', JSON.stringify(books));
+            
+            return updatedBook;
+          }
+        }
+        return null;
+      }
+      
       return supabaseService.update<Book>('libros', id, bookData);
     },
     
     delete: async (id: number): Promise<boolean> => {
+      if (!canConnectToSupabase()) {
+        // Use localStorage
+        const storedBooks = localStorage.getItem('librosData');
+        if (storedBooks) {
+          const books = JSON.parse(storedBooks) as Book[];
+          const filteredBooks = books.filter(book => book.id !== id);
+          
+          // Save to localStorage
+          localStorage.setItem('librosData', JSON.stringify(filteredBooks));
+          
+          return true;
+        }
+        return false;
+      }
+      
       return supabaseService.delete('libros', id);
+    },
+    
+    // Upload a book cover image
+    uploadCover: async (bookId: number, file: File): Promise<string | null> => {
+      try {
+        // Check if we can connect to Supabase
+        if (!canConnectToSupabase()) {
+          console.log(`Using local storage for book cover image (Supabase not configured)`);
+          
+          // Convert the file to a data URL for localStorage
+          return new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+              if (e.target?.result) {
+                const dataUrl = e.target.result.toString();
+                
+                // Update the book in localStorage
+                const storedBooks = localStorage.getItem('librosData');
+                if (storedBooks) {
+                  const books = JSON.parse(storedBooks) as Book[];
+                  const index = books.findIndex(book => book.id === bookId);
+                  
+                  if (index !== -1) {
+                    books[index].imageUrl = dataUrl;
+                    localStorage.setItem('librosData', JSON.stringify(books));
+                  }
+                }
+                
+                resolve(dataUrl);
+              } else {
+                resolve(null);
+              }
+            };
+            reader.readAsDataURL(file);
+          });
+        }
+        
+        // Upload to Supabase Storage
+        const filePath = `book_covers/${bookId}/${file.name}`;
+        const { data, error } = await supabase.storage
+          .from('books')
+          .upload(filePath, file, {
+            upsert: true,
+          });
+          
+        if (error) {
+          throw new Error(`Error uploading book cover: ${error.message}`);
+        }
+        
+        // Get the public URL
+        const { data: publicUrlData } = supabase.storage
+          .from('books')
+          .getPublicUrl(filePath);
+          
+        const imageUrl = publicUrlData.publicUrl;
+        
+        // Update the book with the new image URL
+        await supabaseService.update('libros', bookId, { imageUrl });
+        
+        return imageUrl;
+      } catch (error) {
+        console.error('Error uploading book cover:', error);
+        return null;
+      }
     }
   },
   

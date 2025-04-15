@@ -12,6 +12,8 @@ import { toast } from "@/hooks/use-toast";
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 import { filterLibros, sortLibros } from "./utils/dataUtils";
 import { supabaseService } from "@/services/supabase";
+import { LoadingState } from "@/components/common/LoadingState";
+import { ErrorState } from "@/components/common/ErrorState";
 
 export const LibrosList = () => {
   // Retrieve view mode from localStorage or default to "grid"
@@ -27,9 +29,10 @@ export const LibrosList = () => {
   const [sortOrder, setSortOrder] = useState("");
   
   // Use the synced data hook to keep the books data in sync across the app
-  const [libros, setLibros] = useSyncedData<Book[]>(librosSimulados, "librosData");
+  const [libros, setLibros] = useSyncedData<Book[]>([], "librosData");
   const [isCreatingBook, setIsCreatingBook] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
   
   // Add pagination state to improve performance
   const [currentPage, setCurrentPage] = useState(1);
@@ -40,10 +43,12 @@ export const LibrosList = () => {
     localStorage.setItem("libroViewMode", viewMode);
   }, [viewMode]);
   
-  // Load books from Supabase
+  // Load books from Supabase or localStorage
   useEffect(() => {
     const loadBooks = async () => {
       setIsLoading(true);
+      setLoadError(null);
+      
       try {
         // Try to fetch from Supabase
         const supabaseBooks = await supabaseService.books.getAll();
@@ -66,6 +71,8 @@ export const LibrosList = () => {
         }
       } catch (error) {
         console.error("Error loading books:", error);
+        setLoadError("No se pudieron cargar los libros. Usando datos locales.");
+        
         // Fallback to localStorage and then to mock data
         const storedBooks = localStorage.getItem('librosData');
         if (storedBooks) {
@@ -172,6 +179,20 @@ export const LibrosList = () => {
     setCurrentPage(1);
   }, [searchQuery, filterState, filterContent, sortOrder]);
 
+  // Handle retry loading
+  const handleRetryLoading = useCallback(() => {
+    setLoadError(null);
+    setIsLoading(true);
+    // Use setTimeout to avoid infinite loop if error persists
+    setTimeout(() => {
+      // Set libros directly from mock data
+      setLibros(librosSimulados);
+      // Save mock data to localStorage for persistence
+      localStorage.setItem('librosData', JSON.stringify(librosSimulados));
+      setIsLoading(false);
+    }, 500);
+  }, [setLibros]);
+
   return (
     <div className="animate-fade-in">
       <LibraryHeader onCreateBook={handleOpenCreateDialog} />
@@ -191,10 +212,16 @@ export const LibrosList = () => {
 
       {isLoading ? (
         <div className="flex items-center justify-center p-12">
-          <div className="animate-pulse text-lg text-muted-foreground">
-            Cargando libros...
-          </div>
+          <LoadingState text="Cargando libros..." size="lg" />
         </div>
+      ) : loadError ? (
+        <ErrorState 
+          title="Error al cargar datos"
+          message="No se pudieron cargar los datos de libros. Se usarán datos locales."
+          onRetry={handleRetryLoading}
+          fullPage={false}
+          className="my-8"
+        />
       ) : viewMode === "grid" ? (
         <BooksGrid 
           libros={currentItems} 
@@ -210,7 +237,7 @@ export const LibrosList = () => {
       )}
       
       {/* Pagination controls */}
-      {totalPages > 1 && (
+      {!isLoading && !loadError && totalPages > 1 && (
         <Pagination className="my-6">
           <PaginationContent>
             <PaginationItem>

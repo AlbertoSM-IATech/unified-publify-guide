@@ -21,8 +21,8 @@ export const BookGridItem = memo(({
   // Calculate net royalties for display
   const netRoyalties = calculateNetRoyalties(libro.hardcover || libro.paperback || libro.ebook).replace('.', ',');
 
-  // Use the image URL from the book if available, otherwise use the default cover
-  const coverUrl = libro.imageUrl || "/placeholders/portada-ejemplo.jpg";
+  // Use the image URL from the book if available, otherwise use the Amazon KDP placeholder
+  const coverUrl = libro.imageUrl || "https://edit.org/images/cat/portadas-libros-big-2019101610.jpg";
   
   return <Link to={`/biblioteca/libros/${libro.id}`} className="block focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-lg h-full">
       <motion.div whileHover={{
@@ -39,7 +39,18 @@ export const BookGridItem = memo(({
           {/* Book cover - Left side with proper aspect ratio */}
           <div className="relative md:w-1/3 w-full flex-shrink-0">
             <div className="aspect-[1600/2560] w-full h-full overflow-hidden bg-muted">
-              <img src={coverUrl} alt={libro.titulo} className="h-full w-full object-cover" loading="lazy" width="160" height="256" />
+              <img 
+                src={coverUrl} 
+                alt={libro.titulo} 
+                className="h-full w-full object-cover" 
+                loading="lazy" 
+                width="160" 
+                height="256"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.src = "https://edit.org/images/cat/portadas-libros-big-2019101610.jpg";
+                }} 
+              />
             </div>
           </div>
 
