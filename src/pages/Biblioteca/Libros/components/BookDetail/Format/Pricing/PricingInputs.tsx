@@ -28,7 +28,7 @@ export const PricingInputs = ({
     if (onUpdateFormat) {
       const updateData: Partial<BookFormat> = {};
       
-      if (field === 'price' || field === 'royaltyPercentage' || field === 'printingCost') {
+      if (field === 'price' || field === 'printingCost') {
         // For decimal inputs, normalize the value
         if (typeof value === 'string') {
           // Handle potential empty strings or invalid inputs
@@ -39,6 +39,24 @@ export const PricingInputs = ({
           }
         } else {
           updateData[field as keyof BookFormat] = value;
+        }
+      } else if (field === 'royaltyPercentage') {
+        // Handle royaltyPercentage as decimal (0-1 range)
+        if (typeof value === 'string') {
+          // First normalize decimal
+          let percentValue = normalizeDecimal(value);
+          
+          // If user entered a percentage (like 70), convert to decimal (0.70)
+          if (percentValue > 1) {
+            percentValue = percentValue / 100;
+          }
+          
+          // Ensure it's between 0 and 1
+          percentValue = Math.min(1, Math.max(0, percentValue));
+          
+          updateData[field] = percentValue;
+        } else {
+          updateData[field] = value;
         }
       } else {
         updateData[field as keyof BookFormat] = value;
@@ -52,6 +70,13 @@ export const PricingInputs = ({
   const formatDisplayValue = (value: number | undefined): string => {
     if (value === undefined) return "";
     return value.toString().replace('.', ',');
+  };
+  
+  // Format percentage for display
+  const formatRoyaltyPercentage = (value: number | undefined): string => {
+    if (value === undefined) return "";
+    // Convert decimal to percentage (e.g., 0.7 to 70)
+    return (value * 100).toString();
   };
 
   return (
@@ -82,10 +107,12 @@ export const PricingInputs = ({
             <Input 
               id={`${formatType}-royalty`} 
               type="text" 
-              defaultValue={format.royaltyPercentage ? format.royaltyPercentage : ""} 
-              placeholder="Ej. 0,70" 
+              defaultValue={formatRoyaltyPercentage(format.royaltyPercentage)} 
+              placeholder="Ej. 70" 
               onChange={e => handleInputChange('royaltyPercentage', e.target.value)}
+              className="mr-2"
             />
+            <span className="text-sm text-muted-foreground">%</span>
           </div>
         ) : (
           <div className="border rounded-md p-2 bg-card shadow-sm text-sm">

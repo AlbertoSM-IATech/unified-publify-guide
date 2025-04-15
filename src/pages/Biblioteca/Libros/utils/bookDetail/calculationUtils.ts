@@ -11,20 +11,26 @@ import { BookFormat } from "../../types/bookTypes";
  * @returns The calculated net royalties as a string with 2 decimal places, or "0.00" if no valid format
  */
 export const calculateNetRoyalties = (format?: BookFormat): string => {
-  if (!format || !format.price || !format.royaltyPercentage) {
+  if (!format || !format.price) {
     return "0.00";
   }
 
-  // Calculate royalty amount
-  const royaltyAmount = format.price * (format.royaltyPercentage / 100);
+  // Get values with fallbacks
+  const price = format.price || 0;
+  const royaltyPercentage = format.royaltyPercentage || 0;
+  const printingCost = format.printingCost || 0;
+
+  // Calculate royalty amount: price × royalty percentage
+  const royaltyAmount = price * royaltyPercentage;
   
-  // If there's a printing cost, subtract it
-  const netRoyalty = format.printingCost 
-    ? royaltyAmount - format.printingCost
-    : royaltyAmount;
+  // Calculate net royalty: royalty amount - printing cost
+  const netRoyalty = royaltyAmount - printingCost;
+  
+  // Ensure we don't return negative values
+  const finalRoyalty = Math.max(0, netRoyalty);
 
   // Format to 2 decimal places
-  return netRoyalty.toFixed(2);
+  return finalRoyalty.toFixed(2);
 };
 
 /**
@@ -51,7 +57,7 @@ export const calculateProfitMargin = (format?: BookFormat): number => {
     return 0;
   }
 
-  const royaltyAmount = format.price * (format.royaltyPercentage / 100);
+  const royaltyAmount = format.price * format.royaltyPercentage;
   const cost = format.printingCost || 0;
   
   if (format.price === 0) return 0;

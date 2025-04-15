@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "@/hooks/use-toast";
 import { librosSimulados } from "../../utils/librosUtils";
 import { Book } from "../../types/bookTypes";
+import { supabaseService } from "@/services/supabase";
 
 /**
  * Hook for managing book actions such as save, delete, and navigation
@@ -40,6 +41,18 @@ export const useBookActions = (
       const updatedBook = { ...bookData, ...formData };
       setBookData(updatedBook);
       
+      // Save to Supabase database
+      console.log("Saving book data to Supabase:", updatedBook);
+      
+      // Try to update in Supabase
+      const result = await supabaseService.books.update(bookId, updatedBook);
+      
+      if (result) {
+        console.log("Book updated successfully in Supabase:", result);
+      } else {
+        console.warn("Book update in Supabase returned null, using local update only");
+      }
+      
       // Update in librosSimulados for demo purposes
       const bookIndex = librosSimulados.findIndex(libro => libro.id === bookId);
       if (bookIndex !== -1) {
@@ -48,15 +61,12 @@ export const useBookActions = (
           ...librosSimulados[bookIndex],
           ...updatedBook
         };
+        
+        // Also update localStorage to ensure persistence
+        localStorage.setItem('librosData', JSON.stringify(librosSimulados));
       } else {
         console.warn("Libro no encontrado en los datos simulados para actualizar");
       }
-      
-      // Simulate API call delay
-      await new Promise(resolve => setTimeout(resolve, 500));
-      
-      // In a real app, this would save to an API
-      console.log("Saving book data:", updatedBook);
       
       toast({
         title: "Cambios guardados",
@@ -77,13 +87,23 @@ export const useBookActions = (
 
   const handleDelete = async () => {
     try {
-      // In a real app, this would delete from an API
-      console.log("Deleting book:", bookId);
+      // Delete from Supabase
+      console.log("Deleting book from Supabase:", bookId);
+      const deleted = await supabaseService.books.delete(bookId);
+      
+      if (deleted) {
+        console.log("Book deleted successfully from Supabase");
+      } else {
+        console.warn("Book delete from Supabase failed, proceeding with local delete only");
+      }
       
       // Remove from librosSimulados for demo purposes
       const bookIndex = librosSimulados.findIndex(libro => libro.id === bookId);
       if (bookIndex !== -1) {
         librosSimulados.splice(bookIndex, 1);
+        
+        // Update localStorage to ensure persistence
+        localStorage.setItem('librosData', JSON.stringify(librosSimulados));
         
         toast({
           title: "Libro eliminado",

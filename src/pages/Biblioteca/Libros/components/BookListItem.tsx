@@ -15,8 +15,8 @@ interface BookListItemProps {
 export const BookListItem = memo(({ libro, getStatusColor, getContentColor }: BookListItemProps) => {
   const netRoyalties = calculateNetRoyalties(libro.hardcover || libro.paperback || libro.ebook).replace('.', ',');
   
-  // Always use the default cover
-  const defaultCoverUrl = "/placeholders/portada-ejemplo.jpg";
+  // Use the image URL from the book if available, otherwise use the default cover
+  const coverUrl = libro.imageUrl || "/placeholders/portada-ejemplo.jpg";
 
   return (
     <motion.tr 
@@ -31,7 +31,7 @@ export const BookListItem = memo(({ libro, getStatusColor, getContentColor }: Bo
         <div className="flex items-center space-x-3">
           <div className="h-12 w-8 flex-shrink-0 overflow-hidden rounded-sm">
             <img 
-              src={defaultCoverUrl} 
+              src={coverUrl} 
               alt={libro.titulo} 
               className="h-full w-full object-cover"
               loading="lazy"

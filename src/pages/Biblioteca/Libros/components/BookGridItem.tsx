@@ -1,3 +1,4 @@
+
 import { Link } from "react-router-dom";
 import { Book } from "../types/bookTypes";
 import { Card, CardContent } from "@/components/ui/card";
@@ -5,11 +6,13 @@ import { Eye, Calendar } from "lucide-react";
 import { motion } from "framer-motion";
 import { calculateNetRoyalties } from "../utils/formatUtils";
 import { memo } from 'react';
+
 interface BookGridItemProps {
   libro: Book;
   getStatusColor: (status: string) => string;
   getContentColor: (content: string) => string;
 }
+
 export const BookGridItem = memo(({
   libro,
   getStatusColor,
@@ -18,8 +21,9 @@ export const BookGridItem = memo(({
   // Calculate net royalties for display
   const netRoyalties = calculateNetRoyalties(libro.hardcover || libro.paperback || libro.ebook).replace('.', ',');
 
-  // Always use the default cover
-  const defaultCoverUrl = "/placeholders/portada-ejemplo.jpg";
+  // Use the image URL from the book if available, otherwise use the default cover
+  const coverUrl = libro.imageUrl || "/placeholders/portada-ejemplo.jpg";
+  
   return <Link to={`/biblioteca/libros/${libro.id}`} className="block focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-lg h-full">
       <motion.div whileHover={{
       y: -5,
@@ -35,7 +39,7 @@ export const BookGridItem = memo(({
           {/* Book cover - Left side with proper aspect ratio */}
           <div className="relative md:w-1/3 w-full flex-shrink-0">
             <div className="aspect-[1600/2560] w-full h-full overflow-hidden bg-muted">
-              <img src={defaultCoverUrl} alt={libro.titulo} className="h-full w-full object-cover" loading="lazy" width="160" height="256" />
+              <img src={coverUrl} alt={libro.titulo} className="h-full w-full object-cover" loading="lazy" width="160" height="256" />
             </div>
           </div>
 
@@ -75,6 +79,11 @@ export const BookGridItem = memo(({
               </div>
             </div>
 
+            {/* Net royalties display */}
+            <div className="mt-1 text-sm text-green-500 font-medium">
+              {netRoyalties}€
+            </div>
+
             {/* "View details" text - Slightly reduced vertical margins */}
             <div className="mt-2 flex items-center justify-end text-primary">
               <div className="flex items-center font-medium text-xs">
@@ -87,4 +96,5 @@ export const BookGridItem = memo(({
       </motion.div>
     </Link>;
 });
+
 BookGridItem.displayName = 'BookGridItem';

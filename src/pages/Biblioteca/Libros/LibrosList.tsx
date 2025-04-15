@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useMemo, useCallback } from "react";
 import { BooksToolbar } from "./components/BooksToolbar";
 import { BooksGrid } from "./components/BooksGrid";
@@ -11,6 +10,8 @@ import { Book } from "./types/bookTypes";
 import { useSyncedData } from "@/hooks/useSyncedData";
 import { toast } from "@/hooks/use-toast";
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
+import { filterLibros, sortLibros } from "./utils/dataUtils";
+import { supabaseService } from "@/services/supabase";
 
 export const LibrosList = () => {
   // Retrieve view mode from localStorage or default to "grid"
@@ -19,10 +20,16 @@ export const LibrosList = () => {
     return (savedMode === "list" || savedMode === "grid") ? savedMode : "grid";
   });
   
+  // Search, filter, and sort state
   const [searchQuery, setSearchQuery] = useState("");
+  const [filterState, setFilterState] = useState("");
+  const [filterContent, setFilterContent] = useState("");
+  const [sortOrder, setSortOrder] = useState("");
+  
   // Use the synced data hook to keep the books data in sync across the app
   const [libros, setLibros] = useSyncedData<Book[]>(librosSimulados, "librosData");
   const [isCreatingBook, setIsCreatingBook] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   
   // Add pagination state to improve performance
   const [currentPage, setCurrentPage] = useState(1);
@@ -32,17 +39,72 @@ export const LibrosList = () => {
   useEffect(() => {
     localStorage.setItem("libroViewMode", viewMode);
   }, [viewMode]);
+  
+  // Load books from Supabase
+  useEffect(() => {
+    const loadBooks = async () => {
+      setIsLoading(true);
+      try {
+        // Try to fetch from Supabase
+        const supabaseBooks = await supabaseService.books.getAll();
+        
+        // If we get books from Supabase, use them
+        if (supabaseBooks && supabaseBooks.length > 0) {
+          console.log("Books loaded from Supabase:", supabaseBooks);
+          setLibros(supabaseBooks);
+        } else {
+          console.log("No books found in Supabase, using mock data");
+          // Check localStorage first
+          const storedBooks = localStorage.getItem('librosData');
+          if (storedBooks) {
+            setLibros(JSON.parse(storedBooks));
+          } else {
+            setLibros(librosSimulados);
+            // Save mock data to localStorage for persistence
+            localStorage.setItem('librosData', JSON.stringify(librosSimulados));
+          }
+        }
+      } catch (error) {
+        console.error("Error loading books:", error);
+        // Fallback to localStorage and then to mock data
+        const storedBooks = localStorage.getItem('librosData');
+        if (storedBooks) {
+          setLibros(JSON.parse(storedBooks));
+        } else {
+          setLibros(librosSimulados);
+          localStorage.setItem('librosData', JSON.stringify(librosSimulados));
+        }
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    
+    loadBooks();
+  }, [setLibros]);
 
   // Memoize the filtered books to prevent unnecessary recalculations
   const filteredLibros = useMemo(() => {
-    return libros.filter(
-      (libro) =>
-        libro.titulo.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        libro.autor.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        (libro.isbn && libro.isbn.includes(searchQuery)) ||
-        (libro.asin && libro.asin.includes(searchQuery))
-    );
-  }, [libros, searchQuery]);
+    // First apply text search filter
+    let result = filterLibros(libros, searchQuery);
+    
+    // Then apply state filter if set
+    if (filterState) {
+      result = result.filter(libro => libro.estado === filterState);
+    }
+    
+    // Then apply content filter if set
+    if (filterContent) {
+      result = result.filter(libro => libro.contenido === filterContent);
+    }
+    
+    // Finally, apply sorting
+    if (sortOrder) {
+      const [field, direction] = sortOrder.split('_');
+      result = sortLibros(result, field, direction);
+    }
+    
+    return result;
+  }, [libros, searchQuery, filterState, filterContent, sortOrder]);
   
   // Calculate total pages
   const totalPages = useMemo(() => Math.ceil(filteredLibros.length / itemsPerPage), [filteredLibros, itemsPerPage]);
@@ -62,15 +124,40 @@ export const LibrosList = () => {
     setIsCreatingBook(false);
   }, []);
 
-  const handleCreateBook = useCallback((newBook: Book) => {
-    // Fix: Pass the new array directly instead of a function
-    const updatedBooks = [...libros, newBook];
-    setLibros(updatedBooks);
-    
-    toast({
-      title: "Libro creado",
-      description: `El libro "${newBook.titulo}" ha sido creado con éxito.`
-    });
+  const handleCreateBook = useCallback(async (newBook: Book) => {
+    try {
+      // Try to create in Supabase
+      const createdBook = await supabaseService.books.create(newBook);
+      
+      let bookToAdd = newBook;
+      if (createdBook) {
+        console.log("Book created in Supabase:", createdBook);
+        bookToAdd = createdBook;
+      }
+      
+      // Update local state
+      const updatedBooks = [...libros, bookToAdd];
+      setLibros(updatedBooks);
+      
+      // Update localStorage for persistence
+      localStorage.setItem('librosData', JSON.stringify(updatedBooks));
+      
+      toast({
+        title: "Libro creado",
+        description: `El libro "${newBook.titulo}" ha sido creado con éxito.`
+      });
+    } catch (error) {
+      console.error("Error creating book:", error);
+      // Still update local state even if Supabase fails
+      const updatedBooks = [...libros, newBook];
+      setLibros(updatedBooks);
+      localStorage.setItem('librosData', JSON.stringify(updatedBooks));
+      
+      toast({
+        title: "Libro creado (modo local)",
+        description: `El libro "${newBook.titulo}" ha sido creado localmente.`
+      });
+    }
   }, [libros, setLibros]);
   
   // Handle page change
@@ -80,10 +167,10 @@ export const LibrosList = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
 
-  // Reset to first page when search query changes
+  // Reset to first page when search query or filters change
   useEffect(() => {
     setCurrentPage(1);
-  }, [searchQuery]);
+  }, [searchQuery, filterState, filterContent, sortOrder]);
 
   return (
     <div className="animate-fade-in">
@@ -94,9 +181,21 @@ export const LibrosList = () => {
         setSearchQuery={setSearchQuery}
         viewMode={viewMode}
         setViewMode={setViewMode}
+        sortOrder={sortOrder}
+        setSortOrder={setSortOrder}
+        filterState={filterState}
+        setFilterState={setFilterState}
+        filterContent={filterContent}
+        setFilterContent={setFilterContent}
       />
 
-      {viewMode === "grid" ? (
+      {isLoading ? (
+        <div className="flex items-center justify-center p-12">
+          <div className="animate-pulse text-lg text-muted-foreground">
+            Cargando libros...
+          </div>
+        </div>
+      ) : viewMode === "grid" ? (
         <BooksGrid 
           libros={currentItems} 
           getStatusColor={getStatusColor} 
