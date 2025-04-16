@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { Book } from "../types/bookTypes";
 import { Card, CardContent } from "@/components/ui/card";
@@ -8,13 +7,11 @@ import { memo } from 'react';
 
 // Default book cover image
 const DEFAULT_COVER_URL = "https://edit.org/images/cat/portadas-libros-big-2019101610.jpg";
-
 interface BookGridItemProps {
   libro: Book;
   getStatusColor: (status: string) => string;
   getContentColor: (content: string) => string;
 }
-
 export const BookGridItem = memo(({
   libro,
   getStatusColor,
@@ -22,22 +19,13 @@ export const BookGridItem = memo(({
 }: BookGridItemProps) => {
   // Calculate net royalties for display
   const netRoyalties = calculateNetRoyalties(libro.hardcover || libro.paperback || libro.ebook).replace('.', ',');
-  
-  return (
-    <Link to={`/biblioteca/libros/${libro.id}`} className="block focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-lg h-full">
+  return <Link to={`/biblioteca/libros/${libro.id}`} className="block focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-lg h-full">
       <div className="h-full transition-all duration-200 hover:shadow-md">
         <Card className="overflow-hidden h-full flex flex-col md:flex-row border dark:border-slate-800">
           {/* Book cover - Left side with proper aspect ratio */}
           <div className="relative md:w-1/3 w-full flex-shrink-0">
             <div className="aspect-[1600/2560] w-full h-full overflow-hidden bg-muted">
-              <img 
-                src={DEFAULT_COVER_URL} 
-                alt={libro.titulo} 
-                className="h-full w-full object-cover" 
-                loading="lazy" 
-                width="160" 
-                height="256"
-              />
+              <img src={DEFAULT_COVER_URL} alt={libro.titulo} className="h-full w-full object-cover" loading="lazy" width="160" height="256" />
             </div>
           </div>
 
@@ -50,11 +38,9 @@ export const BookGridItem = memo(({
               </h3>
               
               {/* Subtitle with reduced margin */}
-              {libro.subtitulo && 
-                <p className="line-clamp-1 text-muted-foreground italic text-base font-semibold">
+              {libro.subtitulo && <p className="line-clamp-1 text-muted-foreground italic text-base font-normal">
                   {libro.subtitulo}
-                </p>
-              }
+                </p>}
               
               {/* Author with slightly reduced size */}
               <p className="line-clamp-1 text-foreground text-xs">
@@ -62,7 +48,7 @@ export const BookGridItem = memo(({
               </p>
               
               {/* Status and content badges - More compact */}
-              <div className="flex flex-wrap gap-1.5 my-1 py-1">
+              <div className="flex flex-wrap gap-1.5 py-1 my-[15px]">
                 <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${getStatusColor(libro.estado)}`}>
                   {libro.estado}
                 </span>
@@ -72,19 +58,15 @@ export const BookGridItem = memo(({
               </div>
               
               <div className="flex flex-col space-y-0.5">
-                {libro.fechaPublicacion && 
-                  <div className="flex items-center text-xs text-muted-foreground">
+                {libro.fechaPublicacion && <div className="flex items-center text-xs text-muted-foreground">
                     <Calendar className="mr-1 h-3 w-3" />
                     <span>{new Date(libro.fechaPublicacion).toLocaleDateString()}</span>
-                  </div>
-                }
+                  </div>}
               </div>
             </div>
 
             {/* Net royalties display */}
-            <div className="mt-1 text-sm text-green-500 font-medium">
-              {netRoyalties}€
-            </div>
+            
 
             {/* "View details" text - Slightly reduced vertical margins */}
             <div className="mt-2 flex items-center justify-end text-primary">
@@ -96,8 +78,6 @@ export const BookGridItem = memo(({
           </CardContent>
         </Card>
       </div>
-    </Link>
-  );
+    </Link>;
 });
-
 BookGridItem.displayName = 'BookGridItem';
