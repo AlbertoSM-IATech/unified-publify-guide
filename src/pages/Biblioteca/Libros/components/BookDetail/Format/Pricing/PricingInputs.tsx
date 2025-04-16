@@ -59,7 +59,7 @@ export const PricingInputs = ({
           updateData[field] = value;
         }
       } else {
-        updateData[field as keyof BookFormat] = value;
+        updateData[field as keyof BookFormat] = value as any;
       }
       
       onUpdateFormat(formatType, updateData);
