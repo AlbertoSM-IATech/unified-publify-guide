@@ -3,6 +3,9 @@ import { motion } from "framer-motion";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Link } from "react-router-dom";
 
+// Default book cover image
+const DEFAULT_COVER_URL = "https://edit.org/images/cat/portadas-libros-big-2019101610.jpg";
+
 interface BookCardProps {
   index: number;
   title: string;
@@ -19,7 +22,6 @@ const BookCard = ({
   author,
   contentLevel,
   status,
-  coverUrl,
   id
 }: BookCardProps) => {
   // Determine status color based on status
@@ -40,10 +42,6 @@ const BookCard = ({
   
   const statusColor = getStatusColor(status);
   
-  // Use the provided cover URL or default to local placeholder image
-  const defaultCoverUrl = "/placeholders/default-book-cover.png";
-  const displayCoverUrl = coverUrl || defaultCoverUrl;
-  
   return (
     <Link to={`/biblioteca/libros/${id}`}>
       <motion.div 
@@ -61,14 +59,10 @@ const BookCard = ({
             <div className="h-full w-full overflow-hidden">
               <AspectRatio ratio={16 / 25.6} className="h-full">
                 <img 
-                  src={displayCoverUrl} 
+                  src={DEFAULT_COVER_URL} 
                   alt={title} 
                   className="h-full w-full object-cover" 
                   loading="lazy"
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    target.src = defaultCoverUrl;
-                  }}
                 />
               </AspectRatio>
             </div>

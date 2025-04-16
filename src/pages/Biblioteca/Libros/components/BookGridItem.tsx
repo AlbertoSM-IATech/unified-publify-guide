@@ -7,6 +7,9 @@ import { motion } from "framer-motion";
 import { calculateNetRoyalties } from "../utils/formatUtils";
 import { memo } from 'react';
 
+// Default book cover image
+const DEFAULT_COVER_URL = "https://edit.org/images/cat/portadas-libros-big-2019101610.jpg";
+
 interface BookGridItemProps {
   libro: Book;
   getStatusColor: (status: string) => string;
@@ -20,9 +23,6 @@ export const BookGridItem = memo(({
 }: BookGridItemProps) => {
   // Calculate net royalties for display
   const netRoyalties = calculateNetRoyalties(libro.hardcover || libro.paperback || libro.ebook).replace('.', ',');
-
-  // Use the image URL from the book if available, otherwise use the local placeholder
-  const coverUrl = libro.imageUrl || "/placeholders/default-book-cover.png";
   
   return <Link to={`/biblioteca/libros/${libro.id}`} className="block focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-lg h-full">
       <motion.div whileHover={{
@@ -40,16 +40,12 @@ export const BookGridItem = memo(({
           <div className="relative md:w-1/3 w-full flex-shrink-0">
             <div className="aspect-[1600/2560] w-full h-full overflow-hidden bg-muted">
               <img 
-                src={coverUrl} 
+                src={DEFAULT_COVER_URL} 
                 alt={libro.titulo} 
                 className="h-full w-full object-cover" 
                 loading="lazy" 
                 width="160" 
                 height="256"
-                onError={(e) => {
-                  const target = e.target as HTMLImageElement;
-                  target.src = "/placeholders/default-book-cover.png";
-                }} 
               />
             </div>
           </div>

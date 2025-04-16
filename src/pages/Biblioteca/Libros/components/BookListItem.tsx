@@ -6,6 +6,9 @@ import { motion } from "framer-motion";
 import { calculateNetRoyalties } from "../utils/formatUtils";
 import { memo } from 'react';
 
+// Default book cover image
+const DEFAULT_COVER_URL = "https://edit.org/images/cat/portadas-libros-big-2019101610.jpg";
+
 interface BookListItemProps {
   libro: Book;
   getStatusColor: (status: string) => string;
@@ -15,9 +18,6 @@ interface BookListItemProps {
 export const BookListItem = memo(({ libro, getStatusColor, getContentColor }: BookListItemProps) => {
   const netRoyalties = calculateNetRoyalties(libro.hardcover || libro.paperback || libro.ebook).replace('.', ',');
   
-  // Use the image URL from the book if available, otherwise use the local placeholder
-  const coverUrl = libro.imageUrl || "/placeholders/default-book-cover.png";
-
   return (
     <motion.tr 
       className="hover:bg-muted/20 transition-colors"
@@ -32,16 +32,12 @@ export const BookListItem = memo(({ libro, getStatusColor, getContentColor }: Bo
         <div className="flex items-center space-x-3">
           <div className="h-12 w-8 flex-shrink-0 overflow-hidden rounded-sm">
             <img 
-              src={coverUrl} 
+              src={DEFAULT_COVER_URL} 
               alt={libro.titulo} 
               className="h-full w-full object-cover"
               loading="lazy"
               width={32}
               height={48}
-              onError={(e) => {
-                const target = e.target as HTMLImageElement;
-                target.src = "/placeholders/default-book-cover.png";
-              }}
             />
           </div>
           <div>

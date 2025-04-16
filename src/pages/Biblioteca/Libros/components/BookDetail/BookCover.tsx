@@ -4,10 +4,12 @@ import { Book } from "../../types/bookTypes";
 import { Input } from "@/components/ui/input";
 import { ChangeEvent, useState } from "react";
 import { motion } from "framer-motion";
-import { supabaseService } from "@/services/supabase"; // This import will work with our new structure
 import { toast } from "@/hooks/use-toast";
 import { Upload } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
+
+// Default book cover image
+const DEFAULT_COVER_URL = "https://edit.org/images/cat/portadas-libros-big-2019101610.jpg";
 
 interface BookCoverProps {
   book: Book;
@@ -20,12 +22,9 @@ export const BookCover = ({
   isEditing,
   onUpdateBook
 }: BookCoverProps) => {
-  const [coverUrl, setCoverUrl] = useState(book.imageUrl || "");
+  const [coverUrl, setCoverUrl] = useState(DEFAULT_COVER_URL);
   const [isUploading, setIsUploading] = useState(false);
   const { user } = useAuth();
-  
-  // Always use the default cover as fallback
-  const defaultCoverUrl = "/placeholders/default-book-cover.png";
   
   const handleCoverChange = (e: ChangeEvent<HTMLInputElement>) => {
     setCoverUrl(e.target.value);
@@ -92,7 +91,7 @@ export const BookCover = ({
     <Card className="overflow-hidden relative">
       <div className="aspect-[2/3] w-full relative">
         <motion.img 
-          src={coverUrl || defaultCoverUrl}
+          src={coverUrl}
           alt={book.titulo || "Portada del libro"}
           className="w-full h-full object-cover"
           whileHover={{
