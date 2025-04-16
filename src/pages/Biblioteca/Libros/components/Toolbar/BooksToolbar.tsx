@@ -1,4 +1,5 @@
 
+import { useState } from "react";
 import { SearchBar } from "./SearchBar";
 import { FilterDropdown } from "./FilterDropdown";
 import { SortDropdown } from "./SortDropdown";
@@ -29,12 +30,17 @@ export const BooksToolbar = ({
   filterContent,
   setFilterContent,
 }: BooksToolbarProps) => {
+  // Add state for tracking filters dropdown open state
+  const [isFiltersOpen, setIsFiltersOpen] = useState(false);
+
   return (
     <div className="mb-4 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
       <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
       
       <div className="flex flex-wrap items-center gap-2">
         <FilterDropdown 
+          isFiltersOpen={isFiltersOpen}
+          setIsFiltersOpen={setIsFiltersOpen}
           filterState={filterState}
           setFilterState={setFilterState}
           filterContent={filterContent}
