@@ -1,6 +1,7 @@
 
 // Utility functions for formatting and display styling
 import { BookFormat } from "../types/bookTypes";
+import { calculateNetRoyalties as calculateRoyaltiesFromDetailUtils } from "./bookDetail/calculationUtils";
 
 /**
  * Get the CSS class for a book status badge background and text color
@@ -71,26 +72,12 @@ export const getContentHexColor = (content: string): string => {
 
 /**
  * Calculate net royalties for a book format
- * 
- * This uses a simpler calculation than the more advanced one in bookDetailUtils
- * but is kept for backward compatibility.
+ * Uses the comprehensive calculation from bookDetailUtils.ts
  * 
  * @param format The book format with pricing information
  * @returns The calculated net royalties as a string with 2 decimal places
  */
 export const calculateNetRoyalties = (format?: BookFormat): string => {
-  if (!format || !format.price || !format.royaltyPercentage) {
-    return "0.00";
-  }
-
-  // Calculate royalty amount
-  const royaltyAmount = format.price * (format.royaltyPercentage / 100);
-  
-  // If there's a printing cost, subtract it
-  const netRoyalty = format.printingCost 
-    ? royaltyAmount - format.printingCost
-    : royaltyAmount;
-
-  // Format to 2 decimal places
-  return netRoyalty.toFixed(2);
+  // Use the more comprehensive calculation from bookDetailUtils
+  return calculateRoyaltiesFromDetailUtils(format);
 };

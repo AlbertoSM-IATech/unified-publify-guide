@@ -38,7 +38,7 @@ export const BookInfo = ({
       // Replace dot with comma for display in Spanish format
       setNetRoyalties(calculateNetRoyalties(primaryFormat).replace('.', ','));
     }
-  }, [book, primaryFormat]);
+  }, [book, primaryFormat, calculateNetRoyalties]);
 
   // Handle copying text to clipboard
   const copyToClipboard = (text: string, message: string = "copiado") => {

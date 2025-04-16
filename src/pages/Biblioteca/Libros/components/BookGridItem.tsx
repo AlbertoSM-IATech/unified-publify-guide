@@ -1,3 +1,4 @@
+
 import { Link } from "react-router-dom";
 import { Book } from "../types/bookTypes";
 import { Card, CardContent } from "@/components/ui/card";
@@ -7,18 +8,22 @@ import { memo } from 'react';
 
 // Default book cover image
 const DEFAULT_COVER_URL = "https://edit.org/images/cat/portadas-libros-big-2019101610.jpg";
+
 interface BookGridItemProps {
   libro: Book;
   getStatusColor: (status: string) => string;
   getContentColor: (content: string) => string;
 }
+
 export const BookGridItem = memo(({
   libro,
   getStatusColor,
   getContentColor
 }: BookGridItemProps) => {
   // Calculate net royalties for display
-  const netRoyalties = calculateNetRoyalties(libro.hardcover || libro.paperback || libro.ebook).replace('.', ',');
+  const format = libro.hardcover || libro.paperback || libro.ebook;
+  const netRoyalties = format ? calculateNetRoyalties(format).replace('.', ',') : '0,00';
+  
   return <Link to={`/biblioteca/libros/${libro.id}`} className="block focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-lg h-full">
       <div className="h-full transition-all duration-200 hover:shadow-md">
         <Card className="overflow-hidden h-full flex flex-col md:flex-row border dark:border-slate-800">
@@ -66,7 +71,9 @@ export const BookGridItem = memo(({
             </div>
 
             {/* Net royalties display */}
-            
+            <div className="mt-2 text-right">
+              <span className="font-bold text-green-600 text-lg">{netRoyalties}€</span>
+            </div>
 
             {/* "View details" text - Slightly reduced vertical margins */}
             <div className="mt-2 flex items-center justify-end text-primary">
@@ -80,4 +87,5 @@ export const BookGridItem = memo(({
       </div>
     </Link>;
 });
+
 BookGridItem.displayName = 'BookGridItem';
