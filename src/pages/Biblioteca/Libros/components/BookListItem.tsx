@@ -2,7 +2,6 @@
 import { Link } from "react-router-dom";
 import { Book } from "../types/bookTypes";
 import { Eye } from "lucide-react";
-import { motion } from "framer-motion";
 import { calculateNetRoyalties } from "../utils/formatUtils";
 import { memo } from 'react';
 
@@ -19,15 +18,7 @@ export const BookListItem = memo(({ libro, getStatusColor, getContentColor }: Bo
   const netRoyalties = calculateNetRoyalties(libro.hardcover || libro.paperback || libro.ebook).replace('.', ',');
   
   return (
-    <motion.tr 
-      className="hover:bg-muted/20 transition-colors"
-      whileHover={{
-        backgroundColor: "rgba(251, 146, 60, 0.05)",
-        boxShadow: "0 4px 12px -2px rgba(251, 146, 60, 0.15)",
-        borderColor: "rgba(251, 146, 60, 0.5)",
-        transition: { duration: 0.2, ease: "easeOut" }
-      }}
-    >
+    <tr className="hover:bg-muted/20 transition-colors">
       <td className="whitespace-nowrap px-4 py-4">
         <div className="flex items-center space-x-3">
           <div className="h-12 w-8 flex-shrink-0 overflow-hidden rounded-sm">
@@ -36,8 +27,8 @@ export const BookListItem = memo(({ libro, getStatusColor, getContentColor }: Bo
               alt={libro.titulo} 
               className="h-full w-full object-cover"
               loading="lazy"
-              width={32}
-              height={48}
+              width="32"
+              height="48"
             />
           </div>
           <div>
@@ -87,7 +78,7 @@ export const BookListItem = memo(({ libro, getStatusColor, getContentColor }: Bo
           <Eye className="mr-1 h-4 w-4" /> Ver detalles
         </Link>
       </td>
-    </motion.tr>
+    </tr>
   );
 });
 

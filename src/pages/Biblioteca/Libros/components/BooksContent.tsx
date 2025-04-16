@@ -77,37 +77,11 @@ export const BooksContent = memo(({
               />
             </PaginationItem>
             
-            {Array.from({ length: totalPages }, (_, i) => i + 1)
-              .filter(page => 
-                // Show first page, last page, and pages around current
-                page === 1 || 
-                page === totalPages || 
-                (page >= currentPage - 1 && page <= currentPage + 1)
-              )
-              .map((page, index, array) => {
-                // Add ellipsis if there are gaps
-                const showEllipsisBefore = index > 0 && array[index - 1] !== page - 1;
-                
-                return (
-                  <div key={page} className="flex items-center">
-                    {showEllipsisBefore && (
-                      <PaginationItem className="cursor-default">
-                        <PaginationLink>...</PaginationLink>
-                      </PaginationItem>
-                    )}
-                    
-                    <PaginationItem>
-                      <PaginationLink 
-                        isActive={page === currentPage}
-                        onClick={() => onPageChange(page)}
-                        className="cursor-pointer"
-                      >
-                        {page}
-                      </PaginationLink>
-                    </PaginationItem>
-                  </div>
-                );
-              })}
+            <PaginationItem>
+              <PaginationLink isActive>
+                {currentPage} de {totalPages}
+              </PaginationLink>
+            </PaginationItem>
             
             <PaginationItem>
               <PaginationNext 

@@ -1,6 +1,4 @@
 
-import { motion } from "framer-motion";
-import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Link } from "react-router-dom";
 
 // Default book cover image
@@ -44,27 +42,21 @@ const BookCard = ({
   
   return (
     <Link to={`/biblioteca/libros/${id}`}>
-      <motion.div 
-        className="card-hover rounded-lg border bg-card shadow-sm"
-        whileHover={{ 
-          scale: 1.02,
-          boxShadow: "0 0 15px rgba(251, 146, 60, 0.3), 0 0 20px rgba(251, 146, 60, 0.2)",
-          borderColor: "rgba(251, 146, 60, 0.5)",
-          transition: { duration: 0.2, ease: "easeOut" }
-        }}
-      >
+      <div className="card-hover rounded-lg border bg-card shadow-sm transition-all duration-200 hover:shadow-md">
         <div className="flex h-32 overflow-hidden">
           {/* Book cover image/placeholder */}
           <div className="relative h-full w-28 bg-muted">
             <div className="h-full w-full overflow-hidden">
-              <AspectRatio ratio={16 / 25.6} className="h-full">
+              <div className="h-full">
                 <img 
                   src={DEFAULT_COVER_URL} 
                   alt={title} 
                   className="h-full w-full object-cover" 
                   loading="lazy"
+                  width="112"
+                  height="128"
                 />
-              </AspectRatio>
+              </div>
             </div>
           </div>
           
@@ -87,7 +79,7 @@ const BookCard = ({
             </div>
           </div>
         </div>
-      </motion.div>
+      </div>
     </Link>
   );
 };

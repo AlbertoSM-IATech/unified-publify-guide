@@ -6,11 +6,11 @@ import Header from "./Header";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 const MainLayout = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false); // Default closed to improve initial load performance
   const isMobile = useIsMobile();
   const location = useLocation();
 
-  // Cerrar automáticamente el sidebar en dispositivos móviles
+  // Mobile sidebar management
   useEffect(() => {
     if (isMobile) {
       setSidebarOpen(false);
@@ -19,7 +19,7 @@ const MainLayout = () => {
     }
   }, [isMobile]);
 
-  // Cerrar el sidebar en móviles al cambiar de ruta
+  // Close sidebar on route change for mobile
   useEffect(() => {
     if (isMobile) {
       setSidebarOpen(false);
@@ -32,15 +32,17 @@ const MainLayout = () => {
   
   return (
     <div className="flex h-screen w-full overflow-hidden bg-background">
-      {/* Sidebar */}
-      <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+      {/* Sidebar with simplified rendering */}
+      {(sidebarOpen || !isMobile) && (
+        <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+      )}
       
-      {/* Contenido principal */}
+      {/* Main content */}
       <div className="flex flex-1 flex-col overflow-hidden">
         <Header toggleSidebar={toggleSidebar} sidebarOpen={sidebarOpen} />
         
-        {/* Contenido de la página - Adjusted padding to maximize space */}
-        <main className="flex-1 overflow-y-auto p-2 md:p-4 py-[20px] px-[16px]">
+        {/* Content with simplified padding */}
+        <main className="flex-1 overflow-y-auto p-4">
           <Outlet />
         </main>
       </div>

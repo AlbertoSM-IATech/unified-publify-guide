@@ -3,7 +3,6 @@ import { useState, useCallback, useEffect } from "react";
 import { Book } from "../types/bookTypes";
 import { useSyncedData } from "@/hooks/useSyncedData";
 import { toast } from "@/hooks/use-toast";
-import { supabaseService } from "@/services/supabase"; // This import will work with our new structure
 import { librosSimulados } from "../utils/mockData/librosData";
 
 export const useBooks = () => {
@@ -11,42 +10,29 @@ export const useBooks = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
 
-  const loadBooks = useCallback(async () => {
+  const loadBooks = useCallback(() => {
     setIsLoading(true);
     setLoadError(null);
     
     try {
-      // Try to fetch from Supabase
-      const supabaseBooks = await supabaseService.books.getAll();
-      
-      // If we get books from Supabase, use them
-      if (supabaseBooks && supabaseBooks.length > 0) {
-        console.log("Books loaded from Supabase:", supabaseBooks);
-        setLibros(supabaseBooks);
+      // Check localStorage first for previously saved books
+      const storedBooks = localStorage.getItem('librosData');
+      if (storedBooks) {
+        console.log("Books loaded from localStorage");
+        setLibros(JSON.parse(storedBooks));
       } else {
-        console.log("No books found in Supabase, using mock data");
-        // Check localStorage first
-        const storedBooks = localStorage.getItem('librosData');
-        if (storedBooks) {
-          setLibros(JSON.parse(storedBooks));
-        } else {
-          setLibros(librosSimulados);
-          // Save mock data to localStorage for persistence
-          localStorage.setItem('librosData', JSON.stringify(librosSimulados));
-        }
+        console.log("No books found in localStorage, using mock data");
+        setLibros(librosSimulados);
+        // Save mock data to localStorage for persistence
+        localStorage.setItem('librosData', JSON.stringify(librosSimulados));
       }
     } catch (error) {
       console.error("Error loading books:", error);
       setLoadError("No se pudieron cargar los libros. Usando datos locales.");
       
-      // Fallback to localStorage and then to mock data
-      const storedBooks = localStorage.getItem('librosData');
-      if (storedBooks) {
-        setLibros(JSON.parse(storedBooks));
-      } else {
-        setLibros(librosSimulados);
-        localStorage.setItem('librosData', JSON.stringify(librosSimulados));
-      }
+      // Fallback to mock data
+      setLibros(librosSimulados);
+      localStorage.setItem('librosData', JSON.stringify(librosSimulados));
     } finally {
       setIsLoading(false);
     }
@@ -59,32 +45,14 @@ export const useBooks = () => {
 
   // Handler for retrying loading if there was an error
   const handleRetryLoading = useCallback(() => {
-    setLoadError(null);
-    setIsLoading(true);
-    // Use setTimeout to avoid infinite loop if error persists
-    setTimeout(() => {
-      // Set libros directly from mock data
-      setLibros(librosSimulados);
-      // Save mock data to localStorage for persistence
-      localStorage.setItem('librosData', JSON.stringify(librosSimulados));
-      setIsLoading(false);
-    }, 500);
-  }, [setLibros]);
+    loadBooks();
+  }, [loadBooks]);
 
   // Create book handler
   const handleCreateBook = useCallback(async (newBook: Book) => {
     try {
-      // Try to create in Supabase
-      const createdBook = await supabaseService.books.create(newBook);
-      
-      let bookToAdd = newBook;
-      if (createdBook) {
-        console.log("Book created in Supabase:", createdBook);
-        bookToAdd = createdBook;
-      }
-      
       // Update local state
-      const updatedBooks = [...libros, bookToAdd];
+      const updatedBooks = [...libros, newBook];
       setLibros(updatedBooks);
       
       // Update localStorage for persistence
@@ -98,17 +66,13 @@ export const useBooks = () => {
       return true;
     } catch (error) {
       console.error("Error creating book:", error);
-      // Still update local state even if Supabase fails
-      const updatedBooks = [...libros, newBook];
-      setLibros(updatedBooks);
-      localStorage.setItem('librosData', JSON.stringify(updatedBooks));
-      
       toast({
-        title: "Libro creado (modo local)",
-        description: `El libro "${newBook.titulo}" ha sido creado localmente.`
+        title: "Error",
+        description: "No se pudo crear el libro. Inténtalo de nuevo.",
+        variant: "destructive"
       });
       
-      return true;
+      return false;
     }
   }, [libros, setLibros]);
 

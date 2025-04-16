@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { Book } from "../types/bookTypes";
 import { Card, CardContent } from "@/components/ui/card";
 import { Eye, Calendar } from "lucide-react";
-import { motion } from "framer-motion";
 import { calculateNetRoyalties } from "../utils/formatUtils";
 import { memo } from 'react';
 
@@ -24,18 +23,10 @@ export const BookGridItem = memo(({
   // Calculate net royalties for display
   const netRoyalties = calculateNetRoyalties(libro.hardcover || libro.paperback || libro.ebook).replace('.', ',');
   
-  return <Link to={`/biblioteca/libros/${libro.id}`} className="block focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-lg h-full">
-      <motion.div whileHover={{
-      y: -5,
-      scale: 1.02,
-      boxShadow: "0 10px 25px -5px rgba(251, 146, 60, 0.3), 0 8px 10px -6px rgba(251, 146, 60, 0.2)",
-      borderColor: "rgba(251, 146, 60, 0.5)",
-      transition: {
-        duration: 0.2,
-        ease: "easeOut"
-      }
-    }} className="h-full">
-        <Card className="overflow-hidden transition-all duration-300 h-full flex flex-col md:flex-row border dark:border-slate-800">
+  return (
+    <Link to={`/biblioteca/libros/${libro.id}`} className="block focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-lg h-full">
+      <div className="h-full transition-all duration-200 hover:shadow-md">
+        <Card className="overflow-hidden h-full flex flex-col md:flex-row border dark:border-slate-800">
           {/* Book cover - Left side with proper aspect ratio */}
           <div className="relative md:w-1/3 w-full flex-shrink-0">
             <div className="aspect-[1600/2560] w-full h-full overflow-hidden bg-muted">
@@ -59,9 +50,11 @@ export const BookGridItem = memo(({
               </h3>
               
               {/* Subtitle with reduced margin */}
-              {libro.subtitulo && <p className="line-clamp-1 text-muted-foreground italic text-base font-semibold">
+              {libro.subtitulo && 
+                <p className="line-clamp-1 text-muted-foreground italic text-base font-semibold">
                   {libro.subtitulo}
-                </p>}
+                </p>
+              }
               
               {/* Author with slightly reduced size */}
               <p className="line-clamp-1 text-foreground text-xs">
@@ -79,10 +72,12 @@ export const BookGridItem = memo(({
               </div>
               
               <div className="flex flex-col space-y-0.5">
-                {libro.fechaPublicacion && <div className="flex items-center text-xs text-muted-foreground">
+                {libro.fechaPublicacion && 
+                  <div className="flex items-center text-xs text-muted-foreground">
                     <Calendar className="mr-1 h-3 w-3" />
                     <span>{new Date(libro.fechaPublicacion).toLocaleDateString()}</span>
-                  </div>}
+                  </div>
+                }
               </div>
             </div>
 
@@ -100,8 +95,9 @@ export const BookGridItem = memo(({
             </div>
           </CardContent>
         </Card>
-      </motion.div>
-    </Link>;
+      </div>
+    </Link>
+  );
 });
 
 BookGridItem.displayName = 'BookGridItem';
