@@ -1,6 +1,6 @@
 
 import { useState, useCallback } from "react";
-import { BooksToolbar } from "./components/BooksToolbar";
+import { BooksToolbar } from "./components/Toolbar";
 import { BooksContent } from "./components/BooksContent";
 import { LibraryHeader } from "./components/LibraryHeader";
 import { BookCreateDialog } from "./components/BookCreateDialog";
