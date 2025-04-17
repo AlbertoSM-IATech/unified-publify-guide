@@ -6,4 +6,5 @@ export interface Collection {
   cantidadLibros: number;
   fechaCreacion: string;
   libros: number[];
+  estado?: string;
 }
