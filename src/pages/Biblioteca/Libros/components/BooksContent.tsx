@@ -56,7 +56,7 @@ export const BooksContent = memo(({
     return (
       <EmptyState
         title="No hay libros"
-        description="No hay libros disponibles que coincidan con tu búsqueda."
+        message="No hay libros disponibles que coincidan con tu búsqueda."
         className="my-8"
       />
     );
@@ -109,3 +109,4 @@ export const BooksContent = memo(({
 });
 
 BooksContent.displayName = 'BooksContent';
+

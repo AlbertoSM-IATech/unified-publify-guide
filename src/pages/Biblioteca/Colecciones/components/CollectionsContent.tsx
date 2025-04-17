@@ -47,7 +47,7 @@ export const CollectionsContent = ({
     return (
       <EmptyState
         title="No hay colecciones"
-        description="No hay colecciones disponibles. Crea una nueva colección para comenzar."
+        message="No hay colecciones disponibles. Crea una nueva colección para comenzar."
         className="my-8"
       />
     );
@@ -59,3 +59,4 @@ export const CollectionsContent = ({
     <CollectionsListView collections={collections} />
   );
 };
+
