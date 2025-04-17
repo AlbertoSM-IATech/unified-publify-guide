@@ -1,3 +1,4 @@
+
 import { useNavigate } from "react-router-dom";
 import { toast } from "@/hooks/use-toast";
 import { librosSimulados } from "../../utils/librosUtils";
@@ -28,7 +29,7 @@ export const useBookActions = (
     }
   };
 
-  const handleSave = async () => {
+  const handleSave = async (): Promise<boolean> => {
     try {
       setSaving(true);
       
@@ -40,45 +41,41 @@ export const useBookActions = (
       const updatedBook = { ...bookData, ...formData };
       setBookData(updatedBook);
       
-      // Save to Supabase database
-      console.log("Saving book data to Supabase:", updatedBook);
+      console.log("Saving book data:", updatedBook);
       
-      // Try to update in Supabase
-      const result = await supabaseService.books.update(bookId, updatedBook);
+      // Update in localStorage before trying Supabase
+      // This ensures data persists even if the Supabase call fails
+      const currentBooks = localStorage.getItem('librosData');
+      let booksArray = currentBooks ? JSON.parse(currentBooks) : [...librosSimulados];
       
-      if (result) {
-        console.log("Book updated successfully in Supabase:", result);
-      } else {
-        console.warn("Book update in Supabase returned null, using local update only");
-      }
-      
-      // Update in librosSimulados for demo purposes
-      const bookIndex = librosSimulados.findIndex(libro => libro.id === bookId);
+      const bookIndex = booksArray.findIndex((book: Book) => book.id === bookId);
       if (bookIndex !== -1) {
-        // Update the book in the simulated data array with all properties
-        librosSimulados[bookIndex] = {
-          ...librosSimulados[bookIndex],
-          ...updatedBook
-        };
-        
-        // Also update localStorage to ensure persistence
-        localStorage.setItem('librosData', JSON.stringify(librosSimulados));
+        booksArray[bookIndex] = { ...booksArray[bookIndex], ...updatedBook };
+        localStorage.setItem('librosData', JSON.stringify(booksArray));
       } else {
-        console.warn("Libro no encontrado en los datos simulados para actualizar");
+        // If book not found, add it to the array
+        booksArray.push(updatedBook);
+        localStorage.setItem('librosData', JSON.stringify(booksArray));
       }
       
-      toast({
-        title: "Cambios guardados",
-        description: "Los cambios al libro han sido guardados con éxito.",
-      });
+      // Try to update in Supabase (don't wait for completion)
+      supabaseService.books.update(bookId, updatedBook)
+        .then(result => {
+          if (result) {
+            console.log("Book updated successfully in Supabase:", result);
+          } else {
+            console.warn("Book update in Supabase returned null, using local update only");
+          }
+        })
+        .catch(error => {
+          console.error("Error updating book in Supabase:", error);
+        });
+      
       setIsEditing(false);
+      return true;
     } catch (error) {
       console.error("Error saving book data:", error);
-      toast({
-        title: "Error al guardar",
-        description: "Hubo un problema al guardar los cambios. Por favor, inténtalo de nuevo.",
-        variant: "destructive",
-      });
+      return false;
     } finally {
       setSaving(false);
     }
@@ -86,23 +83,27 @@ export const useBookActions = (
 
   const handleDelete = async () => {
     try {
-      // Delete from Supabase
-      console.log("Deleting book from Supabase:", bookId);
-      const deleted = await supabaseService.books.delete(bookId);
+      // Delete locally first for immediate feedback
+      const currentBooks = localStorage.getItem('librosData');
+      let booksArray = currentBooks ? JSON.parse(currentBooks) : [...librosSimulados];
       
-      if (deleted) {
-        console.log("Book deleted successfully from Supabase");
-      } else {
-        console.warn("Book delete from Supabase failed, proceeding with local delete only");
-      }
-      
-      // Remove from librosSimulados for demo purposes
-      const bookIndex = librosSimulados.findIndex(libro => libro.id === bookId);
+      const bookIndex = booksArray.findIndex((book: Book) => book.id === bookId);
       if (bookIndex !== -1) {
-        librosSimulados.splice(bookIndex, 1);
+        booksArray.splice(bookIndex, 1);
+        localStorage.setItem('librosData', JSON.stringify(booksArray));
         
-        // Update localStorage to ensure persistence
-        localStorage.setItem('librosData', JSON.stringify(librosSimulados));
+        // Try to delete from Supabase (don't wait for completion)
+        supabaseService.books.delete(bookId)
+          .then(deleted => {
+            if (deleted) {
+              console.log("Book deleted successfully from Supabase");
+            } else {
+              console.warn("Book delete from Supabase failed, but deleted locally");
+            }
+          })
+          .catch(error => {
+            console.error("Error deleting book from Supabase:", error);
+          });
         
         toast({
           title: "Libro eliminado",
@@ -111,6 +112,7 @@ export const useBookActions = (
         
         // Navigate back to the list after successful deletion
         navigate("/biblioteca/libros");
+        return true;
       } else {
         throw new Error("No se pudo encontrar el libro para eliminar");
       }
@@ -121,6 +123,7 @@ export const useBookActions = (
         description: "Hubo un problema al eliminar el libro. Por favor, inténtalo de nuevo.",
         variant: "destructive",
       });
+      return false;
     }
   };
 

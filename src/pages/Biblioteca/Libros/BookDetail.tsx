@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ErrorState } from "@/components/common/ErrorState";
 import { LoadingState } from "@/components/common/LoadingState";
+import { toast } from "@/hooks/use-toast";
 
 const containerVariants = {
   hidden: {
@@ -97,14 +98,32 @@ const BookDetail = () => {
       fullPage={true} 
     />;
   }
+  
+  // Notify on save success - using toast for feedback
+  const handleSaveWithFeedback = async () => {
+    const success = await handleSave();
+    if (success) {
+      toast({
+        title: "Cambios guardados",
+        description: "Los cambios al libro han sido guardados exitosamente.",
+        variant: "default",
+      });
+    } else {
+      toast({
+        title: "Error al guardar",
+        description: "No se pudieron guardar los cambios. Inténtalo de nuevo.",
+        variant: "destructive",
+      });
+    }
+  };
 
   // Si tenemos datos del libro, mostrar la interfaz normal
   return (
     <div className="relative overflow-x-hidden min-h-screen">
-      {/* Animated background gradients */}
-      <div className="absolute top-20 -left-20 w-96 h-96 bg-[#FB923C]/10 rounded-full filter blur-[80px] animate-pulse-soft" />
-      <div className="absolute bottom-20 -right-20 w-96 h-96 bg-[#3B82F6]/10 rounded-full filter blur-[80px] animate-pulse-soft [animation-delay:-.5s]" />
-      <div className="absolute top-1/3 right-1/4 w-64 h-64 bg-gradient-to-br from-[#FB923C]/5 to-[#3B82F6]/5 rounded-full filter blur-[60px] animate-pulse-soft [animation-delay:-.25s]" />
+      {/* Subtle background gradients */}
+      <div className="absolute top-20 -left-20 w-96 h-96 bg-[#FB923C]/5 rounded-full filter blur-[80px] animate-pulse-soft" />
+      <div className="absolute bottom-20 -right-20 w-96 h-96 bg-[#3B82F6]/5 rounded-full filter blur-[80px] animate-pulse-soft [animation-delay:-.5s]" />
+      <div className="absolute top-1/3 right-1/4 w-64 h-64 bg-gradient-to-br from-[#FB923C]/3 to-[#3B82F6]/3 rounded-full filter blur-[60px] animate-pulse-soft [animation-delay:-.25s]" />
       
       <motion.div 
         variants={containerVariants} 
@@ -117,7 +136,7 @@ const BookDetail = () => {
             isEditing={isEditing} 
             onGoBack={handleGoBack} 
             onEdit={handleEdit} 
-            onSave={handleSave} 
+            onSave={handleSaveWithFeedback}
             onDelete={handleDelete} 
             onCancel={handleCancel} 
             isSaving={saving} 

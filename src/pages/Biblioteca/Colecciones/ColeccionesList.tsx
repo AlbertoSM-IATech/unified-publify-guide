@@ -8,6 +8,8 @@ import { filterObjectsBySearchQuery } from "@/utils/dataUtils";
 import { useCollections } from "./hooks/useCollections";
 import { useViewMode } from "./hooks/useViewMode";
 import { Collection } from "./types/collectionTypes";
+import { ErrorState } from "@/components/common/ErrorState";
+import { LoadingState } from "@/components/common/LoadingState";
 
 const ColeccionesList = () => {
   const [viewMode, setViewMode] = useViewMode("grid");
@@ -24,7 +26,7 @@ const ColeccionesList = () => {
 
   // Filtrar colecciones por búsqueda
   const filteredColecciones = filterObjectsBySearchQuery<Collection>(
-    colecciones,
+    colecciones || [],
     searchQuery,
     ["nombre", "descripcion"]
   );
@@ -44,6 +46,22 @@ const ColeccionesList = () => {
     }
   };
 
+  // Show loading state while collections are loading
+  if (isLoading) {
+    return <LoadingState text="Cargando colecciones..." />;
+  }
+
+  // Show error state if there was an error loading collections
+  if (loadError && (!colecciones || colecciones.length === 0)) {
+    return (
+      <ErrorState 
+        title="Error al cargar colecciones" 
+        message={loadError} 
+        onRetry={handleRetryLoading}
+      />
+    );
+  }
+
   return (
     <div className="animate-fade-in">
       <CollectionsHeader onCreateCollection={handleOpenCreateDialog} />
@@ -57,8 +75,8 @@ const ColeccionesList = () => {
 
       <CollectionsContent
         collections={filteredColecciones}
-        isLoading={isLoading}
-        loadError={loadError}
+        isLoading={false}
+        loadError={null}
         viewMode={viewMode}
         onRetry={handleRetryLoading}
       />

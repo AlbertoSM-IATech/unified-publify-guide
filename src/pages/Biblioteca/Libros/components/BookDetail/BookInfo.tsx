@@ -2,7 +2,7 @@
 import { ExternalLink, Tag, Calendar, BookOpen, Copy, CheckCheck, Euro } from "lucide-react";
 import { Book, BookFormat } from "../../types/bookTypes";
 import { generateAmazonLink } from "../../utils/bookDetailUtils";
-import { getContentHexColor } from "../../utils/librosUtils";
+import { getContentHexColor, formatDecimal } from "../../utils/formatUtils";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
@@ -36,8 +36,9 @@ export const BookInfo = ({
   // Update royalties when book data changes
   useEffect(() => {
     if (primaryFormat) {
-      // Replace dot with comma for display in Spanish format
-      setNetRoyalties(calculateNetRoyalties(primaryFormat).replace('.', ','));
+      // Get royalties and format with comma
+      const calculatedRoyalties = calculateNetRoyalties(primaryFormat);
+      setNetRoyalties(formatDecimal(calculatedRoyalties));
     }
   }, [book, primaryFormat, calculateNetRoyalties]);
 
@@ -167,7 +168,7 @@ export const BookInfo = ({
         </div>
 
         <motion.div 
-          className="mt-4 p-3 bg-muted rounded-md border shadow-sm"
+          className="mt-4 p-3 bg-slate-50 dark:bg-slate-800/30 rounded-md border shadow-sm"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.7 }}

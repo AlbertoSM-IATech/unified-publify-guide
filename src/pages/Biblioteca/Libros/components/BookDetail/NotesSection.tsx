@@ -1,82 +1,57 @@
 
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Book } from "../../types/bookTypes";
-import { Plus } from "lucide-react";
-import { useNotes } from "../../hooks/bookDetail/useNotes";
-import { NoteForm } from "./Notes/NoteForm";
 import { NotesList } from "./Notes/NotesList";
+import { NoteForm } from "./Notes/NoteForm";
+import { motion } from "framer-motion";
 
 interface NotesSectionProps {
   book: Book;
   isEditing: boolean;
-  onUpdateBook?: (updatedData: Partial<Book>) => void;
+  onUpdateBook: (updatedData: Partial<Book>) => void;
 }
 
-export const NotesSection = ({ book, isEditing, onUpdateBook }: NotesSectionProps) => {
-  const {
-    notes,
-    isAddingNote,
-    newNoteText,
-    editingNoteId,
-    editingNoteText,
-    setNewNoteText,
-    setEditingNoteText,
-    handleAddNote,
-    handleSaveNote,
-    handleCancelNote,
-    handleEditNote,
-    handleSaveEditedNote,
-    handleCancelEditNote,
-    handleDeleteNote,
-    handleReorderNotes
-  } = useNotes(book, onUpdateBook);
-
+export const NotesSection = ({
+  book,
+  isEditing,
+  onUpdateBook
+}: NotesSectionProps) => {
   return (
-    <Card>
-      <CardContent className="p-6">
-        <div className="mb-4 flex items-center justify-between">
-          <h3 className="text-lg font-medium">Notas y Observaciones</h3>
-          {!isAddingNote && (
-            <Button 
-              onClick={handleAddNote} 
-              variant="outline" 
-              size="sm"
-              disabled={!isEditing}
-            >
-              <Plus className="mr-1 h-4 w-4" />
-              Añadir Nota
-            </Button>
+    <motion.div
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3 }}
+    >
+      <Card className="border-slate-200 dark:border-slate-700 shadow-md">
+        <CardHeader className="bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-700">
+          <CardTitle className="text-lg font-medium text-slate-800 dark:text-slate-200">
+            Notas y Observaciones
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="p-6">
+          {isEditing && (
+            <div className="mb-6">
+              <NoteForm 
+                bookId={book.id}
+                onUpdateBook={onUpdateBook}
+              />
+            </div>
           )}
-        </div>
-
-        {isAddingNote && (
-          <NoteForm 
-            noteText={newNoteText}
-            onTextChange={setNewNoteText}
-            onSave={handleSaveNote}
-            onCancel={handleCancelNote}
-          />
-        )}
-
-        {editingNoteId !== null ? (
-          <NoteForm 
-            noteText={editingNoteText}
-            onTextChange={setEditingNoteText}
-            onSave={handleSaveEditedNote}
-            onCancel={handleCancelEditNote}
-            isEditing={true}
-          />
-        ) : (
+          
           <NotesList 
-            notes={notes}
-            isEditing={isEditing}
-            onEditNote={handleEditNote}
-            onDeleteNote={handleDeleteNote}
-            onReorderNotes={handleReorderNotes}
+            notes={book.notes || []} 
+            isEditing={isEditing} 
+            onUpdateBook={onUpdateBook}
           />
-        )}
-      </CardContent>
-    </Card>
+          
+          {!isEditing && (!book.notes || book.notes.length === 0) && (
+            <div className="text-center py-8 text-muted-foreground">
+              <p>No hay notas agregadas para este libro.</p>
+              <p className="text-sm mt-1">Edita este libro para agregar notas.</p>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+    </motion.div>
   );
 };

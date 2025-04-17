@@ -5,6 +5,7 @@ import { PricingResults } from "./PricingResults";
 import { BookFormat } from "../../../../types/bookTypes";
 import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { useState } from "react";
 
 interface PricingSectionProps {
   formatType: string;
@@ -21,6 +22,13 @@ export const PricingSection = ({
   calculateNetRoyalties,
   onUpdateFormat
 }: PricingSectionProps) => {
+  const [shouldCalculate, setShouldCalculate] = useState(false);
+  
+  // This will force the PricingResults to recalculate
+  const triggerCalculation = () => {
+    setShouldCalculate(prev => !prev);
+  };
+  
   return (
     <motion.div 
       className="space-y-6"
@@ -29,7 +37,7 @@ export const PricingSection = ({
       transition={{ duration: 0.3 }}
     >
       <Card className="shadow-md border border-slate-200 dark:border-slate-800 overflow-hidden">
-        <CardHeader className="bg-gradient-to-r from-[#FB923C]/10 to-transparent border-b">
+        <CardHeader className="bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-700">
           <div className="flex items-center">
             <h3 className="text-lg font-semibold text-[#FB923C]">Información de Precios</h3>
           </div>
@@ -40,12 +48,14 @@ export const PricingSection = ({
             formatType={formatType} 
             format={format} 
             isEditing={isEditing} 
-            onUpdateFormat={onUpdateFormat} 
+            onUpdateFormat={onUpdateFormat}
+            triggerCalculation={triggerCalculation}
           />
           
           <PricingResults 
             format={format} 
-            calculateNetRoyalties={calculateNetRoyalties} 
+            calculateNetRoyalties={calculateNetRoyalties}
+            calculationKey={shouldCalculate}
           />
         </CardContent>
       </Card>
