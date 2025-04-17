@@ -109,4 +109,3 @@ export const BooksContent = memo(({
 });
 
 BooksContent.displayName = 'BooksContent';
-

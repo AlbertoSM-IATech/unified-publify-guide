@@ -59,4 +59,3 @@ export const CollectionsContent = ({
     <CollectionsListView collections={collections} />
   );
 };
-
