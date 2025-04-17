@@ -1,6 +1,8 @@
+
 import { useEffect, useState } from "react";
 import { BookFormat } from "../../../../types/bookTypes";
 import { motion } from "framer-motion";
+import { formatDecimal } from "../../../../utils/formatUtils";
 
 interface PricingResultsProps {
   format: BookFormat;
@@ -16,18 +18,6 @@ export const PricingResults = ({
   const [netRoyalties, setNetRoyalties] = useState("0,00");
   const [calculation, setCalculation] = useState<string>("");
 
-  // Helper function to format decimal for display
-  const formatDisplayDecimal = (value: number | string): string => {
-    // If it's already a string with a comma, return it
-    if (typeof value === 'string' && value.includes(',')) {
-      return value;
-    }
-    
-    // Otherwise format it with comma as decimal separator
-    const numValue = typeof value === 'string' ? parseFloat(value) : value;
-    return numValue.toFixed(2).replace('.', ',');
-  };
-
   // Update net royalties when format data changes or calculation is triggered
   useEffect(() => {
     // Calculate royalties using the correct formula
@@ -39,12 +29,11 @@ export const PricingResults = ({
     const royaltyAmount = price * royaltyPercentage;
     const netRoyalty = Math.max(0, royaltyAmount - printingCost);
     
-    // Generate the calculation text
-    setCalculation(`(${formatDisplayDecimal(price)}€ × ${(royaltyPercentage * 100).toFixed(0)}%) − ${formatDisplayDecimal(printingCost)}€ = ${formatDisplayDecimal(netRoyalty)}€`);
+    // Generate the calculation text with formatted values
+    setCalculation(`(${formatDecimal(price)}€ × ${(royaltyPercentage * 100).toFixed(0)}%) − ${formatDecimal(printingCost)}€ = ${formatDecimal(netRoyalty)}€`);
     
-    // Format with 2 decimal places and replace dot with comma for display
-    const formattedRoyalty = netRoyalty.toFixed(2).replace('.', ',');
-    setNetRoyalties(formattedRoyalty);
+    // Format with comma for display
+    setNetRoyalties(formatDecimal(netRoyalty));
   }, [format, format.price, format.royaltyPercentage, format.printingCost, calculationKey]);
   
   return (

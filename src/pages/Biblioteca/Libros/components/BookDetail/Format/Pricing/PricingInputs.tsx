@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { BookFormat } from "../../../../types/bookTypes";
 import { Button } from "@/components/ui/button";
 import { Calculator } from "lucide-react";
+import { formatDecimal, parseDecimalInput } from "../../../../utils/formatUtils";
 
 interface PricingInputsProps {
   formatType: string;
@@ -21,55 +22,66 @@ export const PricingInputs = ({
   onUpdateFormat,
   triggerCalculation
 }: PricingInputsProps) => {
-  // Helper function to normalize decimal separators
-  const normalizeDecimal = (value: string): number => {
-    // Replace comma with dot for calculation
-    const normalized = value.replace(',', '.');
-    return parseFloat(normalized) || 0;
-  };
-
-  // Helper function to format decimal display
-  const formatDecimal = (value: number): string => {
-    return value.toString().replace('.', ',');
-  };
+  // Local state for input fields to handle display formatting
+  const [priceInput, setPriceInput] = useState(format.price ? formatDecimal(format.price) : "");
+  const [royaltyInput, setRoyaltyInput] = useState(
+    format.royaltyPercentage ? (format.royaltyPercentage * 100).toString() : ""
+  );
+  const [printingCostInput, setPrintingCostInput] = useState(
+    format.printingCost ? formatDecimal(format.printingCost) : ""
+  );
 
   // Handle price change with normalized format
   const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!onUpdateFormat) return;
-    
     const value = e.target.value;
-    const numericValue = normalizeDecimal(value);
     
-    onUpdateFormat(formatType, {
-      price: numericValue
-    });
+    // Only allow numbers, one decimal separator, and no more than 2 decimal places
+    if (/^[0-9]*([.,][0-9]{0,2})?$/.test(value) || value === "") {
+      setPriceInput(value);
+      
+      if (onUpdateFormat) {
+        const numericValue = parseDecimalInput(value);
+        onUpdateFormat(formatType, {
+          price: numericValue
+        });
+      }
+    }
   };
 
   // Handle royalty percentage change
   const handleRoyaltyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!onUpdateFormat) return;
-    
     const value = e.target.value;
-    const numericValue = normalizeDecimal(value);
     
-    // Convert to decimal (e.g., 60 -> 0.6)
-    const percentage = numericValue / 100;
-    
-    onUpdateFormat(formatType, {
-      royaltyPercentage: percentage
-    });
+    // Only allow integers from 0 to 100
+    if (/^[0-9]{0,3}$/.test(value) || value === "") {
+      setRoyaltyInput(value);
+      
+      if (onUpdateFormat && value) {
+        // Convert to decimal (e.g., 60 -> 0.6)
+        const percentage = parseInt(value, 10) / 100;
+        
+        onUpdateFormat(formatType, {
+          royaltyPercentage: isNaN(percentage) ? 0 : percentage
+        });
+      }
+    }
   };
 
   // Handle printing cost change
   const handlePrintingCostChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!onUpdateFormat) return;
-    
     const value = e.target.value;
-    const numericValue = normalizeDecimal(value);
     
-    onUpdateFormat(formatType, {
-      printingCost: numericValue
-    });
+    // Only allow numbers, one decimal separator, and no more than 2 decimal places
+    if (/^[0-9]*([.,][0-9]{0,2})?$/.test(value) || value === "") {
+      setPrintingCostInput(value);
+      
+      if (onUpdateFormat) {
+        const numericValue = parseDecimalInput(value);
+        onUpdateFormat(formatType, {
+          printingCost: numericValue
+        });
+      }
+    }
   };
 
   // Handle calculate button click
@@ -87,7 +99,7 @@ export const PricingInputs = ({
           {isEditing ? (
             <Input
               id="price"
-              value={format.price ? formatDecimal(format.price) : ""}
+              value={priceInput}
               onChange={handlePriceChange}
               placeholder="0,00"
               className="bg-white dark:bg-slate-900"
@@ -104,7 +116,7 @@ export const PricingInputs = ({
           {isEditing ? (
             <Input
               id="royalty"
-              value={format.royaltyPercentage ? (format.royaltyPercentage * 100).toString() : ""}
+              value={royaltyInput}
               onChange={handleRoyaltyChange}
               placeholder="0"
               className="bg-white dark:bg-slate-900"
@@ -121,7 +133,7 @@ export const PricingInputs = ({
           {isEditing ? (
             <Input
               id="printingCost"
-              value={format.printingCost ? formatDecimal(format.printingCost) : ""}
+              value={printingCostInput}
               onChange={handlePrintingCostChange}
               placeholder="0,00"
               className="bg-white dark:bg-slate-900"

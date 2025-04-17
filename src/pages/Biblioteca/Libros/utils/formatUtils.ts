@@ -91,6 +91,7 @@ export const formatDecimal = (value: number | string | undefined | null): string
  */
 export const parseDecimalInput = (value: string): number => {
   // Replace comma with dot for calculation
+  if (!value) return 0;
   const normalized = value.replace(',', '.');
   return parseFloat(normalized) || 0;
 };
