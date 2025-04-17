@@ -18,6 +18,9 @@ import { NotFound } from "@/pages/NotFound";
 import { useTheme } from "@/hooks/useTheme";
 import { Toaster } from "@/components/ui/toaster";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
+import { ErrorState } from "@/components/common/ErrorState";
+import { Suspense } from "react";
+import { LoadingState } from "@/components/common/LoadingState";
 import clsx from "clsx";
 
 function App() {
@@ -34,6 +37,22 @@ function App() {
     console.log("Current route:", location.pathname);
   }, [location]);
 
+  // Ensure localStorage is working properly
+  useEffect(() => {
+    try {
+      // Try setting and getting an item to test localStorage
+      localStorage.setItem('test', 'test');
+      const test = localStorage.getItem('test');
+      if (test !== 'test') {
+        console.error("LocalStorage not working properly");
+      } else {
+        console.log("LocalStorage working correctly");
+      }
+    } catch (error) {
+      console.error("Error accessing localStorage:", error);
+    }
+  }, []);
+
   return (
     <div className={clsx("relative min-h-screen", isDark && "dark-theme")}>
       <Toaster />
@@ -47,16 +66,40 @@ function App() {
         <Route element={<ProtectedRoute />}>
           <Route element={<MainLayout />}>
             {/* Dashboard */}
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/dashboard" element={
+              <Suspense fallback={<LoadingState text="Cargando dashboard..." />}>
+                <Dashboard />
+              </Suspense>
+            } />
             
             {/* Biblioteca section */}
             <Route path="/biblioteca">
               <Route index element={<Navigate to="/biblioteca/libros" replace />} />
-              <Route path="libros" element={<LibrosList />} />
-              <Route path="libros/:id" element={<BookDetail />} />
-              <Route path="colecciones" element={<ColeccionesList />} />
-              <Route path="colecciones/:id" element={<ColeccionDetail />} />
-              <Route path="investigaciones" element={<InvestigacionesList />} />
+              <Route path="libros" element={
+                <Suspense fallback={<LoadingState text="Cargando libros..." />}>
+                  <LibrosList />
+                </Suspense>
+              } />
+              <Route path="libros/:id" element={
+                <Suspense fallback={<LoadingState text="Cargando detalle..." />}>
+                  <BookDetail />
+                </Suspense>
+              } />
+              <Route path="colecciones" element={
+                <Suspense fallback={<LoadingState text="Cargando colecciones..." />}>
+                  <ColeccionesList />
+                </Suspense>
+              } />
+              <Route path="colecciones/:id" element={
+                <Suspense fallback={<LoadingState text="Cargando detalle..." />}>
+                  <ColeccionDetail />
+                </Suspense>
+              } />
+              <Route path="investigaciones" element={
+                <Suspense fallback={<LoadingState text="Cargando investigaciones..." />}>
+                  <InvestigacionesList />
+                </Suspense>
+              } />
             </Route>
             
             {/* Marketing section */}

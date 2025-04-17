@@ -1,5 +1,5 @@
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, Suspense } from "react";
 import { BooksToolbar } from "./components/Toolbar";
 import { BooksContent } from "./components/BooksContent";
 import { LibraryHeader } from "./components/LibraryHeader";
@@ -7,8 +7,12 @@ import { BookCreateDialog } from "./components/BookCreateDialog";
 import { useViewMode } from "./hooks/useViewMode";
 import { useBooks } from "./hooks/useBooks";
 import { useBookFilters } from "./hooks/useBookFilters";
+import { ErrorState } from "@/components/common/ErrorState";
+import { LoadingState } from "@/components/common/LoadingState";
 
 export const LibrosList = () => {
+  console.log("Rendering LibrosList component");
+  
   const [viewMode, setViewMode] = useViewMode("grid");
   const {
     libros,
@@ -31,7 +35,7 @@ export const LibrosList = () => {
     totalPages,
     currentItems,
     handlePageChange
-  } = useBookFilters({ books: libros });
+  } = useBookFilters({ books: libros || [] });
   
   const [isCreatingBook, setIsCreatingBook] = useState(false);
 
@@ -52,6 +56,11 @@ export const LibrosList = () => {
     }
   }, [handleCreateBook, handleCloseCreateDialog]);
 
+  // If the page is still loading (first render), show loading state
+  if (isLoading) {
+    return <LoadingState text="Cargando libros..." />;
+  }
+  
   return (
     <div className="animate-fade-in">
       <LibraryHeader onCreateBook={handleOpenCreateDialog} />
@@ -84,7 +93,7 @@ export const LibrosList = () => {
         isOpen={isCreatingBook} 
         onClose={handleCloseCreateDialog} 
         onCreateBook={onCreateBook}
-        libros={libros}
+        libros={libros || []}
       />
     </div>
   );

@@ -11,8 +11,7 @@ export const useBooks = () => {
   const [loadError, setLoadError] = useState<string | null>(null);
 
   const loadBooks = useCallback(() => {
-    setIsLoading(true);
-    setLoadError(null);
+    if (!isLoading) return; // Prevent multiple loads
     
     try {
       // Check localStorage first for previously saved books
@@ -34,11 +33,9 @@ export const useBooks = () => {
       setLibros(librosSimulados);
       localStorage.setItem('librosData', JSON.stringify(librosSimulados));
     } finally {
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 300); // Simular un pequeño delay
+      setIsLoading(false); // Set loading to false regardless of outcome
     }
-  }, [setLibros]);
+  }, [isLoading, setLibros]);
 
   // Load books on component mount
   useEffect(() => {
@@ -47,6 +44,7 @@ export const useBooks = () => {
 
   // Handler for retrying loading if there was an error
   const handleRetryLoading = useCallback(() => {
+    setIsLoading(true); // Set loading to true to trigger loadBooks
     loadBooks();
   }, [loadBooks]);
 

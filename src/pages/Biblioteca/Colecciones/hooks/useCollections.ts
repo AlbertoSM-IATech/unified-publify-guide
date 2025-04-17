@@ -10,16 +10,15 @@ export const useCollections = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
 
-  // Load collections - now as a callback to avoid dependency issues
+  // Load collections - now with safeguards against multiple loads
   const loadCollections = useCallback(async () => {
-    setIsLoading(true);
-    setLoadError(null);
+    if (!isLoading) return; // Prevent multiple loads
     
     try {
       // Check localStorage first for previously saved collections
       const storedCollections = localStorage.getItem('coleccionesData');
       if (storedCollections) {
-        console.log("[MOCK] Collections loaded from localStorage");
+        console.log("[MOCK] Collections loaded from localStorage once");
         setColecciones(JSON.parse(storedCollections));
       } else {
         console.log("[MOCK] No collections found in localStorage, using mock data");
@@ -35,11 +34,9 @@ export const useCollections = () => {
       setColecciones(coleccionesSimuladas);
       localStorage.setItem('coleccionesData', JSON.stringify(coleccionesSimuladas));
     } finally {
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 300); // Simular un pequeño delay
+      setIsLoading(false); // Set loading to false regardless of outcome
     }
-  }, [setColecciones]);
+  }, [isLoading, setColecciones]);
 
   // Load collections on component mount
   useEffect(() => {
@@ -95,6 +92,7 @@ export const useCollections = () => {
   };
 
   const handleRetryLoading = () => {
+    setIsLoading(true); // Set loading to true to trigger loadCollections
     loadCollections();
   };
 

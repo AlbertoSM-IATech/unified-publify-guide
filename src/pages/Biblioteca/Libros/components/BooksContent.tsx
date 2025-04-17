@@ -6,6 +6,7 @@ import { BooksList } from "./BooksList";
 import { getStatusColor, getContentColor } from "../utils/formatUtils";
 import { LoadingState } from "@/components/common/LoadingState";
 import { ErrorState } from "@/components/common/ErrorState";
+import { EmptyState } from "@/components/common/EmptyState";
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 
 interface BooksContentProps {
@@ -29,6 +30,7 @@ export const BooksContent = memo(({
   onPageChange,
   onRetry
 }: BooksContentProps) => {
+  console.log("Rendering BooksContent with", libros?.length || 0, "books");
   
   if (isLoading) {
     return (
@@ -45,6 +47,16 @@ export const BooksContent = memo(({
         message="No se pudieron cargar los datos de libros. Se usarán datos locales."
         onRetry={onRetry}
         fullPage={false}
+        className="my-8"
+      />
+    );
+  }
+
+  if (!libros || libros.length === 0) {
+    return (
+      <EmptyState
+        title="No hay libros"
+        description="No hay libros disponibles que coincidan con tu búsqueda."
         className="my-8"
       />
     );

@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { CollectionsHeader } from "./components/CollectionsHeader";
 import { CollectionsToolbar } from "./components/CollectionsToolbar";
 import { CollectionsContent } from "./components/CollectionsContent";
@@ -12,6 +12,8 @@ import { ErrorState } from "@/components/common/ErrorState";
 import { LoadingState } from "@/components/common/LoadingState";
 
 const ColeccionesList = () => {
+  console.log("Rendering ColeccionesList component");
+  
   const [viewMode, setViewMode] = useViewMode("grid");
   const [searchQuery, setSearchQuery] = useState("");
   const [isCreatingCollection, setIsCreatingCollection] = useState(false);
@@ -23,6 +25,10 @@ const ColeccionesList = () => {
     createCollection,
     handleRetryLoading
   } = useCollections();
+
+  useEffect(() => {
+    console.log("ColeccionesList effect - collections:", colecciones?.length || 0);
+  }, [colecciones]);
 
   // Filtrar colecciones por búsqueda
   const filteredColecciones = filterObjectsBySearchQuery<Collection>(
@@ -51,17 +57,6 @@ const ColeccionesList = () => {
     return <LoadingState text="Cargando colecciones..." />;
   }
 
-  // Show error state if there was an error loading collections
-  if (loadError && (!colecciones || colecciones.length === 0)) {
-    return (
-      <ErrorState 
-        title="Error al cargar colecciones" 
-        message={loadError} 
-        onRetry={handleRetryLoading}
-      />
-    );
-  }
-
   return (
     <div className="animate-fade-in">
       <CollectionsHeader onCreateCollection={handleOpenCreateDialog} />
@@ -76,7 +71,7 @@ const ColeccionesList = () => {
       <CollectionsContent
         collections={filteredColecciones}
         isLoading={false}
-        loadError={null}
+        loadError={loadError}
         viewMode={viewMode}
         onRetry={handleRetryLoading}
       />
