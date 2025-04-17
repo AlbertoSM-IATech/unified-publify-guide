@@ -1,4 +1,3 @@
-
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { BookFormat } from "../../../types/bookTypes";
@@ -8,9 +7,10 @@ interface FileSectionProps {
   formatType: string;
   format: BookFormat;
   isEditing: boolean;
+  onUpdateFormat?: (formatType: string, updatedData: Partial<BookFormat>) => void;
 }
 
-export const FileSection = ({ formatType, format, isEditing }: FileSectionProps) => {
+export const FileSection = ({ formatType, format, isEditing, onUpdateFormat }: FileSectionProps) => {
   return (
     <div className="grid gap-3">
       <Label>Archivos adjuntos</Label>
