@@ -26,7 +26,7 @@ export const BookInfo = ({
   const [netRoyalties, setNetRoyalties] = useState("0,00");
 
   // Obtener el formato principal para mostrar ASIN
-  const primaryFormat = book.hardcover || book.paperback || book.ebook;
+  const primaryFormat = book.paperback || book.hardcover || book.ebook;
   const asin = primaryFormat?.asin || book.asin;
   const amazonLink = generateAmazonLink(asin);
 
@@ -36,9 +36,17 @@ export const BookInfo = ({
   // Update royalties when book data changes
   useEffect(() => {
     if (primaryFormat) {
-      // Get royalties and format with comma
-      const calculatedRoyalties = calculateNetRoyalties(primaryFormat);
-      setNetRoyalties(formatDecimal(calculatedRoyalties));
+      // Calculate net royalties
+      const price = primaryFormat.price || 0;
+      const royaltyPercentage = primaryFormat.royaltyPercentage || 0;
+      const printingCost = primaryFormat.printingCost || 0;
+      
+      // Formula: (Price * RoyaltyPercentage) - PrintingCost
+      const royaltyAmount = price * royaltyPercentage;
+      const netRoyalty = Math.max(0, royaltyAmount - printingCost);
+      
+      // Format with comma for display
+      setNetRoyalties(formatDecimal(netRoyalty));
     }
   }, [book, primaryFormat, calculateNetRoyalties]);
 

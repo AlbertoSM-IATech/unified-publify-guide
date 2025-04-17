@@ -5,17 +5,19 @@ import { Book } from "../../types/bookTypes";
 
 /**
  * Hook for managing book actions such as save, delete, and navigation
- * MODIFIED: All Supabase calls have been removed - using localStorage only
+ * with improved persistence via localStorage
  */
 export const useBookActions = (
   bookData: Book | null,
-  setBookData: (book: Book | null) => void,
+  setBookData: (book: Book) => void,
   bookId: number,
   isEditing: boolean,
   setIsEditing: (isEditing: boolean) => void,
   saving: boolean,
   setSaving: (saving: boolean) => void,
-  formData: Partial<Book>
+  formData: Partial<Book>,
+  storedBooks: Book[],
+  setStoredBooks: (books: Book[]) => void
 ) => {
   const navigate = useNavigate();
 
@@ -38,23 +40,17 @@ export const useBookActions = (
       
       // Update book data with form changes
       const updatedBook = { ...bookData, ...formData };
+      
+      console.log("[SAVE] Saving book data:", updatedBook);
+      
+      // Update book data in state
       setBookData(updatedBook);
       
-      console.log("[MOCK] Saving book data:", updatedBook);
-      
-      // Update in localStorage
-      const currentBooks = localStorage.getItem('librosData');
-      let booksArray = currentBooks ? JSON.parse(currentBooks) : [];
-      
-      const bookIndex = booksArray.findIndex((book: Book) => book.id === bookId);
-      if (bookIndex !== -1) {
-        booksArray[bookIndex] = { ...booksArray[bookIndex], ...updatedBook };
-      } else {
-        // If book not found, add it to the array
-        booksArray.push(updatedBook);
-      }
-      
-      localStorage.setItem('librosData', JSON.stringify(booksArray));
+      // Update in localStorage via stored books array
+      const updatedBooks = storedBooks.map(book => 
+        book.id === bookId ? updatedBook : book
+      );
+      setStoredBooks(updatedBooks);
       
       // Simulate successful save
       setTimeout(() => {
@@ -64,7 +60,7 @@ export const useBookActions = (
       
       return true;
     } catch (error) {
-      console.error("[MOCK] Error saving book data:", error);
+      console.error("[ERROR] Error saving book data:", error);
       setSaving(false);
       return false;
     }
@@ -72,28 +68,20 @@ export const useBookActions = (
 
   const handleDelete = async () => {
     try {
-      // Delete locally from localStorage
-      const currentBooks = localStorage.getItem('librosData');
-      let booksArray = currentBooks ? JSON.parse(currentBooks) : [];
+      // Delete from stored books array
+      const updatedBooks = storedBooks.filter(book => book.id !== bookId);
+      setStoredBooks(updatedBooks);
+        
+      toast({
+        title: "Libro eliminado",
+        description: "El libro ha sido eliminado con éxito.",
+      });
       
-      const bookIndex = booksArray.findIndex((book: Book) => book.id === bookId);
-      if (bookIndex !== -1) {
-        booksArray.splice(bookIndex, 1);
-        localStorage.setItem('librosData', JSON.stringify(booksArray));
-        
-        toast({
-          title: "Libro eliminado",
-          description: "El libro ha sido eliminado con éxito.",
-        });
-        
-        // Navigate back to the list after successful deletion
-        navigate("/biblioteca/libros");
-        return true;
-      } else {
-        throw new Error("No se pudo encontrar el libro para eliminar");
-      }
+      // Navigate back to the list after successful deletion
+      navigate("/biblioteca/libros");
+      return true;
     } catch (error) {
-      console.error("[MOCK] Error deleting book:", error);
+      console.error("[ERROR] Error deleting book:", error);
       toast({
         title: "Error al eliminar",
         description: "Hubo un problema al eliminar el libro. Por favor, inténtalo de nuevo.",

@@ -13,30 +13,31 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useEffect, useState } from "react";
-import { coleccionesSimuladas } from "../../../utils/mockData/coleccionesData";
 
 interface CollectionRelationProps {
   book: Book;
   isEditing: boolean;
   onUpdateBook: (updatedData: Partial<Book>) => void;
+  collections: any[]; // Collections from localStorage
 }
 
 export const CollectionRelation = ({ 
   book, 
   isEditing, 
-  onUpdateBook 
+  onUpdateBook,
+  collections
 }: CollectionRelationProps) => {
-  const [selectedColeccion, setSelectedColeccion] = useState<typeof coleccionesSimuladas[0] | null>(null);
+  const [selectedColeccion, setSelectedColeccion] = useState<any | null>(null);
 
   // Load related collection when component mounts or book changes
   useEffect(() => {
     if (book.proyectoId) {
-      const coleccion = coleccionesSimuladas.find(col => col.id === book.proyectoId);
+      const coleccion = collections.find(col => col.id === book.proyectoId);
       setSelectedColeccion(coleccion || null);
     } else {
       setSelectedColeccion(null);
     }
-  }, [book.proyectoId]);
+  }, [book.proyectoId, collections]);
 
   // Handle collection change
   const handleColeccionChange = (value: string) => {
@@ -44,7 +45,7 @@ export const CollectionRelation = ({
     onUpdateBook({ proyectoId });
     
     if (proyectoId) {
-      const coleccion = coleccionesSimuladas.find(col => col.id === proyectoId);
+      const coleccion = collections.find(col => col.id === proyectoId);
       setSelectedColeccion(coleccion || null);
     } else {
       setSelectedColeccion(null);
@@ -64,7 +65,7 @@ export const CollectionRelation = ({
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="none">Ninguna</SelectItem>
-            {coleccionesSimuladas.map(col => (
+            {collections.map(col => (
               <SelectItem key={col.id} value={col.id.toString()}>
                 {col.nombre}
               </SelectItem>

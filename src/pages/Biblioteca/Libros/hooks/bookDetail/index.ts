@@ -9,10 +9,21 @@ import { useEffect } from 'react';
 
 /**
  * Main hook for book detail page that composes specialized hooks
+ * with improved data persistence
  */
 export const useBookDetail = () => {
   // Use the specialized hooks
-  const { bookData, setBookData, loading, error, bookId, libroOriginal } = useBookData();
+  const { 
+    bookData, 
+    setBookData, 
+    loading, 
+    error, 
+    bookId, 
+    libroOriginal,
+    storedBooks,
+    setStoredBooks 
+  } = useBookData();
+  
   const navigate = useNavigate();
   
   // Show error toast if there's an error loading the book
@@ -50,7 +61,9 @@ export const useBookDetail = () => {
     setIsEditing,
     saving,
     setSaving,
-    formData
+    formData,
+    storedBooks,
+    setStoredBooks
   );
 
   // Return a unified API that matches the original hook

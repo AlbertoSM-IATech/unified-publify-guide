@@ -4,9 +4,10 @@ import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "@/hooks/use-toast";
 import { librosSimulados } from "../../utils/librosUtils";
 import { Book, BookNote } from "../../types/bookTypes";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
 
 /**
- * Hook for fetching and managing a book's data
+ * Hook for fetching and managing a book's data with persistence
  */
 export const useBookData = () => {
   const { id } = useParams<{ id: string }>();
@@ -15,11 +16,14 @@ export const useBookData = () => {
   const [bookData, setBookData] = useState<Book | null>(null);
   const [error, setError] = useState<string | null>(null);
   
+  // Use localStorage to persist books data
+  const [storedBooks, setStoredBooks] = useLocalStorage<Book[]>('librosData', librosSimulados);
+  
   // Validate book ID
   const bookId = id ? parseInt(id) : null;
   
-  // Find original book in simulated data
-  const libroOriginal = bookId ? librosSimulados.find((libro) => libro.id === bookId) : null;
+  // Find original book in stored data
+  const libroOriginal = bookId ? storedBooks.find((libro) => libro.id === bookId) : null;
 
   useEffect(() => {
     const fetchBook = async () => {
@@ -40,10 +44,21 @@ export const useBookData = () => {
           return;
         }
         
-        if (libroOriginal) {
+        // Check stored books first
+        const storedBook = storedBooks.find(book => book.id === bookId);
+        
+        if (storedBook) {
+          console.log("Libro encontrado en localStorage:", storedBook);
+          const extendedBookData = extendBookData(storedBook);
+          setBookData(extendedBookData);
+        } else if (libroOriginal) {
           console.log("Libro original encontrado:", libroOriginal);
           const extendedBookData = extendBookData(libroOriginal);
           setBookData(extendedBookData);
+          
+          // Save to storage for future access
+          const updatedBooks = [...storedBooks, extendedBookData];
+          setStoredBooks(updatedBooks);
         } else {
           const errorMsg = `No se encontró un libro con el ID: ${bookId}`;
           console.error(errorMsg);
@@ -69,7 +84,18 @@ export const useBookData = () => {
 
     // Only try to load data if we have a valid ID
     fetchBook();
-  }, [bookId, libroOriginal]);
+  }, [bookId, libroOriginal, storedBooks, setStoredBooks]);
+
+  // Update book data and save to storage
+  const updateBookData = (updatedBook: Book) => {
+    setBookData(updatedBook);
+    
+    // Update in localStorage
+    const updatedBooks = storedBooks.map(book => 
+      book.id === updatedBook.id ? updatedBook : book
+    );
+    setStoredBooks(updatedBooks);
+  };
 
   // Create extended book data with defaults for missing properties
   const extendBookData = (originalBook: typeof libroOriginal): Book | null => {
@@ -94,11 +120,13 @@ export const useBookData = () => {
 
   return {
     bookData,
-    setBookData,
+    setBookData: updateBookData,
     loading,
     error,
     bookId,
-    libroOriginal
+    libroOriginal,
+    storedBooks,
+    setStoredBooks
   };
 };
 

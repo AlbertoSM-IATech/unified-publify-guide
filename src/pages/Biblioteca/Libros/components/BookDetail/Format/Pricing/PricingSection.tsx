@@ -11,7 +11,6 @@ interface PricingSectionProps {
   formatType: string;
   format: BookFormat;
   isEditing: boolean;
-  calculateNetRoyalties: (format?: BookFormat) => string;
   onUpdateFormat?: (formatType: string, updatedData: Partial<BookFormat>) => void;
 }
 
@@ -19,7 +18,6 @@ export const PricingSection = ({
   formatType,
   format,
   isEditing,
-  calculateNetRoyalties,
   onUpdateFormat
 }: PricingSectionProps) => {
   const [shouldCalculate, setShouldCalculate] = useState(false);
@@ -53,8 +51,7 @@ export const PricingSection = ({
           />
           
           <PricingResults 
-            format={format} 
-            calculateNetRoyalties={calculateNetRoyalties}
+            format={format}
             calculationKey={shouldCalculate}
           />
         </CardContent>

@@ -12,30 +12,31 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useEffect, useState } from "react";
-import { investigacionesSimuladas } from "../../../utils/mockData/investigacionesData";
 
 interface InvestigationRelationProps {
   book: Book;
   isEditing: boolean;
   onUpdateBook: (updatedData: Partial<Book>) => void;
+  investigations: any[]; // Investigations from localStorage
 }
 
 export const InvestigationRelation = ({ 
   book, 
   isEditing, 
-  onUpdateBook 
+  onUpdateBook,
+  investigations
 }: InvestigationRelationProps) => {
-  const [selectedInvestigacion, setSelectedInvestigacion] = useState<typeof investigacionesSimuladas[0] | null>(null);
+  const [selectedInvestigacion, setSelectedInvestigacion] = useState<any | null>(null);
 
   // Load related investigation when component mounts or book changes
   useEffect(() => {
     if (book.investigacionId) {
-      const investigacion = investigacionesSimuladas.find(inv => inv.id === book.investigacionId);
+      const investigacion = investigations.find(inv => inv.id === book.investigacionId);
       setSelectedInvestigacion(investigacion || null);
     } else {
       setSelectedInvestigacion(null);
     }
-  }, [book.investigacionId]);
+  }, [book.investigacionId, investigations]);
 
   // Handle investigation change
   const handleInvestigacionChange = (value: string) => {
@@ -43,7 +44,7 @@ export const InvestigationRelation = ({
     onUpdateBook({ investigacionId });
     
     if (investigacionId) {
-      const investigacion = investigacionesSimuladas.find(inv => inv.id === investigacionId);
+      const investigacion = investigations.find(inv => inv.id === investigacionId);
       setSelectedInvestigacion(investigacion || null);
     } else {
       setSelectedInvestigacion(null);
@@ -63,7 +64,7 @@ export const InvestigationRelation = ({
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="none">Ninguna</SelectItem>
-            {investigacionesSimuladas.map(inv => (
+            {investigations.map(inv => (
               <SelectItem key={inv.id} value={inv.id.toString()}>
                 {inv.titulo}
               </SelectItem>

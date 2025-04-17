@@ -4,7 +4,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
 import { Book, BookFormat } from "../../types/bookTypes";
 import { FormatTabContent } from "./FormatTabContent";
-import { calculateNetRoyalties } from "../../utils/bookDetail/calculationUtils";
 import { motion } from "framer-motion";
 
 interface FormatSectionProps {
@@ -18,13 +17,21 @@ export const FormatSection = ({
   isEditing, 
   onUpdateBook
 }: FormatSectionProps) => {
-  const [activeTab, setActiveTab] = useState("hardcover");
+  const [activeTab, setActiveTab] = useState("paperback"); // Change default to paperback
 
+  // Handle format update
   const handleUpdateFormat = (formatType: string, formatData: Partial<BookFormat>) => {
     if (onUpdateBook) {
+      // Create a deep copy of the book format
+      const currentFormat = book[formatType as keyof Book] as BookFormat || {};
+      const updatedFormat = { ...currentFormat, ...formatData };
+      
+      // Update the book with the new format data
       const updatedBook: Partial<Book> = {
-        [formatType]: { ...book[formatType as keyof Book] as BookFormat, ...formatData }
+        [formatType]: updatedFormat
       };
+      
+      console.log(`Updating ${formatType} format:`, updatedFormat);
       onUpdateBook(updatedBook);
     }
   };
@@ -37,7 +44,7 @@ export const FormatSection = ({
       className="w-full"
     >
       <Tabs 
-        defaultValue="hardcover" 
+        defaultValue="paperback" 
         className="w-full"
         onValueChange={(value) => setActiveTab(value)}
       >
@@ -67,9 +74,8 @@ export const FormatSection = ({
             <TabsContent value="hardcover" className="mt-0">
               <FormatTabContent 
                 formatType="hardcover" 
-                format={book.hardcover} 
+                format={book.hardcover || {}} 
                 isEditing={isEditing} 
-                calculateNetRoyalties={calculateNetRoyalties}
                 onUpdateFormat={handleUpdateFormat}
               />
             </TabsContent>
@@ -77,9 +83,8 @@ export const FormatSection = ({
             <TabsContent value="paperback" className="mt-0">
               <FormatTabContent 
                 formatType="paperback" 
-                format={book.paperback} 
+                format={book.paperback || {}} 
                 isEditing={isEditing} 
-                calculateNetRoyalties={calculateNetRoyalties} 
                 onUpdateFormat={handleUpdateFormat}
               />
             </TabsContent>
@@ -87,9 +92,8 @@ export const FormatSection = ({
             <TabsContent value="ebook" className="mt-0">
               <FormatTabContent 
                 formatType="ebook" 
-                format={book.ebook} 
+                format={book.ebook || {}} 
                 isEditing={isEditing} 
-                calculateNetRoyalties={calculateNetRoyalties} 
                 onUpdateFormat={handleUpdateFormat}
               />
             </TabsContent>

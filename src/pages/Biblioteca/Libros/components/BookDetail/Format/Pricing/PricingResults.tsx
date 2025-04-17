@@ -6,13 +6,11 @@ import { formatDecimal } from "../../../../utils/formatUtils";
 
 interface PricingResultsProps {
   format: BookFormat;
-  calculateNetRoyalties: (format?: BookFormat) => string;
   calculationKey?: boolean; // Used to force recalculation
 }
 
 export const PricingResults = ({
   format,
-  calculateNetRoyalties,
   calculationKey
 }: PricingResultsProps) => {
   const [netRoyalties, setNetRoyalties] = useState("0,00");

@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { BookFormat } from "../../../../types/bookTypes";
@@ -31,11 +31,20 @@ export const PricingInputs = ({
     format.printingCost ? formatDecimal(format.printingCost) : ""
   );
 
+  // Update local input state when format changes from parent
+  useEffect(() => {
+    if (format) {
+      setPriceInput(format.price ? formatDecimal(format.price) : "");
+      setRoyaltyInput(format.royaltyPercentage ? (format.royaltyPercentage * 100).toString() : "");
+      setPrintingCostInput(format.printingCost ? formatDecimal(format.printingCost) : "");
+    }
+  }, [format]);
+
   // Handle price change with normalized format
   const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     
-    // Only allow numbers, one decimal separator, and no more than 2 decimal places
+    // Allow numbers, one decimal separator, and no more than 2 decimal places
     if (/^[0-9]*([.,][0-9]{0,2})?$/.test(value) || value === "") {
       setPriceInput(value);
       
