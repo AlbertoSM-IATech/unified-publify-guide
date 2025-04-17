@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { Book } from "../types/bookTypes";
 import { Card, CardContent } from "@/components/ui/card";
@@ -8,13 +7,11 @@ import { memo } from 'react';
 
 // Default book cover image
 const DEFAULT_COVER_URL = "https://edit.org/images/cat/portadas-libros-big-2019101610.jpg";
-
 interface BookGridItemProps {
   libro: Book;
   getStatusColor: (status: string) => string;
   getContentColor: (content: string) => string;
 }
-
 export const BookGridItem = memo(({
   libro,
   getStatusColor,
@@ -23,7 +20,6 @@ export const BookGridItem = memo(({
   // Calculate net royalties for display
   const format = libro.hardcover || libro.paperback || libro.ebook;
   const netRoyalties = format ? calculateNetRoyalties(format).replace('.', ',') : '0,00';
-  
   return <Link to={`/biblioteca/libros/${libro.id}`} className="block focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-lg h-full">
       <div className="h-full transition-all duration-200 hover:shadow-md">
         <Card className="overflow-hidden h-full flex flex-col md:flex-row border dark:border-slate-800">
@@ -38,7 +34,7 @@ export const BookGridItem = memo(({
           <CardContent className="flex flex-col justify-between p-3 md:p-3 md:w-2/3 w-full">
             <div className="space-y-1">
               {/* Reduced font size and line clamp for title */}
-              <h3 className="line-clamp-1 font-heading font-semibold text-orange-400 text-2xl">
+              <h3 className="line-clamp-1 font-heading font-semibold text-2xl text-inherit">
                 {libro.titulo}
               </h3>
               
@@ -87,5 +83,4 @@ export const BookGridItem = memo(({
       </div>
     </Link>;
 });
-
 BookGridItem.displayName = 'BookGridItem';
