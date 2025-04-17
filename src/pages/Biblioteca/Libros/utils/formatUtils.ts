@@ -3,6 +3,8 @@
  * Format and styling utilities for book-related display
  */
 
+import { BookFormat } from "../types/bookTypes";
+
 /**
  * Get color class based on book status
  */
@@ -91,4 +93,32 @@ export const parseDecimalInput = (value: string): number => {
   // Replace comma with dot for calculation
   const normalized = value.replace(',', '.');
   return parseFloat(normalized) || 0;
+};
+
+/**
+ * Calculate net royalties for a book format
+ * @param format The book format with pricing information
+ * @returns The calculated net royalties formatted as a string with 2 decimal places
+ */
+export const calculateNetRoyalties = (format?: BookFormat): string => {
+  if (!format || !format.price) {
+    return "0.00";
+  }
+
+  // Get values with fallbacks
+  const price = format.price || 0;
+  const royaltyPercentage = format.royaltyPercentage || 0;
+  const printingCost = format.printingCost || 0;
+
+  // Calculate royalty amount: price × royalty percentage
+  const royaltyAmount = price * royaltyPercentage;
+  
+  // Calculate net royalty: royalty amount - printing cost
+  const netRoyalty = royaltyAmount - printingCost;
+  
+  // Ensure we don't return negative values
+  const finalRoyalty = Math.max(0, netRoyalty);
+
+  // Format to 2 decimal places
+  return finalRoyalty.toFixed(2);
 };

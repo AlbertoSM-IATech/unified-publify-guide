@@ -32,14 +32,14 @@ export const NotesSection = ({
           {isEditing && (
             <div className="mb-6">
               <NoteForm 
-                bookId={book.id}
+                book={book}
                 onUpdateBook={onUpdateBook}
               />
             </div>
           )}
           
           <NotesList 
-            notes={book.notes || []} 
+            book={book}
             isEditing={isEditing} 
             onUpdateBook={onUpdateBook}
           />
