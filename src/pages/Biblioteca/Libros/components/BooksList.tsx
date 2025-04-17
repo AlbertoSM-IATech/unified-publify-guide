@@ -1,18 +1,18 @@
-
 import { BookListItem } from "./BookListItem";
 import { Book } from "../types/bookTypes";
 import { memo } from "react";
-
 interface BooksListProps {
   libros: Book[];
   getStatusColor: (status: string) => string;
   getContentColor: (content: string) => string;
 }
-
-export const BooksList = memo(({ libros, getStatusColor, getContentColor }: BooksListProps) => {
+export const BooksList = memo(({
+  libros,
+  getStatusColor,
+  getContentColor
+}: BooksListProps) => {
   if (libros.length === 0) {
-    return (
-      <div className="rounded-lg border bg-card shadow-sm overflow-hidden dark:border-slate-800">
+    return <div className="rounded-lg border bg-card shadow-sm overflow-hidden dark:border-slate-800">
         <div className="relative overflow-x-auto">
           <table className="min-w-full divide-y divide-border">
             <thead className="bg-muted/50">
@@ -46,12 +46,9 @@ export const BooksList = memo(({ libros, getStatusColor, getContentColor }: Book
             </tbody>
           </table>
         </div>
-      </div>
-    );
+      </div>;
   }
-
-  return (
-    <div className="rounded-lg border bg-card shadow-sm overflow-hidden dark:border-slate-800">
+  return <div className="rounded-lg border bg-card shadow-sm overflow-hidden dark:border-slate-800">
       <div className="relative overflow-x-auto">
         <table className="min-w-full divide-y divide-border">
           <thead className="bg-muted/50">
@@ -59,9 +56,7 @@ export const BooksList = memo(({ libros, getStatusColor, getContentColor }: Book
               <th scope="col" className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">
                 Título / Autor
               </th>
-              <th scope="col" className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">
-                Regalías
-              </th>
+              <th scope="col" className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">REGALÍAS TAPA BLANDA</th>
               <th scope="col" className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">
                 Estado
               </th>
@@ -77,19 +72,10 @@ export const BooksList = memo(({ libros, getStatusColor, getContentColor }: Book
             </tr>
           </thead>
           <tbody className="divide-y divide-border bg-background">
-            {libros.map((libro) => (
-              <BookListItem 
-                key={libro.id}
-                libro={libro} 
-                getStatusColor={getStatusColor}
-                getContentColor={getContentColor}
-              />
-            ))}
+            {libros.map(libro => <BookListItem key={libro.id} libro={libro} getStatusColor={getStatusColor} getContentColor={getContentColor} />)}
           </tbody>
         </table>
       </div>
-    </div>
-  );
+    </div>;
 });
-
 BooksList.displayName = 'BooksList';
