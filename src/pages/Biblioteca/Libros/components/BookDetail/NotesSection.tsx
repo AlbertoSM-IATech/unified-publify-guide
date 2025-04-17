@@ -34,6 +34,7 @@ export const NotesSection = ({
               <NoteForm 
                 book={book}
                 onUpdateBook={onUpdateBook}
+                isEditing={isEditing}
               />
             </div>
           )}

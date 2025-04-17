@@ -72,6 +72,7 @@ export const FormatTabContent = ({
         formatType={formatType}
         format={format}
         isEditing={isEditing}
+        onUpdateFormat={onUpdateFormat}
       />
     </motion.div>
   );

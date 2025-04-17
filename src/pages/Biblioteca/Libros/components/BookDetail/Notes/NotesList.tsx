@@ -1,24 +1,27 @@
 
-import { BookNote } from "../../../types/bookTypes";
+import { Book, BookNote } from "../../../types/bookTypes";
 import { NoteItem } from "./NoteItem";
-import { Separator } from "@/components/ui/separator";
 import { DragDropContext, Droppable, Draggable, DropResult } from "react-beautiful-dnd";
+import { useEffect, useState } from "react";
 
 interface NotesListProps {
-  notes: BookNote[];
+  book: Book;
   isEditing: boolean;
-  onEditNote: (noteId: number) => void;
-  onDeleteNote: (noteId: number) => void;
-  onReorderNotes: (reorderedNotes: BookNote[]) => void;
+  onUpdateBook: (updatedData: Partial<Book>) => void;
 }
 
 export const NotesList = ({ 
-  notes, 
+  book,
   isEditing, 
-  onEditNote, 
-  onDeleteNote,
-  onReorderNotes
+  onUpdateBook
 }: NotesListProps) => {
+  const [notes, setNotes] = useState<BookNote[]>(book.notes || []);
+  
+  // Update notes when book data changes
+  useEffect(() => {
+    setNotes(book.notes || []);
+  }, [book.notes]);
+
   // Ordenar notas por fecha (más reciente primero)
   const sortedNotes = [...notes].sort((a, b) => {
     return new Date(b.date).getTime() - new Date(a.date).getTime();
@@ -32,6 +35,22 @@ export const NotesList = ({
     );
   }
 
+  const handleEditNote = (noteId: number) => {
+    // Find the note to edit
+    const noteToEdit = notes.find(note => note.id === noteId);
+    if (!noteToEdit) return;
+
+    // Implementation would depend on how you want to handle editing
+    // For now, just log the action
+    console.log("Editing note:", noteId);
+  };
+
+  const handleDeleteNote = (noteId: number) => {
+    const updatedNotes = notes.filter(note => note.id !== noteId);
+    setNotes(updatedNotes);
+    onUpdateBook({ notes: updatedNotes });
+  };
+
   const handleDragEnd = (result: DropResult) => {
     // Dropped outside the list
     if (!result.destination) return;
@@ -41,8 +60,9 @@ export const NotesList = ({
     const [movedNote] = reorderedNotes.splice(result.source.index, 1);
     reorderedNotes.splice(result.destination.index, 0, movedNote);
     
-    // Update the parent component with the new order
-    onReorderNotes(reorderedNotes);
+    // Update state and parent component
+    setNotes(reorderedNotes);
+    onUpdateBook({ notes: reorderedNotes });
   };
   
   return (
@@ -70,8 +90,8 @@ export const NotesList = ({
                     <NoteItem 
                       note={note} 
                       isEditing={isEditing}
-                      onEdit={onEditNote}
-                      onDelete={onDeleteNote}
+                      onEdit={() => handleEditNote(note.id)}
+                      onDelete={() => handleDeleteNote(note.id)}
                     />
                   </div>
                 )}
