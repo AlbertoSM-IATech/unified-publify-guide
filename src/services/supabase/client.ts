@@ -1,16 +1,53 @@
 
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
-// This URL and key are placeholders that will be replaced with actual values when connected
-// to Supabase through the Lovable Supabase integration
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://your-supabase-url.supabase.co';
-const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'your-supabase-anon-key';
+// Placeholder mock client that doesn't connect to any real Supabase instance
+const mockClient = {
+  from: () => ({
+    select: () => ({
+      eq: () => ({
+        single: async () => ({ data: null, error: null }),
+        data: [],
+        error: null
+      }),
+      data: [],
+      error: null
+    }),
+    insert: () => ({
+      select: () => ({
+        single: async () => ({ data: null, error: null })
+      })
+    }),
+    update: () => ({
+      eq: () => ({
+        select: () => ({
+          single: async () => ({ data: null, error: null })
+        })
+      })
+    }),
+    delete: () => ({
+      eq: () => ({
+        match: () => ({ error: null }),
+        error: null
+      }),
+      match: () => ({ error: null }),
+      error: null
+    })
+  }),
+  auth: {
+    getUser: async () => ({ data: { user: null }, error: null }),
+    signOut: async () => ({ error: null })
+  },
+  storage: {
+    from: () => ({
+      upload: async () => ({ data: { path: 'mock-path' }, error: null }),
+      getPublicUrl: () => ({ data: { publicUrl: 'https://edit.org/images/cat/portadas-libros-big-2019101610.jpg' } })
+    })
+  }
+} as unknown as SupabaseClient;
 
-// Create the Supabase client
-export const supabase: SupabaseClient = createClient(supabaseUrl, supabaseKey);
+// Export the mock client as supabase
+export const supabase = mockClient;
 
-// Helper to determine if we can connect to Supabase
-export const canConnectToSupabase = (): boolean => {
-  return supabaseUrl !== 'https://your-supabase-url.supabase.co' && 
-         supabaseKey !== 'your-supabase-anon-key';
-}
+// This now always returns false to prevent any Supabase connection attempts
+export const canConnectToSupabase = (): boolean => false;

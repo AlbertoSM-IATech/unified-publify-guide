@@ -18,23 +18,25 @@ export const useBooks = () => {
       // Check localStorage first for previously saved books
       const storedBooks = localStorage.getItem('librosData');
       if (storedBooks) {
-        console.log("Books loaded from localStorage");
+        console.log("[MOCK] Books loaded from localStorage");
         setLibros(JSON.parse(storedBooks));
       } else {
-        console.log("No books found in localStorage, using mock data");
+        console.log("[MOCK] No books found in localStorage, using mock data");
         setLibros(librosSimulados);
         // Save mock data to localStorage for persistence
         localStorage.setItem('librosData', JSON.stringify(librosSimulados));
       }
     } catch (error) {
-      console.error("Error loading books:", error);
+      console.error("[MOCK] Error loading books:", error);
       setLoadError("No se pudieron cargar los libros. Usando datos locales.");
       
       // Fallback to mock data
       setLibros(librosSimulados);
       localStorage.setItem('librosData', JSON.stringify(librosSimulados));
     } finally {
-      setIsLoading(false);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 300); // Simular un pequeño delay
     }
   }, [setLibros]);
 
@@ -51,6 +53,12 @@ export const useBooks = () => {
   // Create book handler
   const handleCreateBook = useCallback(async (newBook: Book) => {
     try {
+      // Generate new ID (if not provided)
+      if (!newBook.id) {
+        const maxId = Math.max(0, ...libros.map(book => book.id));
+        newBook.id = maxId + 1;
+      }
+
       // Update local state
       const updatedBooks = [...libros, newBook];
       setLibros(updatedBooks);
@@ -65,7 +73,7 @@ export const useBooks = () => {
       
       return true;
     } catch (error) {
-      console.error("Error creating book:", error);
+      console.error("[MOCK] Error creating book:", error);
       toast({
         title: "Error",
         description: "No se pudo crear el libro. Inténtalo de nuevo.",

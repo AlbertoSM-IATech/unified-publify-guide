@@ -28,6 +28,20 @@ export const NoteForm = ({
       const updatedNotes = [...(book.notes || []), newNote];
       onUpdateBook({ notes: updatedNotes });
       setNoteText("");
+      
+      // Also update the notes in localStorage
+      const storedBooks = localStorage.getItem('librosData');
+      if (storedBooks) {
+        const books = JSON.parse(storedBooks);
+        const bookIndex = books.findIndex((b: Book) => b.id === book.id);
+        if (bookIndex !== -1) {
+          books[bookIndex] = {
+            ...books[bookIndex],
+            notes: updatedNotes
+          };
+          localStorage.setItem('librosData', JSON.stringify(books));
+        }
+      }
     }
   };
 

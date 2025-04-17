@@ -1,8 +1,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { Collection } from "../types/collectionTypes";
-import { supabaseService } from "@/services/supabase";
-import { coleccionesSimuladas } from "../utils/collectionsUtils";
+import { coleccionesSimuladas } from "@/pages/Biblioteca/Libros/utils/mockData/coleccionesData";
 import { useSyncedData } from "@/hooks/useSyncedData";
 import { toast } from "@/hooks/use-toast";
 
@@ -17,25 +16,32 @@ export const useCollections = () => {
     setLoadError(null);
     
     try {
-      // For now, use mock data to avoid potential API call issues
-      console.log("Loading collections from mock data");
-      setColecciones(coleccionesSimuladas);
-      
-      // Save mock data to localStorage for persistence
-      localStorage.setItem('coleccionesData', JSON.stringify(coleccionesSimuladas));
+      // Check localStorage first for previously saved collections
+      const storedCollections = localStorage.getItem('coleccionesData');
+      if (storedCollections) {
+        console.log("[MOCK] Collections loaded from localStorage");
+        setColecciones(JSON.parse(storedCollections));
+      } else {
+        console.log("[MOCK] No collections found in localStorage, using mock data");
+        setColecciones(coleccionesSimuladas);
+        // Save mock data to localStorage for persistence
+        localStorage.setItem('coleccionesData', JSON.stringify(coleccionesSimuladas));
+      }
     } catch (error) {
-      console.error("Error loading collections:", error);
+      console.error("[MOCK] Error loading collections:", error);
       setLoadError("No se pudieron cargar las colecciones. Usando datos locales.");
       
       // Fallback to mock data
       setColecciones(coleccionesSimuladas);
       localStorage.setItem('coleccionesData', JSON.stringify(coleccionesSimuladas));
     } finally {
-      setIsLoading(false);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 300); // Simular un pequeño delay
     }
   }, [setColecciones]);
 
-  // Load collections on component mount, now using the callback
+  // Load collections on component mount
   useEffect(() => {
     loadCollections();
   }, [loadCollections]);
@@ -53,14 +59,15 @@ export const useCollections = () => {
 
     try {
       // Create new collection locally
-      const newId = Math.max(...colecciones.map(col => col.id), 0) + 1;
+      const newId = Math.max(0, ...colecciones.map(col => col.id)) + 1;
       const newCol: Collection = {
         id: newId,
         nombre: newCollection.nombre,
         descripcion: newCollection.descripcion,
         cantidadLibros: 0,
         fechaCreacion: new Date().toISOString().split('T')[0],
-        libros: []
+        libros: [],
+        estado: "Activa"
       };
       
       // Update local state first
@@ -70,17 +77,6 @@ export const useCollections = () => {
       // Update localStorage for persistence
       localStorage.setItem('coleccionesData', JSON.stringify(updatedCollections));
 
-      // Try to create in Supabase (but don't wait for it)
-      supabaseService.collections.create(newCol)
-        .then(createdCollection => {
-          if (createdCollection) {
-            console.log("Collection created in Supabase:", createdCollection);
-          }
-        })
-        .catch(error => {
-          console.error("Error creating collection in Supabase:", error);
-        });
-
       toast({
         title: "Colección creada",
         description: `La colección "${newCol.nombre}" ha sido creada con éxito.`
@@ -88,7 +84,7 @@ export const useCollections = () => {
       
       return true;
     } catch (error) {
-      console.error("Error creating collection:", error);
+      console.error("[MOCK] Error creating collection:", error);
       toast({
         title: "Error",
         description: "No se pudo crear la colección. Inténtalo de nuevo.",

@@ -1,176 +1,156 @@
 
-import { supabase } from './client';
-import { toast } from '@/hooks/use-toast';
-import { canConnectToSupabase } from './client';
-
-// Generic functions for CRUD operations
+// Mock implementation that doesn't attempt to connect to Supabase
 export const supabaseCore = {
-  // Generic function to get data from any table with optional query parameters
-  getData: async <T>(tableName: string, queryParams?: any): Promise<T[]> => {
+  // Generic function to get data from localStorage
+  getData: async <T>(tableName: string, _queryParams?: any): Promise<T[]> => {
     try {
-      // Check if we can connect to Supabase
-      if (!canConnectToSupabase()) {
-        console.log(`Using mock data for ${tableName} (Supabase not configured)`);
-        throw new Error("Supabase not configured");
+      console.log(`[MOCK] Fetching data from ${tableName} from localStorage`);
+      
+      // Get data from localStorage based on table name
+      const localKey = `publify_sync_${tableName}Data`;
+      const storedData = localStorage.getItem(localKey);
+      
+      if (storedData) {
+        return JSON.parse(storedData) as T[];
       }
       
-      console.log(`Fetching data from ${tableName}`, queryParams);
-      let query = supabase.from(tableName).select('*');
-      
-      // Add additional query parameters if provided
-      if (queryParams?.filter) {
-        Object.entries(queryParams.filter).forEach(([column, value]) => {
-          query = query.filter(column, 'eq', value);
-        });
-      }
-      
-      if (queryParams?.orderBy) {
-        query = query.order(queryParams.orderBy.column, { 
-          ascending: queryParams.orderBy.ascending 
-        });
-      }
-      
-      if (queryParams?.limit) {
-        query = query.limit(queryParams.limit);
-      }
-      
-      const { data, error } = await query;
-      
-      if (error) {
-        throw new Error(`Error fetching from ${tableName}: ${error.message}`);
-      }
-      
-      return data as T[];
+      console.log(`No data found in localStorage for ${tableName}, returning empty array`);
+      return [];
     } catch (error) {
-      console.error(`Error in getData(${tableName}):`, error);
-      // Return empty array instead of throwing to prevent UI breaks
+      console.error(`[MOCK] Error in getData(${tableName}):`, error);
       return [];
     }
   },
   
-  // Get a single item by ID
+  // Get a single item by ID from localStorage
   getById: async <T>(tableName: string, id: number | string): Promise<T | null> => {
     try {
-      // Check if we can connect to Supabase
-      if (!canConnectToSupabase()) {
-        console.log(`Using mock data for ${tableName} ID ${id} (Supabase not configured)`);
-        throw new Error("Supabase not configured");
+      console.log(`[MOCK] Fetching ${tableName} with ID ${id} from localStorage`);
+      
+      // Get data from localStorage based on table name
+      const localKey = `publify_sync_${tableName}Data`;
+      const storedData = localStorage.getItem(localKey);
+      
+      if (storedData) {
+        const items = JSON.parse(storedData) as any[];
+        return items.find(item => item.id === id) as T || null;
       }
       
-      console.log(`Fetching ${tableName} with ID ${id}`);
-      const { data, error } = await supabase
-        .from(tableName)
-        .select('*')
-        .eq('id', id)
-        .single();
-        
-      if (error) {
-        // If not found, don't throw an error, just return null
-        if (error.code === 'PGRST116') {
-          return null;
-        }
-        throw new Error(`Error fetching ${tableName} by ID: ${error.message}`);
-      }
-      
-      return data as T;
+      console.log(`No data found in localStorage for ${tableName}`);
+      return null;
     } catch (error) {
-      console.error(`Error in getById(${tableName}, ${id}):`, error);
+      console.error(`[MOCK] Error in getById(${tableName}, ${id}):`, error);
       return null;
     }
   },
   
-  // Create a new item
+  // Create a new item in localStorage
   create: async <T>(tableName: string, data: any): Promise<T | null> => {
     try {
-      // Check if we can connect to Supabase
-      if (!canConnectToSupabase()) {
-        console.log(`Using local storage for ${tableName} (Supabase not configured)`);
-        throw new Error("Supabase not configured");
-      }
+      console.log(`[MOCK] Creating new record in ${tableName}`, data);
       
-      console.log(`Creating new record in ${tableName}`, data);
-      const { data: createdData, error } = await supabase
-        .from(tableName)
-        .insert(data)
-        .select()
-        .single();
-        
-      if (error) {
-        throw new Error(`Error creating record in ${tableName}: ${error.message}`);
-      }
+      // Get existing data
+      const localKey = `publify_sync_${tableName}Data`;
+      const storedData = localStorage.getItem(localKey);
+      const items = storedData ? JSON.parse(storedData) : [];
       
-      toast({
-        title: "Creado con éxito",
-        description: `Se ha creado un nuevo registro en ${tableName}`,
+      // Generate a new ID
+      const newId = Math.max(0, ...items.map((item: any) => item.id)) + 1;
+      const newItem = { ...data, id: newId };
+      
+      // Add new item
+      items.push(newItem);
+      
+      // Save back to localStorage
+      localStorage.setItem(localKey, JSON.stringify(items));
+      
+      // Also dispatch a sync event
+      const syncEvent = new CustomEvent('publify_data_sync', { 
+        detail: { key: `${tableName}Data`, data: items } 
       });
+      window.dispatchEvent(syncEvent);
       
-      return createdData as T;
+      console.log(`[MOCK] Created new ${tableName} record with ID ${newId}`);
+      return newItem as T;
     } catch (error) {
-      console.error(`Error in create(${tableName}):`, error);
+      console.error(`[MOCK] Error in create(${tableName}):`, error);
       return null;
     }
   },
   
-  // Update an existing item
+  // Update an existing item in localStorage
   update: async <T>(tableName: string, id: number | string, data: any): Promise<T | null> => {
     try {
-      // Check if we can connect to Supabase
-      if (!canConnectToSupabase()) {
-        console.log(`Using local storage for ${tableName} (Supabase not configured)`);
-        throw new Error("Supabase not configured");
+      console.log(`[MOCK] Updating record ${id} in ${tableName}`, data);
+      
+      // Get existing data
+      const localKey = `publify_sync_${tableName}Data`;
+      const storedData = localStorage.getItem(localKey);
+      
+      if (!storedData) {
+        console.log(`No data found in localStorage for ${tableName}`);
+        return null;
       }
       
-      console.log(`Updating record ${id} in ${tableName}`, data);
-      const { data: updatedData, error } = await supabase
-        .from(tableName)
-        .update(data)
-        .eq('id', id)
-        .select()
-        .single();
-        
-      if (error) {
-        throw new Error(`Error updating record in ${tableName}: ${error.message}`);
+      const items = JSON.parse(storedData);
+      const index = items.findIndex((item: any) => item.id === id);
+      
+      if (index === -1) {
+        console.log(`Item with ID ${id} not found in ${tableName}`);
+        return null;
       }
       
-      toast({
-        title: "Actualizado con éxito",
-        description: `Se ha actualizado el registro en ${tableName}`,
+      // Update the item
+      const updatedItem = { ...items[index], ...data };
+      items[index] = updatedItem;
+      
+      // Save back to localStorage
+      localStorage.setItem(localKey, JSON.stringify(items));
+      
+      // Also dispatch a sync event
+      const syncEvent = new CustomEvent('publify_data_sync', { 
+        detail: { key: `${tableName}Data`, data: items } 
       });
+      window.dispatchEvent(syncEvent);
       
-      return updatedData as T;
+      console.log(`[MOCK] Updated ${tableName} record with ID ${id}`);
+      return updatedItem as T;
     } catch (error) {
-      console.error(`Error in update(${tableName}, ${id}):`, error);
+      console.error(`[MOCK] Error in update(${tableName}, ${id}):`, error);
       return null;
     }
   },
   
-  // Delete an item
+  // Delete an item from localStorage
   delete: async (tableName: string, id: number | string): Promise<boolean> => {
     try {
-      // Check if we can connect to Supabase
-      if (!canConnectToSupabase()) {
-        console.log(`Using local storage for ${tableName} (Supabase not configured)`);
-        throw new Error("Supabase not configured");
+      console.log(`[MOCK] Deleting record ${id} from ${tableName}`);
+      
+      // Get existing data
+      const localKey = `publify_sync_${tableName}Data`;
+      const storedData = localStorage.getItem(localKey);
+      
+      if (!storedData) {
+        console.log(`No data found in localStorage for ${tableName}`);
+        return false;
       }
       
-      console.log(`Deleting record ${id} from ${tableName}`);
-      const { error } = await supabase
-        .from(tableName)
-        .delete()
-        .eq('id', id);
-        
-      if (error) {
-        throw new Error(`Error deleting record from ${tableName}: ${error.message}`);
-      }
+      const items = JSON.parse(storedData);
+      const filteredItems = items.filter((item: any) => item.id !== id);
       
-      toast({
-        title: "Eliminado con éxito",
-        description: `Se ha eliminado el registro de ${tableName}`,
+      // Save back to localStorage
+      localStorage.setItem(localKey, JSON.stringify(filteredItems));
+      
+      // Also dispatch a sync event
+      const syncEvent = new CustomEvent('publify_data_sync', { 
+        detail: { key: `${tableName}Data`, data: filteredItems } 
       });
+      window.dispatchEvent(syncEvent);
       
+      console.log(`[MOCK] Deleted ${tableName} record with ID ${id}`);
       return true;
     } catch (error) {
-      console.error(`Error in delete(${tableName}, ${id}):`, error);
+      console.error(`[MOCK] Error in delete(${tableName}, ${id}):`, error);
       return false;
     }
   }

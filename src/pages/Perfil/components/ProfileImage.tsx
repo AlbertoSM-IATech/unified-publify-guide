@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { User, Upload } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { supabaseService } from "@/services/supabase"; // This import will work with our new structure
+import { supabaseService } from "@/services/supabase"; // Mantenemos la importación pero usará mock
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
 
@@ -17,6 +17,9 @@ export const ProfileImage = ({ initialImage, onImageChange }: ProfileImageProps)
   const { user, updateUser } = useAuth();
   const { toast } = useToast();
 
+  // Default avatar image
+  const DEFAULT_AVATAR = "https://i.pravatar.cc/150?img=5";
+
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -28,28 +31,29 @@ export const ProfileImage = ({ initialImage, onImageChange }: ProfileImageProps)
       };
       reader.readAsDataURL(file);
       
-      // Upload to Supabase storage
+      // Simulate upload with a delay
       if (user?.id) {
         try {
           setIsUploading(true);
           
-          // In a real implementation with Supabase, this would upload to storage
-          // For now, we'll simulate the upload with a timeout
-          // and just update the profile with the base64 image
+          // Simular un delay para la carga
           setTimeout(async () => {
             try {
+              // Usar la imagen del avatar por defecto que se solicita
+              const mockAvatarUrl = DEFAULT_AVATAR;
+              setImage(mockAvatarUrl);
+              
               // Update user's avatar URL in their profile
               if (user?.id) {
-                await supabaseService.profile.updateAvatar(user.id, image || '');
+                await supabaseService.profile.updateAvatar(user.id, mockAvatarUrl);
                 
                 // Update local user context
-                // Fix: Use avatarUrl instead of avatar to match User type
                 updateUser({
-                  avatarUrl: image
+                  avatarUrl: mockAvatarUrl
                 });
                 
                 // Notify parent component
-                onImageChange(image || '');
+                onImageChange(mockAvatarUrl);
                 
                 toast({
                   title: "Imagen actualizada",
@@ -57,7 +61,7 @@ export const ProfileImage = ({ initialImage, onImageChange }: ProfileImageProps)
                 });
               }
             } catch (error) {
-              console.error('Error updating avatar:', error);
+              console.error('[MOCK] Error updating avatar:', error);
               toast({
                 title: "Error",
                 description: "No se pudo actualizar la imagen de perfil",
@@ -68,7 +72,7 @@ export const ProfileImage = ({ initialImage, onImageChange }: ProfileImageProps)
             }
           }, 1000);
         } catch (error) {
-          console.error('Error uploading image:', error);
+          console.error('[MOCK] Error uploading image:', error);
           toast({
             title: "Error",
             description: "No se pudo cargar la imagen",
