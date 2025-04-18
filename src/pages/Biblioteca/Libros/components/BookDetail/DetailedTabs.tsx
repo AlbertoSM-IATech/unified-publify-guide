@@ -4,13 +4,14 @@ import { Book } from "../../types/bookTypes";
 import { GeneralInfoSection } from "./GeneralInfoSection";
 import { FormatSection } from "./FormatSection";
 import { NotesSection } from "./NotesSection";
+import { AudienceSection } from "./GeneralInfo/AudienceSection";
 import { motion } from "framer-motion";
 import { Card } from "@/components/ui/card";
 import { 
   Info, 
   BookOpen, 
   FileText, 
-  CircleDollarSign
+  Users
 } from "lucide-react";
 
 interface DetailedTabsProps {
@@ -28,7 +29,7 @@ export const DetailedTabs = ({ book, isEditing, onUpdateBook }: DetailedTabsProp
     >
       <Tabs defaultValue="info" className="space-y-4">
         <Card className="p-1 shadow-md overflow-hidden border border-slate-200 dark:border-slate-700">
-          <TabsList className="grid grid-cols-3 md:grid-cols-3 w-full bg-transparent">
+          <TabsList className="grid grid-cols-4 md:grid-cols-4 w-full bg-transparent">
             <TabsTrigger 
               value="info"
               className="data-[state=active]:text-[#FB923C] data-[state=active]:shadow-[0_1px_0_0_#FB923C]"
@@ -45,6 +46,15 @@ export const DetailedTabs = ({ book, isEditing, onUpdateBook }: DetailedTabsProp
               <div className="flex items-center gap-2">
                 <BookOpen size={16} />
                 <span className="hidden md:block">Formatos</span>
+              </div>
+            </TabsTrigger>
+            <TabsTrigger 
+              value="audience"
+              className="data-[state=active]:text-[#FB923C] data-[state=active]:shadow-[0_1px_0_0_#FB923C]"
+            >
+              <div className="flex items-center gap-2">
+                <Users size={16} />
+                <span className="hidden md:block">Audiencia</span>
               </div>
             </TabsTrigger>
             <TabsTrigger 
@@ -65,6 +75,12 @@ export const DetailedTabs = ({ book, isEditing, onUpdateBook }: DetailedTabsProp
 
         <TabsContent value="formats" className="mt-4">
           <FormatSection book={book} isEditing={isEditing} onUpdateBook={onUpdateBook} />
+        </TabsContent>
+
+        <TabsContent value="audience" className="mt-4">
+          <Card className="p-6 border-slate-200 dark:border-slate-700 shadow-md">
+            <AudienceSection book={book} isEditing={isEditing} form={null} />
+          </Card>
         </TabsContent>
 
         <TabsContent value="notes" className="mt-4">

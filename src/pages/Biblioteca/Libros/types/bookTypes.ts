@@ -40,8 +40,8 @@ export interface Book {
   autor: string;
   isbn: string;
   asin: string;
-  estado: "Borrador" | "En revisión" | "Publicado" | "Archivado" | "borrador" | "en_edicion" | "publicado" | "pausado";
-  contenido: "Alto Contenido" | "Medio Contenido" | "Bajo Contenido" | "hardcover" | "paperback" | "ebook";
+  estado: "Borrador" | "En revisión" | "Publicado" | "Archivado";
+  contenido: "Alto Contenido" | "Medio Contenido" | "Bajo Contenido";
   fechaPublicacion: string | null;
   fechaLanzamiento?: string | null; // Launch date
   bsr?: number | null; // Best Seller Rank

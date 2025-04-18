@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Book } from "../../../types/bookTypes";
 import { Label } from "@/components/ui/label";
@@ -7,17 +8,71 @@ import { FormField, FormControl, FormItem } from "@/components/ui/form";
 import { Separator } from "@/components/ui/separator";
 import { Card } from "@/components/ui/card";
 import { Users, Target, Sparkles } from "lucide-react";
+import { UseFormReturn } from "react-hook-form";
+
 interface AudienceSectionProps {
   book: Book;
   isEditing: boolean;
-  form: any; // Using 'any' here to handle the extended form object from useGeneralInfoForm
+  form: UseFormReturn<any> | null;
 }
+
 export const AudienceSection = ({
   book,
   isEditing,
   form
 }: AudienceSectionProps) => {
-  return <div className="space-y-6 mt-8">
+  // Helper function to render form field or static content
+  const renderField = (
+    name: keyof Book, 
+    label: string, 
+    placeholder: string, 
+    isTextarea: boolean = false,
+    rows: number = 2
+  ) => {
+    if (isEditing && form) {
+      return (
+        <FormField 
+          control={form.control}
+          name={name as string}
+          render={({ field }) => (
+            <FormItem>
+              <Label htmlFor={name as string}>{label}</Label>
+              <FormControl>
+                {isTextarea ? (
+                  <Textarea 
+                    id={name as string}
+                    placeholder={placeholder}
+                    rows={rows}
+                    {...field}
+                    value={field.value || ''}
+                  />
+                ) : (
+                  <Input 
+                    id={name as string}
+                    placeholder={placeholder}
+                    {...field}
+                    value={field.value || ''}
+                  />
+                )}
+              </FormControl>
+            </FormItem>
+          )}
+        />
+      );
+    }
+    
+    return (
+      <>
+        <Label htmlFor={name as string}>{label}</Label>
+        <div className="border rounded-md p-3 bg-card shadow-sm min-h-[40px]">
+          {book[name] || "No definido"}
+        </div>
+      </>
+    );
+  };
+  
+  return (
+    <div className="space-y-6 mt-4">
       <div className="flex items-center">
         <h3 className="text-lg font-extrabold text-blue-500">Audiencia y Posicionamiento</h3>
         <Separator className="flex-grow ml-3" />
@@ -30,44 +85,23 @@ export const AudienceSection = ({
           <h4 className="text-md font-semibold">Audiencia Objetivo</h4>
         </div>
         
-        <div className="grid gap-3">
-          
-          {isEditing ? <FormField control={form.control} name="targetAge" render={({
-          field
-        }) => <FormItem>
-                  <FormControl>
-                    <Input id="targetAge" placeholder="Ej: 25-45 años" {...field} value={field.value || ''} />
-                  </FormControl>
-                </FormItem>} /> : <div className="border rounded-md p-2 bg-card shadow-sm">
-              {book.targetAge || "No definido"}
-            </div>}
+        <div className="grid gap-4">
+          {renderField("targetAge", "Edad objetivo", "Ej: 25-45 años")}
+          {renderField("targetGender", "Género", "Ej: Femenino, Masculino, Todos")}
+          {renderField("targetInterests", "Intereses", "Ej: Desarrollo personal, finanzas, etc.", true)}
         </div>
-        
-        
-        
-        
       </Card>
       
       {/* Market Positioning */}
       <Card className="p-5 space-y-4 shadow-sm border-slate-200 dark:border-slate-700">
         <div className="flex items-center gap-2 text-blue-500 mb-1">
           <Target size={18} />
-          <h4 className="text-md font-semibold">Avatar</h4>
+          <h4 className="text-md font-semibold">Posicionamiento de Mercado</h4>
         </div>
         
-        
-        
-        <div className="grid gap-3">
-          
-          {isEditing ? <FormField control={form.control} name="competitorBooks" render={({
-          field
-        }) => <FormItem>
-                  <FormControl>
-                    <Textarea id="competitorBooks" placeholder="Libros similares con los que compite" rows={2} {...field} value={field.value || ''} />
-                  </FormControl>
-                </FormItem>} /> : <div className="border rounded-md p-2 bg-card shadow-sm min-h-[50px]">
-              {book.competitorBooks || "No definido"}
-            </div>}
+        <div className="grid gap-4">
+          {renderField("marketPosition", "Posicionamiento", "Describe cómo se posiciona este libro en el mercado", true)}
+          {renderField("competitorBooks", "Libros competidores", "Libros similares con los que compite", true)}
         </div>
       </Card>
       
@@ -79,17 +113,9 @@ export const AudienceSection = ({
         </div>
         
         <div className="grid gap-3">
-          <Label htmlFor="uniqueValueProposition">¿Qué hace único a este libro?</Label>
-          {isEditing ? <FormField control={form.control} name="uniqueValueProposition" render={({
-          field
-        }) => <FormItem>
-                  <FormControl>
-                    <Textarea id="uniqueValueProposition" placeholder="¿Por qué alguien debería comprar este libro?" rows={3} {...field} value={field.value || ''} />
-                  </FormControl>
-                </FormItem>} /> : <div className="border rounded-md p-2 bg-card shadow-sm min-h-[75px]">
-              {book.uniqueValueProposition || "No definido"}
-            </div>}
+          {renderField("uniqueValueProposition", "¿Qué hace único a este libro?", "¿Por qué alguien debería comprar este libro?", true, 3)}
         </div>
       </Card>
-    </div>;
+    </div>
+  );
 };
