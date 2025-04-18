@@ -2,6 +2,8 @@
 import { useState, useEffect } from "react";
 import { Book } from "../types/bookTypes";
 import { librosSimulados } from "../utils/librosUtils";
+import { booksService } from "@/services/supabase/books";
+import { toast } from "@/hooks/use-toast";
 
 interface FilterParams {
   estado?: string;
@@ -16,8 +18,8 @@ interface FilterParams {
  * Hook to manage books data with localStorage persistence
  */
 export const useBooks = () => {
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [loadError, setError] = useState<string | null>(null);
   const [libros, setLibros] = useState<Book[]>([]);
   const [filteredLibros, setFilteredLibros] = useState<Book[]>([]);
   const [filters, setFilters] = useState<FilterParams>({});
@@ -26,7 +28,7 @@ export const useBooks = () => {
   useEffect(() => {
     const loadBooks = async () => {
       try {
-        setLoading(true);
+        setIsLoading(true);
         
         // Check localStorage first
         const storedBooks = localStorage.getItem('librosData');
@@ -43,11 +45,11 @@ export const useBooks = () => {
           localStorage.setItem('librosData', JSON.stringify(librosSimulados));
         }
         
-        setLoading(false);
+        setIsLoading(false);
       } catch (error) {
         console.error('Error loading books:', error);
-        setError(error as Error);
-        setLoading(false);
+        setError('Error al cargar los libros');
+        setIsLoading(false);
       }
     };
     
@@ -112,12 +114,54 @@ export const useBooks = () => {
     }));
   };
 
+  // Function to retry loading books
+  const handleRetryLoading = async () => {
+    try {
+      setIsLoading(true);
+      setError(null);
+      
+      // Attempt to load books from service
+      const books = await booksService.getAll();
+      setLibros(books);
+      
+      setIsLoading(false);
+    } catch (error) {
+      console.error('Error retrying book load:', error);
+      setError('Error al reintentar cargar los libros');
+      setIsLoading(false);
+    }
+  };
+
+  // Function to create a new book
+  const handleCreateBook = async (newBook: Omit<Book, 'id'>): Promise<boolean> => {
+    try {
+      const createdBook = await booksService.create(newBook);
+      
+      if (createdBook) {
+        // Update local state with the new book
+        setLibros(prevBooks => [...prevBooks, createdBook]);
+        return true;
+      }
+      return false;
+    } catch (error) {
+      console.error('Error creating book:', error);
+      toast({
+        title: "Error",
+        description: "No se pudo crear el libro",
+        variant: "destructive"
+      });
+      return false;
+    }
+  };
+
   return {
     libros,
     filteredLibros,
-    loading,
-    error,
+    isLoading,     // Renamed from loading to isLoading
+    loadError,     // Renamed from error to loadError
     updateFilters,
-    filters
+    filters,
+    handleRetryLoading, // Added this function
+    handleCreateBook    // Added this function
   };
 };
