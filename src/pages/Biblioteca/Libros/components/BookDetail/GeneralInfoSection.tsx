@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Book } from "../../types/bookTypes";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useForm } from "react-hook-form";
+import { UseFormReturn } from "react-hook-form";
 import { useGeneralInfoForm } from "./GeneralInfo/useGeneralInfoForm";
 import { BasicInfoFields } from "./GeneralInfo/BasicInfo";
 import { AudienceSection } from "./GeneralInfo/AudienceSection";
@@ -23,32 +23,9 @@ export const GeneralInfoSection = ({
   onUpdateBook
 }: GeneralInfoSectionProps) => {
   const [activeTab, setActiveTab] = useState("basic-info");
-  const form = useForm({
-    defaultValues: {
-      titulo: book.titulo,
-      subtitulo: book.subtitulo,
-      autor: book.autor,
-      descripcion: book.descripcion,
-      descripcionHtml: book.descripcionHtml,
-      estado: book.estado,
-      fechaPublicacion: book.fechaPublicacion,
-      fechaLanzamiento: book.fechaLanzamiento,
-      bsr: book.bsr,
-      landingPageUrl: book.landingPageUrl,
-      contenidoAPlus: book.contenidoAPlus,
-      
-      // Audience fields
-      targetAge: book.targetAge,
-      targetGender: book.targetGender,
-      targetInterests: book.targetInterests,
-      marketPosition: book.marketPosition,
-      competitorBooks: book.competitorBooks,
-      uniqueValueProposition: book.uniqueValueProposition,
-    }
-  });
-
-  // Observe form values and update parent component
-  useGeneralInfoForm(form, book, onUpdateBook);
+  
+  // Use the useGeneralInfoForm hook to manage form state
+  const { form } = useGeneralInfoForm(book, isEditing, onUpdateBook);
 
   return (
     <motion.div

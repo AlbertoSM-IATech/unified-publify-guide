@@ -30,7 +30,15 @@ export const useGeneralInfoForm = (
       contenidoAPlus: book.contenidoAPlus || "",
       contenidoAPlusFiles: book.contenidoAPlusFiles || [],
       investigacionId: book.investigacionId?.toString() || "none",
-      proyectoId: book.proyectoId?.toString() || "none"
+      proyectoId: book.proyectoId?.toString() || "none",
+      
+      // Audience fields
+      targetAge: book.targetAge || "",
+      targetGender: book.targetGender || "",
+      targetInterests: book.targetInterests || "",
+      marketPosition: book.marketPosition || "",
+      competitorBooks: book.competitorBooks || "",
+      uniqueValueProposition: book.uniqueValueProposition || "",
     }
   });
 
@@ -50,7 +58,15 @@ export const useGeneralInfoForm = (
         contenidoAPlus: book.contenidoAPlus || "",
         contenidoAPlusFiles: book.contenidoAPlusFiles || [],
         investigacionId: book.investigacionId?.toString() || "none",
-        proyectoId: book.proyectoId?.toString() || "none"
+        proyectoId: book.proyectoId?.toString() || "none",
+        
+        // Audience fields
+        targetAge: book.targetAge || "",
+        targetGender: book.targetGender || "",
+        targetInterests: book.targetInterests || "",
+        marketPosition: book.marketPosition || "",
+        competitorBooks: book.competitorBooks || "",
+        uniqueValueProposition: book.uniqueValueProposition || "",
       });
       setSelectedDate(book.fechaPublicacion ? new Date(book.fechaPublicacion) : undefined);
       setSelectedLaunchDate(book.fechaLanzamiento ? new Date(book.fechaLanzamiento) : undefined);
