@@ -1,4 +1,3 @@
-
 export interface BookNote {
   id: number;
   text: string;
@@ -39,8 +38,8 @@ export interface Book {
   autor: string;
   isbn: string;
   asin: string;
-  estado: string;
-  contenido: string;
+  estado: "borrador" | "en_edicion" | "publicado" | "pausado";
+  contenido: "hardcover" | "paperback" | "ebook";
   fechaPublicacion: string | null;
   fechaLanzamiento?: string | null; // Launch date
   bsr?: number | null; // Best Seller Rank
@@ -62,4 +61,6 @@ export interface Book {
   marketPosition?: string; // Market positioning description
   competitorBooks?: string; // Competing books
   uniqueValueProposition?: string; // Unique value proposition
+  amazonUrl?: string;
+  authorPageUrl?: string;
 }

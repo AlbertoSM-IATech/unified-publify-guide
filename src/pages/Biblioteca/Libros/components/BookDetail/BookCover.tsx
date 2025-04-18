@@ -18,28 +18,37 @@ export const BookCover = ({
   onUpdateBook
 }: BookCoverProps) => {
   const [isHovered, setIsHovered] = useState(false);
+  const defaultCoverUrl = "https://edit.org/images/cat/portadas-libros-big-2019101610.jpg";
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      // Here you would normally upload the file to your storage service
-      // For now, we'll create a local URL
-      const imageUrl = URL.createObjectURL(file);
-      onUpdateBook({ imageUrl });
+      // Validate image dimensions
+      const img = new Image();
+      img.onload = () => {
+        const aspectRatio = img.width / img.height;
+        if (Math.abs(aspectRatio - (1600/2560)) > 0.1) {
+          alert("La imagen debe tener una proporción de 1600x2560 píxeles");
+          return;
+        }
+        const imageUrl = URL.createObjectURL(file);
+        onUpdateBook({ imageUrl });
+      };
+      img.src = URL.createObjectURL(file);
     }
   };
 
   return (
     <div 
-      className="relative"
+      className="relative rounded-lg overflow-hidden"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       <AspectRatio ratio={1600/2560} className="bg-muted">
         <motion.img
-          src={book.imageUrl || "/placeholders/default-book-cover.png"}
+          src={book.imageUrl || defaultCoverUrl}
           alt={`Portada de ${book.titulo}`}
-          className="object-cover w-full h-full rounded-t-lg"
+          className="object-cover w-full h-full"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.3 }}
