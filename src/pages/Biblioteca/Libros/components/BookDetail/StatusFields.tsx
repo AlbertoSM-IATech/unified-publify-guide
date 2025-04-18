@@ -36,9 +36,9 @@ export const StatusFields = ({ book, isEditing, form }: StatusFieldsProps) => {
                   <SelectValue placeholder="Seleccionar estado" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="Publicado">Publicado</SelectItem>
                   <SelectItem value="Borrador">Borrador</SelectItem>
                   <SelectItem value="En revisión">En revisión</SelectItem>
+                  <SelectItem value="Publicado">Publicado</SelectItem>
                   <SelectItem value="Archivado">Archivado</SelectItem>
                 </SelectContent>
               </Select>
@@ -62,12 +62,12 @@ export const StatusFields = ({ book, isEditing, form }: StatusFieldsProps) => {
                 defaultValue={field.value}
               >
                 <SelectTrigger id="contenido" className="hover:border-[#FB923C] transition-colors duration-200">
-                  <SelectValue placeholder="Seleccionar nivel de contenido" />
+                  <SelectValue placeholder="Seleccionar tipo" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="Alto Contenido">Alto Contenido</SelectItem>
-                  <SelectItem value="Medio Contenido">Medio Contenido</SelectItem>
-                  <SelectItem value="Bajo Contenido">Bajo Contenido</SelectItem>
+                  <SelectItem value="hardcover">Tapa dura</SelectItem>
+                  <SelectItem value="paperback">Tapa blanda</SelectItem>
+                  <SelectItem value="ebook">eBook</SelectItem>
                 </SelectContent>
               </Select>
             )}

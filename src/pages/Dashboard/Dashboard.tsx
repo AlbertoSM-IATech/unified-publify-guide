@@ -12,6 +12,34 @@ import { BarChart3, BookOpen, LineChart, PieChart, BookText, BookMarked, BookTyp
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { librosSimulados } from "../Biblioteca/Libros/utils/librosUtils";
 
+const contentTypeMap = {
+  "hardcover": "Alto Contenido",
+  "paperback": "Medio Contenido",
+  "ebook": "Bajo Contenido"
+};
+
+const estadoMap = {
+  "publicado": "Publicado",
+  "en_edicion": "En revisión",
+  "borrador": "Borrador",
+  "pausado": "Archivado"
+};
+
+const getContentCategory = (contentType: string) => {
+  if (contentType === "hardcover") return "Alto Contenido";
+  if (contentType === "paperback") return "Medio Contenido";
+  if (contentType === "ebook") return "Bajo Contenido";
+  return contentType;
+};
+
+const getEstadoCategory = (estado: string) => {
+  if (estado === "publicado") return "Publicado";
+  if (estado === "en_edicion") return "En revisión";
+  if (estado === "borrador") return "Borrador";
+  if (estado === "pausado") return "Archivado";
+  return estado;
+};
+
 export const Dashboard = () => {
   const [stats, setStats] = useState(getStatsData());
   const [contentCategories, setContentCategories] = useState(getContentCategoriesData());
@@ -25,13 +53,13 @@ export const Dashboard = () => {
     updatedStats[0].value = libros.length.toString();
     setStats(updatedStats);
 
-    const altoContenido = libros.filter(libro => libro.contenido === "Alto Contenido").length;
-    const medioContenido = libros.filter(libro => libro.contenido === "Medio Contenido").length;
-    const bajoContenido = libros.filter(libro => libro.contenido === "Bajo Contenido").length;
-    const publicados = libros.filter(libro => libro.estado === "Publicado").length;
-    const enRevision = libros.filter(libro => libro.estado === "En revisión").length;
-    const borradores = libros.filter(libro => libro.estado === "Borrador").length;
-    const archivados = libros.filter(libro => libro.estado === "Archivado").length;
+    const altoContenido = libros.filter(libro => getContentCategory(libro.contenido) === "Alto Contenido").length;
+    const medioContenido = libros.filter(libro => getContentCategory(libro.contenido) === "Medio Contenido").length;
+    const bajoContenido = libros.filter(libro => getContentCategory(libro.contenido) === "Bajo Contenido").length;
+    const publicados = libros.filter(libro => getEstadoCategory(libro.estado) === "Publicado").length;
+    const enRevision = libros.filter(libro => getEstadoCategory(libro.estado) === "En revisión").length;
+    const borradores = libros.filter(libro => getEstadoCategory(libro.estado) === "Borrador").length;
+    const archivados = libros.filter(libro => getEstadoCategory(libro.estado) === "Archivado").length;
 
     const updatedContentCategories = [...contentCategories];
     const statusColors = {
@@ -49,56 +77,56 @@ export const Dashboard = () => {
     updatedContentCategories[0].count = altoContenido;
     updatedContentCategories[0].statusData = [{
       label: "Publicados",
-      count: libros.filter(libro => libro.contenido === "Alto Contenido" && libro.estado === "Publicado").length,
-      percentage: altoContenido > 0 ? Math.round(libros.filter(libro => libro.contenido === "Alto Contenido" && libro.estado === "Publicado").length / altoContenido * 100) : 0
+      count: libros.filter(libro => getContentCategory(libro.contenido) === "Alto Contenido" && getEstadoCategory(libro.estado) === "Publicado").length,
+      percentage: altoContenido > 0 ? Math.round(libros.filter(libro => getContentCategory(libro.contenido) === "Alto Contenido" && getEstadoCategory(libro.estado) === "Publicado").length / altoContenido * 100) : 0
     }, {
       label: "En revisión",
-      count: libros.filter(libro => libro.contenido === "Alto Contenido" && libro.estado === "En revisión").length,
-      percentage: altoContenido > 0 ? Math.round(libros.filter(libro => libro.contenido === "Alto Contenido" && libro.estado === "En revisión").length / altoContenido * 100) : 0
+      count: libros.filter(libro => getContentCategory(libro.contenido) === "Alto Contenido" && getEstadoCategory(libro.estado) === "En revisión").length,
+      percentage: altoContenido > 0 ? Math.round(libros.filter(libro => getContentCategory(libro.contenido) === "Alto Contenido" && getEstadoCategory(libro.estado) === "En revisión").length / altoContenido * 100) : 0
     }, {
       label: "Borradores",
-      count: libros.filter(libro => libro.contenido === "Alto Contenido" && libro.estado === "Borrador").length,
-      percentage: altoContenido > 0 ? Math.round(libros.filter(libro => libro.contenido === "Alto Contenido" && libro.estado === "Borrador").length / altoContenido * 100) : 0
+      count: libros.filter(libro => getContentCategory(libro.contenido) === "Alto Contenido" && getEstadoCategory(libro.estado) === "Borrador").length,
+      percentage: altoContenido > 0 ? Math.round(libros.filter(libro => getContentCategory(libro.contenido) === "Alto Contenido" && getEstadoCategory(libro.estado) === "Borrador").length / altoContenido * 100) : 0
     }, {
       label: "Sin empezar",
-      count: libros.filter(libro => libro.contenido === "Alto Contenido" && libro.estado === "Archivado").length,
-      percentage: altoContenido > 0 ? Math.round(libros.filter(libro => libro.contenido === "Alto Contenido" && libro.estado === "Archivado").length / altoContenido * 100) : 0
+      count: libros.filter(libro => getContentCategory(libro.contenido) === "Alto Contenido" && getEstadoCategory(libro.estado) === "Archivado").length,
+      percentage: altoContenido > 0 ? Math.round(libros.filter(libro => getContentCategory(libro.contenido) === "Alto Contenido" && getEstadoCategory(libro.estado) === "Archivado").length / altoContenido * 100) : 0
     }];
     updatedContentCategories[1].count = medioContenido;
     updatedContentCategories[1].statusData = [{
       label: "Publicados",
-      count: libros.filter(libro => libro.contenido === "Medio Contenido" && libro.estado === "Publicado").length,
-      percentage: medioContenido > 0 ? Math.round(libros.filter(libro => libro.contenido === "Medio Contenido" && libro.estado === "Publicado").length / medioContenido * 100) : 0
+      count: libros.filter(libro => getContentCategory(libro.contenido) === "Medio Contenido" && getEstadoCategory(libro.estado) === "Publicado").length,
+      percentage: medioContenido > 0 ? Math.round(libros.filter(libro => getContentCategory(libro.contenido) === "Medio Contenido" && getEstadoCategory(libro.estado) === "Publicado").length / medioContenido * 100) : 0
     }, {
       label: "En revisión",
-      count: libros.filter(libro => libro.contenido === "Medio Contenido" && libro.estado === "En revisión").length,
-      percentage: medioContenido > 0 ? Math.round(libros.filter(libro => libro.contenido === "Medio Contenido" && libro.estado === "En revisión").length / medioContenido * 100) : 0
+      count: libros.filter(libro => getContentCategory(libro.contenido) === "Medio Contenido" && getEstadoCategory(libro.estado) === "En revisión").length,
+      percentage: medioContenido > 0 ? Math.round(libros.filter(libro => getContentCategory(libro.contenido) === "Medio Contenido" && getEstadoCategory(libro.estado) === "En revisión").length / medioContenido * 100) : 0
     }, {
       label: "Borradores",
-      count: libros.filter(libro => libro.contenido === "Medio Contenido" && libro.estado === "Borrador").length,
-      percentage: medioContenido > 0 ? Math.round(libros.filter(libro => libro.contenido === "Medio Contenido" && libro.estado === "Borrador").length / medioContenido * 100) : 0
+      count: libros.filter(libro => getContentCategory(libro.contenido) === "Medio Contenido" && getEstadoCategory(libro.estado) === "Borrador").length,
+      percentage: medioContenido > 0 ? Math.round(libros.filter(libro => getContentCategory(libro.contenido) === "Medio Contenido" && getEstadoCategory(libro.estado) === "Borrador").length / medioContenido * 100) : 0
     }, {
       label: "Sin empezar",
-      count: libros.filter(libro => libro.contenido === "Medio Contenido" && libro.estado === "Archivado").length,
-      percentage: medioContenido > 0 ? Math.round(libros.filter(libro => libro.contenido === "Medio Contenido" && libro.estado === "Archivado").length / medioContenido * 100) : 0
+      count: libros.filter(libro => getContentCategory(libro.contenido) === "Medio Contenido" && getEstadoCategory(libro.estado) === "Archivado").length,
+      percentage: medioContenido > 0 ? Math.round(libros.filter(libro => getContentCategory(libro.contenido) === "Medio Contenido" && getEstadoCategory(libro.estado) === "Archivado").length / medioContenido * 100) : 0
     }];
     updatedContentCategories[2].count = bajoContenido;
     updatedContentCategories[2].statusData = [{
       label: "Publicados",
-      count: libros.filter(libro => libro.contenido === "Bajo Contenido" && libro.estado === "Publicado").length,
-      percentage: bajoContenido > 0 ? Math.round(libros.filter(libro => libro.contenido === "Bajo Contenido" && libro.estado === "Publicado").length / bajoContenido * 100) : 0
+      count: libros.filter(libro => getContentCategory(libro.contenido) === "Bajo Contenido" && getEstadoCategory(libro.estado) === "Publicado").length,
+      percentage: bajoContenido > 0 ? Math.round(libros.filter(libro => getContentCategory(libro.contenido) === "Bajo Contenido" && getEstadoCategory(libro.estado) === "Publicado").length / bajoContenido * 100) : 0
     }, {
       label: "En revisión",
-      count: libros.filter(libro => libro.contenido === "Bajo Contenido" && libro.estado === "En revisión").length,
-      percentage: bajoContenido > 0 ? Math.round(libros.filter(libro => libro.contenido === "Bajo Contenido" && libro.estado === "En revisión").length / bajoContenido * 100) : 0
+      count: libros.filter(libro => getContentCategory(libro.contenido) === "Bajo Contenido" && getEstadoCategory(libro.estado) === "En revisión").length,
+      percentage: bajoContenido > 0 ? Math.round(libros.filter(libro => getContentCategory(libro.contenido) === "Bajo Contenido" && getEstadoCategory(libro.estado) === "En revisión").length / bajoContenido * 100) : 0
     }, {
       label: "Borradores",
-      count: libros.filter(libro => libro.contenido === "Bajo Contenido" && libro.estado === "Borrador").length,
-      percentage: bajoContenido > 0 ? Math.round(libros.filter(libro => libro.contenido === "Bajo Contenido" && libro.estado === "Borrador").length / bajoContenido * 100) : 0
+      count: libros.filter(libro => getContentCategory(libro.contenido) === "Bajo Contenido" && getEstadoCategory(libro.estado) === "Borrador").length,
+      percentage: bajoContenido > 0 ? Math.round(libros.filter(libro => getContentCategory(libro.contenido) === "Bajo Contenido" && getEstadoCategory(libro.estado) === "Borrador").length / bajoContenido * 100) : 0
     }, {
       label: "Sin empezar",
-      count: libros.filter(libro => libro.contenido === "Bajo Contenido" && libro.estado === "Archivado").length,
-      percentage: bajoContenido > 0 ? Math.round(libros.filter(libro => libro.contenido === "Bajo Contenido" && libro.estado === "Archivado").length / bajoContenido * 100) : 0
+      count: libros.filter(libro => getContentCategory(libro.contenido) === "Bajo Contenido" && getEstadoCategory(libro.estado) === "Archivado").length,
+      percentage: bajoContenido > 0 ? Math.round(libros.filter(libro => getContentCategory(libro.contenido) === "Bajo Contenido" && getEstadoCategory(libro.estado) === "Archivado").length / bajoContenido * 100) : 0
     }];
     setContentCategories(updatedContentCategories);
 

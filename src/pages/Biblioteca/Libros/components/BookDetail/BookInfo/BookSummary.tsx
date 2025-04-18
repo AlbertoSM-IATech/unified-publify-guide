@@ -19,11 +19,17 @@ interface BookSummaryProps {
 }
 
 export const BookSummary = ({ book, isEditing, onUpdateBook }: BookSummaryProps) => {
-  const [selectedFormat, setSelectedFormat] = useState(book.contenido || "paperback");
+  const [selectedFormat, setSelectedFormat] = useState<"hardcover" | "paperback" | "ebook">(
+    (book.contenido === "hardcover" || book.contenido === "paperback" || book.contenido === "ebook") 
+      ? book.contenido 
+      : "paperback"
+  );
 
   const handleFormatChange = (format: string) => {
-    setSelectedFormat(format);
-    onUpdateBook?.({ contenido: format });
+    if (format === "hardcover" || format === "paperback" || format === "ebook") {
+      setSelectedFormat(format);
+      onUpdateBook?.({ contenido: format });
+    }
   };
 
   const handleOpenUrl = (url: string) => {
@@ -67,10 +73,10 @@ export const BookSummary = ({ book, isEditing, onUpdateBook }: BookSummaryProps)
         <div className="flex flex-wrap gap-2">
           <Badge variant="outline" className={cn(
             "capitalize",
-            book.estado === "publicado" && "bg-green-100 text-green-800",
-            book.estado === "borrador" && "bg-yellow-100 text-yellow-800",
-            book.estado === "en_edicion" && "bg-blue-100 text-blue-800",
-            book.estado === "pausado" && "bg-gray-100 text-gray-800"
+            book.estado === "Publicado" || book.estado === "publicado" ? "bg-green-100 text-green-800" : "",
+            book.estado === "Borrador" || book.estado === "borrador" ? "bg-yellow-100 text-yellow-800" : "",
+            book.estado === "En revisión" || book.estado === "en_edicion" ? "bg-blue-100 text-blue-800" : "",
+            (book.estado === "Archivado" || book.estado === "pausado") ? "bg-gray-100 text-gray-800" : ""
           )}>
             {book.estado}
           </Badge>

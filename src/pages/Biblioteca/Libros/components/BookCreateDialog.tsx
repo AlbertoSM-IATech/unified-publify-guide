@@ -31,7 +31,7 @@ export const BookCreateDialog = ({ isOpen, onClose, onCreateBook, libros }: Book
     isbn: "",
     asin: "",
     estado: "Borrador",
-    contenido: "Medio Contenido"
+    contenido: "hardcover"
   });
 
   const handleCloseDialog = () => {
@@ -41,7 +41,7 @@ export const BookCreateDialog = ({ isOpen, onClose, onCreateBook, libros }: Book
       isbn: "",
       asin: "",
       estado: "Borrador",
-      contenido: "Medio Contenido"
+      contenido: "hardcover"
     });
     onClose();
   };
@@ -64,8 +64,8 @@ export const BookCreateDialog = ({ isOpen, onClose, onCreateBook, libros }: Book
       autor: newBook.autor,
       isbn: newBook.isbn || `ISBN-${newId}`,
       asin: newBook.asin || `ASIN-${newId}`,
-      estado: newBook.estado,
-      contenido: newBook.contenido,
+      estado: newBook.estado as Book['estado'],
+      contenido: newBook.contenido as Book['contenido'],
       fechaPublicacion: null,
       imageUrl: ""
     };
@@ -144,18 +144,18 @@ export const BookCreateDialog = ({ isOpen, onClose, onCreateBook, libros }: Book
               </Select>
             </div>
             <div>
-              <Label htmlFor="contenido" className="block mb-2">Nivel de Contenido</Label>
+              <Label htmlFor="contenido" className="block mb-2">Tipo de Contenido</Label>
               <Select
                 value={newBook.contenido}
                 onValueChange={(value) => setNewBook({ ...newBook, contenido: value })}
               >
                 <SelectTrigger id="contenido">
-                  <SelectValue placeholder="Seleccionar nivel" />
+                  <SelectValue placeholder="Seleccionar tipo" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="Alto Contenido">Alto Contenido</SelectItem>
-                  <SelectItem value="Medio Contenido">Medio Contenido</SelectItem>
-                  <SelectItem value="Bajo Contenido">Bajo Contenido</SelectItem>
+                  <SelectItem value="hardcover">Tapa dura</SelectItem>
+                  <SelectItem value="paperback">Tapa blanda</SelectItem>
+                  <SelectItem value="ebook">eBook</SelectItem>
                 </SelectContent>
               </Select>
             </div>

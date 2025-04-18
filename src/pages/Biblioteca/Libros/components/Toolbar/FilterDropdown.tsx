@@ -87,29 +87,29 @@ const FilterStateGroup = ({ filterState, setFilterState }: FilterGroupProps) => 
         Todos
       </DropdownMenuItem>
       <DropdownMenuItem 
-        className={filterState === "Borrador" ? "bg-muted/50" : ""}
-        onClick={() => setFilterState("Borrador")}
+        className={filterState === "borrador" ? "bg-muted/50" : ""}
+        onClick={() => setFilterState("borrador")}
       >
         <span className="mr-2 h-2 w-2 rounded-full bg-blue-500"></span>
         Borrador
       </DropdownMenuItem>
       <DropdownMenuItem 
-        className={filterState === "En revisión" ? "bg-muted/50" : ""}
-        onClick={() => setFilterState("En revisión")}
+        className={filterState === "en_edicion" ? "bg-muted/50" : ""}
+        onClick={() => setFilterState("en_edicion")}
       >
         <span className="mr-2 h-2 w-2 rounded-full bg-amber-500"></span>
         En revisión
       </DropdownMenuItem>
       <DropdownMenuItem 
-        className={filterState === "Publicado" ? "bg-muted/50" : ""}
-        onClick={() => setFilterState("Publicado")}
+        className={filterState === "publicado" ? "bg-muted/50" : ""}
+        onClick={() => setFilterState("publicado")}
       >
         <span className="mr-2 h-2 w-2 rounded-full bg-green-500"></span>
         Publicado
       </DropdownMenuItem>
       <DropdownMenuItem 
-        className={filterState === "Archivado" ? "bg-muted/50" : ""}
-        onClick={() => setFilterState("Archivado")}
+        className={filterState === "pausado" ? "bg-muted/50" : ""}
+        onClick={() => setFilterState("pausado")}
       >
         <span className="mr-2 h-2 w-2 rounded-full bg-red-500"></span>
         Archivado
@@ -136,25 +136,25 @@ const FilterContentGroup = ({ filterContent, setFilterContent }: FilterContentGr
         Todos
       </DropdownMenuItem>
       <DropdownMenuItem 
-        className={filterContent === "Alto contenido" ? "bg-muted/50" : ""}
-        onClick={() => setFilterContent("Alto contenido")}
+        className={filterContent === "hardcover" ? "bg-muted/50" : ""}
+        onClick={() => setFilterContent("hardcover")}
       >
         <span className="mr-2 h-2 w-2 rounded-full bg-purple-500"></span>
-        Alto contenido
+        Tapa dura
       </DropdownMenuItem>
       <DropdownMenuItem 
-        className={filterContent === "Medio contenido" ? "bg-muted/50" : ""}
-        onClick={() => setFilterContent("Medio contenido")}
+        className={filterContent === "paperback" ? "bg-muted/50" : ""}
+        onClick={() => setFilterContent("paperback")}
       >
         <span className="mr-2 h-2 w-2 rounded-full bg-indigo-500"></span>
-        Medio contenido
+        Tapa blanda
       </DropdownMenuItem>
       <DropdownMenuItem 
-        className={filterContent === "Bajo contenido" ? "bg-muted/50" : ""}
-        onClick={() => setFilterContent("Bajo contenido")}
+        className={filterContent === "ebook" ? "bg-muted/50" : ""}
+        onClick={() => setFilterContent("ebook")}
       >
         <span className="mr-2 h-2 w-2 rounded-full bg-sky-500"></span>
-        Bajo contenido
+        eBook
       </DropdownMenuItem>
     </DropdownMenuGroup>
   );

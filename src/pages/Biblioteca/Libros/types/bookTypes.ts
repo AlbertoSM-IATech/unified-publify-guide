@@ -1,3 +1,4 @@
+
 export interface BookNote {
   id: number;
   text: string;
@@ -26,6 +27,7 @@ export interface BookFormat {
     [key: string]: string | undefined;
   };
   strategy?: string;
+  bsr?: number;
   [key: string]: any;
 }
 
@@ -38,8 +40,8 @@ export interface Book {
   autor: string;
   isbn: string;
   asin: string;
-  estado: "borrador" | "en_edicion" | "publicado" | "pausado";
-  contenido: "hardcover" | "paperback" | "ebook";
+  estado: "Borrador" | "En revisión" | "Publicado" | "Archivado" | "borrador" | "en_edicion" | "publicado" | "pausado";
+  contenido: "Alto Contenido" | "Medio Contenido" | "Bajo Contenido" | "hardcover" | "paperback" | "ebook";
   fechaPublicacion: string | null;
   fechaLanzamiento?: string | null; // Launch date
   bsr?: number | null; // Best Seller Rank
