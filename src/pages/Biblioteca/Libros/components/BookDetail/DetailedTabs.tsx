@@ -10,8 +10,6 @@ import {
   Info, 
   BookOpen, 
   FileText, 
-  Link, 
-  Calendar,
   CircleDollarSign
 } from "lucide-react";
 

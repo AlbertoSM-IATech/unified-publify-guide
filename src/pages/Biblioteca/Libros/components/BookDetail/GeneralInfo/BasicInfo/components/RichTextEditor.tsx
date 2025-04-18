@@ -1,11 +1,10 @@
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useEditor, EditorContent } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
-import Underline from "@tiptap/extension-underline";
-import Link from "@tiptap/extension-link";
 import { EditorToolbar } from "./Editor/EditorToolbar";
 import { LinkInput } from "./Editor/LinkInput";
+import { editorExtensions } from "./Editor/EditorExtensions";
+import "./Editor/editor.css";
 
 interface RichTextEditorProps {
   content: string;
@@ -18,16 +17,7 @@ export const RichTextEditor = ({ content, onChange, readOnly = false }: RichText
   const [showLinkInput, setShowLinkInput] = useState<boolean>(false);
 
   const editor = useEditor({
-    extensions: [
-      StarterKit,
-      Underline,
-      Link.configure({
-        openOnClick: false,
-        HTMLAttributes: {
-          class: 'text-primary underline',
-        },
-      }),
-    ],
+    extensions: editorExtensions,
     content: content || "",
     editable: !readOnly,
     onUpdate: ({ editor }) => {
@@ -35,29 +25,37 @@ export const RichTextEditor = ({ content, onChange, readOnly = false }: RichText
     },
   });
 
+  // Sync content with parent
   useEffect(() => {
     if (editor && content !== editor.getHTML()) {
       editor.commands.setContent(content || "");
     }
   }, [content, editor]);
 
+  // Handle link setting
+  const setLink = useCallback(() => {
+    if (!editor || !linkUrl) return;
+    
+    // Check if the link has a protocol, if not add https://
+    let url = linkUrl;
+    if (!/^https?:\/\//i.test(url)) {
+      url = 'https://' + url;
+    }
+    
+    editor
+      .chain()
+      .focus()
+      .extendMarkRange('link')
+      .setLink({ href: url })
+      .run();
+    
+    setLinkUrl('');
+    setShowLinkInput(false);
+  }, [editor, linkUrl]);
+
   if (!editor) {
     return null;
   }
-
-  const setLink = () => {
-    if (linkUrl) {
-      editor
-        .chain()
-        .focus()
-        .extendMarkRange('link')
-        .setLink({ href: linkUrl })
-        .run();
-      
-      setLinkUrl('');
-      setShowLinkInput(false);
-    }
-  };
 
   if (readOnly) {
     return (
@@ -85,7 +83,7 @@ export const RichTextEditor = ({ content, onChange, readOnly = false }: RichText
       )}
       
       <div className="bg-background p-3 prose prose-sm max-w-none dark:prose-invert">
-        <EditorContent editor={editor} />
+        <EditorContent editor={editor} className="min-h-[150px]" />
       </div>
     </div>
   );

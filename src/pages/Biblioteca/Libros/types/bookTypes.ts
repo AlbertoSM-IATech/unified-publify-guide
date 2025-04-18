@@ -35,18 +35,18 @@ export interface Book {
   titulo: string;
   subtitulo: string;
   descripcion?: string;
-  descripcionHtml?: string; // New field for HTML description
+  descripcionHtml?: string; // HTML description
   autor: string;
   isbn: string;
   asin: string;
   estado: string;
   contenido: string;
   fechaPublicacion: string | null;
-  fechaLanzamiento?: string | null; // New field for launch date
-  bsr?: number | null; // New field for Best Seller Rank
-  landingPageUrl?: string; // New field for landing page URL
-  contenidoAPlus?: string; // New field for A+ content
-  contenidoAPlusFiles?: {id: number; name: string; type: string}[]; // New field for A+ content files
+  fechaLanzamiento?: string | null; // Launch date
+  bsr?: number | null; // Best Seller Rank
+  landingPageUrl?: string; // Landing page URL
+  contenidoAPlus?: string; // A+ content
+  contenidoAPlusFiles?: {id: number; name: string; type: string}[]; // A+ content files
   imageUrl: string;
   investigacionId?: number;
   proyectoId?: number;
@@ -54,4 +54,12 @@ export interface Book {
   paperback?: BookFormat;
   ebook?: BookFormat;
   notes?: BookNote[];
+  
+  // Audience and positioning fields
+  targetAge?: string; // Target age range (e.g., "25-45")
+  targetGender?: string; // Target gender
+  targetInterests?: string; // Target interests
+  marketPosition?: string; // Market positioning description
+  competitorBooks?: string; // Competing books
+  uniqueValueProposition?: string; // Unique value proposition
 }
