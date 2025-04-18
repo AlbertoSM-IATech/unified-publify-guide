@@ -10,6 +10,7 @@ import { AudienceSection } from "./GeneralInfo/AudienceSection";
 import { ContentAplusSection } from "./GeneralInfo/ContentAplusSection";
 import { motion } from "framer-motion";
 import { FileText, Users, LayoutPanelTop } from "lucide-react";
+import { Form } from "@/components/ui/form";
 
 interface GeneralInfoSectionProps {
   book: Book;
@@ -34,59 +35,62 @@ export const GeneralInfoSection = ({
       transition={{ duration: 0.4 }}
       className="w-full"
     >
-      <Tabs 
-        defaultValue="basic-info" 
-        className="w-full"
-        onValueChange={(value) => setActiveTab(value)}
-      >
-        <TabsList className="mb-4 grid w-full grid-cols-3 bg-muted/80 p-1">
-          <TabsTrigger 
-            value="basic-info"
-            className="data-[state=active]:bg-white dark:data-[state=active]:bg-slate-800 data-[state=active]:shadow-sm"
-          >
-            <div className="flex items-center gap-2">
-              <FileText size={16} />
-              <span className="hidden md:block">Información Básica</span>
-            </div>
-          </TabsTrigger>
-          
-          <TabsTrigger 
-            value="audience"
-            className="data-[state=active]:bg-white dark:data-[state=active]:bg-slate-800 data-[state=active]:shadow-sm"
-          >
-            <div className="flex items-center gap-2">
-              <Users size={16} />
-              <span className="hidden md:block">Audiencia</span>
-            </div>
-          </TabsTrigger>
-          
-          <TabsTrigger 
-            value="aplus-content"
-            className="data-[state=active]:bg-white dark:data-[state=active]:bg-slate-800 data-[state=active]:shadow-sm"
-          >
-            <div className="flex items-center gap-2">
-              <LayoutPanelTop size={16} />
-              <span className="hidden md:block">Contenido A+</span>
-            </div>
-          </TabsTrigger>
-        </TabsList>
-        
-        <Card className="border-slate-200 dark:border-slate-700 shadow-md overflow-hidden">
-          <CardContent className="p-6">
-            <TabsContent value="basic-info" className="mt-0">
-              <BasicInfoFields book={book} isEditing={isEditing} form={form} />
-            </TabsContent>
+      {/* Wrap all form content with the Form provider */}
+      <Form {...form.formProps}>
+        <Tabs 
+          defaultValue="basic-info" 
+          className="w-full"
+          onValueChange={(value) => setActiveTab(value)}
+        >
+          <TabsList className="mb-4 grid w-full grid-cols-3 bg-muted/80 p-1">
+            <TabsTrigger 
+              value="basic-info"
+              className="data-[state=active]:bg-white dark:data-[state=active]:bg-slate-800 data-[state=active]:shadow-sm"
+            >
+              <div className="flex items-center gap-2">
+                <FileText size={16} />
+                <span className="hidden md:block">Información Básica</span>
+              </div>
+            </TabsTrigger>
             
-            <TabsContent value="audience" className="mt-0">
-              <AudienceSection book={book} isEditing={isEditing} form={form} />
-            </TabsContent>
+            <TabsTrigger 
+              value="audience"
+              className="data-[state=active]:bg-white dark:data-[state=active]:bg-slate-800 data-[state=active]:shadow-sm"
+            >
+              <div className="flex items-center gap-2">
+                <Users size={16} />
+                <span className="hidden md:block">Audiencia</span>
+              </div>
+            </TabsTrigger>
             
-            <TabsContent value="aplus-content" className="mt-0">
-              <ContentAplusSection book={book} isEditing={isEditing} form={form} />
-            </TabsContent>
-          </CardContent>
-        </Card>
-      </Tabs>
+            <TabsTrigger 
+              value="aplus-content"
+              className="data-[state=active]:bg-white dark:data-[state=active]:bg-slate-800 data-[state=active]:shadow-sm"
+            >
+              <div className="flex items-center gap-2">
+                <LayoutPanelTop size={16} />
+                <span className="hidden md:block">Contenido A+</span>
+              </div>
+            </TabsTrigger>
+          </TabsList>
+          
+          <Card className="border-slate-200 dark:border-slate-700 shadow-md overflow-hidden">
+            <CardContent className="p-6">
+              <TabsContent value="basic-info" className="mt-0">
+                <BasicInfoFields book={book} isEditing={isEditing} form={form} />
+              </TabsContent>
+              
+              <TabsContent value="audience" className="mt-0">
+                <AudienceSection book={book} isEditing={isEditing} form={form} />
+              </TabsContent>
+              
+              <TabsContent value="aplus-content" className="mt-0">
+                <ContentAplusSection book={book} isEditing={isEditing} form={form} />
+              </TabsContent>
+            </CardContent>
+          </Card>
+        </Tabs>
+      </Form>
     </motion.div>
   );
 };

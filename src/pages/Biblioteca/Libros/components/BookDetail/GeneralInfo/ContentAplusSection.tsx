@@ -4,8 +4,7 @@ import { Book } from "../../../types/bookTypes";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { FormField } from "@/components/ui/form";
-import { UseFormReturn } from "react-hook-form";
+import { FormField, FormControl, FormItem } from "@/components/ui/form";
 import { FilePlus2, File, Image, Trash2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { motion, AnimatePresence } from "framer-motion";
@@ -13,7 +12,7 @@ import { motion, AnimatePresence } from "framer-motion";
 interface ContentAplusSectionProps {
   book: Book;
   isEditing: boolean;
-  form: UseFormReturn<any>;
+  form: any; // Using 'any' here to handle the extended form object from useGeneralInfoForm
 }
 
 export const ContentAplusSection = ({ book, isEditing, form }: ContentAplusSectionProps) => {
@@ -72,12 +71,16 @@ export const ContentAplusSection = ({ book, isEditing, form }: ContentAplusSecti
               control={form.control}
               name="contenidoAPlus"
               render={({ field }) => (
-                <Textarea
-                  id="contenidoAPlus"
-                  placeholder="Introduce el texto para el contenido A+ (se mostrará en Amazon)"
-                  rows={4}
-                  {...field}
-                />
+                <FormItem>
+                  <FormControl>
+                    <Textarea
+                      id="contenidoAPlus"
+                      placeholder="Introduce el texto para el contenido A+ (se mostrará en Amazon)"
+                      rows={4}
+                      {...field}
+                    />
+                  </FormControl>
+                </FormItem>
               )}
             />
           </div>

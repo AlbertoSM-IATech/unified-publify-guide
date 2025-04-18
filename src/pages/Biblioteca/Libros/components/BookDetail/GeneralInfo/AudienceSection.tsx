@@ -4,16 +4,15 @@ import { Book } from "../../../types/bookTypes";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { FormField, FormControl } from "@/components/ui/form";
+import { FormField, FormControl, FormItem } from "@/components/ui/form";
 import { Separator } from "@/components/ui/separator";
 import { Card } from "@/components/ui/card";
-import { UseFormReturn } from "react-hook-form";
 import { Users, Target, Sparkles } from "lucide-react";
 
 interface AudienceSectionProps {
   book: Book;
   isEditing: boolean;
-  form: UseFormReturn<any>;
+  form: any; // Using 'any' here to handle the extended form object from useGeneralInfoForm
 }
 
 export const AudienceSection = ({
@@ -42,12 +41,16 @@ export const AudienceSection = ({
               control={form.control}
               name="targetAge"
               render={({ field }) => (
-                <Input
-                  id="targetAge"
-                  placeholder="Ej: 25-45 años"
-                  {...field}
-                  value={field.value || ''}
-                />
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      id="targetAge"
+                      placeholder="Ej: 25-45 años"
+                      {...field}
+                      value={field.value || ''}
+                    />
+                  </FormControl>
+                </FormItem>
               )}
             />
           ) : (
@@ -64,12 +67,16 @@ export const AudienceSection = ({
               control={form.control}
               name="targetGender"
               render={({ field }) => (
-                <Input
-                  id="targetGender"
-                  placeholder="Ej: Mujeres, Hombres, Todos"
-                  {...field}
-                  value={field.value || ''}
-                />
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      id="targetGender"
+                      placeholder="Ej: Mujeres, Hombres, Todos"
+                      {...field}
+                      value={field.value || ''}
+                    />
+                  </FormControl>
+                </FormItem>
               )}
             />
           ) : (
@@ -86,13 +93,17 @@ export const AudienceSection = ({
               control={form.control}
               name="targetInterests"
               render={({ field }) => (
-                <Textarea
-                  id="targetInterests"
-                  placeholder="Ej: Tecnología, Fitness, Cocina saludable..."
-                  rows={2}
-                  {...field}
-                  value={field.value || ''}
-                />
+                <FormItem>
+                  <FormControl>
+                    <Textarea
+                      id="targetInterests"
+                      placeholder="Ej: Tecnología, Fitness, Cocina saludable..."
+                      rows={2}
+                      {...field}
+                      value={field.value || ''}
+                    />
+                  </FormControl>
+                </FormItem>
               )}
             />
           ) : (
@@ -117,13 +128,17 @@ export const AudienceSection = ({
               control={form.control}
               name="marketPosition"
               render={({ field }) => (
-                <Textarea
-                  id="marketPosition"
-                  placeholder="Describa cómo se posiciona este libro en el mercado"
-                  rows={2}
-                  {...field}
-                  value={field.value || ''}
-                />
+                <FormItem>
+                  <FormControl>
+                    <Textarea
+                      id="marketPosition"
+                      placeholder="Describa cómo se posiciona este libro en el mercado"
+                      rows={2}
+                      {...field}
+                      value={field.value || ''}
+                    />
+                  </FormControl>
+                </FormItem>
               )}
             />
           ) : (
@@ -140,13 +155,17 @@ export const AudienceSection = ({
               control={form.control}
               name="competitorBooks"
               render={({ field }) => (
-                <Textarea
-                  id="competitorBooks"
-                  placeholder="Libros similares con los que compite"
-                  rows={2}
-                  {...field}
-                  value={field.value || ''}
-                />
+                <FormItem>
+                  <FormControl>
+                    <Textarea
+                      id="competitorBooks"
+                      placeholder="Libros similares con los que compite"
+                      rows={2}
+                      {...field}
+                      value={field.value || ''}
+                    />
+                  </FormControl>
+                </FormItem>
               )}
             />
           ) : (
@@ -171,13 +190,17 @@ export const AudienceSection = ({
               control={form.control}
               name="uniqueValueProposition"
               render={({ field }) => (
-                <Textarea
-                  id="uniqueValueProposition"
-                  placeholder="¿Por qué alguien debería comprar este libro?"
-                  rows={3}
-                  {...field}
-                  value={field.value || ''}
-                />
+                <FormItem>
+                  <FormControl>
+                    <Textarea
+                      id="uniqueValueProposition"
+                      placeholder="¿Por qué alguien debería comprar este libro?"
+                      rows={3}
+                      {...field}
+                      value={field.value || ''}
+                    />
+                  </FormControl>
+                </FormItem>
               )}
             />
           ) : (

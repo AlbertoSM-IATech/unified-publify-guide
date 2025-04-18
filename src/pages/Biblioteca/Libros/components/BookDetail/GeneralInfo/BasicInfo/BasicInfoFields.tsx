@@ -8,7 +8,7 @@ import { MetadataSection } from "./MetadataSection";
 interface BasicInfoFieldsProps {
   book: Book;
   isEditing: boolean;
-  form: UseFormReturn<any>;
+  form: any; // Using 'any' here to handle the extended form object from useGeneralInfoForm
 }
 
 export const BasicInfoFields = ({ book, isEditing, form }: BasicInfoFieldsProps) => {

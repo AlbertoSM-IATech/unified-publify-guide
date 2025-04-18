@@ -42,6 +42,11 @@ export const useGeneralInfoForm = (
     }
   });
 
+  // Create form props for passing to FormProvider
+  const formProps = {
+    ...form,
+  };
+
   // Update form when book data changes
   useEffect(() => {
     if (book) {
@@ -117,10 +122,13 @@ export const useGeneralInfoForm = (
   };
 
   return {
-    form,
-    selectedDate,
-    selectedLaunchDate,
-    handleDateChange,
-    handleLaunchDateChange
+    form: {
+      ...form,
+      formProps, // This will be passed to FormProvider
+      selectedDate,
+      selectedLaunchDate,
+      handleDateChange,
+      handleLaunchDateChange
+    }
   };
 };
