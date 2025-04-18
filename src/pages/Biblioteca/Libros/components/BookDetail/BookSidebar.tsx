@@ -1,9 +1,7 @@
 
 import { Card } from "@/components/ui/card";
 import { BookCover } from "./BookCover";
-import { BookInfo } from "./BookInfo";
-import { calculateNetRoyalties } from "../../utils/bookDetailUtils";
-import { getStatusColor, getContentColor } from "../../utils/formatUtils";
+import { BookSummary } from "./BookInfo/BookSummary";
 import { Book } from "../../types/bookTypes";
 import { motion } from "framer-motion";
 
@@ -43,7 +41,9 @@ export const BookSidebar = ({
           <div className="relative">
             <BookCover book={book} isEditing={isEditing} onUpdateBook={onUpdateBook} />
           </div>
-          <BookInfo book={book} getStatusColor={getStatusColor} getContentColor={getContentColor} calculateNetRoyalties={calculateNetRoyalties} />
+          <div className="p-6">
+            <BookSummary book={book} isEditing={isEditing} />
+          </div>
         </div>
       </Card>
     </motion.div>

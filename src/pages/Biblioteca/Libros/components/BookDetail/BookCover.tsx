@@ -1,15 +1,10 @@
 
-import { Card } from "@/components/ui/card";
 import { Book } from "../../types/bookTypes";
-import { Input } from "@/components/ui/input";
-import { ChangeEvent, useState } from "react";
-import { motion } from "framer-motion";
-import { toast } from "@/hooks/use-toast";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { Button } from "@/components/ui/button";
 import { Upload } from "lucide-react";
-import { useAuth } from "@/contexts/AuthContext";
-
-// Default book cover image
-const DEFAULT_COVER_URL = "https://edit.org/images/cat/portadas-libros-big-2019101610.jpg";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface BookCoverProps {
   book: Book;
@@ -22,111 +17,61 @@ export const BookCover = ({
   isEditing,
   onUpdateBook
 }: BookCoverProps) => {
-  const [coverUrl, setCoverUrl] = useState(DEFAULT_COVER_URL);
-  const [isUploading, setIsUploading] = useState(false);
-  const { user } = useAuth();
-  
-  const handleCoverChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setCoverUrl(e.target.value);
-    onUpdateBook({ imageUrl: e.target.value });
-  };
+  const [isHovered, setIsHovered] = useState(false);
 
-  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
     if (file) {
-      // Validate file type
-      if (!file.type.startsWith('image/')) {
-        toast({
-          title: "Tipo de archivo no válido",
-          description: "Por favor, sube solo imágenes",
-          variant: "destructive"
-        });
-        return;
-      }
-      
-      // Validate file size (max 5MB)
-      if (file.size > 5 * 1024 * 1024) {
-        toast({
-          title: "Archivo demasiado grande",
-          description: "El tamaño máximo permitido es 5MB",
-          variant: "destructive"
-        });
-        return;
-      }
-      
-      try {
-        setIsUploading(true);
-        
-        // Use FileReader to display preview immediately
-        const reader = new FileReader();
-        reader.onload = (event) => {
-          const imageData = event.target?.result as string;
-          setCoverUrl(imageData);
-          onUpdateBook({ imageUrl: imageData });
-        };
-        reader.readAsDataURL(file);
-        
-        // In a real implementation with Supabase, we would upload to storage
-        // For now, we'll simulate with a timeout
-        setTimeout(() => {
-          setIsUploading(false);
-          toast({
-            title: "Portada actualizada",
-            description: "La imagen se ha subido correctamente"
-          });
-        }, 1000);
-      } catch (error) {
-        console.error('Error uploading image:', error);
-        toast({
-          title: "Error",
-          description: "No se pudo subir la imagen",
-          variant: "destructive"
-        });
-        setIsUploading(false);
-      }
+      // Here you would normally upload the file to your storage service
+      // For now, we'll create a local URL
+      const imageUrl = URL.createObjectURL(file);
+      onUpdateBook({ imageUrl });
     }
   };
-  
+
   return (
-    <Card className="overflow-hidden relative">
-      <div className="aspect-[2/3] w-full relative">
-        <motion.img 
-          src={coverUrl}
-          alt={book.titulo || "Portada del libro"}
-          className="w-full h-full object-cover"
-          whileHover={{
-            scale: 1.03,
-            transition: { duration: 0.2, ease: "easeOut" }
-          }}
+    <div 
+      className="relative"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <AspectRatio ratio={1600/2560} className="bg-muted">
+        <motion.img
+          src={book.imageUrl || "/placeholders/default-book-cover.png"}
+          alt={`Portada de ${book.titulo}`}
+          className="object-cover w-full h-full rounded-t-lg"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3 }}
         />
-        
-        {/* Input para cambiar URL de portada (solo en modo edición) */}
-        {isEditing && (
-          <div className="absolute inset-0 bg-black/60 flex flex-col items-center justify-center p-4 gap-3">
-            <Input
-              type="text"
-              placeholder="URL de la portada"
-              value={coverUrl}
-              onChange={handleCoverChange}
-              className="bg-white/90 text-black mb-2"
-            />
-            
-            <label 
-              className={`flex w-full cursor-pointer items-center justify-center rounded-md border border-input bg-white/90 px-4 py-2 text-sm hover:bg-white transition-colors ${isUploading ? 'opacity-50 cursor-not-allowed' : ''}`}
+        <AnimatePresence>
+          {isEditing && isHovered && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="absolute inset-0 flex items-center justify-center bg-black/50"
             >
-              <Upload size={16} className="mr-2" />
-              {isUploading ? "Subiendo..." : "Subir imagen"}
-              <input 
-                type="file" 
-                accept="image/*" 
-                className="hidden" 
-                onChange={handleImageUpload}
-                disabled={isUploading}
+              <Button
+                variant="secondary"
+                size="sm"
+                className="relative overflow-hidden"
+                onClick={() => document.getElementById('cover-upload')?.click()}
+              >
+                <Upload className="w-4 h-4 mr-2" />
+                Cambiar portada
+              </Button>
+              <input
+                id="cover-upload"
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={handleImageChange}
               />
-            </label>
-          </div>
-        )}
-      </div>
-    </Card>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </AspectRatio>
+    </div>
   );
 };
