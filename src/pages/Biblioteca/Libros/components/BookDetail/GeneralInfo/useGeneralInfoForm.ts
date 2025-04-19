@@ -78,10 +78,25 @@ export const useGeneralInfoForm = (
     }
   }, [book, form]);
 
-  // Update parent component when form data changes
+  // Update parent component when form data changes, with debouncing to prevent infinite loops
   useEffect(() => {
     if (isEditing && onUpdateBook) {
-      const subscription = form.watch((formData) => {
+      // Create a filtered watch that ignores descripcion and descripcionHtml fields to prevent recursive updates
+      const watchedFields = [
+        'titulo', 'subtitulo', 'autor', 'estado', 'contenido', 'bsr', 
+        'landingPageUrl', 'contenidoAPlus', 'contenidoAPlusFiles',
+        'investigacionId', 'proyectoId', 'targetAge', 'targetGender', 
+        'targetInterests', 'marketPosition', 'competitorBooks', 
+        'uniqueValueProposition'
+      ];
+      
+      // Create a more selective subscription to avoid the circular updates with descripcion fields
+      const subscription = form.watch((formData, { name, type }) => {
+        // Skip if the change is coming from descripcion or descripcionHtml to prevent circular updates
+        if (name === 'descripcion' || name === 'descripcionHtml') {
+          return;
+        }
+        
         // Ensure contenidoAPlusFiles has the required properties (non-optional)
         const processedFiles = formData.contenidoAPlusFiles?.map(file => ({
           id: file.id || Date.now(), // Ensure id is not optional
@@ -98,6 +113,7 @@ export const useGeneralInfoForm = (
           bsr: formData.bsr ? Number(formData.bsr) : null,
           contenidoAPlusFiles: processedFiles
         };
+        
         onUpdateBook(updatedData);
       });
       
@@ -106,18 +122,15 @@ export const useGeneralInfoForm = (
   }, [form, isEditing, onUpdateBook, selectedDate, selectedLaunchDate]);
 
   // Handle date change
-  const handleDateChange = (date: Date | undefined) => {
-    setSelectedDate(date);
-    if (onUpdateBook && date) {
-      onUpdateBook({ fechaPublicacion: date.toISOString() });
+  const handleDateChange = (field: string, date: Date | undefined) => {
+    if (field === 'fechaPublicacion') {
+      setSelectedDate(date);
+    } else if (field === 'fechaLanzamiento') {
+      setSelectedLaunchDate(date);
     }
-  };
-  
-  // Handle launch date change
-  const handleLaunchDateChange = (date: Date | undefined) => {
-    setSelectedLaunchDate(date);
+    
     if (onUpdateBook && date) {
-      onUpdateBook({ fechaLanzamiento: date.toISOString() });
+      onUpdateBook({ [field]: date.toISOString() });
     }
   };
 
@@ -127,8 +140,7 @@ export const useGeneralInfoForm = (
       formProps, // This will be passed to FormProvider
       selectedDate,
       selectedLaunchDate,
-      handleDateChange,
-      handleLaunchDateChange
+      handleDateChange
     }
   };
 };

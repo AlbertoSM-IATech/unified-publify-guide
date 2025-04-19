@@ -22,11 +22,17 @@ export const useHtmlDescription = (book: Book, form: UseFormReturn<any>) => {
     }
     
     // Since we're using a rich text editor, the HTML is already generated
-    // We just need to clean it up a bit and set it to the description HTML field
+    // We just need to set it to the description HTML field
     let html = description;
     
     setHtmlOutput(html);
-    form.setValue("descripcionHtml", html);
+    
+    // Set the value without triggering watch effects to avoid recursion
+    form.setValue("descripcionHtml", html, { 
+      shouldValidate: false,
+      shouldDirty: true
+    });
+    
     setShowHtmlPreview(true);
     
     toast({
@@ -36,7 +42,8 @@ export const useHtmlDescription = (book: Book, form: UseFormReturn<any>) => {
   };
 
   const copyHtml = () => {
-    navigator.clipboard.writeText(htmlOutput || book.descripcionHtml || "");
+    const htmlToCopy = form.getValues("descripcionHtml") || book.descripcionHtml || "";
+    navigator.clipboard.writeText(htmlToCopy);
     setCopied(true);
     
     toast({

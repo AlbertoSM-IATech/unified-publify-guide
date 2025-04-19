@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Book } from "../../../../types/bookTypes";
 import { Label } from "@/components/ui/label";
@@ -32,26 +33,30 @@ export const DescriptionSection = ({
     copyHtml
   } = useHtmlDescription(book, form);
 
-  // Handle rich text editor changes
+  // Handle rich text editor changes without causing infinite recursion
   const handleEditorChange = (html: string) => {
-    form.setValue("descripcion", html);
+    // Prevent recursive updates by temporarily disabling watch
+    const watchState = form.formState.isSubmitted;
+    form._options.shouldUnregister = true;
     
-    // Also update HTML version to keep them in sync
-    form.setValue("descripcionHtml", html);
+    // Update the form values
+    form.setValue("descripcion", html, { 
+      shouldValidate: false,
+      shouldDirty: true,
+      shouldTouch: true 
+    });
+    
+    // Also update HTML version without triggering watch effects
+    form.setValue("descripcionHtml", html, { 
+      shouldValidate: false,
+      shouldDirty: true,
+      shouldTouch: true 
+    });
+    
+    // Restore watch state
+    form._options.shouldUnregister = false;
+    form.formState.isSubmitted = watchState;
   };
-
-  // Ensure HTML and description are kept in sync
-  useEffect(() => {
-    if (isEditing) {
-      const subscription = form.watch((value: any) => {
-        if (value.descripcion) {
-          form.setValue("descripcionHtml", value.descripcion);
-        }
-      });
-
-      return () => subscription.unsubscribe();
-    }
-  }, [form, isEditing]);
   
   return (
     <div className="space-y-6 mt-8">
@@ -69,7 +74,11 @@ export const DescriptionSection = ({
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <RichTextEditor content={field.value || ""} onChange={handleEditorChange} />
+                  <RichTextEditor 
+                    content={field.value || ""} 
+                    onChange={handleEditorChange} 
+                    placeholder="Ingresa la descripción del libro"
+                  />
                 </FormControl>
               </FormItem>
             )}
@@ -135,7 +144,13 @@ export const DescriptionSection = ({
                     value={form.getValues("descripcionHtml") || ""}
                     rows={4}
                     className="font-mono text-sm bg-muted mb-3"
-                    onChange={(e) => form.setValue("descripcionHtml", e.target.value)}
+                    onChange={(e) => {
+                      // Use a simpler direct approach to avoid recursion
+                      form.setValue("descripcionHtml", e.target.value, {
+                        shouldValidate: false,
+                        shouldDirty: true
+                      });
+                    }}
                   />
                   
                   <Label className="text-sm font-medium block mb-2">Vista previa</Label>
