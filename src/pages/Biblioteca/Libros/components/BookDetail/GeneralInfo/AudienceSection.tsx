@@ -61,11 +61,30 @@ export const AudienceSection = ({
       );
     }
     
+    // Fix: We need to ensure we only render string values for fields
+    // that could be complex objects or arrays
+    const renderValue = () => {
+      const value = book[name];
+      
+      // Check the type of value and render accordingly
+      if (typeof value === 'string' || typeof value === 'number' || value === null || value === undefined) {
+        return value || "No definido";
+      }
+      
+      // For arrays or objects, show a simplified representation
+      if (Array.isArray(value)) {
+        return "Array de datos";
+      }
+      
+      // For objects or complex types, show "Datos disponibles"
+      return "Datos disponibles";
+    };
+    
     return (
       <>
         <Label htmlFor={name as string}>{label}</Label>
         <div className="border rounded-md p-3 bg-card shadow-sm min-h-[40px]">
-          {book[name] || "No definido"}
+          {renderValue()}
         </div>
       </>
     );
