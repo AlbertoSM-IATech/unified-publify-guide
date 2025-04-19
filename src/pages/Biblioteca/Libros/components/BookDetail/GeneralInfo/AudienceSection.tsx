@@ -18,6 +18,26 @@ export const AudienceSection = ({
   isEditing,
   form
 }: AudienceSectionProps) => {
+  // Function to determine which content to render based on editing mode
+  const renderContent = (content: string) => {
+    if (isEditing) {
+      return (
+        <RichTextEditor
+          content={content || ""}
+          onChange={(value) => form?.setValue("targetInterests", value)}
+          readOnly={!isEditing}
+          placeholder="Describe la audiencia objetivo del libro..."
+        />
+      );
+    } else {
+      return (
+        <div className="prose prose-sm max-w-none dark:prose-invert" 
+             dangerouslySetInnerHTML={{ __html: content || "<p>No hay información disponible</p>" }} 
+        />
+      );
+    }
+  };
+
   return (
     <div className="space-y-6 mt-4">
       <div className="flex items-center">
@@ -32,12 +52,17 @@ export const AudienceSection = ({
           <h4 className="text-md font-semibold">Audiencia Objetivo</h4>
         </div>
         
-        <RichTextEditor
-          content={book.targetInterests || ""}
-          isEditing={isEditing}
-          onChange={(value) => form?.setValue("targetInterests", value)}
-          placeholder="Describe la audiencia objetivo del libro..."
-        />
+        {isEditing ? (
+          <RichTextEditor
+            content={book.targetInterests || ""}
+            onChange={(value) => form?.setValue("targetInterests", value)}
+            placeholder="Describe la audiencia objetivo del libro..."
+          />
+        ) : (
+          <div className="prose prose-sm max-w-none dark:prose-invert" 
+               dangerouslySetInnerHTML={{ __html: book.targetInterests || "<p>No hay información disponible</p>" }} 
+          />
+        )}
       </Card>
       
       {/* Market Avatar */}
@@ -47,12 +72,17 @@ export const AudienceSection = ({
           <h4 className="text-md font-semibold">Avatar Personalizado</h4>
         </div>
         
-        <RichTextEditor
-          content={book.marketPosition || ""}
-          isEditing={isEditing}
-          onChange={(value) => form?.setValue("marketPosition", value)}
-          placeholder="Describe el avatar personalizado del libro..."
-        />
+        {isEditing ? (
+          <RichTextEditor
+            content={book.marketPosition || ""}
+            onChange={(value) => form?.setValue("marketPosition", value)}
+            placeholder="Describe el avatar personalizado del libro..."
+          />
+        ) : (
+          <div className="prose prose-sm max-w-none dark:prose-invert" 
+               dangerouslySetInnerHTML={{ __html: book.marketPosition || "<p>No hay información disponible</p>" }} 
+          />
+        )}
       </Card>
       
       {/* Unique Value Proposition */}
@@ -62,12 +92,17 @@ export const AudienceSection = ({
           <h4 className="text-md font-semibold">Propuesta de Valor Única</h4>
         </div>
         
-        <RichTextEditor
-          content={book.uniqueValueProposition || ""}
-          isEditing={isEditing}
-          onChange={(value) => form?.setValue("uniqueValueProposition", value)}
-          placeholder="¿Qué hace único a este libro?"
-        />
+        {isEditing ? (
+          <RichTextEditor
+            content={book.uniqueValueProposition || ""}
+            onChange={(value) => form?.setValue("uniqueValueProposition", value)}
+            placeholder="¿Qué hace único a este libro?"
+          />
+        ) : (
+          <div className="prose prose-sm max-w-none dark:prose-invert" 
+               dangerouslySetInnerHTML={{ __html: book.uniqueValueProposition || "<p>No hay información disponible</p>" }} 
+          />
+        )}
       </Card>
     </div>
   );
