@@ -58,7 +58,7 @@ export const StatusBadge = ({ status, label, icon, className }: StatusBadgeProps
       "bajo contenido": {
         variant: "default",
         label: "Bajo Contenido",
-        className: "bg-emerald-100 text-[#10B981] border border-emerald-200 dark:bg-emerald-900/30 dark:text-emerald-300 dark:border-emerald-800"
+        className: "bg-emerald-100 text-[#22C55E] border border-emerald-200 dark:bg-emerald-900/30 dark:text-emerald-300 dark:border-emerald-800"
       },
       
       // Generic types

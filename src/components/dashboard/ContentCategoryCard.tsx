@@ -25,14 +25,14 @@ const ContentCategoryCard = ({
   statusData
 }: ContentCategoryCardProps) => {
   return (
-    <div className="rounded-lg border p-4 shadow-sm bg-card">
+    <div className="rounded-lg border p-4 shadow-md bg-white/80 dark:bg-neutral-800/60 backdrop-blur-sm border-neutral-200 dark:border-neutral-700">
       <div className="mb-2 flex items-center">
         <div className={`${color} p-2 rounded-full mr-2`}>
           {icon}
         </div>
         <div>
           <h3 className="font-heading font-medium">{title}</h3>
-          <p className="text-xs text-muted-foreground">{description}</p>
+          <p className="text-xs text-neutral-500 dark:text-neutral-400">{description}</p>
         </div>
         <div className="ml-auto text-2xl font-bold">{count}</div>
       </div>
@@ -46,7 +46,7 @@ const ContentCategoryCard = ({
               </span>
               <span>{status.count} · {status.percentage}%</span>
             </div>
-            <div className="mt-1 h-1.5 w-full overflow-hidden rounded-full bg-muted">
+            <div className="mt-1 h-1.5 w-full overflow-hidden rounded-full bg-neutral-200 dark:bg-neutral-700">
               <div 
                 className={`h-full ${color}`} 
                 style={{

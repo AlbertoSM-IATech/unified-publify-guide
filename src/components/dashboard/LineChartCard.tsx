@@ -41,10 +41,10 @@ const LineChartCard = ({
             data={data}
             margin={{ top: 20, right: 30, left: 20, bottom: 40 }}
           >
-            <CartesianGrid strokeDasharray="3 3" stroke="#374151" opacity={0.2} />
+            <CartesianGrid strokeDasharray="3 3" stroke="#606060" opacity={0.2} />
             <XAxis 
               dataKey="name" 
-              stroke="#888888" 
+              stroke="#858585" 
               fontSize={12} 
               tickLine={false} 
               axisLine={false}
@@ -52,7 +52,7 @@ const LineChartCard = ({
               dy={10}
             />
             <YAxis
-              stroke="#888888"
+              stroke="#858585"
               fontSize={12}
               tickLine={false}
               axisLine={false}
@@ -67,7 +67,7 @@ const LineChartCard = ({
               wrapperStyle={{ paddingTop: 20 }}
               formatter={(value) => <span className="text-sm font-medium">{value}</span>}
             />
-            <ReferenceLine y={0} stroke="#666" strokeDasharray="3 3" />
+            <ReferenceLine y={0} stroke="#606060" strokeDasharray="3 3" />
             <Line
               type="monotone"
               dataKey="balance"

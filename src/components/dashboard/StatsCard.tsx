@@ -17,7 +17,7 @@ const StatsCard = ({
 }: StatsCardProps) => {
   return (
     <motion.div 
-      className="card-hover rounded-lg border p-4 shadow-sm bg-card dark:border-slate-800"
+      className="rounded-lg border p-4 shadow-md bg-white/80 dark:bg-neutral-800/60 backdrop-blur-sm border-neutral-200 dark:border-neutral-700"
       whileHover={{
         y: -3,
         boxShadow: "0 8px 20px -5px rgba(251, 146, 60, 0.2), 0 4px 10px -4px rgba(251, 146, 60, 0.2)",
@@ -26,7 +26,7 @@ const StatsCard = ({
     >
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-sm text-muted-foreground">{title}</p>
+          <p className="text-sm text-neutral-500 dark:text-neutral-400">{title}</p>
           <p className="mt-1 text-2xl font-bold text-foreground">{value}</p>
         </div>
         <div className="rounded-full bg-primary/10 p-2 text-primary">
@@ -37,7 +37,7 @@ const StatsCard = ({
         <span className={change.startsWith("+") ? "text-green-500 dark:text-green-400" : "text-red-500 dark:text-red-400"}>
           {change}
         </span>
-        <span className="ml-1 text-muted-foreground">desde el mes pasado</span>
+        <span className="ml-1 text-neutral-500 dark:text-neutral-400">desde el mes pasado</span>
       </div>
     </motion.div>
   );

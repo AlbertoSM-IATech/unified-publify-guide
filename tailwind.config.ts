@@ -81,7 +81,18 @@ export default {
         content: {
           high: '#3B82F6',    // Blue
           medium: '#FB923C',  // Coral Orange
-          low: '#10B981'      // Green
+          low: '#22C55E'      // Green (updated to the requested value)
+        },
+        // New neutral palette
+        neutral: {
+          100: '#FFFFFF',
+          200: '#E5E5E5',
+          300: '#D5D5D5',
+          400: '#CACACA',
+          500: '#858585',
+          600: '#606060',
+          700: '#3E3E3E',
+          800: '#1E1E1E',
         }
       },
       borderRadius: {

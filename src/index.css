@@ -7,82 +7,84 @@
 
 @layer base {
   :root {
-    --background: 0 0% 98%;
-    --foreground: 222.2 84% 4.9%;
+    --background: 0 0% 97%;
+    --foreground: 0 0% 12%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 0 0% 12%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 0 0% 12%;
 
     --primary: 217 91% 60%;
     --primary-foreground: 210 40% 98%;
 
     --secondary: 220 14% 94%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary-foreground: 0 0% 12%;
 
     --muted: 220 14% 94%;
     --muted-foreground: 215 25% 40%;
 
     --accent: 24 94% 59%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent-foreground: 0 0% 12%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 214.3 31.8% 85.4%;
-    --input: 214.3 31.8% 85.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 0 0% 85%;
+    --input: 0 0% 85%;
+    --ring: 0 0% 12%;
 
     --radius: 0.5rem;
 
-    --sidebar-background: 0 0% 100%;
-    --sidebar-foreground: 240 5.3% 26.1%;
+    /* Sidebar color variables - Light mode: keep sidebar dark */
+    --sidebar-background: 0 0% 12%; /* #1e1e1e */
+    --sidebar-foreground: 0 0% 100%;
     --sidebar-primary: 217 91% 60%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 0 0% 18%; /* slightly lighter than background for hover */
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 0 0% 18%;
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    --background: 0 0% 12%; /* #1e1e1e */
+    --foreground: 0 0% 95%;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: 0 0% 15%; /* #262626 - slightly lighter than background */
+    --card-foreground: 0 0% 95%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 0 0% 15%;
+    --popover-foreground: 0 0% 95%;
 
     --primary: 217 91% 60%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 0 0% 18%; /* #2e2e2e */
+    --secondary-foreground: 0 0% 95%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 75%;
+    --muted: 0 0% 18%;
+    --muted-foreground: 0 0% 65%;
 
     --accent: 24 94% 59%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 62.8% 40.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 95%;
 
-    --border: 217.2 32.6% 20.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    --border: 0 0% 22%;
+    --input: 0 0% 18%;
+    --ring: 0 0% 75%;
     
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
+    /* Sidebar color variables - Dark mode */
+    --sidebar-background: 0 0% 12%; /* #1e1e1e */
+    --sidebar-foreground: 0 0% 95%;
     --sidebar-primary: 217 91% 60%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-accent: 0 0% 18%; /* #2e2e2e */
+    --sidebar-accent-foreground: 0 0% 95%;
+    --sidebar-border: 0 0% 18%;
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 }
@@ -99,12 +101,12 @@
   
   /* Improved text contrast for light mode */
   .text-muted-foreground {
-    @apply dark:text-slate-300 text-slate-600;
+    @apply dark:text-neutral-200 text-neutral-600;
   }
   
   /* Improved card contrast in light mode */
   .card {
-    @apply dark:shadow-md shadow-md border-slate-200 dark:border-slate-800;
+    @apply dark:shadow-md shadow-md border-neutral-200 dark:border-neutral-700;
   }
 }
 
@@ -178,7 +180,7 @@
   
   /* New book card styles with improved contrast */
   .book-card {
-    @apply border dark:border-slate-700 border-slate-300 overflow-hidden bg-card transition-all duration-300 shadow-md;
+    @apply border dark:border-neutral-700 border-neutral-300 overflow-hidden bg-card transition-all duration-300 shadow-md;
   }
   
   .book-card:hover {
@@ -204,7 +206,7 @@
   }
   
   .btn-outline {
-    @apply border border-slate-300 dark:border-slate-700 hover:border-[#FB923C]/40 hover:bg-[#FB923C]/10;
+    @apply border border-neutral-300 dark:border-neutral-700 hover:border-[#FB923C]/40 hover:bg-[#FB923C]/10;
   }
 }
 
@@ -238,6 +240,16 @@
   /* Enhanced focus styles */
   .focus-visible\:ring-accent:focus-visible {
     @apply outline-none ring-2 ring-[#FB923C]/60 ring-offset-2;
+  }
+
+  /* Glass effect for card elements */
+  .card-glass {
+    @apply bg-white/10 dark:bg-white/5 backdrop-blur-sm border border-white/20 dark:border-white/10;
+  }
+  
+  /* New dashboard card styles */
+  .dashboard-card {
+    @apply bg-white/80 dark:bg-neutral-800/60 backdrop-blur-sm border border-neutral-200 dark:border-neutral-700 shadow-sm;
   }
 }
 

@@ -6,7 +6,7 @@ import { BookOpen, Users, TrendingUp, TrendingDown } from "lucide-react";
 export const CHART_CONFIG = {
   altoContenido: { theme: { light: "#3B82F6", dark: "#3B82F6" } }, // Blue
   medioContenido: { theme: { light: "#FB923C", dark: "#FB923C" } }, // Coral Orange
-  bajoContenido: { theme: { light: "#10B981", dark: "#10B981" } }, // Green
+  bajoContenido: { theme: { light: "#22C55E", dark: "#22C55E" } }, // Green (updated)
   publicados: { theme: { light: "#10B981", dark: "#10B981" } }, // Green
   enRevision: { theme: { light: "#F59E0B", dark: "#F59E0B" } }, // Amber
   borradores: { theme: { light: "#6366F1", dark: "#6366F1" } }, // Indigo
@@ -82,7 +82,7 @@ export const getContentCategoriesData = (): ContentCategory[] => [
   {
     title: "Bajo Contenido",
     description: "Libros con menos de 30 páginas",
-    color: "bg-green-500", // Cambiado a verde
+    color: "bg-green-500",
     count: 0,
     statusData: [
       { label: "Publicados", count: 0, percentage: 0 },
@@ -104,6 +104,6 @@ export const getPieChartData = (): ChartItem[] => [
 // Bar chart data
 export const getBarChartData = (): ChartItem[] => [
   { name: "Alto Contenido", value: 1, color: "#3b82f6" },
-  { name: "Medio Contenido", value: 1, color: "#f97316" },
-  { name: "Bajo Contenido", value: 0, color: "#10b981" }, // Cambiado a verde
+  { name: "Medio Contenido", value: 1, color: "#fb923c" },
+  { name: "Bajo Contenido", value: 0, color: "#22c55e" }, // Updated to new green
 ];

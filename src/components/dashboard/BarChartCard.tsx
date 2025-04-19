@@ -49,6 +49,7 @@ const BarChartCard = ({
               tickLine={false}
               axisLine={false}
               dy={10}
+              stroke="#858585"
             />
             <YAxis 
               fontSize={12}
@@ -57,6 +58,7 @@ const BarChartCard = ({
               width={40}
               domain={[0, 'dataMax + 1']}
               tickCount={5}
+              stroke="#858585"
             />
             <ChartTooltip content={<ChartTooltipContent />} />
             <Legend 

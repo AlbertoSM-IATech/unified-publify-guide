@@ -71,7 +71,7 @@ const PieChartCard = ({
       {/* Total value in center of semicircle */}
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/3 text-center">
         <span className="text-3xl font-bold">{totalValue}</span>
-        <p className="text-xs text-muted-foreground mt-1">{totalLabel}</p>
+        <p className="text-xs text-neutral-500 dark:text-neutral-400 mt-1">{totalLabel}</p>
       </div>
       
       <div className="mt-4 grid grid-cols-4 gap-2">
