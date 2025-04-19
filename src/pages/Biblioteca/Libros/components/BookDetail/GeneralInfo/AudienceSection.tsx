@@ -61,23 +61,35 @@ export const AudienceSection = ({
       );
     }
     
-    // Fix: We need to ensure we only render string values for fields
-    // that could be complex objects or arrays
+    // Enhanced renderValue function that properly handles complex objects and arrays
     const renderValue = () => {
       const value = book[name];
       
-      // Check the type of value and render accordingly
-      if (typeof value === 'string' || typeof value === 'number' || value === null || value === undefined) {
-        return value || "No definido";
+      // Handle null or undefined
+      if (value === null || value === undefined) {
+        return "No definido";
       }
       
-      // For arrays or objects, show a simplified representation
+      // Handle primitive types directly
+      if (typeof value === 'string' || typeof value === 'number') {
+        return String(value);
+      }
+      
+      // Handle arrays by converting to a readable format
       if (Array.isArray(value)) {
-        return "Array de datos";
+        if (value.length === 0) return "No hay datos";
+        
+        // Simple string representation for arrays of objects
+        return "Lista de datos";
       }
       
-      // For objects or complex types, show "Datos disponibles"
-      return "Datos disponibles";
+      // For objects, convert to a string representation
+      if (typeof value === 'object') {
+        return "Datos de objeto";
+      }
+      
+      // Fallback for any other types
+      return String(value);
     };
     
     return (
