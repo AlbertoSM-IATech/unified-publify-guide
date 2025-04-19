@@ -6,12 +6,14 @@ import { isValidASIN, isValidISBN, formatISBN } from "../../../utils/validationU
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle } from "lucide-react";
 import { motion } from "framer-motion";
+
 interface TechnicalSectionProps {
   formatType: string;
   format: BookFormat;
   isEditing: boolean;
   onUpdateFormat?: (formatType: string, updatedData: Partial<BookFormat>) => void;
 }
+
 export const TechnicalSection = ({
   formatType,
   format,
@@ -19,6 +21,7 @@ export const TechnicalSection = ({
   onUpdateFormat
 }: TechnicalSectionProps) => {
   const [errors, setErrors] = useState<Record<string, string>>({});
+
   const validateField = (field: string, value: string) => {
     const newErrors = {
       ...errors
@@ -36,6 +39,7 @@ export const TechnicalSection = ({
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
+
   const handleChange = (field: string, value: string) => {
     if (validateField(field, value) && onUpdateFormat) {
       onUpdateFormat(formatType, {
@@ -44,31 +48,51 @@ export const TechnicalSection = ({
     }
   };
 
-  // Determine if this is an ebook (no dimensions or pages for ebooks)
   const isEbook = formatType === 'ebook';
-  return <div className="space-y-6">
-      <div className="grid gap-4 sm:grid-cols-2">
-        {/* ISBN Field */}
-        <div className="grid gap-2">
-          <Label htmlFor={`${formatType}-isbn`}>ISBN-13</Label>
-          {isEditing ? <div className="space-y-2">
-              <Input id={`${formatType}-isbn`} placeholder="978XXXXXXXXXX" value={format.isbn || ""} onChange={e => handleChange('isbn', e.target.value)} className={errors.isbn ? "border-red-500" : ""} />
-              {errors.isbn && <p className="text-xs text-red-500">{errors.isbn}</p>}
-            </div> : <div className="h-10 px-3 py-2 rounded-md border border-input bg-muted/50 flex items-center">
-              {format.isbn ? formatISBN(format.isbn) : "No definido"}
-            </div>}
-        </div>
-        
-        {/* ASIN Field */}
-        <div className="grid gap-2">
-          <Label htmlFor={`${formatType}-asin`}>ASIN</Label>
-          {isEditing ? <div className="space-y-2">
-              <Input id={`${formatType}-asin`} placeholder="B01ABCDEFG" value={format.asin || ""} onChange={e => handleChange('asin', e.target.value)} className={errors.asin ? "border-red-500" : ""} />
-              {errors.asin && <p className="text-xs text-red-500">{errors.asin}</p>}
-            </div> : <div className="h-10 px-3 py-2 rounded-md border border-input bg-muted/50 flex items-center">
-              {format.asin || "No definido"}
-            </div>}
-        </div>
+
+  return (
+    <div className="space-y-6">
+      {/* BSR Field */}
+      <div className="grid gap-2">
+        <Label htmlFor={`${formatType}-bsr`}>Best Seller Rank (BSR)</Label>
+        {isEditing ? (
+          <Input
+            id={`${formatType}-bsr`}
+            type="number"
+            placeholder="0"
+            value={format.bsr || ""}
+            onChange={(e) => {
+              const value = e.target.value ? parseInt(e.target.value) : undefined;
+              onUpdateFormat && onUpdateFormat(formatType, { bsr: value });
+            }}
+          />
+        ) : (
+          <div className="h-10 px-3 py-2 rounded-md border border-input bg-muted/50 flex items-center">
+            {format.bsr ? `#${format.bsr}` : "No definido"}
+          </div>
+        )}
+      </div>
+
+      {/* ISBN Field */}
+      <div className="grid gap-2">
+        <Label htmlFor={`${formatType}-isbn`}>ISBN-13</Label>
+        {isEditing ? <div className="space-y-2">
+            <Input id={`${formatType}-isbn`} placeholder="978XXXXXXXXXX" value={format.isbn || ""} onChange={e => handleChange('isbn', e.target.value)} className={errors.isbn ? "border-red-500" : ""} />
+            {errors.isbn && <p className="text-xs text-red-500">{errors.isbn}</p>}
+          </div> : <div className="h-10 px-3 py-2 rounded-md border border-input bg-muted/50 flex items-center">
+            {format.isbn ? formatISBN(format.isbn) : "No definido"}
+          </div>}
+      </div>
+
+      {/* ASIN Field */}
+      <div className="grid gap-2">
+        <Label htmlFor={`${formatType}-asin`}>ASIN</Label>
+        {isEditing ? <div className="space-y-2">
+            <Input id={`${formatType}-asin`} placeholder="B01ABCDEFG" value={format.asin || ""} onChange={e => handleChange('asin', e.target.value)} className={errors.asin ? "border-red-500" : ""} />
+            {errors.asin && <p className="text-xs text-red-500">{errors.asin}</p>}
+          </div> : <div className="h-10 px-3 py-2 rounded-md border border-input bg-muted/50 flex items-center">
+            {format.asin || "No definido"}
+          </div>}
       </div>
 
       {/* Only show dimensions and pages for physical books */}
@@ -98,7 +122,6 @@ export const TechnicalSection = ({
         </>}
 
       {/* Strategy Field */}
-      
 
       {Object.keys(errors).length > 0 && <motion.div initial={{
       opacity: 0,
@@ -114,5 +137,6 @@ export const TechnicalSection = ({
             </AlertDescription>
           </Alert>
         </motion.div>}
-    </div>;
+    </div>
+  );
 };

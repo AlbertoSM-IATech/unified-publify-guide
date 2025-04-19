@@ -1,4 +1,3 @@
-
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Book } from "../../types/bookTypes";
 import { GeneralInfoSection } from "./GeneralInfoSection";
@@ -78,9 +77,7 @@ export const DetailedTabs = ({ book, isEditing, onUpdateBook }: DetailedTabsProp
         </TabsContent>
 
         <TabsContent value="audience" className="mt-4">
-          <Card className="p-6 border-slate-200 dark:border-slate-700 shadow-md">
-            <AudienceSection book={book} isEditing={isEditing} form={null} />
-          </Card>
+          <AudienceSection book={book} isEditing={isEditing} form={null} />
         </TabsContent>
 
         <TabsContent value="notes" className="mt-4">
