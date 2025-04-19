@@ -18,26 +18,6 @@ export const AudienceSection = ({
   isEditing,
   form
 }: AudienceSectionProps) => {
-  // Function to determine which content to render based on editing mode
-  const renderContent = (content: string) => {
-    if (isEditing) {
-      return (
-        <RichTextEditor
-          content={content || ""}
-          onChange={(value) => form?.setValue("targetInterests", value)}
-          readOnly={!isEditing}
-          placeholder="Describe la audiencia objetivo del libro..."
-        />
-      );
-    } else {
-      return (
-        <div className="prose prose-sm max-w-none dark:prose-invert" 
-             dangerouslySetInnerHTML={{ __html: content || "<p>No hay información disponible</p>" }} 
-        />
-      );
-    }
-  };
-
   return (
     <div className="space-y-6 mt-4">
       <div className="flex items-center">

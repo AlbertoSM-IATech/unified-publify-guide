@@ -10,9 +10,10 @@ interface RichTextEditorProps {
   content: string;
   onChange: (html: string) => void;
   readOnly?: boolean;
+  placeholder?: string;
 }
 
-export const RichTextEditor = ({ content, onChange, readOnly = false }: RichTextEditorProps) => {
+export const RichTextEditor = ({ content, onChange, readOnly = false, placeholder }: RichTextEditorProps) => {
   const [linkUrl, setLinkUrl] = useState<string>('');
   const [showLinkInput, setShowLinkInput] = useState<boolean>(false);
 
@@ -84,6 +85,11 @@ export const RichTextEditor = ({ content, onChange, readOnly = false }: RichText
       
       <div className="bg-background p-3 prose prose-sm max-w-none dark:prose-invert">
         <EditorContent editor={editor} className="min-h-[150px]" />
+        {placeholder && !editor.getText() && (
+          <div className="absolute top-1/2 left-4 text-muted-foreground pointer-events-none opacity-50">
+            {placeholder}
+          </div>
+        )}
       </div>
     </div>
   );
