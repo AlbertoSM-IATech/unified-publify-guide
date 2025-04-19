@@ -2,6 +2,7 @@
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { ReactNode } from "react";
+import { motion } from "framer-motion";
 
 type StatusType = "pending" | "draft" | "published" | "archived" | "review" | "success" | "error" | "warning" | "info";
 
@@ -80,12 +81,19 @@ export const StatusBadge = ({ status, label, icon, className }: StatusBadgeProps
   const { variant, label: defaultLabel, className: statusClassName } = getStatusConfig(status);
   
   return (
-    <Badge 
-      variant={variant} 
-      className={cn("flex items-center gap-1 px-2.5 py-1 text-xs font-medium", statusClassName, className)}
+    <motion.div 
+      initial={{ scale: 0.9, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
+      transition={{ duration: 0.2 }}
+      whileHover={{ scale: 1.05 }}
     >
-      {icon}
-      {label || defaultLabel}
-    </Badge>
+      <Badge 
+        variant={variant} 
+        className={cn("flex items-center gap-1 px-2.5 py-1 text-xs font-medium shadow-sm", statusClassName, className)}
+      >
+        {icon}
+        {label || defaultLabel}
+      </Badge>
+    </motion.div>
   );
 };

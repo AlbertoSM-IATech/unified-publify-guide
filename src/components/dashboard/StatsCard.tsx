@@ -17,21 +17,35 @@ const StatsCard = ({
 }: StatsCardProps) => {
   return (
     <motion.div 
-      className="rounded-lg border p-4 shadow-md bg-white/80 dark:bg-neutral-800/60 backdrop-blur-sm border-neutral-200 dark:border-neutral-700"
+      className="rounded-lg border p-4 shadow-md glass-card"
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3 }}
       whileHover={{
-        y: -3,
-        boxShadow: "0 8px 20px -5px rgba(251, 146, 60, 0.2), 0 4px 10px -4px rgba(251, 146, 60, 0.2)",
+        y: -4,
+        boxShadow: "0 10px 25px -5px rgba(251, 146, 60, 0.2), 0 8px 10px -6px rgba(251, 146, 60, 0.2)",
         transition: { duration: 0.2, ease: "easeOut" }
       }}
     >
       <div className="flex items-center justify-between">
         <div>
           <p className="text-sm text-neutral-500 dark:text-neutral-400">{title}</p>
-          <p className="mt-1 text-2xl font-bold text-foreground">{value}</p>
+          <motion.p 
+            className="mt-1 text-2xl font-bold text-foreground"
+            initial={{ scale: 0.9 }}
+            animate={{ scale: 1 }}
+            transition={{ delay: 0.1, duration: 0.3 }}
+          >
+            {value}
+          </motion.p>
         </div>
-        <div className="rounded-full bg-primary/10 p-2 text-primary">
+        <motion.div 
+          className="rounded-full bg-primary/10 p-2 text-primary"
+          whileHover={{ rotate: 10 }}
+          whileTap={{ scale: 0.95 }}
+        >
           {icon}
-        </div>
+        </motion.div>
       </div>
       <div className="mt-2 text-xs font-medium">
         <span className={change.startsWith("+") ? "text-green-500 dark:text-green-400" : "text-red-500 dark:text-red-400"}>

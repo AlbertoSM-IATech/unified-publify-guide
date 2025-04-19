@@ -71,28 +71,29 @@ export default {
           border: 'hsl(var(--sidebar-border))',
           ring: 'hsl(var(--sidebar-ring))'
         },
-        // Add the custom color palette
+        // Status colors based on the guide
         status: {
-          published: '#10B981', // Green
-          draft: '#6366F1',     // Indigo
-          review: '#F59E0B',    // Amber
-          archived: '#EF4444'   // Red
+          published: '#10B981', // Verde para publicado
+          draft: '#6366F1',     // Azul indigo para borrador
+          review: '#F59E0B',    // Naranja ámbar para revisión
+          archived: '#EF4444'   // Rojo para archivado
         },
+        // Content type colors based on the guide
         content: {
-          high: '#3B82F6',    // Blue
-          medium: '#FB923C',  // Coral Orange
-          low: '#22C55E'      // Green (updated to the requested value)
+          high: '#3B82F6',    // Azul para alto contenido
+          medium: '#FB923C',  // Naranja coral para medio contenido
+          low: '#22C55E'      // Verde para bajo contenido
         },
-        // New neutral palette
+        // Nueva paleta de neutrales según la guía
         neutral: {
-          100: '#FFFFFF',
+          100: '#FFFFFF', // Blanco
           200: '#E5E5E5',
           300: '#D5D5D5',
           400: '#CACACA',
           500: '#858585',
           600: '#606060',
           700: '#3E3E3E',
-          800: '#1E1E1E',
+          800: '#1E1E1E', // Negro muy oscuro (menú lateral)
         }
       },
       borderRadius: {
@@ -136,6 +137,14 @@ export default {
           '50%': { 
             boxShadow: '0 0 15px rgba(251, 146, 60, 0.8), 0 0 20px rgba(251, 146, 60, 0.5)' 
           },
+        },
+        'slide-in': {
+          '0%': { transform: 'translateX(-100%)' },
+          '100%': { transform: 'translateX(0)' }
+        },
+        'slide-out': {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-100%)' }
         }
       },
       animation: {
@@ -147,6 +156,8 @@ export default {
         'float': 'float 3s ease-in-out infinite',
         'pulse-soft': 'pulse-soft 2s ease-in-out infinite',
         'glow': 'glow 2s ease-in-out infinite',
+        'slide-in': 'slide-in 0.3s ease-out',
+        'slide-out': 'slide-out 0.3s ease-out'
       },
     },
   },

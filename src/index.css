@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap');
 
 @tailwind base;
@@ -16,7 +15,7 @@
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 12%;
 
-    --primary: 217 91% 60%;
+    --primary: 24 94% 59%; /* Coral #FB923C */
     --primary-foreground: 210 40% 98%;
 
     --secondary: 220 14% 94%;
@@ -25,7 +24,7 @@
     --muted: 220 14% 94%;
     --muted-foreground: 215 25% 40%;
 
-    --accent: 24 94% 59%;
+    --accent: 217 91% 60%; /* Azul #3B82F6 */
     --accent-foreground: 0 0% 12%;
 
     --destructive: 0 84.2% 60.2%;
@@ -40,12 +39,12 @@
     /* Sidebar color variables - Light mode: keep sidebar dark */
     --sidebar-background: 0 0% 12%; /* #1e1e1e */
     --sidebar-foreground: 0 0% 100%;
-    --sidebar-primary: 217 91% 60%;
+    --sidebar-primary: 24 94% 59%; /* Coral #FB923C */
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 0 0% 18%; /* slightly lighter than background for hover */
     --sidebar-accent-foreground: 0 0% 100%;
     --sidebar-border: 0 0% 18%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-ring: 24 94% 59%; /* Coral #FB923C */
   }
 
   .dark {
@@ -58,7 +57,7 @@
     --popover: 0 0% 15%;
     --popover-foreground: 0 0% 95%;
 
-    --primary: 217 91% 60%;
+    --primary: 24 94% 59%; /* Coral #FB923C */
     --primary-foreground: 0 0% 100%;
 
     --secondary: 0 0% 18%; /* #2e2e2e */
@@ -67,7 +66,7 @@
     --muted: 0 0% 18%;
     --muted-foreground: 0 0% 65%;
 
-    --accent: 24 94% 59%;
+    --accent: 217 91% 60%; /* Azul #3B82F6 */
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 62.8% 40.6%;
@@ -80,12 +79,12 @@
     /* Sidebar color variables - Dark mode */
     --sidebar-background: 0 0% 12%; /* #1e1e1e */
     --sidebar-foreground: 0 0% 95%;
-    --sidebar-primary: 217 91% 60%;
+    --sidebar-primary: 24 94% 59%; /* Coral #FB923C */
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 0 0% 18%; /* #2e2e2e */
     --sidebar-accent-foreground: 0 0% 95%;
     --sidebar-border: 0 0% 18%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-ring: 24 94% 59%; /* Coral #FB923C */
   }
 }
 
@@ -107,6 +106,11 @@
   /* Improved card contrast in light mode */
   .card {
     @apply dark:shadow-md shadow-md border-neutral-200 dark:border-neutral-700;
+  }
+
+  /* Heading styles */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading font-semibold;
   }
 }
 
@@ -167,7 +171,7 @@
 
 @layer components {
   .card-hover {
-    @apply transition-all duration-200 hover:shadow-lg hover:border-[#FB923C]/50 hover:-translate-y-1;
+    @apply transition-all duration-300 hover:shadow-lg hover:border-[#FB923C]/50 hover:-translate-y-1;
   }
   
   .sidebar-link {
@@ -184,7 +188,7 @@
   }
   
   .book-card:hover {
-    @apply shadow-lg shadow-[#FB923C]/20 border-[#FB923C]/50;
+    @apply shadow-lg shadow-[#FB923C]/20 border-[#FB923C]/50 -translate-y-1;
   }
   
   /* Badge styles with improved contrast */
@@ -198,15 +202,20 @@
   
   /* Button styles with better contrast */
   .btn-primary {
-    @apply bg-[#3B82F6] text-white hover:bg-[#3B82F6]/90 shadow-sm;
+    @apply bg-[#FB923C] text-white hover:bg-[#FB923C]/90 shadow-sm;
   }
   
   .btn-secondary {
-    @apply bg-[#FB923C] text-white hover:bg-[#FB923C]/90 shadow-sm;
+    @apply bg-[#3B82F6] text-white hover:bg-[#3B82F6]/90 shadow-sm;
   }
   
   .btn-outline {
     @apply border border-neutral-300 dark:border-neutral-700 hover:border-[#FB923C]/40 hover:bg-[#FB923C]/10;
+  }
+
+  /* Glass morphism card */
+  .glass-card {
+    @apply bg-white/80 dark:bg-neutral-800/60 backdrop-blur-sm border border-neutral-200 dark:border-neutral-700 shadow-sm transition-all duration-200;
   }
 }
 
@@ -244,7 +253,7 @@
 
   /* Glass effect for card elements */
   .card-glass {
-    @apply bg-white/10 dark:bg-white/5 backdrop-blur-sm border border-white/20 dark:border-white/10;
+    @apply bg-white/10 dark:bg-neutral-800/30 backdrop-blur-sm border border-white/20 dark:border-white/10;
   }
   
   /* New dashboard card styles */
