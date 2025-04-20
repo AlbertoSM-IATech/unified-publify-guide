@@ -17,14 +17,12 @@ export const getChartTheme = (isDarkMode: boolean): Partial<ApexOptions> => {
       borderColor: borderColor,
       xaxis: {
         lines: {
-          show: true,
-          color: gridColor,
+          show: true
         }
       },
       yaxis: {
         lines: {
-          show: true,
-          color: gridColor,
+          show: true
         }
       },
     },
@@ -43,14 +41,12 @@ export const getChartTheme = (isDarkMode: boolean): Partial<ApexOptions> => {
     states: {
       hover: {
         filter: {
-          type: 'darken',
-          value: 0.15
+          type: 'darken'
         }
       },
       active: {
         filter: {
-          type: 'darken',
-          value: 0.15
+          type: 'darken'
         }
       }
     }
