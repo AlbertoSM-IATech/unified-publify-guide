@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Upload } from "lucide-react";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { toast } from "@/hooks/use-toast";
 
 interface BookCoverProps {
   book: Book;
@@ -19,6 +20,7 @@ export const BookCover = ({
 }: BookCoverProps) => {
   const [isHovered, setIsHovered] = useState(false);
   const defaultCoverUrl = "https://edit.org/images/cat/portadas-libros-big-2019101610.jpg";
+  const [previewUrl, setPreviewUrl] = useState<string>(book.imageUrl || defaultCoverUrl);
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -28,11 +30,22 @@ export const BookCover = ({
       img.onload = () => {
         const aspectRatio = img.width / img.height;
         if (Math.abs(aspectRatio - (1600/2560)) > 0.1) {
-          alert("La imagen debe tener una proporción de 1600x2560 píxeles");
+          toast({
+            title: "Dimensiones incorrectas",
+            description: "La imagen debe tener una proporción de 1600x2560 píxeles",
+            variant: "destructive"
+          });
           return;
         }
+        
+        // Create preview URL and update book data
         const imageUrl = URL.createObjectURL(file);
+        setPreviewUrl(imageUrl);
         onUpdateBook({ imageUrl });
+        
+        toast({
+          description: "Portada actualizada exitosamente",
+        });
       };
       img.src = URL.createObjectURL(file);
     }
@@ -46,7 +59,7 @@ export const BookCover = ({
     >
       <AspectRatio ratio={1600/2560} className="bg-muted">
         <motion.img
-          src={book.imageUrl || defaultCoverUrl}
+          src={previewUrl}
           alt={`Portada de ${book.titulo}`}
           className="object-cover w-full h-full"
           initial={{ opacity: 0 }}

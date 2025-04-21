@@ -10,34 +10,38 @@ export const useBookForm = (bookData: Book | null) => {
   const [isEditing, setIsEditing] = useState(false);
   const [saving, setSaving] = useState(false);
   
-  // Form state for edits
+  // Form state for edits with live preview
   const [formData, setFormData] = useState<Partial<Book>>({});
 
   // Reset form data when book data changes
   useEffect(() => {
-    setFormData({});
+    if (bookData) {
+      setFormData(bookData);
+    } else {
+      setFormData({});
+    }
   }, [bookData]);
 
   const handleEdit = () => {
     setIsEditing(true);
-    setFormData({});
+    setFormData(bookData || {});
   };
 
   const handleCancel = () => {
     setIsEditing(false);
-    setFormData({});
+    setFormData(bookData || {});
     toast({
       description: "Edición cancelada. Los cambios no han sido guardados.",
     });
   };
 
-  // Handle form data updates from child components
+  // Handle form data updates from child components with live preview
   const handleUpdateBook = (updatedData: Partial<Book>) => {
-    setFormData(prevData => ({
-      ...prevData,
-      ...updatedData
-    }));
-    console.log("Updated form data:", { ...formData, ...updatedData });
+    setFormData(prevData => {
+      const newData = { ...prevData, ...updatedData };
+      console.log("Updated form data:", newData);
+      return newData;
+    });
   };
 
   return {

@@ -1,4 +1,3 @@
-
 import { useBookDetail } from "./hooks/bookDetail";
 import { BookHeader } from "./components/BookDetail/BookHeader";
 import { BookSidebar } from "./components/BookDetail/BookSidebar";
@@ -44,7 +43,6 @@ const BookDetail = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
 
-  // Verificar que tenemos un ID válido
   useEffect(() => {
     if (!id) {
       console.error("No se proporcionó ID de libro, redirigiendo a la lista");
@@ -74,12 +72,10 @@ const BookDetail = () => {
     id
   });
 
-  // Muestra un indicador de carga mientras se obtienen los datos del libro
   if (loading) {
     return <LoadingState text="Cargando libro..." fullPage={true} />;
   }
 
-  // Si hay un error o no hay datos después de cargar, mostrar el error
   if (error || !bookData && !loading) {
     return <ErrorState 
       title="Libro no encontrado" 
@@ -89,7 +85,6 @@ const BookDetail = () => {
     />;
   }
 
-  // Verificar que tenemos datos del libro antes de renderizar
   if (!bookData) {
     return <ErrorState 
       title="Datos no disponibles" 
@@ -98,8 +93,7 @@ const BookDetail = () => {
       fullPage={true} 
     />;
   }
-  
-  // Notify on save success - using toast for feedback
+
   const handleSaveWithFeedback = async () => {
     const success = await handleSave();
     if (success) {
@@ -117,10 +111,8 @@ const BookDetail = () => {
     }
   };
 
-  // Si tenemos datos del libro, mostrar la interfaz normal
   return (
     <div className="relative overflow-x-hidden min-h-screen">
-      {/* Subtle background gradients */}
       <div className="absolute top-20 -left-20 w-96 h-96 bg-[#FB923C]/5 rounded-full filter blur-[80px] animate-pulse-soft" />
       <div className="absolute bottom-20 -right-20 w-96 h-96 bg-[#3B82F6]/5 rounded-full filter blur-[80px] animate-pulse-soft [animation-delay:-.5s]" />
       <div className="absolute top-1/3 right-1/4 w-64 h-64 bg-gradient-to-br from-[#FB923C]/3 to-[#3B82F6]/3 rounded-full filter blur-[60px] animate-pulse-soft [animation-delay:-.25s]" />
@@ -144,14 +136,20 @@ const BookDetail = () => {
         </motion.div>
 
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
-          {/* Left column: Book cover and basic info card */}
           <motion.div variants={itemVariants} className="lg:col-span-1">
-            <BookSidebar book={bookData} isEditing={isEditing} onUpdateBook={handleUpdateBook} />
+            <BookSidebar 
+              book={bookData} 
+              isEditing={isEditing} 
+              onUpdateBook={handleUpdateBook} 
+            />
           </motion.div>
 
-          {/* Right column: Tabs with detailed information */}
           <motion.div variants={itemVariants} className="lg:col-span-2">
-            <DetailedTabs book={bookData} isEditing={isEditing} onUpdateBook={handleUpdateBook} />
+            <DetailedTabs 
+              book={bookData} 
+              isEditing={isEditing} 
+              onUpdateBook={handleUpdateBook} 
+            />
           </motion.div>
         </div>
       </motion.div>
