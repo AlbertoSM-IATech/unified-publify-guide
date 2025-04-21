@@ -55,6 +55,7 @@ export interface Book {
   paperback?: BookFormat;
   ebook?: BookFormat;
   notes?: BookNote[];
+  coverFile?: File; // Add this property for handling the cover file
   
   // Audience and positioning fields
   targetAge?: string; // Target age range (e.g., "25-45")
