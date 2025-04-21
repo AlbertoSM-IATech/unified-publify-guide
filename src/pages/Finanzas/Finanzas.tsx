@@ -1,16 +1,13 @@
-
 import { useState } from "react";
 import { 
   Upload, PieChart, BarChart, Calculator, 
   TrendingUp, TrendingDown, DollarSign, FilePlus2
 } from "lucide-react";
-import { getLineChartData } from "@/components/dashboard/lineChartData";
 import { ApexLineChart } from "@/components/charts";
 import MotionWrapper from "@/components/motion/MotionWrapper";
 
 export const Finanzas = () => {
   const [activeTab, setActiveTab] = useState("resumen");
-  const [lineChartData, setLineChartData] = useState(getLineChartData());
 
   // Datos simulados para finanzas
   const resumenesMensuales = [
@@ -22,15 +19,15 @@ export const Finanzas = () => {
     { mes: "Junio", ingresos: 3720, gastos: 2650, beneficio: 1070 }
   ];
 
-  // Costes fijos simulados
-  const costesFijos = [
-    { concepto: "Hosting y dominios", coste: 35, frecuencia: "Mensual" },
-    { concepto: "Suscripciones software", coste: 120, frecuencia: "Mensual" },
-    { concepto: "Servicios profesionales", coste: 250, frecuencia: "Trimestral" },
-    { concepto: "Publicidad base", coste: 150, frecuencia: "Mensual" }
-  ];
+  // Preparar datos para el gráfico de líneas múltiples
+  const lineChartData = resumenesMensuales.map(item => ({
+    name: item.mes.substring(0, 3),
+    ingresos: item.ingresos,
+    gastos: item.gastos,
+    beneficio: item.beneficio
+  }));
 
-  // Cálculo de totales para las tarjetas de ingresos y gastos
+  // Cálculo de totales para las tarjetas
   const ingresosTotales = resumenesMensuales.reduce((total, item) => total + item.ingresos, 0);
   const gastosTotales = resumenesMensuales.reduce((total, item) => total + item.gastos, 0);
   const beneficioNeto = ingresosTotales - gastosTotales;
@@ -91,7 +88,7 @@ export const Finanzas = () => {
       {activeTab === "resumen" && (
         <div className="space-y-6">
           {/* Tarjetas de resumen */}
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+          <div className="mb-6 grid grid-cols-1 gap-4 md:grid-cols-3">
             {[
               { 
                 title: "Ingresos Totales", 
@@ -140,8 +137,25 @@ export const Finanzas = () => {
           <MotionWrapper type="fadeUp" delay={0.2}>
             <ApexLineChart
               title="Evolución Financiera"
-              description="Seguimiento de ingresos y gastos mensuales"
+              description="Seguimiento de ingresos, gastos y beneficios mensuales"
               data={lineChartData}
+              series={[
+                {
+                  name: "Ingresos",
+                  key: "ingresos",
+                  color: "#10B981" // green
+                },
+                {
+                  name: "Gastos",
+                  key: "gastos",
+                  color: "#EF4444" // red
+                },
+                {
+                  name: "Beneficio",
+                  key: "beneficio",
+                  color: "#3B82F6" // blue
+                }
+              ]}
               height={350}
             />
           </MotionWrapper>

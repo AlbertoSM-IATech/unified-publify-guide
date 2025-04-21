@@ -8,25 +8,50 @@ import { LineChart } from 'lucide-react';
 import { getChartTheme } from './chartTheme';
 import { useTheme } from '@/hooks/useTheme';
 
+interface DataPoint {
+  name: string;
+  [key: string]: string | number;
+}
+
+interface Series {
+  name: string;
+  key: string;
+  color: string;
+}
+
 interface ApexLineChartProps {
   title: string;
   description: string;
-  data: { name: string; balance: number }[];
+  data: DataPoint[];
+  series?: Series[];
   height?: number;
   className?: string;
 }
 
-const ApexLineChart = ({ title, description, data, height = 350, className }: ApexLineChartProps) => {
+const ApexLineChart = ({ 
+  title, 
+  description, 
+  data, 
+  series = [], 
+  height = 350, 
+  className 
+}: ApexLineChartProps) => {
   const { isDarkMode } = useTheme();
   const themeOptions = getChartTheme(isDarkMode);
   
   // Preparar datos para ApexCharts
-  const series = [{
-    name: 'Balance',
-    data: data.map(item => item.balance),
-  }];
+  const chartSeries = series.length > 0 
+    ? series.map(s => ({
+        name: s.name,
+        data: data.map(item => Number(item[s.key])),
+      }))
+    : [{
+        name: 'Balance',
+        data: data.map(item => Number(item.balance)),
+      }];
 
   const categories = data.map(item => item.name);
+  const colors = series.length > 0 ? series.map(s => s.color) : ['#FB923C'];
 
   const options: ApexOptions = {
     ...themeOptions,
@@ -46,14 +71,14 @@ const ApexLineChart = ({ title, description, data, height = 350, className }: Ap
       },
       dropShadow: {
         enabled: true,
-        color: '#FB923C',
+        color: colors[0],
         top: 18,
         left: 7,
         blur: 10,
         opacity: 0.2
       },
     },
-    colors: ['#FB923C'],
+    colors: colors,
     dataLabels: {
       enabled: false,
     },
@@ -63,7 +88,6 @@ const ApexLineChart = ({ title, description, data, height = 350, className }: Ap
     },
     markers: {
       size: 6,
-      colors: ['#FB923C'],
       strokeColors: '#fff',
       strokeWidth: 2,
       hover: {
@@ -131,7 +155,7 @@ const ApexLineChart = ({ title, description, data, height = 350, className }: Ap
         >
           <ReactApexChart 
             options={options} 
-            series={series} 
+            series={chartSeries} 
             type="line" 
             height={height}
           />
