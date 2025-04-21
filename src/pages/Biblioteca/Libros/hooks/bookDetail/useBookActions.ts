@@ -1,4 +1,3 @@
-
 import { useNavigate } from "react-router-dom";
 import { toast } from "@/hooks/use-toast";
 import { Book } from "../../types/bookTypes";
@@ -53,6 +52,13 @@ export const useBookActions = (
         ...bookData, 
         ...formData 
       };
+      
+      // If there's a coverFile, handle it specially
+      if (formData.coverFile) {
+        console.log("[SAVE] Book has a cover file to process");
+        // In a real application, you might upload the file to a server here
+        // For now, we just keep the imageUrl that was set when selecting the file
+      }
       
       // Update book data in state
       setBookData(updatedBook);
