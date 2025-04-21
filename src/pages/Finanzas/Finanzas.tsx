@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { 
   Upload, PieChart, BarChart, Calculator, 
@@ -17,6 +18,15 @@ export const Finanzas = () => {
     { mes: "Abril", ingresos: 2920, gastos: 2180, beneficio: 740 },
     { mes: "Mayo", ingresos: 3450, gastos: 2400, beneficio: 1050 },
     { mes: "Junio", ingresos: 3720, gastos: 2650, beneficio: 1070 }
+  ];
+
+  // Datos de costes fijos
+  const costesFijos = [
+    { concepto: "Alquiler Oficina", coste: 850, frecuencia: "Mensual" },
+    { concepto: "Servicios Web", coste: 120, frecuencia: "Mensual" },
+    { concepto: "Software Editorial", coste: 350, frecuencia: "Mensual" },
+    { concepto: "Seguro Profesional", coste: 420, frecuencia: "Trimestral" },
+    { concepto: "Asesoría Contable", coste: 200, frecuencia: "Mensual" }
   ];
 
   // Preparar datos para el gráfico de líneas múltiples
