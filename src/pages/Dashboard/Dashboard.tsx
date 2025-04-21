@@ -4,12 +4,13 @@ import StatsCard from "@/components/dashboard/StatsCard";
 import ContentCategoryCard from "@/components/dashboard/ContentCategoryCard";
 import BookCard from "@/components/dashboard/BookCard";
 import { CHART_CONFIG, getStatsData, getContentCategoriesData, getPieChartData, getBarChartData } from "@/components/dashboard/dashboardData";
-import { getLineChartData } from "@/components/dashboard/lineChartData";
+import { getLineChartData, useFinanceChartData } from "@/components/dashboard/lineChartData";
 import { BarChart3, BookOpen, LineChart, PieChart, BookText, BookMarked, BookType } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { librosSimulados } from "../Biblioteca/Libros/utils/librosUtils";
 import { ApexLineChart, ApexBarChart, ApexPieChart } from "@/components/charts";
 import MotionWrapper from "@/components/motion/MotionWrapper";
+import { useFinanceData } from "@/data/financesData";
 
 const contentTypeMap = {
   "hardcover": "Alto Contenido",
@@ -44,12 +45,27 @@ export const Dashboard = () => {
   const [contentCategories, setContentCategories] = useState(getContentCategoriesData());
   const [pieChartData, setPieChartData] = useState(getPieChartData());
   const [barChartData, setBarChartData] = useState(getBarChartData());
-  const [lineChartData, setLineChartData] = useState(getLineChartData());
   const [libros, setLibros] = useState(librosSimulados);
+  
+  const { 
+    lineChartData: financeData, 
+    ingresosTotales, 
+    gastosTotales, 
+    beneficioNeto,
+    cambioIngresos,
+    cambioGastos 
+  } = useFinanceData();
 
   useEffect(() => {
     const updatedStats = [...stats];
     updatedStats[0].value = libros.length.toString();
+    
+    updatedStats[2].value = `€${ingresosTotales.toLocaleString()}`;
+    updatedStats[2].change = `${Number(cambioIngresos) >= 0 ? '+' : ''}${cambioIngresos}%`;
+    
+    updatedStats[3].value = `€${gastosTotales.toLocaleString()}`;
+    updatedStats[3].change = `${Number(cambioGastos) >= 0 ? '+' : ''}${cambioGastos}%`;
+    
     setStats(updatedStats);
 
     const altoContenido = libros.filter(libro => getContentCategory(libro.contenido) === "Alto Contenido").length;
@@ -162,7 +178,7 @@ export const Dashboard = () => {
       color: contentColors["Bajo Contenido"]
     }];
     setBarChartData(updatedBarChartData);
-  }, [libros]);
+  }, [libros, ingresosTotales, gastosTotales, cambioIngresos, cambioGastos]);
 
   return (
     <div className="p-4 animate-fade-in space-y-8">
@@ -234,7 +250,24 @@ export const Dashboard = () => {
         <ApexLineChart
           title="Balance Mensual"
           description="Seguimiento de ingresos y gastos mensuales"
-          data={lineChartData}
+          data={financeData}
+          series={[
+            {
+              name: "Ingresos",
+              key: "ingresos",
+              color: "#10B981"
+            },
+            {
+              name: "Gastos",
+              key: "gastos",
+              color: "#EF4444"
+            },
+            {
+              name: "Beneficio",
+              key: "beneficio",
+              color: "#3B82F6"
+            }
+          ]}
           height={350}
         />
       </MotionWrapper>

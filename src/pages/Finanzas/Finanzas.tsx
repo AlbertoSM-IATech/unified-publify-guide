@@ -2,53 +2,133 @@
 import { useState } from "react";
 import { 
   Upload, PieChart, BarChart, Calculator, 
-  TrendingUp, TrendingDown, DollarSign, FilePlus2
+  TrendingUp, TrendingDown, DollarSign, FilePlus2,
+  Save, X
 } from "lucide-react";
 import { ApexLineChart } from "@/components/charts";
 import MotionWrapper from "@/components/motion/MotionWrapper";
+import { useFinanceData } from "@/data/financesData";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useToast } from "@/hooks/use-toast";
 
 export const Finanzas = () => {
   const [activeTab, setActiveTab] = useState("resumen");
+  const { 
+    resumenesMensuales, 
+    costesFijos,
+    lineChartData, 
+    ingresosTotales, 
+    gastosTotales, 
+    beneficioNeto,
+    cambioIngresos,
+    cambioGastos,
+    cambioBeneficio,
+    agregarRegistroFinanciero,
+    editarCosteFijo,
+    agregarCosteFijo,
+    eliminarCosteFijo
+  } = useFinanceData();
 
-  // Datos simulados para finanzas
-  const resumenesMensuales = [
-    { mes: "Enero", ingresos: 2430, gastos: 1890, beneficio: 540 },
-    { mes: "Febrero", ingresos: 2870, gastos: 2100, beneficio: 770 },
-    { mes: "Marzo", ingresos: 3150, gastos: 2350, beneficio: 800 },
-    { mes: "Abril", ingresos: 2920, gastos: 2180, beneficio: 740 },
-    { mes: "Mayo", ingresos: 3450, gastos: 2400, beneficio: 1050 },
-    { mes: "Junio", ingresos: 3720, gastos: 2650, beneficio: 1070 }
-  ];
+  const { toast } = useToast();
 
-  // Datos de costes fijos
-  const costesFijos = [
-    { concepto: "Alquiler Oficina", coste: 850, frecuencia: "Mensual" },
-    { concepto: "Servicios Web", coste: 120, frecuencia: "Mensual" },
-    { concepto: "Software Editorial", coste: 350, frecuencia: "Mensual" },
-    { concepto: "Seguro Profesional", coste: 420, frecuencia: "Trimestral" },
-    { concepto: "Asesoría Contable", coste: 200, frecuencia: "Mensual" }
-  ];
+  // Estados para formularios
+  const [nuevoRegistro, setNuevoRegistro] = useState({
+    mes: "",
+    ingresos: 0,
+    gastos: 0
+  });
+  const [nuevoCosteFijo, setNuevoCosteFijo] = useState({
+    concepto: "",
+    coste: 0,
+    frecuencia: "Mensual" as "Mensual" | "Trimestral" | "Anual"
+  });
+  const [editandoCosteFijo, setEditandoCosteFijo] = useState<number | null>(null);
 
-  // Preparar datos para el gráfico de líneas múltiples
-  const lineChartData = resumenesMensuales.map(item => ({
-    name: item.mes.substring(0, 3),
-    ingresos: item.ingresos,
-    gastos: item.gastos,
-    beneficio: item.beneficio
-  }));
+  // Manejadores para formularios
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement>, 
+    campo: string, 
+    tipo: "registro" | "costeFijo"
+  ) => {
+    const value = e.target.name === "mes" ? e.target.value : Number(e.target.value);
+    if (tipo === "registro") {
+      setNuevoRegistro({ ...nuevoRegistro, [campo]: value });
+    } else {
+      setNuevoCosteFijo({ ...nuevoCosteFijo, [campo]: value });
+    }
+  };
 
-  // Cálculo de totales para las tarjetas
-  const ingresosTotales = resumenesMensuales.reduce((total, item) => total + item.ingresos, 0);
-  const gastosTotales = resumenesMensuales.reduce((total, item) => total + item.gastos, 0);
-  const beneficioNeto = ingresosTotales - gastosTotales;
-  
-  // Cálculo de porcentajes de cambio (comparando con el mes anterior)
-  const ultimoMes = resumenesMensuales[resumenesMensuales.length - 1];
-  const penultimoMes = resumenesMensuales[resumenesMensuales.length - 2];
-  
-  const cambioIngresos = ((ultimoMes.ingresos - penultimoMes.ingresos) / penultimoMes.ingresos * 100).toFixed(0);
-  const cambioGastos = ((ultimoMes.gastos - penultimoMes.gastos) / penultimoMes.gastos * 100).toFixed(0);
-  const cambioBeneficio = ((ultimoMes.beneficio - penultimoMes.beneficio) / penultimoMes.beneficio * 100).toFixed(0);
+  const handleFrecuenciaChange = (value: string) => {
+    setNuevoCosteFijo({ 
+      ...nuevoCosteFijo, 
+      frecuencia: value as "Mensual" | "Trimestral" | "Anual" 
+    });
+  };
+
+  const handleSubmitRegistro = () => {
+    if (!nuevoRegistro.mes) {
+      toast({ 
+        title: "Error", 
+        description: "El mes es obligatorio", 
+        variant: "destructive" 
+      });
+      return;
+    }
+
+    agregarRegistroFinanciero(nuevoRegistro);
+    setNuevoRegistro({ mes: "", ingresos: 0, gastos: 0 });
+    toast({
+      title: "Registro añadido",
+      description: `Se ha añadido el registro para ${nuevoRegistro.mes}`,
+    });
+  };
+
+  const handleSubmitCosteFijo = () => {
+    if (!nuevoCosteFijo.concepto) {
+      toast({ 
+        title: "Error", 
+        description: "El concepto es obligatorio", 
+        variant: "destructive" 
+      });
+      return;
+    }
+
+    if (editandoCosteFijo !== null) {
+      editarCosteFijo(editandoCosteFijo, nuevoCosteFijo);
+      toast({
+        title: "Coste fijo actualizado",
+        description: `Se ha actualizado el coste fijo ${nuevoCosteFijo.concepto}`,
+      });
+    } else {
+      agregarCosteFijo(nuevoCosteFijo);
+      toast({
+        title: "Coste fijo añadido",
+        description: `Se ha añadido el coste fijo ${nuevoCosteFijo.concepto}`,
+      });
+    }
+    
+    setNuevoCosteFijo({ concepto: "", coste: 0, frecuencia: "Mensual" });
+    setEditandoCosteFijo(null);
+  };
+
+  const iniciarEdicionCosteFijo = (id: number) => {
+    const costeFijo = costesFijos.find(c => c.id === id);
+    if (costeFijo) {
+      setNuevoCosteFijo({
+        concepto: costeFijo.concepto,
+        coste: costeFijo.coste,
+        frecuencia: costeFijo.frecuencia
+      });
+      setEditandoCosteFijo(id);
+    }
+  };
+
+  const cancelarEdicion = () => {
+    setNuevoCosteFijo({ concepto: "", coste: 0, frecuencia: "Mensual" });
+    setEditandoCosteFijo(null);
+  };
 
   return (
     <div className="animate-fade-in">
@@ -88,7 +168,10 @@ export const Finanzas = () => {
           <Upload size={16} className="mr-2" />
           Importar CSV
         </button>
-        <button className="flex items-center rounded-md border border-input bg-background px-4 py-2 text-sm hover:bg-muted">
+        <button 
+          className="flex items-center rounded-md border border-input bg-background px-4 py-2 text-sm hover:bg-muted"
+          onClick={() => setActiveTab(activeTab === "costesFijos" ? "costesFijos" : "ingresos")}
+        >
           <FilePlus2 size={16} className="mr-2" />
           Nuevo Registro
         </button>
@@ -103,21 +186,21 @@ export const Finanzas = () => {
               { 
                 title: "Ingresos Totales", 
                 value: `€${ingresosTotales.toLocaleString()}`, 
-                change: `+${cambioIngresos}%`, 
+                change: `${Number(cambioIngresos) >= 0 ? '+' : ''}${cambioIngresos}%`, 
                 icon: <TrendingUp size={20} />,
                 color: "text-green-500"
               },
               { 
                 title: "Gastos Totales", 
                 value: `€${gastosTotales.toLocaleString()}`, 
-                change: `+${cambioGastos}%`, 
+                change: `${Number(cambioGastos) >= 0 ? '+' : ''}${cambioGastos}%`, 
                 icon: <TrendingDown size={20} />,
                 color: "text-red-500"
               },
               { 
                 title: "Beneficio Neto", 
                 value: `€${beneficioNeto.toLocaleString()}`, 
-                change: `+${cambioBeneficio}%`, 
+                change: `${Number(cambioBeneficio) >= 0 ? '+' : ''}${cambioBeneficio}%`, 
                 icon: <DollarSign size={20} />,
                 color: "text-blue-500"
               },
@@ -217,88 +300,282 @@ export const Finanzas = () => {
         </div>
       )}
 
-      {/* Resto de las pestañas mantienen su funcionalidad original */}
+      {/* Costes Fijos Tab */}
       {activeTab === "costesFijos" && (
-        <div className="rounded-lg border bg-card shadow-sm">
-          <div className="p-4">
-            <h2 className="font-heading text-lg font-medium">Costes Fijos</h2>
-          </div>
-          <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-border">
-              <thead className="bg-muted/50">
-                <tr>
-                  <th scope="col" className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">
-                    Concepto
-                  </th>
-                  <th scope="col" className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">
-                    Coste
-                  </th>
-                  <th scope="col" className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">
-                    Frecuencia
-                  </th>
-                  <th scope="col" className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">
-                    Acciones
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-border bg-background">
-                {costesFijos.map((coste, index) => (
-                  <tr key={index} className="hover:bg-muted/50">
-                    <td className="whitespace-nowrap px-4 py-4 font-medium">
-                      {coste.concepto}
-                    </td>
-                    <td className="whitespace-nowrap px-4 py-4 text-red-500">
-                      €{coste.coste.toLocaleString()}
-                    </td>
-                    <td className="whitespace-nowrap px-4 py-4 text-muted-foreground">
-                      {coste.frecuencia}
-                    </td>
-                    <td className="whitespace-nowrap px-4 py-4 text-sm">
-                      <button className="mr-2 font-medium text-primary hover:underline">
-                        Editar
-                      </button>
-                      <button className="font-medium text-red-500 hover:underline">
-                        Eliminar
-                      </button>
-                    </td>
+        <div className="space-y-6">
+          <div className="rounded-lg border bg-card shadow-sm">
+            <div className="p-4">
+              <h2 className="font-heading text-lg font-medium">Costes Fijos</h2>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-border">
+                <thead className="bg-muted/50">
+                  <tr>
+                    <th scope="col" className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                      Concepto
+                    </th>
+                    <th scope="col" className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                      Coste
+                    </th>
+                    <th scope="col" className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                      Frecuencia
+                    </th>
+                    <th scope="col" className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                      Acciones
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          <div className="flex justify-end border-t border-border p-4">
-            <button className="flex items-center rounded-md bg-primary px-4 py-2 text-sm text-primary-foreground hover:bg-primary/90">
-              <FilePlus2 size={16} className="mr-2" />
-              Añadir Coste Fijo
-            </button>
+                </thead>
+                <tbody className="divide-y divide-border bg-background">
+                  {costesFijos.map((coste) => (
+                    <tr key={coste.id} className="hover:bg-muted/50">
+                      <td className="whitespace-nowrap px-4 py-4 font-medium">
+                        {coste.concepto}
+                      </td>
+                      <td className="whitespace-nowrap px-4 py-4 text-red-500">
+                        €{coste.coste.toLocaleString()}
+                      </td>
+                      <td className="whitespace-nowrap px-4 py-4 text-muted-foreground">
+                        {coste.frecuencia}
+                      </td>
+                      <td className="whitespace-nowrap px-4 py-4 text-sm">
+                        <button 
+                          className="mr-2 font-medium text-primary hover:underline"
+                          onClick={() => iniciarEdicionCosteFijo(coste.id)}
+                        >
+                          Editar
+                        </button>
+                        <button 
+                          className="font-medium text-red-500 hover:underline"
+                          onClick={() => eliminarCosteFijo(coste.id)}
+                        >
+                          Eliminar
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <div className="border-t border-border p-4">
+              <h3 className="mb-3 text-base font-medium">
+                {editandoCosteFijo !== null ? "Editar Coste Fijo" : "Añadir Nuevo Coste Fijo"}
+              </h3>
+              <div className="grid gap-4 md:grid-cols-3">
+                <div>
+                  <label className="mb-1 block text-sm font-medium">Concepto</label>
+                  <Input
+                    name="concepto"
+                    value={nuevoCosteFijo.concepto}
+                    onChange={(e) => handleInputChange(e, "concepto", "costeFijo")}
+                    placeholder="Ej: Alquiler Oficina"
+                  />
+                </div>
+                <div>
+                  <label className="mb-1 block text-sm font-medium">Coste (€)</label>
+                  <Input
+                    name="coste"
+                    type="number"
+                    value={nuevoCosteFijo.coste}
+                    onChange={(e) => handleInputChange(e, "coste", "costeFijo")}
+                    placeholder="0"
+                  />
+                </div>
+                <div>
+                  <label className="mb-1 block text-sm font-medium">Frecuencia</label>
+                  <Select 
+                    value={nuevoCosteFijo.frecuencia} 
+                    onValueChange={handleFrecuenciaChange}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Seleccionar frecuencia" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Mensual">Mensual</SelectItem>
+                      <SelectItem value="Trimestral">Trimestral</SelectItem>
+                      <SelectItem value="Anual">Anual</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+              <div className="mt-4 flex justify-end gap-2">
+                {editandoCosteFijo !== null && (
+                  <Button variant="outline" onClick={cancelarEdicion}>
+                    <X size={16} className="mr-2" /> Cancelar
+                  </Button>
+                )}
+                <Button onClick={handleSubmitCosteFijo}>
+                  <Save size={16} className="mr-2" /> 
+                  {editandoCosteFijo !== null ? "Actualizar" : "Guardar"}
+                </Button>
+              </div>
+            </div>
           </div>
         </div>
       )}
 
-      {(activeTab === "ingresos" || activeTab === "gastos") && (
-        <div className="rounded-lg border bg-card p-8 text-center shadow-sm">
-          <div className="mx-auto max-w-md">
-            <div className="rounded-full bg-muted/70 p-4 text-muted-foreground mx-auto w-fit mb-4">
-              {activeTab === "ingresos" ? <TrendingUp size={32} /> : <TrendingDown size={32} />}
-            </div>
-            <h2 className="font-heading text-xl font-medium">
-              Sección de {activeTab === "ingresos" ? "Ingresos" : "Gastos"}
-            </h2>
-            <p className="mt-2 text-muted-foreground">
-              Aquí podrás gestionar todos tus {activeTab === "ingresos" ? "ingresos" : "gastos"} editoriales, 
-              incluyendo {activeTab === "ingresos" ? "regalías, afiliaciones y cursos" : "publicidad, colaboraciones y servicios"}.
-            </p>
-            <div className="mt-6 flex justify-center space-x-4">
-              <button className="flex items-center rounded-md bg-primary px-4 py-2 text-sm text-primary-foreground hover:bg-primary/90">
-                <Upload size={16} className="mr-2" />
-                Importar {activeTab === "ingresos" ? "Ingresos" : "Gastos"}
-              </button>
-              <button className="flex items-center rounded-md border border-input bg-background px-4 py-2 text-sm hover:bg-muted">
-                <FilePlus2 size={16} className="mr-2" />
-                Añadir Manualmente
-              </button>
+      {/* Pestaña de Ingresos */}
+      {activeTab === "ingresos" && (
+        <div className="space-y-6">
+          <div className="rounded-lg border bg-card p-6">
+            <h2 className="mb-4 text-xl font-semibold">Registrar Nuevo Ingreso</h2>
+            <div className="grid gap-4 md:grid-cols-3">
+              <div>
+                <label className="mb-1 block text-sm font-medium">Mes</label>
+                <Input
+                  name="mes"
+                  value={nuevoRegistro.mes}
+                  onChange={(e) => handleInputChange(e, "mes", "registro")}
+                  placeholder="Ej: Julio"
+                />
+              </div>
+              <div>
+                <label className="mb-1 block text-sm font-medium">Cantidad (€)</label>
+                <Input
+                  name="ingresos"
+                  type="number"
+                  value={nuevoRegistro.ingresos}
+                  onChange={(e) => handleInputChange(e, "ingresos", "registro")}
+                  placeholder="0"
+                />
+              </div>
+              <div className="flex items-end">
+                <Button onClick={handleSubmitRegistro} className="w-full">
+                  <Save size={16} className="mr-2" /> Guardar Ingreso
+                </Button>
+              </div>
             </div>
           </div>
+
+          <div className="rounded-lg border bg-card shadow-sm">
+            <div className="p-4">
+              <h2 className="font-heading text-lg font-medium">Historial de Ingresos</h2>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-border">
+                <thead className="bg-muted/50">
+                  <tr>
+                    <th scope="col" className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                      Mes
+                    </th>
+                    <th scope="col" className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                      Ingresos
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-border bg-background">
+                  {resumenesMensuales.map((resumen, index) => (
+                    <tr key={index} className="hover:bg-muted/50">
+                      <td className="whitespace-nowrap px-4 py-4 font-medium">
+                        {resumen.mes}
+                      </td>
+                      <td className="whitespace-nowrap px-4 py-4 text-green-500">
+                        €{resumen.ingresos.toLocaleString()}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <MotionWrapper type="fadeUp" delay={0.2}>
+            <ApexLineChart
+              title="Evolución de Ingresos"
+              description="Seguimiento mensual de ingresos"
+              data={lineChartData}
+              series={[
+                {
+                  name: "Ingresos",
+                  key: "ingresos",
+                  color: "#10B981" // green
+                }
+              ]}
+              height={350}
+            />
+          </MotionWrapper>
+        </div>
+      )}
+
+      {/* Pestaña de Gastos */}
+      {activeTab === "gastos" && (
+        <div className="space-y-6">
+          <div className="rounded-lg border bg-card p-6">
+            <h2 className="mb-4 text-xl font-semibold">Registrar Nuevo Gasto</h2>
+            <div className="grid gap-4 md:grid-cols-3">
+              <div>
+                <label className="mb-1 block text-sm font-medium">Mes</label>
+                <Input
+                  name="mes"
+                  value={nuevoRegistro.mes}
+                  onChange={(e) => handleInputChange(e, "mes", "registro")}
+                  placeholder="Ej: Julio"
+                />
+              </div>
+              <div>
+                <label className="mb-1 block text-sm font-medium">Cantidad (€)</label>
+                <Input
+                  name="gastos"
+                  type="number"
+                  value={nuevoRegistro.gastos}
+                  onChange={(e) => handleInputChange(e, "gastos", "registro")}
+                  placeholder="0"
+                />
+              </div>
+              <div className="flex items-end">
+                <Button onClick={handleSubmitRegistro} className="w-full">
+                  <Save size={16} className="mr-2" /> Guardar Gasto
+                </Button>
+              </div>
+            </div>
+          </div>
+
+          <div className="rounded-lg border bg-card shadow-sm">
+            <div className="p-4">
+              <h2 className="font-heading text-lg font-medium">Historial de Gastos</h2>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-border">
+                <thead className="bg-muted/50">
+                  <tr>
+                    <th scope="col" className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                      Mes
+                    </th>
+                    <th scope="col" className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                      Gastos
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-border bg-background">
+                  {resumenesMensuales.map((resumen, index) => (
+                    <tr key={index} className="hover:bg-muted/50">
+                      <td className="whitespace-nowrap px-4 py-4 font-medium">
+                        {resumen.mes}
+                      </td>
+                      <td className="whitespace-nowrap px-4 py-4 text-red-500">
+                        €{resumen.gastos.toLocaleString()}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <MotionWrapper type="fadeUp" delay={0.2}>
+            <ApexLineChart
+              title="Evolución de Gastos"
+              description="Seguimiento mensual de gastos"
+              data={lineChartData}
+              series={[
+                {
+                  name: "Gastos",
+                  key: "gastos",
+                  color: "#EF4444" // red
+                }
+              ]}
+              height={350}
+            />
+          </MotionWrapper>
         </div>
       )}
     </div>
