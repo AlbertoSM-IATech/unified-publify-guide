@@ -37,7 +37,7 @@ export const useBookDetail = () => {
     }
   }, [error]);
   
-  // Only initialize useBookForm and useBookActions if we have book data
+  // Initialize hooks with current book data for form management and actions
   const {
     isEditing,
     setIsEditing,
@@ -68,7 +68,7 @@ export const useBookDetail = () => {
 
   // Return a unified API that matches the original hook
   return {
-    bookData,
+    bookData: isEditing ? {...bookData, ...formData} : bookData, // Merge form data during editing
     isEditing,
     saving,
     loading,

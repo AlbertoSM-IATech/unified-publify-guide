@@ -1,3 +1,4 @@
+
 import { useBookDetail } from "./hooks/bookDetail";
 import { BookHeader } from "./components/BookDetail/BookHeader";
 import { BookSidebar } from "./components/BookDetail/BookSidebar";
@@ -65,11 +66,11 @@ const BookDetail = () => {
     handleUpdateBook
   } = useBookDetail();
 
-  console.log("BookDetail - Datos recibidos:", {
+  console.log("BookDetail - Datos actuales:", {
     bookData,
+    isEditing,
     loading,
-    error,
-    id
+    error
   });
 
   if (loading) {
@@ -138,7 +139,7 @@ const BookDetail = () => {
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
           <motion.div variants={itemVariants} className="lg:col-span-1">
             <BookSidebar 
-              book={bookData} 
+              book={isEditing ? {...bookData, ...libroOriginal} : bookData} 
               isEditing={isEditing} 
               onUpdateBook={handleUpdateBook} 
             />
@@ -146,7 +147,7 @@ const BookDetail = () => {
 
           <motion.div variants={itemVariants} className="lg:col-span-2">
             <DetailedTabs 
-              book={bookData} 
+              book={isEditing ? {...bookData, ...libroOriginal} : bookData}
               isEditing={isEditing} 
               onUpdateBook={handleUpdateBook} 
             />

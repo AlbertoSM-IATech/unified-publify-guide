@@ -24,6 +24,14 @@ export const useBookActions = (
   const handleGoBack = () => {
     // First check if we're in edit mode
     if (isEditing) {
+      // Prompt user if they want to discard changes
+      const hasUnsavedChanges = Object.keys(formData).length > 0;
+      
+      if (hasUnsavedChanges) {
+        const confirmCancel = window.confirm('¿Estás seguro que deseas salir? Los cambios no guardados se perderán.');
+        if (!confirmCancel) return;
+      }
+      
       setIsEditing(false);
     } else {
       navigate('/biblioteca/libros');
@@ -38,10 +46,13 @@ export const useBookActions = (
         throw new Error("No hay datos del libro para guardar");
       }
       
-      // Update book data with form changes
-      const updatedBook = { ...bookData, ...formData };
+      console.log("[SAVE] Saving book data with changes:", formData);
       
-      console.log("[SAVE] Saving book data:", updatedBook);
+      // Create a complete merged book object
+      const updatedBook: Book = { 
+        ...bookData, 
+        ...formData 
+      };
       
       // Update book data in state
       setBookData(updatedBook);
@@ -50,13 +61,16 @@ export const useBookActions = (
       const updatedBooks = storedBooks.map(book => 
         book.id === bookId ? updatedBook : book
       );
+      
+      console.log("[SAVE] Persisting updated book to storage:", updatedBook);
       setStoredBooks(updatedBooks);
       
-      // Simulate successful save
-      setTimeout(() => {
-        setSaving(false);
-        setIsEditing(false);
-      }, 500);
+      // Simulate successful save with small delay to show saving state
+      await new Promise(resolve => setTimeout(resolve, 800));
+      
+      // Exit edit mode after successful save
+      setIsEditing(false);
+      setSaving(false);
       
       return true;
     } catch (error) {
@@ -68,6 +82,10 @@ export const useBookActions = (
 
   const handleDelete = async () => {
     try {
+      // Confirm deletion
+      const confirmDelete = window.confirm('¿Estás seguro que deseas eliminar este libro? Esta acción no se puede deshacer.');
+      if (!confirmDelete) return false;
+      
       // Delete from stored books array
       const updatedBooks = storedBooks.filter(book => book.id !== bookId);
       setStoredBooks(updatedBooks);

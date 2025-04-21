@@ -3,7 +3,7 @@ import { Book } from "../../types/bookTypes";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Button } from "@/components/ui/button";
 import { Upload } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "@/hooks/use-toast";
 
@@ -20,16 +20,25 @@ export const BookCover = ({
 }: BookCoverProps) => {
   const [isHovered, setIsHovered] = useState(false);
   const defaultCoverUrl = "https://edit.org/images/cat/portadas-libros-big-2019101610.jpg";
+  
+  // Track preview URL separately from book data to enable immediate visual feedback
   const [previewUrl, setPreviewUrl] = useState<string>(book.imageUrl || defaultCoverUrl);
+
+  // Update preview URL when book data changes
+  useEffect(() => {
+    setPreviewUrl(book.imageUrl || defaultCoverUrl);
+  }, [book.imageUrl]);
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      // Validate image dimensions
+      // Validate image dimensions and file
       const img = new Image();
       img.onload = () => {
         const aspectRatio = img.width / img.height;
-        if (Math.abs(aspectRatio - (1600/2560)) > 0.1) {
+        const expectedRatio = 1600/2560;
+        
+        if (Math.abs(aspectRatio - expectedRatio) > 0.1) {
           toast({
             title: "Dimensiones incorrectas",
             description: "La imagen debe tener una proporción de 1600x2560 píxeles",
@@ -40,13 +49,28 @@ export const BookCover = ({
         
         // Create preview URL and update book data
         const imageUrl = URL.createObjectURL(file);
-        setPreviewUrl(imageUrl);
-        onUpdateBook({ imageUrl });
+        setPreviewUrl(imageUrl); // Update preview immediately
+        
+        // Update the book data with the new image URL
+        // We pass file information too in case we need to save to server later
+        onUpdateBook({
+          imageUrl,
+          coverFile: file
+        });
         
         toast({
-          description: "Portada actualizada exitosamente",
+          description: "Portada actualizada. Recuerda guardar los cambios para hacer permanente esta modificación.",
         });
       };
+      
+      img.onerror = () => {
+        toast({
+          title: "Error al cargar la imagen",
+          description: "No se pudo cargar la imagen seleccionada. Por favor, intenta con otra imagen.",
+          variant: "destructive"
+        });
+      };
+      
       img.src = URL.createObjectURL(file);
     }
   };
