@@ -1,11 +1,16 @@
+
 import { useState } from "react";
 import { 
   Upload, PieChart, BarChart, Calculator, 
   TrendingUp, TrendingDown, DollarSign, FilePlus2
 } from "lucide-react";
+import { getLineChartData } from "@/components/dashboard/lineChartData";
+import { ApexLineChart } from "@/components/charts";
+import MotionWrapper from "@/components/motion/MotionWrapper";
 
 export const Finanzas = () => {
   const [activeTab, setActiveTab] = useState("resumen");
+  const [lineChartData, setLineChartData] = useState(getLineChartData());
 
   // Datos simulados para finanzas
   const resumenesMensuales = [
@@ -24,6 +29,19 @@ export const Finanzas = () => {
     { concepto: "Servicios profesionales", coste: 250, frecuencia: "Trimestral" },
     { concepto: "Publicidad base", coste: 150, frecuencia: "Mensual" }
   ];
+
+  // Cálculo de totales para las tarjetas de ingresos y gastos
+  const ingresosTotales = resumenesMensuales.reduce((total, item) => total + item.ingresos, 0);
+  const gastosTotales = resumenesMensuales.reduce((total, item) => total + item.gastos, 0);
+  const beneficioNeto = ingresosTotales - gastosTotales;
+  
+  // Cálculo de porcentajes de cambio (comparando con el mes anterior)
+  const ultimoMes = resumenesMensuales[resumenesMensuales.length - 1];
+  const penultimoMes = resumenesMensuales[resumenesMensuales.length - 2];
+  
+  const cambioIngresos = ((ultimoMes.ingresos - penultimoMes.ingresos) / penultimoMes.ingresos * 100).toFixed(0);
+  const cambioGastos = ((ultimoMes.gastos - penultimoMes.gastos) / penultimoMes.gastos * 100).toFixed(0);
+  const cambioBeneficio = ((ultimoMes.beneficio - penultimoMes.beneficio) / penultimoMes.beneficio * 100).toFixed(0);
 
   return (
     <div className="animate-fade-in">
@@ -77,22 +95,22 @@ export const Finanzas = () => {
             {[
               { 
                 title: "Ingresos Totales", 
-                value: "€20,540", 
-                change: "+12%", 
+                value: `€${ingresosTotales.toLocaleString()}`, 
+                change: `+${cambioIngresos}%`, 
                 icon: <TrendingUp size={20} />,
                 color: "text-green-500"
               },
               { 
                 title: "Gastos Totales", 
-                value: "€13,570", 
-                change: "+5%", 
+                value: `€${gastosTotales.toLocaleString()}`, 
+                change: `+${cambioGastos}%`, 
                 icon: <TrendingDown size={20} />,
                 color: "text-red-500"
               },
               { 
                 title: "Beneficio Neto", 
-                value: "€6,970", 
-                change: "+18%", 
+                value: `€${beneficioNeto.toLocaleString()}`, 
+                change: `+${cambioBeneficio}%`, 
                 icon: <DollarSign size={20} />,
                 color: "text-blue-500"
               },
@@ -118,19 +136,15 @@ export const Finanzas = () => {
             ))}
           </div>
 
-          {/* Gráfico placeholder */}
-          <div className="rounded-lg border bg-card p-6 shadow-sm">
-            <h2 className="font-heading text-lg font-medium">Evolución Financiera</h2>
-            <div className="mt-4 h-64 w-full">
-              {/* Placeholder para gráfico */}
-              <div className="flex h-full w-full flex-col items-center justify-center rounded-md border border-dashed border-border bg-muted/40 p-8 text-center">
-                <BarChart size={40} className="mb-2 text-muted-foreground" />
-                <p className="text-sm text-muted-foreground">
-                  Aquí se mostrará un gráfico de evolución de ingresos, gastos y beneficios
-                </p>
-              </div>
-            </div>
-          </div>
+          {/* Gráfico de evolución financiera */}
+          <MotionWrapper type="fadeUp" delay={0.2}>
+            <ApexLineChart
+              title="Evolución Financiera"
+              description="Seguimiento de ingresos y gastos mensuales"
+              data={lineChartData}
+              height={350}
+            />
+          </MotionWrapper>
 
           {/* Tabla de resumen mensual */}
           <div className="rounded-lg border bg-card shadow-sm">
@@ -179,6 +193,7 @@ export const Finanzas = () => {
         </div>
       )}
 
+      {/* Resto de las pestañas mantienen su funcionalidad original */}
       {activeTab === "costesFijos" && (
         <div className="rounded-lg border bg-card shadow-sm">
           <div className="p-4">

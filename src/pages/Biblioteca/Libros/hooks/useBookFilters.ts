@@ -1,7 +1,7 @@
 
 import { useState, useMemo, useEffect, useCallback } from "react";
 import { Book } from "../types/bookTypes";
-import { filterLibros, sortLibros } from "../utils/dataUtils";
+import { filterObjectsBySearchQuery, sortObjectsByProperty } from "@/utils/dataUtils";
 
 interface UseBookFiltersProps {
   books: Book[];
@@ -18,22 +18,31 @@ export const useBookFilters = ({ books, itemsPerPage = 12 }: UseBookFiltersProps
   // Filtered and sorted books
   const filteredBooks = useMemo(() => {
     // First apply text search filter
-    let result = filterLibros(books, searchQuery);
+    let result = books;
+    
+    if (searchQuery) {
+      // Use the utility function for text searching across multiple properties
+      result = filterObjectsBySearchQuery(
+        result, 
+        searchQuery, 
+        ['titulo', 'subtitulo', 'autor']
+      );
+    }
     
     // Then apply state filter if set
     if (filterState) {
-      result = result.filter(libro => libro.estado === filterState);
+      result = result.filter(libro => libro.estado.toLowerCase() === filterState.toLowerCase());
     }
     
     // Then apply content filter if set
     if (filterContent) {
-      result = result.filter(libro => libro.contenido === filterContent);
+      result = result.filter(libro => libro.contenido.toLowerCase() === filterContent.toLowerCase());
     }
     
     // Finally, apply sorting
     if (sortOrder) {
       const [field, direction] = sortOrder.split('_');
-      result = sortLibros(result, field, direction);
+      result = sortObjectsByProperty(result, field as keyof Book, direction as 'asc' | 'desc');
     }
     
     return result;

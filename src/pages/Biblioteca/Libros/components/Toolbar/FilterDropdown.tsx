@@ -94,8 +94,8 @@ const FilterStateGroup = ({ filterState, setFilterState }: FilterGroupProps) => 
         Borrador
       </DropdownMenuItem>
       <DropdownMenuItem 
-        className={filterState === "en_edicion" ? "bg-muted/50" : ""}
-        onClick={() => setFilterState("en_edicion")}
+        className={filterState === "en revisión" ? "bg-muted/50" : ""}
+        onClick={() => setFilterState("en revisión")}
       >
         <span className="mr-2 h-2 w-2 rounded-full bg-amber-500"></span>
         En revisión
@@ -108,8 +108,8 @@ const FilterStateGroup = ({ filterState, setFilterState }: FilterGroupProps) => 
         Publicado
       </DropdownMenuItem>
       <DropdownMenuItem 
-        className={filterState === "pausado" ? "bg-muted/50" : ""}
-        onClick={() => setFilterState("pausado")}
+        className={filterState === "archivado" ? "bg-muted/50" : ""}
+        onClick={() => setFilterState("archivado")}
       >
         <span className="mr-2 h-2 w-2 rounded-full bg-red-500"></span>
         Archivado
@@ -136,25 +136,25 @@ const FilterContentGroup = ({ filterContent, setFilterContent }: FilterContentGr
         Todos
       </DropdownMenuItem>
       <DropdownMenuItem 
-        className={filterContent === "hardcover" ? "bg-muted/50" : ""}
-        onClick={() => setFilterContent("hardcover")}
+        className={filterContent === "alto contenido" ? "bg-muted/50" : ""}
+        onClick={() => setFilterContent("alto contenido")}
       >
         <span className="mr-2 h-2 w-2 rounded-full bg-purple-500"></span>
-        Tapa dura
+        Alto Contenido
       </DropdownMenuItem>
       <DropdownMenuItem 
-        className={filterContent === "paperback" ? "bg-muted/50" : ""}
-        onClick={() => setFilterContent("paperback")}
+        className={filterContent === "medio contenido" ? "bg-muted/50" : ""}
+        onClick={() => setFilterContent("medio contenido")}
       >
         <span className="mr-2 h-2 w-2 rounded-full bg-indigo-500"></span>
-        Tapa blanda
+        Medio Contenido
       </DropdownMenuItem>
       <DropdownMenuItem 
-        className={filterContent === "ebook" ? "bg-muted/50" : ""}
-        onClick={() => setFilterContent("ebook")}
+        className={filterContent === "bajo contenido" ? "bg-muted/50" : ""}
+        onClick={() => setFilterContent("bajo contenido")}
       >
         <span className="mr-2 h-2 w-2 rounded-full bg-sky-500"></span>
-        eBook
+        Bajo Contenido
       </DropdownMenuItem>
     </DropdownMenuGroup>
   );
