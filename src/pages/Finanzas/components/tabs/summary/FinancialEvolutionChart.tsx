@@ -22,8 +22,8 @@ export const FinancialEvolutionChart = ({
     setActivePeriod(periodView);
   }, [periodView]);
 
-  // Use useCallback to prevent recreation on every render
-  const handlePeriodChange = useCallback((period: string) => {
+  // Handle period button click
+  const handlePeriodClick = useCallback((period: string) => {
     setActivePeriod(period);
     if (onPeriodChange) {
       onPeriodChange(period);
@@ -39,28 +39,28 @@ export const FinancialEvolutionChart = ({
             <Button 
               variant={activePeriod === "diario" ? "default" : "outline"} 
               size="sm"
-              onClick={() => handlePeriodChange("diario")}
+              onClick={() => handlePeriodClick("diario")}
             >
               Diario
             </Button>
             <Button 
               variant={activePeriod === "semanal" ? "default" : "outline"}
               size="sm"
-              onClick={() => handlePeriodChange("semanal")}
+              onClick={() => handlePeriodClick("semanal")}
             >
               Semanal
             </Button>
             <Button 
               variant={activePeriod === "mensual" ? "default" : "outline"}
               size="sm"
-              onClick={() => handlePeriodChange("mensual")}
+              onClick={() => handlePeriodClick("mensual")}
             >
               Mensual
             </Button>
             <Button 
               variant={activePeriod === "anual" ? "default" : "outline"}
               size="sm"
-              onClick={() => handlePeriodChange("anual")}
+              onClick={() => handlePeriodClick("anual")}
             >
               Anual
             </Button>

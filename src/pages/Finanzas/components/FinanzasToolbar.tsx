@@ -14,17 +14,12 @@ export const FinanzasToolbar = ({
   periodView,
   onPeriodChange
 }: FinanzasToolbarProps) => {
-  // Handle period change through a callback
-  const handlePeriodChange = (value: string) => {
-    onPeriodChange(value);
-  };
-
   return (
     <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
       <div className="flex items-center gap-3">
         <Select 
           value={periodView} 
-          onValueChange={handlePeriodChange}
+          onValueChange={onPeriodChange}
         >
           <SelectTrigger className="w-[180px]">
             <div className="flex items-center gap-2">
@@ -39,6 +34,11 @@ export const FinanzasToolbar = ({
             <SelectItem value="anual">Vista Anual</SelectItem>
           </SelectContent>
         </Select>
+      </div>
+      <div>
+        <Button onClick={onNewRecordClick} variant="outline" size="sm">
+          <FilePlus2 size={16} className="mr-2" /> Nuevo registro
+        </Button>
       </div>
     </div>
   );

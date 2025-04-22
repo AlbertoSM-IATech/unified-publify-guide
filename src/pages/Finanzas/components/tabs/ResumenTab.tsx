@@ -54,6 +54,11 @@ export const ResumenTab = () => {
     getFilteredChartData(period);
   }, [getFilteredChartData]);
 
+  // Memoized chart data to prevent unnecessary re-renders
+  const filteredChartData = useCallback(() => {
+    return getFilteredChartData(periodView);
+  }, [getFilteredChartData, periodView])();
+
   return (
     <div className="space-y-6">
       <CurrentMonthSummary
@@ -78,7 +83,7 @@ export const ResumenTab = () => {
       />
 
       <FinancialEvolutionChart 
-        lineChartData={lineChartData} 
+        lineChartData={filteredChartData} 
         periodView={periodView}
         onPeriodChange={handlePeriodChange}
       />

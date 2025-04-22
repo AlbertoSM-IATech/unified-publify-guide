@@ -73,7 +73,7 @@ export const useChartData = (resumenesMensuales: FinancialRecord[]) => {
     });
   }, [resumenesMensuales, currentPeriod]);
 
-  // Use useCallback to prevent function recreation on each render
+  // Generate data for a specific period
   const generateDataForPeriod = useCallback((records: FinancialRecord[], period: string) => {
     const dates = getDatesByPeriod(period);
     

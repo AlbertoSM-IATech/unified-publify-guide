@@ -22,7 +22,9 @@ export const Finanzas = () => {
   } = useFinanceData();
 
   // Get filtered chart data based on selected period
-  const filteredChartData = getFilteredChartData(periodView);
+  const filteredChartData = useCallback(() => {
+    return getFilteredChartData(periodView);
+  }, [getFilteredChartData, periodView])();
 
   // Handle edit record
   const handleEditRecord = useCallback((id: number, data: Partial<Transaction>) => {
@@ -45,10 +47,17 @@ export const Finanzas = () => {
     updateResumenesMensuales(filteredRecords);
   }, [resumenesMensuales, updateResumenesMensuales]);
 
-  // Handle period change - using useCallback to prevent recreation on every render
+  // Handle period change
   const handlePeriodChange = useCallback((period: string) => {
     setPeriodView(period);
   }, []);
+
+  // Handle new record click
+  const handleNewRecordClick = useCallback(() => {
+    if (activeTab === "resumen") {
+      setActiveTab("ingresos");
+    }
+  }, [activeTab]);
 
   return (
     <div className="animate-fade-in">
@@ -61,16 +70,14 @@ export const Finanzas = () => {
 
       <FinanzasTabs activeTab={activeTab} setActiveTab={setActiveTab} />
       <FinanzasToolbar 
-        onNewRecordClick={() => {
-          if (activeTab === "resumen") {
-            setActiveTab("ingresos");
-          }
-        }}
+        onNewRecordClick={handleNewRecordClick}
         periodView={periodView}
         onPeriodChange={handlePeriodChange}
       />
 
-      {activeTab === "resumen" && <ResumenTab />}
+      {activeTab === "resumen" && (
+        <ResumenTab />
+      )}
       
       {activeTab === "ingresos" && (
         <TransactionsTabContent
