@@ -9,6 +9,12 @@ interface RecentBooksProps {
 }
 
 export const RecentBooks = ({ libros }: RecentBooksProps) => {
+  // Ensure image URLs have default fallbacks if not available
+  const processedLibros = libros.map(libro => ({
+    ...libro,
+    imageUrl: libro.imageUrl || libro.portadaUrl || "/placeholders/default-book-cover.png"
+  }));
+
   return (
     <MotionWrapper type="fadeUp" delay={0.4}>
       <Card>
@@ -23,7 +29,7 @@ export const RecentBooks = ({ libros }: RecentBooksProps) => {
         </CardHeader>
         <CardContent className="pt-4">
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-            {libros.sort((a, b) => b.id - a.id).slice(0, 6).map((libro, index) => (
+            {processedLibros.sort((a, b) => b.id - a.id).slice(0, 6).map((libro, index) => (
               <MotionWrapper key={libro.id} delay={0.1 * index} type="scale">
                 <BookCard 
                   index={index + 1} 
@@ -31,7 +37,7 @@ export const RecentBooks = ({ libros }: RecentBooksProps) => {
                   author={libro.autor} 
                   contentLevel={libro.contenido} 
                   status={libro.estado} 
-                  coverUrl={libro.imageUrl || "/placeholders/default-book-cover.png"} 
+                  coverUrl={libro.imageUrl} 
                   id={libro.id}
                 />
               </MotionWrapper>

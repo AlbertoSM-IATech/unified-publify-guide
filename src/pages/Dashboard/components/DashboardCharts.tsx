@@ -88,6 +88,7 @@ export const DashboardCharts = ({ pieChartData, barChartData, librosCount }: Das
               data={pieChartData}
               totalLabel="Total libros"
               totalValue={librosCount}
+              showLegend={false}
             />
           )}
         </MotionWrapper>

@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { useFinanceData } from "@/data/financesData";
 import { FinanzasTabs } from "./components/FinanzasTabs";
@@ -12,14 +12,17 @@ import { NuevoRegistro } from "./types/finanzasTypes";
 import { ApexLineChart } from "@/components/charts";
 import MotionWrapper from "@/components/motion/MotionWrapper";
 import { getCurrentMonth } from "./utils/dateUtils";
+import { TransactionsList } from "./components/TransactionsList";
 
 export const Finanzas = () => {
   const [activeTab, setActiveTab] = useState("resumen");
+  const [periodView, setPeriodView] = useState("mensual");
   const { toast } = useToast();
   const { 
     resumenesMensuales,
     lineChartData,
-    agregarRegistroFinanciero
+    agregarRegistroFinanciero,
+    getFilteredChartData
   } = useFinanceData();
 
   const [nuevoRegistro, setNuevoRegistro] = useState<NuevoRegistro>({
@@ -29,6 +32,14 @@ export const Finanzas = () => {
     concepto: "",
     observaciones: ""
   });
+
+  // Get filtered chart data based on selected period
+  const filteredChartData = getFilteredChartData(periodView);
+
+  // Filter transactions for current month
+  const currentMonthTransactions = resumenesMensuales.filter(
+    record => record.mes === getCurrentMonth()
+  );
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -80,6 +91,11 @@ export const Finanzas = () => {
     });
   };
 
+  // Handle period change
+  const handlePeriodChange = (period: string) => {
+    setPeriodView(period);
+  };
+
   return (
     <div className="animate-fade-in">
       <div className="mb-6">
@@ -90,12 +106,16 @@ export const Finanzas = () => {
       </div>
 
       <FinanzasTabs activeTab={activeTab} setActiveTab={setActiveTab} />
-      <FinanzasToolbar onNewRecordClick={() => {
-        // Redirect to the tab corresponding to the type of record the user might want to add
-        if (activeTab === "resumen") {
-          setActiveTab("ingresos");
-        }
-      }} />
+      <FinanzasToolbar 
+        onNewRecordClick={() => {
+          // Redirect to the tab corresponding to the type of record the user might want to add
+          if (activeTab === "resumen") {
+            setActiveTab("ingresos");
+          }
+        }}
+        periodView={periodView}
+        onPeriodChange={handlePeriodChange}
+      />
 
       {activeTab === "resumen" && <ResumenTab />}
 
@@ -111,9 +131,9 @@ export const Finanzas = () => {
 
           <MotionWrapper type="fadeUp" delay={0.2}>
             <ApexLineChart
-              title="Evolución de Ingresos"
-              description="Seguimiento mensual de ingresos"
-              data={lineChartData}
+              title={`Evolución de Ingresos (${periodView})`}
+              description={`Seguimiento ${periodView} de ingresos`}
+              data={filteredChartData}
               series={[
                 {
                   name: "Ingresos",
@@ -122,6 +142,14 @@ export const Finanzas = () => {
                 }
               ]}
               height={350}
+            />
+          </MotionWrapper>
+
+          <MotionWrapper type="fadeUp" delay={0.3}>
+            <TransactionsList 
+              transactions={resumenesMensuales.filter(record => record.ingresos > 0)}
+              title="Historial de Ingresos"
+              type="ingresos"
             />
           </MotionWrapper>
         </div>
@@ -139,9 +167,9 @@ export const Finanzas = () => {
 
           <MotionWrapper type="fadeUp" delay={0.2}>
             <ApexLineChart
-              title="Evolución de Gastos"
-              description="Seguimiento mensual de gastos"
-              data={lineChartData}
+              title={`Evolución de Gastos (${periodView})`}
+              description={`Seguimiento ${periodView} de gastos`}
+              data={filteredChartData}
               series={[
                 {
                   name: "Gastos",
@@ -150,6 +178,14 @@ export const Finanzas = () => {
                 }
               ]}
               height={350}
+            />
+          </MotionWrapper>
+
+          <MotionWrapper type="fadeUp" delay={0.3}>
+            <TransactionsList 
+              transactions={resumenesMensuales.filter(record => record.gastos > 0)}
+              title="Historial de Gastos"
+              type="gastos"
             />
           </MotionWrapper>
         </div>

@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { getStatsData, getContentCategoriesData, getPieChartData, getBarChartData } from "@/components/dashboard/dashboardData";
 import { librosSimulados } from "../Biblioteca/Libros/utils/librosUtils";
@@ -7,8 +8,10 @@ import { ContentCategories } from "./components/ContentCategories";
 import { DashboardCharts } from "./components/DashboardCharts";
 import { RecentBooks } from "./components/RecentBooks";
 import { getContentCategory, getEstadoCategory } from "@/pages/Dashboard/utils/dashboardUtils";
+import { useFinanceData } from "@/data/financesData";
 
 export const Dashboard = () => {
+  const { ingresosTotales, gastosTotales, beneficioNeto, cambioIngresos, cambioGastos, cambioBeneficio } = useFinanceData();
   const [stats, setStats] = useState(getStatsData());
   const [contentCategories, setContentCategories] = useState(getContentCategoriesData());
   const [pieChartData, setPieChartData] = useState(getPieChartData());
@@ -16,6 +19,21 @@ export const Dashboard = () => {
   const [libros, setLibros] = useState(librosSimulados);
   
   useEffect(() => {
+    // Update stats with real financial data
+    const updatedStats = [...stats];
+    updatedStats[2] = {
+      ...updatedStats[2],
+      value: `€${ingresosTotales}`,
+      change: `${cambioIngresos}%`
+    };
+    updatedStats[3] = {
+      ...updatedStats[3],
+      value: `€${gastosTotales}`,
+      change: `${cambioGastos}%`
+    };
+    setStats(updatedStats);
+    
+    // Calculate statistics based on books data
     const altoContenido = libros.filter(libro => getContentCategory(libro.contenido) === "Alto Contenido").length;
     const medioContenido = libros.filter(libro => getContentCategory(libro.contenido) === "Medio Contenido").length;
     const bajoContenido = libros.filter(libro => getContentCategory(libro.contenido) === "Bajo Contenido").length;
@@ -107,7 +125,7 @@ export const Dashboard = () => {
       { name: "Bajo Contenido", value: bajoContenido, color: "#22c55e" }
     ];
     setBarChartData(updatedBarChartData);
-  }, [libros]);
+  }, [libros, ingresosTotales, gastosTotales, beneficioNeto, cambioIngresos, cambioGastos, cambioBeneficio]);
 
   return (
     <div className="p-4 animate-fade-in space-y-8">

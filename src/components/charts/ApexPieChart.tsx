@@ -23,6 +23,7 @@ interface ApexPieChartProps {
   className?: string;
   totalLabel?: string;
   totalValue?: number;
+  showLegend?: boolean;
 }
 
 const ApexPieChart = ({ 
@@ -32,7 +33,8 @@ const ApexPieChart = ({
   height = 350, 
   className,
   totalLabel,
-  totalValue
+  totalValue,
+  showLegend = true
 }: ApexPieChartProps) => {
   const { isDarkMode } = useTheme();
   const themeOptions = getChartTheme(isDarkMode);
@@ -108,6 +110,7 @@ const ApexPieChart = ({
       colors: ['transparent']
     },
     legend: {
+      show: showLegend,
       position: 'bottom',
       horizontalAlign: 'center',
       itemMargin: {
@@ -182,7 +185,7 @@ const ApexPieChart = ({
           />
         </MotionWrapper>
 
-        {validData.length > 0 && (
+        {validData.length > 0 && showLegend === false && (
           <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-2">
             {validData.map((entry, index) => (
               <motion.div 
