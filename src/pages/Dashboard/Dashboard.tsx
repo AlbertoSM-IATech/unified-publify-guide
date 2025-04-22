@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { getStatsData, getContentCategoriesData, getPieChartData, getBarChartData } from "@/components/dashboard/dashboardData";
 import { librosSimulados } from "../Biblioteca/Libros/utils/librosUtils";
@@ -15,7 +14,7 @@ export const Dashboard = () => {
   const [pieChartData, setPieChartData] = useState(getPieChartData());
   const [barChartData, setBarChartData] = useState(getBarChartData());
   const [libros, setLibros] = useState(librosSimulados);
-
+  
   useEffect(() => {
     const altoContenido = libros.filter(libro => getContentCategory(libro.contenido) === "Alto Contenido").length;
     const medioContenido = libros.filter(libro => getContentCategory(libro.contenido) === "Medio Contenido").length;

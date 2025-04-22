@@ -8,7 +8,7 @@ export const getContentCategory = (contentType: string) => {
 
 export const getEstadoCategory = (estado: string) => {
   if (estado === "publicado") return "Publicado";
-  if (estado === "en_edicion") return "En Revisión";
+  if (estado === "en_edicion") return "En revisión";
   if (estado === "borrador") return "Borrador";
   if (estado === "pausado") return "Archivado";
   return estado;
