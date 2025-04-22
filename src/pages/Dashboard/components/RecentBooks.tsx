@@ -15,6 +15,9 @@ export const RecentBooks = ({ libros }: RecentBooksProps) => {
     imageUrl: libro.imageUrl || libro.portadaUrl || "/placeholders/default-book-cover.png"
   }));
 
+  // Filter out any books with undefined values that might cause rendering issues
+  const validLibros = processedLibros.filter(libro => libro && libro.id);
+
   return (
     <MotionWrapper type="fadeUp" delay={0.4}>
       <Card>
@@ -28,21 +31,27 @@ export const RecentBooks = ({ libros }: RecentBooksProps) => {
           </CardDescription>
         </CardHeader>
         <CardContent className="pt-4">
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-            {processedLibros.sort((a, b) => b.id - a.id).slice(0, 6).map((libro, index) => (
-              <MotionWrapper key={libro.id} delay={0.1 * index} type="scale">
-                <BookCard 
-                  index={index + 1} 
-                  title={libro.titulo} 
-                  author={libro.autor} 
-                  contentLevel={libro.contenido} 
-                  status={libro.estado} 
-                  coverUrl={libro.imageUrl} 
-                  id={libro.id}
-                />
-              </MotionWrapper>
-            ))}
-          </div>
+          {validLibros.length > 0 ? (
+            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+              {validLibros.sort((a, b) => b.id - a.id).slice(0, 6).map((libro, index) => (
+                <MotionWrapper key={libro.id} delay={0.1 * index} type="scale">
+                  <BookCard 
+                    index={index + 1} 
+                    title={libro.titulo} 
+                    author={libro.autor} 
+                    contentLevel={libro.contenido} 
+                    status={libro.estado} 
+                    coverUrl={libro.imageUrl} 
+                    id={libro.id}
+                  />
+                </MotionWrapper>
+              ))}
+            </div>
+          ) : (
+            <div className="py-8 text-center text-muted-foreground">
+              No hay libros en la biblioteca
+            </div>
+          )}
         </CardContent>
       </Card>
     </MotionWrapper>

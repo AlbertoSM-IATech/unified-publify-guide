@@ -46,3 +46,32 @@ export const truncateText = (text: string, maxLength: number): string => {
   if (text.length <= maxLength) return text;
   return `${text.slice(0, maxLength)}...`;
 };
+
+/**
+ * Formats period dates for charts and display
+ * @param date The date to format
+ * @param period The period type (daily, weekly, monthly, yearly)
+ * @param locale The locale to use
+ * @returns A formatted period date string
+ */
+export const formatPeriodDate = (date: Date, period: string, locale = 'es-ES'): string => {
+  switch (period) {
+    case 'daily':
+    case 'diario':
+      return date.toLocaleDateString(locale, { day: 'numeric', month: 'short' });
+    case 'weekly':
+    case 'semanal':
+      // Get week number
+      const firstDayOfYear = new Date(date.getFullYear(), 0, 1);
+      const pastDaysOfYear = (date.getTime() - firstDayOfYear.getTime()) / 86400000;
+      const weekNum = Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);
+      return `Sem ${weekNum}`;
+    case 'yearly':
+    case 'anual':
+      return date.toLocaleDateString(locale, { year: 'numeric' });
+    case 'monthly':
+    case 'mensual':
+    default:
+      return date.toLocaleDateString(locale, { month: 'short', year: 'numeric' });
+  }
+};

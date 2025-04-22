@@ -48,6 +48,7 @@ export const Finanzas = () => {
   // Handle period change
   const handlePeriodChange = (period: string) => {
     setPeriodView(period);
+    getFilteredChartData(period);
   };
 
   return (

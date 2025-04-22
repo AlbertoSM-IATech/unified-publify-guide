@@ -1,4 +1,5 @@
 
+import { useState } from "react";
 import { useFinanceData } from "@/data/financesData";
 import { getCurrentMonth } from "../../utils/dateUtils";
 import { CurrentMonthSummary } from "./summary/CurrentMonthSummary";
@@ -7,6 +8,7 @@ import { FinancialEvolutionChart } from "./summary/FinancialEvolutionChart";
 import { MonthlySummaryTable } from "./summary/MonthlySummaryTable";
 
 export const ResumenTab = () => {
+  const [periodView, setPeriodView] = useState('mensual');
   const { 
     resumenesMensuales, 
     lineChartData,
@@ -17,7 +19,8 @@ export const ResumenTab = () => {
     cambioGastos,
     cambioBeneficio,
     costesFijos,
-    ingresosFijos
+    ingresosFijos,
+    getFilteredChartData
   } = useFinanceData();
 
   // Calculate fixed monthly costs
@@ -45,6 +48,11 @@ export const ResumenTab = () => {
   const currentMonthGastos = (currentMonthRecord?.gastos || 0) + costesFijosMensuales;
   const currentMonthBeneficio = currentMonthIngresos - currentMonthGastos;
 
+  const handlePeriodChange = (period: string) => {
+    setPeriodView(period);
+    getFilteredChartData(period);
+  };
+
   return (
     <div className="space-y-6">
       <CurrentMonthSummary
@@ -68,7 +76,11 @@ export const ResumenTab = () => {
         resumenesMensualesLength={resumenesMensuales.length}
       />
 
-      <FinancialEvolutionChart lineChartData={lineChartData} />
+      <FinancialEvolutionChart 
+        lineChartData={lineChartData} 
+        periodView={periodView}
+        onPeriodChange={handlePeriodChange}
+      />
 
       <MonthlySummaryTable resumenesMensuales={resumenesMensuales} />
     </div>

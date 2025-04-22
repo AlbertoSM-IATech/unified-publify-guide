@@ -23,7 +23,7 @@ export const useFinanceData = () => {
     eliminarIngresoFijo 
   } = useFixedFinances();
 
-  const { getFilteredChartData, lineChartData } = useChartData(resumenesMensuales);
+  const { getFilteredChartData, lineChartData, currentPeriod } = useChartData(resumenesMensuales);
 
   // Cálculo de totales
   const ingresosTotales = resumenesMensuales.reduce((total, item) => total + item.ingresos, 0);
@@ -35,7 +35,8 @@ export const useFinanceData = () => {
     ingresos: number, 
     gastos: number,
     concepto?: string,
-    observaciones?: string
+    observaciones?: string,
+    fecha?: Date
   }) => {
     const nuevoId = Math.max(0, ...resumenesMensuales.map(item => item.id)) + 1;
     const beneficio = nuevoRegistro.ingresos - nuevoRegistro.gastos;
@@ -47,7 +48,8 @@ export const useFinanceData = () => {
       gastos: nuevoRegistro.gastos,
       beneficio: beneficio,
       concepto: nuevoRegistro.concepto,
-      observaciones: nuevoRegistro.observaciones
+      observaciones: nuevoRegistro.observaciones,
+      fecha: nuevoRegistro.fecha
     };
     
     setResumenesMensuales([...resumenesMensuales, registroCompleto]);
@@ -67,6 +69,7 @@ export const useFinanceData = () => {
     beneficioNeto,
     getFilteredChartData,
     updateResumenesMensuales,
+    currentPeriod,
     ...calcularCambios(resumenesMensuales),
     agregarRegistroFinanciero,
     editarCosteFijo,

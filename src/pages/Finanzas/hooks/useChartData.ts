@@ -1,35 +1,137 @@
 
+import { useState, useEffect, useMemo } from 'react';
 import { FinancialRecord } from '../types/dataTypes';
+import { getDatesByPeriod, formatPeriodDate } from '../utils/dateUtils';
 
 export const useChartData = (resumenesMensuales: FinancialRecord[]) => {
-  const getFilteredChartData = (periodView: string) => {
-    switch (periodView) {
-      case 'diario':
-        return [];  // Return daily data when implemented
-      case 'semanal':
-        return [];  // Return weekly data when implemented
-      case 'anual':
-        return [];  // Return yearly data when implemented
-      case 'mensual':
-      default:
-        return resumenesMensuales.map(item => ({
-          name: item.mes.substring(0, 3),
-          ingresos: item.ingresos,
-          gastos: item.gastos,
-          beneficio: item.beneficio
-        }));
+  const [filteredChartData, setFilteredChartData] = useState<any[]>([]);
+  const [currentPeriod, setCurrentPeriod] = useState('mensual');
+
+  // Create line chart data for financial evolution
+  const lineChartData = useMemo(() => {
+    if (!resumenesMensuales.length) {
+      const dates = getDatesByPeriod(currentPeriod);
+      return dates.map(date => ({
+        date,
+        name: formatPeriodDate(date, currentPeriod),
+        ingresos: 0,
+        gastos: 0,
+        beneficio: 0
+      }));
     }
+
+    // For the monthly view, we use the actual data
+    if (currentPeriod === 'mensual') {
+      return resumenesMensuales.map(record => ({
+        name: record.mes,
+        ingresos: record.ingresos,
+        gastos: record.gastos,
+        beneficio: record.beneficio
+      }));
+    }
+
+    // For other views, we generate dates and aggregate data
+    const dates = getDatesByPeriod(currentPeriod);
+    
+    return dates.map(date => {
+      // Find records that fall within this period
+      const recordsInPeriod = resumenesMensuales.filter(record => {
+        const recordDate = new Date(record.fecha || `1 ${record.mes} 2024`);
+        
+        if (currentPeriod === 'diario') {
+          // Same day
+          return recordDate.toDateString() === date.toDateString();
+        } else if (currentPeriod === 'semanal') {
+          // Same week
+          const diffTime = Math.abs(date.getTime() - recordDate.getTime());
+          const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+          return diffDays <= 7;
+        } else if (currentPeriod === 'anual') {
+          // Same year
+          return recordDate.getFullYear() === date.getFullYear();
+        } else {
+          // Default to monthly
+          return (
+            recordDate.getMonth() === date.getMonth() && 
+            recordDate.getFullYear() === date.getFullYear()
+          );
+        }
+      });
+      
+      // Sum up the values
+      const ingresos = recordsInPeriod.reduce((sum, record) => sum + record.ingresos, 0);
+      const gastos = recordsInPeriod.reduce((sum, record) => sum + record.gastos, 0);
+      const beneficio = ingresos - gastos;
+      
+      return {
+        date,
+        name: formatPeriodDate(date, currentPeriod),
+        ingresos,
+        gastos,
+        beneficio
+      };
+    });
+  }, [resumenesMensuales, currentPeriod]);
+
+  const getFilteredChartData = (period: string) => {
+    setCurrentPeriod(period);
+    const data = generateDataForPeriod(resumenesMensuales, period);
+    setFilteredChartData(data);
+    return data;
   };
 
-  const lineChartData = resumenesMensuales.map(item => ({
-    name: item.mes.substring(0, 3),
-    ingresos: item.ingresos,
-    gastos: item.gastos,
-    beneficio: item.beneficio
-  }));
+  const generateDataForPeriod = (records: FinancialRecord[], period: string) => {
+    const dates = getDatesByPeriod(period);
+    
+    return dates.map(date => {
+      // Find records that fall within this period
+      const recordsInPeriod = records.filter(record => {
+        const recordDate = new Date(record.fecha || `1 ${record.mes} 2024`);
+        
+        if (period === 'diario') {
+          // Same day
+          return recordDate.toDateString() === date.toDateString();
+        } else if (period === 'semanal') {
+          // Same week
+          const diffTime = Math.abs(date.getTime() - recordDate.getTime());
+          const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+          return diffDays <= 7;
+        } else if (period === 'anual') {
+          // Same year
+          return recordDate.getFullYear() === date.getFullYear();
+        } else {
+          // Default to monthly
+          return (
+            recordDate.getMonth() === date.getMonth() && 
+            recordDate.getFullYear() === date.getFullYear()
+          );
+        }
+      });
+      
+      // Sum up the values
+      const ingresos = recordsInPeriod.reduce((sum, record) => sum + record.ingresos, 0);
+      const gastos = recordsInPeriod.reduce((sum, record) => sum + record.gastos, 0);
+      const beneficio = ingresos - gastos;
+      
+      return {
+        date,
+        name: formatPeriodDate(date, period),
+        ingresos,
+        gastos,
+        beneficio
+      };
+    });
+  };
+
+  // Initialize filtered data
+  useEffect(() => {
+    setFilteredChartData(lineChartData);
+  }, [lineChartData]);
 
   return {
+    lineChartData,
+    filteredChartData,
     getFilteredChartData,
-    lineChartData
+    currentPeriod
   };
 };

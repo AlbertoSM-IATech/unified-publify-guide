@@ -7,18 +7,23 @@ export interface FinancialRecord {
   beneficio: number;
   concepto?: string;
   observaciones?: string;
+  fecha?: Date;
 }
 
-export interface CosteFijo {
+export interface FixedCost {
   id: number;
   concepto: string;
   coste: number;
-  frecuencia: "Mensual" | "Trimestral" | "Anual";
+  frecuencia: string;
+  fechaInicio: string;
+  notas?: string;
 }
 
-export interface IngresoFijo {
+export interface FixedIncome {
   id: number;
   concepto: string;
   cantidad: number;
-  frecuencia: "Mensual" | "Trimestral" | "Anual";
+  frecuencia: string;
+  fechaInicio: string;
+  notas?: string;
 }
