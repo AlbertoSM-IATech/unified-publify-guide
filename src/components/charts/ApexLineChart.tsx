@@ -116,6 +116,9 @@ const ApexLineChart = ({
       },
     },
     tooltip: {
+      enabled: true,
+      // Remove custom tooltip to avoid resolve issues
+      custom: undefined,
       theme: isDarkMode ? 'dark' : 'light',
       y: {
         formatter: function (value) {
@@ -124,9 +127,7 @@ const ApexLineChart = ({
       },
       marker: {
         show: true,
-      },
-      // Using custom render to avoid issues with undefined resolver
-      custom: undefined
+      }
     },
     responsive: [{
       breakpoint: 480,

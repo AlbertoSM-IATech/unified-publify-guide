@@ -105,13 +105,12 @@ const ApexBarChart = ({
       }
     },
     tooltip: {
+      enabled: true,
+      // Remove custom property to avoid resolve issues
+      custom: undefined,
       y: {
-        formatter: function (value) {
-          return value.toString();
-        }
-      },
-      // Using custom render to avoid issues with undefined resolver
-      custom: undefined
+        formatter: (val) => val.toString()
+      }
     },
     legend: {
       show: false,

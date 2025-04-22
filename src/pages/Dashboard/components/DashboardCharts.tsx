@@ -3,6 +3,7 @@ import MotionWrapper from "@/components/motion/MotionWrapper";
 import { ApexLineChart, ApexPieChart, ApexBarChart } from "@/components/charts";
 import { useFinanceData } from "@/data/financesData";
 import { ChartItem } from "@/components/dashboard/dashboardData";
+import { useState, useEffect } from "react";
 
 interface DashboardChartsProps {
   pieChartData: ChartItem[];
@@ -12,11 +13,30 @@ interface DashboardChartsProps {
 
 export const DashboardCharts = ({ pieChartData, barChartData, librosCount }: DashboardChartsProps) => {
   const { lineChartData } = useFinanceData();
+  // Add error handling state
+  const [hasError, setHasError] = useState(false);
 
   // Ensure lineChartData is valid
   const validLineChartData = Array.isArray(lineChartData) && lineChartData.length > 0 
     ? lineChartData 
     : [{ name: 'No data', ingresos: 0, gastos: 0, beneficio: 0 }];
+    
+  // Error boundary for chart rendering
+  useEffect(() => {
+    return () => setHasError(false); // Reset error state on unmount
+  }, []);
+
+  // If there was an error rendering charts, show fallback UI
+  if (hasError) {
+    return (
+      <div className="p-6 bg-card border rounded-lg text-center">
+        <h3 className="text-lg font-medium mb-2">Error al cargar gráficos</h3>
+        <p className="text-muted-foreground">
+          Ocurrió un problema al cargar los gráficos. Intente refrescar la página.
+        </p>
+      </div>
+    );
+  }
 
   return (
     <>

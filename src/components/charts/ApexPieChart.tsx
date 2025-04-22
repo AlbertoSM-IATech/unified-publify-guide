@@ -128,13 +128,12 @@ const ApexPieChart = ({
       }
     },
     tooltip: {
+      enabled: true,
+      // Completely remove custom formatting to avoid resolve issues
+      custom: undefined,
       y: {
-        formatter: function (value) {
-          return value.toString();
-        }
-      },
-      // Using custom render to avoid issues with undefined resolver
-      custom: undefined
+        formatter: (val) => val.toString()
+      }
     },
     responsive: [{
       breakpoint: 480,
