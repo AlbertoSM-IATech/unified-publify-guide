@@ -77,6 +77,7 @@ export const Finanzas = () => {
       return;
     }
 
+    // No need to calculate beneficio here, it's handled in useFinanceData
     agregarRegistroFinanciero(nuevoRegistro);
     setNuevoRegistro({ mes: "", ingresos: 0, gastos: 0 });
     toast({

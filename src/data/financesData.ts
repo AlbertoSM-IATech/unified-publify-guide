@@ -78,14 +78,20 @@ export const useFinanceData = () => {
   };
   
   // Funciones para agregar/editar registros
-  const agregarRegistroFinanciero = (nuevoRegistro: Omit<FinancialRecord, 'id'>) => {
+  const agregarRegistroFinanciero = (nuevoRegistro: { mes: string, ingresos: number, gastos: number }) => {
     const nuevoId = Math.max(0, ...resumenesMensuales.map(item => item.id)) + 1;
     const beneficio = nuevoRegistro.ingresos - nuevoRegistro.gastos;
     
-    setResumenesMensuales([
-      ...resumenesMensuales, 
-      { ...nuevoRegistro, id: nuevoId, beneficio }
-    ]);
+    // Ahora creamos un objeto que se ajusta a la interfaz FinancialRecord
+    const registroCompleto: FinancialRecord = {
+      id: nuevoId,
+      mes: nuevoRegistro.mes,
+      ingresos: nuevoRegistro.ingresos,
+      gastos: nuevoRegistro.gastos,
+      beneficio: beneficio
+    };
+    
+    setResumenesMensuales([...resumenesMensuales, registroCompleto]);
   };
   
   const editarCosteFijo = (id: number, datos: Partial<CosteFijo>) => {
