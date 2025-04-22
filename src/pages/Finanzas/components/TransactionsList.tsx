@@ -1,56 +1,78 @@
 
 import React, { useState } from "react";
+import { format } from "date-fns";
+import { es } from "date-fns/locale";
+import { Edit2, Trash2, SearchIcon } from "lucide-react";
 import { 
-  Table, 
-  TableBody, 
-  TableCell, 
-  TableHead, 
-  TableHeader, 
-  TableRow 
+  Table, TableBody, TableCell, TableHead, TableHeader, TableRow 
 } from "@/components/ui/table";
 import { 
-  Pagination, 
-  PaginationContent, 
-  PaginationEllipsis, 
-  PaginationItem, 
-  PaginationLink, 
-  PaginationNext, 
-  PaginationPrevious 
+  Pagination, PaginationContent, PaginationItem, PaginationLink, 
+  PaginationNext, PaginationPrevious 
 } from "@/components/ui/pagination";
 import { Input } from "@/components/ui/input";
-import { SearchIcon } from "lucide-react";
-
-export interface Transaction {
-  id: number;
-  mes: string;
-  concepto: string; // This is required
-  ingresos?: number;
-  gastos?: number;
-  observaciones?: string;
-}
+import { Button } from "@/components/ui/button";
+import { DatePicker } from "@/components/ui/date-picker";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { useToast } from "@/hooks/use-toast";
+import { Transaction } from "../types/finanzasTypes";
 
 interface TransactionsListProps {
   transactions: Transaction[];
   title: string;
   type: 'ingresos' | 'gastos';
+  onEdit: (id: number, data: Partial<Transaction>) => void;
+  onDelete: (id: number) => void;
 }
 
-export const TransactionsList: React.FC<TransactionsListProps> = ({ transactions, title, type }) => {
+export const TransactionsList: React.FC<TransactionsListProps> = ({ 
+  transactions, 
+  title, 
+  type,
+  onEdit,
+  onDelete 
+}) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [filter, setFilter] = useState("");
-  const itemsPerPage = 10;
-  
+  const [editingTransaction, setEditingTransaction] = useState<Transaction | null>(null);
+  const { toast } = useToast();
+  const itemsPerPage = 50;
+
   const filteredTransactions = transactions.filter(transaction => 
-    transaction.mes.toLowerCase().includes(filter.toLowerCase()) || 
+    format(new Date(transaction.fecha), 'dd/MM/yyyy').includes(filter) || 
     transaction.concepto.toLowerCase().includes(filter.toLowerCase()) ||
     (transaction.observaciones && transaction.observaciones.toLowerCase().includes(filter.toLowerCase()))
   );
-  
-  const totalPages = Math.ceil(filteredTransactions.length / itemsPerPage);
+
   const startIndex = (currentPage - 1) * itemsPerPage;
   const paginatedTransactions = filteredTransactions.slice(startIndex, startIndex + itemsPerPage);
-  
-  // Reset to first page when filter changes
+  const totalPages = Math.ceil(filteredTransactions.length / itemsPerPage);
+
+  const handleEdit = (transaction: Transaction) => {
+    setEditingTransaction(transaction);
+  };
+
+  const handleSaveEdit = () => {
+    if (editingTransaction) {
+      onEdit(editingTransaction.id, editingTransaction);
+      setEditingTransaction(null);
+      toast({
+        title: "Registro actualizado",
+        description: "Los cambios han sido guardados correctamente"
+      });
+    }
+  };
+
+  const handleDelete = (id: number) => {
+    if (window.confirm("¿Estás seguro de que deseas eliminar este registro?")) {
+      onDelete(id);
+      toast({
+        title: "Registro eliminado",
+        description: "El registro ha sido eliminado correctamente"
+      });
+    }
+  };
+
   React.useEffect(() => {
     setCurrentPage(1);
   }, [filter]);
@@ -74,17 +96,20 @@ export const TransactionsList: React.FC<TransactionsListProps> = ({ transactions
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Mes</TableHead>
+              <TableHead>Fecha</TableHead>
               <TableHead>Concepto</TableHead>
               <TableHead className="text-right">Importe (€)</TableHead>
               <TableHead>Observaciones</TableHead>
+              <TableHead className="text-right">Acciones</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {paginatedTransactions.length > 0 ? (
               paginatedTransactions.map((transaction) => (
                 <TableRow key={transaction.id}>
-                  <TableCell>{transaction.mes}</TableCell>
+                  <TableCell>
+                    {format(new Date(transaction.fecha), 'dd/MM/yyyy', { locale: es })}
+                  </TableCell>
                   <TableCell>{transaction.concepto}</TableCell>
                   <TableCell className="text-right">
                     {type === 'ingresos' 
@@ -95,11 +120,27 @@ export const TransactionsList: React.FC<TransactionsListProps> = ({ transactions
                   <TableCell className="max-w-xs truncate">
                     {transaction.observaciones || "-"}
                   </TableCell>
+                  <TableCell className="text-right space-x-2">
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => handleEdit(transaction)}
+                    >
+                      <Edit2 className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => handleDelete(transaction.id)}
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  </TableCell>
                 </TableRow>
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={4} className="h-24 text-center">
+                <TableCell colSpan={5} className="h-24 text-center">
                   No hay transacciones que mostrar
                 </TableCell>
               </TableRow>
@@ -118,44 +159,16 @@ export const TransactionsList: React.FC<TransactionsListProps> = ({ transactions
               />
             </PaginationItem>
             
-            {[...Array(Math.min(5, totalPages))].map((_, i) => {
-              let pageNum;
-              
-              if (totalPages <= 5 || currentPage <= 3) {
-                pageNum = i + 1;
-              } else if (currentPage >= totalPages - 2) {
-                pageNum = totalPages - 4 + i;
-              } else {
-                pageNum = currentPage - 2 + i;
-              }
-              
-              if (pageNum > 0 && pageNum <= totalPages) {
-                return (
-                  <PaginationItem key={i}>
-                    <PaginationLink 
-                      onClick={() => setCurrentPage(pageNum)}
-                      isActive={currentPage === pageNum}
-                    >
-                      {pageNum}
-                    </PaginationLink>
-                  </PaginationItem>
-                );
-              }
-              return null;
-            })}
-            
-            {totalPages > 5 && currentPage < totalPages - 2 && (
-              <>
-                <PaginationItem>
-                  <PaginationEllipsis />
-                </PaginationItem>
-                <PaginationItem>
-                  <PaginationLink onClick={() => setCurrentPage(totalPages)}>
-                    {totalPages}
-                  </PaginationLink>
-                </PaginationItem>
-              </>
-            )}
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+              <PaginationItem key={page}>
+                <PaginationLink
+                  onClick={() => setCurrentPage(page)}
+                  isActive={currentPage === page}
+                >
+                  {page}
+                </PaginationLink>
+              </PaginationItem>
+            ))}
             
             <PaginationItem>
               <PaginationNext 
@@ -166,6 +179,69 @@ export const TransactionsList: React.FC<TransactionsListProps> = ({ transactions
           </PaginationContent>
         </Pagination>
       )}
+
+      <Dialog open={!!editingTransaction} onOpenChange={() => setEditingTransaction(null)}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Editar Registro</DialogTitle>
+          </DialogHeader>
+          {editingTransaction && (
+            <div className="space-y-4 py-4">
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Fecha</label>
+                <DatePicker
+                  date={new Date(editingTransaction.fecha)}
+                  onSelect={(date) => setEditingTransaction(prev => prev ? {
+                    ...prev,
+                    fecha: date || new Date()
+                  } : null)}
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Concepto</label>
+                <Input
+                  value={editingTransaction.concepto}
+                  onChange={(e) => setEditingTransaction(prev => prev ? {
+                    ...prev,
+                    concepto: e.target.value
+                  } : null)}
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium">
+                  {type === 'ingresos' ? 'Ingreso' : 'Gasto'} (€)
+                </label>
+                <Input
+                  type="number"
+                  value={type === 'ingresos' ? editingTransaction.ingresos : editingTransaction.gastos}
+                  onChange={(e) => setEditingTransaction(prev => prev ? {
+                    ...prev,
+                    [type]: Number(e.target.value)
+                  } : null)}
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Observaciones</label>
+                <Input
+                  value={editingTransaction.observaciones || ''}
+                  onChange={(e) => setEditingTransaction(prev => prev ? {
+                    ...prev,
+                    observaciones: e.target.value
+                  } : null)}
+                />
+              </div>
+              <div className="flex justify-end space-x-2 pt-4">
+                <Button variant="outline" onClick={() => setEditingTransaction(null)}>
+                  Cancelar
+                </Button>
+                <Button onClick={handleSaveEdit}>
+                  Guardar cambios
+                </Button>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

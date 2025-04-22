@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { useFinanceData } from "@/data/financesData";
@@ -14,12 +13,17 @@ import MotionWrapper from "@/components/motion/MotionWrapper";
 import { getCurrentMonth } from "./utils/dateUtils";
 import { TransactionsList } from "./components/TransactionsList";
 import { FinancialRecord } from "@/data/financesData";
+import { Transaction } from "./types/finanzasTypes";
 
 // Define a utility function to transform FinancialRecord to Transaction
 const mapRecordsToTransactions = (records: FinancialRecord[]) => {
   return records.map(record => ({
-    ...record,
-    concepto: record.concepto || "Sin concepto" // Ensure concepto is never undefined
+    id: record.id,
+    fecha: new Date(record.mes), // Assuming 'mes' can be parsed as a date
+    concepto: record.concepto || "Sin concepto", // Ensure concepto is never undefined
+    ingresos: record.ingresos,
+    gastos: record.gastos,
+    observaciones: record.observaciones
   }));
 };
 
@@ -31,11 +35,12 @@ export const Finanzas = () => {
     resumenesMensuales,
     lineChartData,
     agregarRegistroFinanciero,
-    getFilteredChartData
+    getFilteredChartData,
+    setResumenesMensuales
   } = useFinanceData();
 
   const [nuevoRegistro, setNuevoRegistro] = useState<NuevoRegistro>({
-    mes: getCurrentMonth(),
+    fecha: new Date(),
     ingresos: 0,
     gastos: 0,
     concepto: "",
@@ -52,7 +57,7 @@ export const Finanzas = () => {
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-    field: keyof NuevoRegistro
+    field: keyof Omit<NuevoRegistro, 'fecha'>
   ) => {
     const value = field === "ingresos" || field === "gastos" 
       ? Number(e.target.value) 
@@ -61,15 +66,35 @@ export const Finanzas = () => {
     setNuevoRegistro({ ...nuevoRegistro, [field]: value });
   };
 
-  const handleSelectChange = (field: keyof NuevoRegistro, value: string) => {
+  // Handle edit record
+  const handleEditRecord = (id: number, data: Partial<Transaction>) => {
+    const updatedRecords = resumenesMensuales.map(record => 
+      record.id === id ? { ...record, ...data } : record
+    );
+    // Update records through useFinanceData hook
+    setResumenesMensuales(updatedRecords);
+  };
+
+  // Handle delete record
+  const handleDeleteRecord = (id: number) => {
+    const filteredRecords = resumenesMensuales.filter(record => record.id !== id);
+    // Update records through useFinanceData hook
+    setResumenesMensuales(filteredRecords);
+  };
+
+  const handleDateChange = (date: Date) => {
+    setNuevoRegistro(prev => ({ ...prev, fecha: date }));
+  };
+
+  const handleSelectChange = (field: keyof Omit<NuevoRegistro, 'fecha'>, value: string) => {
     setNuevoRegistro({ ...nuevoRegistro, [field]: value });
   };
 
   const handleSubmitRegistro = () => {
-    if (!nuevoRegistro.mes) {
+    if (!nuevoRegistro.fecha) {
       toast({ 
         title: "Error", 
-        description: "El mes es obligatorio", 
+        description: "La fecha es obligatoria", 
         variant: "destructive" 
       });
       return;
@@ -84,10 +109,13 @@ export const Finanzas = () => {
       return;
     }
 
-    agregarRegistroFinanciero(nuevoRegistro);
+    agregarRegistroFinanciero({
+      ...nuevoRegistro,
+      mes: nuevoRegistro.fecha.toLocaleDateString()
+    });
     
     setNuevoRegistro({ 
-      mes: getCurrentMonth(), 
+      fecha: new Date(),
       ingresos: 0, 
       gastos: 0,
       concepto: "",
@@ -96,7 +124,7 @@ export const Finanzas = () => {
     
     toast({
       title: "Registro guardado",
-      description: `Se ha añadido el registro de ${nuevoRegistro.concepto} para ${nuevoRegistro.mes}`,
+      description: `Se ha añadido el registro de ${nuevoRegistro.concepto} para ${nuevoRegistro.fecha.toLocaleDateString()}`,
     });
   };
 
@@ -134,7 +162,7 @@ export const Finanzas = () => {
             title="Registrar Nuevo Ingreso"
             record={{ ...nuevoRegistro, gastos: 0 }}
             onChange={handleInputChange}
-            onSelectChange={handleSelectChange}
+            onDateChange={handleDateChange}
             onSubmit={handleSubmitRegistro}
           />
 
@@ -156,9 +184,15 @@ export const Finanzas = () => {
 
           <MotionWrapper type="fadeUp" delay={0.3}>
             <TransactionsList 
-              transactions={mapRecordsToTransactions(resumenesMensuales.filter(record => record.ingresos > 0))}
+              transactions={mapRecordsToTransactions(
+                // Remove duplicates by ID before mapping
+                Array.from(new Map(resumenesMensuales.filter(record => record.ingresos > 0)
+                  .map(item => [item.id, item])).values())
+              )}
               title="Historial de Ingresos"
               type="ingresos"
+              onEdit={handleEditRecord}
+              onDelete={handleDeleteRecord}
             />
           </MotionWrapper>
         </div>
@@ -170,7 +204,7 @@ export const Finanzas = () => {
             title="Registrar Nuevo Gasto"
             record={{ ...nuevoRegistro, ingresos: 0 }}
             onChange={handleInputChange}
-            onSelectChange={handleSelectChange}
+            onDateChange={handleDateChange}
             onSubmit={handleSubmitRegistro}
           />
 
@@ -192,9 +226,15 @@ export const Finanzas = () => {
 
           <MotionWrapper type="fadeUp" delay={0.3}>
             <TransactionsList 
-              transactions={mapRecordsToTransactions(resumenesMensuales.filter(record => record.gastos > 0))}
+              transactions={mapRecordsToTransactions(
+                // Remove duplicates by ID before mapping
+                Array.from(new Map(resumenesMensuales.filter(record => record.gastos > 0)
+                  .map(item => [item.id, item])).values())
+              )}
               title="Historial de Gastos"
               type="gastos"
+              onEdit={handleEditRecord}
+              onDelete={handleDeleteRecord}
             />
           </MotionWrapper>
         </div>

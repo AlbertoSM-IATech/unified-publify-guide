@@ -1,6 +1,5 @@
-
 export interface NuevoRegistro {
-  mes: string;
+  fecha: Date;
   ingresos: number;
   gastos: number;
   concepto?: string;
@@ -17,4 +16,13 @@ export interface NuevoIngresoFijo {
   concepto: string;
   cantidad: number;
   frecuencia: "Mensual" | "Trimestral" | "Anual";
+}
+
+export interface Transaction {
+  id: number;
+  fecha: Date;
+  concepto: string;
+  ingresos?: number;
+  gastos?: number;
+  observaciones?: string;
 }
