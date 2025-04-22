@@ -13,3 +13,12 @@ export const formatTransactionDate = (date: Date | string | null): string => {
     return "Error en fecha";
   }
 };
+
+export const getCurrentMonth = (): string => {
+  return format(new Date(), 'MMMM', { locale: es });
+};
+
+export const isCurrentMonth = (month: string): boolean => {
+  const currentMonth = getCurrentMonth().toLowerCase();
+  return month.toLowerCase() === currentMonth;
+};
