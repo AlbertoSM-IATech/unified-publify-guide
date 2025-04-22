@@ -63,7 +63,7 @@ export const CostesFijosTab = () => {
       {!showForm ? (
         <Button onClick={() => setShowForm(true)}>+ Añadir Coste Fijo</Button>
       ) : (
-        <MotionWrapper type="fadeIn">
+        <MotionWrapper type="fade">
           <CosteFijoForm 
             costeFijo={editingCosteFijo || { concepto: "", coste: 0, frecuencia: "Mensual" }}
             onSubmit={editingId !== null ? handleUpdate : handleAdd}

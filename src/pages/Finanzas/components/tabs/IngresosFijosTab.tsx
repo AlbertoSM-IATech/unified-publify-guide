@@ -63,7 +63,7 @@ export const IngresosFijosTab = () => {
       {!showForm ? (
         <Button onClick={() => setShowForm(true)}>+ Añadir Ingreso Fijo</Button>
       ) : (
-        <MotionWrapper type="fadeIn">
+        <MotionWrapper type="fade">
           <IngresoFijoForm 
             ingresoFijo={editingIngresoFijo || { concepto: "", cantidad: 0, frecuencia: "Mensual" }}
             onSubmit={editingId !== null ? handleUpdate : handleAdd}
