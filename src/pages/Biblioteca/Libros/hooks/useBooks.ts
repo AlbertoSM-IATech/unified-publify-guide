@@ -1,5 +1,4 @@
-
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Book } from "../types/bookTypes";
 import { librosSimulados } from "../utils/librosUtils";
 import { booksService } from "@/services/supabase/books";
@@ -24,6 +23,12 @@ export const useBooks = () => {
   const [filteredLibros, setFilteredLibros] = useState<Book[]>([]);
   const [filters, setFilters] = useState<FilterParams>({});
   
+  // Function to notify other components about book data changes
+  const notifyBooksUpdated = useCallback(() => {
+    const updateEvent = new CustomEvent('publify_books_updated');
+    window.dispatchEvent(updateEvent);
+  }, []);
+  
   // Load books from localStorage
   useEffect(() => {
     const loadBooks = async () => {
@@ -35,7 +40,8 @@ export const useBooks = () => {
         
         if (storedBooks) {
           console.info('[MOCK] Books loaded from localStorage');
-          setLibros(JSON.parse(storedBooks));
+          const parsedBooks = JSON.parse(storedBooks);
+          setLibros(parsedBooks);
         } else {
           // Fall back to mock data if nothing in localStorage
           console.info('[MOCK] No books in localStorage, using mock data');
@@ -46,6 +52,7 @@ export const useBooks = () => {
         }
         
         setIsLoading(false);
+        notifyBooksUpdated();
       } catch (error) {
         console.error('Error loading books:', error);
         setError('Error al cargar los libros');
@@ -54,7 +61,14 @@ export const useBooks = () => {
     };
     
     loadBooks();
-  }, []);
+    
+    // Set up periodic refresh to keep data in sync
+    const refreshInterval = setInterval(() => {
+      loadBooks();
+    }, 30000); // Check every 30 seconds for changes
+    
+    return () => clearInterval(refreshInterval);
+  }, [notifyBooksUpdated]);
 
   // Filter and sort books when filters or books change
   useEffect(() => {
@@ -124,7 +138,11 @@ export const useBooks = () => {
       const books = await booksService.getAll();
       setLibros(books);
       
+      // Store updated books in localStorage
+      localStorage.setItem('librosData', JSON.stringify(books));
+      
       setIsLoading(false);
+      notifyBooksUpdated();
     } catch (error) {
       console.error('Error retrying book load:', error);
       setError('Error al reintentar cargar los libros');
@@ -139,7 +157,14 @@ export const useBooks = () => {
       
       if (createdBook) {
         // Update local state with the new book
-        setLibros(prevBooks => [...prevBooks, createdBook]);
+        const updatedBooks = [...libros, createdBook];
+        setLibros(updatedBooks);
+        
+        // Update localStorage
+        localStorage.setItem('librosData', JSON.stringify(updatedBooks));
+        
+        // Notify other components
+        notifyBooksUpdated();
         return true;
       }
       return false;
@@ -157,11 +182,11 @@ export const useBooks = () => {
   return {
     libros,
     filteredLibros,
-    isLoading,     // Renamed from loading to isLoading
-    loadError,     // Renamed from error to loadError
+    isLoading,
+    loadError,
     updateFilters,
     filters,
-    handleRetryLoading, // Added this function
-    handleCreateBook    // Added this function
+    handleRetryLoading,
+    handleCreateBook
   };
 };

@@ -1,9 +1,10 @@
 
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 // Default book cover image
-const DEFAULT_COVER_URL = "https://edit.org/images/cat/portadas-libros-big-2019101610.jpg";
+const DEFAULT_COVER_URL = "/placeholders/default-book-cover.png";
 
 interface BookCardProps {
   index: number;
@@ -24,6 +25,18 @@ const BookCard = ({
   coverUrl,
   id
 }: BookCardProps) => {
+  const [imageSrc, setImageSrc] = useState(coverUrl || DEFAULT_COVER_URL);
+  
+  // Update image source if props change
+  useEffect(() => {
+    setImageSrc(coverUrl || DEFAULT_COVER_URL);
+  }, [coverUrl]);
+  
+  // Handle image loading error
+  const handleImageError = () => {
+    setImageSrc(DEFAULT_COVER_URL);
+  };
+  
   // Determine status color based on status
   const getStatusColor = (status: string): string => {
     switch (status) {
@@ -91,12 +104,13 @@ const BookCard = ({
             <div className="h-full w-full overflow-hidden">
               <div className="h-full">
                 <img 
-                  src={coverUrl || DEFAULT_COVER_URL} 
+                  src={imageSrc} 
                   alt={title} 
                   className="h-full w-full object-cover" 
                   loading="lazy"
                   width="112"
                   height="128"
+                  onError={handleImageError}
                 />
               </div>
             </div>

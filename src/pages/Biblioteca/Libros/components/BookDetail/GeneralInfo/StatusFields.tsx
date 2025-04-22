@@ -10,6 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useEffect } from "react";
 
 interface StatusFieldsProps {
   book: Book;
@@ -18,6 +19,30 @@ interface StatusFieldsProps {
 }
 
 export const StatusFields = ({ book, isEditing, form }: StatusFieldsProps) => {
+  // Ensure form values stay in sync with book data
+  useEffect(() => {
+    if (!isEditing && book) {
+      form.setValue("estado", book.estado);
+      form.setValue("contenido", book.contenido);
+    }
+  }, [book, form, isEditing]);
+
+  const dispatchBookUpdate = () => {
+    // Create a custom event to notify other components of book data change
+    const updateEvent = new CustomEvent('publify_books_updated');
+    window.dispatchEvent(updateEvent);
+  };
+
+  const handleStatusChange = (value: string) => {
+    form.setValue("estado", value);
+    dispatchBookUpdate();
+  };
+
+  const handleContentChange = (value: string) => {
+    form.setValue("contenido", value);
+    dispatchBookUpdate();
+  };
+
   return (
     <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
       {/* Estado */}
@@ -29,7 +54,7 @@ export const StatusFields = ({ book, isEditing, form }: StatusFieldsProps) => {
             name="estado"
             render={({ field }) => (
               <Select 
-                onValueChange={field.onChange}
+                onValueChange={(value) => handleStatusChange(value)}
                 defaultValue={field.value}
               >
                 <SelectTrigger id="estado" className="hover:border-[#FB923C] transition-colors duration-200">
@@ -58,7 +83,7 @@ export const StatusFields = ({ book, isEditing, form }: StatusFieldsProps) => {
             name="contenido"
             render={({ field }) => (
               <Select 
-                onValueChange={field.onChange}
+                onValueChange={(value) => handleContentChange(value)}
                 defaultValue={field.value}
               >
                 <SelectTrigger id="contenido" className="hover:border-[#FB923C] transition-colors duration-200">

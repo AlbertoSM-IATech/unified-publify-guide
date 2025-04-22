@@ -40,6 +40,9 @@ export const DashboardCharts = ({ pieChartData, barChartData, librosCount }: Das
     console.error(`Error rendering ${chartType} chart`);
   }, []);
 
+  // Calculate the actual values from the pieChartData array to display correct totals
+  const totalBooks = pieChartData.reduce((sum, item) => sum + item.value, 0);
+  
   // Fallback component for chart errors
   const ErrorFallback = ({ title }: { title: string }) => (
     <Card className="w-full h-[350px] flex items-center justify-center">
@@ -95,7 +98,7 @@ export const DashboardCharts = ({ pieChartData, barChartData, librosCount }: Das
               description="Proporción de libros según su estado de publicación"
               data={pieChartData}
               totalLabel="Total libros"
-              totalValue={librosCount}
+              totalValue={totalBooks}
               showLegend={false}
             />
           )}
