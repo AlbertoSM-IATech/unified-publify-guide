@@ -1,5 +1,5 @@
 
-import { UploadIcon, PieChart, BarChart, Calculator, FilePlus2 } from "lucide-react";
+import { PieChart, BarChart, Calculator, CreditCard } from "lucide-react";
 
 interface FinanzasTabsProps {
   activeTab: string;
@@ -11,6 +11,7 @@ export const FinanzasTabs = ({ activeTab, setActiveTab }: FinanzasTabsProps) => 
     { id: "resumen", label: "Resumen", icon: <PieChart size={16} /> },
     { id: "ingresos", label: "Ingresos", icon: <BarChart size={16} /> },
     { id: "gastos", label: "Gastos", icon: <BarChart size={16} /> },
+    { id: "ingresosFijos", label: "Ingresos Fijos", icon: <CreditCard size={16} /> },
     { id: "costesFijos", label: "Costes Fijos", icon: <Calculator size={16} /> },
   ];
 

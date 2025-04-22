@@ -1,6 +1,6 @@
 
 import { useSyncedData } from '@/hooks/useSyncedData';
-import { useState } from 'react';
+import { NuevoIngresoFijo, NuevoCosteFijo } from '@/pages/Finanzas/types/finanzasTypes';
 
 export interface FinancialRecord {
   id: number;
@@ -8,12 +8,21 @@ export interface FinancialRecord {
   ingresos: number;
   gastos: number;
   beneficio: number;
+  concepto?: string;
+  observaciones?: string;
 }
 
 export interface CosteFijo {
   id: number;
   concepto: string;
   coste: number;
+  frecuencia: "Mensual" | "Trimestral" | "Anual";
+}
+
+export interface IngresoFijo {
+  id: number;
+  concepto: string;
+  cantidad: number;
   frecuencia: "Mensual" | "Trimestral" | "Anual";
 }
 
@@ -36,6 +45,14 @@ const initialFixedCosts: CosteFijo[] = [
   { id: 5, concepto: "Asesoría Contable", coste: 200, frecuencia: "Mensual" }
 ];
 
+// Datos iniciales de ingresos fijos
+const initialFixedIncomes: IngresoFijo[] = [
+  { id: 1, concepto: "Suscripciones Premium", cantidad: 350, frecuencia: "Mensual" },
+  { id: 2, concepto: "Licencias Corporativas", cantidad: 1200, frecuencia: "Mensual" },
+  { id: 3, concepto: "Servicios de Edición", cantidad: 750, frecuencia: "Mensual" },
+  { id: 4, concepto: "Royalties Trimestrales", cantidad: 2400, frecuencia: "Trimestral" },
+];
+
 export const useFinanceData = () => {
   const [resumenesMensuales, setResumenesMensuales] = useSyncedData<FinancialRecord[]>(
     initialMonthlySummaries, 
@@ -44,6 +61,10 @@ export const useFinanceData = () => {
   const [costesFijos, setCostesFijos] = useSyncedData<CosteFijo[]>(
     initialFixedCosts, 
     "fixed_costs"
+  );
+  const [ingresosFijos, setIngresosFijos] = useSyncedData<IngresoFijo[]>(
+    initialFixedIncomes, 
+    "fixed_incomes"
   );
 
   // Cálculo de totales
@@ -77,23 +98,31 @@ export const useFinanceData = () => {
     return { cambioIngresos, cambioGastos, cambioBeneficio };
   };
   
-  // Funciones para agregar/editar registros
-  const agregarRegistroFinanciero = (nuevoRegistro: { mes: string, ingresos: number, gastos: number }) => {
+  // Funciones para agregar/editar registros financieros
+  const agregarRegistroFinanciero = (nuevoRegistro: { 
+    mes: string, 
+    ingresos: number, 
+    gastos: number,
+    concepto?: string,
+    observaciones?: string
+  }) => {
     const nuevoId = Math.max(0, ...resumenesMensuales.map(item => item.id)) + 1;
     const beneficio = nuevoRegistro.ingresos - nuevoRegistro.gastos;
     
-    // Ahora creamos un objeto que se ajusta a la interfaz FinancialRecord
     const registroCompleto: FinancialRecord = {
       id: nuevoId,
       mes: nuevoRegistro.mes,
       ingresos: nuevoRegistro.ingresos,
       gastos: nuevoRegistro.gastos,
-      beneficio: beneficio
+      beneficio: beneficio,
+      concepto: nuevoRegistro.concepto,
+      observaciones: nuevoRegistro.observaciones
     };
     
     setResumenesMensuales([...resumenesMensuales, registroCompleto]);
   };
   
+  // Funciones para gestionar costes fijos
   const editarCosteFijo = (id: number, datos: Partial<CosteFijo>) => {
     setCostesFijos(
       costesFijos.map(coste => 
@@ -111,9 +140,28 @@ export const useFinanceData = () => {
     setCostesFijos(costesFijos.filter(coste => coste.id !== id));
   };
 
+  // Funciones para gestionar ingresos fijos
+  const editarIngresoFijo = (id: number, datos: Partial<IngresoFijo>) => {
+    setIngresosFijos(
+      ingresosFijos.map(ingreso => 
+        ingreso.id === id ? { ...ingreso, ...datos } : ingreso
+      )
+    );
+  };
+  
+  const agregarIngresoFijo = (nuevoIngreso: Omit<IngresoFijo, 'id'>) => {
+    const nuevoId = Math.max(0, ...ingresosFijos.map(item => item.id)) + 1;
+    setIngresosFijos([...ingresosFijos, { ...nuevoIngreso, id: nuevoId }]);
+  };
+  
+  const eliminarIngresoFijo = (id: number) => {
+    setIngresosFijos(ingresosFijos.filter(ingreso => ingreso.id !== id));
+  };
+
   return {
     resumenesMensuales,
     costesFijos,
+    ingresosFijos,
     lineChartData,
     ingresosTotales,
     gastosTotales,
@@ -122,6 +170,9 @@ export const useFinanceData = () => {
     agregarRegistroFinanciero,
     editarCosteFijo,
     agregarCosteFijo,
-    eliminarCosteFijo
+    eliminarCosteFijo,
+    editarIngresoFijo,
+    agregarIngresoFijo,
+    eliminarIngresoFijo
   };
 };

@@ -1,15 +1,25 @@
+
 import { Upload, FilePlus2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+
 interface FinanzasToolbarProps {
   onNewRecordClick: () => void;
 }
+
 export const FinanzasToolbar = ({
   onNewRecordClick
 }: FinanzasToolbarProps) => {
-  return <div className="mb-6 flex flex-wrap gap-3">
-      <button className="flex items-center rounded-md border border-input bg-background px-4 py-2 text-sm hover:bg-muted">
+  return (
+    <div className="mb-6 flex flex-wrap gap-3">
+      <Button variant="outline" onClick={onNewRecordClick} className="flex items-center gap-2">
+        <FilePlus2 size={16} />
+        Nuevo Registro
+      </Button>
+      
+      <Button variant="outline" className="flex items-center">
         <Upload size={16} className="mr-2" />
         Importar CSV
-      </button>
-      
-    </div>;
+      </Button>
+    </div>
+  );
 };

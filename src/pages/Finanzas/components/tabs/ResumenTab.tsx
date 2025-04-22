@@ -1,9 +1,10 @@
 
 import { ApexLineChart } from "@/components/charts";
 import MotionWrapper from "@/components/motion/MotionWrapper";
-import { TrendingUp, TrendingDown, DollarSign } from "lucide-react";
+import { TrendingUp, TrendingDown, DollarSign, Calendar } from "lucide-react";
 import { useFinanceData } from "@/data/financesData";
 import { Card } from "@/components/ui/card";
+import { isCurrentMonth, getCurrentMonth } from "../../utils/dateUtils";
 
 export const ResumenTab = () => {
   const { 
@@ -14,30 +15,111 @@ export const ResumenTab = () => {
     beneficioNeto,
     cambioIngresos,
     cambioGastos,
-    cambioBeneficio
+    cambioBeneficio,
+    costesFijos,
+    ingresosFijos
   } = useFinanceData();
+
+  // Calculate fixed monthly costs
+  const costesFijosMensuales = costesFijos.reduce((total, coste) => {
+    if (coste.frecuencia === "Mensual") return total + coste.coste;
+    if (coste.frecuencia === "Trimestral") return total + (coste.coste / 3);
+    if (coste.frecuencia === "Anual") return total + (coste.coste / 12);
+    return total;
+  }, 0);
+
+  // Calculate fixed monthly income
+  const ingresosFijosMensuales = ingresosFijos.reduce((total, ingreso) => {
+    if (ingreso.frecuencia === "Mensual") return total + ingreso.cantidad;
+    if (ingreso.frecuencia === "Trimestral") return total + (ingreso.cantidad / 3);
+    if (ingreso.frecuencia === "Anual") return total + (ingreso.cantidad / 12);
+    return total;
+  }, 0);
+
+  // Filter current month records
+  const currentMonthName = getCurrentMonth();
+  const currentMonthRecord = resumenesMensuales.find(record => record.mes === currentMonthName);
+  
+  // Calculate current month values
+  const currentMonthIngresos = (currentMonthRecord?.ingresos || 0) + ingresosFijosMensuales;
+  const currentMonthGastos = (currentMonthRecord?.gastos || 0) + costesFijosMensuales;
+  const currentMonthBeneficio = currentMonthIngresos - currentMonthGastos;
 
   return (
     <div className="space-y-6">
+      {/* Current Month Summary */}
+      <div className="rounded-md border bg-card">
+        <div className="flex items-center gap-2 p-4 border-b">
+          <Calendar size={18} />
+          <h3 className="text-lg font-medium">Resumen del Mes Actual ({currentMonthName})</h3>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4">
+          <div className="rounded-lg bg-background p-4 shadow-sm">
+            <div className="flex items-center justify-between">
+              <h4 className="text-sm font-medium text-muted-foreground">Ingresos</h4>
+              <div className="rounded-full bg-green-500 bg-opacity-10 p-2 text-green-500">
+                <TrendingUp size={16} />
+              </div>
+            </div>
+            <p className="mt-2 text-2xl font-bold">€{currentMonthIngresos.toFixed(2)}</p>
+            <div className="mt-2 flex items-center text-sm">
+              <span className="mr-1 text-green-500">+{ingresosFijosMensuales.toFixed(2)}€</span>
+              <span className="text-muted-foreground">ingresos fijos</span>
+            </div>
+          </div>
+          
+          <div className="rounded-lg bg-background p-4 shadow-sm">
+            <div className="flex items-center justify-between">
+              <h4 className="text-sm font-medium text-muted-foreground">Gastos</h4>
+              <div className="rounded-full bg-red-500 bg-opacity-10 p-2 text-red-500">
+                <TrendingDown size={16} />
+              </div>
+            </div>
+            <p className="mt-2 text-2xl font-bold">€{currentMonthGastos.toFixed(2)}</p>
+            <div className="mt-2 flex items-center text-sm">
+              <span className="mr-1 text-red-500">+{costesFijosMensuales.toFixed(2)}€</span>
+              <span className="text-muted-foreground">costes fijos</span>
+            </div>
+          </div>
+          
+          <div className="rounded-lg bg-background p-4 shadow-sm">
+            <div className="flex items-center justify-between">
+              <h4 className="text-sm font-medium text-muted-foreground">Balance</h4>
+              <div className="rounded-full bg-blue-500 bg-opacity-10 p-2 text-blue-500">
+                <DollarSign size={16} />
+              </div>
+            </div>
+            <p className="mt-2 text-2xl font-bold">€{currentMonthBeneficio.toFixed(2)}</p>
+            <div className="mt-2 flex items-center text-sm">
+              <span className={currentMonthBeneficio >= 0 ? "text-green-500" : "text-red-500"}>
+                {currentMonthBeneficio >= 0 ? "Beneficio" : "Pérdida"}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* General Stats */}
       <div className="mb-6 grid grid-cols-1 gap-4 md:grid-cols-3">
         {[
           { 
             title: "Ingresos Totales", 
-            value: `€${ingresosTotales.toLocaleString()}`, 
+            value: `€${(ingresosTotales + ingresosFijosMensuales * resumenesMensuales.length).toLocaleString()}`, 
             change: `${Number(cambioIngresos) >= 0 ? '+' : ''}${cambioIngresos}%`, 
             icon: <TrendingUp size={20} />,
             color: "text-green-500"
           },
           { 
             title: "Gastos Totales", 
-            value: `€${gastosTotales.toLocaleString()}`, 
+            value: `€${(gastosTotales + costesFijosMensuales * resumenesMensuales.length).toLocaleString()}`, 
             change: `${Number(cambioGastos) >= 0 ? '+' : ''}${cambioGastos}%`, 
             icon: <TrendingDown size={20} />,
             color: "text-red-500"
           },
           { 
             title: "Beneficio Neto", 
-            value: `€${beneficioNeto.toLocaleString()}`, 
+            value: `€${(beneficioNeto + (ingresosFijosMensuales - costesFijosMensuales) * resumenesMensuales.length).toLocaleString()}`, 
             change: `${Number(cambioBeneficio) >= 0 ? '+' : ''}${cambioBeneficio}%`, 
             icon: <DollarSign size={20} />,
             color: "text-blue-500"
@@ -120,9 +202,9 @@ const MonthlySummaryTable = ({ resumenesMensuales }) => (
         </thead>
         <tbody className="divide-y divide-border bg-background">
           {resumenesMensuales.map((resumen, index) => (
-            <tr key={index} className="hover:bg-muted/50">
+            <tr key={index} className={`hover:bg-muted/50 ${isCurrentMonth(resumen.mes) ? 'bg-primary/5' : ''}`}>
               <td className="whitespace-nowrap px-4 py-4 font-medium">
-                {resumen.mes}
+                {resumen.mes} {isCurrentMonth(resumen.mes) && <span className="text-xs text-muted-foreground">(Actual)</span>}
               </td>
               <td className="whitespace-nowrap px-4 py-4 text-green-500">
                 €{resumen.ingresos.toLocaleString()}

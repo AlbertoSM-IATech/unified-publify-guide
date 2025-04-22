@@ -5,10 +5,13 @@ import { useFinanceData } from "@/data/financesData";
 import { FinanzasTabs } from "./components/FinanzasTabs";
 import { FinanzasToolbar } from "./components/FinanzasToolbar";
 import { ResumenTab } from "./components/tabs/ResumenTab";
+import { CostesFijosTab } from "./components/tabs/CostesFijosTab";
+import { IngresosFijosTab } from "./components/tabs/IngresosFijosTab";
 import { FinancialRecordForm } from "./components/FinancialRecordForm";
 import { NuevoRegistro } from "./types/finanzasTypes";
 import { ApexLineChart } from "@/components/charts";
 import MotionWrapper from "@/components/motion/MotionWrapper";
+import { getCurrentMonth } from "./utils/dateUtils";
 
 export const Finanzas = () => {
   const [activeTab, setActiveTab] = useState("resumen");
@@ -20,16 +23,25 @@ export const Finanzas = () => {
   } = useFinanceData();
 
   const [nuevoRegistro, setNuevoRegistro] = useState<NuevoRegistro>({
-    mes: "",
+    mes: getCurrentMonth(),
     ingresos: 0,
-    gastos: 0
+    gastos: 0,
+    concepto: "",
+    observaciones: ""
   });
 
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     field: keyof NuevoRegistro
   ) => {
-    const value = field === "mes" ? e.target.value : Number(e.target.value);
+    const value = field === "ingresos" || field === "gastos" 
+      ? Number(e.target.value) 
+      : e.target.value;
+      
+    setNuevoRegistro({ ...nuevoRegistro, [field]: value });
+  };
+
+  const handleSelectChange = (field: keyof NuevoRegistro, value: string) => {
     setNuevoRegistro({ ...nuevoRegistro, [field]: value });
   };
 
@@ -43,11 +55,28 @@ export const Finanzas = () => {
       return;
     }
 
+    if (!nuevoRegistro.concepto) {
+      toast({ 
+        title: "Error", 
+        description: "El concepto es obligatorio", 
+        variant: "destructive" 
+      });
+      return;
+    }
+
     agregarRegistroFinanciero(nuevoRegistro);
-    setNuevoRegistro({ mes: "", ingresos: 0, gastos: 0 });
+    
+    setNuevoRegistro({ 
+      mes: getCurrentMonth(), 
+      ingresos: 0, 
+      gastos: 0,
+      concepto: "",
+      observaciones: ""
+    });
+    
     toast({
       title: "Registro guardado",
-      description: `Se ha añadido el registro para ${nuevoRegistro.mes}`,
+      description: `Se ha añadido el registro de ${nuevoRegistro.concepto} para ${nuevoRegistro.mes}`,
     });
   };
 
@@ -61,7 +90,12 @@ export const Finanzas = () => {
       </div>
 
       <FinanzasTabs activeTab={activeTab} setActiveTab={setActiveTab} />
-      <FinanzasToolbar onNewRecordClick={() => setActiveTab("ingresos")} />
+      <FinanzasToolbar onNewRecordClick={() => {
+        // Redirect to the tab corresponding to the type of record the user might want to add
+        if (activeTab === "resumen") {
+          setActiveTab("ingresos");
+        }
+      }} />
 
       {activeTab === "resumen" && <ResumenTab />}
 
@@ -69,8 +103,9 @@ export const Finanzas = () => {
         <div className="space-y-6">
           <FinancialRecordForm
             title="Registrar Nuevo Ingreso"
-            record={nuevoRegistro}
+            record={{ ...nuevoRegistro, gastos: 0 }}
             onChange={handleInputChange}
+            onSelectChange={handleSelectChange}
             onSubmit={handleSubmitRegistro}
           />
 
@@ -96,8 +131,9 @@ export const Finanzas = () => {
         <div className="space-y-6">
           <FinancialRecordForm
             title="Registrar Nuevo Gasto"
-            record={nuevoRegistro}
+            record={{ ...nuevoRegistro, ingresos: 0 }}
             onChange={handleInputChange}
+            onSelectChange={handleSelectChange}
             onSubmit={handleSubmitRegistro}
           />
 
@@ -118,6 +154,10 @@ export const Finanzas = () => {
           </MotionWrapper>
         </div>
       )}
+
+      {activeTab === "ingresosFijos" && <IngresosFijosTab />}
+      
+      {activeTab === "costesFijos" && <CostesFijosTab />}
     </div>
   );
 };
