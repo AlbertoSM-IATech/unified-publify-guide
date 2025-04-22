@@ -1,11 +1,12 @@
 
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useMemo } from "react";
 import MotionWrapper from "@/components/motion/MotionWrapper";
 import { ApexLineChart, ApexPieChart, ApexBarChart } from "@/components/charts";
 import { useFinanceData } from "@/data/financesData";
 import { ChartItem } from "@/components/dashboard/dashboardData";
 import { AlertTriangle } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
+import { formatPeriodDate } from "@/pages/Finanzas/utils/dateUtils";
 
 interface DashboardChartsProps {
   pieChartData: ChartItem[];
@@ -14,17 +15,24 @@ interface DashboardChartsProps {
 }
 
 export const DashboardCharts = ({ pieChartData, barChartData, librosCount }: DashboardChartsProps) => {
-  const { lineChartData } = useFinanceData();
+  const { getFilteredChartData } = useFinanceData();
   const [chartErrors, setChartErrors] = useState({
     line: false,
     pie: false,
     bar: false
   });
 
-  // Ensure lineChartData is valid
-  const validLineChartData = Array.isArray(lineChartData) && lineChartData.length > 0 
-    ? lineChartData 
-    : [{ name: 'Sin datos', ingresos: 0, gastos: 0, beneficio: 0 }];
+  // Get chart data for the monthly view by default
+  const validLineChartData = useMemo(() => {
+    const chartData = getFilteredChartData('mensual');
+    return Array.isArray(chartData) && chartData.length > 0 
+      ? chartData.map(item => ({
+          ...item,
+          name: typeof item.name === 'string' ? item.name : 
+            formatPeriodDate(new Date(item.date || Date.now()), 'mensual')
+        }))
+      : [{ name: 'Sin datos', ingresos: 0, gastos: 0, beneficio: 0 }];
+  }, [getFilteredChartData]);
 
   // Error handler function for charts
   const handleChartError = useCallback((chartType: 'line' | 'pie' | 'bar') => {

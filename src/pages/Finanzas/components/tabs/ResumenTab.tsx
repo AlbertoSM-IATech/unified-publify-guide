@@ -43,13 +43,20 @@ export const ResumenTab = ({ periodView, onPeriodChange }: ResumenTabProps) => {
     return total;
   }, 0);
 
-  // Filter current month records
+  // Filter current month records with updated approach
   const currentMonthName = getCurrentMonth();
-  const currentMonthRecord = resumenesMensuales.find(record => record.mes === currentMonthName);
+  const currentMonth = new Date().getMonth();
+  const currentYear = new Date().getFullYear();
   
-  // Calculate current month values
-  const currentMonthIngresos = (currentMonthRecord?.ingresos || 0) + ingresosFijosMensuales;
-  const currentMonthGastos = (currentMonthRecord?.gastos || 0) + costesFijosMensuales;
+  // Find all records for the current month based on date
+  const currentMonthRecords = resumenesMensuales.filter(record => {
+    const recordDate = new Date(record.fecha || `1 ${record.mes} ${currentYear}`);
+    return recordDate.getMonth() === currentMonth && recordDate.getFullYear() === currentYear;
+  });
+  
+  // Calculate current month totals
+  const currentMonthIngresos = currentMonthRecords.reduce((sum, record) => sum + record.ingresos, 0) + ingresosFijosMensuales;
+  const currentMonthGastos = currentMonthRecords.reduce((sum, record) => sum + record.gastos, 0) + costesFijosMensuales;
   const currentMonthBeneficio = currentMonthIngresos - currentMonthGastos;
 
   // Handle period change using useCallback to prevent recreation on each render

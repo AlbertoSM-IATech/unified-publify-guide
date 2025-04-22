@@ -9,8 +9,10 @@ export const useChartData = (resumenesMensuales: FinancialRecord[]) => {
 
   // Create line chart data for financial evolution
   const lineChartData = useMemo(() => {
+    // Generate dates based on period and ensure we cover the whole year or appropriate time range
+    const dates = getDatesByPeriod(currentPeriod, true); // Added parameter to get full year
+    
     if (!resumenesMensuales.length) {
-      const dates = getDatesByPeriod(currentPeriod);
       return dates.map(date => ({
         date,
         name: formatPeriodDate(date, currentPeriod),
@@ -20,19 +22,6 @@ export const useChartData = (resumenesMensuales: FinancialRecord[]) => {
       }));
     }
 
-    // For the monthly view, we use the actual data
-    if (currentPeriod === 'mensual') {
-      return resumenesMensuales.map(record => ({
-        name: record.mes,
-        ingresos: record.ingresos,
-        gastos: record.gastos,
-        beneficio: record.beneficio
-      }));
-    }
-
-    // For other views, we generate dates and aggregate data
-    const dates = getDatesByPeriod(currentPeriod);
-    
     return dates.map(date => {
       // Find records that fall within this period
       const recordsInPeriod = resumenesMensuales.filter(record => {
@@ -42,15 +31,17 @@ export const useChartData = (resumenesMensuales: FinancialRecord[]) => {
           // Same day
           return recordDate.toDateString() === date.toDateString();
         } else if (currentPeriod === 'semanal') {
-          // Same week
-          const diffTime = Math.abs(date.getTime() - recordDate.getTime());
-          const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-          return diffDays <= 7;
+          // Same week - first day of week to last day of week
+          const recordWeekStart = new Date(recordDate);
+          recordWeekStart.setDate(recordDate.getDate() - recordDate.getDay());
+          const dateWeekStart = new Date(date);
+          dateWeekStart.setDate(date.getDate() - date.getDay());
+          return recordWeekStart.toDateString() === dateWeekStart.toDateString();
         } else if (currentPeriod === 'anual') {
           // Same year
           return recordDate.getFullYear() === date.getFullYear();
         } else {
-          // Default to monthly
+          // Monthly - same month and year
           return (
             recordDate.getMonth() === date.getMonth() && 
             recordDate.getFullYear() === date.getFullYear()
@@ -75,7 +66,7 @@ export const useChartData = (resumenesMensuales: FinancialRecord[]) => {
 
   // Generate data for a specific period - memoize to prevent recreation on each render
   const generateDataForPeriod = useCallback((records: FinancialRecord[], period: string) => {
-    const dates = getDatesByPeriod(period);
+    const dates = getDatesByPeriod(period, true); // Added parameter to get full year
     
     return dates.map(date => {
       // Find records that fall within this period
@@ -86,15 +77,17 @@ export const useChartData = (resumenesMensuales: FinancialRecord[]) => {
           // Same day
           return recordDate.toDateString() === date.toDateString();
         } else if (period === 'semanal') {
-          // Same week
-          const diffTime = Math.abs(date.getTime() - recordDate.getTime());
-          const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-          return diffDays <= 7;
+          // Same week - align by start of week
+          const recordWeekStart = new Date(recordDate);
+          recordWeekStart.setDate(recordDate.getDate() - recordDate.getDay());
+          const dateWeekStart = new Date(date);
+          dateWeekStart.setDate(date.getDate() - date.getDay());
+          return recordWeekStart.toDateString() === dateWeekStart.toDateString();
         } else if (period === 'anual') {
           // Same year
           return recordDate.getFullYear() === date.getFullYear();
         } else {
-          // Default to monthly
+          // Monthly - same month and year
           return (
             recordDate.getMonth() === date.getMonth() && 
             recordDate.getFullYear() === date.getFullYear()
@@ -126,7 +119,7 @@ export const useChartData = (resumenesMensuales: FinancialRecord[]) => {
       setFilteredChartData(data);
       return data;
     }
-    return filteredChartData;
+    return filteredChartData.length > 0 ? filteredChartData : generateDataForPeriod(resumenesMensuales, period);
   }, [resumenesMensuales, generateDataForPeriod, currentPeriod, filteredChartData]);
 
   // Initialize filtered data only once on mount or when dependencies change

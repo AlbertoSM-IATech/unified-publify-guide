@@ -35,6 +35,12 @@ export const FinancialEvolutionChart = ({
     }
   }, [onPeriodChange, activePeriod]);
 
+  // Ensure data is properly formatted for the chart
+  const formattedChartData = lineChartData.map(item => ({
+    ...item,
+    name: typeof item.name === 'string' ? item.name : formatPeriodDate(new Date(item.date || item.fecha || Date.now()), activePeriod)
+  }));
+
   return (
     <MotionWrapper type="fadeUp" delay={0.2}>
       <div className="rounded-lg border bg-card">
@@ -76,10 +82,7 @@ export const FinancialEvolutionChart = ({
           <ApexLineChart
             title=""
             description="Seguimiento de ingresos, gastos y beneficios"
-            data={lineChartData.map(item => ({
-              ...item,
-              name: typeof item.name === 'string' ? item.name : formatPeriodDate(new Date(item.date || item.fecha || Date.now()), activePeriod)
-            }))}
+            data={formattedChartData}
             series={[
               {
                 name: "Ingresos",

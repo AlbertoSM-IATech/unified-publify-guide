@@ -36,53 +36,110 @@ export const formatDate = (date: Date | string | null): string => {
 };
 
 // Additional date utility functions for time-based views
-export const getDatesByPeriod = (period: string): Date[] => {
+export const getDatesByPeriod = (period: string, fullYear = false): Date[] => {
   const today = new Date();
   const dates: Date[] = [];
+  const currentYear = today.getFullYear();
 
   switch (period) {
     case 'diario':
-      // Last 7 days
-      for (let i = 6; i >= 0; i--) {
-        const date = new Date();
-        date.setDate(today.getDate() - i);
-        dates.push(date);
+      if (fullYear) {
+        // From January 1st to current date
+        const startDate = new Date(currentYear, 0, 1);
+        const daysToGenerate = Math.floor((today.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)) + 1;
+        
+        for (let i = 0; i < daysToGenerate; i++) {
+          const date = new Date(startDate);
+          date.setDate(startDate.getDate() + i);
+          dates.push(date);
+        }
+      } else {
+        // Last 7 days
+        for (let i = 6; i >= 0; i--) {
+          const date = new Date();
+          date.setDate(today.getDate() - i);
+          dates.push(date);
+        }
       }
       break;
+
     case 'semanal':
-      // Last 4 weeks
-      for (let i = 3; i >= 0; i--) {
-        const date = new Date();
-        date.setDate(today.getDate() - (i * 7));
-        dates.push(date);
+      if (fullYear) {
+        // From first week of year to current week
+        const startDate = new Date(currentYear, 0, 1);
+        // Adjust to first day of week
+        const dayOfWeek = startDate.getDay();
+        startDate.setDate(startDate.getDate() - dayOfWeek);
+        
+        let currentWeekStart = new Date(startDate);
+        const currentDate = new Date();
+        
+        while (currentWeekStart <= currentDate) {
+          dates.push(new Date(currentWeekStart));
+          currentWeekStart.setDate(currentWeekStart.getDate() + 7);
+        }
+      } else {
+        // Last 4 weeks
+        for (let i = 3; i >= 0; i--) {
+          const date = new Date();
+          date.setDate(today.getDate() - (i * 7));
+          dates.push(date);
+        }
       }
       break;
+
     case 'mensual':
-      // Last 6 months
-      for (let i = 5; i >= 0; i--) {
-        const date = new Date();
-        date.setMonth(today.getMonth() - i);
-        date.setDate(1);
-        dates.push(date);
+      if (fullYear) {
+        // All months of current year up to current month
+        for (let i = 0; i <= today.getMonth(); i++) {
+          const date = new Date(currentYear, i, 1);
+          dates.push(date);
+        }
+      } else {
+        // Last 6 months
+        for (let i = 5; i >= 0; i--) {
+          const date = new Date();
+          date.setMonth(today.getMonth() - i);
+          date.setDate(1);
+          dates.push(date);
+        }
       }
       break;
+
     case 'anual':
-      // Last 5 years
-      for (let i = 4; i >= 0; i--) {
-        const date = new Date();
-        date.setFullYear(today.getFullYear() - i);
-        date.setMonth(0);
-        date.setDate(1);
-        dates.push(date);
+      if (fullYear) {
+        // Last 5 years including current
+        for (let i = 4; i >= 0; i--) {
+          const date = new Date(currentYear - i, 0, 1);
+          dates.push(date);
+        }
+      } else {
+        // Last 5 years
+        for (let i = 4; i >= 0; i--) {
+          const date = new Date();
+          date.setFullYear(today.getFullYear() - i);
+          date.setMonth(0);
+          date.setDate(1);
+          dates.push(date);
+        }
       }
       break;
+
     default:
       // Default to monthly
-      for (let i = 5; i >= 0; i--) {
-        const date = new Date();
-        date.setMonth(today.getMonth() - i);
-        date.setDate(1);
-        dates.push(date);
+      if (fullYear) {
+        // All months of current year up to current month
+        for (let i = 0; i <= today.getMonth(); i++) {
+          const date = new Date(currentYear, i, 1);
+          dates.push(date);
+        }
+      } else {
+        for (let i = 5; i >= 0; i--) {
+          const date = new Date();
+          date.setMonth(today.getMonth() - i);
+          date.setDate(1);
+          dates.push(date);
+        }
       }
   }
 
