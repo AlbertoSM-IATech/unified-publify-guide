@@ -1,19 +1,31 @@
+
 import { Upload, FilePlus2, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+
 interface FinanzasToolbarProps {
   onNewRecordClick: () => void;
   periodView: string;
   onPeriodChange: (period: string) => void;
 }
+
 export const FinanzasToolbar = ({
   onNewRecordClick,
   periodView,
   onPeriodChange
 }: FinanzasToolbarProps) => {
-  return <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+  // Handle period change through a callback
+  const handlePeriodChange = (value: string) => {
+    onPeriodChange(value);
+  };
+
+  return (
+    <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
       <div className="flex items-center gap-3">
-        <Select value={periodView} onValueChange={onPeriodChange}>
+        <Select 
+          value={periodView} 
+          onValueChange={handlePeriodChange}
+        >
           <SelectTrigger className="w-[180px]">
             <div className="flex items-center gap-2">
               <Calendar size={16} />
@@ -28,7 +40,6 @@ export const FinanzasToolbar = ({
           </SelectContent>
         </Select>
       </div>
-      
-      
-    </div>;
+    </div>
+  );
 };

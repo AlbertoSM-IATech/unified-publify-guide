@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { useFinanceData } from "@/data/financesData";
 import { FinanzasTabs } from "./components/FinanzasTabs";
 import { FinanzasToolbar } from "./components/FinanzasToolbar";
@@ -25,7 +25,7 @@ export const Finanzas = () => {
   const filteredChartData = getFilteredChartData(periodView);
 
   // Handle edit record
-  const handleEditRecord = (id: number, data: Partial<Transaction>) => {
+  const handleEditRecord = useCallback((id: number, data: Partial<Transaction>) => {
     const updatedRecords = resumenesMensuales.map(record => 
       record.id === id ? { 
         ...record, 
@@ -37,19 +37,18 @@ export const Finanzas = () => {
       } : record
     );
     updateResumenesMensuales(updatedRecords);
-  };
+  }, [resumenesMensuales, updateResumenesMensuales]);
 
   // Handle delete record
-  const handleDeleteRecord = (id: number) => {
+  const handleDeleteRecord = useCallback((id: number) => {
     const filteredRecords = resumenesMensuales.filter(record => record.id !== id);
     updateResumenesMensuales(filteredRecords);
-  };
+  }, [resumenesMensuales, updateResumenesMensuales]);
 
-  // Handle period change
-  const handlePeriodChange = (period: string) => {
+  // Handle period change - using useCallback to prevent recreation on every render
+  const handlePeriodChange = useCallback((period: string) => {
     setPeriodView(period);
-    getFilteredChartData(period);
-  };
+  }, []);
 
   return (
     <div className="animate-fade-in">

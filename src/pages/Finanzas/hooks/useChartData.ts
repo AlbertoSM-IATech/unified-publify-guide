@@ -1,5 +1,5 @@
 
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { FinancialRecord } from '../types/dataTypes';
 import { getDatesByPeriod, formatPeriodDate } from '../utils/dateUtils';
 
@@ -73,14 +73,8 @@ export const useChartData = (resumenesMensuales: FinancialRecord[]) => {
     });
   }, [resumenesMensuales, currentPeriod]);
 
-  const getFilteredChartData = (period: string) => {
-    setCurrentPeriod(period);
-    const data = generateDataForPeriod(resumenesMensuales, period);
-    setFilteredChartData(data);
-    return data;
-  };
-
-  const generateDataForPeriod = (records: FinancialRecord[], period: string) => {
+  // Use useCallback to prevent function recreation on each render
+  const generateDataForPeriod = useCallback((records: FinancialRecord[], period: string) => {
     const dates = getDatesByPeriod(period);
     
     return dates.map(date => {
@@ -121,7 +115,15 @@ export const useChartData = (resumenesMensuales: FinancialRecord[]) => {
         beneficio
       };
     });
-  };
+  }, []);
+
+  // Use useCallback to prevent function recreation on each render
+  const getFilteredChartData = useCallback((period: string) => {
+    setCurrentPeriod(period);
+    const data = generateDataForPeriod(resumenesMensuales, period);
+    setFilteredChartData(data);
+    return data;
+  }, [resumenesMensuales, generateDataForPeriod]);
 
   // Initialize filtered data
   useEffect(() => {

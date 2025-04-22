@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { useFinanceData } from "@/data/financesData";
 import { getCurrentMonth } from "../../utils/dateUtils";
 import { CurrentMonthSummary } from "./summary/CurrentMonthSummary";
@@ -48,10 +48,11 @@ export const ResumenTab = () => {
   const currentMonthGastos = (currentMonthRecord?.gastos || 0) + costesFijosMensuales;
   const currentMonthBeneficio = currentMonthIngresos - currentMonthGastos;
 
-  const handlePeriodChange = (period: string) => {
+  // Handle period change using useCallback to prevent recreation on each render
+  const handlePeriodChange = useCallback((period: string) => {
     setPeriodView(period);
     getFilteredChartData(period);
-  };
+  }, [getFilteredChartData]);
 
   return (
     <div className="space-y-6">

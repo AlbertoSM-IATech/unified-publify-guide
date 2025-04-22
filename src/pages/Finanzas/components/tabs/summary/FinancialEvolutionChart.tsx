@@ -1,5 +1,5 @@
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { ApexLineChart } from "@/components/charts";
 import MotionWrapper from "@/components/motion/MotionWrapper";
 import { Button } from "@/components/ui/button";
@@ -22,12 +22,13 @@ export const FinancialEvolutionChart = ({
     setActivePeriod(periodView);
   }, [periodView]);
 
-  const handlePeriodChange = (period: string) => {
+  // Use useCallback to prevent recreation on every render
+  const handlePeriodChange = useCallback((period: string) => {
     setActivePeriod(period);
     if (onPeriodChange) {
       onPeriodChange(period);
     }
-  };
+  }, [onPeriodChange]);
 
   return (
     <MotionWrapper type="fadeUp" delay={0.2}>
