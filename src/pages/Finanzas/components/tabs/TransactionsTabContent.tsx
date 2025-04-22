@@ -5,12 +5,12 @@ import { Transaction } from "../../types/finanzasTypes";
 import { ApexLineChart } from "@/components/charts";
 import MotionWrapper from "@/components/motion/MotionWrapper";
 import { useFinancialForm } from "../../hooks/useFinancialForm";
-import { FinancialRecord } from "@/data/financesData";
+import { FinancialRecord } from "../../types/dataTypes";
 
 interface TransactionsTabContentProps {
   title: string;
   type: "ingresos" | "gastos";
-  records: Transaction[];  // Changed to Transaction[] to match the expected type
+  records: Transaction[];
   filteredChartData: any[];
   onEdit: (id: number, data: Partial<Transaction>) => void;
   onDelete: (id: number) => void;

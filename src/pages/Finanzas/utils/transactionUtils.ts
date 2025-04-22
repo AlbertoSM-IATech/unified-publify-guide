@@ -1,5 +1,5 @@
 
-import { FinancialRecord } from "@/data/financesData";
+import { FinancialRecord } from "../types/dataTypes";
 import { Transaction } from "../types/finanzasTypes";
 import { isValid } from "date-fns";
 
