@@ -82,8 +82,14 @@ export const useChartData = (resumenesMensuales: FinancialRecord[]) => {
       });
       
       // Calcular ingresos y gastos fijos para este período
-      const costesFijosMes = calcularCostesFijos(date);
-      const ingresosFijosMes = calcularIngresosFijos(date);
+      let costesFijosMes = 0;
+      let ingresosFijosMes = 0;
+      
+      // Solo incluir costes e ingresos fijos para la vista mensual y anual
+      if (currentPeriod === 'mensual' || currentPeriod === 'anual') {
+        costesFijosMes = calcularCostesFijos(date);
+        ingresosFijosMes = calcularIngresosFijos(date);
+      }
       
       // Sum up the values including fixed incomes and costs
       const ingresos = recordsInPeriod.reduce((sum, record) => sum + record.ingresos, 0) + ingresosFijosMes;
@@ -130,17 +136,15 @@ export const useChartData = (resumenesMensuales: FinancialRecord[]) => {
       let costesFijosMes = 0;
       let ingresosFijosMes = 0;
       
-      // Solo incluir costes e ingresos fijos para la vista mensual
-      if (period === 'mensual') {
+      // Solo incluir costes e ingresos fijos para la vista mensual y anual
+      if (period === 'mensual' || period === 'anual') {
         costesFijosMes = calcularCostesFijos(date);
         ingresosFijosMes = calcularIngresosFijos(date);
       }
       
-      // Sum up the values including fixed incomes and costs (solo para vista mensual)
-      const ingresos = recordsInPeriod.reduce((sum, record) => sum + record.ingresos, 0) + 
-                      (period === 'mensual' ? ingresosFijosMes : 0);
-      const gastos = recordsInPeriod.reduce((sum, record) => sum + record.gastos, 0) + 
-                    (period === 'mensual' ? costesFijosMes : 0);
+      // Sum up the values including fixed incomes and costs
+      const ingresos = recordsInPeriod.reduce((sum, record) => sum + record.ingresos, 0) + ingresosFijosMes;
+      const gastos = recordsInPeriod.reduce((sum, record) => sum + record.gastos, 0) + costesFijosMes;
       const beneficio = ingresos - gastos;
       
       return {
