@@ -1,9 +1,8 @@
 
-import { format } from "date-fns";
-import { es } from "date-fns/locale";
 import { Edit2, Trash2 } from "lucide-react";
 import { Button } from "@/components/common/Button";
 import { Transaction } from "../../types/finanzasTypes";
+import { formatTransactionDate } from "../../utils/dateUtils";
 import {
   Table,
   TableBody,
@@ -26,17 +25,6 @@ export const TransactionsTable = ({
   onEdit,
   onDelete
 }: TransactionsTableProps) => {
-  const safeFormatDate = (date: Date | string | null): string => {
-    if (!date) return "Fecha no disponible";
-    const dateObj = typeof date === 'string' ? new Date(date) : date;
-    try {
-      return format(dateObj, 'dd/MM/yyyy', { locale: es });
-    } catch (error) {
-      console.error("Error formatting date:", error, date);
-      return "Error en fecha";
-    }
-  };
-
   return (
     <div className="border rounded-md">
       <Table>
@@ -54,7 +42,7 @@ export const TransactionsTable = ({
             transactions.map((transaction) => (
               <TableRow key={transaction.id}>
                 <TableCell>
-                  {safeFormatDate(transaction.fecha)}
+                  {formatTransactionDate(transaction.fecha)}
                 </TableCell>
                 <TableCell>{transaction.concepto}</TableCell>
                 <TableCell className="text-right">

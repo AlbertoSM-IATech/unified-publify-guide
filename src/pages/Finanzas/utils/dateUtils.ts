@@ -1,20 +1,15 @@
 
-/**
- * Returns the current month name in Spanish
- */
-export function getCurrentMonth(): string {
-  const months = [
-    "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
-    "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
-  ];
-  
-  const currentMonth = new Date().getMonth();
-  return months[currentMonth];
-}
+import { format } from "date-fns";
+import { es } from "date-fns/locale";
 
-/**
- * Checks if a month string matches the current month
- */
-export function isCurrentMonth(month: string): boolean {
-  return month === getCurrentMonth();
-}
+export const formatTransactionDate = (date: Date | string | null): string => {
+  if (!date) return "Fecha no disponible";
+  
+  const dateObj = typeof date === 'string' ? new Date(date) : date;
+  try {
+    return format(dateObj, 'dd/MM/yyyy', { locale: es });
+  } catch (error) {
+    console.error("Error formatting date:", error, date);
+    return "Error en fecha";
+  }
+};
