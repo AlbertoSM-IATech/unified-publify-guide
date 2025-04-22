@@ -1,4 +1,3 @@
-
 export interface NuevoRegistro {
   fecha: Date;
   ingresos: number;
@@ -26,4 +25,6 @@ export interface Transaction {
   ingresos?: number;
   gastos?: number;
   observaciones?: string;
+  mes?: string;
+  beneficio?: number;
 }
