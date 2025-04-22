@@ -11,6 +11,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useEffect } from "react";
+import { toast } from "@/hooks/use-toast";
 
 interface StatusFieldsProps {
   book: Book;
@@ -28,19 +29,53 @@ export const StatusFields = ({ book, isEditing, form }: StatusFieldsProps) => {
   }, [book, form, isEditing]);
 
   const dispatchBookUpdate = () => {
-    // Create a custom event to notify other components of book data change
-    const updateEvent = new CustomEvent('publify_books_updated');
-    window.dispatchEvent(updateEvent);
+    console.log("[StatusFields] Dispatching book update event");
+    
+    // Update book data in localStorage
+    const storedBooksJson = localStorage.getItem('librosData');
+    if (storedBooksJson) {
+      try {
+        const storedBooks = JSON.parse(storedBooksJson);
+        const updatedBooks = storedBooks.map((storedBook: any) => {
+          if (storedBook.id === book.id) {
+            return {
+              ...storedBook,
+              estado: form.getValues("estado"),
+              contenido: form.getValues("contenido")
+            };
+          }
+          return storedBook;
+        });
+        
+        // Save the updated books back to localStorage
+        localStorage.setItem('librosData', JSON.stringify(updatedBooks));
+        
+        // Create a custom event to notify other components of book data change
+        const updateEvent = new CustomEvent('publify_books_updated');
+        window.dispatchEvent(updateEvent);
+        
+        toast({
+          title: "Estado actualizado",
+          description: "La información del libro ha sido actualizada"
+        });
+      } catch (error) {
+        console.error('Error updating book data:', error);
+      }
+    }
   };
 
   const handleStatusChange = (value: string) => {
     form.setValue("estado", value);
-    dispatchBookUpdate();
+    if (isEditing) {
+      dispatchBookUpdate();
+    }
   };
 
   const handleContentChange = (value: string) => {
     form.setValue("contenido", value);
-    dispatchBookUpdate();
+    if (isEditing) {
+      dispatchBookUpdate();
+    }
   };
 
   return (
@@ -56,6 +91,7 @@ export const StatusFields = ({ book, isEditing, form }: StatusFieldsProps) => {
               <Select 
                 onValueChange={(value) => handleStatusChange(value)}
                 defaultValue={field.value}
+                value={field.value}
               >
                 <SelectTrigger id="estado" className="hover:border-[#FB923C] transition-colors duration-200">
                   <SelectValue placeholder="Seleccionar estado" />
@@ -85,6 +121,7 @@ export const StatusFields = ({ book, isEditing, form }: StatusFieldsProps) => {
               <Select 
                 onValueChange={(value) => handleContentChange(value)}
                 defaultValue={field.value}
+                value={field.value}
               >
                 <SelectTrigger id="contenido" className="hover:border-[#FB923C] transition-colors duration-200">
                   <SelectValue placeholder="Seleccionar tipo" />

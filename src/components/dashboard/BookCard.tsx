@@ -29,8 +29,10 @@ const BookCard = ({
   
   // Update image source if props change
   useEffect(() => {
-    setImageSrc(coverUrl || DEFAULT_COVER_URL);
-  }, [coverUrl]);
+    if (coverUrl && coverUrl !== imageSrc) {
+      setImageSrc(coverUrl);
+    }
+  }, [coverUrl, imageSrc]);
   
   // Handle image loading error
   const handleImageError = () => {
@@ -39,18 +41,16 @@ const BookCard = ({
   
   // Determine status color based on status
   const getStatusColor = (status: string): string => {
-    switch (status) {
+    switch (status?.toLowerCase()) {
       case "publicado":
-      case "Publicado":
         return "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300";
+      case "en revisión":
       case "en_edicion":
-      case "En revisión":
         return "bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-300";
       case "borrador":
-      case "Borrador":
         return "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300";
+      case "archivado":
       case "pausado":
-      case "Archivado":
         return "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300";
       default:
         return "bg-gray-100 text-gray-800 dark:bg-gray-800/30 dark:text-gray-300";
@@ -111,6 +111,7 @@ const BookCard = ({
                   width="112"
                   height="128"
                   onError={handleImageError}
+                  key={`${id}-${imageSrc}`} // Force re-render when image source changes
                 />
               </div>
             </div>

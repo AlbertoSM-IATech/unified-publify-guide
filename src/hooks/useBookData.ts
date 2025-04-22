@@ -6,6 +6,7 @@ export function useBookData() {
   const [books, setBooks] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [lastUpdated, setLastUpdated] = useState(Date.now());
 
   // Load books data from localStorage or mock data
   const loadBooks = useCallback(async () => {
@@ -33,6 +34,7 @@ export function useBookData() {
       setBooks([]);
     } finally {
       setIsLoading(false);
+      setLastUpdated(Date.now());
     }
   }, []);
 
@@ -42,15 +44,16 @@ export function useBookData() {
     
     // Set up event listener for data sync events
     const handleSyncEvent = () => {
+      console.log('[useBookData] Detected book update event, refreshing...');
       loadBooks();
     };
     
     window.addEventListener('publify_books_updated', handleSyncEvent);
     
-    // Also poll periodically to ensure data is up to date
+    // Also poll periodically but less frequently
     const interval = setInterval(() => {
       loadBooks();
-    }, 10000);
+    }, 5000);
     
     return () => {
       window.removeEventListener('publify_books_updated', handleSyncEvent);
@@ -62,6 +65,7 @@ export function useBookData() {
     books,
     isLoading,
     error,
-    refresh: loadBooks
+    refresh: loadBooks,
+    lastUpdated
   };
 }
