@@ -46,10 +46,9 @@ const ApexBarChart = ({
   const categories = validData.map(item => item.name);
   const colors = validData.map(item => item.color);
 
+  // Simplified options to avoid any resolve reference issues
   const options: ApexOptions = {
-    ...themeOptions,
     chart: {
-      ...themeOptions.chart,
       type: 'bar',
       toolbar: {
         show: true,
@@ -62,14 +61,9 @@ const ApexBarChart = ({
           pan: false,
         },
       },
-      dropShadow: {
-        enabled: true,
-        color: '#000',
-        top: 3,
-        left: 3,
-        blur: 6,
-        opacity: 0.1
-      },
+      fontFamily: 'Poppins, sans-serif',
+      foreColor: isDarkMode ? 'rgba(233, 233, 233, 0.9)' : 'rgba(60, 60, 60, 0.9)',
+      background: 'transparent',
     },
     plotOptions: {
       bar: {
@@ -106,11 +100,10 @@ const ApexBarChart = ({
     },
     tooltip: {
       enabled: true,
-      // Remove custom property to avoid resolve issues
       custom: undefined,
-      y: {
-        formatter: (val) => val.toString()
-      }
+      fixed: {
+        enabled: false
+      },
     },
     legend: {
       show: false,

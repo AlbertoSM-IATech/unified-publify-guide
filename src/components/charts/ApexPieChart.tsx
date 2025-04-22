@@ -45,10 +45,9 @@ const ApexPieChart = ({
   const labels = validData.map(item => item.name);
   const colors = validData.map(item => item.color);
 
+  // Simplified options to avoid any resolve reference issues
   const options: ApexOptions = {
-    ...themeOptions,
     chart: {
-      ...themeOptions.chart,
       type: 'donut',
       toolbar: {
         show: true,
@@ -61,14 +60,9 @@ const ApexPieChart = ({
           pan: false,
         },
       },
-      dropShadow: {
-        enabled: true,
-        color: '#000',
-        top: 3,
-        left: 3,
-        blur: 6,
-        opacity: 0.1
-      },
+      fontFamily: 'Poppins, sans-serif',
+      foreColor: isDarkMode ? 'rgba(233, 233, 233, 0.9)' : 'rgba(60, 60, 60, 0.9)',
+      background: 'transparent',
     },
     colors: colors,
     labels: labels,
@@ -102,12 +96,6 @@ const ApexPieChart = ({
               fontSize: '16px',
               fontWeight: 600,
               color: isDarkMode ? '#d5d5d5' : '#606060',
-              formatter: function (w) {
-                // Safe formatter that doesn't rely on external functions
-                return totalValue !== undefined 
-                  ? totalValue.toString() 
-                  : w.globals.seriesTotals.reduce((a, b) => a + b, 0).toString();
-              }
             }
           }
         },
@@ -129,11 +117,10 @@ const ApexPieChart = ({
     },
     tooltip: {
       enabled: true,
-      // Completely remove custom formatting to avoid resolve issues
       custom: undefined,
-      y: {
-        formatter: (val) => val.toString()
-      }
+      fixed: {
+        enabled: false
+      },
     },
     responsive: [{
       breakpoint: 480,

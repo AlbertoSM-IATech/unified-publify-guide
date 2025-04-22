@@ -4,9 +4,9 @@ import { ApexOptions } from 'apexcharts';
 // Define los estilos base para las gráficas según el tema
 export const getChartTheme = (isDarkMode: boolean): Partial<ApexOptions> => {
   const baseTextColor = isDarkMode ? 'rgba(233, 233, 233, 0.9)' : 'rgba(60, 60, 60, 0.9)';
-  const gridColor = isDarkMode ? 'rgba(150, 150, 150, 0.1)' : 'rgba(96, 96, 96, 0.1)';
   const borderColor = isDarkMode ? 'rgba(150, 150, 150, 0.2)' : 'rgba(96, 96, 96, 0.2)';
 
+  // Return simplified theme options to avoid any resolve issues
   return {
     chart: {
       background: 'transparent',
@@ -26,30 +26,11 @@ export const getChartTheme = (isDarkMode: boolean): Partial<ApexOptions> => {
         }
       },
     },
-    tooltip: {
-      theme: isDarkMode ? 'dark' : 'light',
-      style: {
-        fontSize: '12px',
-        fontFamily: 'Poppins, sans-serif',
-      }
-    },
     legend: {
       labels: {
         colors: baseTextColor
       }
     },
-    states: {
-      hover: {
-        filter: {
-          type: 'darken'
-        }
-      },
-      active: {
-        filter: {
-          type: 'darken'
-        }
-      }
-    }
   };
 };
 

@@ -58,10 +58,9 @@ const ApexLineChart = ({
   const categories = validData.map(item => item.name);
   const colors = series.length > 0 ? series.map(s => s.color) : ['#FB923C'];
 
+  // Simplified options to avoid any resolve reference issues
   const options: ApexOptions = {
-    ...themeOptions,
     chart: {
-      ...themeOptions.chart,
       type: 'line',
       toolbar: {
         show: true,
@@ -74,6 +73,9 @@ const ApexLineChart = ({
           pan: true,
         },
       },
+      fontFamily: 'Poppins, sans-serif',
+      foreColor: isDarkMode ? 'rgba(233, 233, 233, 0.9)' : 'rgba(60, 60, 60, 0.9)',
+      background: 'transparent',
       dropShadow: {
         enabled: true,
         color: colors[0],
@@ -117,17 +119,11 @@ const ApexLineChart = ({
     },
     tooltip: {
       enabled: true,
-      // Remove custom tooltip to avoid resolve issues
-      custom: undefined,
       theme: isDarkMode ? 'dark' : 'light',
-      y: {
-        formatter: function (value) {
-          return `€${value}`;
-        }
+      custom: undefined,
+      fixed: {
+        enabled: false
       },
-      marker: {
-        show: true,
-      }
     },
     responsive: [{
       breakpoint: 480,
