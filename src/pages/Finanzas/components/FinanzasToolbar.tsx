@@ -14,12 +14,19 @@ export const FinanzasToolbar = ({
   periodView,
   onPeriodChange
 }: FinanzasToolbarProps) => {
+  // Handle period change without causing infinite loops
+  const handlePeriodChange = (value: string) => {
+    if (value !== periodView) {
+      onPeriodChange(value);
+    }
+  };
+
   return (
     <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
       <div className="flex items-center gap-3">
         <Select 
           value={periodView} 
-          onValueChange={onPeriodChange}
+          onValueChange={handlePeriodChange}
         >
           <SelectTrigger className="w-[180px]">
             <div className="flex items-center gap-2">

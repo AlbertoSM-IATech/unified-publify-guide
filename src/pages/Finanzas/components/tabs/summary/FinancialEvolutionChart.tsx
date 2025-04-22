@@ -18,17 +18,22 @@ export const FinancialEvolutionChart = ({
 }: FinancialEvolutionChartProps) => {
   const [activePeriod, setActivePeriod] = useState(periodView);
   
+  // Update local state when prop changes
   useEffect(() => {
-    setActivePeriod(periodView);
-  }, [periodView]);
-
-  // Handle period button click
-  const handlePeriodClick = useCallback((period: string) => {
-    setActivePeriod(period);
-    if (onPeriodChange) {
-      onPeriodChange(period);
+    if (activePeriod !== periodView) {
+      setActivePeriod(periodView);
     }
-  }, [onPeriodChange]);
+  }, [periodView, activePeriod]);
+
+  // Handle period button click - prevent unnecessary rerenders
+  const handlePeriodClick = useCallback((period: string) => {
+    if (period !== activePeriod) {
+      setActivePeriod(period);
+      if (onPeriodChange) {
+        onPeriodChange(period);
+      }
+    }
+  }, [onPeriodChange, activePeriod]);
 
   return (
     <MotionWrapper type="fadeUp" delay={0.2}>

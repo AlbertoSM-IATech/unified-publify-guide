@@ -1,5 +1,5 @@
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { useFinanceData } from "@/data/financesData";
 import { getCurrentMonth } from "../../utils/dateUtils";
 import { CurrentMonthSummary } from "./summary/CurrentMonthSummary";
@@ -7,8 +7,12 @@ import { GeneralStats } from "./summary/GeneralStats";
 import { FinancialEvolutionChart } from "./summary/FinancialEvolutionChart";
 import { MonthlySummaryTable } from "./summary/MonthlySummaryTable";
 
-export const ResumenTab = () => {
-  const [periodView, setPeriodView] = useState('mensual');
+interface ResumenTabProps {
+  periodView: string;
+  onPeriodChange: (period: string) => void;
+}
+
+export const ResumenTab = ({ periodView, onPeriodChange }: ResumenTabProps) => {
   const { 
     resumenesMensuales, 
     lineChartData,
@@ -50,9 +54,8 @@ export const ResumenTab = () => {
 
   // Handle period change using useCallback to prevent recreation on each render
   const handlePeriodChange = useCallback((period: string) => {
-    setPeriodView(period);
-    getFilteredChartData(period);
-  }, [getFilteredChartData]);
+    onPeriodChange(period);
+  }, [onPeriodChange]);
 
   // Memoized chart data to prevent unnecessary re-renders
   const filteredChartData = useCallback(() => {

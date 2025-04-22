@@ -1,5 +1,5 @@
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { useFinanceData } from "@/data/financesData";
 import { FinanzasTabs } from "./components/FinanzasTabs";
 import { FinanzasToolbar } from "./components/FinanzasToolbar";
@@ -8,7 +8,7 @@ import { CostesFijosTab } from "./components/tabs/CostesFijosTab";
 import { IngresosFijosTab } from "./components/tabs/IngresosFijosTab";
 import { Transaction } from "./types/finanzasTypes";
 import { TransactionsTabContent } from "./components/tabs/TransactionsTabContent";
-import { mapRecordsToTransactions, mapTransactionsToRecords } from "./utils/transactionUtils";
+import { mapRecordsToTransactions } from "./utils/transactionUtils";
 
 export const Finanzas = () => {
   const [activeTab, setActiveTab] = useState("resumen");
@@ -26,33 +26,35 @@ export const Finanzas = () => {
     return getFilteredChartData(periodView);
   }, [getFilteredChartData, periodView])();
 
-  // Handle edit record
+  // Handle edit record with useCallback to prevent function recreation
   const handleEditRecord = useCallback((id: number, data: Partial<Transaction>) => {
-    const updatedRecords = resumenesMensuales.map(record => 
-      record.id === id ? { 
-        ...record, 
-        ...data,
-        mes: data.fecha ? data.fecha.toLocaleDateString() : record.mes,
-        // Ensure beneficio is recalculated
-        beneficio: (data.ingresos !== undefined ? data.ingresos : record.ingresos) - 
-                  (data.gastos !== undefined ? data.gastos : record.gastos)
-      } : record
+    updateResumenesMensuales(
+      resumenesMensuales.map(record => 
+        record.id === id ? { 
+          ...record, 
+          ...data,
+          mes: data.fecha ? data.fecha.toLocaleDateString() : record.mes,
+          // Ensure beneficio is recalculated
+          beneficio: (data.ingresos !== undefined ? data.ingresos : record.ingresos) - 
+                    (data.gastos !== undefined ? data.gastos : record.gastos)
+        } : record
+      )
     );
-    updateResumenesMensuales(updatedRecords);
   }, [resumenesMensuales, updateResumenesMensuales]);
 
-  // Handle delete record
+  // Handle delete record with useCallback
   const handleDeleteRecord = useCallback((id: number) => {
-    const filteredRecords = resumenesMensuales.filter(record => record.id !== id);
-    updateResumenesMensuales(filteredRecords);
+    updateResumenesMensuales(resumenesMensuales.filter(record => record.id !== id));
   }, [resumenesMensuales, updateResumenesMensuales]);
 
-  // Handle period change
+  // Handle period change with proper useCallback
   const handlePeriodChange = useCallback((period: string) => {
-    setPeriodView(period);
-  }, []);
+    if (period !== periodView) {
+      setPeriodView(period);
+    }
+  }, [periodView]);
 
-  // Handle new record click
+  // Handle new record click with useCallback
   const handleNewRecordClick = useCallback(() => {
     if (activeTab === "resumen") {
       setActiveTab("ingresos");
@@ -76,7 +78,7 @@ export const Finanzas = () => {
       />
 
       {activeTab === "resumen" && (
-        <ResumenTab />
+        <ResumenTab periodView={periodView} onPeriodChange={handlePeriodChange} />
       )}
       
       {activeTab === "ingresos" && (

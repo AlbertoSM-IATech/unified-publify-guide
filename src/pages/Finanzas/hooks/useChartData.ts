@@ -73,7 +73,7 @@ export const useChartData = (resumenesMensuales: FinancialRecord[]) => {
     });
   }, [resumenesMensuales, currentPeriod]);
 
-  // Generate data for a specific period
+  // Generate data for a specific period - memoize to prevent recreation on each render
   const generateDataForPeriod = useCallback((records: FinancialRecord[], period: string) => {
     const dates = getDatesByPeriod(period);
     
@@ -119,13 +119,17 @@ export const useChartData = (resumenesMensuales: FinancialRecord[]) => {
 
   // Use useCallback to prevent function recreation on each render
   const getFilteredChartData = useCallback((period: string) => {
-    setCurrentPeriod(period);
-    const data = generateDataForPeriod(resumenesMensuales, period);
-    setFilteredChartData(data);
-    return data;
-  }, [resumenesMensuales, generateDataForPeriod]);
+    // Only update if period actually changed
+    if (period !== currentPeriod) {
+      setCurrentPeriod(period);
+      const data = generateDataForPeriod(resumenesMensuales, period);
+      setFilteredChartData(data);
+      return data;
+    }
+    return filteredChartData;
+  }, [resumenesMensuales, generateDataForPeriod, currentPeriod, filteredChartData]);
 
-  // Initialize filtered data
+  // Initialize filtered data only once on mount or when dependencies change
   useEffect(() => {
     setFilteredChartData(lineChartData);
   }, [lineChartData]);
