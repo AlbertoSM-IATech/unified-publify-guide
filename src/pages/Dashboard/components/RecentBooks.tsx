@@ -4,19 +4,23 @@ import { BookOpen } from "lucide-react";
 import MotionWrapper from "@/components/motion/MotionWrapper";
 import BookCard from "@/components/dashboard/BookCard";
 import { useBookData } from "@/hooks/useBookData";
+import { useMemo } from "react";
 
 export const RecentBooks = () => {
   // Use the shared book data hook to ensure consistency across the app
-  const { books, isLoading, refresh } = useBookData();
+  const { books, isLoading } = useBookData();
   
   // Get the 6 most recent books (sorted by id in descending order)
-  const recentBooks = books
-    .sort((a, b) => b.id - a.id)
-    .slice(0, 6)
-    .map(libro => ({
-      ...libro,
-      imageUrl: libro.imageUrl || libro.portadaUrl || "/placeholders/default-book-cover.png"
-    }));
+  const recentBooks = useMemo(() => {
+    return books
+      .slice()  // Create a copy to avoid mutating the original array
+      .sort((a, b) => b.id - a.id)
+      .slice(0, 6)
+      .map(libro => ({
+        ...libro,
+        imageUrl: libro.imageUrl || libro.portadaUrl || "/placeholders/default-book-cover.png"
+      }));
+  }, [books]);
 
   return (
     <MotionWrapper type="fadeUp" delay={0.4}>
@@ -38,17 +42,16 @@ export const RecentBooks = () => {
           ) : recentBooks.length > 0 ? (
             <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
               {recentBooks.map((libro, index) => (
-                <MotionWrapper key={`${libro.id}-${Date.now()}`} delay={0.1 * index} type="scale">
-                  <BookCard 
-                    index={index + 1} 
-                    title={libro.titulo} 
-                    author={libro.autor} 
-                    contentLevel={libro.contenido} 
-                    status={libro.estado} 
-                    coverUrl={libro.imageUrl} 
-                    id={libro.id}
-                  />
-                </MotionWrapper>
+                <BookCard 
+                  key={`book-${libro.id}-${index}`}
+                  index={index + 1} 
+                  title={libro.titulo} 
+                  author={libro.autor} 
+                  contentLevel={libro.contenido} 
+                  status={libro.estado} 
+                  coverUrl={libro.imageUrl} 
+                  id={libro.id}
+                />
               ))}
             </div>
           ) : (

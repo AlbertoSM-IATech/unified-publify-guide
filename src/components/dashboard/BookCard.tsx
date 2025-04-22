@@ -27,12 +27,10 @@ const BookCard = ({
 }: BookCardProps) => {
   const [imageSrc, setImageSrc] = useState(coverUrl || DEFAULT_COVER_URL);
   
-  // Update image source if props change
+  // Update image source when prop changes
   useEffect(() => {
-    if (coverUrl && coverUrl !== imageSrc) {
-      setImageSrc(coverUrl);
-    }
-  }, [coverUrl, imageSrc]);
+    setImageSrc(coverUrl || DEFAULT_COVER_URL);
+  }, [coverUrl]);
   
   // Handle image loading error
   const handleImageError = () => {
@@ -111,7 +109,6 @@ const BookCard = ({
                   width="112"
                   height="128"
                   onError={handleImageError}
-                  key={`${id}-${imageSrc}`} // Force re-render when image source changes
                 />
               </div>
             </div>

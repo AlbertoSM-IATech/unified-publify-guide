@@ -40,6 +40,7 @@ export function useBookData() {
 
   // Monitor for changes to book data
   useEffect(() => {
+    // Initial load
     loadBooks();
     
     // Set up event listener for data sync events
@@ -50,14 +51,8 @@ export function useBookData() {
     
     window.addEventListener('publify_books_updated', handleSyncEvent);
     
-    // Also poll periodically but less frequently
-    const interval = setInterval(() => {
-      loadBooks();
-    }, 5000);
-    
     return () => {
       window.removeEventListener('publify_books_updated', handleSyncEvent);
-      clearInterval(interval);
     };
   }, [loadBooks]);
 
