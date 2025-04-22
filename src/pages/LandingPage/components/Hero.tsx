@@ -1,4 +1,3 @@
-
 import { motion } from "framer-motion";
 import { ArrowRight, Sparkles, Play } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -70,14 +69,12 @@ export const Hero = () => {
   return <motion.section initial="hidden" whileInView="visible" viewport={{
     once: true
   }} className="relative flex flex-1 flex-col items-center px-4 pt-24 pb-16 md:pt-32 md:pb-24 overflow-hidden">
-      {/* Background glow effect */}
       <div className="absolute inset-0 -z-10 opacity-30 pointer-events-none">
         <div className="absolute top-1/4 left-1/4 w-1/2 h-1/2 bg-primary/10 rounded-full blur-[100px]" />
         <div className="absolute bottom-1/4 right-1/4 w-1/3 h-1/3 bg-[#FB923C]/20 rounded-full blur-[80px]" />
       </div>
       
       <div className="mx-auto max-w-7xl w-full grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-        {/* Left column: Text content */}
         <div className="text-center lg:text-left relative">
           <motion.h1 variants={fadeIn} className="font-heading text-4xl font-bold tracking-tight md:text-5xl text-inherit lg:text-5xl">
             Gestiona y haz crecer tu editorial de{" "}
@@ -120,14 +117,13 @@ export const Hero = () => {
           </motion.div>
         </div>
 
-        {/* Right column: Video section */}
         <motion.div variants={fadeIn} className="w-full flex justify-center lg:justify-end mt-8 lg:mt-0">
           <motion.div whileHover="hover" variants={videoContainerVariants} className="relative w-full max-w-md lg:max-w-full overflow-hidden rounded-xl border-2 border-[#FB923C]/20 bg-black/5 backdrop-blur-sm">
             {videoPlaying ? (
               <AspectRatio ratio={16 / 9} className="w-full">
                 <iframe 
                   className="w-full h-full" 
-                  src="https://www.youtube.com/embed/FsX6gZwIxqo?autoplay=1&controls=1&showinfo=0&rel=0" 
+                  src="https://www.youtube.com/embed/videoseries?list=PLk6VGnSO9jRyDZkngVHPyLTMdYHiG6jYe&autoplay=1&controls=1&showinfo=0&rel=0" 
                   title="Publify Demo Video" 
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                   allowFullScreen
@@ -135,10 +131,8 @@ export const Hero = () => {
               </AspectRatio>
             ) : (
               <AspectRatio ratio={16 / 9} className="w-full relative overflow-hidden flex items-center justify-center">
-                {/* Placeholder background with gradient */}
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-[#FB923C]/20"></div>
                 
-                {/* Animated glow effect */}
                 <motion.div 
                   className="absolute w-full h-full bg-gradient-to-r from-transparent via-white/5 to-transparent" 
                   animate={{
@@ -151,7 +145,6 @@ export const Hero = () => {
                   }} 
                 />
                 
-                {/* Play button with pulsing animation */}
                 <motion.div 
                   className="relative z-10 cursor-pointer" 
                   onClick={handlePlayVideo} 
@@ -188,7 +181,6 @@ export const Hero = () => {
               </AspectRatio>
             )}
             
-            {/* Decorative glowing corners */}
             <div className="absolute top-0 left-0 w-6 h-6 border-t-2 border-l-2 border-[#FB923C]/40 rounded-tl-lg" />
             <div className="absolute top-0 right-0 w-6 h-6 border-t-2 border-r-2 border-[#FB923C]/40 rounded-tr-lg" />
             <div className="absolute bottom-0 left-0 w-6 h-6 border-b-2 border-l-2 border-[#FB923C]/40 rounded-bl-lg" />
