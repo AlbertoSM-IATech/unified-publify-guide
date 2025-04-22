@@ -8,7 +8,7 @@ import { CostesFijosTab } from "./components/tabs/CostesFijosTab";
 import { IngresosFijosTab } from "./components/tabs/IngresosFijosTab";
 import { Transaction } from "./types/finanzasTypes";
 import { TransactionsTabContent } from "./components/tabs/TransactionsTabContent";
-import { mapRecordsToTransactions } from "./utils/transactionUtils";
+import { mapRecordsToTransactions, mapTransactionsToRecords } from "./utils/transactionUtils";
 
 export const Finanzas = () => {
   const [activeTab, setActiveTab] = useState("resumen");
@@ -30,7 +30,10 @@ export const Finanzas = () => {
       record.id === id ? { 
         ...record, 
         ...data,
-        mes: data.fecha ? data.fecha.toLocaleDateString() : record.mes
+        mes: data.fecha ? data.fecha.toLocaleDateString() : record.mes,
+        // Ensure beneficio is recalculated
+        beneficio: (data.ingresos !== undefined ? data.ingresos : record.ingresos) - 
+                  (data.gastos !== undefined ? data.gastos : record.gastos)
       } : record
     );
     updateResumenesMensuales(updatedRecords);

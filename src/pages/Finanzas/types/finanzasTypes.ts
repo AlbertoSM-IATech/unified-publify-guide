@@ -1,3 +1,4 @@
+
 export interface NuevoRegistro {
   fecha: Date;
   ingresos: number;
@@ -25,6 +26,6 @@ export interface Transaction {
   ingresos?: number;
   gastos?: number;
   observaciones?: string;
-  mes?: string;
+  mes: string; // Make mes required to match FinancialRecord
   beneficio?: number;
 }

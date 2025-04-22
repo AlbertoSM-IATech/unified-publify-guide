@@ -32,7 +32,24 @@ export const mapRecordsToTransactions = (records: FinancialRecord[]): Transactio
         concepto: record.concepto || "Sin concepto",
         ingresos: record.ingresos,
         gastos: record.gastos,
-        observaciones: record.observaciones
+        observaciones: record.observaciones,
+        mes: record.mes, // Ensure mes is included
+        beneficio: record.beneficio
       };
     });
+};
+
+// Add a utility function to convert Transaction back to FinancialRecord
+export const mapTransactionsToRecords = (transactions: Transaction[]): FinancialRecord[] => {
+  return transactions.map(transaction => {
+    return {
+      id: transaction.id,
+      mes: transaction.mes,
+      ingresos: transaction.ingresos || 0,
+      gastos: transaction.gastos || 0,
+      beneficio: (transaction.ingresos || 0) - (transaction.gastos || 0),
+      concepto: transaction.concepto,
+      observaciones: transaction.observaciones
+    };
+  });
 };

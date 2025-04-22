@@ -10,7 +10,7 @@ import { FinancialRecord } from "@/data/financesData";
 interface TransactionsTabContentProps {
   title: string;
   type: "ingresos" | "gastos";
-  records: FinancialRecord[];
+  records: Transaction[];  // Changed to Transaction[] to match the expected type
   filteredChartData: any[];
   onEdit: (id: number, data: Partial<Transaction>) => void;
   onDelete: (id: number) => void;
@@ -61,7 +61,7 @@ export const TransactionsTabContent = ({
 
       <MotionWrapper type="fadeUp" delay={0.3}>
         <TransactionsList 
-          transactions={records}
+          transactions={records}  // Now correctly receives Transaction[]
           title={`Historial de ${type === "ingresos" ? "Ingresos" : "Gastos"}`}
           type={type}
           onEdit={onEdit}

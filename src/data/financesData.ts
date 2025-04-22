@@ -1,6 +1,5 @@
-
 import { useSyncedData } from '@/hooks/useSyncedData';
-import { NuevoIngresoFijo, NuevoCosteFijo } from '@/pages/Finanzas/types/finanzasTypes';
+import { NuevoIngresoFijo, NuevoCosteFijo, Transaction } from '@/pages/Finanzas/types/finanzasTypes';
 
 export interface FinancialRecord {
   id: number;
@@ -227,6 +226,11 @@ export const useFinanceData = () => {
     setIngresosFijos(ingresosFijos.filter(ingreso => ingreso.id !== id));
   };
 
+  // Add this function to expose updating resumenesMensuales
+  const updateResumenesMensuales = (updatedRecords: FinancialRecord[]) => {
+    setResumenesMensuales(updatedRecords);
+  };
+
   return {
     resumenesMensuales,
     costesFijos,
@@ -236,6 +240,7 @@ export const useFinanceData = () => {
     gastosTotales,
     beneficioNeto,
     getFilteredChartData,
+    updateResumenesMensuales,
     ...calcularCambios(),
     agregarRegistroFinanciero,
     editarCosteFijo,

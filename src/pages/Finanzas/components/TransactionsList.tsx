@@ -35,6 +35,8 @@ export const TransactionsList = ({
   const itemsPerPage = 50;
 
   const filteredTransactions = transactions.filter(transaction => {
+    if (!transaction) return false;
+    
     const conceptoStr = transaction.concepto?.toLowerCase() || "";
     const obsStr = transaction.observaciones?.toLowerCase() || "";
     const filterLower = filter.toLowerCase();
@@ -52,6 +54,7 @@ export const TransactionsList = ({
 
   const handleSaveEdit = (updatedTransaction: Transaction) => {
     onEdit(updatedTransaction.id, updatedTransaction);
+    setEditingTransaction(null);
   };
 
   return (
