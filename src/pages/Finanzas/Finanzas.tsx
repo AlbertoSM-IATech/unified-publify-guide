@@ -13,6 +13,15 @@ import { ApexLineChart } from "@/components/charts";
 import MotionWrapper from "@/components/motion/MotionWrapper";
 import { getCurrentMonth } from "./utils/dateUtils";
 import { TransactionsList } from "./components/TransactionsList";
+import { FinancialRecord } from "@/data/financesData";
+
+// Define a utility function to transform FinancialRecord to Transaction
+const mapRecordsToTransactions = (records: FinancialRecord[]) => {
+  return records.map(record => ({
+    ...record,
+    concepto: record.concepto || "Sin concepto" // Ensure concepto is never undefined
+  }));
+};
 
 export const Finanzas = () => {
   const [activeTab, setActiveTab] = useState("resumen");
@@ -147,7 +156,7 @@ export const Finanzas = () => {
 
           <MotionWrapper type="fadeUp" delay={0.3}>
             <TransactionsList 
-              transactions={resumenesMensuales.filter(record => record.ingresos > 0)}
+              transactions={mapRecordsToTransactions(resumenesMensuales.filter(record => record.ingresos > 0))}
               title="Historial de Ingresos"
               type="ingresos"
             />
@@ -183,7 +192,7 @@ export const Finanzas = () => {
 
           <MotionWrapper type="fadeUp" delay={0.3}>
             <TransactionsList 
-              transactions={resumenesMensuales.filter(record => record.gastos > 0)}
+              transactions={mapRecordsToTransactions(resumenesMensuales.filter(record => record.gastos > 0))}
               title="Historial de Gastos"
               type="gastos"
             />

@@ -18,12 +18,12 @@ import {
   PaginationPrevious 
 } from "@/components/ui/pagination";
 import { Input } from "@/components/ui/input";
-import { SearchIcon, FilterIcon } from "lucide-react";
+import { SearchIcon } from "lucide-react";
 
-interface Transaction {
+export interface Transaction {
   id: number;
   mes: string;
-  concepto: string;
+  concepto: string; // This is required
   ingresos?: number;
   gastos?: number;
   observaciones?: string;
@@ -50,6 +50,11 @@ export const TransactionsList: React.FC<TransactionsListProps> = ({ transactions
   const startIndex = (currentPage - 1) * itemsPerPage;
   const paginatedTransactions = filteredTransactions.slice(startIndex, startIndex + itemsPerPage);
   
+  // Reset to first page when filter changes
+  React.useEffect(() => {
+    setCurrentPage(1);
+  }, [filter]);
+
   return (
     <div className="mt-8">
       <div className="flex justify-between items-center mb-4">
