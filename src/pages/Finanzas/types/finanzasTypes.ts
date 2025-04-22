@@ -1,31 +1,26 @@
 
-export interface NuevoRegistro {
-  fecha: Date;
+import { FixedCost, FixedIncome } from './dataTypes';
+
+export type Transaction = {
+  id: number;
+  concepto?: string;
   ingresos: number;
   gastos: number;
+  beneficio: number;
+  observaciones?: string;
+  fecha?: Date;
+};
+
+export type NuevoRegistro = {
   concepto?: string;
+  ingresos: number;
+  gastos: number;
   observaciones?: string;
-}
+  fecha?: Date;
+  mes?: string;
+};
 
-export interface NuevoCosteFijo {
-  concepto: string;
-  coste: number;
-  frecuencia: "Mensual" | "Trimestral" | "Anual";
-}
+export type NuevoCosteFijo = Omit<FixedCost, 'id'>;
+export type NuevoIngresoFijo = Omit<FixedIncome, 'id'>;
 
-export interface NuevoIngresoFijo {
-  concepto: string;
-  cantidad: number;
-  frecuencia: "Mensual" | "Trimestral" | "Anual";
-}
-
-export interface Transaction {
-  id: number;
-  fecha: Date;
-  concepto: string;
-  ingresos?: number;
-  gastos?: number;
-  observaciones?: string;
-  mes: string; // Make mes required to match FinancialRecord
-  beneficio?: number;
-}
+export type PeriodView = 'diario' | 'semanal' | 'mensual' | 'anual';

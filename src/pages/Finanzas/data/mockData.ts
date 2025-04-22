@@ -1,4 +1,5 @@
-import { FinancialRecord, CosteFijo, IngresoFijo } from '../types/dataTypes';
+
+import { FinancialRecord, FixedCost, FixedIncome } from '../types/dataTypes';
 
 export const initialMonthlySummaries: FinancialRecord[] = [
   { id: 1, mes: "Enero", ingresos: 2430, gastos: 1890, beneficio: 540, concepto: "Ventas mensuales", observaciones: "Primer mes del año" },
@@ -37,17 +38,17 @@ export const initialYearlyData = [
   { id: 10003, ano: "2024", ingresos: 18500, gastos: 13650, beneficio: 4850, concepto: "Total 2024 (parcial)", observaciones: "Año en curso" },
 ];
 
-export const initialFixedCosts: CosteFijo[] = [
-  { id: 1, concepto: "Alquiler Oficina", coste: 850, frecuencia: "Mensual" },
-  { id: 2, concepto: "Servicios Web", coste: 120, frecuencia: "Mensual" },
-  { id: 3, concepto: "Software Editorial", coste: 350, frecuencia: "Mensual" },
-  { id: 4, concepto: "Seguro Profesional", coste: 420, frecuencia: "Trimestral" },
-  { id: 5, concepto: "Asesoría Contable", coste: 200, frecuencia: "Mensual" }
+export const initialFixedCosts: FixedCost[] = [
+  { id: 1, concepto: "Alquiler Oficina", coste: 850, frecuencia: "Mensual", fechaInicio: "2023-01-01" },
+  { id: 2, concepto: "Servicios Web", coste: 120, frecuencia: "Mensual", fechaInicio: "2023-01-15" },
+  { id: 3, concepto: "Software Editorial", coste: 350, frecuencia: "Mensual", fechaInicio: "2023-02-01" },
+  { id: 4, concepto: "Seguro Profesional", coste: 420, frecuencia: "Trimestral", fechaInicio: "2023-03-01" },
+  { id: 5, concepto: "Asesoría Contable", coste: 200, frecuencia: "Mensual", fechaInicio: "2023-01-10" }
 ];
 
-export const initialFixedIncomes: IngresoFijo[] = [
-  { id: 1, concepto: "Suscripciones Premium", cantidad: 350, frecuencia: "Mensual" },
-  { id: 2, concepto: "Licencias Corporativas", cantidad: 1200, frecuencia: "Mensual" },
-  { id: 3, concepto: "Servicios de Edición", cantidad: 750, frecuencia: "Mensual" },
-  { id: 4, concepto: "Royalties Trimestrales", cantidad: 2400, frecuencia: "Trimestral" },
+export const initialFixedIncomes: FixedIncome[] = [
+  { id: 1, concepto: "Suscripciones Premium", cantidad: 350, frecuencia: "Mensual", fechaInicio: "2023-01-05" },
+  { id: 2, concepto: "Licencias Corporativas", cantidad: 1200, frecuencia: "Mensual", fechaInicio: "2023-02-01" },
+  { id: 3, concepto: "Servicios de Edición", cantidad: 750, frecuencia: "Mensual", fechaInicio: "2023-01-15" },
+  { id: 4, concepto: "Royalties Trimestrales", cantidad: 2400, frecuencia: "Trimestral", fechaInicio: "2023-03-01" },
 ];

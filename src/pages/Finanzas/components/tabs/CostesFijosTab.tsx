@@ -65,7 +65,7 @@ export const CostesFijosTab = () => {
       ) : (
         <MotionWrapper type="fade">
           <CosteFijoForm 
-            costeFijo={editingCosteFijo || { concepto: "", coste: 0, frecuencia: "Mensual" }}
+            costeFijo={editingCosteFijo || { concepto: "", coste: 0, frecuencia: "Mensual", fechaInicio: new Date().toISOString().split('T')[0] }}
             onSubmit={editingId !== null ? handleUpdate : handleAdd}
             onCancel={() => {
               setShowForm(false);

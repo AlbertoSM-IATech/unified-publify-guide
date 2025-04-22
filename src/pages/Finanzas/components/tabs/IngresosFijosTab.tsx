@@ -65,7 +65,7 @@ export const IngresosFijosTab = () => {
       ) : (
         <MotionWrapper type="fade">
           <IngresoFijoForm 
-            ingresoFijo={editingIngresoFijo || { concepto: "", cantidad: 0, frecuencia: "Mensual" }}
+            ingresoFijo={editingIngresoFijo || { concepto: "", cantidad: 0, frecuencia: "Mensual", fechaInicio: new Date().toISOString().split('T')[0] }}
             onSubmit={editingId !== null ? handleUpdate : handleAdd}
             onCancel={() => {
               setShowForm(false);
