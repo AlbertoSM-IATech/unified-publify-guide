@@ -39,17 +39,37 @@ export const mapRecordsToTransactions = (records: FinancialRecord[]): Transactio
     });
 };
 
-// Add a utility function to convert Transaction back to FinancialRecord
+// Update the function to handle the mes property correctly
 export const mapTransactionsToRecords = (transactions: Transaction[]): FinancialRecord[] => {
   return transactions.map(transaction => {
+    // Extract month name from fecha if available, or use mes if provided, or default to current month
+    let monthName = "";
+    if (transaction.fecha) {
+      const months = [
+        "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", 
+        "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+      ];
+      monthName = months[transaction.fecha.getMonth()];
+    } else if (transaction.mes) {
+      monthName = transaction.mes;
+    } else {
+      const currentDate = new Date();
+      const months = [
+        "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", 
+        "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+      ];
+      monthName = months[currentDate.getMonth()];
+    }
+
     return {
       id: transaction.id,
-      mes: transaction.mes,
+      mes: monthName,
       ingresos: transaction.ingresos || 0,
       gastos: transaction.gastos || 0,
       beneficio: (transaction.ingresos || 0) - (transaction.gastos || 0),
       concepto: transaction.concepto,
-      observaciones: transaction.observaciones
+      observaciones: transaction.observaciones,
+      fecha: transaction.fecha
     };
   });
 };

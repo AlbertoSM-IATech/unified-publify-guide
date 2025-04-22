@@ -9,6 +9,7 @@ export type Transaction = {
   beneficio: number;
   observaciones?: string;
   fecha?: Date;
+  mes?: string; // Added the mes property to fix the type error
 };
 
 export type NuevoRegistro = {
