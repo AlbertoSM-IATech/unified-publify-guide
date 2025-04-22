@@ -39,18 +39,23 @@ const ApexLineChart = ({
   const { isDarkMode } = useTheme();
   const themeOptions = getChartTheme(isDarkMode);
   
+  // Making sure the data is valid to prevent rendering issues
+  const validData = Array.isArray(data) && data.length > 0 
+    ? data 
+    : [{ name: 'No data', balance: 0 }];
+  
   // Preparar datos para ApexCharts
   const chartSeries = series.length > 0 
     ? series.map(s => ({
         name: s.name,
-        data: data.map(item => Number(item[s.key])),
+        data: validData.map(item => Number(item[s.key] || 0)),
       }))
     : [{
         name: 'Balance',
-        data: data.map(item => Number(item.balance)),
+        data: validData.map(item => Number(item.balance || 0)),
       }];
 
-  const categories = data.map(item => item.name);
+  const categories = validData.map(item => item.name);
   const colors = series.length > 0 ? series.map(s => s.color) : ['#FB923C'];
 
   const options: ApexOptions = {
@@ -120,6 +125,8 @@ const ApexLineChart = ({
       marker: {
         show: true,
       },
+      // Using custom render to avoid issues with undefined resolver
+      custom: undefined
     },
     responsive: [{
       breakpoint: 480,
@@ -133,6 +140,26 @@ const ApexLineChart = ({
       }
     }]
   };
+
+  // Prevent rendering chart if no valid data is available
+  if (!Array.isArray(data) || data.length === 0) {
+    return (
+      <Card className={className}>
+        <CardHeader className="pb-3">
+          <div className="space-y-1">
+            <CardTitle className="text-lg font-medium flex items-center gap-2">
+              <LineChart size={20} className="text-[#FB923C]" />
+              {title}
+            </CardTitle>
+            <CardDescription>{description}</CardDescription>
+          </div>
+        </CardHeader>
+        <CardContent className="py-10 text-center text-muted-foreground">
+          No data available to display chart
+        </CardContent>
+      </Card>
+    );
+  }
 
   return (
     <Card className={`overflow-hidden ${className}`}>

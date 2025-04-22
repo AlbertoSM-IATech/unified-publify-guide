@@ -37,10 +37,13 @@ const ApexPieChart = ({
   const { isDarkMode } = useTheme();
   const themeOptions = getChartTheme(isDarkMode);
   
+  // Making sure the data is valid to prevent rendering issues
+  const validData = Array.isArray(data) && data.length > 0 ? data : [{ name: 'No data', value: 1, color: '#ccc' }];
+  
   // Preparar datos para ApexCharts
-  const series = data.map(item => item.value);
-  const labels = data.map(item => item.name);
-  const colors = data.map(item => item.color);
+  const series = validData.map(item => item.value);
+  const labels = validData.map(item => item.name);
+  const colors = validData.map(item => item.color);
 
   const options: ApexOptions = {
     ...themeOptions,
@@ -100,7 +103,10 @@ const ApexPieChart = ({
               fontWeight: 600,
               color: isDarkMode ? '#d5d5d5' : '#606060',
               formatter: function (w) {
-                return totalValue?.toString() || w.globals.seriesTotals.reduce((a: number, b: number) => a + b, 0).toString();
+                // Safe formatter that doesn't rely on external functions
+                return totalValue !== undefined 
+                  ? totalValue.toString() 
+                  : w.globals.seriesTotals.reduce((a, b) => a + b, 0).toString();
               }
             }
           }
@@ -127,6 +133,8 @@ const ApexPieChart = ({
           return value.toString();
         }
       },
+      // Using custom render to avoid issues with undefined resolver
+      custom: undefined
     },
     responsive: [{
       breakpoint: 480,
@@ -140,6 +148,26 @@ const ApexPieChart = ({
       }
     }]
   };
+
+  // Prevent rendering chart if no valid data is available
+  if (!Array.isArray(data) || data.length === 0) {
+    return (
+      <Card className={className}>
+        <CardHeader className="pb-3">
+          <div className="space-y-1">
+            <CardTitle className="text-lg font-medium flex items-center gap-2">
+              <PieChart size={20} className="text-green-500" />
+              {title}
+            </CardTitle>
+            <CardDescription>{description}</CardDescription>
+          </div>
+        </CardHeader>
+        <CardContent className="py-10 text-center text-muted-foreground">
+          No data available to display chart
+        </CardContent>
+      </Card>
+    );
+  }
 
   return (
     <Card className={`overflow-hidden ${className}`}>
@@ -168,9 +196,9 @@ const ApexPieChart = ({
           />
         </MotionWrapper>
 
-        {data.length > 0 && (
+        {validData.length > 0 && (
           <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-2">
-            {data.map((entry, index) => (
+            {validData.map((entry, index) => (
               <motion.div 
                 key={index} 
                 className="text-center py-1"

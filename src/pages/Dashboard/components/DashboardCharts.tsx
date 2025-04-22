@@ -13,13 +13,18 @@ interface DashboardChartsProps {
 export const DashboardCharts = ({ pieChartData, barChartData, librosCount }: DashboardChartsProps) => {
   const { lineChartData } = useFinanceData();
 
+  // Ensure lineChartData is valid
+  const validLineChartData = Array.isArray(lineChartData) && lineChartData.length > 0 
+    ? lineChartData 
+    : [{ name: 'No data', ingresos: 0, gastos: 0, beneficio: 0 }];
+
   return (
     <>
       <MotionWrapper type="fadeUp" delay={0.2}>
         <ApexLineChart
           title="Balance Mensual"
           description="Seguimiento de ingresos y gastos mensuales"
-          data={lineChartData}
+          data={validLineChartData}
           series={[
             {
               name: "Ingresos",

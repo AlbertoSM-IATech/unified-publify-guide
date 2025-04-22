@@ -34,20 +34,23 @@ const ApexBarChart = ({
   const { isDarkMode } = useTheme();
   const themeOptions = getChartTheme(isDarkMode);
   
+  // Making sure the data is valid to prevent rendering issues
+  const validData = Array.isArray(data) && data.length > 0 ? data : [{ name: 'No data', value: 0, color: '#ccc' }];
+  
   // Preparar datos para ApexCharts
   const series = [{
     name: "Cantidad",
-    data: data.map(item => item.value),
+    data: validData.map(item => item.value),
   }];
 
-  const categories = data.map(item => item.name);
-  const colors = data.map(item => item.color);
+  const categories = validData.map(item => item.name);
+  const colors = validData.map(item => item.color);
 
   const options: ApexOptions = {
     ...themeOptions,
     chart: {
       ...themeOptions.chart,
-      type: horizontal ? 'bar' : 'bar',
+      type: 'bar',
       toolbar: {
         show: true,
         tools: {
@@ -89,7 +92,7 @@ const ApexBarChart = ({
         colors: [isDarkMode ? "#ffffff" : "#333333"]
       },
       formatter: function(val) {
-        return val.toString();
+        return val ? val.toString() : "0";
       },
     },
     xaxis: {
@@ -107,6 +110,8 @@ const ApexBarChart = ({
           return value.toString();
         }
       },
+      // Using custom render to avoid issues with undefined resolver
+      custom: undefined
     },
     legend: {
       show: false,
@@ -130,6 +135,26 @@ const ApexBarChart = ({
     }]
   };
 
+  // Prevent rendering chart if no valid data is available
+  if (!Array.isArray(data) || data.length === 0) {
+    return (
+      <Card className={className}>
+        <CardHeader className="pb-3">
+          <div className="space-y-1">
+            <CardTitle className="text-lg font-medium flex items-center gap-2">
+              <BarChart3 size={20} className="text-blue-500" />
+              {title}
+            </CardTitle>
+            <CardDescription>{description}</CardDescription>
+          </div>
+        </CardHeader>
+        <CardContent className="py-10 text-center text-muted-foreground">
+          No data available to display chart
+        </CardContent>
+      </Card>
+    );
+  }
+
   return (
     <Card className={`overflow-hidden ${className}`}>
       <CardHeader className="pb-3">
@@ -152,7 +177,7 @@ const ApexBarChart = ({
           <ReactApexChart 
             options={options} 
             series={series} 
-            type={horizontal ? 'bar' : 'bar'} 
+            type="bar" 
             height={height}
           />
         </MotionWrapper>
