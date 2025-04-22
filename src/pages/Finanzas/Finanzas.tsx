@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { useFinanceData } from "@/data/financesData";
@@ -14,17 +15,44 @@ import { getCurrentMonth } from "./utils/dateUtils";
 import { TransactionsList } from "./components/TransactionsList";
 import { FinancialRecord } from "@/data/financesData";
 import { Transaction } from "./types/finanzasTypes";
+import { isValid } from "date-fns";
 
 // Define a utility function to transform FinancialRecord to Transaction
-const mapRecordsToTransactions = (records: FinancialRecord[]) => {
-  return records.map(record => ({
-    id: record.id,
-    fecha: new Date(record.mes), // Assuming 'mes' can be parsed as a date
-    concepto: record.concepto || "Sin concepto", // Ensure concepto is never undefined
-    ingresos: record.ingresos,
-    gastos: record.gastos,
-    observaciones: record.observaciones
-  }));
+const mapRecordsToTransactions = (records: FinancialRecord[]): Transaction[] => {
+  return records
+    .filter(record => record && record.id) // Filter out invalid records
+    .map(record => {
+      // Try to parse the date properly
+      let fecha: Date;
+      try {
+        // If 'mes' is a date string like MM/DD/YYYY or just a month name
+        fecha = new Date(record.mes);
+        if (!isValid(fecha)) {
+          // If invalid, try creating a date for the first day of the month
+          const currentYear = new Date().getFullYear();
+          const months = [
+            "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", 
+            "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+          ];
+          const monthIndex = months.findIndex(m => m === record.mes);
+          fecha = monthIndex !== -1 ? 
+            new Date(currentYear, monthIndex, 1) : 
+            new Date(); // Fallback to current date if parsing fails
+        }
+      } catch (e) {
+        console.error("Error parsing date:", e, record.mes);
+        fecha = new Date(); // Fallback to current date
+      }
+
+      return {
+        id: record.id,
+        fecha: fecha,
+        concepto: record.concepto || "Sin concepto", // Ensure concepto is never undefined
+        ingresos: record.ingresos,
+        gastos: record.gastos,
+        observaciones: record.observaciones
+      };
+    });
 };
 
 export const Finanzas = () => {
@@ -36,7 +64,7 @@ export const Finanzas = () => {
     lineChartData,
     agregarRegistroFinanciero,
     getFilteredChartData,
-    setResumenesMensuales
+    setResumenesMensuales: updateResumenesMensuales
   } = useFinanceData();
 
   const [nuevoRegistro, setNuevoRegistro] = useState<NuevoRegistro>({
@@ -69,17 +97,21 @@ export const Finanzas = () => {
   // Handle edit record
   const handleEditRecord = (id: number, data: Partial<Transaction>) => {
     const updatedRecords = resumenesMensuales.map(record => 
-      record.id === id ? { ...record, ...data } : record
+      record.id === id ? { 
+        ...record, 
+        ...data,
+        mes: data.fecha ? data.fecha.toLocaleDateString() : record.mes
+      } : record
     );
     // Update records through useFinanceData hook
-    setResumenesMensuales(updatedRecords);
+    updateResumenesMensuales(updatedRecords);
   };
 
   // Handle delete record
   const handleDeleteRecord = (id: number) => {
     const filteredRecords = resumenesMensuales.filter(record => record.id !== id);
     // Update records through useFinanceData hook
-    setResumenesMensuales(filteredRecords);
+    updateResumenesMensuales(filteredRecords);
   };
 
   const handleDateChange = (date: Date) => {

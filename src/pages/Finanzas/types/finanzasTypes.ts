@@ -1,3 +1,4 @@
+
 export interface NuevoRegistro {
   fecha: Date;
   ingresos: number;

@@ -1,6 +1,6 @@
 
 import React, { useState } from "react";
-import { format } from "date-fns";
+import { format, isValid } from "date-fns";
 import { es } from "date-fns/locale";
 import { Edit2, Trash2, SearchIcon } from "lucide-react";
 import { 
@@ -16,6 +16,7 @@ import { DatePicker } from "@/components/ui/date-picker";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
 import { Transaction } from "../types/finanzasTypes";
+import { formatDate } from "@/utils/formatting";
 
 interface TransactionsListProps {
   transactions: Transaction[];
@@ -38,11 +39,35 @@ export const TransactionsList: React.FC<TransactionsListProps> = ({
   const { toast } = useToast();
   const itemsPerPage = 50;
 
-  const filteredTransactions = transactions.filter(transaction => 
-    format(new Date(transaction.fecha), 'dd/MM/yyyy').includes(filter) || 
-    transaction.concepto.toLowerCase().includes(filter.toLowerCase()) ||
-    (transaction.observaciones && transaction.observaciones.toLowerCase().includes(filter.toLowerCase()))
-  );
+  // Safe date formatting function
+  const safeFormatDate = (date: Date | string | null): string => {
+    if (!date) return "Fecha no disponible";
+    
+    // If it's a string, try to convert it to a Date
+    const dateObj = typeof date === 'string' ? new Date(date) : date;
+    
+    // Verify the date is valid before formatting
+    if (!isValid(dateObj)) return "Fecha inválida";
+    
+    try {
+      return format(dateObj, 'dd/MM/yyyy', { locale: es });
+    } catch (error) {
+      console.error("Error formatting date:", error, date);
+      return "Error en fecha";
+    }
+  };
+
+  const filteredTransactions = transactions.filter(transaction => {
+    // Safe check for transaction properties
+    const dateStr = transaction.fecha ? safeFormatDate(transaction.fecha) : "";
+    const conceptoStr = transaction.concepto?.toLowerCase() || "";
+    const obsStr = transaction.observaciones?.toLowerCase() || "";
+    const filterLower = filter.toLowerCase();
+    
+    return dateStr.includes(filter) || 
+           conceptoStr.includes(filterLower) ||
+           obsStr.includes(filterLower);
+  });
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const paginatedTransactions = filteredTransactions.slice(startIndex, startIndex + itemsPerPage);
@@ -108,7 +133,7 @@ export const TransactionsList: React.FC<TransactionsListProps> = ({
               paginatedTransactions.map((transaction) => (
                 <TableRow key={transaction.id}>
                   <TableCell>
-                    {format(new Date(transaction.fecha), 'dd/MM/yyyy', { locale: es })}
+                    {safeFormatDate(transaction.fecha)}
                   </TableCell>
                   <TableCell>{transaction.concepto}</TableCell>
                   <TableCell className="text-right">
