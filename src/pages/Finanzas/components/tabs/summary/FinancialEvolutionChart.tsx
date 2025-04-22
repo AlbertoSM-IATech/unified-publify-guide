@@ -41,6 +41,11 @@ export const FinancialEvolutionChart = ({
     name: typeof item.name === 'string' ? item.name : formatPeriodDate(new Date(item.date || item.fecha || Date.now()), activePeriod)
   }));
 
+  // Determine description based on active period
+  const chartDescription = activePeriod === "mensual" || activePeriod === "anual"
+    ? "Seguimiento de ingresos, gastos y beneficios (incluye fijos)"
+    : "Seguimiento de ingresos, gastos y beneficios";
+
   return (
     <MotionWrapper type="fadeUp" delay={0.2}>
       <div className="rounded-lg border bg-card">
@@ -81,7 +86,7 @@ export const FinancialEvolutionChart = ({
         <div className="p-4">
           <ApexLineChart
             title=""
-            description="Seguimiento de ingresos, gastos y beneficios"
+            description={chartDescription}
             data={formattedChartData}
             series={[
               {

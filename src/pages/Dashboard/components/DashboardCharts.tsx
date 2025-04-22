@@ -24,6 +24,7 @@ export const DashboardCharts = ({ pieChartData, barChartData, librosCount }: Das
 
   // Get chart data for the monthly view by default
   const validLineChartData = useMemo(() => {
+    // Specifically use monthly view to include fixed incomes and costs
     const chartData = getFilteredChartData('mensual');
     return Array.isArray(chartData) && chartData.length > 0 
       ? chartData.map(item => ({
@@ -64,7 +65,7 @@ export const DashboardCharts = ({ pieChartData, barChartData, librosCount }: Das
         ) : (
           <ApexLineChart
             title="Balance Mensual"
-            description="Seguimiento de ingresos y gastos mensuales"
+            description="Seguimiento de ingresos y gastos mensuales (incluye fijos)"
             data={validLineChartData}
             series={[
               {
