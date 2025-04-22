@@ -6,6 +6,7 @@ import { ApexLineChart } from "@/components/charts";
 import MotionWrapper from "@/components/motion/MotionWrapper";
 import { useFinancialForm } from "../../hooks/useFinancialForm";
 import { FinancialRecord } from "../../types/dataTypes";
+import { useMemo } from "react";
 
 interface TransactionsTabContentProps {
   title: string;
@@ -33,6 +34,17 @@ export const TransactionsTabContent = ({
     handleSubmitRegistro
   } = useFinancialForm(agregarRegistroFinanciero);
 
+  // Filtrar los datos del gráfico para mostrar solo el tipo de transacción actual
+  const chartData = useMemo(() => {
+    return filteredChartData.map(item => ({
+      ...item,
+      // Solo mantener la serie que corresponde al tipo actual (ingresos o gastos)
+      // y poner a cero el otro tipo
+      ingresos: type === "ingresos" ? item.ingresos : 0,
+      gastos: type === "gastos" ? item.gastos : 0
+    }));
+  }, [filteredChartData, type]);
+
   return (
     <div className="space-y-6">
       <FinancialRecordForm
@@ -46,8 +58,8 @@ export const TransactionsTabContent = ({
       <MotionWrapper type="fadeUp" delay={0.2}>
         <ApexLineChart
           title={`Evolución de ${type === "ingresos" ? "Ingresos" : "Gastos"}`}
-          description={`Seguimiento de ${type}`}
-          data={filteredChartData}
+          description={`Seguimiento de ${type} ${type === "ingresos" || type === "gastos" ? "(incluye fijos)" : ""}`}
+          data={chartData}
           series={[
             {
               name: type === "ingresos" ? "Ingresos" : "Gastos",
@@ -61,7 +73,7 @@ export const TransactionsTabContent = ({
 
       <MotionWrapper type="fadeUp" delay={0.3}>
         <TransactionsList 
-          transactions={records}  // Now correctly receives Transaction[]
+          transactions={records}
           title={`Historial de ${type === "ingresos" ? "Ingresos" : "Gastos"}`}
           type={type}
           onEdit={onEdit}

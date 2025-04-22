@@ -74,6 +74,7 @@ export const useChartData = (resumenesMensuales: FinancialRecord[]) => {
         } else if (currentPeriod === 'anual') {
           return recordDate.getFullYear() === date.getFullYear();
         } else {
+          // Para el período mensual
           return (
             recordDate.getMonth() === date.getMonth() && 
             recordDate.getFullYear() === date.getFullYear()
@@ -92,8 +93,9 @@ export const useChartData = (resumenesMensuales: FinancialRecord[]) => {
       }
       
       // Sum up the values including fixed incomes and costs
-      const ingresos = recordsInPeriod.reduce((sum, record) => sum + record.ingresos, 0) + ingresosFijosMes;
-      const gastos = recordsInPeriod.reduce((sum, record) => sum + record.gastos, 0) + costesFijosMes;
+      // Importante: ahora sumamos todos los ingresos y gastos de los registros en el período
+      const ingresos = recordsInPeriod.reduce((sum, record) => sum + (record.ingresos || 0), 0) + ingresosFijosMes;
+      const gastos = recordsInPeriod.reduce((sum, record) => sum + (record.gastos || 0), 0) + costesFijosMes;
       const beneficio = ingresos - gastos;
       
       return {
@@ -125,6 +127,7 @@ export const useChartData = (resumenesMensuales: FinancialRecord[]) => {
         } else if (period === 'anual') {
           return recordDate.getFullYear() === date.getFullYear();
         } else {
+          // Para el período mensual
           return (
             recordDate.getMonth() === date.getMonth() && 
             recordDate.getFullYear() === date.getFullYear()
@@ -143,8 +146,9 @@ export const useChartData = (resumenesMensuales: FinancialRecord[]) => {
       }
       
       // Sum up the values including fixed incomes and costs
-      const ingresos = recordsInPeriod.reduce((sum, record) => sum + record.ingresos, 0) + ingresosFijosMes;
-      const gastos = recordsInPeriod.reduce((sum, record) => sum + record.gastos, 0) + costesFijosMes;
+      // Corregido: aseguramos que sumamos correctamente todos los valores
+      const ingresos = recordsInPeriod.reduce((sum, record) => sum + (record.ingresos || 0), 0) + ingresosFijosMes;
+      const gastos = recordsInPeriod.reduce((sum, record) => sum + (record.gastos || 0), 0) + costesFijosMes;
       const beneficio = ingresos - gastos;
       
       return {
