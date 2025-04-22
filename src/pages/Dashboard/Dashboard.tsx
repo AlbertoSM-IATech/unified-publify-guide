@@ -191,7 +191,7 @@ export const Dashboard = () => {
         librosCount={libros.length}
       />
 
-      <RecentBooks libros={libros} />
+      <RecentBooks />
     </div>
   );
 };
