@@ -1,6 +1,6 @@
 
 import { ApexLineChart } from "@/components/charts";
-import { MotionWrapper } from "@/components/motion/MotionWrapper";
+import MotionWrapper from "@/components/motion/MotionWrapper";
 import { TrendingUp, TrendingDown, DollarSign } from "lucide-react";
 import { useFinanceData } from "@/data/financesData";
 import { Card } from "@/components/ui/card";

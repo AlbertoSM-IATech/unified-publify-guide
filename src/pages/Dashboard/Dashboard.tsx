@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { getStatsData, getContentCategoriesData, getPieChartData, getBarChartData } from "@/components/dashboard/dashboardData";
 import { librosSimulados } from "../Biblioteca/Libros/utils/librosUtils";
@@ -6,6 +7,7 @@ import { DashboardStats } from "./components/DashboardStats";
 import { ContentCategories } from "./components/ContentCategories";
 import { DashboardCharts } from "./components/DashboardCharts";
 import { RecentBooks } from "./components/RecentBooks";
+import { getContentCategory, getEstadoCategory } from "@/pages/Dashboard/utils/dashboardUtils";
 
 export const Dashboard = () => {
   const [stats, setStats] = useState(getStatsData());
