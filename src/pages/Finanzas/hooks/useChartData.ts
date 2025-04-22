@@ -92,10 +92,15 @@ export const useChartData = (resumenesMensuales: FinancialRecord[]) => {
         ingresosFijosMes = calcularIngresosFijos(date);
       }
       
-      // Sum up the values including fixed incomes and costs
-      // Importante: ahora sumamos todos los ingresos y gastos de los registros en el período
-      const ingresos = recordsInPeriod.reduce((sum, record) => sum + (record.ingresos || 0), 0) + ingresosFijosMes;
-      const gastos = recordsInPeriod.reduce((sum, record) => sum + (record.gastos || 0), 0) + costesFijosMes;
+      // CORREGIDO: Sumando correctamente todos los ingresos y gastos para el período
+      const ingresos = recordsInPeriod.reduce((sum, record) => {
+        return sum + (typeof record.ingresos === 'number' ? record.ingresos : 0);
+      }, 0) + ingresosFijosMes;
+      
+      const gastos = recordsInPeriod.reduce((sum, record) => {
+        return sum + (typeof record.gastos === 'number' ? record.gastos : 0);
+      }, 0) + costesFijosMes;
+      
       const beneficio = ingresos - gastos;
       
       return {
@@ -145,10 +150,15 @@ export const useChartData = (resumenesMensuales: FinancialRecord[]) => {
         ingresosFijosMes = calcularIngresosFijos(date);
       }
       
-      // Sum up the values including fixed incomes and costs
-      // Corregido: aseguramos que sumamos correctamente todos los valores
-      const ingresos = recordsInPeriod.reduce((sum, record) => sum + (record.ingresos || 0), 0) + ingresosFijosMes;
-      const gastos = recordsInPeriod.reduce((sum, record) => sum + (record.gastos || 0), 0) + costesFijosMes;
+      // CORREGIDO: Sumando correctamente todos los ingresos y gastos para el período
+      const ingresos = recordsInPeriod.reduce((sum, record) => {
+        return sum + (typeof record.ingresos === 'number' ? record.ingresos : 0);
+      }, 0) + ingresosFijosMes;
+      
+      const gastos = recordsInPeriod.reduce((sum, record) => {
+        return sum + (typeof record.gastos === 'number' ? record.gastos : 0);
+      }, 0) + costesFijosMes;
+      
       const beneficio = ingresos - gastos;
       
       return {

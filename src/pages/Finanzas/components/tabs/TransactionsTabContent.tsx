@@ -41,7 +41,9 @@ export const TransactionsTabContent = ({
       // Solo mantener la serie que corresponde al tipo actual (ingresos o gastos)
       // y poner a cero el otro tipo
       ingresos: type === "ingresos" ? item.ingresos : 0,
-      gastos: type === "gastos" ? item.gastos : 0
+      gastos: type === "gastos" ? item.gastos : 0,
+      // Establecer el beneficio basado en el tipo actual
+      beneficio: type === "ingresos" ? item.ingresos : -item.gastos
     }));
   }, [filteredChartData, type]);
 

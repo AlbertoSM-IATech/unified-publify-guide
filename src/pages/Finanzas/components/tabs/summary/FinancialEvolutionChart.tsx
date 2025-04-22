@@ -38,7 +38,11 @@ export const FinancialEvolutionChart = ({
   // Ensure data is properly formatted for the chart
   const formattedChartData = lineChartData.map(item => ({
     ...item,
-    name: typeof item.name === 'string' ? item.name : formatPeriodDate(new Date(item.date || item.fecha || Date.now()), activePeriod)
+    name: typeof item.name === 'string' ? item.name : formatPeriodDate(new Date(item.date || item.fecha || Date.now()), activePeriod),
+    // Ensure all numeric values are properly converted
+    ingresos: Number(item.ingresos || 0),
+    gastos: Number(item.gastos || 0),
+    beneficio: Number(item.beneficio || 0)
   }));
 
   // Determine description based on active period
