@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import { FinancialRecord, FixedCost, FixedIncome } from '../types/dataTypes';
 import { getDatesByPeriod, formatPeriodDate } from '../utils/dateUtils';
@@ -125,13 +126,21 @@ export const useChartData = (resumenesMensuales: FinancialRecord[]) => {
         }
       });
       
-      // Calcular ingresos y gastos fijos para este período
-      const costesFijosMes = calcularCostesFijos(date);
-      const ingresosFijosMes = calcularIngresosFijos(date);
+      // Costes fijos e ingresos fijos para el período
+      let costesFijosMes = 0;
+      let ingresosFijosMes = 0;
       
-      // Sum up the values including fixed incomes and costs
-      const ingresos = recordsInPeriod.reduce((sum, record) => sum + record.ingresos, 0) + ingresosFijosMes;
-      const gastos = recordsInPeriod.reduce((sum, record) => sum + record.gastos, 0) + costesFijosMes;
+      // Solo incluir costes e ingresos fijos para la vista mensual
+      if (period === 'mensual') {
+        costesFijosMes = calcularCostesFijos(date);
+        ingresosFijosMes = calcularIngresosFijos(date);
+      }
+      
+      // Sum up the values including fixed incomes and costs (solo para vista mensual)
+      const ingresos = recordsInPeriod.reduce((sum, record) => sum + record.ingresos, 0) + 
+                      (period === 'mensual' ? ingresosFijosMes : 0);
+      const gastos = recordsInPeriod.reduce((sum, record) => sum + record.gastos, 0) + 
+                    (period === 'mensual' ? costesFijosMes : 0);
       const beneficio = ingresos - gastos;
       
       return {
