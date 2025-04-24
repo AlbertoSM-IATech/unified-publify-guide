@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
@@ -45,6 +44,12 @@ export const Header = () => {
           <a href="#faq" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
             FAQ
           </a>
+          <Link 
+            to="/contacto" 
+            className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+          >
+            Contacto
+          </Link>
           <button 
             onClick={toggleTheme} 
             className="text-sm text-muted-foreground hover:text-foreground transition-colors"
@@ -102,6 +107,13 @@ export const Header = () => {
             >
               FAQ
             </a>
+            <Link 
+              to="/contacto"
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+              onClick={() => setMenuOpen(false)}
+            >
+              Contacto
+            </Link>
             <button 
               onClick={() => {
                 toggleTheme();

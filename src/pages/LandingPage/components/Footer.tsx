@@ -47,6 +47,14 @@ export const Footer = () => {
                     FAQ
                   </a>
                 </li>
+                <li>
+                  <Link 
+                    to="/contacto" 
+                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    Contacto
+                  </Link>
+                </li>
               </ul>
             </div>
             

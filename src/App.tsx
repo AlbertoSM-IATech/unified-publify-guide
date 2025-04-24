@@ -27,6 +27,7 @@ import { LoadingState } from "@/components/common/LoadingState";
 import clsx from "clsx";
 import { TermsAndConditions } from "@/pages/Legal/TermsAndConditions";
 import { PrivacyPolicy } from "@/pages/Legal/PrivacyPolicy";
+import { Contact } from "@/pages/Contact/Contact";
 
 function App() {
   const { theme } = useTheme();
@@ -118,6 +119,7 @@ function App() {
         
         <Route path="/terminos-y-condiciones" element={<TermsAndConditions />} />
         <Route path="/politica-privacidad" element={<PrivacyPolicy />} />
+        <Route path="/contacto" element={<Contact />} />
       </Routes>
     </div>
   );
