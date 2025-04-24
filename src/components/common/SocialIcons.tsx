@@ -47,8 +47,8 @@ export const SocialIcons = ({
           href={social.url}
           target="_blank"
           rel="noopener noreferrer"
-          className={`text-muted-foreground hover:text-[#FB923C] transition-colors ${
-            variant === "sidebar" ? "text-sidebar-foreground hover:text-[#FB923C]" : ""
+          className={`text-white/70 hover:text-[#FB923C] transition-colors ${
+            variant === "sidebar" ? "text-white hover:text-[#FB923C]" : ""
           }`}
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}

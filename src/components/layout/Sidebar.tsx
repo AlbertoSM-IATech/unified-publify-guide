@@ -80,21 +80,21 @@ const Sidebar = ({
         variants={sidebarVariants}
         animate={open ? "open" : "closed"}
         transition={{ type: "spring", stiffness: 300, damping: 30 }}
-        className="fixed inset-y-0 left-0 z-30 w-64 transform bg-sidebar lg:relative lg:translate-x-0"
+        className="fixed inset-y-0 left-0 z-30 w-64 transform bg-[#3e3e3e] dark:bg-[#1e1e1e] border-r border-[#cacaca]/10 dark:border-[#3e3e3e]/10 lg:relative lg:translate-x-0"
       >
-        <div className="flex h-full flex-col border-r border-sidebar-border">
-          <div className="flex h-14 items-center border-b border-sidebar-border px-4">
+        <div className="flex h-full flex-col">
+          <div className="flex h-14 items-center border-b border-[#cacaca]/10 dark:border-[#3e3e3e]/10 px-4">
             <Link to="/dashboard" className="flex items-center">
-              <span className="font-heading text-xl font-bold text-sidebar-foreground">
+              <span className="font-heading text-xl font-bold text-white">
                 Publify
               </span>
             </Link>
             
             <button 
-              className="ml-auto rounded-full p-1 hover:bg-sidebar-accent lg:hidden" 
+              className="ml-auto rounded-full p-1 hover:bg-white/10 lg:hidden" 
               onClick={onClose}
             >
-              <X size={18} className="text-gray-500" />
+              <X size={18} className="text-white" />
             </button>
           </div>
           
@@ -110,19 +110,21 @@ const Sidebar = ({
                   <div className="space-y-1">
                     <button
                       onClick={() => setBibliotecaExpanded(!bibliotecaExpanded)}
-                      className={`sidebar-link w-full text-left flex items-center justify-between ${isActive(item.path) ? "active" : ""}`}
+                      className={`w-full text-left flex items-center justify-between rounded-md px-3 py-2 text-white hover:bg-white/10 transition-colors ${
+                        isActive(item.path) ? "bg-white/10" : ""
+                      }`}
                     >
                       <div className="flex items-center">
                         {item.icon}
                         <span className="ml-2">{item.label}</span>
                       </div>
                       {bibliotecaExpanded ? (
-                        <ChevronUp size={16} className="text-gray-500" />
+                        <ChevronUp size={16} className="text-white/70" />
                       ) : (
-                        <ChevronDown size={16} className="text-gray-500" />
+                        <ChevronDown size={16} className="text-white/70" />
                       )}
                     </button>
-                  
+                    
                     {bibliotecaExpanded && item.subItems && (
                       <motion.div 
                         className="ml-6 mt-1 space-y-1"
@@ -134,13 +136,9 @@ const Sidebar = ({
                           <Link
                             key={subItem.path}
                             to={subItem.path}
-                            className={`sidebar-link ${
-                              location.pathname === subItem.path 
-                                ? "active"
-                                : location.pathname.startsWith(subItem.path) && subItem.path !== "/biblioteca"
-                                ? "active" 
-                                : ""
-                            } hover:bg-sidebar-accent/30 transition-colors duration-200`}
+                            className={`flex items-center rounded-md px-3 py-2 text-white hover:bg-white/10 transition-colors ${
+                              location.pathname === subItem.path ? "bg-white/10" : ""
+                            }`}
                           >
                             {subItem.icon}
                             <span className="ml-2">{subItem.label}</span>
@@ -152,7 +150,9 @@ const Sidebar = ({
                 ) : (
                   <Link
                     to={item.path}
-                    className={`sidebar-link ${isActive(item.path) ? "active" : ""} hover:bg-sidebar-accent/50 transition-colors duration-200`}
+                    className={`flex items-center rounded-md px-3 py-2 text-white hover:bg-white/10 transition-colors ${
+                      isActive(item.path) ? "bg-white/10" : ""
+                    }`}
                   >
                     {item.icon}
                     <span className="ml-2">{item.label}</span>
@@ -162,9 +162,9 @@ const Sidebar = ({
             ))}
           </motion.nav>
           
-          <div className="border-t border-sidebar-border p-4">
+          <div className="border-t border-[#cacaca]/10 dark:border-[#3e3e3e]/10 p-4">
             <SocialIcons className="justify-center" variant="sidebar" />
-            <div className="text-xs text-sidebar-foreground/70 text-center mt-4">
+            <div className="text-xs text-white/70 text-center mt-4">
               Publify v0.1.0
             </div>
           </div>
