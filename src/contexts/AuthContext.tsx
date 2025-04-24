@@ -1,3 +1,4 @@
+
 import React, { createContext, useContext, useState } from "react";
 
 // Tipos de usuario
@@ -23,6 +24,9 @@ type AuthActions = {
   logout: () => Promise<void>;
   resetPassword: (email: string) => Promise<void>;
   updateUser: (userData: Partial<User>) => Promise<void>;
+  verifyEmail: (token: string) => Promise<void>;
+  resendVerificationEmail: (email: string) => Promise<void>;
+  setNewPassword: (token: string, password: string) => Promise<void>;
 };
 
 // Contexto completo
@@ -87,6 +91,24 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     console.log(`Reseteo de contraseña para: ${email}`);
     // Esta funcionalidad se implementará con Supabase
   };
+  
+  // Nueva función para establecer nueva contraseña después de reset
+  const setNewPassword = async (token: string, password: string) => {
+    console.log(`Estableciendo nueva contraseña con token: ${token}`);
+    // Esta funcionalidad se implementará con Supabase
+  };
+  
+  // Nueva función para verificación de email
+  const verifyEmail = async (token: string) => {
+    console.log(`Verificando email con token: ${token}`);
+    // Esta funcionalidad se implementará con Supabase
+  };
+  
+  // Nueva función para reenviar email de verificación
+  const resendVerificationEmail = async (email: string) => {
+    console.log(`Reenviando email de verificación a: ${email}`);
+    // Esta funcionalidad se implementará con Supabase
+  };
 
   // Implementación de actualización de usuario
   const updateUser = async (userData: Partial<User>) => {
@@ -117,6 +139,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     logout,
     resetPassword,
     updateUser,
+    verifyEmail,
+    resendVerificationEmail,
+    setNewPassword,
   };
 
   return <AuthContext.Provider value={authContextValue}>{children}</AuthContext.Provider>;

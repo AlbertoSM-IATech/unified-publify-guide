@@ -4,6 +4,10 @@ import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import MainLayout from "@/components/layout/MainLayout";
 import { LandingPage } from "@/pages/LandingPage/LandingPage";
 import { Login } from "@/pages/Auth/Login";
+import { Register } from "@/pages/Auth/Register";
+import { ForgotPassword } from "@/pages/Auth/ForgotPassword";
+import { ResetPassword } from "@/pages/Auth/ResetPassword";
+import { VerifyEmail } from "@/pages/Auth/VerifyEmail";
 import { Dashboard } from "@/pages/Dashboard/Dashboard";
 import { LibrosList } from "@/pages/Biblioteca/Libros/LibrosList";
 import BookDetail from "@/pages/Biblioteca/Libros/BookDetail";
@@ -61,6 +65,10 @@ function App() {
         {/* Public routes */}
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/verify-email" element={<VerifyEmail />} />
         
         {/* All routes are now accessible without authentication */}
         <Route element={<ProtectedRoute />}>

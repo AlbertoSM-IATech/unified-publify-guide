@@ -3,25 +3,48 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { Input } from "@/components/ui/input";
+import { FormField } from "@/components/form/FormField";
 import { Button } from "@/components/ui/button";
-import { useToast } from "@/components/ui/use-toast";
-import { ArrowLeft } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
+import { ArrowLeft, Mail, Lock, LogIn } from "lucide-react";
+import { required, email } from "@/utils/validationRules";
 
 export const Login = () => {
   const navigate = useNavigate();
   const { login } = useAuth();
   const { toast } = useToast();
-  const [email, setEmail] = useState("demo@publify.com");
+  const [userEmail, setUserEmail] = useState("demo@publify.com");
   const [password, setPassword] = useState("password");
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const [isLoading, setIsLoading] = useState(false);
+
+  const validateForm = () => {
+    const newErrors: Record<string, string> = {};
+    
+    if (!required().test(userEmail)) {
+      newErrors.email = "El email es obligatorio";
+    } else if (!email().test(userEmail)) {
+      newErrors.email = "El formato del email no es válido";
+    }
+    
+    if (!required().test(password)) {
+      newErrors.password = "La contraseña es obligatoria";
+    }
+    
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!validateForm()) return;
+    
     setIsLoading(true);
     
     try {
       // TEMPORARY: Authentication is disabled, just simulate login
-      await login(email, password);
+      await login(userEmail, password);
       toast({
         title: "Inicio de sesión exitoso",
         description: "Modo de desarrollo: Autenticación desactivada temporalmente",
@@ -48,6 +71,20 @@ export const Login = () => {
     navigate("/dashboard");
   };
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    if (name === 'email') {
+      setUserEmail(value);
+    } else if (name === 'password') {
+      setPassword(value);
+    }
+    
+    // Limpiar error cuando el usuario comienza a escribir
+    if (errors[name]) {
+      setErrors(prev => ({ ...prev, [name]: "" }));
+    }
+  };
+
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-background p-4">
       <div className="w-full max-w-md space-y-6">
@@ -59,20 +96,18 @@ export const Login = () => {
         </div>
 
         <form onSubmit={handleLogin} className="space-y-4">
-          <div className="space-y-2">
-            <label htmlFor="email" className="text-sm font-medium">
-              Correo electrónico
-            </label>
-            <Input
-              id="email"
-              type="email"
-              placeholder="tu@correo.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              className="w-full"
-            />
-          </div>
+          <FormField
+            label="Correo electrónico"
+            id="email"
+            name="email"
+            type="email"
+            placeholder="tu@correo.com"
+            value={userEmail}
+            onChange={handleChange}
+            error={errors.email}
+            icon={<Mail className="h-4 w-4 text-muted-foreground" />}
+            required
+          />
 
           <div className="space-y-2">
             <div className="flex items-center justify-between">
@@ -80,20 +115,23 @@ export const Login = () => {
                 Contraseña
               </label>
               <Link
-                to="/"
+                to="/forgot-password"
                 className="text-xs text-primary hover:underline"
               >
                 ¿Olvidaste tu contraseña?
               </Link>
             </div>
-            <Input
+            <FormField
+              label=""
               id="password"
+              name="password"
               type="password"
               placeholder="••••••••"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={handleChange}
+              error={errors.password}
+              icon={<Lock className="h-4 w-4 text-muted-foreground" />}
               required
-              className="w-full"
             />
           </div>
 
@@ -102,7 +140,7 @@ export const Login = () => {
             className="w-full"
             disabled={isLoading}
           >
-            {isLoading ? "Iniciando sesión..." : "Iniciar sesión"}
+            {isLoading ? "Iniciando sesión..." : "Iniciar sesión"} <LogIn className="ml-2 h-4 w-4" />
           </Button>
           
           {/* TEMPORARY: Direct access button for development */}
@@ -118,7 +156,7 @@ export const Login = () => {
         <div className="text-center text-sm">
           ¿No tienes una cuenta?{" "}
           <Link
-            to="/"
+            to="/register"
             className="text-primary hover:underline"
           >
             Registrarse
