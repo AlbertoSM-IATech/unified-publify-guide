@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { SocialIcons } from "@/components/common/SocialIcons";
 
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
@@ -26,6 +27,9 @@ export const Footer = () => {
             <p className="text-sm text-muted-foreground text-center md:text-left">
               La plataforma todo-en-uno para autores y editoriales.
             </p>
+            <div className="mt-4">
+              <SocialIcons />
+            </div>
           </div>
           
           <div className="flex flex-col gap-6 sm:flex-row">

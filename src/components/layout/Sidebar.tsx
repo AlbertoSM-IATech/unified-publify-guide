@@ -1,4 +1,3 @@
-
 import { Link, useLocation } from "react-router-dom";
 import { 
   Home, BookOpen, LineChart, PieChart, Settings, 
@@ -7,6 +6,7 @@ import {
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { SocialIcons } from "@/components/common/SocialIcons";
 
 const Sidebar = ({ 
   open, 
@@ -17,10 +17,8 @@ const Sidebar = ({
 }) => {
   const location = useLocation();
   
-  // Estado para controlar si el submenú de biblioteca está expandido
   const [bibliotecaExpanded, setBibliotecaExpanded] = useState(false);
 
-  // Determinar si el menú de biblioteca debe estar expandido basado en la ruta actual
   useEffect(() => {
     if (location.pathname.startsWith("/biblioteca")) {
       setBibliotecaExpanded(true);
@@ -67,7 +65,6 @@ const Sidebar = ({
 
   return (
     <>
-      {/* Overlay para móviles */}
       {open && (
         <div 
           className="fixed inset-0 z-20 bg-black/50 backdrop-blur-sm lg:hidden"
@@ -75,7 +72,6 @@ const Sidebar = ({
         />
       )}
       
-      {/* Sidebar */}
       <motion.aside
         variants={sidebarVariants}
         animate={open ? "open" : "closed"}
@@ -83,7 +79,6 @@ const Sidebar = ({
         className="fixed inset-y-0 left-0 z-30 w-64 transform bg-sidebar lg:relative lg:translate-x-0"
       >
         <div className="flex h-full flex-col border-r border-sidebar-border">
-          {/* Header del sidebar */}
           <div className="flex h-14 items-center border-b border-sidebar-border px-4">
             <Link to="/dashboard" className="flex items-center">
               <span className="font-heading text-xl font-bold text-sidebar-foreground">
@@ -99,7 +94,6 @@ const Sidebar = ({
             </button>
           </div>
           
-          {/* Navegación */}
           <motion.nav 
             className="flex-1 space-y-1 px-2 py-4 overflow-y-auto scrollbar-hide"
             variants={containerVariants}
@@ -108,7 +102,6 @@ const Sidebar = ({
           >
             {menuItems.map((item) => (
               <motion.div key={item.path} className="mb-2" variants={itemVariants}>
-                {/* Enlace del menú principal */}
                 {item.path === "/biblioteca" ? (
                   <div className="space-y-1">
                     <button
@@ -126,7 +119,6 @@ const Sidebar = ({
                       )}
                     </button>
                   
-                    {/* Submenús para biblioteca siempre visibles si están expandidos */}
                     {bibliotecaExpanded && item.subItems && (
                       <motion.div 
                         className="ml-6 mt-1 space-y-1"
@@ -166,9 +158,9 @@ const Sidebar = ({
             ))}
           </motion.nav>
           
-          {/* Footer opcional */}
           <div className="border-t border-sidebar-border p-4">
-            <div className="text-xs text-sidebar-foreground/70">
+            <SocialIcons className="justify-center" />
+            <div className="text-xs text-sidebar-foreground/70 text-center mt-4">
               Publify v0.1.0
             </div>
           </div>
