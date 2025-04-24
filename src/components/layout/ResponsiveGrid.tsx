@@ -46,7 +46,7 @@ export const ResponsiveGrid = ({
   return (
     <div
       className={cn(
-        "grid", 
+        "grid w-full", 
         getColumnClasses(), 
         gapClasses[gap], 
         className

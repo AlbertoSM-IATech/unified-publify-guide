@@ -1,3 +1,4 @@
+
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { SocialIcons } from "@/components/common/SocialIcons";
@@ -28,13 +29,13 @@ export const Footer = () => {
               La plataforma todo-en-uno para autores y editoriales.
             </p>
             <div className="mt-4">
-              <SocialIcons />
+              <SocialIcons variant="footer" />
             </div>
           </div>
           
           <div className="flex flex-col gap-6 sm:flex-row">
             <div>
-              <h4 className="font-heading text-sm font-medium mb-3">Enlaces rápidos</h4>
+              <h4 className="font-heading text-sm font-medium mb-3 text-center sm:text-left">Enlaces rápidos</h4>
               <ul className="space-y-2">
                 <li>
                   <a href="#caracteristicas" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
@@ -63,7 +64,7 @@ export const Footer = () => {
             </div>
             
             <div>
-              <h4 className="font-heading text-sm font-medium mb-3">Legal</h4>
+              <h4 className="font-heading text-sm font-medium mb-3 text-center sm:text-left">Legal</h4>
               <ul className="space-y-2">
                 <li>
                   <Link 
@@ -86,9 +87,12 @@ export const Footer = () => {
                   </Link>
                 </li>
                 <li>
-                  <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                  <Link 
+                    to="/contacto" 
+                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  >
                     Contacto
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>

@@ -1,3 +1,4 @@
+
 import { Link, useLocation } from "react-router-dom";
 import { 
   Home, BookOpen, LineChart, PieChart, Settings, 
@@ -5,8 +6,9 @@ import {
   BookText, FolderIcon, FileSearch, ChevronDown, ChevronUp
 } from "lucide-react";
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { SocialIcons } from "@/components/common/SocialIcons";
+import { useTheme } from "@/hooks/useTheme";
 
 const Sidebar = ({ 
   open, 
@@ -16,6 +18,7 @@ const Sidebar = ({
   onClose: () => void 
 }) => {
   const location = useLocation();
+  const { isDarkMode } = useTheme();
   
   const [bibliotecaExpanded, setBibliotecaExpanded] = useState(false);
 
@@ -41,6 +44,7 @@ const Sidebar = ({
     { path: "/finanzas", icon: <PieChart size={20} className="text-gray-500" />, label: "Finanzas" },
     { path: "/perfil", icon: <User size={20} className="text-gray-500" />, label: "Perfil" },
     { path: "/configuracion", icon: <Settings size={20} className="text-gray-500" />, label: "Configuración" },
+    { path: "/contacto", icon: <MegaphoneIcon size={20} className="text-gray-500" />, label: "Contacto" },
   ];
 
   const isActive = (path: string) => {
@@ -159,7 +163,7 @@ const Sidebar = ({
           </motion.nav>
           
           <div className="border-t border-sidebar-border p-4">
-            <SocialIcons className="justify-center" />
+            <SocialIcons className="justify-center" variant="sidebar" />
             <div className="text-xs text-sidebar-foreground/70 text-center mt-4">
               Publify v0.1.0
             </div>
