@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { PageLayout } from '@/components/layout/PageLayout';
+import { LegalSection } from './components/LegalSection';
 
 export const TermsAndConditions = () => {
   return (
@@ -8,21 +9,18 @@ export const TermsAndConditions = () => {
       title="Términos y Condiciones" 
       subtitle="Última actualización: [Fecha]"
     >
-      <div className="space-y-6 text-muted-foreground">
-        <section>
-          <h2 className="text-xl font-semibold mb-4 text-foreground">1. Introducción</h2>
+      <div className="space-y-8">
+        <LegalSection title="1. Introducción">
           <p>// Placeholder para introducción</p>
-        </section>
+        </LegalSection>
 
-        <section>
-          <h2 className="text-xl font-semibold mb-4 text-foreground">2. Aceptación de Términos</h2>
+        <LegalSection title="2. Aceptación de Términos">
           <p>// Placeholder para aceptación de términos</p>
-        </section>
+        </LegalSection>
 
-        <section>
-          <h2 className="text-xl font-semibold mb-4 text-foreground">3. Derechos y Responsabilidades</h2>
+        <LegalSection title="3. Derechos y Responsabilidades">
           <p>// Placeholder para derechos y responsabilidades</p>
-        </section>
+        </LegalSection>
       </div>
     </PageLayout>
   );
