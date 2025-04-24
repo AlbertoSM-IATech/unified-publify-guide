@@ -1,4 +1,3 @@
-
 import { useEffect } from "react";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import MainLayout from "@/components/layout/MainLayout";
@@ -26,6 +25,8 @@ import { ErrorState } from "@/components/common/ErrorState";
 import { Suspense } from "react";
 import { LoadingState } from "@/components/common/LoadingState";
 import clsx from "clsx";
+import { TermsAndConditions } from "@/pages/Legal/TermsAndConditions";
+import { PrivacyPolicy } from "@/pages/Legal/PrivacyPolicy";
 
 function App() {
   const { theme } = useTheme();
@@ -36,15 +37,12 @@ function App() {
     document.documentElement.classList.toggle("dark", isDark);
   }, [isDark]);
 
-  // Add debugging for route changes
   useEffect(() => {
     console.log("Current route:", location.pathname);
   }, [location]);
 
-  // Ensure localStorage is working properly
   useEffect(() => {
     try {
-      // Try setting and getting an item to test localStorage
       localStorage.setItem('test', 'test');
       const test = localStorage.getItem('test');
       if (test !== 'test') {
@@ -62,7 +60,6 @@ function App() {
       <Toaster />
       
       <Routes>
-        {/* Public routes */}
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
@@ -70,17 +67,14 @@ function App() {
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/verify-email" element={<VerifyEmail />} />
         
-        {/* All routes are now accessible without authentication */}
         <Route element={<ProtectedRoute />}>
           <Route element={<MainLayout />}>
-            {/* Dashboard */}
             <Route path="/dashboard" element={
               <Suspense fallback={<LoadingState text="Cargando dashboard..." />}>
                 <Dashboard />
               </Suspense>
             } />
             
-            {/* Biblioteca section */}
             <Route path="/biblioteca">
               <Route index element={<Navigate to="/biblioteca/libros" replace />} />
               <Route path="libros" element={
@@ -110,21 +104,20 @@ function App() {
               } />
             </Route>
             
-            {/* Marketing section */}
             <Route path="/marketing" element={<Marketing />} />
             
-            {/* Finanzas section */}
             <Route path="/finanzas" element={<Finanzas />} />
             
-            {/* Settings & profile */}
             <Route path="/configuracion" element={<Configuracion />} />
             <Route path="/perfil" element={<Perfil />} />
           </Route>
         </Route>
         
-        {/* Redirects */}
         <Route path="/index.html" element={<Navigate to="/" replace />} />
         <Route path="*" element={<NotFound />} />
+        
+        <Route path="/terminos-y-condiciones" element={<TermsAndConditions />} />
+        <Route path="/politica-privacidad" element={<PrivacyPolicy />} />
       </Routes>
     </div>
   );
