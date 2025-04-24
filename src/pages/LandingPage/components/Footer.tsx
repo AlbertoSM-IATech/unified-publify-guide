@@ -1,5 +1,5 @@
-
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
@@ -54,14 +54,24 @@ export const Footer = () => {
               <h4 className="font-heading text-sm font-medium mb-3">Legal</h4>
               <ul className="space-y-2">
                 <li>
-                  <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                  <Link 
+                    to="/terminos-y-condiciones" 
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  >
                     Términos y condiciones
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                  <Link 
+                    to="/politica-privacidad"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  >
                     Política de privacidad
-                  </a>
+                  </Link>
                 </li>
                 <li>
                   <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">

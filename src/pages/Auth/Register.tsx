@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
@@ -34,7 +33,6 @@ export const Register = () => {
       [name]: type === "checkbox" ? checked : value
     }));
     
-    // Limpiar error cuando el usuario comienza a escribir
     if (errors[name]) {
       setErrors(prev => ({ ...prev, [name]: "" }));
     }
@@ -79,7 +77,6 @@ export const Register = () => {
     setIsLoading(true);
     
     try {
-      // TEMPORARY: Authentication is disabled, just simulate signup
       await signup(formData.email, formData.password);
       toast({
         title: "Registro exitoso",
@@ -87,7 +84,6 @@ export const Register = () => {
       });
       navigate("/dashboard");
     } catch (error) {
-      // This should never happen in dev mode
       toast({
         title: "Error de registro",
         description: "No se pudo completar el registro. Por favor, inténtalo de nuevo.",
@@ -98,7 +94,6 @@ export const Register = () => {
     }
   };
 
-  // TEMPORARY: Direct access to dashboard without registration
   const handleDirectAccess = () => {
     toast({
       title: "Acceso directo activado",
@@ -184,7 +179,24 @@ export const Register = () => {
                 htmlFor="acceptTerms"
                 className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
               >
-                Acepto los <Link to="/" className="text-primary hover:underline">Términos y Condiciones</Link> y la <Link to="/" className="text-primary hover:underline">Política de Privacidad</Link>
+                Acepto los{" "}
+                <Link 
+                  to="/terminos-y-condiciones"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-primary hover:underline"
+                >
+                  Términos y Condiciones
+                </Link>
+                {" "}y la{" "}
+                <Link 
+                  to="/politica-privacidad"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-primary hover:underline"
+                >
+                  Política de Privacidad
+                </Link>
               </label>
             </div>
             {errors.acceptTerms && (
@@ -200,7 +212,6 @@ export const Register = () => {
             {isLoading ? "Creando cuenta..." : "Crear cuenta"} <ArrowRight className="ml-2 h-4 w-4" />
           </Button>
           
-          {/* TEMPORARY: Direct access button for development */}
           <Button
             type="button"
             className="w-full bg-emerald-600 hover:bg-emerald-700"
