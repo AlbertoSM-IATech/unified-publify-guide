@@ -1,0 +1,24 @@
+
+import { 
+  Home, BookOpen, LineChart, PieChart, Settings, 
+  User, MegaphoneIcon, BookText, FolderIcon, FileSearch
+} from "lucide-react";
+
+export const menuItems = [
+  { path: "/dashboard", icon: <Home size={20} className="text-gray-500" />, label: "Dashboard" },
+  { 
+    path: "/biblioteca", 
+    icon: <BookOpen size={20} className="text-gray-500" />, 
+    label: "Biblioteca",
+    subItems: [
+      { path: "/biblioteca/libros", icon: <BookText size={18} className="text-gray-500" />, label: "Libros" },
+      { path: "/biblioteca/colecciones", icon: <FolderIcon size={18} className="text-gray-500" />, label: "Colecciones" },
+      { path: "/biblioteca/investigaciones", icon: <FileSearch size={18} className="text-gray-500" />, label: "Investigaciones" },
+    ]
+  },
+  { path: "/marketing", icon: <MegaphoneIcon size={20} className="text-gray-500" />, label: "Marketing" },
+  { path: "/finanzas", icon: <PieChart size={20} className="text-gray-500" />, label: "Finanzas" },
+  { path: "/perfil", icon: <User size={20} className="text-gray-500" />, label: "Perfil" },
+  { path: "/configuracion", icon: <Settings size={20} className="text-gray-500" />, label: "Configuración" },
+  { path: "/contacto", icon: <MegaphoneIcon size={20} className="text-gray-500" />, label: "Contacto" },
+];
