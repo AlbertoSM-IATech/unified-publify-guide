@@ -5,8 +5,8 @@ import { Eye } from "lucide-react";
 import { calculateNetRoyalties } from "../utils/formatUtils";
 import { memo, useState } from 'react';
 
-// Default book cover image
-const DEFAULT_COVER_URL = "/placeholders/default-book-cover.png";
+// Default optimized book cover image
+const DEFAULT_COVER_URL = "/placeholders/portada-ejemplo.jpg";
 
 interface BookListItemProps {
   libro: Book;

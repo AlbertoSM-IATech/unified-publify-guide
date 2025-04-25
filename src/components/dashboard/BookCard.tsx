@@ -3,8 +3,8 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-// Default book cover image
-const DEFAULT_COVER_URL = "/placeholders/default-book-cover.png";
+// Default optimized book cover image
+const DEFAULT_COVER_URL = "/placeholders/portada-ejemplo.jpg";
 
 interface BookCardProps {
   index: number;

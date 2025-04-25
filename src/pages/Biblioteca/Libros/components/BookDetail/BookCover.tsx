@@ -13,26 +13,28 @@ interface BookCoverProps {
   onUpdateBook: (updatedData: Partial<Book>) => void;
 }
 
+// Default optimized book cover image
+const DEFAULT_COVER_URL = "/placeholders/portada-ejemplo.jpg";
+
 export const BookCover = ({
   book,
   isEditing,
   onUpdateBook
 }: BookCoverProps) => {
   const [isHovered, setIsHovered] = useState(false);
-  const defaultCoverUrl = "/placeholders/default-book-cover.png";
   
   // Track preview URL separately from book data to enable immediate visual feedback
-  const [previewUrl, setPreviewUrl] = useState<string>(book.imageUrl || book.portadaUrl || defaultCoverUrl);
+  const [previewUrl, setPreviewUrl] = useState<string>(book.imageUrl || book.portadaUrl || DEFAULT_COVER_URL);
 
   // Update preview URL when book data changes
   useEffect(() => {
-    setPreviewUrl(book.imageUrl || book.portadaUrl || defaultCoverUrl);
+    setPreviewUrl(book.imageUrl || book.portadaUrl || DEFAULT_COVER_URL);
   }, [book.imageUrl, book.portadaUrl]);
 
   // Handle image error
   const handleImageError = () => {
     console.log(`Failed to load cover image for book: ${book.id}, using default`);
-    setPreviewUrl(defaultCoverUrl);
+    setPreviewUrl(DEFAULT_COVER_URL);
   };
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {

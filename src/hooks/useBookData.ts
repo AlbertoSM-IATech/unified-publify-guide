@@ -2,6 +2,9 @@
 import { useState, useEffect, useCallback } from 'react';
 import { librosSimulados } from '@/pages/Biblioteca/Libros/utils/librosUtils';
 
+// Default optimized book cover image
+const DEFAULT_COVER_URL = "/placeholders/portada-ejemplo.jpg";
+
 export function useBookData() {
   const [books, setBooks] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -22,8 +25,8 @@ export function useBookData() {
         const parsedBooks = JSON.parse(storedBooks);
         const booksWithImages = parsedBooks.map(book => ({
           ...book,
-          imageUrl: book.imageUrl || book.portadaUrl || "/placeholders/default-book-cover.png",
-          portadaUrl: book.portadaUrl || book.imageUrl || "/placeholders/default-book-cover.png"
+          imageUrl: book.imageUrl || book.portadaUrl || DEFAULT_COVER_URL,
+          portadaUrl: book.portadaUrl || book.imageUrl || DEFAULT_COVER_URL
         }));
         
         setBooks(booksWithImages);
@@ -36,8 +39,8 @@ export function useBookData() {
         // Ensure all mock books have imageUrl
         const mocksWithImages = librosSimulados.map(book => ({
           ...book,
-          imageUrl: book.imageUrl || book.portadaUrl || "/placeholders/default-book-cover.png",
-          portadaUrl: book.portadaUrl || book.imageUrl || "/placeholders/default-book-cover.png"
+          imageUrl: book.imageUrl || book.portadaUrl || DEFAULT_COVER_URL,
+          portadaUrl: book.portadaUrl || book.imageUrl || DEFAULT_COVER_URL
         }));
         
         setBooks(mocksWithImages);

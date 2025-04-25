@@ -4,6 +4,9 @@ import { supabaseCore } from "./core";
 import { librosSimulados } from "@/pages/Biblioteca/Libros/utils/mockData/librosData";
 import { toast } from "@/hooks/use-toast";
 
+// Default optimized book cover image
+const DEFAULT_COVER_URL = "/placeholders/portada-ejemplo.jpg";
+
 export const booksService = {
   getAll: async (): Promise<Book[]> => {
     console.log("[MOCK] Getting all books from localStorage");
@@ -14,8 +17,8 @@ export const booksService = {
       const books = JSON.parse(storedBooks);
       return books.map((book: Book) => ({
         ...book,
-        imageUrl: book.imageUrl || book.portadaUrl || "/placeholders/default-book-cover.png",
-        portadaUrl: book.portadaUrl || book.imageUrl || "/placeholders/default-book-cover.png"
+        imageUrl: book.imageUrl || book.portadaUrl || DEFAULT_COVER_URL,
+        portadaUrl: book.portadaUrl || book.imageUrl || DEFAULT_COVER_URL
       }));
     }
     
@@ -23,8 +26,8 @@ export const booksService = {
     console.log("[MOCK] No books in localStorage, using mock data");
     const mocksWithImages = librosSimulados.map(book => ({
       ...book,
-      imageUrl: book.imageUrl || book.portadaUrl || "/placeholders/default-book-cover.png",
-      portadaUrl: book.portadaUrl || book.imageUrl || "/placeholders/default-book-cover.png"
+      imageUrl: book.imageUrl || book.portadaUrl || DEFAULT_COVER_URL,
+      portadaUrl: book.portadaUrl || book.imageUrl || DEFAULT_COVER_URL
     }));
     localStorage.setItem('librosData', JSON.stringify(mocksWithImages));
     return mocksWithImages;
@@ -42,8 +45,8 @@ export const booksService = {
         // Ensure book has image URL
         return {
           ...book,
-          imageUrl: book.imageUrl || book.portadaUrl || "/placeholders/default-book-cover.png",
-          portadaUrl: book.portadaUrl || book.imageUrl || "/placeholders/default-book-cover.png"
+          imageUrl: book.imageUrl || book.portadaUrl || DEFAULT_COVER_URL,
+          portadaUrl: book.portadaUrl || book.imageUrl || DEFAULT_COVER_URL
         };
       }
       return null;
@@ -53,8 +56,8 @@ export const booksService = {
     console.log("[MOCK] No books in localStorage, using mock data");
     const mocksWithImages = librosSimulados.map(book => ({
       ...book,
-      imageUrl: book.imageUrl || book.portadaUrl || "/placeholders/default-book-cover.png",
-      portadaUrl: book.portadaUrl || book.imageUrl || "/placeholders/default-book-cover.png"
+      imageUrl: book.imageUrl || book.portadaUrl || DEFAULT_COVER_URL,
+      portadaUrl: book.portadaUrl || book.imageUrl || DEFAULT_COVER_URL
     }));
     localStorage.setItem('librosData', JSON.stringify(mocksWithImages));
     
@@ -83,8 +86,8 @@ export const booksService = {
     const bookWithImage = {
       ...book,
       id: newId,
-      imageUrl: book.imageUrl || book.portadaUrl || "/placeholders/default-book-cover.png",
-      portadaUrl: book.portadaUrl || book.imageUrl || "/placeholders/default-book-cover.png"
+      imageUrl: book.imageUrl || book.portadaUrl || DEFAULT_COVER_URL,
+      portadaUrl: book.portadaUrl || book.imageUrl || DEFAULT_COVER_URL
     } as Book;
     
     // Add to books array
@@ -120,8 +123,8 @@ export const booksService = {
         const updatedBook = { 
           ...books[index], 
           ...bookData,
-          imageUrl: bookData.imageUrl || bookData.portadaUrl || books[index].imageUrl || books[index].portadaUrl || "/placeholders/default-book-cover.png",
-          portadaUrl: bookData.portadaUrl || bookData.imageUrl || books[index].portadaUrl || books[index].imageUrl || "/placeholders/default-book-cover.png"
+          imageUrl: bookData.imageUrl || bookData.portadaUrl || books[index].imageUrl || books[index].portadaUrl || DEFAULT_COVER_URL,
+          portadaUrl: bookData.portadaUrl || bookData.imageUrl || books[index].portadaUrl || books[index].imageUrl || DEFAULT_COVER_URL
         };
         
         // If imageUrl was updated, also update portadaUrl for consistency
@@ -183,8 +186,8 @@ export const booksService = {
   uploadCover: async (_bookId: number, _file: File): Promise<string> => {
     console.log("[MOCK] Uploading book cover image (simulated)");
     
-    // Return default cover URL
-    const defaultCoverUrl = "/placeholders/default-book-cover.png";
+    // Return the optimized cover URL 
+    const coverUrl = DEFAULT_COVER_URL;
     
     // Simulate a delay for realism
     await new Promise(resolve => setTimeout(resolve, 500));
@@ -195,6 +198,6 @@ export const booksService = {
       description: "La portada del libro ha sido actualizada",
     });
     
-    return defaultCoverUrl;
+    return coverUrl;
   }
 };
