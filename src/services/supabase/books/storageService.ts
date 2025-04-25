@@ -7,8 +7,14 @@ export const storageService = {
   loadFromStorage: (): Book[] | null => {
     const storedBooks = localStorage.getItem('librosData');
     if (storedBooks) {
-      const books = JSON.parse(storedBooks);
-      return books.map((book: Book) => imageService.ensureBookImages(book));
+      try {
+        const books = JSON.parse(storedBooks);
+        // Ensure each book has the required properties
+        return books.map((book: Book) => imageService.ensureBookImages(book));
+      } catch (e) {
+        console.error("Error parsing stored books:", e);
+        return null;
+      }
     }
     return null;
   },
@@ -18,6 +24,7 @@ export const storageService = {
   },
 
   getInitialBooks: (): Book[] => {
+    // Ensure the mock data has all required properties including id
     const mocksWithImages = librosSimulados.map(book => imageService.ensureBookImages(book));
     localStorage.setItem('librosData', JSON.stringify(mocksWithImages));
     return mocksWithImages;

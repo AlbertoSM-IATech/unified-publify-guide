@@ -40,7 +40,15 @@ export const booksService = {
     const storedBooks = storageService.loadFromStorage() || storageService.getInitialBooks();
     
     const newId = Math.max(0, ...storedBooks.map(b => b.id)) + 1;
-    const bookWithImage = imageService.ensureBookImages({ ...book, id: newId }) as Book;
+    // Create a new book with the required id property
+    const newBook: Book = {
+      ...book,
+      id: newId,
+      imageUrl: book.imageUrl || book.portadaUrl || "", // Ensure required fields have values
+      portadaUrl: book.portadaUrl || book.imageUrl || ""
+    };
+    
+    const bookWithImage = imageService.ensureBookImages(newBook);
     
     storedBooks.push(bookWithImage);
     storageService.saveToStorage(storedBooks);
