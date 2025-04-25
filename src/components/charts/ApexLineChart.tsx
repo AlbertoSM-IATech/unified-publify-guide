@@ -119,11 +119,14 @@ const ApexLineChart = ({
     },
     tooltip: {
       enabled: true,
+      shared: true,
+      intersect: false,
       theme: isDarkMode ? 'dark' : 'light',
-      custom: undefined,
-      fixed: {
-        enabled: false
-      },
+      y: {
+        formatter: function(val) {
+          return `€${val.toFixed(2)}`;
+        }
+      }
     },
     responsive: [{
       breakpoint: 480,

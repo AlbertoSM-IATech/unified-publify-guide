@@ -4,11 +4,25 @@ import { BookOpen } from "lucide-react";
 import MotionWrapper from "@/components/motion/MotionWrapper";
 import BookCard from "@/components/dashboard/BookCard";
 import { useBookData } from "@/hooks/useBookData";
-import { useMemo } from "react";
+import { useMemo, useEffect } from "react";
 
 export const RecentBooks = () => {
   // Use the shared book data hook to ensure consistency across the app
-  const { books, isLoading } = useBookData();
+  const { books, isLoading, refresh } = useBookData();
+  
+  // Actualizamos los datos cada vez que se monte el componente
+  useEffect(() => {
+    // Refrescar libros al montar el componente
+    refresh();
+    
+    // Escuchar cambios en libros
+    const handleBooksUpdated = () => refresh();
+    window.addEventListener('publify_books_updated', handleBooksUpdated);
+    
+    return () => {
+      window.removeEventListener('publify_books_updated', handleBooksUpdated);
+    };
+  }, [refresh]);
   
   // Get the 6 most recent books (sorted by id in descending order)
   const recentBooks = useMemo(() => {

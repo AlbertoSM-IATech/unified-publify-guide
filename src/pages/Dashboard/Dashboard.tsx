@@ -109,7 +109,7 @@ export const Dashboard = () => {
       { name: "Bajo Contenido", value: bajoContenido, color: "#22c55e" }
     ];
     setBarChartData(updatedBarChartData);
-  }, [libros, contentCategories]);
+  }, [libros]);
 
   return (
     <div className="p-4 animate-fade-in space-y-8">

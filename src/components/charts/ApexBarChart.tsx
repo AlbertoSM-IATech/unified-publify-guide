@@ -100,10 +100,14 @@ const ApexBarChart = ({
     },
     tooltip: {
       enabled: true,
-      custom: undefined,
-      fixed: {
-        enabled: false
+      intersect: false,
+      shared: false,
+      y: {
+        formatter: function(val) {
+          return val.toString();
+        }
       },
+      theme: isDarkMode ? 'dark' : 'light',
     },
     legend: {
       show: false,
