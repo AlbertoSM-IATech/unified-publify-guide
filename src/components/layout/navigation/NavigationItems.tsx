@@ -3,8 +3,9 @@ import {
   Home, BookOpen, LineChart, PieChart, Settings, 
   User, MegaphoneIcon, BookText, FolderIcon, FileSearch
 } from "lucide-react";
+import { MenuItem } from "./types";
 
-export const menuItems = [
+export const menuItems: MenuItem[] = [
   { path: "/dashboard", icon: <Home size={20} className="text-gray-500" />, label: "Dashboard" },
   { 
     path: "/biblioteca", 
