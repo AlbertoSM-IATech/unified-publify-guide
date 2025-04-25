@@ -3,10 +3,10 @@ import { Link } from "react-router-dom";
 import { Book } from "../types/bookTypes";
 import { Eye } from "lucide-react";
 import { calculateNetRoyalties } from "../utils/formatUtils";
-import { memo } from 'react';
+import { memo, useState } from 'react';
 
 // Default book cover image
-const DEFAULT_COVER_URL = "https://edit.org/images/cat/portadas-libros-big-2019101610.jpg";
+const DEFAULT_COVER_URL = "/placeholders/default-book-cover.png";
 
 interface BookListItemProps {
   libro: Book;
@@ -17,18 +17,26 @@ interface BookListItemProps {
 export const BookListItem = memo(({ libro, getStatusColor, getContentColor }: BookListItemProps) => {
   const netRoyalties = calculateNetRoyalties(libro.hardcover || libro.paperback || libro.ebook).replace('.', ',');
   
+  const [imgSrc, setImgSrc] = useState(libro.imageUrl || libro.portadaUrl || DEFAULT_COVER_URL);
+  
+  const handleImageError = () => {
+    console.log(`Failed to load image for book: ${libro.id}, falling back to default`);
+    setImgSrc(DEFAULT_COVER_URL);
+  };
+  
   return (
     <tr className="hover:bg-muted/20 transition-colors">
       <td className="whitespace-nowrap px-4 py-4">
         <div className="flex items-center space-x-3">
           <div className="h-12 w-8 flex-shrink-0 overflow-hidden rounded-sm">
             <img 
-              src={DEFAULT_COVER_URL} 
+              src={imgSrc} 
               alt={libro.titulo} 
               className="h-full w-full object-cover"
               loading="lazy"
               width="32"
               height="48"
+              onError={handleImageError}
             />
           </div>
           <div>

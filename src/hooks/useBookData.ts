@@ -18,15 +18,31 @@ export function useBookData() {
       const storedBooks = localStorage.getItem('librosData');
       
       if (storedBooks) {
-        setBooks(JSON.parse(storedBooks));
-        console.info('[useBookData] Books loaded from localStorage');
+        // Ensure all books have imageUrl set correctly
+        const parsedBooks = JSON.parse(storedBooks);
+        const booksWithImages = parsedBooks.map(book => ({
+          ...book,
+          imageUrl: book.imageUrl || book.portadaUrl || "/placeholders/default-book-cover.png"
+        }));
+        
+        setBooks(booksWithImages);
+        console.info('[useBookData] Books loaded from localStorage with images normalized');
+        
+        // Update localStorage with normalized image URLs
+        localStorage.setItem('librosData', JSON.stringify(booksWithImages));
       } else {
         // Fall back to mock data if nothing in localStorage
-        setBooks(librosSimulados);
-        console.info('[useBookData] Using mock book data');
+        // Ensure all mock books have imageUrl
+        const mocksWithImages = librosSimulados.map(book => ({
+          ...book,
+          imageUrl: book.imageUrl || book.portadaUrl || "/placeholders/default-book-cover.png"
+        }));
+        
+        setBooks(mocksWithImages);
+        console.info('[useBookData] Using mock book data with images normalized');
         
         // Save mock data to localStorage for future use
-        localStorage.setItem('librosData', JSON.stringify(librosSimulados));
+        localStorage.setItem('librosData', JSON.stringify(mocksWithImages));
       }
     } catch (error) {
       console.error('Error loading books:', error);

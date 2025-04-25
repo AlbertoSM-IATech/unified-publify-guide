@@ -88,13 +88,24 @@ export const useBookData = () => {
 
   // Update book data and save to storage
   const updateBookData = (updatedBook: Book) => {
-    setBookData(updatedBook);
+    // Ensure image URLs are consistent
+    const bookWithConsistentImages = {
+      ...updatedBook,
+      imageUrl: updatedBook.imageUrl || updatedBook.portadaUrl || "/placeholders/default-book-cover.png",
+      portadaUrl: updatedBook.portadaUrl || updatedBook.imageUrl || "/placeholders/default-book-cover.png"
+    };
+    
+    setBookData(bookWithConsistentImages);
     
     // Update in localStorage
     const updatedBooks = storedBooks.map(book => 
-      book.id === updatedBook.id ? updatedBook : book
+      book.id === bookWithConsistentImages.id ? bookWithConsistentImages : book
     );
     setStoredBooks(updatedBooks);
+    
+    // Dispatch event to notify other components
+    const updateEvent = new CustomEvent('publify_books_updated');
+    window.dispatchEvent(updateEvent);
   };
 
   // Create extended book data with defaults for missing properties
@@ -111,6 +122,9 @@ export const useBookData = () => {
       landingPageUrl: originalBook.landingPageUrl || "",
       contenidoAPlus: originalBook.contenidoAPlus || "",
       contenidoAPlusFiles: originalBook.contenidoAPlusFiles || [],
+      // Ensure image URLs are set and consistent
+      imageUrl: originalBook.imageUrl || originalBook.portadaUrl || "/placeholders/default-book-cover.png",
+      portadaUrl: originalBook.portadaUrl || originalBook.imageUrl || "/placeholders/default-book-cover.png",
       hardcover: originalBook.hardcover || createDefaultHardcoverFormat(),
       paperback: originalBook.paperback || createDefaultPaperbackFormat(),
       ebook: originalBook.ebook || createDefaultEbookFormat(),

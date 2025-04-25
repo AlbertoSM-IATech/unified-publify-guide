@@ -1,17 +1,20 @@
+
 import { Link } from "react-router-dom";
 import { Book } from "../types/bookTypes";
 import { Card, CardContent } from "@/components/ui/card";
 import { Eye, Calendar } from "lucide-react";
 import { calculateNetRoyalties } from "../utils/formatUtils";
-import { memo } from 'react';
+import { memo, useState } from 'react';
 
 // Default book cover image
-const DEFAULT_COVER_URL = "https://edit.org/images/cat/portadas-libros-big-2019101610.jpg";
+const DEFAULT_COVER_URL = "/placeholders/default-book-cover.png";
+
 interface BookGridItemProps {
   libro: Book;
   getStatusColor: (status: string) => string;
   getContentColor: (content: string) => string;
 }
+
 export const BookGridItem = memo(({
   libro,
   getStatusColor,
@@ -20,13 +23,31 @@ export const BookGridItem = memo(({
   // Calculate net royalties for display
   const format = libro.hardcover || libro.paperback || libro.ebook;
   const netRoyalties = format ? calculateNetRoyalties(format).replace('.', ',') : '0,00';
-  return <Link to={`/biblioteca/libros/${libro.id}`} className="block focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-lg h-full">
+  
+  // Handle image errors
+  const [imgSrc, setImgSrc] = useState(libro.imageUrl || libro.portadaUrl || DEFAULT_COVER_URL);
+  
+  const handleImageError = () => {
+    console.log(`Failed to load image for book: ${libro.id}, falling back to default`);
+    setImgSrc(DEFAULT_COVER_URL);
+  };
+  
+  return (
+    <Link to={`/biblioteca/libros/${libro.id}`} className="block focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-lg h-full">
       <div className="h-full transition-all duration-200 hover:shadow-md">
         <Card className="overflow-hidden h-full flex flex-col md:flex-row border dark:border-slate-800">
           {/* Book cover - Left side with proper aspect ratio */}
           <div className="relative md:w-1/3 w-full flex-shrink-0">
             <div className="aspect-[1600/2560] w-full h-full overflow-hidden bg-muted">
-              <img src={DEFAULT_COVER_URL} alt={libro.titulo} className="h-full w-full object-cover" loading="lazy" width="160" height="256" />
+              <img 
+                src={imgSrc} 
+                alt={libro.titulo} 
+                className="h-full w-full object-cover" 
+                loading="lazy" 
+                width="160" 
+                height="256" 
+                onError={handleImageError}
+              />
             </div>
           </div>
 
@@ -81,6 +102,8 @@ export const BookGridItem = memo(({
           </CardContent>
         </Card>
       </div>
-    </Link>;
+    </Link>
+  );
 });
+
 BookGridItem.displayName = 'BookGridItem';

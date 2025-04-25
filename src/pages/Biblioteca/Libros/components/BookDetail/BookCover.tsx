@@ -19,15 +19,21 @@ export const BookCover = ({
   onUpdateBook
 }: BookCoverProps) => {
   const [isHovered, setIsHovered] = useState(false);
-  const defaultCoverUrl = "https://edit.org/images/cat/portadas-libros-big-2019101610.jpg";
+  const defaultCoverUrl = "/placeholders/default-book-cover.png";
   
   // Track preview URL separately from book data to enable immediate visual feedback
-  const [previewUrl, setPreviewUrl] = useState<string>(book.imageUrl || defaultCoverUrl);
+  const [previewUrl, setPreviewUrl] = useState<string>(book.imageUrl || book.portadaUrl || defaultCoverUrl);
 
   // Update preview URL when book data changes
   useEffect(() => {
-    setPreviewUrl(book.imageUrl || defaultCoverUrl);
-  }, [book.imageUrl]);
+    setPreviewUrl(book.imageUrl || book.portadaUrl || defaultCoverUrl);
+  }, [book.imageUrl, book.portadaUrl]);
+
+  // Handle image error
+  const handleImageError = () => {
+    console.log(`Failed to load cover image for book: ${book.id}, using default`);
+    setPreviewUrl(defaultCoverUrl);
+  };
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -55,6 +61,7 @@ export const BookCover = ({
         // We pass file information too in case we need to save to server later
         onUpdateBook({
           imageUrl,
+          portadaUrl: imageUrl, // Update both fields for consistency
           coverFile: file
         });
         
@@ -89,6 +96,7 @@ export const BookCover = ({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.3 }}
+          onError={handleImageError}
         />
         <AnimatePresence>
           {isEditing && isHovered && (
