@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 // Default optimized book cover image
-const DEFAULT_COVER_URL = "/placeholders/portada-ejemplo.jpg";
+const DEFAULT_COVER_URL = "https://edit.org/images/cat/portadas-libros-big-2019101610.jpg";
 
 interface BookCardProps {
   index: number;
@@ -87,69 +87,46 @@ const BookCard = ({
   return (
     <Link to={`/biblioteca/libros/${id}`}>
       <motion.div 
-        className="rounded-lg border bg-card shadow-sm glass-card"
+        className="rounded-md border border-gray-800 bg-card shadow-sm overflow-hidden"
         variants={cardVariants}
         initial="initial"
         animate="animate"
         whileHover="hover"
         custom={index}
       >
-        <div className="flex h-32 overflow-hidden">
-          {/* Book cover image/placeholder */}
-          <motion.div 
-            className="relative h-full w-28 bg-muted overflow-hidden"
-            whileHover={{ scale: 1.05 }}
-            transition={{ duration: 0.3 }}
-          >
-            <div className="h-full w-full overflow-hidden">
-              <div className="h-full">
-                <img 
-                  src={imageSrc} 
-                  alt={title} 
-                  className="h-full w-full object-cover" 
-                  loading="lazy"
-                  width="112"
-                  height="128"
-                  onError={handleImageError}
-                />
-              </div>
-            </div>
-          </motion.div>
+        <div className="flex">
+          {/* Book cover image */}
+          <div className="relative h-28 w-24 overflow-hidden">
+            <img 
+              src={imageSrc} 
+              alt={title} 
+              className="h-full w-full object-cover" 
+              loading="lazy"
+              width="96"
+              height="112"
+              onError={handleImageError}
+            />
+          </div>
           
           {/* Book information */}
-          <div className="flex flex-1 flex-col justify-between p-3">
+          <div className="flex flex-1 flex-col justify-between p-3 bg-gray-900">
             <div>
-              <motion.h3 
-                className="font-medium line-clamp-1 text-foreground"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: index * 0.05 + 0.2, duration: 0.3 }}
-              >
+              <h3 className="font-medium text-sm line-clamp-1 text-white">
                 {title}
-              </motion.h3>
-              <motion.div 
-                className="mt-1 flex items-center space-x-2"
-                initial={{ opacity: 0, x: -5 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: index * 0.05 + 0.3, duration: 0.3 }}
-              >
+              </h3>
+              <div className="mt-1">
                 <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${statusColor}`}>
                   {status}
                 </span>
-                <span className="text-xs text-muted-foreground">
-                  {contentLevel}
-                </span>
-              </motion.div>
+                <span className="text-xs ml-1 text-white">{contentLevel}</span>
+              </div>
             </div>
-            <motion.div 
-              className="flex justify-between text-xs"
-              initial={{ opacity: 0, y: 5 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.05 + 0.4, duration: 0.3 }}
-            >
-              <span className="text-muted-foreground">Autor: {author}</span>
-              <span className="text-primary hover:underline cursor-pointer">Ver detalles</span>
-            </motion.div>
+            <div className="text-xs text-gray-400">
+              Autor: {author}
+            </div>
+            <div className="mt-1 flex justify-end">
+              <span className="text-orange-500 hover:underline cursor-pointer text-xs">Ver detalles</span>
+            </div>
           </div>
         </div>
       </motion.div>

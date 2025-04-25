@@ -38,38 +38,36 @@ export const RecentBooks = () => {
 
   return (
     <MotionWrapper type="fadeUp" delay={0.4}>
-      <Card>
+      <Card className="border-0 bg-gray-900 text-white">
         <CardHeader className="pb-3">
           <CardTitle className="text-lg font-medium flex items-center gap-2">
             <BookOpen size={20} className="text-orange-500" />
             Libros Recientes
           </CardTitle>
-          <CardDescription>
+          <CardDescription className="text-gray-400">
             Los últimos libros añadidos a tu biblioteca ({books.length} libros)
           </CardDescription>
         </CardHeader>
-        <CardContent className="pt-4">
+        <CardContent className="pt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
           {isLoading ? (
-            <div className="py-8 text-center text-muted-foreground">
+            <div className="py-8 text-center text-muted-foreground col-span-2">
               Cargando libros...
             </div>
           ) : recentBooks.length > 0 ? (
-            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-              {recentBooks.map((libro, index) => (
-                <BookCard 
-                  key={`book-${libro.id}-${index}`}
-                  index={index + 1} 
-                  title={libro.titulo} 
-                  author={libro.autor} 
-                  contentLevel={libro.contenido} 
-                  status={libro.estado} 
-                  coverUrl={libro.imageUrl} 
-                  id={libro.id}
-                />
-              ))}
-            </div>
+            recentBooks.map((libro, index) => (
+              <BookCard 
+                key={`book-${libro.id}-${index}`}
+                index={index + 1} 
+                title={libro.titulo} 
+                author={libro.autor} 
+                contentLevel={libro.contenido} 
+                status={libro.estado} 
+                coverUrl={libro.imageUrl} 
+                id={libro.id}
+              />
+            ))
           ) : (
-            <div className="py-8 text-center text-muted-foreground">
+            <div className="py-8 text-center text-muted-foreground col-span-2">
               No hay libros en la biblioteca
             </div>
           )}

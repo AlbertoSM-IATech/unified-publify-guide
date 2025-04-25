@@ -6,7 +6,7 @@ import { calculateNetRoyalties } from "../utils/formatUtils";
 import { memo, useState } from 'react';
 
 // Default optimized book cover image
-const DEFAULT_COVER_URL = "/placeholders/portada-ejemplo.jpg";
+const DEFAULT_COVER_URL = "https://edit.org/images/cat/portadas-libros-big-2019101610.jpg";
 
 interface BookListItemProps {
   libro: Book;
@@ -25,7 +25,7 @@ export const BookListItem = memo(({ libro, getStatusColor, getContentColor }: Bo
   };
   
   return (
-    <tr className="hover:bg-muted/20 transition-colors">
+    <tr className="hover:bg-gray-800 transition-colors text-white">
       <td className="whitespace-nowrap px-4 py-4">
         <div className="flex items-center space-x-3">
           <div className="h-12 w-8 flex-shrink-0 overflow-hidden rounded-sm">
@@ -40,15 +40,15 @@ export const BookListItem = memo(({ libro, getStatusColor, getContentColor }: Bo
             />
           </div>
           <div>
-            <div className="font-medium text-[#3B82F6]">
-              <Link to={`/biblioteca/libros/${libro.id}`} className="hover:underline focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-[#3B82F6] rounded-sm">
+            <div className="font-medium text-orange-500">
+              <Link to={`/biblioteca/libros/${libro.id}`} className="hover:underline focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-orange-500 rounded-sm">
                 {libro.titulo}
               </Link>
             </div>
             {libro.subtitulo && (
-              <div className="text-xs text-muted-foreground italic">{libro.subtitulo}</div>
+              <div className="text-xs text-gray-400 italic">{libro.subtitulo}</div>
             )}
-            <div className="text-sm text-muted-foreground">{libro.autor}</div>
+            <div className="text-sm text-gray-400">{libro.autor}</div>
           </div>
         </div>
       </td>
@@ -73,7 +73,7 @@ export const BookListItem = memo(({ libro, getStatusColor, getContentColor }: Bo
           {libro.contenido}
         </span>
       </td>
-      <td className="whitespace-nowrap px-4 py-4 text-sm text-muted-foreground">
+      <td className="whitespace-nowrap px-4 py-4 text-sm text-gray-400">
         {libro.fechaPublicacion
           ? new Date(libro.fechaPublicacion).toLocaleDateString()
           : "No publicado"}
@@ -81,7 +81,7 @@ export const BookListItem = memo(({ libro, getStatusColor, getContentColor }: Bo
       <td className="whitespace-nowrap px-4 py-4 text-right text-sm">
         <Link
           to={`/biblioteca/libros/${libro.id}`}
-          className="inline-flex items-center font-medium text-[#FB923C] hover:underline focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-[#FB923C] rounded-sm"
+          className="inline-flex items-center font-medium text-orange-500 hover:underline focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-orange-500 rounded-sm"
         >
           <Eye className="mr-1 h-4 w-4" /> Ver detalles
         </Link>
