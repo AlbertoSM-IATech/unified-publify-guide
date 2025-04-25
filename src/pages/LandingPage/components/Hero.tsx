@@ -153,7 +153,7 @@ export const Hero = () => {
               }} />
                 </motion.div>
                 
-                <p className="absolute bottom-4 text-white font-medium text-sm md:text-base">Ver demo de Publify</p>
+                
               </AspectRatio>}
             
             <div className="absolute top-0 left-0 w-6 h-6 border-t-2 border-l-2 border-[#FB923C]/40 rounded-tl-lg" />
