@@ -67,7 +67,7 @@ export const Hero = () => {
   };
   return <motion.section initial="hidden" whileInView="visible" viewport={{
     once: true
-  }} className="relative flex flex-1 flex-col items-center pt-24 pb-16 md:pt-32 md:pb-24 overflow-hidden px-[32px] my-[20px] py-[240px]">
+  }} className="relative flex flex-1 flex-col items-center pt-24 pb-16 md:pt-32 md:pb-24 overflow-hidden px-[32px] my-0 py-[240px]">
       <div className="absolute inset-0 -z-10 opacity-30 pointer-events-none">
         <div className="absolute top-1/4 left-1/4 w-1/2 h-1/2 bg-primary/10 rounded-full blur-[100px]" />
         <div className="absolute bottom-1/4 right-1/4 w-1/3 h-1/3 bg-[#FB923C]/20 rounded-full blur-[80px]" />
