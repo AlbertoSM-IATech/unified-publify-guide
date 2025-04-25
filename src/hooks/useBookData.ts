@@ -22,7 +22,8 @@ export function useBookData() {
         const parsedBooks = JSON.parse(storedBooks);
         const booksWithImages = parsedBooks.map(book => ({
           ...book,
-          imageUrl: book.imageUrl || book.portadaUrl || "/placeholders/default-book-cover.png"
+          imageUrl: book.imageUrl || book.portadaUrl || "/placeholders/default-book-cover.png",
+          portadaUrl: book.portadaUrl || book.imageUrl || "/placeholders/default-book-cover.png"
         }));
         
         setBooks(booksWithImages);
@@ -35,7 +36,8 @@ export function useBookData() {
         // Ensure all mock books have imageUrl
         const mocksWithImages = librosSimulados.map(book => ({
           ...book,
-          imageUrl: book.imageUrl || book.portadaUrl || "/placeholders/default-book-cover.png"
+          imageUrl: book.imageUrl || book.portadaUrl || "/placeholders/default-book-cover.png",
+          portadaUrl: book.portadaUrl || book.imageUrl || "/placeholders/default-book-cover.png"
         }));
         
         setBooks(mocksWithImages);

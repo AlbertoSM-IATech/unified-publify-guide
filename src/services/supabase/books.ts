@@ -14,7 +14,8 @@ export const booksService = {
       const books = JSON.parse(storedBooks);
       return books.map((book: Book) => ({
         ...book,
-        imageUrl: book.imageUrl || book.portadaUrl || "/placeholders/default-book-cover.png"
+        imageUrl: book.imageUrl || book.portadaUrl || "/placeholders/default-book-cover.png",
+        portadaUrl: book.portadaUrl || book.imageUrl || "/placeholders/default-book-cover.png"
       }));
     }
     
@@ -22,7 +23,8 @@ export const booksService = {
     console.log("[MOCK] No books in localStorage, using mock data");
     const mocksWithImages = librosSimulados.map(book => ({
       ...book,
-      imageUrl: book.imageUrl || book.portadaUrl || "/placeholders/default-book-cover.png"
+      imageUrl: book.imageUrl || book.portadaUrl || "/placeholders/default-book-cover.png",
+      portadaUrl: book.portadaUrl || book.imageUrl || "/placeholders/default-book-cover.png"
     }));
     localStorage.setItem('librosData', JSON.stringify(mocksWithImages));
     return mocksWithImages;
@@ -40,7 +42,8 @@ export const booksService = {
         // Ensure book has image URL
         return {
           ...book,
-          imageUrl: book.imageUrl || book.portadaUrl || "/placeholders/default-book-cover.png"
+          imageUrl: book.imageUrl || book.portadaUrl || "/placeholders/default-book-cover.png",
+          portadaUrl: book.portadaUrl || book.imageUrl || "/placeholders/default-book-cover.png"
         };
       }
       return null;
@@ -50,7 +53,8 @@ export const booksService = {
     console.log("[MOCK] No books in localStorage, using mock data");
     const mocksWithImages = librosSimulados.map(book => ({
       ...book,
-      imageUrl: book.imageUrl || book.portadaUrl || "/placeholders/default-book-cover.png"
+      imageUrl: book.imageUrl || book.portadaUrl || "/placeholders/default-book-cover.png",
+      portadaUrl: book.portadaUrl || book.imageUrl || "/placeholders/default-book-cover.png"
     }));
     localStorage.setItem('librosData', JSON.stringify(mocksWithImages));
     
@@ -79,7 +83,8 @@ export const booksService = {
     const bookWithImage = {
       ...book,
       id: newId,
-      imageUrl: book.imageUrl || book.portadaUrl || "/placeholders/default-book-cover.png"
+      imageUrl: book.imageUrl || book.portadaUrl || "/placeholders/default-book-cover.png",
+      portadaUrl: book.portadaUrl || book.imageUrl || "/placeholders/default-book-cover.png"
     } as Book;
     
     // Add to books array
@@ -115,7 +120,8 @@ export const booksService = {
         const updatedBook = { 
           ...books[index], 
           ...bookData,
-          imageUrl: bookData.imageUrl || bookData.portadaUrl || books[index].imageUrl || books[index].portadaUrl || "/placeholders/default-book-cover.png"
+          imageUrl: bookData.imageUrl || bookData.portadaUrl || books[index].imageUrl || books[index].portadaUrl || "/placeholders/default-book-cover.png",
+          portadaUrl: bookData.portadaUrl || bookData.imageUrl || books[index].portadaUrl || books[index].imageUrl || "/placeholders/default-book-cover.png"
         };
         
         // If imageUrl was updated, also update portadaUrl for consistency

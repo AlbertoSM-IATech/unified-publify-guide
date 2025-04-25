@@ -49,6 +49,7 @@ export interface Book {
   contenidoAPlus?: string; // A+ content
   contenidoAPlusFiles?: {id: number; name: string; type: string}[]; // A+ content files
   imageUrl: string;
+  portadaUrl?: string; // Add the portadaUrl property as an optional field
   investigacionId?: number;
   proyectoId?: number;
   hardcover?: BookFormat;
