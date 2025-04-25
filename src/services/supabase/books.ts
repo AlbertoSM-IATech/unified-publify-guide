@@ -1,108 +1,55 @@
 
 import { Book } from "@/pages/Biblioteca/Libros/types/bookTypes";
-import { supabaseCore } from "./core";
-import { librosSimulados } from "@/pages/Biblioteca/Libros/utils/mockData/librosData";
 import { toast } from "@/hooks/use-toast";
-
-// Default optimized book cover image
-const DEFAULT_COVER_URL = "/placeholders/portada-ejemplo.jpg";
+import { imageService } from "./books/imageService";
+import { storageService } from "./books/storageService";
 
 export const booksService = {
   getAll: async (): Promise<Book[]> => {
     console.log("[MOCK] Getting all books from localStorage");
     
-    // Return from localStorage if available
-    const storedBooks = localStorage.getItem('librosData');
+    const storedBooks = storageService.loadFromStorage();
     if (storedBooks) {
-      const books = JSON.parse(storedBooks);
-      return books.map((book: Book) => ({
-        ...book,
-        imageUrl: book.imageUrl || book.portadaUrl || DEFAULT_COVER_URL,
-        portadaUrl: book.portadaUrl || book.imageUrl || DEFAULT_COVER_URL
-      }));
+      return storedBooks;
     }
     
-    // Mock data as a fallback
     console.log("[MOCK] No books in localStorage, using mock data");
-    const mocksWithImages = librosSimulados.map(book => ({
-      ...book,
-      imageUrl: book.imageUrl || book.portadaUrl || DEFAULT_COVER_URL,
-      portadaUrl: book.portadaUrl || book.imageUrl || DEFAULT_COVER_URL
-    }));
-    localStorage.setItem('librosData', JSON.stringify(mocksWithImages));
-    return mocksWithImages;
+    return storageService.getInitialBooks();
   },
   
   getById: async (id: number): Promise<Book | null> => {
     console.log(`[MOCK] Getting book with ID ${id} from localStorage`);
     
-    // Return from localStorage if available
-    const storedBooks = localStorage.getItem('librosData');
+    const storedBooks = storageService.loadFromStorage();
     if (storedBooks) {
-      const books = JSON.parse(storedBooks) as Book[];
-      const book = books.find(book => book.id === id);
+      const book = storedBooks.find(book => book.id === id);
       if (book) {
-        // Ensure book has image URL
-        return {
-          ...book,
-          imageUrl: book.imageUrl || book.portadaUrl || DEFAULT_COVER_URL,
-          portadaUrl: book.portadaUrl || book.imageUrl || DEFAULT_COVER_URL
-        };
+        return imageService.ensureBookImages(book);
       }
       return null;
     }
     
-    // Mock data as a fallback
     console.log("[MOCK] No books in localStorage, using mock data");
-    const mocksWithImages = librosSimulados.map(book => ({
-      ...book,
-      imageUrl: book.imageUrl || book.portadaUrl || DEFAULT_COVER_URL,
-      portadaUrl: book.portadaUrl || book.imageUrl || DEFAULT_COVER_URL
-    }));
-    localStorage.setItem('librosData', JSON.stringify(mocksWithImages));
-    
-    const book = mocksWithImages.find(book => book.id === id);
-    return book || null;
+    const mocksWithImages = storageService.getInitialBooks();
+    return mocksWithImages.find(book => book.id === id) || null;
   },
   
   create: async (book: Omit<Book, 'id'>): Promise<Book | null> => {
     console.log("[MOCK] Creating new book in localStorage");
     
-    // Use localStorage
-    const storedBooks = localStorage.getItem('librosData');
-    let books: Book[] = [];
+    const storedBooks = storageService.loadFromStorage() || storageService.getInitialBooks();
     
-    if (storedBooks) {
-      books = JSON.parse(storedBooks);
-    } else {
-      // Get mock data if there are no stored books
-      books = [...librosSimulados];
-    }
+    const newId = Math.max(0, ...storedBooks.map(b => b.id)) + 1;
+    const bookWithImage = imageService.ensureBookImages({ ...book, id: newId }) as Book;
     
-    // Generate a new ID
-    const newId = Math.max(0, ...books.map(b => b.id)) + 1;
+    storedBooks.push(bookWithImage);
+    storageService.saveToStorage(storedBooks);
     
-    // Ensure imageUrl is set
-    const bookWithImage = {
-      ...book,
-      id: newId,
-      imageUrl: book.imageUrl || book.portadaUrl || DEFAULT_COVER_URL,
-      portadaUrl: book.portadaUrl || book.imageUrl || DEFAULT_COVER_URL
-    } as Book;
-    
-    // Add to books array
-    books.push(bookWithImage);
-    
-    // Save to localStorage
-    localStorage.setItem('librosData', JSON.stringify(books));
-    
-    // Notify with toast
     toast({
       title: "Libro creado",
       description: "El libro ha sido creado exitosamente",
     });
     
-    // Notify other components about the update
     const updateEvent = new CustomEvent('publify_books_updated');
     window.dispatchEvent(updateEvent);
     
@@ -112,92 +59,50 @@ export const booksService = {
   update: async (id: number, bookData: Partial<Book>): Promise<Book | null> => {
     console.log(`[MOCK] Updating book with ID ${id} in localStorage`);
     
-    // Use localStorage
-    const storedBooks = localStorage.getItem('librosData');
-    if (storedBooks) {
-      const books = JSON.parse(storedBooks) as Book[];
-      const index = books.findIndex(book => book.id === id);
-      
-      if (index !== -1) {
-        // Update the book and ensure imageUrl consistency
-        const updatedBook = { 
-          ...books[index], 
-          ...bookData,
-          imageUrl: bookData.imageUrl || bookData.portadaUrl || books[index].imageUrl || books[index].portadaUrl || DEFAULT_COVER_URL,
-          portadaUrl: bookData.portadaUrl || bookData.imageUrl || books[index].portadaUrl || books[index].imageUrl || DEFAULT_COVER_URL
-        };
-        
-        // If imageUrl was updated, also update portadaUrl for consistency
-        if (bookData.imageUrl && !bookData.portadaUrl) {
-          updatedBook.portadaUrl = bookData.imageUrl;
-        } else if (bookData.portadaUrl && !bookData.imageUrl) {
-          updatedBook.imageUrl = bookData.portadaUrl;
-        }
-        
-        books[index] = updatedBook;
-        
-        // Save to localStorage
-        localStorage.setItem('librosData', JSON.stringify(books));
-        
-        // Notify with toast
-        toast({
-          title: "Libro actualizado",
-          description: "El libro ha sido actualizado exitosamente",
-        });
-        
-        // Notify other components about the update
-        const updateEvent = new CustomEvent('publify_books_updated');
-        window.dispatchEvent(updateEvent);
-        
-        return updatedBook;
-      }
-    }
-    return null;
+    const storedBooks = storageService.loadFromStorage();
+    if (!storedBooks) return null;
+    
+    const index = storedBooks.findIndex(book => book.id === id);
+    if (index === -1) return null;
+    
+    const updatedBook = imageService.ensureBookImages({ 
+      ...storedBooks[index], 
+      ...bookData 
+    }) as Book;
+    
+    storedBooks[index] = updatedBook;
+    storageService.saveToStorage(storedBooks);
+    
+    toast({
+      title: "Libro actualizado",
+      description: "El libro ha sido actualizado exitosamente",
+    });
+    
+    const updateEvent = new CustomEvent('publify_books_updated');
+    window.dispatchEvent(updateEvent);
+    
+    return updatedBook;
   },
   
   delete: async (id: number): Promise<boolean> => {
     console.log(`[MOCK] Deleting book with ID ${id} from localStorage`);
     
-    // Use localStorage
-    const storedBooks = localStorage.getItem('librosData');
-    if (storedBooks) {
-      const books = JSON.parse(storedBooks) as Book[];
-      const filteredBooks = books.filter(book => book.id !== id);
-      
-      // Save to localStorage
-      localStorage.setItem('librosData', JSON.stringify(filteredBooks));
-      
-      // Notify with toast
-      toast({
-        title: "Libro eliminado",
-        description: "El libro ha sido eliminado exitosamente",
-      });
-      
-      // Notify other components about the update
-      const updateEvent = new CustomEvent('publify_books_updated');
-      window.dispatchEvent(updateEvent);
-      
-      return true;
-    }
-    return false;
-  },
-  
-  // Upload a book cover image - use consistent URL path
-  uploadCover: async (_bookId: number, _file: File): Promise<string> => {
-    console.log("[MOCK] Uploading book cover image (simulated)");
+    const storedBooks = storageService.loadFromStorage();
+    if (!storedBooks) return false;
     
-    // Return the optimized cover URL 
-    const coverUrl = DEFAULT_COVER_URL;
+    const filteredBooks = storedBooks.filter(book => book.id !== id);
+    storageService.saveToStorage(filteredBooks);
     
-    // Simulate a delay for realism
-    await new Promise(resolve => setTimeout(resolve, 500));
-    
-    // Notify with toast
     toast({
-      title: "Imagen subida",
-      description: "La portada del libro ha sido actualizada",
+      title: "Libro eliminado",
+      description: "El libro ha sido eliminado exitosamente",
     });
     
-    return coverUrl;
-  }
+    const updateEvent = new CustomEvent('publify_books_updated');
+    window.dispatchEvent(updateEvent);
+    
+    return true;
+  },
+  
+  uploadCover: imageService.uploadCover
 };
