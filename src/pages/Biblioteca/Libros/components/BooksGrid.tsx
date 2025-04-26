@@ -13,8 +13,8 @@ export const BooksGrid = memo(({ libros, getStatusColor, getContentColor }: Book
   // If there are no books, show empty state
   if (libros.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center p-10 text-center border border-gray-800 bg-gray-900 text-white rounded-lg shadow-sm">
-        <p className="text-gray-400">No hay libros que coincidan con tu búsqueda</p>
+      <div className="flex flex-col items-center justify-center p-10 text-center border rounded-lg bg-card shadow-sm">
+        <p className="text-muted-foreground">No hay libros que coincidan con tu búsqueda</p>
       </div>
     );
   }
