@@ -22,17 +22,14 @@ import {
 } from '@/components/ui/select';
 import { Book } from '@/pages/Biblioteca/Libros/types/bookTypes';
 import { Loader2 } from 'lucide-react';
+import { NewInvestigationData } from '../../types/investigacionTypes'; // Importar el tipo compartido
 
-export interface NewInvestigationData {
-  titulo: string;
-  descripcion: string;
-  libroId: number | null;
-}
+// La interfaz local NewInvestigationData ha sido eliminada
 
 interface CreateInvestigationDialogProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (data: NewInvestigationData) => void;
+  onSubmit: (data: NewInvestigationData) => void; // Usar el tipo importado
   books: Book[];
   isLoadingBooks: boolean;
 }
@@ -72,7 +69,7 @@ export const CreateInvestigationDialog: React.FC<CreateInvestigationDialogProps>
     onSubmit({
       titulo,
       descripcion,
-      libroId: parseInt(selectedBookId, 10),
+      libroId: selectedBookId, // selectedBookId ya es un string, no se necesita parseInt
     });
   };
 
@@ -127,7 +124,7 @@ export const CreateInvestigationDialog: React.FC<CreateInvestigationDialogProps>
                 <SelectContent>
                   {books.length > 0 ? (
                     books.map((book) => (
-                      <SelectItem key={book.id} value={book.id.toString()}>
+                      <SelectItem key={book.id} value={book.id.toString()}> {/* Aseguramos que book.id es string */}
                         {book.titulo}
                       </SelectItem>
                     ))
@@ -156,4 +153,3 @@ export const CreateInvestigationDialog: React.FC<CreateInvestigationDialogProps>
     </Dialog>
   );
 };
-
