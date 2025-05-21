@@ -5,6 +5,7 @@ import MotionWrapper from "@/components/motion/MotionWrapper";
 import BookCard from "@/components/dashboard/BookCard";
 import { useBookData } from "@/hooks/useBookData";
 import { useMemo, useEffect } from "react";
+import { DEFAULT_COVER_URL } from "@/services/supabase/books/constants"; // Importar la constante
 
 export const RecentBooks = () => {
   // Use the shared book data hook to ensure consistency across the app
@@ -32,7 +33,8 @@ export const RecentBooks = () => {
       .slice(0, 6)
       .map(libro => ({
         ...libro,
-        imageUrl: libro.imageUrl || libro.portadaUrl || "/placeholders/default-book-cover.png"
+        // Usar la constante DEFAULT_COVER_URL para la imagen de fallback
+        imageUrl: libro.imageUrl || libro.portadaUrl || DEFAULT_COVER_URL 
       }));
   }, [books]);
 

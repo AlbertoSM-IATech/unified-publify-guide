@@ -1,9 +1,8 @@
+
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-
-// Default optimized book cover image
-const DEFAULT_COVER_URL = "/placeholders/portada-ejemplo.jpg";
+import { DEFAULT_COVER_URL } from "@/services/supabase/books/constants"; // Importar la constante global
 
 interface BookCardProps {
   index: number;
@@ -24,6 +23,7 @@ const BookCard = ({
   coverUrl,
   id
 }: BookCardProps) => {
+  // Usar la constante global DEFAULT_COVER_URL
   const [imageSrc, setImageSrc] = useState(coverUrl || DEFAULT_COVER_URL);
   
   // Update image source when prop changes
@@ -34,7 +34,7 @@ const BookCard = ({
   // Handle image loading error
   const handleImageError = () => {
     console.log(`Image error loading: ${coverUrl}, falling back to default`);
-    setImageSrc(DEFAULT_COVER_URL);
+    setImageSrc(DEFAULT_COVER_URL); // Usar la constante global
   };
   
   // Determine status color based on status
@@ -43,7 +43,7 @@ const BookCard = ({
       case "publicado":
         return "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300";
       case "en revisión":
-      case "en_edicion":
+      case "en_edicion": // Asegurarse que este caso también está cubierto si es un estado válido
         return "bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-300";
       case "borrador":
         return "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300";
@@ -95,19 +95,19 @@ const BookCard = ({
         <div className="flex h-32 overflow-hidden">
           {/* Book cover image/placeholder */}
           <motion.div 
-            className="relative h-full w-28 bg-muted overflow-hidden"
+            className="relative h-full w-28 bg-muted overflow-hidden" // w-28 es aproximadamente 112px, podemos ajustar si es necesario
             whileHover={{ scale: 1.05 }}
             transition={{ duration: 0.3 }}
           >
-            <div className="h-full w-full overflow-hidden">
-              <div className="h-full">
+            <div className="h-full w-full overflow-hidden"> {/* Contenedor para aspect-ratio si fuera necesario */}
+              <div className="h-full"> {/* Div para la imagen */}
                 <img 
                   src={imageSrc} 
                   alt={title} 
                   className="h-full w-full object-cover" 
                   loading="lazy"
-                  width="112"
-                  height="128"
+                  width="112" // Puede ser útil para la optimización de la imagen
+                  height="128" // Puede ser útil para la optimización de la imagen
                   onError={handleImageError}
                 />
               </div>
