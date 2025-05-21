@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { investigacionesSimuladas } from "../Libros/utils/librosUtils";
-import { CreateInvestigationDialog } from "./components/CreateInvestigationDialog"; // Mantener si es específico o moverlo si es más genérico
+import { investigacionesSimuladas } from "../Libros/utils/mockData/investigacionesData"; // Esta importación parece incorrecta, debería ser de investigaciones
+import { CreateInvestigationDialog } from "./components/CreateInvestigationDialog";
 import { useBookData } from "@/hooks/useBookData";
 import { toast } from "@/hooks/use-toast";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
@@ -17,7 +17,7 @@ export const InvestigacionesList = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [investigaciones, setInvestigaciones] = useLocalStorage<Investigacion[]>(
     'publify_user_investigaciones',
-    investigacionesSimuladas
+    investigacionesSimuladas // Usar datos simulados de investigaciones, no de libros
   );
   const [selectedInvestigacion, setSelectedInvestigacion] = useState<Investigacion | null>(null);
   const location = useLocation();
@@ -28,7 +28,7 @@ export const InvestigacionesList = () => {
   useEffect(() => {
     if (location.state?.selectInvestigacion) {
       const investigacionId = location.state.selectInvestigacion;
-      const investigacion = investigaciones && investigaciones.find(inv => inv.id === investigacionId);
+      const investigacion = investigaciones && investigaciones.find(inv => inv.id.toString() === investigacionId.toString());
       if (investigacion) {
         setSelectedInvestigacion(investigacion);
       }
@@ -38,8 +38,8 @@ export const InvestigacionesList = () => {
 
   const filteredInvestigaciones = (investigaciones || []).filter(investigacion => 
     investigacion.titulo.toLowerCase().includes(searchQuery.toLowerCase()) || 
-    (investigacion.descripcion && investigacion.descripcion.toLowerCase().includes(searchQuery.toLowerCase())) || 
-    investigacion.libroTitulo.toLowerCase().includes(searchQuery.toLowerCase())
+    (investigacion.descripcion && investigacion.descripcion.toLowerCase().includes(searchQuery.toLowerCase())) ||
+    (investigacion.libroTitulo && investigacion.libroTitulo.toLowerCase().includes(searchQuery.toLowerCase()))
   );
 
   const handleSelectInvestigacion = (investigacion: Investigacion) => {
@@ -59,23 +59,35 @@ export const InvestigacionesList = () => {
       });
       return;
     }
-    const selectedBook = availableBooks.find(b => b.id === data.libroId);
+    const selectedBook = availableBooks.find(b => b.id.toString() === data.libroId); 
     if (!selectedBook) {
       toast({
         title: "Error",
-        description: "El libro seleccionado no es válido.",
+        description: "El libro seleccionado no es válido o no se encontró.",
         variant: "destructive",
       });
       return;
     }
 
     const currentInvestigaciones = investigaciones || [];
-    const newId = currentInvestigaciones.length > 0 ? Math.max(...currentInvestigaciones.map(inv => inv.id)) + 1 : 1;
+    let newId: number | string;
+    if (currentInvestigaciones.length > 0) {
+        const allNumericIds = currentInvestigaciones.every(inv => typeof inv.id === 'number' || !isNaN(Number(inv.id.toString())));
+        if (allNumericIds) {
+            newId = Math.max(0, ...currentInvestigaciones.map(inv => Number(inv.id.toString()))) + 1;
+        } else {
+            newId = `inv_${Date.now()}`;
+            console.warn("Generando ID de investigación como string no numérico. Considerar una mejor estrategia si esto es intencional.");
+        }
+    } else {
+        newId = 1;
+    }
+    
     const newInvestigation: Investigacion = {
-      id: newId,
+      id: newId, 
       titulo: data.titulo,
       descripcion: data.descripcion,
-      libroId: selectedBook.id,
+      libroId: selectedBook.id.toString(), 
       libroTitulo: selectedBook.titulo,
       fechaActualizacion: new Date().toISOString().split('T')[0],
     };
