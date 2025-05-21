@@ -18,33 +18,33 @@ export function useBookData() {
       const storedBooks = localStorage.getItem('librosData');
       
       if (storedBooks) {
-        // Ensure all books have imageUrl set correctly
         const parsedBooks = JSON.parse(storedBooks);
-        const booksWithImages = parsedBooks.map(book => ({
+        // Force all books to use DEFAULT_COVER_URL
+        const booksWithForcedDefaultCover = parsedBooks.map(book => ({
           ...book,
-          imageUrl: book.imageUrl || book.portadaUrl || DEFAULT_COVER_URL,
-          portadaUrl: book.portadaUrl || book.imageUrl || DEFAULT_COVER_URL
+          imageUrl: DEFAULT_COVER_URL,
+          portadaUrl: DEFAULT_COVER_URL
         }));
         
-        setBooks(booksWithImages);
-        console.info('[useBookData] Books loaded from localStorage with images normalized');
+        setBooks(booksWithForcedDefaultCover);
+        console.info('[useBookData] Books loaded from localStorage with images forced to default');
         
-        // Update localStorage with normalized image URLs
-        localStorage.setItem('librosData', JSON.stringify(booksWithImages));
+        // Update localStorage with forced default image URLs
+        localStorage.setItem('librosData', JSON.stringify(booksWithForcedDefaultCover));
       } else {
         // Fall back to mock data if nothing in localStorage
-        // Ensure all mock books have imageUrl
-        const mocksWithImages = librosSimulados.map(book => ({
+        // Force all mock books to use DEFAULT_COVER_URL
+        const mocksWithForcedDefaultCover = librosSimulados.map(book => ({
           ...book,
-          imageUrl: book.imageUrl || book.portadaUrl || DEFAULT_COVER_URL,
-          portadaUrl: book.portadaUrl || book.imageUrl || DEFAULT_COVER_URL
+          imageUrl: DEFAULT_COVER_URL,
+          portadaUrl: DEFAULT_COVER_URL
         }));
         
-        setBooks(mocksWithImages);
-        console.info('[useBookData] Using mock book data with images normalized');
+        setBooks(mocksWithForcedDefaultCover);
+        console.info('[useBookData] Using mock book data with images forced to default');
         
-        // Save mock data to localStorage for future use
-        localStorage.setItem('librosData', JSON.stringify(mocksWithImages));
+        // Save mock data (with forced default images) to localStorage for future use
+        localStorage.setItem('librosData', JSON.stringify(mocksWithForcedDefaultCover));
       }
     } catch (error) {
       console.error('Error loading books:', error);

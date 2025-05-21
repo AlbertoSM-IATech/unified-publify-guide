@@ -1,5 +1,7 @@
+
 // Mock data for books
 import { Book } from "../../types/bookTypes";
+import { DEFAULT_COVER_URL } from '@/services/supabase/books/constants'; // Importar DEFAULT_COVER_URL
 
 // Simulate data for libros
 export const librosSimulados: Book[] = [
@@ -14,8 +16,8 @@ export const librosSimulados: Book[] = [
     contenido: "Alto Contenido",
     fechaPublicacion: "2023-01-15",
     fechaLanzamiento: "2023-01-01",
-    imageUrl: "https://edit.org/images/cat/portadas-libros-big-2019101610.jpg",
-    portadaUrl: "https://edit.org/images/cat/portadas-libros-big-2019101610.jpg",
+    imageUrl: DEFAULT_COVER_URL, // Usar constante
+    portadaUrl: DEFAULT_COVER_URL, // Usar constante
     investigacionId: 1,
     proyectoId: 1,
     descripcionHtml: "<h2>El Arte de la Estrategia</h2><p>Este libro te enseñará los fundamentos de la estrategia empresarial con ejemplos prácticos.</p><ul><li>Capítulo 1: Fundamentos</li><li>Capítulo 2: Análisis competitivo</li><li>Capítulo 3: Implementación</li></ul>",
@@ -61,8 +63,8 @@ export const librosSimulados: Book[] = [
     contenido: "Alto Contenido",
     fechaPublicacion: "2023-02-10",
     fechaLanzamiento: "2023-02-01",
-    imageUrl: "https://edit.org/images/cat/portadas-libros-big-2019101610.jpg",
-    portadaUrl: "https://edit.org/images/cat/portadas-libros-big-2019101610.jpg",
+    imageUrl: DEFAULT_COVER_URL, // Usar constante
+    portadaUrl: DEFAULT_COVER_URL, // Usar constante
     investigacionId: 2,
     proyectoId: 1,
     descripcionHtml: "<h2>Finanzas para Emprendedores</h2><p>Una guía esencial para manejar las finanzas de tu negocio desde cero.</p><ul><li>Contabilidad básica</li><li>Flujo de caja</li><li>Estrategias de inversión</li></ul>",
@@ -79,8 +81,8 @@ export const librosSimulados: Book[] = [
     contenido: "Medio Contenido",
     fechaPublicacion: "2023-03-20",
     fechaLanzamiento: "2023-03-10",
-    imageUrl: "https://edit.org/images/cat/portadas-libros-big-2019101610.jpg",
-    portadaUrl: "https://edit.org/images/cat/portadas-libros-big-2019101610.jpg",
+    imageUrl: DEFAULT_COVER_URL, // Usar constante
+    portadaUrl: DEFAULT_COVER_URL, // Usar constante
     investigacionId: 3,
     proyectoId: 3,
     descripcionHtml: "<h2>Marketing Digital</h2><p>Descubre las estrategias más efectivas de marketing online para tu negocio.</p><ul><li>SEO y SEM</li><li>Redes sociales</li><li>Email marketing</li></ul>",
@@ -97,8 +99,8 @@ export const librosSimulados: Book[] = [
     contenido: "Alto Contenido",
     fechaPublicacion: "2023-02-25",
     fechaLanzamiento: "2023-02-15",
-    imageUrl: "https://edit.org/images/cat/portadas-libros-big-2019101610.jpg",
-    portadaUrl: "https://edit.org/images/cat/portadas-libros-big-2019101610.jpg",
+    imageUrl: DEFAULT_COVER_URL, // Usar constante
+    portadaUrl: DEFAULT_COVER_URL, // Usar constante
     investigacionId: 4,
     proyectoId: 2,
     descripcionHtml: "<h2>Desarrollo Personal</h2><p>Aprende a potenciar tus habilidades y mejorar tu calidad de vida.</p><ul><li>Gestión del tiempo</li><li>Inteligencia emocional</li><li>Hábitos efectivos</li></ul>",
@@ -115,8 +117,8 @@ export const librosSimulados: Book[] = [
     contenido: "Medio Contenido",
     fechaPublicacion: "2023-04-05",
     fechaLanzamiento: null,
-    imageUrl: "https://edit.org/images/cat/portadas-libros-big-2019101610.jpg",
-    portadaUrl: "https://edit.org/images/cat/portadas-libros-big-2019101610.jpg",
+    imageUrl: DEFAULT_COVER_URL, // Usar constante
+    portadaUrl: DEFAULT_COVER_URL, // Usar constante
     proyectoId: 5,
     descripcionHtml: "<h2>Cocina Vegetariana</h2><p>Las mejores recetas vegetarianas para una alimentación saludable.</p><ul><li>Entradas</li><li>Platos principales</li><li>Postres</li></ul>",
     descripcion: "Las mejores recetas vegetarianas para una alimentación saludable.\n\nEntradas\nPlatos principales\nPostres"
@@ -132,8 +134,8 @@ export const librosSimulados: Book[] = [
     contenido: "Bajo Contenido",
     fechaPublicacion: "2023-04-15",
     fechaLanzamiento: "2023-04-01",
-    imageUrl: "https://edit.org/images/cat/portadas-libros-big-2019101610.jpg",
-    portadaUrl: "https://edit.org/images/cat/portadas-libros-big-2019101610.jpg",
+    imageUrl: DEFAULT_COVER_URL, // Usar constante
+    portadaUrl: DEFAULT_COVER_URL, // Usar constante
     proyectoId: 4,
     descripcionHtml: "<h2>Liderazgo Efectivo</h2><p>Aprende a liderar equipos de trabajo y conseguir resultados extraordinarios.</p><ul><li>Comunicación efectiva</li><li>Delegación</li><li>Motivación de equipos</li></ul>",
     descripcion: "Aprende a liderar equipos de trabajo y conseguir resultados extraordinarios.\n\nComunicación efectiva\nDelegación\nMotivación de equipos"
@@ -149,10 +151,11 @@ export const librosSimulados: Book[] = [
     contenido: "Alto Contenido",
     fechaPublicacion: "2023-05-20",
     fechaLanzamiento: "2023-05-10",
-    imageUrl: "https://edit.org/images/cat/portadas-libros-big-2019101610.jpg",
-    portadaUrl: "https://edit.org/images/cat/portadas-libros-big-2019101610.jpg",
+    imageUrl: DEFAULT_COVER_URL, // Usar constante
+    portadaUrl: DEFAULT_COVER_URL, // Usar constante
     proyectoId: 1,
     descripcionHtml: "<h2>Innovación Empresarial</h2><p>Estrategias para fomentar la innovación y creatividad en tu empresa.</p><ul><li>Cultura de innovación</li><li>Design thinking</li><li>Implementación de procesos creativos</li></ul>",
     descripcion: "Estrategias para fomentar la innovación y creatividad en tu empresa.\n\nCultura de innovación\nDesign thinking\nImplementación de procesos creativos"
   },
 ];
+

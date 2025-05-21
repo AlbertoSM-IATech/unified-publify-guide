@@ -6,6 +6,7 @@ import { librosSimulados } from "../../utils/librosUtils";
 import { Book } from "../../types/bookTypes";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { useBookExtension } from "./useBookExtension";
+import { DEFAULT_COVER_URL } from "@/services/supabase/books/constants"; // Importar DEFAULT_COVER_URL
 
 export const useBookData = () => {
   const { id } = useParams<{ id: string }>();
@@ -18,7 +19,10 @@ export const useBookData = () => {
   const { extendBookData } = useBookExtension();
   
   const bookId = id ? parseInt(id) : null;
-  const libroOriginal = bookId ? storedBooks.find((libro) => libro.id === bookId) : null;
+  // Find original book from the initial mock list if not in storedBooks (localStorage)
+  // This libroOriginal might not have the forced default URL yet if it's purely from mockData.ts
+  const initialMockBook = bookId ? librosSimulados.find((libro) => libro.id === bookId) : null;
+
 
   useEffect(() => {
     const fetchBook = async () => {
@@ -39,21 +43,50 @@ export const useBookData = () => {
           return;
         }
         
-        // Check stored books first
-        const storedBook = storedBooks.find(book => book.id === bookId);
+        let foundBook: Book | null | undefined = storedBooks.find(book => book.id === bookId);
         
-        if (storedBook) {
-          console.log("Libro encontrado en localStorage:", storedBook);
-          const extendedBookData = extendBookData(storedBook);
+        if (!foundBook && initialMockBook) {
+            console.log("Libro encontrado en datos simulados iniciales, no en localStorage aún:", initialMockBook);
+            foundBook = initialMockBook;
+        }
+
+        if (foundBook) {
+          console.log("Libro encontrado:", foundBook.titulo);
+          // Force default cover URL for display
+          const bookWithForcedCover = {
+            ...foundBook,
+            imageUrl: DEFAULT_COVER_URL,
+            portadaUrl: DEFAULT_COVER_URL,
+          };
+          const extendedBookData = extendBookData(bookWithForcedCover);
           setBookData(extendedBookData);
-        } else if (libroOriginal) {
-          console.log("Libro original encontrado:", libroOriginal);
-          const extendedBookData = extendBookData(libroOriginal);
-          setBookData(extendedBookData);
-          
-          // Save to storage for future access
-          const updatedBooks = [...storedBooks, extendedBookData];
-          setStoredBooks(updatedBooks);
+
+          // Ensure the version in localStorage also has the forced default cover
+          // This aligns with how the main useBookData hook saves data
+          const updatedStoredBooks = storedBooks.map(b => 
+            b.id === bookId ? { ...b, imageUrl: DEFAULT_COVER_URL, portadaUrl: DEFAULT_COVER_URL } : b
+          );
+          // If the book was from initialMockBook and not in storedBooks, add it with forced default.
+          if (!storedBooks.find(b => b.id === bookId) && initialMockBook) {
+             updatedStoredBooks.push({
+                ...initialMockBook,
+                imageUrl: DEFAULT_COVER_URL,
+                portadaUrl: DEFAULT_COVER_URL,
+             });
+          }
+          // Only update if there was a change or if it was sourced from initial mocks.
+          // This check prevents unnecessary writes if data is already consistent.
+          if (JSON.stringify(storedBooks.find(b => b.id === bookId)) !== JSON.stringify(extendedBookData) || 
+             (initialMockBook && !storedBooks.find(b => b.id === bookId)) ) {
+            const bookToStoreIdx = updatedStoredBooks.findIndex(b => b.id === bookId);
+            if (bookToStoreIdx !== -1) {
+                updatedStoredBooks[bookToStoreIdx] = extendedBookData; // Use extended data as it's what's displayed
+            } else if (initialMockBook) { // If it came from mocks and wasn't in storedBooks
+                updatedStoredBooks.push(extendedBookData);
+            }
+            setStoredBooks(updatedStoredBooks);
+          }
+
         } else {
           const errorMsg = `No se encontró un libro con el ID: ${bookId}`;
           console.error(errorMsg);
@@ -78,7 +111,7 @@ export const useBookData = () => {
     };
 
     fetchBook();
-  }, [bookId, libroOriginal, storedBooks, setStoredBooks, extendBookData]);
+  }, [bookId, storedBooks, setStoredBooks, extendBookData, initialMockBook]); // Added initialMockBook to dependencies
 
   return {
     bookData,
@@ -86,8 +119,9 @@ export const useBookData = () => {
     loading,
     error,
     bookId,
-    libroOriginal,
+    // Remove libroOriginal from return as its role is covered by initialMockBook and storedBooks logic
     storedBooks,
     setStoredBooks
   };
 };
+
