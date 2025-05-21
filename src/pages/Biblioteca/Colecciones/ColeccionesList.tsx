@@ -12,7 +12,7 @@ import { ErrorState } from "@/components/common/ErrorState";
 import { LoadingState } from "@/components/common/LoadingState";
 
 const ColeccionesList = () => {
-  console.log("Rendering ColeccionesList component");
+  console.log("Rendering ColeccionesList component (now SeriesList)");
   
   const [viewMode, setViewMode] = useViewMode("grid");
   const [searchQuery, setSearchQuery] = useState("");
@@ -27,7 +27,7 @@ const ColeccionesList = () => {
   } = useCollections();
 
   useEffect(() => {
-    console.log("ColeccionesList effect - collections:", colecciones?.length || 0);
+    console.log("SeriesList effect - series:", colecciones?.length || 0);
   }, [colecciones]);
 
   // Filtrar colecciones por búsqueda
@@ -54,7 +54,7 @@ const ColeccionesList = () => {
 
   // Show loading state while collections are loading
   if (isLoading) {
-    return <LoadingState text="Cargando colecciones..." />;
+    return <LoadingState text="Cargando series..." />;
   }
 
   return (
@@ -70,7 +70,7 @@ const ColeccionesList = () => {
 
       <CollectionsContent
         collections={filteredColecciones}
-        isLoading={false}
+        isLoading={false} // isLoading is handled above, so pass false here
         loadError={loadError}
         viewMode={viewMode}
         onRetry={handleRetryLoading}
@@ -80,9 +80,15 @@ const ColeccionesList = () => {
         isOpen={isCreatingCollection}
         onClose={handleCloseCreateDialog}
         onCreate={handleCreateCollection}
+        dialogTitle="Crear Nueva Serie"
+        labelNombre="Nombre de la serie"
+        labelDescripcion="Descripción de la serie"
+        placeholderNombre="Ej: Marketing Digital Avanzado"
+        placeholderDescripcion="Una serie sobre estrategias de marketing digital..."
       />
     </div>
   );
 };
 
 export default ColeccionesList;
+

@@ -36,7 +36,7 @@ export const CollectionDetailHeader = ({
           Volver
         </Button>
         <h1 className="font-heading text-xl font-bold md:text-2xl">
-          {isEditing ? 'Editar Colección' : collectionName}
+          {isEditing ? 'Editar Serie' : collectionName}
         </h1>
       </div>
       
@@ -85,3 +85,4 @@ export const CollectionDetailHeader = ({
     </div>
   );
 };
+

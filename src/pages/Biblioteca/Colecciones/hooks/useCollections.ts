@@ -19,17 +19,17 @@ export const useCollections = () => {
       // Check localStorage first for previously saved collections
       const storedCollections = localStorage.getItem('coleccionesData');
       if (storedCollections) {
-        console.log("[MOCK] Collections loaded from localStorage once");
+        console.log("[MOCK] Series loaded from localStorage once");
         setColecciones(JSON.parse(storedCollections));
       } else {
-        console.log("[MOCK] No collections found in localStorage, using mock data");
+        console.log("[MOCK] No series found in localStorage, using mock data");
         setColecciones(coleccionesSimuladas);
         // Save mock data to localStorage for persistence
         localStorage.setItem('coleccionesData', JSON.stringify(coleccionesSimuladas));
       }
     } catch (error) {
-      console.error("[MOCK] Error loading collections:", error);
-      setLoadError("No se pudieron cargar las colecciones. Usando datos locales.");
+      console.error("[MOCK] Error loading series:", error);
+      setLoadError("No se pudieron cargar las series. Usando datos locales.");
       
       // Fallback to mock data
       setColecciones(coleccionesSimuladas);
@@ -53,7 +53,7 @@ export const useCollections = () => {
     if (!newCollection.nombre) {
       toast({
         title: "Campo requerido",
-        description: "Por favor introduce un nombre para la colección.",
+        description: "Por favor introduce un nombre para la serie.",
         variant: "destructive"
       });
       return false;
@@ -107,16 +107,16 @@ export const useCollections = () => {
       }
 
       toast({
-        title: "Colección creada",
-        description: `La colección "${newCol.nombre}" ha sido creada con éxito.`
+        title: "Serie creada",
+        description: `La serie "${newCol.nombre}" ha sido creada con éxito.`
       });
       
       return true;
     } catch (error) {
-      console.error("[MOCK] Error creating collection:", error);
+      console.error("[MOCK] Error creating serie:", error);
       toast({
         title: "Error",
-        description: "No se pudo crear la colección. Inténtalo de nuevo.",
+        description: "No se pudo crear la serie. Inténtalo de nuevo.",
         variant: "destructive"
       });
       return false;
@@ -129,10 +129,11 @@ export const useCollections = () => {
   };
 
   return {
-    colecciones,
+    colecciones, // Mantengo el nombre de la variable por ahora para evitar refactor masivo
     isLoading,
     loadError,
-    createCollection,
+    createCollection, // La función también mantiene su nombre
     handleRetryLoading
   };
 };
+

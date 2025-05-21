@@ -1,6 +1,6 @@
 
 import { LucideIcon } from "lucide-react";
-import { BookOpen, Users, TrendingUp, TrendingDown } from "lucide-react";
+import { BookOpen, Users, TrendingUp, TrendingDown, FolderIcon } from "lucide-react"; // Added FolderIcon for series
 
 // Chart configuration with consistent colors
 export const CHART_CONFIG = {
@@ -31,7 +31,7 @@ export interface StatusData {
 
 export interface ContentCategory {
   title: string;
-  description: string;
+  description?: string; // Made optional
   color: string;
   icon?: LucideIcon; // Ahora es opcional ya que se definen directamente en Dashboard.tsx
   count: number;
@@ -48,7 +48,7 @@ export interface ChartItem {
 // Stats data
 export const getStatsData = (): StatItem[] => [
   { title: "Libros", value: "12", icon: BookOpen, change: "+2" },
-  { title: "Colecciones", value: "4", icon: Users, change: "+1" },
+  { title: "Series", value: "4", icon: FolderIcon, change: "+1" }, // Changed from Users to FolderIcon
   { title: "Ingresos", value: "€2,430", icon: TrendingUp, change: "+15%" },
   { title: "Gastos", value: "€1,890", icon: TrendingDown, change: "-5%" },
 ];
@@ -57,7 +57,7 @@ export const getStatsData = (): StatItem[] => [
 export const getContentCategoriesData = (): ContentCategory[] => [
   {
     title: "Alto Contenido",
-    description: "Libros con más de 100 páginas",
+    // description: "Libros con más de 100 páginas", // Description removed based on previous user request
     color: "bg-blue-500",
     count: 1,
     statusData: [
@@ -69,7 +69,7 @@ export const getContentCategoriesData = (): ContentCategory[] => [
   },
   {
     title: "Medio Contenido",
-    description: "Libros entre 30-100 páginas",
+    // description: "Libros entre 30-100 páginas", // Description removed
     color: "bg-orange-500",
     count: 1,
     statusData: [
@@ -81,7 +81,7 @@ export const getContentCategoriesData = (): ContentCategory[] => [
   },
   {
     title: "Bajo Contenido",
-    description: "Libros con menos de 30 páginas",
+    // description: "Libros con menos de 30 páginas", // Description removed
     color: "bg-green-500",
     count: 0,
     statusData: [
@@ -107,3 +107,4 @@ export const getBarChartData = (): ChartItem[] => [
   { name: "Medio Contenido", value: 1, color: "#fb923c" },
   { name: "Bajo Contenido", value: 0, color: "#22c55e" }, // Updated to new green
 ];
+

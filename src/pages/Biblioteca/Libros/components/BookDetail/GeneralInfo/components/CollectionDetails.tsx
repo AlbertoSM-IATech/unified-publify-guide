@@ -42,7 +42,7 @@ export const CollectionDetails = ({
 
   return (
     <div className="grid gap-3">
-      <Label>Colección Relacionada</Label>
+      <Label>Serie Relacionada</Label>
       {loadingLists || loadingColeccion ? (
         <div className="flex items-center space-x-2">
           <Loader2 className="h-4 w-4 animate-spin" />
@@ -52,7 +52,7 @@ export const CollectionDetails = ({
         <ViewCollectionDetailsCard coleccion={selectedColeccion} />
       ) : (
         <div className="rounded-md border border-input px-3 py-2 bg-muted/50">
-          Ninguna colección seleccionada
+          Ninguna serie seleccionada
         </div>
       )}
     </div>

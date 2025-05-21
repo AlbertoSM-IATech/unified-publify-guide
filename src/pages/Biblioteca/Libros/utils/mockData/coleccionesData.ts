@@ -43,10 +43,11 @@ export const coleccionesSimuladas = [
   {
     id: 5,
     nombre: "Cocina mediterránea",
-    descripcion: "Colección de libros de cocina mediterránea",
+    descripcion: "Serie de libros de cocina mediterránea", // Actualizado
     cantidadLibros: 1,
     fechaCreacion: "2023-05-15",
     libros: [5],
     estado: "Activa"
   }
 ];
+

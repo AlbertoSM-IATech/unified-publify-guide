@@ -30,9 +30,10 @@ export const ViewCollectionDetailsCard = ({ coleccion }: ViewCollectionDetailsCa
           className="flex items-center text-sm text-primary hover:underline hover:text-[#FB923C] transition-colors duration-200"
         >
           <ExternalLink size={14} className="mr-1" />
-          Ver colección
+          Ver serie
         </Link>
       </div>
     </motion.div>
   );
 };
+

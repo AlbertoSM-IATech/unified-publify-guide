@@ -13,7 +13,7 @@ export const menuItems: MenuItem[] = [
     label: "Biblioteca",
     subItems: [
       { path: "/biblioteca/libros", icon: <BookText size={18} className="text-gray-500" />, label: "Libros" },
-      { path: "/biblioteca/colecciones", icon: <FolderIcon size={18} className="text-gray-500" />, label: "Colecciones" },
+      { path: "/biblioteca/colecciones", icon: <FolderIcon size={18} className="text-gray-500" />, label: "Series" },
       { path: "/biblioteca/investigaciones", icon: <FileSearch size={18} className="text-gray-500" />, label: "Investigaciones" },
     ]
   },
@@ -23,3 +23,4 @@ export const menuItems: MenuItem[] = [
   { path: "/configuracion", icon: <Settings size={20} className="text-gray-500" />, label: "Configuración" },
   { path: "/contacto", icon: <MegaphoneIcon size={20} className="text-gray-500" />, label: "Contacto" },
 ];
+

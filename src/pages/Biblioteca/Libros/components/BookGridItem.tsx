@@ -81,7 +81,7 @@ export const BookGridItem = memo(({
           <div className="mt-auto space-y-2"> {/* mt-auto para empujar al fondo si hay espacio */}
             {collections.length > 0 && (
               <div>
-                <div className="text-xs text-muted-foreground mb-1">Colecciones:</div>
+                <div className="text-xs text-muted-foreground mb-1">Series:</div>
                 <div className="flex flex-wrap gap-1">
                   {collections.map(col => (
                     <Badge 
@@ -115,3 +115,4 @@ export const BookGridItem = memo(({
 });
 
 BookGridItem.displayName = 'BookGridItem';
+

@@ -6,7 +6,7 @@ import { toast } from "@/hooks/use-toast";
 
 export const collectionsService = {
   getAll: async (): Promise<Collection[]> => {
-    console.log("[MOCK] Getting all collections from localStorage");
+    console.log("[MOCK] Getting all series from localStorage");
     
     // Return from localStorage if available
     const storedCollections = localStorage.getItem('coleccionesData');
@@ -15,13 +15,13 @@ export const collectionsService = {
     }
     
     // Mock data as a fallback
-    console.log("[MOCK] No collections in localStorage, using mock data");
+    console.log("[MOCK] No series in localStorage, using mock data");
     localStorage.setItem('coleccionesData', JSON.stringify(coleccionesSimuladas));
     return coleccionesSimuladas;
   },
   
   getById: async (id: number): Promise<Collection | null> => {
-    console.log(`[MOCK] Getting collection with ID ${id} from localStorage`);
+    console.log(`[MOCK] Getting serie with ID ${id} from localStorage`);
     
     // Return from localStorage if available
     const storedCollections = localStorage.getItem('coleccionesData');
@@ -31,13 +31,13 @@ export const collectionsService = {
     }
     
     // Mock data as a fallback
-    console.log("[MOCK] No collections in localStorage, using mock data");
+    console.log("[MOCK] No series in localStorage, using mock data");
     localStorage.setItem('coleccionesData', JSON.stringify(coleccionesSimuladas));
     return coleccionesSimuladas.find(collection => collection.id === id) || null;
   },
   
   create: async (collection: Omit<Collection, 'id'>): Promise<Collection | null> => {
-    console.log("[MOCK] Creating new collection in localStorage");
+    console.log("[MOCK] Creating new serie in localStorage");
     
     // Use localStorage
     const storedCollections = localStorage.getItem('coleccionesData');
@@ -61,15 +61,15 @@ export const collectionsService = {
     
     // Notify with toast
     toast({
-      title: "Colección creada",
-      description: "La colección ha sido creada exitosamente",
+      title: "Serie creada",
+      description: "La serie ha sido creada exitosamente",
     });
     
     return newCollection;
   },
   
   update: async (id: number, data: any): Promise<Collection | null> => {
-    console.log(`[MOCK] Updating collection with ID ${id} in localStorage`);
+    console.log(`[MOCK] Updating serie with ID ${id} in localStorage`);
     
     // Use localStorage
     const storedCollections = localStorage.getItem('coleccionesData');
@@ -87,8 +87,8 @@ export const collectionsService = {
         
         // Notify with toast
         toast({
-          title: "Colección actualizada",
-          description: "La colección ha sido actualizada exitosamente",
+          title: "Serie actualizada",
+          description: "La serie ha sido actualizada exitosamente",
         });
         
         return updatedCollection;
@@ -98,7 +98,7 @@ export const collectionsService = {
   },
   
   delete: async (id: number): Promise<boolean> => {
-    console.log(`[MOCK] Deleting collection with ID ${id} from localStorage`);
+    console.log(`[MOCK] Deleting serie with ID ${id} from localStorage`);
     
     // Use localStorage
     const storedCollections = localStorage.getItem('coleccionesData');
@@ -111,8 +111,8 @@ export const collectionsService = {
       
       // Notify with toast
       toast({
-        title: "Colección eliminada",
-        description: "La colección ha sido eliminada exitosamente",
+        title: "Serie eliminada",
+        description: "La serie ha sido eliminada exitosamente",
       });
       
       return true;
@@ -121,7 +121,7 @@ export const collectionsService = {
   },
   
   addBook: async (collectionId: number, bookId: number): Promise<boolean> => {
-    console.log(`[MOCK] Adding book ${bookId} to collection ${collectionId} in localStorage`);
+    console.log(`[MOCK] Adding book ${bookId} to serie ${collectionId} in localStorage`);
     
     // Use localStorage
     const storedCollections = localStorage.getItem('coleccionesData');
@@ -141,7 +141,7 @@ export const collectionsService = {
           // Notify with toast
           toast({
             title: "Libro agregado",
-            description: "El libro ha sido añadido a la colección exitosamente",
+            description: "El libro ha sido añadido a la serie exitosamente",
           });
           
           return true;
@@ -152,7 +152,7 @@ export const collectionsService = {
   },
   
   removeBook: async (collectionId: number, bookId: number): Promise<boolean> => {
-    console.log(`[MOCK] Removing book ${bookId} from collection ${collectionId} in localStorage`);
+    console.log(`[MOCK] Removing book ${bookId} from serie ${collectionId} in localStorage`);
     
     // Use localStorage
     const storedCollections = localStorage.getItem('coleccionesData');
@@ -171,7 +171,7 @@ export const collectionsService = {
         // Notify with toast
         toast({
           title: "Libro removido",
-          description: "El libro ha sido removido de la colección exitosamente",
+          description: "El libro ha sido removido de la serie exitosamente",
         });
         
         return true;
@@ -180,3 +180,4 @@ export const collectionsService = {
     return false;
   }
 };
+

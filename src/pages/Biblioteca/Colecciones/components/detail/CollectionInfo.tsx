@@ -23,12 +23,12 @@ export const CollectionInfo = ({
       <CardContent className="p-6">
         <div className="space-y-4">
           <div>
-            <h3 className="mb-2 font-medium">Nombre de la colección</h3>
+            <h3 className="mb-2 font-medium">Nombre de la serie</h3>
             {isEditing ? (
               <Input
                 value={editedCollection.nombre}
                 onChange={(e) => onUpdateField("nombre", e.target.value)}
-                placeholder="Nombre de la colección"
+                placeholder="Nombre de la serie"
               />
             ) : (
               <p className="text-lg font-semibold">{collection.nombre}</p>
@@ -41,7 +41,7 @@ export const CollectionInfo = ({
               <Textarea
                 value={editedCollection.descripcion}
                 onChange={(e) => onUpdateField("descripcion", e.target.value)}
-                placeholder="Descripción de la colección"
+                placeholder="Descripción de la serie"
                 rows={4}
               />
             ) : (
@@ -60,3 +60,4 @@ export const CollectionInfo = ({
     </Card>
   );
 };
+

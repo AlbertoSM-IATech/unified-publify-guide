@@ -66,12 +66,12 @@ export const CollectionRelation = ({
 
   return (
     <div className="grid gap-3">
-      <Label htmlFor="colecciones">Colecciones Relacionadas</Label>
+      <Label htmlFor="colecciones">Series Relacionadas</Label>
       
       {isEditing ? (
         <div className="space-y-4">
           <div className="w-full border border-input rounded-md p-4 bg-background">
-            <div className="text-sm font-medium mb-2">Selecciona las colecciones:</div>
+            <div className="text-sm font-medium mb-2">Selecciona las series:</div>
             
             {collections.length > 0 ? (
               <div className="space-y-2 max-h-40 overflow-y-auto">
@@ -95,7 +95,7 @@ export const CollectionRelation = ({
               </div>
             ) : (
               <div className="text-sm text-muted-foreground">
-                No hay colecciones disponibles.
+                No hay series disponibles.
               </div>
             )}
           </div>
@@ -141,7 +141,7 @@ export const CollectionRelation = ({
             </div>
           ) : (
             <div className="rounded-md border border-input px-3 py-2 bg-muted/50">
-              Este libro no pertenece a ninguna colección
+              Este libro no pertenece a ninguna serie
             </div>
           )}
         </>
@@ -172,7 +172,7 @@ export const CollectionRelation = ({
                   className="flex items-center text-sm text-primary hover:underline hover:text-[#FB923C] transition-colors duration-200"
                 >
                   <ExternalLink size={14} className="mr-1" />
-                  Ver colección
+                  Ver serie
                 </Link>
               </div>
             </motion.div>
@@ -182,3 +182,4 @@ export const CollectionRelation = ({
     </div>
   );
 };
+

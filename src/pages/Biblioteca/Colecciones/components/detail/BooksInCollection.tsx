@@ -75,7 +75,7 @@ export const BooksInCollection = ({
       <CardHeader className="pb-3">
         <CardTitle className="text-base font-medium flex items-center gap-2">
           <BookOpen size={18} className="text-[#FB923C]" />
-          {isEditing ? "Gestionar Libros en la Colección" : "Libros en esta Colección"}
+          {isEditing ? "Gestionar Libros en la Serie" : "Libros en esta Serie"}
           <Badge variant="outline" className="ml-2">{books.length}</Badge>
         </CardTitle>
       </CardHeader>
@@ -212,7 +212,7 @@ export const BooksInCollection = ({
               </div>
             ) : (
               <div className="py-8 text-center text-muted-foreground border rounded-md">
-                Esta colección no tiene libros asociados.
+                Esta serie no tiene libros asociados.
               </div>
             )}
           </>
@@ -221,3 +221,4 @@ export const BooksInCollection = ({
     </Card>
   );
 };
+
