@@ -37,14 +37,14 @@ export const StatusFields = ({ book, isEditing, form, onUpdateBook }: StatusFiel
   const handleStatusChange = (value: string) => {
     form.setValue("estado", value); // Actualiza el valor en react-hook-form
     if (isEditing) {
-      onUpdateBook({ estado: value }); // Notifica el cambio al hook principal
+      onUpdateBook({ estado: value as Book["estado"] }); // Notifica el cambio al hook principal
     }
   };
 
   const handleContentChange = (value: string) => {
     form.setValue("contenido", value); // Actualiza el valor en react-hook-form
     if (isEditing) {
-      onUpdateBook({ contenido: value }); // Notifica el cambio al hook principal
+      onUpdateBook({ contenido: value as Book["contenido"] }); // Notifica el cambio al hook principal
     }
   };
 
@@ -119,3 +119,4 @@ export const StatusFields = ({ book, isEditing, form, onUpdateBook }: StatusFiel
     </div>
   );
 };
+
