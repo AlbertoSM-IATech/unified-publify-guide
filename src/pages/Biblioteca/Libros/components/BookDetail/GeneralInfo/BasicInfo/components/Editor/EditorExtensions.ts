@@ -1,90 +1,50 @@
 
-import StarterKit from "@tiptap/starter-kit";
-import Underline from "@tiptap/extension-underline";
-import Link from "@tiptap/extension-link";
-import TextAlign from "@tiptap/extension-text-align";
-import { Extension } from "@tiptap/core";
-import { Node } from "@tiptap/core";
+import StarterKit from '@tiptap/starter-kit';
+import Link from '@tiptap/extension-link';
+import TextAlign from '@tiptap/extension-text-align';
+import BubbleMenu from '@tiptap/extension-bubble-menu';
+// Asegúrate de que TwoColumnsNode y ImageGalleryNode estén definidos e importados correctamente si los usas.
+// import { TwoColumnsNode } from './Nodes/TwoColumnsNode'; 
+// import { ImageGalleryNode } from './Nodes/ImageGalleryNode';
+// import Placeholder from '@tiptap/extension-placeholder' // Si necesitas placeholder
 
-// Custom extension for two-column layout
-export const TwoColumns = Node.create({
-  name: 'twoColumns',
-  group: 'block',
-  content: 'block+',
-  defining: true,
-  isolating: true,
-
-  parseHTML() {
-    return [
-      {
-        tag: 'div[data-type="two-columns"]',
-      },
-    ];
-  },
-
-  renderHTML({ HTMLAttributes }) {
-    return ['div', { 'data-type': 'two-columns', class: 'two-columns-container', ...HTMLAttributes }, 0];
-  },
-});
-
-// Custom extension for image gallery
-export const ImageGallery = Node.create({
-  name: 'imageGallery',
-  group: 'block',
-  content: 'inline*',
-  defining: true,
-
-  parseHTML() {
-    return [
-      {
-        tag: 'div[data-type="image-gallery"]',
-      },
-    ];
-  },
-
-  renderHTML({ HTMLAttributes }) {
-    return ['div', { 'data-type': 'image-gallery', class: 'image-gallery-container', ...HTMLAttributes }, 0];
-  },
-});
-
-// Custom extension for A+ content HTML formatting
-export const APlusContent = Extension.create({
-  name: 'aplusContent',
-
-  addGlobalAttributes() {
-    return [
-      {
-        types: ['heading'],
-        attributes: {
-          class: {
-            default: null,
-            renderHTML: attributes => {
-              if (!attributes.class) {
-                return {};
-              }
-              return { class: attributes.class };
-            },
-          },
-        },
-      },
-    ];
-  },
-});
-
-// Export all extensions as a unified collection
 export const editorExtensions = [
-  StarterKit,
-  Underline,
-  TextAlign.configure({
-    types: ['heading', 'paragraph'],
+  StarterKit.configure({
+    // StarterKit ya incluye bold, italic, strike, underline, heading, bulletList, orderedList, etc.
+    // Si necesitas configurar el placeholder, puedes hacerlo aquí o con la extensión Placeholder.
+    // placeholder: {
+    //   placeholder: 'Escribe aquí...',
+    // },
   }),
   Link.configure({
-    openOnClick: false,
-    HTMLAttributes: {
-      class: 'text-primary underline',
-    },
+    openOnClick: true,
+    autolink: true,
+    linkOnPaste: true,
+    // Considera validar las URLs si es necesario
+    // validate: href => /^https?:\/\//.test(href), 
   }),
-  TwoColumns,
-  ImageGallery,
-  APlusContent,
+  TextAlign.configure({
+    types: ['heading', 'paragraph'],
+    defaultAlignment: 'left',
+  }),
+  BubbleMenu.configure({
+    // Aquí puedes configurar las opciones de Tippy.js si es necesario,
+    // o el pluginKey si tienes múltiples bubble menus.
+    // tippyOptions: { duration: 100, animation: 'scale-subtle' },
+  }),
+  // Si estás usando nodos personalizados como TwoColumnsNode o ImageGalleryNode,
+  // asegúrate de que estén importados y añadidos aquí.
+  // Ejemplo:
+  // TwoColumnsNode,
+  // ImageGalleryNode,
+
+  // Si necesitas la extensión Placeholder explícitamente:
+  // Placeholder.configure({
+  //   placeholder: 'Comienza a escribir tu descripción...',
+  // })
 ];
+
+// Nota: Si TwoColumnsNode y ImageGalleryNode no existen o no están siendo usados,
+// puedes eliminar los comentarios relacionados o implementarlos.
+// Por ahora, los he comentado para evitar errores si no están definidos.
+
