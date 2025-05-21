@@ -22,7 +22,7 @@ import {
 } from '@/components/ui/select';
 import { Book } from '@/pages/Biblioteca/Libros/types/bookTypes';
 import { Loader2 } from 'lucide-react';
-import { NewInvestigationData } from '../../types/investigacionTypes'; // Importar el tipo compartido
+import { NewInvestigationData } from '../types/investigacionTypes'; // Ruta corregida
 
 // La interfaz local NewInvestigationData ha sido eliminada
 
