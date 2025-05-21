@@ -8,7 +8,7 @@ export const investigacionesSimuladas = [
     id: 1,
     titulo: "Investigación para El Arte de la Estrategia",
     descripcion: "Notas y fuentes para el libro",
-    libroId: 1,
+    libroId: "1", // Cambiado a string
     libroTitulo: "El Arte de la Estrategia",
     fechaActualizacion: "2023-10-05"
   },
@@ -16,7 +16,7 @@ export const investigacionesSimuladas = [
     id: 2,
     titulo: "Investigación para Finanzas para Emprendedores",
     descripcion: "Referencias y estudios de caso",
-    libroId: 2,
+    libroId: "2", // Cambiado a string
     libroTitulo: "Finanzas para Emprendedores",
     fechaActualizacion: "2023-04-15"
   },
@@ -24,7 +24,7 @@ export const investigacionesSimuladas = [
     id: 3,
     titulo: "Investigación para Marketing Digital",
     descripcion: "Tendencias y estadísticas actuales",
-    libroId: 3,
+    libroId: "3", // Cambiado a string
     libroTitulo: "Marketing Digital",
     fechaActualizacion: "2023-03-20"
   },
@@ -32,8 +32,9 @@ export const investigacionesSimuladas = [
     id: 4,
     titulo: "Investigación para Desarrollo Personal",
     descripcion: "Técnicas y metodologías",
-    libroId: 4,
+    libroId: "4", // Cambiado a string
     libroTitulo: "Desarrollo Personal",
     fechaActualizacion: "2023-02-25"
   }
 ];
+
