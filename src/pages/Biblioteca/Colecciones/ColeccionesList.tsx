@@ -19,10 +19,10 @@ const ColeccionesList = () => {
   const [isCreatingCollection, setIsCreatingCollection] = useState(false);
   
   const {
-    colecciones,
+    colecciones, // Renamed from series in useCollections for consistency, but variable name kept here
     isLoading,
     loadError,
-    createCollection,
+    createCollection, // Function name kept from useCollections
     handleRetryLoading
   } = useCollections();
 
@@ -45,8 +45,10 @@ const ColeccionesList = () => {
     setIsCreatingCollection(false);
   };
 
-  const handleCreateCollection = async (newCollection: { nombre: string; descripcion: string }) => {
-    const success = await createCollection(newCollection);
+  const handleCreateCollection = async (newCollectionData: { nombre: string; descripcion: string; libros?: number[] }) => {
+    // The onCreate prop in CreateCollectionDialog expects 'libros'
+    // useCollections createCollection also handles 'libros'
+    const success = await createCollection(newCollectionData);
     if (success) {
       handleCloseCreateDialog();
     }
@@ -55,6 +57,17 @@ const ColeccionesList = () => {
   // Show loading state while collections are loading
   if (isLoading) {
     return <LoadingState text="Cargando series..." />;
+  }
+
+  // Show error state if there's an error loading collections
+  // isLoading is false here, so if loadError is present, it means loading failed
+  if (loadError && !colecciones?.length) {
+    return (
+      <ErrorState 
+        message={loadError}
+        onRetry={handleRetryLoading} 
+      />
+    );
   }
 
   return (
@@ -80,15 +93,16 @@ const ColeccionesList = () => {
         isOpen={isCreatingCollection}
         onClose={handleCloseCreateDialog}
         onCreate={handleCreateCollection}
-        dialogTitle="Crear Nueva Serie"
-        labelNombre="Nombre de la serie"
-        labelDescripcion="Descripción de la serie"
-        placeholderNombre="Ej: Marketing Digital Avanzado"
-        placeholderDescripcion="Una serie sobre estrategias de marketing digital..."
+        // Las siguientes props fueron eliminadas ya que no existen en CreateCollectionDialogProps
+        // y los textos correspondientes ya están actualizados dentro del componente CreateCollectionDialog
+        // dialogTitle="Crear Nueva Serie"
+        // labelNombre="Nombre de la serie"
+        // labelDescripcion="Descripción de la serie"
+        // placeholderNombre="Ej: Marketing Digital Avanzado"
+        // placeholderDescripcion="Una serie sobre estrategias de marketing digital..."
       />
     </div>
   );
 };
 
 export default ColeccionesList;
-
