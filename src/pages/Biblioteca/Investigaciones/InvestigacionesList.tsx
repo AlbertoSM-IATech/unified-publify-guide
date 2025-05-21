@@ -1,16 +1,25 @@
-
 import { useState, useEffect } from "react";
 import { BookOpen, FileText, Plus, Search, Filter, ArrowLeft } from "lucide-react";
 import { motion } from "framer-motion";
 import { ResponsiveGrid } from "@/components/layout/ResponsiveGrid";
 import { Link, useLocation } from "react-router-dom";
 import { investigacionesSimuladas } from "../Libros/utils/librosUtils";
+import { Button } from "@/components/common/Button"; // Import common Button
+import { CreateInvestigationDialog, NewInvestigationData } from "./components/CreateInvestigationDialog";
+import { useBookData } from "@/hooks/useBookData";
+import { toast } from "@/hooks/use-toast";
+
+// Definir el tipo para un objeto de investigación basado en la estructura de investigacionesSimuladas
+type Investigacion = typeof investigacionesSimuladas[0];
 
 export const InvestigacionesList = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [investigaciones, setInvestigaciones] = useState(investigacionesSimuladas);
-  const [selectedInvestigacion, setSelectedInvestigacion] = useState<typeof investigacionesSimuladas[0] | null>(null);
+  const [investigaciones, setInvestigaciones] = useState<Investigacion[]>(investigacionesSimuladas);
+  const [selectedInvestigacion, setSelectedInvestigacion] = useState<Investigacion | null>(null);
   const location = useLocation();
+
+  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
+  const { books: availableBooks, isLoading: isLoadingBooks } = useBookData();
 
   // Manejar selección de investigación desde otra página
   useEffect(() => {
@@ -20,24 +29,62 @@ export const InvestigacionesList = () => {
       if (investigacion) {
         setSelectedInvestigacion(investigacion);
       }
+      // Limpiar el estado de la ubicación para evitar re-selección en navegación
+      window.history.replaceState({}, document.title) 
     }
   }, [location.state, investigaciones]);
 
   // Filtrar investigaciones por búsqueda
   const filteredInvestigaciones = investigaciones.filter(investigacion => 
     investigacion.titulo.toLowerCase().includes(searchQuery.toLowerCase()) || 
-    investigacion.descripcion.toLowerCase().includes(searchQuery.toLowerCase()) || 
+    (investigacion.descripcion && investigacion.descripcion.toLowerCase().includes(searchQuery.toLowerCase())) || 
     investigacion.libroTitulo.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   // Manejar la selección de una investigación
-  const handleSelectInvestigacion = (investigacion: typeof investigacionesSimuladas[0]) => {
+  const handleSelectInvestigacion = (investigacion: Investigacion) => {
     setSelectedInvestigacion(investigacion);
   };
 
   // Volver a la lista de investigaciones
   const handleVolver = () => {
     setSelectedInvestigacion(null);
+  };
+
+  const handleCreateInvestigacion = (data: NewInvestigationData) => {
+    if (!data.libroId) {
+      toast({
+        title: "Error",
+        description: "Debe seleccionar un libro asociado.",
+        variant: "destructive",
+      });
+      return;
+    }
+    const selectedBook = availableBooks.find(b => b.id === data.libroId);
+    if (!selectedBook) {
+      toast({
+        title: "Error",
+        description: "El libro seleccionado no es válido.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    const newId = investigaciones.length > 0 ? Math.max(...investigaciones.map(inv => inv.id)) + 1 : 1;
+    const newInvestigation: Investigacion = {
+      id: newId,
+      titulo: data.titulo,
+      descripcion: data.descripcion,
+      libroId: selectedBook.id,
+      libroTitulo: selectedBook.titulo,
+      fechaActualizacion: new Date().toISOString().split('T')[0],
+    };
+    setInvestigaciones(prev => [...prev, newInvestigation]);
+    setIsCreateDialogOpen(false);
+    toast({
+      title: "Investigación Creada",
+      description: `"${data.titulo}" ha sido creada exitosamente.`,
+    });
   };
 
   // Si hay una investigación seleccionada, mostrar el editor
@@ -71,12 +118,8 @@ export const InvestigacionesList = () => {
               crear y editar tu investigación con formato.
             </p>
             <div className="flex space-x-4">
-              <button className="rounded-md bg-primary px-4 py-2 text-sm text-primary-foreground hover:bg-primary/90">
-                Guardar cambios
-              </button>
-              <button className="rounded-md border border-input bg-background px-4 py-2 text-sm hover:bg-muted">
-                Vista previa
-              </button>
+              <Button variant="default">Guardar cambios</Button>
+              <Button variant="outline">Vista previa</Button>
             </div>
           </div>
         </div>
@@ -93,10 +136,13 @@ export const InvestigacionesList = () => {
             Tus notas de investigación para cada libro
           </p>
         </div>
-        <button className="mt-4 flex items-center rounded-md bg-primary px-4 py-2 text-primary-foreground hover:bg-primary/90 md:mt-0">
+        <Button 
+          onClick={() => setIsCreateDialogOpen(true)}
+          className="mt-4 md:mt-0"
+        >
           <Plus size={18} className="mr-2" />
           Nueva Investigación
-        </button>
+        </Button>
       </div>
 
       <div className="mb-6 flex flex-col space-y-4 rounded-lg border bg-card p-4 md:flex-row md:items-center md:justify-between md:space-y-0">
@@ -113,10 +159,10 @@ export const InvestigacionesList = () => {
           />
         </div>
         <div className="flex items-center space-x-2">
-          <button className="inline-flex items-center rounded-md border border-input bg-background px-3 py-2 text-sm hover:bg-muted">
+          <Button variant="outline" className="items-center">
             <Filter size={16} className="mr-2" />
             Filtros
-          </button>
+          </Button>
         </div>
       </div>
 
@@ -170,6 +216,14 @@ export const InvestigacionesList = () => {
           </motion.div>
         ))}
       </ResponsiveGrid>
+
+      <CreateInvestigationDialog
+        isOpen={isCreateDialogOpen}
+        onClose={() => setIsCreateDialogOpen(false)}
+        onSubmit={handleCreateInvestigacion}
+        books={availableBooks}
+        isLoadingBooks={isLoadingBooks}
+      />
     </div>
   );
 };
