@@ -1,10 +1,18 @@
 
 import { Book } from "../types/bookTypes";
 import { BookGridItem } from "./BookGridItem";
-import { memo, useState, useEffect } from "react";
+import { memo } from "react";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { coleccionesSimuladas } from "../utils/mockData/coleccionesData";
 import { Collection } from "../../Colecciones/types/collectionTypes";
+import { investigacionesSimuladas } from "../utils/mockData/investigacionesData"; // Importar datos de investigaciones
+
+// Definir un tipo simple para Investigación si no existe uno más complejo
+interface Investigation {
+  id: number;
+  titulo: string;
+  // otros campos relevantes si los hay
+}
 
 interface BooksGridProps {
   libros: Book[];
@@ -16,6 +24,11 @@ export const BooksGrid = memo(({ libros, getStatusColor, getContentColor }: Book
   const [collections, setCollections] = useLocalStorage<Collection[]>(
     'coleccionesData',
     coleccionesSimuladas
+  );
+  
+  const [investigations, setInvestigations] = useLocalStorage<Investigation[]>(
+    'investigacionesData',
+    investigacionesSimuladas
   );
   
   // If there are no books, show empty state
@@ -39,9 +52,17 @@ export const BooksGrid = memo(({ libros, getStatusColor, getContentColor }: Book
       }));
   };
 
+  // Get related investigation name for the book
+  const getBookInvestigationName = (book: Book): string | undefined => {
+    if (!book.investigacionId) return undefined;
+    const investigation = investigations.find(inv => inv.id === book.investigacionId);
+    return investigation?.titulo;
+  };
+
   return (
     <div className="w-full">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+      {/* Modificado para mostrar 2 columnas en md y superior, 1 en sm */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
         {libros.map((libro) => (
           <div key={libro.id} className="h-full">
             <BookGridItem
@@ -49,6 +70,7 @@ export const BooksGrid = memo(({ libros, getStatusColor, getContentColor }: Book
               getStatusColor={getStatusColor}
               getContentColor={getContentColor}
               collections={getBookCollections(libro)}
+              investigationName={getBookInvestigationName(libro)}
             />
           </div>
         ))}

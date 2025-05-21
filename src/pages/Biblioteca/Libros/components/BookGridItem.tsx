@@ -6,19 +6,22 @@ import { calculateNetRoyalties } from "../utils/formatUtils";
 import { memo, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { DEFAULT_COVER_URL } from "@/services/supabase/books/constants"; 
+import { BookOpenText } from "lucide-react"; // Icono para investigación
 
 interface BookGridItemProps {
   libro: Book;
   getStatusColor: (status: string) => string;
   getContentColor: (content: string) => string;
   collections?: { id: number; nombre: string }[];
+  investigationName?: string; // Nueva prop
 }
 
 export const BookGridItem = memo(({ 
   libro, 
   getStatusColor, 
   getContentColor,
-  collections = [] 
+  collections = [],
+  investigationName
 }: BookGridItemProps) => {
   const [imgSrc, setImgSrc] = useState<string>(libro.imageUrl || libro.portadaUrl || DEFAULT_COVER_URL);
   
@@ -70,22 +73,36 @@ export const BookGridItem = memo(({
             </span>
           </div>
           
-          {collections.length > 0 && (
-            <div className="mt-3">
-              <div className="text-xs text-muted-foreground mb-1">Colecciones:</div>
-              <div className="flex flex-wrap gap-1">
-                {collections.map(col => (
-                  <Badge 
-                    key={col.id} 
-                    variant="outline"
-                    className="text-xs px-1.5 py-0.5 truncate max-w-[120px]"
-                  >
-                    {col.nombre}
-                  </Badge>
-                ))}
+          <div className="mt-3 space-y-2">
+            {collections.length > 0 && (
+              <div>
+                <div className="text-xs text-muted-foreground mb-1">Colecciones:</div>
+                <div className="flex flex-wrap gap-1">
+                  {collections.map(col => (
+                    <Badge 
+                      key={col.id} 
+                      variant="outline"
+                      className="text-xs px-1.5 py-0.5 truncate max-w-[120px]"
+                    >
+                      {col.nombre}
+                    </Badge>
+                  ))}
+                </div>
               </div>
-            </div>
-          )}
+            )}
+
+            {investigationName && (
+              <div>
+                <div className="text-xs text-muted-foreground mb-1 flex items-center">
+                  <BookOpenText size={12} className="mr-1 text-muted-foreground" />
+                  Investigación:
+                </div>
+                <p className="text-xs text-foreground truncate" title={investigationName}>
+                  {investigationName}
+                </p>
+              </div>
+            )}
+          </div>
         </div>
       </Link>
     </Card>
