@@ -28,7 +28,8 @@ export const CollectionDetails = ({
         try {
           const coleccion = await fetchColeccionById(book.proyectoId);
           setSelectedColeccion(coleccion);
-        } catch (error)          console.error("Error fetching related collection:", error);
+        } catch (error) { // Llaves restauradas aquí
+          console.error("Error fetching related collection:", error);
         } finally {
           setLoadingColeccion(false);
         }
@@ -57,3 +58,4 @@ export const CollectionDetails = ({
     </div>
   );
 };
+
