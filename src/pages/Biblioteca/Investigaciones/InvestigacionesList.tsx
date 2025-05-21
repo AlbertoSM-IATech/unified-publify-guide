@@ -8,13 +8,18 @@ import { Button } from "@/components/common/Button"; // Import common Button
 import { CreateInvestigationDialog, NewInvestigationData } from "./components/CreateInvestigationDialog";
 import { useBookData } from "@/hooks/useBookData";
 import { toast } from "@/hooks/use-toast";
+import { useLocalStorage } from "@/hooks/useLocalStorage"; // Importar useLocalStorage
 
 // Definir el tipo para un objeto de investigación basado en la estructura de investigacionesSimuladas
 type Investigacion = typeof investigacionesSimuladas[0];
 
 export const InvestigacionesList = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [investigaciones, setInvestigaciones] = useState<Investigacion[]>(investigacionesSimuladas);
+  // Usar useLocalStorage para persistir las investigaciones
+  const [investigaciones, setInvestigaciones] = useLocalStorage<Investigacion[]>(
+    'publify_user_investigaciones', // Clave única para localStorage
+    investigacionesSimuladas // Valor inicial si no hay nada en localStorage
+  );
   const [selectedInvestigacion, setSelectedInvestigacion] = useState<Investigacion | null>(null);
   const location = useLocation();
 
@@ -25,7 +30,8 @@ export const InvestigacionesList = () => {
   useEffect(() => {
     if (location.state?.selectInvestigacion) {
       const investigacionId = location.state.selectInvestigacion;
-      const investigacion = investigaciones.find(inv => inv.id === investigacionId);
+      // Asegurarse de que 'investigaciones' no sea undefined o null antes de usar 'find'
+      const investigacion = investigaciones && investigaciones.find(inv => inv.id === investigacionId);
       if (investigacion) {
         setSelectedInvestigacion(investigacion);
       }
@@ -35,7 +41,7 @@ export const InvestigacionesList = () => {
   }, [location.state, investigaciones]);
 
   // Filtrar investigaciones por búsqueda
-  const filteredInvestigaciones = investigaciones.filter(investigacion => 
+  const filteredInvestigaciones = (investigaciones || []).filter(investigacion => 
     investigacion.titulo.toLowerCase().includes(searchQuery.toLowerCase()) || 
     (investigacion.descripcion && investigacion.descripcion.toLowerCase().includes(searchQuery.toLowerCase())) || 
     investigacion.libroTitulo.toLowerCase().includes(searchQuery.toLowerCase())
@@ -70,7 +76,8 @@ export const InvestigacionesList = () => {
       return;
     }
 
-    const newId = investigaciones.length > 0 ? Math.max(...investigaciones.map(inv => inv.id)) + 1 : 1;
+    const currentInvestigaciones = investigaciones || [];
+    const newId = currentInvestigaciones.length > 0 ? Math.max(...currentInvestigaciones.map(inv => inv.id)) + 1 : 1;
     const newInvestigation: Investigacion = {
       id: newId,
       titulo: data.titulo,
@@ -79,7 +86,7 @@ export const InvestigacionesList = () => {
       libroTitulo: selectedBook.titulo,
       fechaActualizacion: new Date().toISOString().split('T')[0],
     };
-    setInvestigaciones(prev => [...prev, newInvestigation]);
+    setInvestigaciones([...currentInvestigaciones, newInvestigation]);
     setIsCreateDialogOpen(false);
     toast({
       title: "Investigación Creada",
@@ -166,56 +173,63 @@ export const InvestigacionesList = () => {
         </div>
       </div>
 
-      <ResponsiveGrid 
-        columns={{ sm: 1, md: 2, lg: 2, xl: 2 }}
-        gap="lg"
-        className="mt-6"
-      >
-        {filteredInvestigaciones.map(investigacion => (
-          <motion.div
-            key={investigacion.id}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
-            whileHover={{ 
-              y: -5,
-              transition: { duration: 0.2 }
-            }}
-            onClick={() => handleSelectInvestigacion(investigacion)}
-            className="h-full"
-          >
-            <div className="card-hover group cursor-pointer rounded-lg border bg-card shadow-sm h-full flex overflow-hidden">
-              <div className="bg-primary/10 flex items-center justify-center p-6 w-1/4">
-                <FileText size={48} className="text-primary" />
-              </div>
-              
-              <div className="p-6 flex flex-col justify-between flex-1">
-                <div>
-                  <div className="flex justify-between items-center mb-2">
-                    <h3 className="font-medium text-lg">{investigacion.titulo}</h3>
-                    <div className="rounded-md px-2 py-1 text-xs bg-secondary/10 text-secondary-foreground">
-                      <Link to={`/biblioteca/libros/${investigacion.libroId}`} className="hover:underline">
-                        {investigacion.libroTitulo}
-                      </Link>
+      {/* Asegurarse de que filteredInvestigaciones es un array antes de mapear */}
+      {Array.isArray(filteredInvestigaciones) && filteredInvestigaciones.length > 0 ? (
+        <ResponsiveGrid 
+          columns={{ sm: 1, md: 2, lg: 2, xl: 2 }}
+          gap="lg"
+          className="mt-6"
+        >
+          {filteredInvestigaciones.map(investigacion => (
+            <motion.div
+              key={investigacion.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+              whileHover={{ 
+                y: -5,
+                transition: { duration: 0.2 }
+              }}
+              onClick={() => handleSelectInvestigacion(investigacion)}
+              className="h-full"
+            >
+              <div className="card-hover group cursor-pointer rounded-lg border bg-card shadow-sm h-full flex overflow-hidden">
+                <div className="bg-primary/10 flex items-center justify-center p-6 w-1/4">
+                  <FileText size={48} className="text-primary" />
+                </div>
+                
+                <div className="p-6 flex flex-col justify-between flex-1">
+                  <div>
+                    <div className="flex justify-between items-center mb-2">
+                      <h3 className="font-medium text-lg">{investigacion.titulo}</h3>
+                      <div className="rounded-md px-2 py-1 text-xs bg-secondary/10 text-secondary-foreground">
+                        <Link to={`/biblioteca/libros/${investigacion.libroId}`} className="hover:underline">
+                          {investigacion.libroTitulo}
+                        </Link>
+                      </div>
                     </div>
+                    <p className="mt-1 text-sm text-muted-foreground line-clamp-2">
+                      {investigacion.descripcion}
+                    </p>
                   </div>
-                  <p className="mt-1 text-sm text-muted-foreground line-clamp-2">
-                    {investigacion.descripcion}
-                  </p>
-                </div>
-                <div className="mt-4 flex items-center justify-between border-t border-border pt-4 text-xs text-muted-foreground">
-                  <span>
-                    Actualizada: {new Date(investigacion.fechaActualizacion).toLocaleDateString()}
-                  </span>
-                  <span className="font-medium text-primary group-hover:underline">
-                    Abrir investigación
-                  </span>
+                  <div className="mt-4 flex items-center justify-between border-t border-border pt-4 text-xs text-muted-foreground">
+                    <span>
+                      Actualizada: {new Date(investigacion.fechaActualizacion).toLocaleDateString()}
+                    </span>
+                    <span className="font-medium text-primary group-hover:underline">
+                      Abrir investigación
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
-          </motion.div>
-        ))}
-      </ResponsiveGrid>
+            </motion.div>
+          ))}
+        </ResponsiveGrid>
+      ) : (
+        <div className="mt-6 text-center text-muted-foreground">
+          {searchQuery ? 'No se encontraron investigaciones con ese criterio.' : 'No hay investigaciones aún. ¡Crea una nueva!'}
+        </div>
+      )}
 
       <CreateInvestigationDialog
         isOpen={isCreateDialogOpen}
