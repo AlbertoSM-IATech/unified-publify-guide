@@ -14,7 +14,7 @@ export const ContentCategories = ({ contentCategories }: ContentCategoriesProps)
       <MotionWrapper delay={0.1} type="fadeLeft">
         <ContentCategoryCard 
           title="Alto Contenido" 
-          description="Libros con más de 100 páginas" 
+          // description="Libros con más de 100 páginas" <- Eliminado
           color="bg-blue-500" 
           icon={<BookText size={20} className="text-white" />} 
           count={contentCategories[0].count} 
@@ -24,7 +24,7 @@ export const ContentCategories = ({ contentCategories }: ContentCategoriesProps)
       <MotionWrapper delay={0.2} type="fadeUp">
         <ContentCategoryCard 
           title="Medio Contenido" 
-          description="Libros entre 30-100 páginas" 
+          // description="Libros entre 30-100 páginas" <- Eliminado
           color="bg-orange-500" 
           icon={<BookMarked size={20} className="text-white" />} 
           count={contentCategories[1].count} 
@@ -34,7 +34,7 @@ export const ContentCategories = ({ contentCategories }: ContentCategoriesProps)
       <MotionWrapper delay={0.3} type="fadeRight">
         <ContentCategoryCard 
           title="Bajo Contenido" 
-          description="Libros con menos de 30 páginas" 
+          // description="Libros con menos de 30 páginas" <- Eliminado
           color="bg-green-500" 
           icon={<BookType size={20} className="text-white" />} 
           count={contentCategories[2].count} 
@@ -44,3 +44,4 @@ export const ContentCategories = ({ contentCategories }: ContentCategoriesProps)
     </div>
   );
 };
+
