@@ -1,4 +1,3 @@
-
 import { LucideIcon } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -10,7 +9,7 @@ interface StatusData {
 
 interface ContentCategoryCardProps {
   title: string;
-  description: string;
+  description?: string; // Hacemos que la descripción sea opcional
   color: string;
   icon: React.ReactNode;
   count: number;
@@ -19,7 +18,7 @@ interface ContentCategoryCardProps {
 
 const ContentCategoryCard = ({
   title,
-  description,
+  description, // La descripción ahora es opcional
   color,
   icon,
   count,
@@ -48,7 +47,7 @@ const ContentCategoryCard = ({
         </motion.div>
         <div>
           <h3 className="font-heading font-medium">{title}</h3>
-          <p className="text-xs text-neutral-500 dark:text-neutral-400">{description}</p>
+          {description && <p className="text-xs text-neutral-500 dark:text-neutral-400">{description}</p>}
         </div>
         <motion.div 
           className="ml-auto text-2xl font-bold"
