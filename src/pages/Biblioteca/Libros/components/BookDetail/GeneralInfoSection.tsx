@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Book } from "../../types/bookTypes";
 import { Card, CardContent } from "@/components/ui/card";
@@ -14,7 +13,7 @@ import { Form } from "@/components/ui/form";
 interface GeneralInfoSectionProps {
   book: Book;
   isEditing: boolean;
-  onUpdateBook?: (updatedData: Partial<Book>) => void;
+  onUpdateBook: (updatedData: Partial<Book>) => void; // Changed: onUpdateBook was optional
 }
 
 export const GeneralInfoSection = ({ 
@@ -66,7 +65,12 @@ export const GeneralInfoSection = ({
           <Card className="border-slate-200 dark:border-slate-700 shadow-md overflow-hidden">
             <CardContent className="p-6">
               <TabsContent value="basic-info" className="mt-0">
-                <BasicInfoFields book={book} isEditing={isEditing} form={form} />
+                <BasicInfoFields 
+                  book={book} 
+                  isEditing={isEditing} 
+                  form={form} 
+                  onUpdateBook={onUpdateBook} // Pass onUpdateBook here
+                />
               </TabsContent>
               
               <TabsContent value="aplus-content" className="mt-0">
