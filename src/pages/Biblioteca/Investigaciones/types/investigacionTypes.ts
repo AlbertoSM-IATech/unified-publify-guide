@@ -1,8 +1,15 @@
 
-import { investigacionesSimuladas } from "../../Libros/utils/librosUtils";
+import { investigacionesSimuladas } from "../../Libros/utils/mockData/investigacionesData";
 
-// Definir el tipo para un objeto de investigación basado en la estructura de investigacionesSimuladas
-export type Investigacion = typeof investigacionesSimuladas[0];
+// Definimos explícitamente el tipo Investigacion en lugar de derivarlo
+export interface Investigacion {
+  id: string | number; // Ahora aceptamos tanto string como number
+  titulo: string;
+  descripcion: string;
+  libroId: string;
+  libroTitulo?: string;
+  fechaActualizacion: string;
+}
 
 export interface NewInvestigationData {
   titulo: string;

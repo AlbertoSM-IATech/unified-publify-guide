@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { investigacionesSimuladas } from "../Libros/utils/mockData/investigacionesData"; // Esta importación parece incorrecta, debería ser de investigaciones
@@ -28,7 +29,10 @@ export const InvestigacionesList = () => {
   useEffect(() => {
     if (location.state?.selectInvestigacion) {
       const investigacionId = location.state.selectInvestigacion;
-      const investigacion = investigaciones && investigaciones.find(inv => inv.id.toString() === investigacionId.toString());
+      // Asegurarse de que investigaciones es un array antes de usar find
+      const investigacion = Array.isArray(investigaciones) && 
+        investigaciones.find(inv => String(inv.id) === String(investigacionId));
+      
       if (investigacion) {
         setSelectedInvestigacion(investigacion);
       }
@@ -59,7 +63,7 @@ export const InvestigacionesList = () => {
       });
       return;
     }
-    const selectedBook = availableBooks.find(b => b.id.toString() === data.libroId); 
+    const selectedBook = availableBooks.find(b => String(b.id) === data.libroId); 
     if (!selectedBook) {
       toast({
         title: "Error",
@@ -70,11 +74,12 @@ export const InvestigacionesList = () => {
     }
 
     const currentInvestigaciones = investigaciones || [];
-    let newId: number | string;
+    let newId: string | number;
     if (currentInvestigaciones.length > 0) {
-        const allNumericIds = currentInvestigaciones.every(inv => typeof inv.id === 'number' || !isNaN(Number(inv.id.toString())));
+        const allNumericIds = currentInvestigaciones.every(inv => typeof inv.id === 'number' || !isNaN(Number(String(inv.id))));
         if (allNumericIds) {
-            newId = Math.max(0, ...currentInvestigaciones.map(inv => Number(inv.id.toString()))) + 1;
+            // Convertimos todos los IDs a números para encontrar el máximo
+            newId = Math.max(0, ...currentInvestigaciones.map(inv => Number(String(inv.id)))) + 1;
         } else {
             newId = `inv_${Date.now()}`;
             console.warn("Generando ID de investigación como string no numérico. Considerar una mejor estrategia si esto es intencional.");
