@@ -6,14 +6,15 @@ import { calculateNetRoyalties } from "../utils/formatUtils";
 import { memo, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { DEFAULT_COVER_URL } from "@/services/supabase/books/constants"; 
-import { BookOpenText } from "lucide-react"; // Icono para investigación
+import { BookOpenText } from "lucide-react";
+import { AspectRatio } from "@/components/ui/aspect-ratio"; // Importar AspectRatio
 
 interface BookGridItemProps {
   libro: Book;
   getStatusColor: (status: string) => string;
   getContentColor: (content: string) => string;
   collections?: { id: number; nombre: string }[];
-  investigationName?: string; // Nueva prop
+  investigationName?: string;
 }
 
 export const BookGridItem = memo(({ 
@@ -32,27 +33,31 @@ export const BookGridItem = memo(({
   const netRoyalties = calculateNetRoyalties(libro.hardcover || libro.paperback || libro.ebook).replace('.', ',');
   
   return (
-    <Card className="overflow-hidden border h-full hover:border-[#FB923C]/40 hover:shadow-md transition-all duration-200 flex flex-col">
+    <Card className="overflow-hidden border h-full hover:border-[#FB923C]/40 hover:shadow-md transition-all duration-200 flex flex-row">
       <Link
         to={`/biblioteca/libros/${libro.id}`}
-        className="flex flex-col h-full overflow-hidden focus:outline-none focus:ring-2 focus:ring-[#FB923C] focus:ring-offset-2 rounded-sm"
+        className="flex flex-row h-full w-full overflow-hidden focus:outline-none focus:ring-2 focus:ring-[#FB923C] focus:ring-offset-2 rounded-sm group"
       >
-        <div className="relative w-full pt-[155%] overflow-hidden">
-          <img
-            src={imgSrc}
-            alt={libro.titulo}
-            className="absolute inset-0 h-full w-full object-cover object-center transition-transform duration-200 hover:scale-105"
-            onError={handleImageError}
-            loading="lazy"
-          />
-          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3 pt-10">
-            <h3 className="font-medium text-white line-clamp-2">{libro.titulo}</h3>
-            <p className="text-sm text-white/80">{libro.autor}</p>
-          </div>
+        {/* Image Section */}
+        <div className="w-1/3 flex-shrink-0 h-full"> {/* Ajusta w-1/3 según sea necesario, ej: w-32, w-40 */}
+          <AspectRatio ratio={1600 / 2560} className="h-full w-full bg-muted">
+            <img
+              src={imgSrc}
+              alt={libro.titulo}
+              className="h-full w-full object-cover transition-transform duration-200 group-hover:scale-105"
+              onError={handleImageError}
+              loading="lazy"
+            />
+          </AspectRatio>
         </div>
-        <div className="p-4 flex-1 flex flex-col justify-between">
+
+        {/* Content Section */}
+        <div className="flex-1 p-4 flex flex-col justify-between overflow-y-auto">
           <div>
-            <div className="flex justify-between items-center mb-3">
+            <h3 className="font-medium text-foreground line-clamp-2 mb-1">{libro.titulo}</h3>
+            <p className="text-sm text-muted-foreground mb-3 line-clamp-1">{libro.autor}</p>
+            
+            <div className="flex justify-between items-center mb-2">
               <span
                 className={`inline-flex items-center rounded-full px-2 py-1 text-xs font-medium ${getStatusColor(
                   libro.estado
@@ -67,13 +72,13 @@ export const BookGridItem = memo(({
             <span
               className={`inline-flex items-center rounded-full px-2 py-1 text-xs font-medium ${getContentColor(
                 libro.contenido
-              )}`}
+              )} mb-3`}
             >
               {libro.contenido}
             </span>
           </div>
           
-          <div className="mt-3 space-y-2">
+          <div className="mt-auto space-y-2"> {/* mt-auto para empujar al fondo si hay espacio */}
             {collections.length > 0 && (
               <div>
                 <div className="text-xs text-muted-foreground mb-1">Colecciones:</div>
@@ -82,7 +87,7 @@ export const BookGridItem = memo(({
                     <Badge 
                       key={col.id} 
                       variant="outline"
-                      className="text-xs px-1.5 py-0.5 truncate max-w-[120px]"
+                      className="text-xs px-1.5 py-0.5 truncate max-w-[100px]" // Ajustado max-w
                     >
                       {col.nombre}
                     </Badge>
@@ -97,7 +102,7 @@ export const BookGridItem = memo(({
                   <BookOpenText size={12} className="mr-1 text-muted-foreground" />
                   Investigación:
                 </div>
-                <p className="text-xs text-foreground truncate" title={investigationName}>
+                <p className="text-xs text-foreground truncate max-w-[150px]" title={investigationName}> {/* Ajustado max-w */}
                   {investigationName}
                 </p>
               </div>

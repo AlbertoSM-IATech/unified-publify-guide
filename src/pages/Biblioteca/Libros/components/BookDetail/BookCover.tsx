@@ -1,4 +1,3 @@
-
 import { Book } from "../../types/bookTypes";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Button } from "@/components/ui/button";
@@ -6,15 +5,13 @@ import { Upload } from "lucide-react";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "@/hooks/use-toast";
+import { DEFAULT_COVER_URL } from "@/services/supabase/books/constants"; // Importar la constante
 
 interface BookCoverProps {
   book: Book;
   isEditing: boolean;
   onUpdateBook: (updatedData: Partial<Book>) => void;
 }
-
-// Default optimized book cover image
-const DEFAULT_COVER_URL = "/placeholders/portada-ejemplo.jpg";
 
 export const BookCover = ({
   book,
@@ -23,15 +20,12 @@ export const BookCover = ({
 }: BookCoverProps) => {
   const [isHovered, setIsHovered] = useState(false);
   
-  // Track preview URL separately from book data to enable immediate visual feedback
   const [previewUrl, setPreviewUrl] = useState<string>(book.imageUrl || book.portadaUrl || DEFAULT_COVER_URL);
 
-  // Update preview URL when book data changes
   useEffect(() => {
     setPreviewUrl(book.imageUrl || book.portadaUrl || DEFAULT_COVER_URL);
   }, [book.imageUrl, book.portadaUrl]);
 
-  // Handle image error
   const handleImageError = () => {
     console.log(`Failed to load cover image for book: ${book.id}, using default`);
     setPreviewUrl(DEFAULT_COVER_URL);

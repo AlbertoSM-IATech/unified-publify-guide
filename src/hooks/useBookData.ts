@@ -1,9 +1,6 @@
-
 import { useState, useEffect, useCallback } from 'react';
 import { librosSimulados } from '@/pages/Biblioteca/Libros/utils/librosUtils';
-
-// Default optimized book cover image
-const DEFAULT_COVER_URL = "/placeholders/portada-ejemplo.jpg";
+import { DEFAULT_COVER_URL } from '@/services/supabase/books/constants';
 
 export function useBookData() {
   const [books, setBooks] = useState([]);
