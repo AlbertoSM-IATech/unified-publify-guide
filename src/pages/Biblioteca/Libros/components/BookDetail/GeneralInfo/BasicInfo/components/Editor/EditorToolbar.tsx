@@ -3,7 +3,7 @@ import { Editor } from "@tiptap/react";
 import { 
   Bold, 
   Italic, 
-  Underline, 
+  Underline, // This is the Lucide icon, not the Tiptap extension
   List, 
   ListOrdered,
   Link as LinkIcon,
@@ -87,7 +87,7 @@ export const EditorToolbar = ({
       </MenuButton>
       
       <MenuButton 
-        onClick={() => editor.chain().focus().toggleUnderline().run()}
+        onClick={() => editor.chain().focus().toggleMark('underline').run()} // Changed from toggleUnderline()
         active={editor.isActive('underline')}
       >
         <Underline className="h-4 w-4" />
@@ -170,3 +170,4 @@ export const EditorToolbar = ({
     </div>
   );
 };
+

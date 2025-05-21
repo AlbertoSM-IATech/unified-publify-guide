@@ -19,7 +19,7 @@ export const useBookDetail = () => {
     loading, 
     error, 
     bookId, 
-    libroOriginal,
+    // libroOriginal, // Removed: No longer provided by useBookData
     storedBooks,
     setStoredBooks 
   } = useBookData();
@@ -74,7 +74,7 @@ export const useBookDetail = () => {
     loading,
     error,
     formData,
-    libroOriginal,
+    // libroOriginal, // Removed: No longer needed here
     handleGoBack,
     handleEdit,
     handleSave,
@@ -88,3 +88,4 @@ export const useBookDetail = () => {
 export { useBookData } from './useBookData';
 export { useBookForm } from './useBookForm';
 export { useBookActions } from './useBookActions';
+

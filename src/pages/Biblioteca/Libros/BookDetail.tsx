@@ -57,7 +57,8 @@ const BookDetail = () => {
     saving,
     error,
     loading,
-    libroOriginal,
+    // libroOriginal, // Removed
+    formData, // formData is available if needed, but bookData is already merged
     handleGoBack,
     handleEdit,
     handleSave,
@@ -139,7 +140,7 @@ const BookDetail = () => {
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
           <motion.div variants={itemVariants} className="lg:col-span-1">
             <BookSidebar 
-              book={isEditing ? {...bookData, ...libroOriginal} : bookData} 
+              book={bookData} // Changed: useBookDetail already provides the merged data
               isEditing={isEditing} 
               onUpdateBook={handleUpdateBook} 
             />
@@ -147,7 +148,7 @@ const BookDetail = () => {
 
           <motion.div variants={itemVariants} className="lg:col-span-2">
             <DetailedTabs 
-              book={isEditing ? {...bookData, ...libroOriginal} : bookData}
+              book={bookData} // Changed: useBookDetail already provides the merged data
               isEditing={isEditing} 
               onUpdateBook={handleUpdateBook} 
             />
@@ -159,3 +160,4 @@ const BookDetail = () => {
 };
 
 export default BookDetail;
+
