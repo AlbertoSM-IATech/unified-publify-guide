@@ -6,6 +6,7 @@ import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { useEffect } from "react";
 import { investigacionesSimuladas } from "../../../utils/mockData/investigacionesData";
 import { coleccionesSimuladas } from "../../../utils/mockData/coleccionesData";
+import { Investigacion } from "@/pages/Biblioteca/Investigaciones/types/investigacionTypes"; // Importar el tipo Investigacion
 
 interface RelationFieldsProps {
   book: Book;
@@ -15,7 +16,7 @@ interface RelationFieldsProps {
 
 export const RelationFields = ({ book, isEditing, onUpdateBook }: RelationFieldsProps) => {
   // Store relationships in localStorage for persistence
-  const [storedInvestigations, setStoredInvestigations] = useLocalStorage('investigacionesData', investigacionesSimuladas);
+  const [storedInvestigations, setStoredInvestigations] = useLocalStorage<Investigacion[]>('investigacionesData', investigacionesSimuladas);
   const [storedCollections, setStoredCollections] = useLocalStorage('coleccionesData', coleccionesSimuladas);
 
   // Update relationships when book changes
@@ -27,7 +28,7 @@ export const RelationFields = ({ book, isEditing, onUpdateBook }: RelationFields
           // Make sure this book is linked to the investigation
           return {
             ...investigation,
-            libroId: book.id,
+            libroId: book.id.toString(), // Convertir book.id a string
             libroTitulo: book.titulo
           };
         }
@@ -64,7 +65,7 @@ export const RelationFields = ({ book, isEditing, onUpdateBook }: RelationFields
       });
       setStoredCollections(updatedCollections);
     }
-  }, [book.investigacionId, book.coleccionesIds, book.id, book.titulo]);
+  }, [book.investigacionId, book.coleccionesIds, book.id, book.titulo, storedInvestigations, storedCollections, setStoredInvestigations, setStoredCollections]);
 
   return (
     <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
@@ -83,3 +84,4 @@ export const RelationFields = ({ book, isEditing, onUpdateBook }: RelationFields
     </div>
   );
 };
+
