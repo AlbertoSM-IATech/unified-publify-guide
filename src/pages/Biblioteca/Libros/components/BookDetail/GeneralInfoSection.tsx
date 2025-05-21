@@ -2,18 +2,18 @@ import { useState } from "react";
 import { Book } from "../../types/bookTypes";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { UseFormReturn } from "react-hook-form";
 import { useGeneralInfoForm } from "./GeneralInfo/useGeneralInfoForm";
 import { BasicInfoFields } from "./GeneralInfo/BasicInfo";
 import { ContentAplusSection } from "./GeneralInfo/ContentAplusSection";
 import { motion } from "framer-motion";
 import { FileText, LayoutPanelTop } from "lucide-react";
 import { Form } from "@/components/ui/form";
+import { StatusFields } from "./GeneralInfo/StatusFields";
 
 interface GeneralInfoSectionProps {
   book: Book;
   isEditing: boolean;
-  onUpdateBook: (updatedData: Partial<Book>) => void; // Changed: onUpdateBook was optional
+  onUpdateBook: (updatedData: Partial<Book>) => void;
 }
 
 export const GeneralInfoSection = ({ 
@@ -23,7 +23,6 @@ export const GeneralInfoSection = ({
 }: GeneralInfoSectionProps) => {
   const [activeTab, setActiveTab] = useState("basic-info");
   
-  // Use the useGeneralInfoForm hook to manage form state
   const { form } = useGeneralInfoForm(book, isEditing, onUpdateBook);
 
   return (
@@ -33,7 +32,6 @@ export const GeneralInfoSection = ({
       transition={{ duration: 0.4 }}
       className="w-full"
     >
-      {/* Wrap all form content with the Form provider */}
       <Form {...form.formProps}>
         <Tabs 
           defaultValue="basic-info" 
@@ -69,8 +67,16 @@ export const GeneralInfoSection = ({
                   book={book} 
                   isEditing={isEditing} 
                   form={form} 
-                  onUpdateBook={onUpdateBook} // Pass onUpdateBook here
+                  onUpdateBook={onUpdateBook}
                 />
+                <div className="mt-6">
+                  <StatusFields
+                    book={book}
+                    isEditing={isEditing}
+                    form={form}
+                    onUpdateBook={onUpdateBook}
+                  />
+                </div>
               </TabsContent>
               
               <TabsContent value="aplus-content" className="mt-0">

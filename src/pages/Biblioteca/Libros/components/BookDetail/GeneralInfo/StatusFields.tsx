@@ -1,7 +1,7 @@
 
 import { Book } from "../../../types/bookTypes";
 import { Label } from "@/components/ui/label";
-import { FormField } from "@/components/ui/form";
+import { FormField, FormItem, FormControl } from "@/components/ui/form"; // FormControl e Item para consistencia
 import { UseFormReturn } from "react-hook-form";
 import {
   Select,
@@ -11,91 +11,63 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useEffect } from "react";
-import { toast } from "@/hooks/use-toast";
+// toast ya no se usa aquí
+// import { toast } from "@/hooks/use-toast";
 
 interface StatusFieldsProps {
   book: Book;
   isEditing: boolean;
-  form: UseFormReturn<any>;
+  form: UseFormReturn<any>; // Mantener form por si se usa para control directo
+  onUpdateBook: (updatedData: Partial<Book>) => void; // Añadir onUpdateBook
 }
 
-export const StatusFields = ({ book, isEditing, form }: StatusFieldsProps) => {
-  // Ensure form values stay in sync with book data
+export const StatusFields = ({ book, isEditing, form, onUpdateBook }: StatusFieldsProps) => {
+  // Sincronizar form.setValue con book data cuando no se está editando
   useEffect(() => {
     if (!isEditing && book) {
-      form.setValue("estado", book.estado);
-      form.setValue("contenido", book.contenido);
+      // Asegurarse de que los nombres de campo coincidan con los del formulario/Book type
+      form.setValue("estado", book.estado, { shouldDirty: false, shouldValidate: false });
+      form.setValue("contenido", book.contenido, { shouldDirty: false, shouldValidate: false });
     }
   }, [book, form, isEditing]);
 
-  const dispatchBookUpdate = () => {
-    console.log("[StatusFields] Dispatching book update event");
-    
-    // Update book data in localStorage
-    const storedBooksJson = localStorage.getItem('librosData');
-    if (storedBooksJson) {
-      try {
-        const storedBooks = JSON.parse(storedBooksJson);
-        const updatedBooks = storedBooks.map((storedBook: any) => {
-          if (storedBook.id === book.id) {
-            return {
-              ...storedBook,
-              estado: form.getValues("estado"),
-              contenido: form.getValues("contenido")
-            };
-          }
-          return storedBook;
-        });
-        
-        // Save the updated books back to localStorage
-        localStorage.setItem('librosData', JSON.stringify(updatedBooks));
-        
-        // Create a custom event to notify other components of book data change
-        const updateEvent = new CustomEvent('publify_books_updated');
-        window.dispatchEvent(updateEvent);
-        
-        toast({
-          title: "Estado actualizado",
-          description: "La información del libro ha sido actualizada"
-        });
-      } catch (error) {
-        console.error('Error updating book data:', error);
-      }
-    }
-  };
+  // Ya no se necesita dispatchBookUpdate
+  // const dispatchBookUpdate = () => { ... }
 
   const handleStatusChange = (value: string) => {
-    form.setValue("estado", value);
+    form.setValue("estado", value); // Actualiza el valor en react-hook-form
     if (isEditing) {
-      dispatchBookUpdate();
+      onUpdateBook({ estado: value }); // Notifica el cambio al hook principal
     }
   };
 
   const handleContentChange = (value: string) => {
-    form.setValue("contenido", value);
+    form.setValue("contenido", value); // Actualiza el valor en react-hook-form
     if (isEditing) {
-      dispatchBookUpdate();
+      onUpdateBook({ contenido: value }); // Notifica el cambio al hook principal
     }
   };
 
   return (
     <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
       {/* Estado */}
-      <div className="grid gap-3">
-        <Label htmlFor="estado">Estado</Label>
-        {isEditing ? (
-          <FormField
-            control={form.control}
-            name="estado"
-            render={({ field }) => (
+      <FormField
+        control={form.control}
+        name="estado"
+        render={({ field }) => (
+          <FormItem className="grid gap-3"> {/* Usar FormItem para estructura semántica */}
+            <Label htmlFor="estado">Estado</Label>
+            {isEditing ? (
               <Select 
-                onValueChange={(value) => handleStatusChange(value)}
-                defaultValue={field.value}
-                value={field.value}
+                onValueChange={handleStatusChange} // Usar nuestra función de manejo
+                value={field.value || book.estado} // Usar field.value, fallback a book.estado si es necesario
+                defaultValue={book.estado}
               >
-                <SelectTrigger id="estado" className="hover:border-[#FB923C] transition-colors duration-200">
-                  <SelectValue placeholder="Seleccionar estado" />
-                </SelectTrigger>
+                <FormControl>
+                  <SelectTrigger id="estado" className="hover:border-[#FB923C] transition-colors duration-200">
+                    <SelectValue placeholder="Seleccionar estado" />
+                  </SelectTrigger>
+                </FormControl>
                 <SelectContent>
                   <SelectItem value="Borrador">Borrador</SelectItem>
                   <SelectItem value="En revisión">En revisión</SelectItem>
@@ -103,41 +75,47 @@ export const StatusFields = ({ book, isEditing, form }: StatusFieldsProps) => {
                   <SelectItem value="Archivado">Archivado</SelectItem>
                 </SelectContent>
               </Select>
+            ) : (
+              <div className="mt-2 rounded-md border border-input px-3 py-2 bg-muted/10 min-h-[40px] flex items-center">
+                {book.estado || "No especificado"}
+              </div>
             )}
-          />
-        ) : (
-          <div>{book.estado}</div>
+          </FormItem>
         )}
-      </div>
+      />
 
       {/* Contenido */}
-      <div className="grid gap-3">
-        <Label htmlFor="contenido">Contenido</Label>
-        {isEditing ? (
-          <FormField
-            control={form.control}
-            name="contenido"
-            render={({ field }) => (
+      <FormField
+        control={form.control}
+        name="contenido"
+        render={({ field }) => (
+          <FormItem className="grid gap-3"> {/* Usar FormItem */}
+            <Label htmlFor="contenido">Contenido</Label>
+            {isEditing ? (
               <Select 
-                onValueChange={(value) => handleContentChange(value)}
-                defaultValue={field.value}
-                value={field.value}
+                onValueChange={handleContentChange} // Usar nuestra función de manejo
+                value={field.value || book.contenido} // Usar field.value, fallback a book.contenido
+                defaultValue={book.contenido}
               >
-                <SelectTrigger id="contenido" className="hover:border-[#FB923C] transition-colors duration-200">
-                  <SelectValue placeholder="Seleccionar tipo" />
-                </SelectTrigger>
+                <FormControl>
+                  <SelectTrigger id="contenido" className="hover:border-[#FB923C] transition-colors duration-200">
+                    <SelectValue placeholder="Seleccionar tipo" />
+                  </SelectTrigger>
+                </FormControl>
                 <SelectContent>
                   <SelectItem value="Alto Contenido">Alto Contenido</SelectItem>
                   <SelectItem value="Medio Contenido">Medio Contenido</SelectItem>
                   <SelectItem value="Bajo Contenido">Bajo Contenido</SelectItem>
                 </SelectContent>
               </Select>
+            ) : (
+              <div className="mt-2 rounded-md border border-input px-3 py-2 bg-muted/10 min-h-[40px] flex items-center">
+                {book.contenido || "No especificado"}
+              </div>
             )}
-          />
-        ) : (
-          <div>{book.contenido}</div>
+          </FormItem>
         )}
-      </div>
+      />
     </div>
   );
 };
