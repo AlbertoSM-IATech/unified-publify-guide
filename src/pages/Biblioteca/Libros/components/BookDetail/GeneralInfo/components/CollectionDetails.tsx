@@ -23,14 +23,12 @@ export const CollectionDetails = ({
 
   useEffect(() => {
     const fetchRelatedColeccion = async () => {
-      // Usando proyectoId para la colección según la lógica original
       if (book?.proyectoId) { 
         setLoadingColeccion(true);
         try {
           const coleccion = await fetchColeccionById(book.proyectoId);
           setSelectedColeccion(coleccion);
-        } catch (error) {
-          console.error("Error fetching related collection:", error);
+        } catch (error)          console.error("Error fetching related collection:", error);
         } finally {
           setLoadingColeccion(false);
         }
@@ -49,14 +47,12 @@ export const CollectionDetails = ({
           <Loader2 className="h-4 w-4 animate-spin" />
           <span className="text-sm text-muted-foreground">Cargando...</span>
         </div>
+      ) : selectedColeccion ? (
+        <ViewCollectionDetailsCard coleccion={selectedColeccion} />
       ) : (
         <div className="rounded-md border border-input px-3 py-2 bg-muted/50">
-          {selectedColeccion ? selectedColeccion.titulo : "Ninguna colección seleccionada"}
+          Ninguna colección seleccionada
         </div>
-      )}
-      
-      {selectedColeccion && !loadingColeccion && (
-        <ViewCollectionDetailsCard coleccion={selectedColeccion} />
       )}
     </div>
   );

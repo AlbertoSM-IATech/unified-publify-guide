@@ -48,14 +48,12 @@ export const InvestigationDetails = ({
           <Loader2 className="h-4 w-4 animate-spin" />
           <span className="text-sm text-muted-foreground">Cargando...</span>
         </div>
+      ) : selectedInvestigacion ? (
+        <ViewInvestigationDetailsCard investigacion={selectedInvestigacion} />
       ) : (
         <div className="rounded-md border border-input px-3 py-2 bg-muted/50">
-          {selectedInvestigacion ? selectedInvestigacion.titulo : "Ninguna investigación seleccionada"}
+          Ninguna investigación seleccionada
         </div>
-      )}
-      
-      {selectedInvestigacion && !loadingInvestigacion && (
-        <ViewInvestigationDetailsCard investigacion={selectedInvestigacion} />
       )}
     </div>
   );
