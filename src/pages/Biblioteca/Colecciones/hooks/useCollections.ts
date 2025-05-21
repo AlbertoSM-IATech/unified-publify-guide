@@ -4,6 +4,7 @@ import { Collection } from "../types/collectionTypes";
 import { coleccionesSimuladas } from "@/pages/Biblioteca/Libros/utils/mockData/coleccionesData";
 import { useSyncedData } from "@/hooks/useSyncedData";
 import { toast } from "@/hooks/use-toast";
+import { Book } from "@/pages/Biblioteca/Libros/types/bookTypes";
 
 export const useCollections = () => {
   const [colecciones, setColecciones] = useSyncedData<Collection[]>([] as Collection[], "coleccionesData");
@@ -43,7 +44,11 @@ export const useCollections = () => {
     loadCollections();
   }, [loadCollections]);
 
-  const createCollection = async (newCollection: { nombre: string; descripcion: string }) => {
+  const createCollection = async (newCollection: { 
+    nombre: string; 
+    descripcion: string;
+    libros?: number[]; 
+  }) => {
     // Validar campos requeridos
     if (!newCollection.nombre) {
       toast({
@@ -61,9 +66,9 @@ export const useCollections = () => {
         id: newId,
         nombre: newCollection.nombre,
         descripcion: newCollection.descripcion,
-        cantidadLibros: 0,
+        cantidadLibros: newCollection.libros?.length || 0,
         fechaCreacion: new Date().toISOString().split('T')[0],
-        libros: [],
+        libros: newCollection.libros || [],
         estado: "Activa"
       };
       
@@ -73,6 +78,33 @@ export const useCollections = () => {
       
       // Update localStorage for persistence
       localStorage.setItem('coleccionesData', JSON.stringify(updatedCollections));
+
+      // Update books to reference this collection
+      if (newCollection.libros && newCollection.libros.length > 0) {
+        // Get books from localStorage
+        const booksData = localStorage.getItem('librosData');
+        if (booksData) {
+          const books = JSON.parse(booksData);
+          const updatedBooks = books.map((book: Book) => {
+            if (newCollection.libros?.includes(book.id)) {
+              // Add this collection to the book's collections
+              const coleccionesIds = book.coleccionesIds || [];
+              if (!coleccionesIds.includes(newId)) {
+                return {
+                  ...book,
+                  coleccionesIds: [...coleccionesIds, newId]
+                };
+              }
+            }
+            return book;
+          });
+          localStorage.setItem('librosData', JSON.stringify(updatedBooks));
+          
+          // Dispatch event to notify book data has changed
+          const updateEvent = new CustomEvent('publify_books_updated');
+          window.dispatchEvent(updateEvent);
+        }
+      }
 
       toast({
         title: "Colección creada",

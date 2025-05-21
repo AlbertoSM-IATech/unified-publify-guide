@@ -2,7 +2,7 @@
 import { Book } from "../../../types/bookTypes";
 import { Link } from "react-router-dom";
 import { Label } from "@/components/ui/label";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, Search } from "lucide-react";
 import { motion } from "framer-motion";
 import {
   Select,
@@ -11,6 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
 import { useEffect, useState } from "react";
 
 interface InvestigationRelationProps {
@@ -27,6 +28,8 @@ export const InvestigationRelation = ({
   investigations
 }: InvestigationRelationProps) => {
   const [selectedInvestigacion, setSelectedInvestigacion] = useState<any | null>(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredInvestigations, setFilteredInvestigations] = useState(investigations);
 
   // Load related investigation when component mounts or book changes
   useEffect(() => {
@@ -37,6 +40,19 @@ export const InvestigationRelation = ({
       setSelectedInvestigacion(null);
     }
   }, [book.investigacionId, investigations]);
+
+  // Filter investigations based on search term
+  useEffect(() => {
+    if (searchTerm) {
+      setFilteredInvestigations(
+        investigations.filter(inv => 
+          inv.titulo.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+      );
+    } else {
+      setFilteredInvestigations(investigations);
+    }
+  }, [searchTerm, investigations]);
 
   // Handle investigation change
   const handleInvestigacionChange = (value: string) => {
@@ -55,22 +71,35 @@ export const InvestigationRelation = ({
     <div className="grid gap-3">
       <Label htmlFor="investigacion">Investigación Relacionada</Label>
       {isEditing ? (
-        <Select 
-          onValueChange={handleInvestigacionChange}
-          defaultValue={book.investigacionId ? book.investigacionId.toString() : "none"}
-        >
-          <SelectTrigger id="investigacion" className="hover:border-[#FB923C] transition-colors duration-200">
-            <SelectValue placeholder="Seleccionar investigación" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="none">Ninguna</SelectItem>
-            {investigations.map(inv => (
-              <SelectItem key={inv.id} value={inv.id.toString()}>
-                {inv.titulo}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        <div className="space-y-3">
+          <div className="relative">
+            <Input
+              type="text"
+              placeholder="Buscar investigación..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="pl-9"
+            />
+            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+          </div>
+          
+          <Select 
+            onValueChange={handleInvestigacionChange}
+            defaultValue={book.investigacionId ? book.investigacionId.toString() : "none"}
+          >
+            <SelectTrigger id="investigacion" className="hover:border-[#FB923C] transition-colors duration-200">
+              <SelectValue placeholder={investigations.length > 0 ? "Seleccionar investigación" : "No hay investigaciones disponibles"} />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="none">Ninguna</SelectItem>
+              {filteredInvestigations.map(inv => (
+                <SelectItem key={inv.id} value={inv.id.toString()}>
+                  {inv.titulo}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
       ) : (
         <div className="rounded-md border border-input px-3 py-2 bg-muted/50">
           {selectedInvestigacion ? selectedInvestigacion.titulo : "Ninguna investigación seleccionada"}

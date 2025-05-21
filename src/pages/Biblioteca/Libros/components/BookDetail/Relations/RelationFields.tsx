@@ -37,15 +37,26 @@ export const RelationFields = ({ book, isEditing, onUpdateBook }: RelationFields
     }
 
     // Update collection relationships
-    if (book.proyectoId) {
+    if (book.coleccionesIds && book.coleccionesIds.length > 0) {
       const updatedCollections = storedCollections.map(collection => {
-        if (collection.id === book.proyectoId) {
-          // Make sure this book is linked to the collection
+        // If this collection is linked to the book
+        if (book.coleccionesIds?.includes(collection.id)) {
+          // Add the book to the collection if it's not already there
           if (!collection.libros.includes(book.id)) {
             return {
               ...collection,
               libros: [...collection.libros, book.id],
-              cantidadLibros: collection.cantidadLibros + 1
+              cantidadLibros: collection.libros.length + 1
+            };
+          }
+        } else {
+          // Remove the book from the collection if it's there but shouldn't be
+          if (collection.libros.includes(book.id)) {
+            const updatedLibros = collection.libros.filter(id => id !== book.id);
+            return {
+              ...collection,
+              libros: updatedLibros,
+              cantidadLibros: updatedLibros.length
             };
           }
         }
@@ -53,7 +64,7 @@ export const RelationFields = ({ book, isEditing, onUpdateBook }: RelationFields
       });
       setStoredCollections(updatedCollections);
     }
-  }, [book.investigacionId, book.proyectoId, book.id, book.titulo]);
+  }, [book.investigacionId, book.coleccionesIds, book.id, book.titulo]);
 
   return (
     <div className="grid grid-cols-1 gap-6 md:grid-cols-2">

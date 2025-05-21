@@ -51,7 +51,8 @@ export interface Book {
   imageUrl: string;
   portadaUrl?: string; // Add the portadaUrl property as an optional field
   investigacionId?: number;
-  proyectoId?: number;
+  proyectoId?: number; // Legacy field - keep for backward compatibility
+  coleccionesIds?: number[]; // New field for multiple collection relationships
   hardcover?: BookFormat;
   paperback?: BookFormat;
   ebook?: BookFormat;

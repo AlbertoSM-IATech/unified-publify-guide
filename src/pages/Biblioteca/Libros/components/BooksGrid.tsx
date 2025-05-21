@@ -1,7 +1,10 @@
 
 import { Book } from "../types/bookTypes";
 import { BookGridItem } from "./BookGridItem";
-import { memo } from "react";
+import { memo, useState, useEffect } from "react";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { coleccionesSimuladas } from "../utils/mockData/coleccionesData";
+import { Collection } from "../../Colecciones/types/collectionTypes";
 
 interface BooksGridProps {
   libros: Book[];
@@ -10,6 +13,11 @@ interface BooksGridProps {
 }
 
 export const BooksGrid = memo(({ libros, getStatusColor, getContentColor }: BooksGridProps) => {
+  const [collections, setCollections] = useLocalStorage<Collection[]>(
+    'coleccionesData',
+    coleccionesSimuladas
+  );
+  
   // If there are no books, show empty state
   if (libros.length === 0) {
     return (
@@ -18,6 +26,18 @@ export const BooksGrid = memo(({ libros, getStatusColor, getContentColor }: Book
       </div>
     );
   }
+
+  // Get collection names for each book based on its coleccionesIds
+  const getBookCollections = (book: Book) => {
+    if (!book.coleccionesIds || book.coleccionesIds.length === 0) return [];
+    
+    return collections
+      .filter(col => book.coleccionesIds?.includes(col.id))
+      .map(col => ({
+        id: col.id,
+        nombre: col.nombre
+      }));
+  };
 
   return (
     <div className="w-full">
@@ -28,6 +48,7 @@ export const BooksGrid = memo(({ libros, getStatusColor, getContentColor }: Book
               libro={libro}
               getStatusColor={getStatusColor}
               getContentColor={getContentColor}
+              collections={getBookCollections(libro)}
             />
           </div>
         ))}
