@@ -22,11 +22,12 @@ export const RichTextEditor = ({ content, onChange, readOnly = false, placeholde
     content: content || "",
     editable: !readOnly,
     onUpdate: ({ editor }) => {
-      onChange(editor.getHTML());
+      const html = editor.getHTML();
+      onChange(html);
     },
   });
 
-  // Sync content with parent
+  // Sync content with parent when content prop changes
   useEffect(() => {
     if (editor && content !== editor.getHTML()) {
       editor.commands.setContent(content || "");
@@ -83,10 +84,13 @@ export const RichTextEditor = ({ content, onChange, readOnly = false, placeholde
         />
       )}
       
-      <div className="bg-background p-3 prose prose-sm max-w-none dark:prose-invert">
-        <EditorContent editor={editor} className="min-h-[150px]" />
+      <div className="bg-background p-3 min-h-[150px] relative">
+        <EditorContent 
+          editor={editor} 
+          className="prose prose-sm max-w-none dark:prose-invert min-h-[150px]" 
+        />
         {placeholder && !editor.getText() && (
-          <div className="absolute top-1/2 left-4 text-muted-foreground pointer-events-none opacity-50">
+          <div className="absolute top-[calc(50%-20px)] left-4 text-muted-foreground pointer-events-none opacity-50">
             {placeholder}
           </div>
         )}

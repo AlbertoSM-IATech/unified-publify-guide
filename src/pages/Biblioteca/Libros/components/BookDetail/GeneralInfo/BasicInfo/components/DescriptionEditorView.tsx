@@ -25,11 +25,13 @@ export const DescriptionEditorView = ({
           control={form.control}
           name="descripcion"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="w-full">
               <FormControl>
                 <RichTextEditor
                   content={field.value || ""}
-                  onChange={handleEditorChange}
+                  onChange={(html) => {
+                    handleEditorChange(html);
+                  }}
                   placeholder="Ingresa la descripción del libro"
                 />
               </FormControl>

@@ -41,7 +41,7 @@ export const CollectionDetails = ({
   }, [book?.proyectoId]);
 
   return (
-    <div className="w-full">
+    <div className="w-full h-full">
       <Label className="text-base font-medium">Serie Relacionada</Label>
       {loadingLists || loadingColeccion ? (
         <div className="flex items-center space-x-2 mt-2">

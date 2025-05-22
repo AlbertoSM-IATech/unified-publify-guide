@@ -19,7 +19,7 @@ export const RelationFields = ({
   return (
     <div className="w-full">
       <h3 className="text-lg font-semibold mb-3 text-blue-500">Relaciones</h3>
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 h-full">
         {/* Investigación Relacionada */}
         <InvestigationDetails 
           book={book} 

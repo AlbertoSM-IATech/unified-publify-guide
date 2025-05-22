@@ -5,13 +5,13 @@ import { toast } from "@/hooks/use-toast";
 import { UseFormReturn } from "react-hook-form";
 
 export const useHtmlDescription = (book: Book, form: UseFormReturn<any>) => {
-  // const [htmlOutput, setHtmlOutput] = useState<string>(book.descripcionHtml || ""); // Eliminado, no se usaba externamente
   const [showHtmlPreview, setShowHtmlPreview] = useState(false);
   const [copied, setCopied] = useState(false);
 
   const generateHtml = () => {
-    // Obtener la descripción del formulario (contenido del RichTextEditor) o del libro como fallback
-    const description = form.getValues("descripcion") || book.descripcion;
+    // Obtener la descripción del formulario (contenido del RichTextEditor)
+    const description = form.getValues("descripcion");
+    
     if (!description) {
       toast({
         title: "Error",
@@ -21,14 +21,10 @@ export const useHtmlDescription = (book: Book, form: UseFormReturn<any>) => {
       return;
     }
     
-    // Usamos el HTML directamente del editor (campo 'descripcion')
-    let html = description;
-    
-    // Actualizar el valor 'descripcionHtml' en el formulario
-    // Esto asegura que HtmlCodePreview use el contenido más reciente del editor
-    form.setValue("descripcionHtml", html, { 
+    // Usamos directamente el HTML del editor para ambos campos
+    form.setValue("descripcionHtml", description, { 
       shouldValidate: false,
-      shouldDirty: true // Marcar como dirty ya que el usuario realiza una acción explícita
+      shouldDirty: true
     });
     
     // Mostrar la vista previa automáticamente
@@ -43,6 +39,15 @@ export const useHtmlDescription = (book: Book, form: UseFormReturn<any>) => {
   const copyHtml = () => {
     // Obtener el HTML del campo 'descripcionHtml' del formulario, o del libro como fallback
     const htmlToCopy = form.getValues("descripcionHtml") || book.descripcionHtml || "";
+    
+    if (!htmlToCopy) {
+      toast({
+        title: "Error",
+        description: "No hay código HTML para copiar. Genera el HTML primero.",
+        variant: "destructive",
+      });
+      return;
+    }
     
     try {
       navigator.clipboard.writeText(htmlToCopy);
@@ -67,7 +72,6 @@ export const useHtmlDescription = (book: Book, form: UseFormReturn<any>) => {
   };
 
   return {
-    // htmlOutput, // Eliminado
     showHtmlPreview,
     setShowHtmlPreview,
     copied,
@@ -75,4 +79,3 @@ export const useHtmlDescription = (book: Book, form: UseFormReturn<any>) => {
     copyHtml
   };
 };
-
