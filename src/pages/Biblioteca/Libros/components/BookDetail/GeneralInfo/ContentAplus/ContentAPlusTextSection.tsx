@@ -1,10 +1,10 @@
-
 import React, { useState, useEffect } from "react";
-import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { FilePlus2, Trash2, GripVertical } from "lucide-react";
+import { FilePlus2, GripVertical, Trash2 } from "lucide-react"; // GripVertical y Trash2 ya no se usan directamente aquí
 import { Reorder } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
+import { ContentAPlusTextReorderItem } from "./ContentAPlusTextReorderItem"; // Importamos el nuevo componente
+import { Textarea } from "@/components/ui/textarea"; // Textarea ya no se usa directamente aquí
 
 interface ContentSection {
   id: number;
@@ -91,33 +91,14 @@ export const ContentAPlusTextSection = ({
         className="space-y-4"
       >
         {contentSections.map((section, index) => (
-          <Reorder.Item key={section.id} value={section} className="bg-card border rounded-md p-3">
-            <div className="flex items-start gap-2">
-              <div className="mt-2 cursor-move">
-                <GripVertical size={16} className="text-muted-foreground" />
-              </div>
-              <div className="flex-grow">
-                <Textarea
-                  placeholder={`Sección ${index + 1} de contenido A+`}
-                  rows={4}
-                  value={section.text}
-                  onChange={(e) => handleContentChange(index, e.target.value)}
-                  className="mb-2"
-                />
-                <div className="flex justify-end">
-                  <Button
-                    type="button"
-                    size="sm"
-                    variant="destructive"
-                    onClick={() => removeContentSection(index)}
-                    disabled={contentSections.length <= 1 && section.text.trim() === ''}
-                  >
-                    <Trash2 size={14} className="mr-1" /> Eliminar
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </Reorder.Item>
+          <ContentAPlusTextReorderItem
+            key={section.id}
+            section={section}
+            index={index}
+            isSingleNonEmptyItem={contentSections.length <= 1 && section.text.trim() === ''}
+            onContentChange={handleContentChange}
+            onRemoveSection={removeContentSection}
+          />
         ))}
       </Reorder.Group>
 
