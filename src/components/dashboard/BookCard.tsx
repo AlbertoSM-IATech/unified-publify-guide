@@ -1,9 +1,9 @@
-
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { DEFAULT_COVER_URL } from "@/services/supabase/books/constants";
-import { StatusBadge } from "@/components/common/StatusBadge"; // Importar StatusBadge
+import { StatusBadge } from "@/components/common/StatusBadge";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 interface BookCardProps {
   index: number;
@@ -35,8 +35,6 @@ const BookCard = ({
     setImageSrc(DEFAULT_COVER_URL);
   };
   
-  // getStatusColor function is no longer needed as StatusBadge handles colors.
-
   const cardVariants = {
     initial: { 
       opacity: 0, 
@@ -63,42 +61,38 @@ const BookCard = ({
   };
   
   return (
-    <Link to={`/biblioteca/libros/${id}`}>
+    <Link to={`/biblioteca/libros/${id}`} className="block">
       <motion.div 
-        className="rounded-lg border bg-card shadow-sm glass-card"
+        className="rounded-lg border bg-card shadow-sm glass-card overflow-hidden"
         variants={cardVariants}
         initial="initial"
         animate="animate"
         whileHover="hover"
         custom={index}
       >
-        <div className="flex h-32 overflow-hidden">
-          {/* Book cover image/placeholder */}
+        <div className="flex flex-col sm:flex-row h-full">
           <motion.div 
-            className="relative h-full w-28 bg-muted overflow-hidden"
+            className="relative w-full sm:w-28 bg-muted"
             whileHover={{ scale: 1.05 }}
             transition={{ duration: 0.3 }}
           >
-            <div className="h-full w-full overflow-hidden">
-              <div className="h-full">
-                <img 
-                  src={imageSrc} 
-                  alt={title} 
-                  className="h-full w-full object-cover" 
-                  loading="lazy"
-                  width="112"
-                  height="128"
-                  onError={handleImageError}
-                />
-              </div>
-            </div>
+            <AspectRatio ratio={2 / 3} className="bg-muted">
+              <img 
+                src={imageSrc} 
+                alt={title} 
+                className="h-full w-full object-cover rounded-l-lg sm:rounded-l-lg sm:rounded-r-none"
+                loading="lazy"
+                width="112"
+                height="168"
+                onError={handleImageError}
+              />
+            </AspectRatio>
           </motion.div>
           
-          {/* Book information */}
           <div className="flex flex-1 flex-col justify-between p-3">
             <div>
               <motion.h3 
-                className="font-medium line-clamp-1 text-foreground"
+                className="font-medium line-clamp-2 text-foreground"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: index * 0.05 + 0.2, duration: 0.3 }}
@@ -106,24 +100,23 @@ const BookCard = ({
                 {title}
               </motion.h3>
               <motion.div 
-                className="mt-1 flex items-center space-x-2"
+                className="mt-1 flex flex-wrap items-center gap-2"
                 initial={{ opacity: 0, x: -5 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: index * 0.05 + 0.3, duration: 0.3 }}
               >
-                {/* Usar StatusBadge para el estado y el nivel de contenido */}
                 <StatusBadge status={status} />
                 <StatusBadge status={contentLevel} />
               </motion.div>
             </div>
             <motion.div 
-              className="flex justify-between text-xs"
+              className="mt-2 flex justify-between text-xs"
               initial={{ opacity: 0, y: 5 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.05 + 0.4, duration: 0.3 }}
             >
-              <span className="text-muted-foreground">Autor: {author}</span>
-              <span className="text-primary hover:underline cursor-pointer">Ver detalles</span>
+              <span className="text-muted-foreground line-clamp-1">Autor: {author}</span>
+              <span className="text-primary hover:underline cursor-pointer shrink-0">Ver detalles</span>
             </motion.div>
           </div>
         </div>
@@ -133,4 +126,3 @@ const BookCard = ({
 };
 
 export default BookCard;
-
