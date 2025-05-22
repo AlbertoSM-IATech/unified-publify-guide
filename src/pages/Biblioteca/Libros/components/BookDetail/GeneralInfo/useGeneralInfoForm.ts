@@ -15,7 +15,7 @@ export const useGeneralInfoForm = (
     book.fechaLanzamiento ? new Date(book.fechaLanzamiento) : undefined
   );
 
-  const form = useForm({
+  const formMethods = useForm({
     defaultValues: {
       titulo: book.titulo,
       subtitulo: book.subtitulo || "",
@@ -41,15 +41,10 @@ export const useGeneralInfoForm = (
     }
   });
 
-  // Create form props for passing to FormProvider
-  const formProps = {
-    ...form,
-  };
-
   // Update form when book data changes
   useEffect(() => {
     if (book) {
-      form.reset({
+      formMethods.reset({
         titulo: book.titulo,
         subtitulo: book.subtitulo || "",
         descripcion: book.descripcion || "",
@@ -75,7 +70,7 @@ export const useGeneralInfoForm = (
       setSelectedDate(book.fechaPublicacion ? new Date(book.fechaPublicacion) : undefined);
       setSelectedLaunchDate(book.fechaLanzamiento ? new Date(book.fechaLanzamiento) : undefined);
     }
-  }, [book, form]);
+  }, [book, formMethods]);
 
   // Update parent component when form data changes, with debouncing to prevent infinite loops
   useEffect(() => {
@@ -90,7 +85,7 @@ export const useGeneralInfoForm = (
       ];
       
       // Create a more selective subscription to avoid the circular updates with descripcion fields
-      const subscription = form.watch((formData, { name, type }) => {
+      const subscription = formMethods.watch((formData, { name, type }) => {
         // Skip if the change is coming from descripcion or descripcionHtml to prevent circular updates
         if (name === 'descripcion' || name === 'descripcionHtml') {
           return;
@@ -118,7 +113,7 @@ export const useGeneralInfoForm = (
       
       return () => subscription.unsubscribe();
     }
-  }, [form, isEditing, onUpdateBook, selectedDate, selectedLaunchDate]);
+  }, [formMethods, isEditing, onUpdateBook, selectedDate, selectedLaunchDate]);
 
   // Handle date change
   const handleDateChange = (field: 'fechaPublicacion' | 'fechaLanzamiento', date: Date | undefined) => {
@@ -131,7 +126,7 @@ export const useGeneralInfoForm = (
 
   return {
     form: {
-      ...form,
+      ...formMethods,
       selectedDate,
       selectedLaunchDate,
       handleDateChange
