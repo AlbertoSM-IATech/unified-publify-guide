@@ -1,4 +1,3 @@
-
 import { Book } from "../../../types/bookTypes";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -9,7 +8,7 @@ import { Separator } from "@/components/ui/separator";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { BSRRankings } from "../BSRRankings";
-import { useState } from "react";
+// import { useState } from "react"; // useState ya no es necesario aquí
 import { FormField } from "@/components/ui/form";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { StatusBadge } from "@/components/common/StatusBadge";
@@ -22,11 +21,11 @@ interface BookSummaryProps {
 }
 
 export const BookSummary = ({ book, isEditing, onUpdateBook }: BookSummaryProps) => {
-  const [selectedFormat, setSelectedFormat] = useState<"hardcover" | "paperback" | "ebook">("paperback");
+  // const [selectedFormat, setSelectedFormat] = useState<"hardcover" | "paperback" | "ebook">("paperback"); // Eliminado
 
-  const handleFormatChange = (format: string) => {
-    setSelectedFormat(format as "hardcover" | "paperback" | "ebook");
-  };
+  // const handleFormatChange = (format: string) => { // Eliminado
+  //   setSelectedFormat(format as "hardcover" | "paperback" | "ebook");
+  // };
 
   const handleDateChange = (field: 'fechaPublicacion' | 'fechaLanzamiento', date: Date | undefined) => {
     if (onUpdateBook && date) {
@@ -50,12 +49,12 @@ export const BookSummary = ({ book, isEditing, onUpdateBook }: BookSummaryProps)
     if (url) window.open(url, '_blank');
   };
 
-  const getAmazonLink = () => {
-    if (selectedFormat && book[selectedFormat]?.links?.amazon) {
-      return book[selectedFormat]?.links?.amazon;
-    }
-    return book.amazonUrl;
-  };
+  // const getAmazonLink = () => { // Eliminado, ya que ahora mostraremos todos los enlaces
+  //   if (selectedFormat && book[selectedFormat]?.links?.amazon) {
+  //     return book[selectedFormat]?.links?.amazon;
+  //   }
+  //   return book.amazonUrl; // book.amazonUrl podría ser un fallback general si se desea
+  // };
 
   return (
     <motion.div
@@ -64,6 +63,7 @@ export const BookSummary = ({ book, isEditing, onUpdateBook }: BookSummaryProps)
       transition={{ delay: 0.2, duration: 0.3 }}
       className="p-6 space-y-6 py-[10px] px-[10px]"
     >
+      {/* ... keep existing code (Título y subtítulo) */}
       <div className="space-y-1">
         <h2 className="font-bold text-2xl font-heading text-blue-500">{book.titulo}</h2>
         {book.subtitulo && (
@@ -71,6 +71,7 @@ export const BookSummary = ({ book, isEditing, onUpdateBook }: BookSummaryProps)
         )}
       </div>
 
+      {/* ... keep existing code (Autor) */}
       <div className="flex items-center gap-2">
         <User className="w-4 h-4" />
         <span className="text-lg font-medium">Por:</span>
@@ -85,7 +86,7 @@ export const BookSummary = ({ book, isEditing, onUpdateBook }: BookSummaryProps)
 
       <Separator />
 
-      {/* Status Field */}
+      {/* ... keep existing code (Status Field) */}
       <div className="grid gap-3 py-0 my-[20px]">
         <label className="text-sm font-medium">Estado</label>
         {isEditing ? (
@@ -108,7 +109,7 @@ export const BookSummary = ({ book, isEditing, onUpdateBook }: BookSummaryProps)
         )}
       </div>
 
-      {/* Content Type Field */}
+      {/* ... keep existing code (Content Type Field) */}
       <div className="grid gap-3">
         <label className="text-sm font-medium">Tipo de Contenido</label>
         {isEditing ? (
@@ -132,6 +133,7 @@ export const BookSummary = ({ book, isEditing, onUpdateBook }: BookSummaryProps)
 
       <Separator />
 
+      {/* ... keep existing code (Publication Date and Launch Date) */}
       <div className="space-y-4">
         {/* Publication Date */}
         <div className="space-y-2">
@@ -179,17 +181,56 @@ export const BookSummary = ({ book, isEditing, onUpdateBook }: BookSummaryProps)
       <div className="space-y-3">
         <h3 className="text-sm font-medium text-muted-foreground">Enlaces</h3>
         <div className="space-y-2">
-          {getAmazonLink() && (
+          {/* Amazon Hardcover Link */}
+          {book.hardcover?.links?.amazon && (
             <Button
               variant="outline"
               size="sm"
               className="w-full justify-start"
-              onClick={() => handleOpenUrl(getAmazonLink() || '')}
+              onClick={() => handleOpenUrl(book.hardcover!.links!.amazon!)}
             >
               <ExternalLink className="w-4 h-4 mr-2" />
-              Ver en Amazon ({selectedFormat})
+              Ver en Amazon (Tapa dura)
             </Button>
           )}
+          {/* Amazon Paperback Link */}
+          {book.paperback?.links?.amazon && (
+            <Button
+              variant="outline"
+              size="sm"
+              className="w-full justify-start"
+              onClick={() => handleOpenUrl(book.paperback!.links!.amazon!)}
+            >
+              <ExternalLink className="w-4 h-4 mr-2" />
+              Ver en Amazon (Tapa blanda)
+            </Button>
+          )}
+          {/* Amazon eBook Link */}
+          {book.ebook?.links?.amazon && (
+            <Button
+              variant="outline"
+              size="sm"
+              className="w-full justify-start"
+              onClick={() => handleOpenUrl(book.ebook!.links!.amazon!)}
+            >
+              <ExternalLink className="w-4 h-4 mr-2" />
+              Ver en Amazon (eBook)
+            </Button>
+          )}
+          {/* Fallback general Amazon Link si los específicos no existen y book.amazonUrl sí */}
+          {!book.hardcover?.links?.amazon && !book.paperback?.links?.amazon && !book.ebook?.links?.amazon && book.amazonUrl && (
+             <Button
+              variant="outline"
+              size="sm"
+              className="w-full justify-start"
+              onClick={() => handleOpenUrl(book.amazonUrl!)}
+            >
+              <ExternalLink className="w-4 h-4 mr-2" />
+              Ver en Amazon (General)
+            </Button>
+          )}
+
+          {/* Landing Page Link */}
           {book.landingPageUrl && (
             <Button
               variant="outline"
@@ -200,6 +241,15 @@ export const BookSummary = ({ book, isEditing, onUpdateBook }: BookSummaryProps)
               <LinkIcon className="w-4 h-4 mr-2" />
               Lead Magnet
             </Button>
+          )}
+
+          {/* Mensaje si no hay ningún enlace de Amazon ni Landing Page */}
+          {!book.hardcover?.links?.amazon && 
+           !book.paperback?.links?.amazon && 
+           !book.ebook?.links?.amazon && 
+           !book.amazonUrl && 
+           !book.landingPageUrl && (
+            <p className="text-sm text-muted-foreground">No hay enlaces disponibles.</p>
           )}
         </div>
       </div>
