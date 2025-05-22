@@ -1,5 +1,5 @@
 
-import { Book } from "../../../../../types/bookTypes";
+import { Book } from "../../../../types/bookTypes"; // Ruta corregida
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
@@ -82,3 +82,4 @@ export const HtmlCodePreview = ({
     </motion.div>
   );
 };
+
