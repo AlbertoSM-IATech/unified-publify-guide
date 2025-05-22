@@ -8,7 +8,7 @@ import { motion } from "framer-motion";
 import { Card } from "@/components/ui/card";
 
 interface HtmlCodePreviewProps {
-  form: any; // Type from react-hook-form
+  form: any;
   book: Book;
   isEditing: boolean;
   copyHtml: () => void;
@@ -28,11 +28,9 @@ export const HtmlCodePreview = ({
     return null;
   }
 
-  // Obtener contenido HTML del formulario o del libro
   const htmlContent = isEditing ? form.getValues("descripcionHtml") : book.descripcionHtml;
-  console.log("HtmlCodePreview: Mostrando contenido HTML:", htmlContent ? htmlContent.substring(0, 50) + "..." : "vacío");
 
-  if (!htmlContent && !isEditing) { // Don't show if not editing and no HTML content
+  if (!htmlContent && !isEditing) {
     return null;
   }
 
@@ -62,16 +60,7 @@ export const HtmlCodePreview = ({
           value={htmlContent || ""}
           rows={4}
           className="font-mono text-sm bg-muted/50 border-muted mb-3 focus-visible:ring-[#FB923C]/50"
-          readOnly={!isEditing}
-          onChange={(e) => {
-            if (isEditing) {
-              console.log("HtmlCodePreview: Usuario editando manualmente el HTML");
-              form.setValue("descripcionHtml", e.target.value, {
-                shouldValidate: false,
-                shouldDirty: true,
-              });
-            }
-          }}
+          readOnly={true}
         />
 
         <Label className="text-sm font-medium block mb-2 text-foreground">Vista previa</Label>

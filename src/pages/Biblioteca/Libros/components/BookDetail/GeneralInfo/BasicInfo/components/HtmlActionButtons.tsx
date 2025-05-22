@@ -1,15 +1,14 @@
 
 import { Button } from "@/components/ui/button";
 import { Code, Eye, EyeOff } from "lucide-react";
-// import { Book } from "../../../../../types/bookTypes"; // No se usa Book directamente
 
 interface HtmlActionButtonsProps {
   isEditing: boolean;
   generateHtml: () => void;
   showHtmlPreview: boolean;
   setShowHtmlPreview: (show: boolean) => void;
-  bookDescripcionHtml?: string | null; // Usado para el modo no edición
-  hasGeneratedThisEditSession?: boolean; // Nuevo prop, opcional para compatibilidad
+  bookDescripcionHtml?: string | null;
+  hasGeneratedThisEditSession?: boolean;
 }
 
 export const HtmlActionButtons = ({
@@ -33,7 +32,8 @@ export const HtmlActionButtons = ({
           <Code size={16} />
           Generar código HTML
         </Button>
-        {hasGeneratedThisEditSession && ( // Solo mostrar el botón de toggle si se ha generado HTML
+        
+        {hasGeneratedThisEditSession && (
           <Button
             type="button"
             size="sm"
@@ -49,7 +49,6 @@ export const HtmlActionButtons = ({
     );
   }
 
-  // Lógica para modo no edición (solo ver HTML si existe en el libro)
   if (bookDescripcionHtml) {
     return (
       <Button

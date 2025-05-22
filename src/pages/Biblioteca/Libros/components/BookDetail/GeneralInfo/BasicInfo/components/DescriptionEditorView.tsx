@@ -7,7 +7,7 @@ import { RichTextEditor } from "./RichTextEditor";
 interface DescriptionEditorViewProps {
   book: Book;
   isEditing: boolean;
-  form: any; // Type from react-hook-form
+  form: any;
   handleEditorChange: (html: string) => void;
 }
 
@@ -17,9 +17,6 @@ export const DescriptionEditorView = ({
   form,
   handleEditorChange,
 }: DescriptionEditorViewProps) => {
-  console.log("DescriptionEditorView render: isEditing:", isEditing);
-  console.log("DescriptionEditorView render: Valor actual form.descripcion:", form.getValues("descripcion") ? form.getValues("descripcion").substring(0, 50) + "..." : "vacío");
-  
   return (
     <div className="grid gap-3">
       <Label htmlFor="descripcion" className="text-foreground">Descripción</Label>
@@ -27,23 +24,19 @@ export const DescriptionEditorView = ({
         <FormField
           control={form.control}
           name="descripcion"
-          render={({ field }) => {
-            console.log("DescriptionEditorView FormField render: field.value:", field.value ? field.value.substring(0, 50) + "..." : "undefined/empty");
-            return (
-              <FormItem className="w-full">
-                <FormControl>
-                  <RichTextEditor
-                    content={field.value || ""} // Usa el valor del campo
-                    onChange={(html) => {
-                      console.log("DescriptionEditorView: Editor cambió. Llamando a handleEditorChange");
-                      handleEditorChange(html);
-                    }}
-                    placeholder="Ingresa la descripción del libro"
-                  />
-                </FormControl>
-              </FormItem>
-            );
-          }}
+          render={({ field }) => (
+            <FormItem className="w-full">
+              <FormControl>
+                <RichTextEditor
+                  content={field.value || ""}
+                  onChange={(html) => {
+                    handleEditorChange(html);
+                  }}
+                  placeholder="Ingresa la descripción del libro"
+                />
+              </FormControl>
+            </FormItem>
+          )}
         />
       ) : (
         <div

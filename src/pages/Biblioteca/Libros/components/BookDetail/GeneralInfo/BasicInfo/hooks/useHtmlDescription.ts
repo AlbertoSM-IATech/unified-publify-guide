@@ -7,11 +7,10 @@ import { UseFormReturn } from "react-hook-form";
 export const useHtmlDescription = (book: Book, form: UseFormReturn<any>) => {
   const [showHtmlPreview, setShowHtmlPreview] = useState(false);
   const [copied, setCopied] = useState(false);
-  const [hasGeneratedThisEditSession, setHasGeneratedThisEditSession] = useState(false); // Nuevo estado
+  const [hasGeneratedThisEditSession, setHasGeneratedThisEditSession] = useState(false);
 
   const generateHtml = () => {
     const description = form.getValues("descripcion");
-    console.log("generateHtml: Contenido actual de form.descripcion:", description ? description.substring(0,50) + "..." : "vacío");
     
     if (!description || description.trim() === "<p></p>" || description.trim() === "") {
       toast({
@@ -19,29 +18,25 @@ export const useHtmlDescription = (book: Book, form: UseFormReturn<any>) => {
         description: "Por favor, introduce una descripción primero.",
         variant: "destructive",
       });
-      setHasGeneratedThisEditSession(false); // Asegurar que no se considera generado
-      setShowHtmlPreview(false); // Ocultar si estaba visible
       return;
     }
     
-    console.log("generateHtml: Estableciendo descripcionHtml con el contenido de form.descripcion");
     form.setValue("descripcionHtml", description, { 
       shouldValidate: false,
       shouldDirty: true
     });
     
-    setHasGeneratedThisEditSession(true); // Marcar como generado en esta sesión
-    setShowHtmlPreview(true); // Mostrar la vista previa automáticamente
+    setHasGeneratedThisEditSession(true);
+    setShowHtmlPreview(true);
     
     toast({
       title: "HTML generado",
-      description: "El código HTML se ha generado y la vista previa está visible.",
+      description: "El código HTML se ha generado correctamente.",
     });
   };
 
   const copyHtml = () => {
-    const htmlToCopy = form.getValues("descripcionHtml") || ""; // No tomar de book.descripcionHtml aquí
-    console.log("copyHtml: Contenido a copiar (de form.descripcionHtml):", htmlToCopy ? htmlToCopy.substring(0,50) + "..." : "vacío");
+    const htmlToCopy = form.getValues("descripcionHtml") || "";
     
     if (!htmlToCopy) {
       toast({
@@ -76,7 +71,7 @@ export const useHtmlDescription = (book: Book, form: UseFormReturn<any>) => {
     copied,
     generateHtml,
     copyHtml,
-    hasGeneratedThisEditSession, // Exponer nuevo estado
-    setHasGeneratedThisEditSession // Exponer setter para resetear
+    hasGeneratedThisEditSession,
+    setHasGeneratedThisEditSession
   };
 };

@@ -9,7 +9,7 @@ import { HtmlCodePreview } from "./components/HtmlCodePreview";
 interface DescriptionSectionProps {
   book: Book;
   isEditing: boolean;
-  form: any; // Using 'any' here to handle the extended form object from useGeneralInfoForm
+  form: any;
 }
 
 export const DescriptionSection = ({
@@ -23,26 +23,22 @@ export const DescriptionSection = ({
     copied,
     generateHtml,
     copyHtml,
-    hasGeneratedThisEditSession, // Obtener nuevo estado
-    setHasGeneratedThisEditSession // Obtener setter
+    hasGeneratedThisEditSession,
+    setHasGeneratedThisEditSession
   } = useHtmlDescription(book, form);
 
   const handleEditorChange = (html: string) => {
-    console.log("DescriptionSection handleEditorChange: Recibido HTML del editor:", html ? html.substring(0, 50) + "..." : "vacío");
-    
     form.setValue("descripcion", html, { 
       shouldValidate: false,
       shouldDirty: true,
       shouldTouch: true 
     });
     
-    if (showHtmlPreview) {
-      console.log("DescriptionSection handleEditorChange: Ocultando vista previa y reseteando hasGeneratedThisEditSession.");
+    // Si el usuario edita el contenido, reseteamos el estado de generación y ocultamos la vista previa
+    if (hasGeneratedThisEditSession) {
       setShowHtmlPreview(false);
-      setHasGeneratedThisEditSession(false); // Resetear al editar
+      setHasGeneratedThisEditSession(false);
     }
-    
-    console.log("DescriptionSection handleEditorChange: Form.descripcion DESPUÉS de setValue:", form.getValues("descripcion") ? form.getValues("descripcion").substring(0, 50) + "..." : "vacío");
   };
 
   return (
@@ -65,17 +61,18 @@ export const DescriptionSection = ({
           generateHtml={generateHtml}
           showHtmlPreview={showHtmlPreview}
           setShowHtmlPreview={setShowHtmlPreview}
-          bookDescripcionHtml={book.descripcionHtml} // Este prop podría no ser necesario para el botón de toggle en modo edición
-          hasGeneratedThisEditSession={hasGeneratedThisEditSession} // Pasar nuevo estado
+          bookDescripcionHtml={book.descripcionHtml}
+          hasGeneratedThisEditSession={hasGeneratedThisEditSession}
         />
-        {showHtmlPreview && hasGeneratedThisEditSession && ( // HtmlCodePreview solo si se ha generado Y se quiere mostrar
+        
+        {showHtmlPreview && (
           <HtmlCodePreview
             form={form}
-            book={book} // Necesario para la vista no editable
+            book={book}
             isEditing={isEditing}
             copyHtml={copyHtml}
             copied={copied}
-            showHtmlPreview={showHtmlPreview} // Se mantiene para la lógica interna de HtmlCodePreview si es necesario
+            showHtmlPreview={showHtmlPreview}
           />
         )}
       </div>
