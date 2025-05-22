@@ -1,4 +1,3 @@
-
 import React from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { ApexOptions } from 'apexcharts';
@@ -26,6 +25,7 @@ interface ApexLineChartProps {
   series?: Series[];
   height?: number;
   className?: string;
+  onError?: () => void; // <-- Prop añadida
 }
 
 const ApexLineChart = ({ 
@@ -34,17 +34,17 @@ const ApexLineChart = ({
   data, 
   series = [], 
   height = 350, 
-  className 
+  className,
+  // onError is now accepted
 }: ApexLineChartProps) => {
+  // ... keep existing code (isDarkMode, themeOptions, validData, chartSeries, categories, colors)
   const { isDarkMode } = useTheme();
   const themeOptions = getChartTheme(isDarkMode);
   
-  // Making sure the data is valid to prevent rendering issues
   const validData = Array.isArray(data) && data.length > 0 
     ? data 
     : [{ name: 'No data', balance: 0 }];
   
-  // Preparar datos para ApexCharts
   const chartSeries = series.length > 0 
     ? series.map(s => ({
         name: s.name,
@@ -58,8 +58,8 @@ const ApexLineChart = ({
   const categories = validData.map(item => item.name);
   const colors = series.length > 0 ? series.map(s => s.color) : ['#FB923C'];
 
-  // Simplified options to avoid any resolve reference issues
   const options: ApexOptions = {
+    // ... keep existing code (chart, colors, dataLabels, stroke, markers, xaxis, yaxis, tooltip, responsive options)
     chart: {
       type: 'line',
       toolbar: {
@@ -143,6 +143,7 @@ const ApexLineChart = ({
 
   // Prevent rendering chart if no valid data is available
   if (!Array.isArray(data) || data.length === 0) {
+    // ... keep existing code (Card for no data)
     return (
       <Card className={className}>
         <CardHeader className="pb-3">
@@ -162,6 +163,7 @@ const ApexLineChart = ({
   }
 
   return (
+    // ... keep existing code (Card with MotionWrapper and ReactApexChart)
     <Card className={`overflow-hidden ${className}`}>
       <CardHeader className="pb-3">
         <div className="space-y-1">

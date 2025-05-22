@@ -1,4 +1,3 @@
-
 import React from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { ApexOptions } from 'apexcharts';
@@ -24,6 +23,7 @@ interface ApexPieChartProps {
   totalLabel?: string;
   totalValue?: number;
   showLegend?: boolean;
+  onError?: () => void; // <-- Prop añadida
 }
 
 const ApexPieChart = ({ 
@@ -34,7 +34,8 @@ const ApexPieChart = ({
   className,
   totalLabel,
   totalValue,
-  showLegend = true
+  showLegend = true,
+  onError
 }: ApexPieChartProps) => {
   const { isDarkMode } = useTheme();
   const themeOptions = getChartTheme(isDarkMode);
@@ -98,6 +99,12 @@ const ApexPieChart = ({
               fontSize: '16px',
               fontWeight: 600,
               color: isDarkMode ? '#d5d5d5' : '#606060',
+              formatter: totalValue !== undefined ? function (w) {
+                // If totalValue is provided, use it. Otherwise, ApexCharts calculates sum.
+                return w.globals.seriesTotals.reduce((a: number, b: number) => a + b, 0) === 0 && validData[0]?.name === 'No data' 
+                  ? '0' 
+                  : totalValue.toString();
+              } : undefined,
             }
           }
         },
@@ -137,6 +144,11 @@ const ApexPieChart = ({
       }
     }]
   };
+
+  // Make sure totalValue is passed to options if available
+  if (options.plotOptions?.pie?.donut?.labels?.total && totalValue !== undefined) {
+    // The formatter will handle showing the totalValue if it's provided
+  }
 
   // Prevent rendering chart if no valid data is available
   if (!Array.isArray(data) || data.length === 0) {
@@ -185,7 +197,7 @@ const ApexPieChart = ({
           />
         </MotionWrapper>
 
-        {validData.length > 0 && showLegend === false && (
+        {validData.length > 0 && showLegend === false && validData[0]?.name !== 'No data' && (
           <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-2">
             {validData.map((entry, index) => (
               <motion.div 

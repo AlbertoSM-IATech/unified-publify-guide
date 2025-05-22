@@ -1,4 +1,3 @@
-
 import React from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { ApexOptions } from 'apexcharts';
@@ -21,6 +20,7 @@ interface ApexBarChartProps {
   height?: number;
   className?: string;
   horizontal?: boolean;
+  onError?: () => void;
 }
 
 const ApexBarChart = ({ 
@@ -29,7 +29,7 @@ const ApexBarChart = ({
   data, 
   height = 350, 
   className,
-  horizontal = false
+  horizontal = false,
 }: ApexBarChartProps) => {
   const { isDarkMode } = useTheme();
   const themeOptions = getChartTheme(isDarkMode);
