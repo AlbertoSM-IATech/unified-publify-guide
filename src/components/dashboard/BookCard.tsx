@@ -2,7 +2,8 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { DEFAULT_COVER_URL } from "@/services/supabase/books/constants"; // Importar la constante global
+import { DEFAULT_COVER_URL } from "@/services/supabase/books/constants";
+import { StatusBadge } from "@/components/common/StatusBadge"; // Importar StatusBadge
 
 interface BookCardProps {
   index: number;
@@ -23,39 +24,18 @@ const BookCard = ({
   coverUrl,
   id
 }: BookCardProps) => {
-  // Usar la constante global DEFAULT_COVER_URL
   const [imageSrc, setImageSrc] = useState(coverUrl || DEFAULT_COVER_URL);
   
-  // Update image source when prop changes
   useEffect(() => {
     setImageSrc(coverUrl || DEFAULT_COVER_URL);
   }, [coverUrl]);
   
-  // Handle image loading error
   const handleImageError = () => {
     console.log(`Image error loading: ${coverUrl}, falling back to default`);
-    setImageSrc(DEFAULT_COVER_URL); // Usar la constante global
+    setImageSrc(DEFAULT_COVER_URL);
   };
   
-  // Determine status color based on status
-  const getStatusColor = (status: string): string => {
-    switch (status?.toLowerCase()) {
-      case "publicado":
-        return "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300";
-      case "en revisión":
-      case "en_edicion": // Asegurarse que este caso también está cubierto si es un estado válido
-        return "bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-300";
-      case "borrador":
-        return "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300";
-      case "archivado":
-      case "pausado":
-        return "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300";
-      default:
-        return "bg-gray-100 text-gray-800 dark:bg-gray-800/30 dark:text-gray-300";
-    }
-  };
-  
-  const statusColor = getStatusColor(status);
+  // getStatusColor function is no longer needed as StatusBadge handles colors.
 
   const cardVariants = {
     initial: { 
@@ -95,19 +75,19 @@ const BookCard = ({
         <div className="flex h-32 overflow-hidden">
           {/* Book cover image/placeholder */}
           <motion.div 
-            className="relative h-full w-28 bg-muted overflow-hidden" // w-28 es aproximadamente 112px, podemos ajustar si es necesario
+            className="relative h-full w-28 bg-muted overflow-hidden"
             whileHover={{ scale: 1.05 }}
             transition={{ duration: 0.3 }}
           >
-            <div className="h-full w-full overflow-hidden"> {/* Contenedor para aspect-ratio si fuera necesario */}
-              <div className="h-full"> {/* Div para la imagen */}
+            <div className="h-full w-full overflow-hidden">
+              <div className="h-full">
                 <img 
                   src={imageSrc} 
                   alt={title} 
                   className="h-full w-full object-cover" 
                   loading="lazy"
-                  width="112" // Puede ser útil para la optimización de la imagen
-                  height="128" // Puede ser útil para la optimización de la imagen
+                  width="112"
+                  height="128"
                   onError={handleImageError}
                 />
               </div>
@@ -131,12 +111,9 @@ const BookCard = ({
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: index * 0.05 + 0.3, duration: 0.3 }}
               >
-                <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${statusColor}`}>
-                  {status}
-                </span>
-                <span className="text-xs text-muted-foreground">
-                  {contentLevel}
-                </span>
+                {/* Usar StatusBadge para el estado y el nivel de contenido */}
+                <StatusBadge status={status} />
+                <StatusBadge status={contentLevel} />
               </motion.div>
             </div>
             <motion.div 
@@ -156,3 +133,4 @@ const BookCard = ({
 };
 
 export default BookCard;
+
