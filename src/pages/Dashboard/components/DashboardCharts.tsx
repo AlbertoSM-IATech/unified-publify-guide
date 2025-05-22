@@ -29,7 +29,7 @@ export const DashboardCharts = ({ pieChartData, barChartData }: DashboardChartsP
   
   // Fallback component for chart errors
   const ErrorFallback = ({ title }: { title: string }) => (
-    <Card className="w-full h-[350px] flex items-center justify-center">
+    <Card className="w-full h-full flex items-center justify-center"> {/* Changed h-[350px] to h-full */}
       <CardContent className="flex flex-col items-center justify-center p-6 text-center">
         <AlertTriangle className="h-12 w-12 text-amber-500 mb-4" />
         <h3 className="text-lg font-medium mb-2">Error al cargar gráfico</h3>
@@ -44,7 +44,7 @@ export const DashboardCharts = ({ pieChartData, barChartData }: DashboardChartsP
     <>
       {/* Line chart has been moved to Dashboard.tsx */}
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-        <MotionWrapper type="fadeLeft" delay={0.2}>
+        <MotionWrapper type="fadeLeft" delay={0.2} className="h-full"> {/* Added h-full */}
           {chartErrors.pie ? (
             <ErrorFallback title="Distribución por Estado" />
           ) : (
@@ -56,11 +56,12 @@ export const DashboardCharts = ({ pieChartData, barChartData }: DashboardChartsP
               totalValue={totalBooks}
               showLegend={false}
               onError={() => handleChartError('pie')}
+              className="h-full" // Added h-full
             />
           )}
         </MotionWrapper>
 
-        <MotionWrapper type="fadeRight" delay={0.3}>
+        <MotionWrapper type="fadeRight" delay={0.3} className="h-full"> {/* Added h-full */}
           {chartErrors.bar ? (
             <ErrorFallback title="Distribución por Contenido" />
           ) : (
@@ -69,6 +70,7 @@ export const DashboardCharts = ({ pieChartData, barChartData }: DashboardChartsP
               description="Libros distribuidos por longitud de contenido"
               data={barChartData}
               onError={() => handleChartError('bar')}
+              className="h-full" // Added h-full
             />
           )}
         </MotionWrapper>

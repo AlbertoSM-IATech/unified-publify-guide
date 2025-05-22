@@ -6,6 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { BarChart3 } from 'lucide-react';
 import { getChartTheme } from './chartTheme';
 import { useTheme } from '@/hooks/useTheme';
+import { cn } from '@/lib/utils';
 
 interface ChartItem {
   name: string;
@@ -17,7 +18,7 @@ interface ApexBarChartProps {
   title: string;
   description: string;
   data: ChartItem[];
-  height?: number;
+  height?: number | string; // Permitir string para "100%"
   className?: string;
   horizontal?: boolean;
   onError?: () => void;
@@ -27,17 +28,15 @@ const ApexBarChart = ({
   title, 
   description, 
   data, 
-  height = 350, 
+  height = 350, // Default height
   className,
   horizontal = false,
 }: ApexBarChartProps) => {
   const { isDarkMode } = useTheme();
   const themeOptions = getChartTheme(isDarkMode);
   
-  // Making sure the data is valid to prevent rendering issues
   const validData = Array.isArray(data) && data.length > 0 ? data : [{ name: 'No data', value: 0, color: '#ccc' }];
   
-  // Preparar datos para ApexCharts
   const series = [{
     name: "Cantidad",
     data: validData.map(item => item.value),
@@ -46,7 +45,6 @@ const ApexBarChart = ({
   const categories = validData.map(item => item.name);
   const colors = validData.map(item => item.color);
 
-  // Simplified options to avoid any resolve reference issues
   const options: ApexOptions = {
     chart: {
       type: 'bar',
@@ -131,10 +129,12 @@ const ApexBarChart = ({
     }]
   };
 
-  // Prevent rendering chart if no valid data is available
+  // Si className incluye h-full, entonces el gráfico debería intentar usar 100% de altura.
+  const chartHeight = className?.includes('h-full') ? '100%' : height;
+
   if (!Array.isArray(data) || data.length === 0) {
     return (
-      <Card className={className}>
+      <Card className={cn("flex flex-col", className)}> {/* Added flex flex-col */}
         <CardHeader className="pb-3">
           <div className="space-y-1">
             <CardTitle className="text-lg font-medium flex items-center gap-2">
@@ -144,7 +144,7 @@ const ApexBarChart = ({
             <CardDescription>{description}</CardDescription>
           </div>
         </CardHeader>
-        <CardContent className="py-10 text-center text-muted-foreground">
+        <CardContent className={cn("py-10 text-center text-muted-foreground flex-grow flex items-center justify-center", { "justify-center": !className?.includes('h-full') })}> {/* Added flex-grow items-center justify-center */}
           No data available to display chart
         </CardContent>
       </Card>
@@ -152,7 +152,7 @@ const ApexBarChart = ({
   }
 
   return (
-    <Card className={`overflow-hidden ${className}`}>
+    <Card className={cn("overflow-hidden flex flex-col", className)}> {/* Added flex flex-col */}
       <CardHeader className="pb-3">
         <div className="space-y-1">
           <CardTitle className="text-lg font-medium flex items-center gap-2">
@@ -164,9 +164,9 @@ const ApexBarChart = ({
           </CardDescription>
         </div>
       </CardHeader>
-      <CardContent className="pb-4">
+      <CardContent className={cn("pb-4 flex flex-col flex-grow", { "justify-center": !className?.includes('h-full') })}> {/* Added flex flex-col flex-grow and conditional justify-center */}
         <MotionWrapper 
-          className="h-[350px]"
+          className="flex-grow min-h-[300px] w-full" // Changed from h-[350px]
           type="fadeUp"
           duration={0.7}
         >
@@ -174,7 +174,8 @@ const ApexBarChart = ({
             options={options} 
             series={series} 
             type="bar" 
-            height={height}
+            height={chartHeight} // Use dynamic chartHeight
+            width="100%"
           />
         </MotionWrapper>
       </CardContent>
