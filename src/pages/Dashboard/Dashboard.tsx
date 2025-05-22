@@ -1,4 +1,3 @@
-
 import { useEffect, useState, useCallback, useMemo } from "react";
 import { getStatsData, getContentCategoriesData } from "@/components/dashboard/dashboardData";
 import MotionWrapper from "@/components/motion/MotionWrapper";
@@ -10,20 +9,43 @@ import { getContentCategory, getEstadoCategory } from "@/pages/Dashboard/utils/d
 import { useFinanceData } from "@/data/financesData";
 import { ChartItem } from "@/components/dashboard/dashboardData";
 import { useBookData } from "@/hooks/useBookData";
+import { ApexLineChart } from "@/components/charts";
+import { formatPeriodDate } from "@/pages/Finanzas/utils/dateUtils";
+import { AlertTriangle } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+
+const ChartErrorFallback = ({ title }: { title: string }) => (
+  <Card className="w-full h-[350px] flex items-center justify-center">
+    <CardContent className="flex flex-col items-center justify-center p-6 text-center">
+      <AlertTriangle className="h-12 w-12 text-amber-500 mb-4" />
+      <h3 className="text-lg font-medium mb-2">Error al cargar gráfico</h3>
+      <p className="text-muted-foreground">
+        No se pudo cargar el gráfico {title}. Intente recargar la página.
+      </p>
+    </CardContent>
+  </Card>
+);
 
 export const Dashboard = () => {
-  const { ingresosTotales, gastosTotales, beneficioNeto, cambioIngresos, cambioGastos, cambioBeneficio } = useFinanceData();
+  const { 
+    ingresosTotales, 
+    gastosTotales, 
+    beneficioNeto, 
+    cambioIngresos, 
+    cambioGastos, 
+    cambioBeneficio,
+    getFilteredChartData
+  } = useFinanceData();
   const { books: libros, lastUpdated } = useBookData();
   const [stats, setStats] = useState(getStatsData());
   const [contentCategories, setContentCategories] = useState(getContentCategoriesData());
   const [pieChartData, setPieChartData] = useState<ChartItem[]>([]);
   const [barChartData, setBarChartData] = useState<ChartItem[]>([]);
-  
-  // Calculate derived data only when books or financial data changes
+  const [lineChartError, setLineChartError] = useState(false);
+
   useEffect(() => {
     if (!libros || libros.length === 0) return;
     
-    // Calculate statistics based on books data
     const altoContenido = libros.filter(libro => getContentCategory(libro.contenido) === "Alto Contenido").length;
     const medioContenido = libros.filter(libro => getContentCategory(libro.contenido) === "Medio Contenido").length;
     const bajoContenido = libros.filter(libro => getContentCategory(libro.contenido) === "Bajo Contenido").length;
@@ -32,7 +54,6 @@ export const Dashboard = () => {
     const borradores = libros.filter(libro => getEstadoCategory(libro.estado) === "Borrador").length;
     const archivados = libros.filter(libro => getEstadoCategory(libro.estado) === "Archivado").length;
 
-    // Update content categories
     const updatedContentCategories = [...contentCategories];
     
     updatedContentCategories[0].count = altoContenido;
@@ -94,7 +115,6 @@ export const Dashboard = () => {
     
     setContentCategories(updatedContentCategories);
 
-    // Update chart data
     const updatedPieChartData = [
       { name: "Publicados", value: publicados, color: "#10b981" },
       { name: "En revisión", value: enRevision, color: "#f59e0b" },
@@ -109,7 +129,23 @@ export const Dashboard = () => {
       { name: "Bajo Contenido", value: bajoContenido, color: "#22c55e" }
     ];
     setBarChartData(updatedBarChartData);
-  }, [libros]);
+  }, [libros, contentCategories]);
+
+  const validLineChartData = useMemo(() => {
+    const chartData = getFilteredChartData('mensual');
+    return Array.isArray(chartData) && chartData.length > 0 
+      ? chartData.map(item => ({
+          ...item,
+          name: typeof item.name === 'string' ? item.name : 
+            formatPeriodDate(new Date(item.date || Date.now()), 'mensual')
+        }))
+      : [{ name: 'Sin datos', ingresos: 0, gastos: 0, beneficio: 0 }];
+  }, [getFilteredChartData]);
+
+  const handleLineChartError = useCallback(() => {
+    setLineChartError(true);
+    console.error("Error rendering Line chart (Balance Mensual)");
+  }, []);
 
   return (
     <div className="p-4 animate-fade-in space-y-8">
@@ -135,6 +171,25 @@ export const Dashboard = () => {
       />
 
       <RecentBooks />
+
+      <MotionWrapper type="fadeUp" delay={0.2}>
+        {lineChartError ? (
+          <ChartErrorFallback title="Balance Mensual" />
+        ) : (
+          <ApexLineChart
+            title="Balance Mensual"
+            description="Seguimiento de ingresos y gastos mensuales (incluye fijos)"
+            data={validLineChartData}
+            series={[
+              { name: "Ingresos", key: "ingresos", color: "#10B981" },
+              { name: "Gastos", key: "gastos", color: "#EF4444" },
+              { name: "Beneficio", key: "beneficio", color: "#3B82F6" }
+            ]}
+            height={350}
+            onError={handleLineChartError}
+          />
+        )}
+      </MotionWrapper>
     </div>
   );
 };

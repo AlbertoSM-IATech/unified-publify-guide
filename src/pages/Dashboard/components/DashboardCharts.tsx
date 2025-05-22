@@ -1,12 +1,10 @@
 
-import React, { useState, useCallback, useMemo } from "react";
+import React, { useState, useCallback } from "react";
 import MotionWrapper from "@/components/motion/MotionWrapper";
-import { ApexLineChart, ApexPieChart, ApexBarChart } from "@/components/charts";
-import { useFinanceData } from "@/data/financesData";
+import { ApexPieChart, ApexBarChart } from "@/components/charts";
 import { ChartItem } from "@/components/dashboard/dashboardData";
 import { AlertTriangle } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
-import { formatPeriodDate } from "@/pages/Finanzas/utils/dateUtils";
 
 interface DashboardChartsProps {
   pieChartData: ChartItem[];
@@ -14,29 +12,14 @@ interface DashboardChartsProps {
   librosCount: number;
 }
 
-export const DashboardCharts = ({ pieChartData, barChartData, librosCount }: DashboardChartsProps) => {
-  const { getFilteredChartData } = useFinanceData();
+export const DashboardCharts = ({ pieChartData, barChartData }: DashboardChartsProps) => {
   const [chartErrors, setChartErrors] = useState({
-    line: false,
     pie: false,
     bar: false
   });
 
-  // Get chart data for the monthly view by default
-  const validLineChartData = useMemo(() => {
-    // Specifically use monthly view to include fixed incomes and costs
-    const chartData = getFilteredChartData('mensual');
-    return Array.isArray(chartData) && chartData.length > 0 
-      ? chartData.map(item => ({
-          ...item,
-          name: typeof item.name === 'string' ? item.name : 
-            formatPeriodDate(new Date(item.date || Date.now()), 'mensual')
-        }))
-      : [{ name: 'Sin datos', ingresos: 0, gastos: 0, beneficio: 0 }];
-  }, [getFilteredChartData]);
-
   // Error handler function for charts
-  const handleChartError = useCallback((chartType: 'line' | 'pie' | 'bar') => {
+  const handleChartError = useCallback((chartType: 'pie' | 'bar') => {
     setChartErrors(prev => ({ ...prev, [chartType]: true }));
     console.error(`Error rendering ${chartType} chart`);
   }, []);
@@ -59,36 +42,7 @@ export const DashboardCharts = ({ pieChartData, barChartData, librosCount }: Das
 
   return (
     <>
-      <MotionWrapper type="fadeUp" delay={0.2}>
-        {chartErrors.line ? (
-          <ErrorFallback title="Balance Mensual" />
-        ) : (
-          <ApexLineChart
-            title="Balance Mensual"
-            description="Seguimiento de ingresos y gastos mensuales (incluye fijos)"
-            data={validLineChartData}
-            series={[
-              {
-                name: "Ingresos",
-                key: "ingresos",
-                color: "#10B981"
-              },
-              {
-                name: "Gastos",
-                key: "gastos",
-                color: "#EF4444"
-              },
-              {
-                name: "Beneficio",
-                key: "beneficio",
-                color: "#3B82F6"
-              }
-            ]}
-            height={350}
-          />
-        )}
-      </MotionWrapper>
-
+      {/* Line chart has been moved to Dashboard.tsx */}
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         <MotionWrapper type="fadeLeft" delay={0.2}>
           {chartErrors.pie ? (
@@ -101,6 +55,7 @@ export const DashboardCharts = ({ pieChartData, barChartData, librosCount }: Das
               totalLabel="Total libros"
               totalValue={totalBooks}
               showLegend={false}
+              onError={() => handleChartError('pie')}
             />
           )}
         </MotionWrapper>
@@ -113,6 +68,7 @@ export const DashboardCharts = ({ pieChartData, barChartData, librosCount }: Das
               title="Distribución por Contenido"
               description="Libros distribuidos por longitud de contenido"
               data={barChartData}
+              onError={() => handleChartError('bar')}
             />
           )}
         </MotionWrapper>
@@ -120,3 +76,4 @@ export const DashboardCharts = ({ pieChartData, barChartData, librosCount }: Das
     </>
   );
 };
+
