@@ -3,12 +3,13 @@ import { Book } from "../../../../../types/bookTypes";
 import { Label } from "@/components/ui/label";
 import { FormField, FormControl, FormItem } from "@/components/ui/form";
 import { RichTextEditor } from "./RichTextEditor";
-import { Textarea } from "@/components/ui/textarea"; // Añadido para mostrar el HTML
+import { Textarea } from "@/components/ui/textarea";
+import { useWatch } from "react-hook-form"; // Importar useWatch
 
 interface DescriptionEditorViewProps {
   book: Book;
   isEditing: boolean;
-  form: any; // Type for react-hook-form instance
+  form: any; // Type for react-hook-form instance, specifically needs form.control
   handleEditorChange: (html: string) => void;
 }
 
@@ -18,8 +19,15 @@ export const DescriptionEditorView = ({
   form,
   handleEditorChange,
 }: DescriptionEditorViewProps) => {
-  // Observamos el campo 'descripcionHtml' para mostrar su contenido en el Textarea
-  const currentHtmlContent = form.watch("descripcionHtml");
+  // Usamos useWatch para observar el campo 'descripcionHtml' de forma más reactiva.
+  // Esto asegura que el componente se re-renderice cuando 'descripcionHtml' cambie.
+  const currentHtmlContent = useWatch({
+    control: form.control, // Pasamos el control del formulario
+    name: "descripcionHtml", // El nombre del campo a observar
+    defaultValue: form.getValues("descripcionHtml") || "" // Valor inicial opcional
+  });
+
+  // console.log("DescriptionEditorView - currentHtmlContent:", currentHtmlContent); // Para depuración
 
   return (
     <div className="grid gap-3">
@@ -28,14 +36,12 @@ export const DescriptionEditorView = ({
         <>
           <FormField
             control={form.control}
-            name="descripcionHtml" // Cambiado de "descripcion" a "descripcionHtml"
+            name="descripcionHtml"
             render={({ field }) => (
               <FormItem className="w-full">
                 <FormControl>
                   <RichTextEditor
                     content={field.value || ""}
-                    // onChange es llamado por RichTextEditor, que a su vez llamará a handleEditorChange.
-                    // handleEditorChange (definido en DescriptionSection) se encarga de form.setValue("descripcionHtml", html)
                     onChange={handleEditorChange}
                     placeholder="Ingresa la descripción detallada del libro aquí..."
                   />
@@ -49,7 +55,7 @@ export const DescriptionEditorView = ({
             </Label>
             <Textarea
               id="html-output-inline"
-              value={currentHtmlContent || ""}
+              value={currentHtmlContent || ""} // Usamos el valor observado por useWatch
               rows={8}
               className="font-mono text-xs bg-muted/30 border-border mt-1 focus-visible:ring-ring"
               readOnly
