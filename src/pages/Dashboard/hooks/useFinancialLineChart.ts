@@ -1,4 +1,3 @@
-
 import { useState, useCallback, useMemo } from "react";
 import { useFinanceData } from "@/data/financesData";
 import { formatPeriodDate } from "@/pages/Finanzas/utils/dateUtils";
@@ -9,6 +8,7 @@ interface LineChartDataItem {
   gastos: number;
   beneficio: number;
   date?: string | number | Date; 
+  [key: string]: string | number | Date | undefined; // Firma de índice añadida
 }
 
 export const useFinancialLineChart = () => {
