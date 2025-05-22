@@ -1,10 +1,12 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+// Input ya no se usa directamente aquí, lo maneja ContentAPlusFileUpload
 import { Label } from "@/components/ui/label";
-import { FilePlus2, File as FileIcon, ImageIcon, Trash2 } from "lucide-react";
+// FilePlus2 ya no se usa directamente aquí
+import { File as FileIcon, ImageIcon, Trash2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { ContentAPlusFileUpload } from "./ContentAPlusFileUpload"; // Importar el nuevo componente
 
 // Definición del tipo para los archivos de Contenido A+
 type ContentAPlusFile = { id: number; name: string; type: string; url?: string };
@@ -29,25 +31,7 @@ export const ContentAPlusFileEditList = ({
       <Label htmlFor="contenidoAPlusFilesGallery">Archivos para contenido A+</Label>
       
       <div className="flex flex-col gap-3">
-        <div className="flex items-center gap-2">
-          <Button
-            type="button"
-            variant="outline"
-            onClick={() => document.getElementById("aplus-gallery-file-upload")?.click()}
-            className="w-full justify-center py-8 border-dashed text-muted-foreground hover:text-[#FB923C] hover:border-[#FB923C]"
-          >
-            <FilePlus2 size={24} className="mr-2" />
-            Subir archivos para contenido A+
-          </Button>
-          <Input
-            id="aplus-gallery-file-upload"
-            type="file"
-            multiple
-            accept="image/*,.pdf,.doc,.docx"
-            onChange={handleFileChange}
-            className="hidden"
-          />
-        </div>
+        <ContentAPlusFileUpload handleFileChange={handleFileChange} inputId="aplus-gallery-file-upload-edit-list" />
 
         <AnimatePresence>
           {(displayedFiles.length > 0) && (
