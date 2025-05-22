@@ -1,4 +1,3 @@
-
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Book } from "../../types/bookTypes";
 import { GeneralInfoSection } from "./GeneralInfoSection";
@@ -61,12 +60,11 @@ export const DetailedTabs = ({ book, isEditing, onUpdateBook }: DetailedTabsProp
         value={activeTab} 
         onValueChange={handleTabChange}
       >
-        <Card className="p-1 shadow-md overflow-hidden border border-neutral-200 dark:border-neutral-700">
-          <TabsList className="grid grid-cols-4 md:grid-cols-4 w-full bg-transparent">
+        <Card className="shadow-md overflow-hidden border border-neutral-200 dark:border-neutral-700">
+          <TabsList className="grid grid-cols-4 md:grid-cols-4 w-full">
             <motion.div whileHover={{ y: -2 }} whileTap={{ y: 0 }}>
               <TabsTrigger 
                 value="info"
-                className="data-[state=active]:text-[#FB923C] data-[state=active]:shadow-[0_1px_0_0_#FB923C]"
               >
                 <div className="flex items-center gap-2">
                   <Info size={16} />
@@ -78,7 +76,6 @@ export const DetailedTabs = ({ book, isEditing, onUpdateBook }: DetailedTabsProp
             <motion.div whileHover={{ y: -2 }} whileTap={{ y: 0 }}>
               <TabsTrigger 
                 value="formats"
-                className="data-[state=active]:text-[#FB923C] data-[state=active]:shadow-[0_1px_0_0_#FB923C]"
               >
                 <div className="flex items-center gap-2">
                   <BookOpen size={16} />
@@ -90,7 +87,6 @@ export const DetailedTabs = ({ book, isEditing, onUpdateBook }: DetailedTabsProp
             <motion.div whileHover={{ y: -2 }} whileTap={{ y: 0 }}>
               <TabsTrigger 
                 value="audience"
-                className="data-[state=active]:text-[#FB923C] data-[state=active]:shadow-[0_1px_0_0_#FB923C]"
               >
                 <div className="flex items-center gap-2">
                   <Users size={16} />
@@ -102,7 +98,6 @@ export const DetailedTabs = ({ book, isEditing, onUpdateBook }: DetailedTabsProp
             <motion.div whileHover={{ y: -2 }} whileTap={{ y: 0 }}>
               <TabsTrigger 
                 value="notes"
-                className="data-[state=active]:text-[#FB923C] data-[state=active]:shadow-[0_1px_0_0_#FB923C]"
               >
                 <div className="flex items-center gap-2">
                   <FileText size={16} />

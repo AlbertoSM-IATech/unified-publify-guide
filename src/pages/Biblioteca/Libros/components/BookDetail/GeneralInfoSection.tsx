@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Book } from "../../types/bookTypes";
 import { Card, CardContent } from "@/components/ui/card";
@@ -38,10 +39,12 @@ export const GeneralInfoSection = ({
           className="w-full"
           onValueChange={(value) => setActiveTab(value)}
         >
+          {/* TabsList ya tiene bg-muted/80 p-1, lo que es correcto */}
           <TabsList className="mb-4 grid w-full grid-cols-2 bg-muted/80 p-1">
             <TabsTrigger 
               value="basic-info"
-              className="data-[state=active]:bg-white dark:data-[state=active]:bg-slate-800 data-[state=active]:shadow-sm"
+              // Se eliminan las clases personalizadas para data-[state=active]
+              // para que tome el estilo por defecto de shadcn
             >
               <div className="flex items-center gap-2">
                 <FileText size={16} />
@@ -51,7 +54,8 @@ export const GeneralInfoSection = ({
             
             <TabsTrigger 
               value="aplus-content"
-              className="data-[state=active]:bg-white dark:data-[state=active]:bg-slate-800 data-[state=active]:shadow-sm"
+              // Se eliminan las clases personalizadas para data-[state=active]
+              // para que tome el estilo por defecto de shadcn
             >
               <div className="flex items-center gap-2">
                 <LayoutPanelTop size={16} />
