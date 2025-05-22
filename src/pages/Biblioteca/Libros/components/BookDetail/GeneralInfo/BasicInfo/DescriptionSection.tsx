@@ -37,6 +37,7 @@ export const DescriptionSection = ({
       shouldTouch: true 
     });
     
+    // También actualizamos el HTML
     form.setValue("descripcionHtml", html, { 
       shouldValidate: false,
       shouldDirty: true,
@@ -81,4 +82,3 @@ export const DescriptionSection = ({
     </div>
   );
 };
-

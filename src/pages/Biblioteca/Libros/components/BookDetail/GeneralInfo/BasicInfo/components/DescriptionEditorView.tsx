@@ -19,7 +19,7 @@ export const DescriptionEditorView = ({
 }: DescriptionEditorViewProps) => {
   return (
     <div className="grid gap-3">
-      <Label htmlFor="descripcion">Descripción</Label>
+      <Label htmlFor="descripcion" className="text-foreground">Descripción</Label>
       {isEditing ? (
         <FormField
           control={form.control}
@@ -45,4 +45,3 @@ export const DescriptionEditorView = ({
     </div>
   );
 };
-

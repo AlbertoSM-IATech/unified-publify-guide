@@ -11,6 +11,7 @@ export const useHtmlDescription = (book: Book, form: UseFormReturn<any>) => {
   const [copied, setCopied] = useState(false);
 
   const generateHtml = () => {
+    // Obtener la descripción del formulario o del libro
     const description = form.getValues("descripcion") || book.descripcion;
     if (!description) {
       toast({
@@ -21,18 +22,19 @@ export const useHtmlDescription = (book: Book, form: UseFormReturn<any>) => {
       return;
     }
     
-    // Since we're using a rich text editor, the HTML is already generated
-    // We just need to set it to the description HTML field
+    // Usamos el HTML directamente del editor
     let html = description;
     
+    // Actualizar el estado local
     setHtmlOutput(html);
     
-    // Set the value without triggering watch effects to avoid recursion
+    // Actualizar el valor en el formulario
     form.setValue("descripcionHtml", html, { 
       shouldValidate: false,
       shouldDirty: true
     });
     
+    // Mostrar la vista previa automáticamente
     setShowHtmlPreview(true);
     
     toast({
@@ -43,17 +45,27 @@ export const useHtmlDescription = (book: Book, form: UseFormReturn<any>) => {
 
   const copyHtml = () => {
     const htmlToCopy = form.getValues("descripcionHtml") || book.descripcionHtml || "";
-    navigator.clipboard.writeText(htmlToCopy);
-    setCopied(true);
     
-    toast({
-      title: "Copiado",
-      description: "El código HTML se ha copiado al portapapeles",
-    });
-    
-    setTimeout(() => {
-      setCopied(false);
-    }, 2000);
+    try {
+      navigator.clipboard.writeText(htmlToCopy);
+      setCopied(true);
+      
+      toast({
+        title: "Copiado",
+        description: "El código HTML se ha copiado al portapapeles",
+      });
+      
+      setTimeout(() => {
+        setCopied(false);
+      }, 2000);
+    } catch (error) {
+      console.error("Error al copiar al portapapeles:", error);
+      toast({
+        title: "Error",
+        description: "No se pudo copiar el código. Inténtalo de nuevo.",
+        variant: "destructive",
+      });
+    }
   };
 
   return {

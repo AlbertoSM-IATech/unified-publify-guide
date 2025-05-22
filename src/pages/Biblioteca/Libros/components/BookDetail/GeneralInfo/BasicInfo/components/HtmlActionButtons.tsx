@@ -26,7 +26,7 @@ export const HtmlActionButtons = ({
           size="sm"
           variant="outline"
           onClick={generateHtml}
-          className="flex items-center gap-1 border-[#FB923C] text-[#FB923C] hover:bg-[#FB923C]/10"
+          className="flex items-center gap-1 border-[#FB923C] text-[#FB923C] hover:bg-[#FB923C]/10 hover:text-[#FB923C] font-medium transition-colors shadow-sm"
         >
           <Code size={16} />
           Generar código HTML
@@ -36,7 +36,7 @@ export const HtmlActionButtons = ({
           size="sm"
           variant="outline"
           onClick={() => setShowHtmlPreview(!showHtmlPreview)}
-          className="flex items-center gap-1"
+          className="flex items-center gap-1 hover:border-[#3B82F6] hover:text-[#3B82F6] hover:bg-[#3B82F6]/10 transition-colors shadow-sm"
         >
           {showHtmlPreview ? <EyeOff size={16} /> : <Eye size={16} />}
           {showHtmlPreview ? "Ocultar HTML" : "Ver HTML"}
@@ -51,7 +51,7 @@ export const HtmlActionButtons = ({
         type="button"
         size="sm"
         variant="outline"
-        className="flex items-center gap-1 mb-3"
+        className="flex items-center gap-1 mb-3 hover:border-[#3B82F6] hover:text-[#3B82F6] hover:bg-[#3B82F6]/10 transition-colors shadow-sm"
         onClick={() => setShowHtmlPreview(!showHtmlPreview)}
       >
         {showHtmlPreview ? <EyeOff size={16} /> : <Eye size={16} />}
@@ -62,4 +62,3 @@ export const HtmlActionButtons = ({
 
   return null;
 };
-

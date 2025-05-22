@@ -1,3 +1,4 @@
+
 import { useState, useCallback, useMemo } from "react";
 import { useFinanceData } from "@/data/financesData";
 import { formatPeriodDate } from "@/pages/Finanzas/utils/dateUtils";
@@ -7,8 +8,8 @@ interface LineChartDataItem {
   ingresos: number;
   gastos: number;
   beneficio: number;
-  date?: string | number | Date; 
-  [key: string]: string | number | Date | undefined; // Firma de índice añadida
+  date?: string | number; // Eliminamos Date para evitar problemas de tipo
+  [key: string]: string | number | undefined; // Cambiamos para evitar el problema con Date
 }
 
 export const useFinancialLineChart = () => {
@@ -23,8 +24,11 @@ export const useFinancialLineChart = () => {
     }
     return chartData.map(item => ({
       ...item,
+      // Convertir cualquier Date a string para evitar problemas de tipo
       name: typeof item.name === 'string' ? item.name : 
-        formatPeriodDate(new Date(item.date || Date.now()), 'mensual')
+        formatPeriodDate(new Date(item.date || Date.now()), 'mensual'),
+      // Asegurarse de que date sea string o number, no Date
+      date: item.date instanceof Date ? item.date.getTime() : item.date
     }));
   }, [getFilteredChartData]);
 
@@ -41,6 +45,6 @@ export const useFinancialLineChart = () => {
     lineChartData,
     lineChartError,
     handleLineChartError,
-    resetLineChartError, // if you want to allow retrying or re-rendering
+    resetLineChartError,
   };
 };
