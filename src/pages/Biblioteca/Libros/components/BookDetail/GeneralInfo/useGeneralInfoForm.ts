@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Book } from "../../../types/bookTypes";
@@ -122,22 +121,17 @@ export const useGeneralInfoForm = (
   }, [form, isEditing, onUpdateBook, selectedDate, selectedLaunchDate]);
 
   // Handle date change
-  const handleDateChange = (field: string, date: Date | undefined) => {
+  const handleDateChange = (field: 'fechaPublicacion' | 'fechaLanzamiento', date: Date | undefined) => {
     if (field === 'fechaPublicacion') {
       setSelectedDate(date);
     } else if (field === 'fechaLanzamiento') {
       setSelectedLaunchDate(date);
-    }
-    
-    if (onUpdateBook && date) {
-      onUpdateBook({ [field]: date.toISOString() });
     }
   };
 
   return {
     form: {
       ...form,
-      formProps, // This will be passed to FormProvider
       selectedDate,
       selectedLaunchDate,
       handleDateChange
