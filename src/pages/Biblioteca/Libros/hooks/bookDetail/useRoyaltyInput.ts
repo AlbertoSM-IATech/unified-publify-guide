@@ -1,6 +1,6 @@
 
 import { useState, useEffect, useCallback } from "react";
-import { BookFormat } from "../../../types/bookTypes";
+import { BookFormat } from "../../types/bookTypes";
 
 interface UseRoyaltyInputProps {
   initialRoyaltyPercentage?: number;

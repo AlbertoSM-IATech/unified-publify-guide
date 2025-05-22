@@ -1,7 +1,7 @@
 
 import { useState, useEffect, useCallback } from "react";
-import { BookFormat } from "../../../types/bookTypes";
-import { formatDecimal, parseDecimalInput } from "../../../utils/formatUtils";
+import { BookFormat } from "../../types/bookTypes";
+import { formatDecimal, parseDecimalInput } from "../../utils/formatUtils";
 
 interface UsePrintingCostInputProps {
   initialPrintingCost?: number;
