@@ -1,5 +1,5 @@
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Book } from "../../types/bookTypes";
 import { NotesList } from "./Notes/NotesList";
 import { NoteForm } from "./Notes/NoteForm";
@@ -21,13 +21,16 @@ export const NotesSection = ({
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
+      className="space-y-6" // Añadido para espaciar las tarjetas
     >
+      {/* Tarjeta para el título de la sección */}
+      <Card className="p-4 bg-muted/40 dark:bg-muted/10">
+        <h3 className="text-xl font-semibold">Notas y Observaciones</h3>
+      </Card>
+      
+      {/* Tarjeta para el contenido de las notas */}
       <Card className="border-slate-200 dark:border-slate-700 shadow-md">
-        <CardHeader className="bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-700">
-          <CardTitle className="text-lg font-medium text-slate-800 dark:text-slate-200">
-            Notas y Observaciones
-          </CardTitle>
-        </CardHeader>
+        {/* CardHeader eliminado, el título ahora está en la tarjeta superior */}
         <CardContent className="p-6">
           {isEditing && (
             <div className="mb-6">
