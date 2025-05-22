@@ -22,23 +22,24 @@ export const DescriptionSection = ({
     setShowHtmlPreview,
     copied,
     generateHtml,
-    copyHtml
+    copyHtml,
+    hasGeneratedThisEditSession, // Obtener nuevo estado
+    setHasGeneratedThisEditSession // Obtener setter
   } = useHtmlDescription(book, form);
 
-  // Handle rich text editor changes - actualiza solo descripcion
   const handleEditorChange = (html: string) => {
     console.log("DescriptionSection handleEditorChange: Recibido HTML del editor:", html ? html.substring(0, 50) + "..." : "vacío");
     
-    // Actualiza el campo 'descripcion' que está vinculado al editor
     form.setValue("descripcion", html, { 
       shouldValidate: false,
       shouldDirty: true,
       shouldTouch: true 
     });
     
-    // Ocultamos la vista previa cuando el usuario edita el contenido nuevamente
     if (showHtmlPreview) {
+      console.log("DescriptionSection handleEditorChange: Ocultando vista previa y reseteando hasGeneratedThisEditSession.");
       setShowHtmlPreview(false);
+      setHasGeneratedThisEditSession(false); // Resetear al editar
     }
     
     console.log("DescriptionSection handleEditorChange: Form.descripcion DESPUÉS de setValue:", form.getValues("descripcion") ? form.getValues("descripcion").substring(0, 50) + "..." : "vacío");
@@ -64,16 +65,17 @@ export const DescriptionSection = ({
           generateHtml={generateHtml}
           showHtmlPreview={showHtmlPreview}
           setShowHtmlPreview={setShowHtmlPreview}
-          bookDescripcionHtml={book.descripcionHtml}
+          bookDescripcionHtml={book.descripcionHtml} // Este prop podría no ser necesario para el botón de toggle en modo edición
+          hasGeneratedThisEditSession={hasGeneratedThisEditSession} // Pasar nuevo estado
         />
-        {showHtmlPreview && (
+        {showHtmlPreview && hasGeneratedThisEditSession && ( // HtmlCodePreview solo si se ha generado Y se quiere mostrar
           <HtmlCodePreview
             form={form}
-            book={book}
+            book={book} // Necesario para la vista no editable
             isEditing={isEditing}
             copyHtml={copyHtml}
             copied={copied}
-            showHtmlPreview={showHtmlPreview}
+            showHtmlPreview={showHtmlPreview} // Se mantiene para la lógica interna de HtmlCodePreview si es necesario
           />
         )}
       </div>

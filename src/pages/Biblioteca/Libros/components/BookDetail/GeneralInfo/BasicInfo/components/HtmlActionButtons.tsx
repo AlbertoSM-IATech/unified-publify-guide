@@ -1,14 +1,15 @@
 
 import { Button } from "@/components/ui/button";
 import { Code, Eye, EyeOff } from "lucide-react";
-import { Book } from "../../../../../types/bookTypes";
+// import { Book } from "../../../../../types/bookTypes"; // No se usa Book directamente
 
 interface HtmlActionButtonsProps {
   isEditing: boolean;
   generateHtml: () => void;
   showHtmlPreview: boolean;
   setShowHtmlPreview: (show: boolean) => void;
-  bookDescripcionHtml?: string | null;
+  bookDescripcionHtml?: string | null; // Usado para el modo no edición
+  hasGeneratedThisEditSession?: boolean; // Nuevo prop, opcional para compatibilidad
 }
 
 export const HtmlActionButtons = ({
@@ -17,6 +18,7 @@ export const HtmlActionButtons = ({
   showHtmlPreview,
   setShowHtmlPreview,
   bookDescripcionHtml,
+  hasGeneratedThisEditSession,
 }: HtmlActionButtonsProps) => {
   if (isEditing) {
     return (
@@ -31,20 +33,23 @@ export const HtmlActionButtons = ({
           <Code size={16} />
           Generar código HTML
         </Button>
-        <Button
-          type="button"
-          size="sm"
-          variant="outline"
-          onClick={() => setShowHtmlPreview(!showHtmlPreview)}
-          className="flex items-center gap-1 hover:border-[#3B82F6] hover:text-[#3B82F6] hover:bg-[#3B82F6]/10 transition-colors shadow-sm"
-        >
-          {showHtmlPreview ? <EyeOff size={16} /> : <Eye size={16} />}
-          {showHtmlPreview ? "Ocultar HTML" : "Ver HTML"}
-        </Button>
+        {hasGeneratedThisEditSession && ( // Solo mostrar el botón de toggle si se ha generado HTML
+          <Button
+            type="button"
+            size="sm"
+            variant="outline"
+            onClick={() => setShowHtmlPreview(!showHtmlPreview)}
+            className="flex items-center gap-1 hover:border-[#3B82F6] hover:text-[#3B82F6] hover:bg-[#3B82F6]/10 transition-colors shadow-sm"
+          >
+            {showHtmlPreview ? <EyeOff size={16} /> : <Eye size={16} />}
+            {showHtmlPreview ? "Ocultar HTML" : "Ver HTML"}
+          </Button>
+        )}
       </div>
     );
   }
 
+  // Lógica para modo no edición (solo ver HTML si existe en el libro)
   if (bookDescripcionHtml) {
     return (
       <Button
