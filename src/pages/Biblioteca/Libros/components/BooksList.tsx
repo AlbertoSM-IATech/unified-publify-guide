@@ -1,16 +1,12 @@
 import { BookListItem } from "./BookListItem";
 import { Book } from "../types/bookTypes";
 import { memo } from "react";
+
 interface BooksListProps {
   libros: Book[];
-  getStatusColor: (status: string) => string;
-  getContentColor: (content: string) => string;
 }
-export const BooksList = memo(({
-  libros,
-  getStatusColor,
-  getContentColor
-}: BooksListProps) => {
+
+export const BooksList = memo(({ libros }: BooksListProps) => {
   if (libros.length === 0) {
     return <div className="rounded-lg border bg-card shadow-sm overflow-hidden dark:border-slate-800">
         <div className="relative overflow-x-auto">
@@ -48,7 +44,8 @@ export const BooksList = memo(({
         </div>
       </div>;
   }
-  return <div className="rounded-lg border bg-card shadow-sm overflow-hidden dark:border-slate-800">
+  return (
+    <div className="rounded-lg border bg-card shadow-sm overflow-hidden dark:border-slate-800">
       <div className="relative overflow-x-auto">
         <table className="min-w-full divide-y divide-border">
           <thead className="bg-muted/50">
@@ -72,10 +69,17 @@ export const BooksList = memo(({
             </tr>
           </thead>
           <tbody className="divide-y divide-border bg-background">
-            {libros.map(libro => <BookListItem key={libro.id} libro={libro} getStatusColor={getStatusColor} getContentColor={getContentColor} />)}
+            {libros.map(libro => (
+              <BookListItem 
+                key={libro.id} 
+                libro={libro}
+              />
+            ))}
           </tbody>
         </table>
       </div>
-    </div>;
+    </div>
+  );
 });
+
 BooksList.displayName = 'BooksList';

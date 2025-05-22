@@ -1,26 +1,21 @@
-
 import { Book } from "../types/bookTypes";
 import { BookGridItem } from "./BookGridItem";
 import { memo } from "react";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { coleccionesSimuladas } from "../utils/mockData/coleccionesData";
 import { Collection } from "../../Colecciones/types/collectionTypes";
-import { investigacionesSimuladas } from "../utils/mockData/investigacionesData"; // Importar datos de investigaciones
+import { investigacionesSimuladas } from "../utils/mockData/investigacionesData";
 
-// Definir un tipo simple para Investigación si no existe uno más complejo
 interface Investigation {
   id: number;
   titulo: string;
-  // otros campos relevantes si los hay
 }
 
 interface BooksGridProps {
   libros: Book[];
-  getStatusColor: (status: string) => string;
-  getContentColor: (content: string) => string;
 }
 
-export const BooksGrid = memo(({ libros, getStatusColor, getContentColor }: BooksGridProps) => {
+export const BooksGrid = memo(({ libros }: BooksGridProps) => {
   const [collections, setCollections] = useLocalStorage<Collection[]>(
     'coleccionesData',
     coleccionesSimuladas
@@ -31,7 +26,6 @@ export const BooksGrid = memo(({ libros, getStatusColor, getContentColor }: Book
     investigacionesSimuladas
   );
   
-  // If there are no books, show empty state
   if (libros.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center p-10 text-center border rounded-lg bg-card shadow-sm">
@@ -40,7 +34,6 @@ export const BooksGrid = memo(({ libros, getStatusColor, getContentColor }: Book
     );
   }
 
-  // Get collection names for each book based on its coleccionesIds
   const getBookCollections = (book: Book) => {
     if (!book.coleccionesIds || book.coleccionesIds.length === 0) return [];
     
@@ -52,7 +45,6 @@ export const BooksGrid = memo(({ libros, getStatusColor, getContentColor }: Book
       }));
   };
 
-  // Get related investigation name for the book
   const getBookInvestigationName = (book: Book): string | undefined => {
     if (!book.investigacionId) return undefined;
     const investigation = investigations.find(inv => inv.id === book.investigacionId);
@@ -61,14 +53,11 @@ export const BooksGrid = memo(({ libros, getStatusColor, getContentColor }: Book
 
   return (
     <div className="w-full">
-      {/* Modificado para mostrar 2 columnas en md y superior, 1 en sm */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
         {libros.map((libro) => (
           <div key={libro.id} className="h-full">
             <BookGridItem
               libro={libro}
-              getStatusColor={getStatusColor}
-              getContentColor={getContentColor}
               collections={getBookCollections(libro)}
               investigationName={getBookInvestigationName(libro)}
             />

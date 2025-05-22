@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { Book } from "../types/bookTypes";
 import { Eye } from "lucide-react";
@@ -9,15 +8,13 @@ import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { coleccionesSimuladas } from "../utils/mockData/coleccionesData";
 import { Collection } from "../../Colecciones/types/collectionTypes";
 import { DEFAULT_COVER_URL } from "@/services/supabase/books/constants";
-import { StatusBadge } from "@/components/common/StatusBadge"; // Importar StatusBadge
+import { StatusBadge } from "@/components/common/StatusBadge";
 
 interface BookListItemProps {
   libro: Book;
-  getStatusColor: (status: string) => string;
-  // getContentColor: (content: string) => string; // Eliminado, StatusBadge lo maneja
 }
 
-export const BookListItem = memo(({ libro, getStatusColor /*, getContentColor */ }: BookListItemProps) => {
+export const BookListItem = memo(({ libro }: BookListItemProps) => {
   const netRoyalties = calculateNetRoyalties(libro.hardcover || libro.paperback || libro.ebook).replace('.', ',');
   
   const [imgSrc, setImgSrc] = useState(libro.imageUrl || libro.portadaUrl || DEFAULT_COVER_URL);
@@ -98,11 +95,9 @@ export const BookListItem = memo(({ libro, getStatusColor /*, getContentColor */
         {netRoyalties}€
       </td>
       <td className="whitespace-nowrap px-4 py-4 text-sm">
-        {/* Usar StatusBadge para el estado */}
         <StatusBadge status={libro.estado} />
       </td>
       <td className="whitespace-nowrap px-4 py-4 text-sm">
-        {/* Usar StatusBadge para el tipo de contenido */}
         <StatusBadge status={libro.contenido} />
       </td>
       <td className="whitespace-nowrap px-4 py-4 text-sm text-muted-foreground">
@@ -123,4 +118,3 @@ export const BookListItem = memo(({ libro, getStatusColor /*, getContentColor */
 });
 
 BookListItem.displayName = 'BookListItem';
-

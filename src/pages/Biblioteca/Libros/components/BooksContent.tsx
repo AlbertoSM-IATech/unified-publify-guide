@@ -1,9 +1,7 @@
-
 import { memo } from "react";
 import { Book } from "../types/bookTypes";
 import { BooksGrid } from "./BooksGrid";
 import { BooksList } from "./BooksList";
-import { getStatusColor, getContentColor } from "../utils/formatUtils";
 import { LoadingState } from "@/components/common/LoadingState";
 import { ErrorState } from "@/components/common/ErrorState";
 import { EmptyState } from "@/components/common/EmptyState";
@@ -67,14 +65,10 @@ export const BooksContent = memo(({
       {viewMode === "grid" ? (
         <BooksGrid 
           libros={libros} 
-          getStatusColor={getStatusColor} 
-          getContentColor={getContentColor}
         />
       ) : (
         <BooksList 
           libros={libros} 
-          getStatusColor={getStatusColor} 
-          getContentColor={getContentColor}
         />
       )}
       

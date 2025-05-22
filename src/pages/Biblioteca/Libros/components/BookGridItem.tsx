@@ -1,28 +1,22 @@
-
 import { Link } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { Book } from "../types/bookTypes";
 import { calculateNetRoyalties } from "../utils/formatUtils";
 import { memo, useState } from "react";
-// import { Badge } from "@/components/ui/badge"; // Badge ya no se usa directamente para el contenido aquí
 import { DEFAULT_COVER_URL } from "@/services/supabase/books/constants"; 
 import { BookOpenText } from "lucide-react";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { StatusBadge } from "@/components/common/StatusBadge"; // Importar StatusBadge
-import { Badge } from "@/components/ui/badge"; // Mantener si se usa para 'Series'
+import { StatusBadge } from "@/components/common/StatusBadge";
+import { Badge } from "@/components/ui/badge";
 
 interface BookGridItemProps {
   libro: Book;
-  getStatusColor: (status: string) => string;
-  // getContentColor: (content: string) => string; // Eliminado, StatusBadge lo maneja
   collections?: { id: number; nombre: string }[];
   investigationName?: string;
 }
 
 export const BookGridItem = memo(({ 
   libro, 
-  getStatusColor, 
-  // getContentColor, // Eliminado
   collections = [],
   investigationName
 }: BookGridItemProps) => {
@@ -60,19 +54,14 @@ export const BookGridItem = memo(({
             <p className="text-sm text-muted-foreground mb-3 line-clamp-1">{libro.autor}</p>
             
             <div className="flex justify-between items-center mb-2">
-              <span
-                className={`inline-flex items-center rounded-full px-2 py-1 text-xs font-medium ${getStatusColor(
-                  libro.estado
-                )}`}
-              >
-                {libro.estado}
-              </span>
+              {/* Usar StatusBadge para el estado */}
+              <StatusBadge status={libro.estado} />
               <span className="font-medium text-green-500 text-sm">
                 {netRoyalties}€
               </span>
             </div>
             {/* Usar StatusBadge para el tipo de contenido */}
-            <div className="mb-3"> {/* Envolvemos en un div para aplicar el margen inferior si es necesario */}
+            <div className="mb-3">
               <StatusBadge status={libro.contenido} />
             </div>
           </div>
@@ -114,4 +103,3 @@ export const BookGridItem = memo(({
 });
 
 BookGridItem.displayName = 'BookGridItem';
-
