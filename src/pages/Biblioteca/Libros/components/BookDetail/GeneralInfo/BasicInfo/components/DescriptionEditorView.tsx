@@ -48,7 +48,7 @@ export const DescriptionEditorView = ({
       ) : (
         <div
           className="text-sm text-muted-foreground prose prose-sm max-w-none dark:prose-invert p-3 border rounded-md bg-card shadow-sm"
-          dangerouslySetInnerHTML={{ __html: book.descripcion || form.getValues("descripcion") || "" }}
+          dangerouslySetInnerHTML={{ __html: book.descripcion || "" }}
         />
       )}
     </div>

@@ -36,6 +36,11 @@ export const DescriptionSection = ({
       shouldTouch: true 
     });
     
+    // Ocultamos la vista previa cuando el usuario edita el contenido nuevamente
+    if (showHtmlPreview) {
+      setShowHtmlPreview(false);
+    }
+    
     console.log("DescriptionSection handleEditorChange: Form.descripcion DESPUÉS de setValue:", form.getValues("descripcion") ? form.getValues("descripcion").substring(0, 50) + "..." : "vacío");
   };
 
@@ -61,14 +66,16 @@ export const DescriptionSection = ({
           setShowHtmlPreview={setShowHtmlPreview}
           bookDescripcionHtml={book.descripcionHtml}
         />
-        <HtmlCodePreview
-          form={form}
-          book={book}
-          isEditing={isEditing}
-          copyHtml={copyHtml}
-          copied={copied}
-          showHtmlPreview={showHtmlPreview}
-        />
+        {showHtmlPreview && (
+          <HtmlCodePreview
+            form={form}
+            book={book}
+            isEditing={isEditing}
+            copyHtml={copyHtml}
+            copied={copied}
+            showHtmlPreview={showHtmlPreview}
+          />
+        )}
       </div>
     </div>
   );
