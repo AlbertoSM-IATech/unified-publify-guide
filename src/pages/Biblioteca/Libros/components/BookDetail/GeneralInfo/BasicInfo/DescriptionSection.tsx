@@ -27,7 +27,8 @@ export const DescriptionSection = ({
 
   // Handle rich text editor changes - actualiza tanto descripcion como descripcionHtml
   const handleEditorChange = (html: string) => {
-    console.log("Editor content changed:", html);
+    console.log("DescriptionSection handleEditorChange: Received HTML from RichTextEditor:", html);
+    // console.log("DescriptionSection handleEditorChange: Current form.descripcion BEFORE setValue:", form.getValues("descripcion"));
     
     // Actualiza el campo 'descripcion' que está vinculado al editor
     form.setValue("descripcion", html, { 
@@ -35,8 +36,12 @@ export const DescriptionSection = ({
       shouldDirty: true,
       shouldTouch: true 
     });
+    // console.log("DescriptionSection handleEditorChange: Form.descripcion AFTER setValue:", form.getValues("descripcion"));
   };
   
+  console.log("DescriptionSection render: isEditing:", isEditing, "Book description:", book.descripcion);
+  console.log("DescriptionSection render: Form values for descripcion:", form.getValues("descripcion"));
+
   return (
     <div className="space-y-6 mt-8">
       <div className="flex items-center">
