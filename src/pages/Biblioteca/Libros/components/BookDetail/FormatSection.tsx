@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
@@ -51,20 +50,17 @@ export const FormatSection = ({
         <TabsList className="mb-4 grid w-full grid-cols-3 bg-muted/80 p-1">
           <TabsTrigger 
             value="hardcover"
-            className="data-[state=active]:bg-white dark:data-[state=active]:bg-slate-800 data-[state=active]:shadow-sm"
-          >
+            >
             Tapa Dura
           </TabsTrigger>
           <TabsTrigger 
             value="paperback"
-            className="data-[state=active]:bg-white dark:data-[state=active]:bg-slate-800 data-[state=active]:shadow-sm"
-          >
+            >
             Tapa Blanda
           </TabsTrigger>
           <TabsTrigger 
             value="ebook"
-            className="data-[state=active]:bg-white dark:data-[state=active]:bg-slate-800 data-[state=active]:shadow-sm"
-          >
+            >
             eBook
           </TabsTrigger>
         </TabsList>
