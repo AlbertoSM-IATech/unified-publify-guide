@@ -1,4 +1,3 @@
-
 import { Book } from "../../../../types/bookTypes";
 import { FormField, FormControl, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
@@ -10,8 +9,8 @@ import { PublicationDateField } from "../PublicationDateField";
 interface BasicInfoFieldsProps {
   book: Book;
   isEditing: boolean;
-  form: any; // Type for react-hook-form instance
-  onUpdateBook: (updatedData: Partial<Book>) => void; // Añadido para pasar a DescriptionSection
+  form: any; // Type for react-hook-form instance from useGeneralInfoForm
+  onUpdateBook: (updatedData: Partial<Book>) => void;
 }
 
 export const BasicInfoFields = ({ book, isEditing, form, onUpdateBook }: BasicInfoFieldsProps) => {
@@ -27,8 +26,6 @@ export const BasicInfoFields = ({ book, isEditing, form, onUpdateBook }: BasicIn
       shouldDirty: true,
       shouldTouch: true
     });
-    // Actualizamos el formData general del libro.
-    // El useEffect en useGeneralInfoForm ignora 'descripcion', así que lo hacemos aquí.
     if (onUpdateBook) {
       onUpdateBook({ descripcion: newDescription });
     }
@@ -103,12 +100,12 @@ export const BasicInfoFields = ({ book, isEditing, form, onUpdateBook }: BasicIn
       />
       
       <PublicationDateField 
-        form={form} 
+        book={book} // Pasamos el objeto book completo
         isEditing={isEditing} 
-        currentDate={form.selectedDate} 
-        onDateChange={(date) => form.handleDateChange('fechaPublicacion', date)}
-        label="Fecha de Publicación"
-        fieldKey="fechaPublicacion"
+        selectedDate={form.selectedDate} // Fecha de publicación del hook del formulario
+        selectedLaunchDate={form.selectedLaunchDate} // Fecha de lanzamiento del hook del formulario
+        onDateChange={(date) => form.handleDateChange('fechaPublicacion', date)} // Manejador para fecha de publicación
+        onLaunchDateChange={(date) => form.handleDateChange('fechaLanzamiento', date)} // Manejador para fecha de lanzamiento
       />
 
       <FormField
@@ -122,8 +119,8 @@ export const BasicInfoFields = ({ book, isEditing, form, onUpdateBook }: BasicIn
                 {...field}
                 disabled={!isEditing}
                 onChange={(e) => {
-                  field.onChange(e); // Actualiza el campo en react-hook-form
-                  handleDescriptionChange(e.target.value); // Llama a nuestra función para actualizar el formData
+                  field.onChange(e); 
+                  handleDescriptionChange(e.target.value); 
                 }}
                 placeholder="Una breve descripción del libro..."
                 rows={4}
@@ -139,7 +136,7 @@ export const BasicInfoFields = ({ book, isEditing, form, onUpdateBook }: BasicIn
         book={book}
         isEditing={isEditing}
         form={form}
-        onUpdateBook={onUpdateBook} // Pasamos onUpdateBook
+        onUpdateBook={onUpdateBook}
       />
     </div>
   );
