@@ -4,15 +4,17 @@ import { Card } from "@/components/ui/card";
 import { Book } from "../types/bookTypes";
 import { calculateNetRoyalties } from "../utils/formatUtils";
 import { memo, useState } from "react";
-import { Badge } from "@/components/ui/badge";
+// import { Badge } from "@/components/ui/badge"; // Badge ya no se usa directamente para el contenido aquí
 import { DEFAULT_COVER_URL } from "@/services/supabase/books/constants"; 
 import { BookOpenText } from "lucide-react";
-import { AspectRatio } from "@/components/ui/aspect-ratio"; // Importar AspectRatio
+import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { StatusBadge } from "@/components/common/StatusBadge"; // Importar StatusBadge
+import { Badge } from "@/components/ui/badge"; // Mantener si se usa para 'Series'
 
 interface BookGridItemProps {
   libro: Book;
   getStatusColor: (status: string) => string;
-  getContentColor: (content: string) => string;
+  // getContentColor: (content: string) => string; // Eliminado, StatusBadge lo maneja
   collections?: { id: number; nombre: string }[];
   investigationName?: string;
 }
@@ -20,7 +22,7 @@ interface BookGridItemProps {
 export const BookGridItem = memo(({ 
   libro, 
   getStatusColor, 
-  getContentColor,
+  // getContentColor, // Eliminado
   collections = [],
   investigationName
 }: BookGridItemProps) => {
@@ -39,7 +41,7 @@ export const BookGridItem = memo(({
         className="flex flex-row h-full w-full overflow-hidden focus:outline-none focus:ring-2 focus:ring-[#FB923C] focus:ring-offset-2 rounded-sm group"
       >
         {/* Image Section */}
-        <div className="w-1/3 flex-shrink-0 h-full"> {/* Ajusta w-1/3 según sea necesario, ej: w-32, w-40 */}
+        <div className="w-1/3 flex-shrink-0 h-full">
           <AspectRatio ratio={1600 / 2560} className="h-full w-full bg-muted">
             <img
               src={imgSrc}
@@ -69,16 +71,13 @@ export const BookGridItem = memo(({
                 {netRoyalties}€
               </span>
             </div>
-            <span
-              className={`inline-flex items-center rounded-full px-2 py-1 text-xs font-medium ${getContentColor(
-                libro.contenido
-              )} mb-3`}
-            >
-              {libro.contenido}
-            </span>
+            {/* Usar StatusBadge para el tipo de contenido */}
+            <div className="mb-3"> {/* Envolvemos en un div para aplicar el margen inferior si es necesario */}
+              <StatusBadge status={libro.contenido} />
+            </div>
           </div>
           
-          <div className="mt-auto space-y-2"> {/* mt-auto para empujar al fondo si hay espacio */}
+          <div className="mt-auto space-y-2">
             {collections.length > 0 && (
               <div>
                 <div className="text-xs text-muted-foreground mb-1">Series:</div>
@@ -87,7 +86,7 @@ export const BookGridItem = memo(({
                     <Badge 
                       key={col.id} 
                       variant="outline"
-                      className="text-xs px-1.5 py-0.5 truncate max-w-[100px]" // Ajustado max-w
+                      className="text-xs px-1.5 py-0.5 truncate max-w-[100px]"
                     >
                       {col.nombre}
                     </Badge>
@@ -102,7 +101,7 @@ export const BookGridItem = memo(({
                   <BookOpenText size={12} className="mr-1 text-muted-foreground" />
                   Investigación:
                 </div>
-                <p className="text-xs text-foreground truncate max-w-[150px]" title={investigationName}> {/* Ajustado max-w */}
+                <p className="text-xs text-foreground truncate max-w-[150px]" title={investigationName}>
                   {investigationName}
                 </p>
               </div>

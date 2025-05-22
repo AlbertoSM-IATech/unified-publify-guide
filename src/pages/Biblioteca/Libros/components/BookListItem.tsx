@@ -9,14 +9,15 @@ import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { coleccionesSimuladas } from "../utils/mockData/coleccionesData";
 import { Collection } from "../../Colecciones/types/collectionTypes";
 import { DEFAULT_COVER_URL } from "@/services/supabase/books/constants";
+import { StatusBadge } from "@/components/common/StatusBadge"; // Importar StatusBadge
 
 interface BookListItemProps {
   libro: Book;
   getStatusColor: (status: string) => string;
-  getContentColor: (content: string) => string;
+  // getContentColor: (content: string) => string; // Eliminado, StatusBadge lo maneja
 }
 
-export const BookListItem = memo(({ libro, getStatusColor, getContentColor }: BookListItemProps) => {
+export const BookListItem = memo(({ libro, getStatusColor /*, getContentColor */ }: BookListItemProps) => {
   const netRoyalties = calculateNetRoyalties(libro.hardcover || libro.paperback || libro.ebook).replace('.', ',');
   
   const [imgSrc, setImgSrc] = useState(libro.imageUrl || libro.portadaUrl || DEFAULT_COVER_URL);
@@ -26,7 +27,6 @@ export const BookListItem = memo(({ libro, getStatusColor, getContentColor }: Bo
   );
   const [bookCollections, setBookCollections] = useState<{id: number, nombre: string}[]>([]);
   
-  // Get collection names for the book
   useEffect(() => {
     if (libro.coleccionesIds && libro.coleccionesIds.length > 0) {
       const relatedCollections = collections
@@ -34,6 +34,8 @@ export const BookListItem = memo(({ libro, getStatusColor, getContentColor }: Bo
         .map(col => ({id: col.id, nombre: col.nombre}));
       
       setBookCollections(relatedCollections);
+    } else {
+      setBookCollections([]); // Asegurar que se vacíe si no hay colecciones
     }
   }, [libro.coleccionesIds, collections]);
   
@@ -96,22 +98,12 @@ export const BookListItem = memo(({ libro, getStatusColor, getContentColor }: Bo
         {netRoyalties}€
       </td>
       <td className="whitespace-nowrap px-4 py-4 text-sm">
-        <span
-          className={`rounded-full px-2.5 py-1 text-xs font-medium ${getStatusColor(
-            libro.estado
-          )}`}
-        >
-          {libro.estado}
-        </span>
+        {/* Usar StatusBadge para el estado */}
+        <StatusBadge status={libro.estado} />
       </td>
       <td className="whitespace-nowrap px-4 py-4 text-sm">
-        <span
-          className={`rounded-full px-2.5 py-1 text-xs font-medium ${getContentColor(
-            libro.contenido
-          )}`}
-        >
-          {libro.contenido}
-        </span>
+        {/* Usar StatusBadge para el tipo de contenido */}
+        <StatusBadge status={libro.contenido} />
       </td>
       <td className="whitespace-nowrap px-4 py-4 text-sm text-muted-foreground">
         {libro.fechaPublicacion
@@ -131,3 +123,4 @@ export const BookListItem = memo(({ libro, getStatusColor, getContentColor }: Bo
 });
 
 BookListItem.displayName = 'BookListItem';
+

@@ -90,28 +90,28 @@ const FilterStateGroup = ({ filterState, setFilterState }: FilterGroupProps) => 
         className={filterState === "borrador" ? "bg-muted/50" : ""}
         onClick={() => setFilterState("borrador")}
       >
-        <span className="mr-2 h-2 w-2 rounded-full bg-blue-500"></span>
+        <span className="mr-2 h-2 w-2 rounded-full bg-status-draft"></span> {/* Usando color de Tailwind config */}
         Borrador
       </DropdownMenuItem>
       <DropdownMenuItem 
         className={filterState === "en revisión" ? "bg-muted/50" : ""}
         onClick={() => setFilterState("en revisión")}
       >
-        <span className="mr-2 h-2 w-2 rounded-full bg-amber-500"></span>
+        <span className="mr-2 h-2 w-2 rounded-full bg-status-review"></span> {/* Usando color de Tailwind config */}
         En revisión
       </DropdownMenuItem>
       <DropdownMenuItem 
         className={filterState === "publicado" ? "bg-muted/50" : ""}
         onClick={() => setFilterState("publicado")}
       >
-        <span className="mr-2 h-2 w-2 rounded-full bg-green-500"></span>
+        <span className="mr-2 h-2 w-2 rounded-full bg-status-published"></span> {/* Usando color de Tailwind config */}
         Publicado
       </DropdownMenuItem>
       <DropdownMenuItem 
         className={filterState === "archivado" ? "bg-muted/50" : ""}
         onClick={() => setFilterState("archivado")}
       >
-        <span className="mr-2 h-2 w-2 rounded-full bg-red-500"></span>
+        <span className="mr-2 h-2 w-2 rounded-full bg-status-archived"></span> {/* Usando color de Tailwind config */}
         Archivado
       </DropdownMenuItem>
     </DropdownMenuGroup>
@@ -139,23 +139,24 @@ const FilterContentGroup = ({ filterContent, setFilterContent }: FilterContentGr
         className={filterContent === "alto contenido" ? "bg-muted/50" : ""}
         onClick={() => setFilterContent("alto contenido")}
       >
-        <span className="mr-2 h-2 w-2 rounded-full bg-purple-500"></span>
+        <span className="mr-2 h-2 w-2 rounded-full bg-content-high"></span> {/* Actualizado */}
         Alto Contenido
       </DropdownMenuItem>
       <DropdownMenuItem 
         className={filterContent === "medio contenido" ? "bg-muted/50" : ""}
         onClick={() => setFilterContent("medio contenido")}
       >
-        <span className="mr-2 h-2 w-2 rounded-full bg-indigo-500"></span>
+        <span className="mr-2 h-2 w-2 rounded-full bg-content-medium"></span> {/* Actualizado */}
         Medio Contenido
       </DropdownMenuItem>
       <DropdownMenuItem 
         className={filterContent === "bajo contenido" ? "bg-muted/50" : ""}
         onClick={() => setFilterContent("bajo contenido")}
       >
-        <span className="mr-2 h-2 w-2 rounded-full bg-sky-500"></span>
+        <span className="mr-2 h-2 w-2 rounded-full bg-content-low"></span> {/* Actualizado */}
         Bajo Contenido
       </DropdownMenuItem>
     </DropdownMenuGroup>
   );
 };
+
