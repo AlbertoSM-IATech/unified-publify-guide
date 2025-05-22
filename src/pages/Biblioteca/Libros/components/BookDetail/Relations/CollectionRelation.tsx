@@ -1,4 +1,3 @@
-
 import { Book } from "../../../types/bookTypes";
 import { Link } from "react-router-dom";
 import { Label } from "@/components/ui/label";
@@ -123,19 +122,7 @@ export const CollectionRelation = ({
         </div>
       ) : (
         <>
-          {selectedCollections.length > 0 ? (
-            <div className="flex flex-wrap gap-2 mb-4">
-              {selectedCollections.map(collection => (
-                <Badge 
-                  key={collection.id}
-                  variant="outline"
-                  className="bg-slate-800 text-white border-slate-700 hover:bg-slate-700 transition-colors px-3 py-1 cursor-pointer"
-                >
-                  {collection.nombre}
-                </Badge>
-              ))}
-            </div>
-          ) : (
+          {selectedCollections.length === 0 && ( // Solo mostrar mensaje si no hay colecciones seleccionadas
             <div className="rounded-md border border-input px-3 py-2 bg-muted/50 w-full mb-4">
               Este libro no pertenece a ninguna serie
             </div>
@@ -144,7 +131,7 @@ export const CollectionRelation = ({
       )}
       
       {selectedCollections.length > 0 && !isEditing && (
-        <div className="grid grid-cols-1 gap-3 w-full">
+        <div className="grid grid-cols-1 gap-3 w-full mt-0"> {/* Ajustado mt-0 si es necesario después de quitar badges */}
           {selectedCollections.map(collection => (
             <Card key={collection.id} className="overflow-hidden border-slate-800">
               <motion.div 
