@@ -19,7 +19,9 @@ export const useRoyaltyInput = ({ initialRoyaltyPercentage, isEditing, formatTyp
     // console.log(`[useRoyaltyInput ${formatType}] useEffect [initialRoyaltyPercentage]: initialRoyaltyPercentage prop changed to: ${initialRoyaltyPercentage}`);
     const newRoyaltyInput = typeof initialRoyaltyPercentage === 'number' ? (initialRoyaltyPercentage * 100).toString() : "";
     // console.log(`[useRoyaltyInput ${formatType}] useEffect [initialRoyaltyPercentage]: Setting royaltyInput to: "${newRoyaltyInput}" (was: "${royaltyInput}")`);
-    setRoyaltyInput(newRoyaltyInput);
+    if (royaltyInput !== newRoyaltyInput) {
+        setRoyaltyInput(newRoyaltyInput);
+    }
      if (isEditing) {
         validate(newRoyaltyInput);
     }
@@ -28,6 +30,7 @@ export const useRoyaltyInput = ({ initialRoyaltyPercentage, isEditing, formatTyp
 
   const validate = useCallback((value: string): boolean => {
     let fieldHasError = false;
+    // Permite un string vacío, ya que se manejará por separado para enviar 'undefined'
     if (value && (parseInt(value, 10) < 0 || parseInt(value, 10) > 100 || !/^\d+$/.test(value))) {
       setError("El porcentaje debe ser un número entero entre 0 y 100");
       fieldHasError = true;
@@ -41,44 +44,39 @@ export const useRoyaltyInput = ({ initialRoyaltyPercentage, isEditing, formatTyp
     let value = e.target.value;
     // console.log(`[useRoyaltyInput ${formatType}] handleChange: raw value="${value}"`);
 
-    // Allow only digits
-    if (!/^\d*$/.test(value)) {
-        return; 
-    }
+    // Limpiar valor: permitir solo dígitos
+    value = value.replace(/[^\d]/g, '');
     
-    // Trim to max 3 digits and ensure it's not above 100 if it becomes 3 digits.
+    // Trim a max 3 dígitos y asegurar que no sea > 100 si son 3 dígitos.
     if (value.length > 3) {
         value = value.substring(0, 3);
     }
+    // Si el usuario está escribiendo "100", value será "100". parseInt(value, 10) es 100.
+    // Si escribe "101", value será "101". parseInt(value,10) es 101.
+    // Esta lógica de capar a "100" debe estar después de setRoyaltyInput si queremos que el usuario vea "101" y luego el error.
+    // O antes, para corregirlo automáticamente. Corregir automáticamente es mejor UX.
     if (value.length === 3 && parseInt(value, 10) > 100) {
-        value = "100"; // Cap at 100 if user types e.g., "101" or "999"
+        value = "100"; 
     }
+    
+    // console.log(`[useRoyaltyInput ${formatType}] handleChange: cleaned value="${value}"`);
+    setRoyaltyInput(value); // Refleja el valor (posiblemente corregido) en el UI
 
-
-    setRoyaltyInput(value);
-    const isValid = validate(value);
+    const isValid = validate(value); // Esto también actualiza el estado de 'error'
 
     if (value === "") {
     //   console.log(`[useRoyaltyInput ${formatType}] handleChange: Empty value, updating format with royaltyPercentage: undefined`);
       onUpdateFormat(formatType, { royaltyPercentage: undefined });
     } else if (isValid) {
-      if (/^\d+$/.test(value)) { // Ensure it's a string of digits before parsing
-        const percentageInt = parseInt(value, 10);
-        // console.log(`[useRoyaltyInput ${formatType}] handleChange: Valid percentage ${percentageInt}%`);
-        if (percentageInt >= 0 && percentageInt <= 100) {
-          const numericValue = percentageInt / 100;
-        //   console.log(`[useRoyaltyInput ${formatType}] handleChange: numericValue=${numericValue}, updating parent.`);
-          onUpdateFormat(formatType, { royaltyPercentage: numericValue });
-        } else {
-        //   console.log(`[useRoyaltyInput ${formatType}] handleChange: Percentage "${value}" out of 0-100 range, not updating parent state.`);
-          onUpdateFormat(formatType, { royaltyPercentage: undefined });
-        }
-      } else {
-        // console.log(`[useRoyaltyInput ${formatType}] handleChange: Invalid (non-integer) royalty value "${value}", not updating parent state.`);
-        onUpdateFormat(formatType, { royaltyPercentage: undefined });
-      }
+      // isValid implica que value es un string de dígitos y está en el rango 0-100
+      const percentageInt = parseInt(value, 10);
+      const numericValue = percentageInt / 100;
+    //   console.log(`[useRoyaltyInput ${formatType}] handleChange: Valid numericValue=${numericValue}, updating parent.`);
+      onUpdateFormat(formatType, { royaltyPercentage: numericValue });
     } else {
-         onUpdateFormat(formatType, { royaltyPercentage: undefined });
+    //   console.log(`[useRoyaltyInput ${formatType}] handleChange: Invalid value or out of 0-100 range. Not updating parent.`);
+      // El valor no es válido (podría ser que `validate` lo marcó como error, ej. no es número después de limpiar, o fuera de rango si la validación es más compleja)
+      // No se llama a onUpdateFormat. El error se muestra.
     }
   };
   

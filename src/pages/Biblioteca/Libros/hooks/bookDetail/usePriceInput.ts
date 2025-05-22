@@ -20,12 +20,18 @@ export const usePriceInput = ({ initialPrice, isEditing, formatType, onUpdateFor
     // console.log(`[usePriceInput ${formatType}] useEffect [initialPrice]: initialPrice prop changed to: ${initialPrice}`);
     const newPriceInput = typeof initialPrice === 'number' ? formatDecimal(initialPrice) : "";
     // console.log(`[usePriceInput ${formatType}] useEffect [initialPrice]: Setting priceInput to: "${newPriceInput}" (was: "${priceInput}")`);
-    setPriceInput(newPriceInput);
-    if (isEditing) { // Only validate if editing to avoid showing errors initially on non-edited fields
+    
+    // Solo actualizar si el valor de la prop realmente es diferente de lo que ya está en el input
+    // Esto evita que se sobreescriba la entrada del usuario si el valor de la prop se actualizó a lo mismo que acaba de parsear el input
+    if (priceInput !== newPriceInput) {
+        setPriceInput(newPriceInput);
+    }
+
+    if (isEditing) { 
         validate(newPriceInput);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [initialPrice, isEditing, formatType]); // Added formatType and isEditing as per hook's scope
+  }, [initialPrice, isEditing, formatType]);
 
 
   const validate = useCallback((value: string): boolean => {
@@ -42,27 +48,29 @@ export const usePriceInput = ({ initialPrice, isEditing, formatType, onUpdateFor
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     // console.log(`[usePriceInput ${formatType}] handleChange: value="${value}"`);
-    setPriceInput(value);
+    setPriceInput(value); // Siempre refleja la entrada del usuario en el UI
 
-    const isValid = validate(value);
+    const isValidFormat = validate(value); // Esto también actualiza el estado de 'error'
 
     if (value === "") {
-    //   console.log(`[usePriceInput ${formatType}] handleChange: Empty value, updating format with price: undefined`);
+      // console.log(`[usePriceInput ${formatType}] handleChange: Empty value, updating format with price: undefined`);
       onUpdateFormat(formatType, { price: undefined });
-    } else if (isValid) {
+    } else if (isValidFormat) {
       const numericValue = parseDecimalInput(value);
-    //   console.log(`[usePriceInput ${formatType}] handleChange: Non-empty value, numericValue=${numericValue}`);
       if (numericValue !== null) {
-        // console.log(`[usePriceInput ${formatType}] handleChange: Valid numericValue, updating format with price: ${numericValue}`);
+        // console.log(`[usePriceInput ${formatType}] handleChange: Valid numericValue=${numericValue}, updating parent.`);
         onUpdateFormat(formatType, { price: numericValue });
       } else {
-        // console.log(`[usePriceInput ${formatType}] handleChange: Invalid non-empty value ("${value}"), not updating parent state (or setting to undefined).`);
-        // Potentially set to undefined if parseDecimalInput returns null for an invalid but non-empty string.
-        onUpdateFormat(formatType, { price: undefined });
+        // console.log(`[usePriceInput ${formatType}] handleChange: Format OK, but not parseable to full number (e.g., just ','). Not updating parent.`);
+        // No se llama a onUpdateFormat aquí, para permitir al usuario continuar escribiendo.
+        // El error de validación (si es aplicable, aunque para "," no debería haber) se mostraría.
       }
     } else {
-        // If not valid and not empty, call onUpdateFormat with undefined to signify an invalid entry that shouldn't be saved as a number
-        onUpdateFormat(formatType, { price: undefined });
+      // console.log(`[usePriceInput ${formatType}] handleChange: Invalid format. Not updating parent.`);
+      // El formato no es válido (ej. "abc").
+      // validate() ya actualizó el estado de 'error'.
+      // No se llama a onUpdateFormat, para evitar que el estado principal
+      // con 'undefined' haga que el useEffect borre la entrada inválida del usuario.
     }
   };
 
