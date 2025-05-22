@@ -2,34 +2,39 @@
 import { Book } from "../../../../types/bookTypes";
 import { Separator } from "@/components/ui/separator";
 import { DescriptionEditorView } from "./components/DescriptionEditorView";
-// Eliminadas importaciones de useHtmlDescription, HtmlActionButtons, HtmlCodePreview
 
 interface DescriptionSectionProps {
   book: Book;
   isEditing: boolean;
   form: any; // Type for react-hook-form instance
+  onUpdateBook: (updatedData: Partial<Book>) => void; // Añadido
 }
 
 export const DescriptionSection = ({
   book,
   isEditing,
-  form
+  form,
+  onUpdateBook // Añadido
 }: DescriptionSectionProps) => {
 
   const handleEditorChange = (html: string) => {
-    // Actualizamos el campo 'descripcionHtml' del formulario.
-    // El RichTextEditor ahora está vinculado a 'descripcionHtml'.
+    // Actualizamos el campo 'descripcionHtml' del formulario de react-hook-form.
     form.setValue("descripcionHtml", html, {
-      shouldValidate: false, // No validar en cada cambio para mejor rendimiento
-      shouldDirty: true,    // Marcar el campo como modificado
-      shouldTouch: true     // Marcar el campo como tocado
+      shouldValidate: false, 
+      shouldDirty: true,    
+      shouldTouch: true     
     });
+
+    // También actualizamos el formData general del libro para que se guarde correctamente.
+    if (onUpdateBook) {
+      onUpdateBook({ descripcionHtml: html });
+    }
   };
 
   return (
     <div className="space-y-6 mt-8">
       <div className="flex items-center">
-        <h3 className="text-lg text-blue-500 font-semibold">Descripción</h3>
+        <h3 className="text-lg text-blue-500 font-semibold">Descripción Detallada (HTML)</h3>
         <Separator className="flex-grow ml-3" />
       </div>
       
@@ -39,8 +44,6 @@ export const DescriptionSection = ({
         form={form}
         handleEditorChange={handleEditorChange}
       />
-
-      {/* La sección de HtmlActionButtons y HtmlCodePreview ha sido eliminada */}
     </div>
   );
 };

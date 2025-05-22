@@ -1,60 +1,146 @@
 
 import { Book } from "../../../../types/bookTypes";
-import { UseFormReturn } from "react-hook-form";
-import { BasicInfoSection } from "./BasicInfoSection";
-import { DescriptionSection } from "./DescriptionSection";
-import { MetadataSection } from "./MetadataSection";
-import { InvestigationRelation } from "../../Relations/InvestigationRelation";
-import { CollectionRelation } from "../../Relations/CollectionRelation";
-import { useLocalStorage } from "@/hooks/useLocalStorage";
-import { investigacionesSimuladas } from "../../../../utils/mockData/investigacionesData";
-import { coleccionesSimuladas } from "../../../../utils/mockData/coleccionesData";
+import { FormField, FormControl, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { Separator } from "@/components/ui/separator";
+import { DescriptionSection } from "./DescriptionSection";
+import { PublicationDateField } from "../PublicationDateField";
 
 interface BasicInfoFieldsProps {
   book: Book;
   isEditing: boolean;
-  form: any; // Using 'any' here to handle the extended form object from useGeneralInfoForm
-  onUpdateBook: (updatedData: Partial<Book>) => void; // Added onUpdateBook prop
+  form: any; // Type for react-hook-form instance
+  onUpdateBook: (updatedData: Partial<Book>) => void; // Añadido para pasar a DescriptionSection
 }
 
 export const BasicInfoFields = ({ book, isEditing, form, onUpdateBook }: BasicInfoFieldsProps) => {
-  const [storedInvestigations, setStoredInvestigations] = useLocalStorage('investigacionesData', investigacionesSimuladas);
-  const [storedCollections, setStoredCollections] = useLocalStorage('coleccionesData', coleccionesSimuladas);
+  const handleSimpleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    // No es necesario llamar a onUpdateBook aquí si el useEffect en useGeneralInfoForm lo maneja
+    // form.setValue(name, value, { shouldValidate: true, shouldDirty: true });
+  };
+  
+  const handleDescriptionChange = (newDescription: string) => {
+    form.setValue("descripcion", newDescription, { 
+      shouldValidate: false, 
+      shouldDirty: true,
+      shouldTouch: true
+    });
+    // Actualizamos el formData general del libro.
+    // El useEffect en useGeneralInfoForm ignora 'descripcion', así que lo hacemos aquí.
+    if (onUpdateBook) {
+      onUpdateBook({ descripcion: newDescription });
+    }
+  };
 
   return (
-    <>
-      {/* Sección de Información Básica */}
-      <BasicInfoSection book={book} isEditing={isEditing} form={form} />
+    <div className="space-y-6">
+      <FormField
+        control={form.control}
+        name="titulo"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Título Principal</FormLabel>
+            <FormControl>
+              <Input
+                {...field}
+                disabled={!isEditing}
+                onChange={(e) => {
+                  field.onChange(e);
+                  handleSimpleInputChange(e);
+                }}
+                placeholder="Ej: El Gran Libro de Cocina"
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
 
-      {/* Sección de Descripción */}
-      <DescriptionSection book={book} isEditing={isEditing} form={form} />
+      <FormField
+        control={form.control}
+        name="subtitulo"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Subtítulo (Opcional)</FormLabel>
+            <FormControl>
+              <Input
+                {...field}
+                disabled={!isEditing}
+                onChange={(e) => {
+                  field.onChange(e);
+                  handleSimpleInputChange(e);
+                }}
+                placeholder="Ej: Recetas para toda la familia"
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
 
-      {/* Sección de Metadatos */}
-      <MetadataSection book={book} isEditing={isEditing} form={form} />
+      <FormField
+        control={form.control}
+        name="autor"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Autor</FormLabel>
+            <FormControl>
+              <Input
+                {...field}
+                disabled={!isEditing}
+                onChange={(e) => {
+                  field.onChange(e);
+                  handleSimpleInputChange(e);
+                }}
+                placeholder="Ej: Juan Pérez"
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
       
-      {/* Sección de Relaciones (Investigación y Colección) */}
-      <div className="space-y-6 mt-8">
-        <div className="flex items-center">
-          <h3 className="text-lg text-blue-500 font-extrabold">Relaciones</h3>
-          <Separator className="flex-grow ml-3" />
-        </div>
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-          <InvestigationRelation
-            book={book}
-            isEditing={isEditing}
-            onUpdateBook={onUpdateBook}
-            investigations={storedInvestigations}
-          />
-          <CollectionRelation
-            book={book}
-            isEditing={isEditing}
-            onUpdateBook={onUpdateBook}
-            collections={storedCollections}
-          />
-        </div>
-      </div>
-    </>
+      <PublicationDateField 
+        form={form} 
+        isEditing={isEditing} 
+        currentDate={form.selectedDate} 
+        onDateChange={(date) => form.handleDateChange('fechaPublicacion', date)}
+        label="Fecha de Publicación"
+        fieldKey="fechaPublicacion"
+      />
+
+      <FormField
+        control={form.control}
+        name="descripcion"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Descripción Corta (Texto Plano)</FormLabel>
+            <FormControl>
+              <Textarea
+                {...field}
+                disabled={!isEditing}
+                onChange={(e) => {
+                  field.onChange(e); // Actualiza el campo en react-hook-form
+                  handleDescriptionChange(e.target.value); // Llama a nuestra función para actualizar el formData
+                }}
+                placeholder="Una breve descripción del libro..."
+                rows={4}
+                className="bg-muted/30"
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+
+      <DescriptionSection
+        book={book}
+        isEditing={isEditing}
+        form={form}
+        onUpdateBook={onUpdateBook} // Pasamos onUpdateBook
+      />
+    </div>
   );
 };
-
