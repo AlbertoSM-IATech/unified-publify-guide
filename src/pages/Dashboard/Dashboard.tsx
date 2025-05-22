@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback, useMemo } from "react";
-import { getStatsData, getContentCategoriesData } from "@/components/dashboard/dashboardData";
+import { getStatsData, getContentCategoriesData as getInitialContentCategoriesData } from "@/components/dashboard/dashboardData";
 import MotionWrapper from "@/components/motion/MotionWrapper";
 import { DashboardStats } from "./components/DashboardStats";
 import { ContentCategories } from "./components/ContentCategories";
@@ -36,28 +36,23 @@ export const Dashboard = () => {
     cambioBeneficio,
     getFilteredChartData
   } = useFinanceData();
-  const { books: libros, lastUpdated } = useBookData();
+  const { books: libros } = useBookData();
   const [stats, setStats] = useState(getStatsData());
-  const [contentCategories, setContentCategories] = useState(getContentCategoriesData());
-  const [pieChartData, setPieChartData] = useState<ChartItem[]>([]);
-  const [barChartData, setBarChartData] = useState<ChartItem[]>([]);
   const [lineChartError, setLineChartError] = useState(false);
 
-  useEffect(() => {
-    if (!libros || libros.length === 0) return;
-    
+  const initialContentCategories = useMemo(() => getInitialContentCategoriesData(), []);
+
+  const contentCategories = useMemo(() => {
+    if (!libros || libros.length === 0) return initialContentCategories;
+
     const altoContenido = libros.filter(libro => getContentCategory(libro.contenido) === "Alto Contenido").length;
     const medioContenido = libros.filter(libro => getContentCategory(libro.contenido) === "Medio Contenido").length;
     const bajoContenido = libros.filter(libro => getContentCategory(libro.contenido) === "Bajo Contenido").length;
-    const publicados = libros.filter(libro => getEstadoCategory(libro.estado) === "Publicado").length;
-    const enRevision = libros.filter(libro => getEstadoCategory(libro.estado) === "En revisión").length;
-    const borradores = libros.filter(libro => getEstadoCategory(libro.estado) === "Borrador").length;
-    const archivados = libros.filter(libro => getEstadoCategory(libro.estado) === "Archivado").length;
 
-    const updatedContentCategories = [...contentCategories];
-    
-    updatedContentCategories[0].count = altoContenido;
-    updatedContentCategories[0].statusData = [{
+    const updatedCategories = initialContentCategories.map(category => ({ ...category, statusData: [...(category.statusData || [])] }));
+
+    updatedCategories[0].count = altoContenido;
+    updatedCategories[0].statusData = [{
       label: "Publicados",
       count: libros.filter(libro => getContentCategory(libro.contenido) === "Alto Contenido" && getEstadoCategory(libro.estado) === "Publicado").length,
       percentage: altoContenido > 0 ? Math.round(libros.filter(libro => getContentCategory(libro.contenido) === "Alto Contenido" && getEstadoCategory(libro.estado) === "Publicado").length / altoContenido * 100) : 0
@@ -75,8 +70,8 @@ export const Dashboard = () => {
       percentage: altoContenido > 0 ? Math.round(libros.filter(libro => getContentCategory(libro.contenido) === "Alto Contenido" && getEstadoCategory(libro.estado) === "Archivado").length / altoContenido * 100) : 0
     }];
     
-    updatedContentCategories[1].count = medioContenido;
-    updatedContentCategories[1].statusData = [{
+    updatedCategories[1].count = medioContenido;
+    updatedCategories[1].statusData = [{
       label: "Publicados",
       count: libros.filter(libro => getContentCategory(libro.contenido) === "Medio Contenido" && getEstadoCategory(libro.estado) === "Publicado").length,
       percentage: medioContenido > 0 ? Math.round(libros.filter(libro => getContentCategory(libro.contenido) === "Medio Contenido" && getEstadoCategory(libro.estado) === "Publicado").length / medioContenido * 100) : 0
@@ -94,8 +89,8 @@ export const Dashboard = () => {
       percentage: medioContenido > 0 ? Math.round(libros.filter(libro => getContentCategory(libro.contenido) === "Medio Contenido" && getEstadoCategory(libro.estado) === "Archivado").length / medioContenido * 100) : 0
     }];
     
-    updatedContentCategories[2].count = bajoContenido;
-    updatedContentCategories[2].statusData = [{
+    updatedCategories[2].count = bajoContenido;
+    updatedCategories[2].statusData = [{
       label: "Publicados",
       count: libros.filter(libro => getContentCategory(libro.contenido) === "Bajo Contenido" && getEstadoCategory(libro.estado) === "Publicado").length,
       percentage: bajoContenido > 0 ? Math.round(libros.filter(libro => getContentCategory(libro.contenido) === "Bajo Contenido" && getEstadoCategory(libro.estado) === "Publicado").length / bajoContenido * 100) : 0
@@ -113,24 +108,37 @@ export const Dashboard = () => {
       percentage: bajoContenido > 0 ? Math.round(libros.filter(libro => getContentCategory(libro.contenido) === "Bajo Contenido" && getEstadoCategory(libro.estado) === "Archivado").length / bajoContenido * 100) : 0
     }];
     
-    setContentCategories(updatedContentCategories);
+    return updatedCategories;
+  }, [libros, initialContentCategories]);
 
-    const updatedPieChartData = [
+  const pieChartData = useMemo<ChartItem[]>(() => {
+    if (!libros || libros.length === 0) return [];
+    const publicados = libros.filter(libro => getEstadoCategory(libro.estado) === "Publicado").length;
+    const enRevision = libros.filter(libro => getEstadoCategory(libro.estado) === "En revisión").length;
+    const borradores = libros.filter(libro => getEstadoCategory(libro.estado) === "Borrador").length;
+    const archivados = libros.filter(libro => getEstadoCategory(libro.estado) === "Archivado").length;
+
+    return [
       { name: "Publicados", value: publicados, color: "#10b981" },
       { name: "En revisión", value: enRevision, color: "#f59e0b" },
       { name: "Borradores", value: borradores, color: "#6366f1" },
       { name: "Archivados", value: archivados, color: "#ef4444" }
     ];
-    setPieChartData(updatedPieChartData);
+  }, [libros]);
 
-    const updatedBarChartData = [
+  const barChartData = useMemo<ChartItem[]>(() => {
+    if (!libros || libros.length === 0) return [];
+    const altoContenido = libros.filter(libro => getContentCategory(libro.contenido) === "Alto Contenido").length;
+    const medioContenido = libros.filter(libro => getContentCategory(libro.contenido) === "Medio Contenido").length;
+    const bajoContenido = libros.filter(libro => getContentCategory(libro.contenido) === "Bajo Contenido").length;
+    
+    return [
       { name: "Alto Contenido", value: altoContenido, color: "#3b82f6" },
       { name: "Medio Contenido", value: medioContenido, color: "#fb923c" },
       { name: "Bajo Contenido", value: bajoContenido, color: "#22c55e" }
     ];
-    setBarChartData(updatedBarChartData);
-  }, [libros, contentCategories]);
-
+  }, [libros]);
+  
   const validLineChartData = useMemo(() => {
     const chartData = getFilteredChartData('mensual');
     return Array.isArray(chartData) && chartData.length > 0 

@@ -1,0 +1,62 @@
+
+/* Estilos para el menú de herramientas de ApexCharts */
+.apexcharts-menu {
+  background-color: hsl(var(--popover)) !important;
+  color: hsl(var(--popover-foreground)) !important;
+  border: 1px solid hsl(var(--border)) !important;
+  border-radius: var(--radius) !important;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1) !important; /* Sombra similar a popover */
+  padding: 0.25rem !important; /* p-1 */
+  z-index: 50 !important; /* Asegurar que esté por encima de otros elementos */
+}
+
+.apexcharts-menu-item {
+  padding: 0.5rem 1rem !important; /* py-2 px-4 */
+  font-size: 0.875rem !important; /* text-sm */
+  cursor: pointer !important;
+}
+
+.apexcharts-menu-item:hover {
+  background-color: hsl(var(--accent)) !important;
+  color: hsl(var(--accent-foreground)) !important;
+}
+
+/* Estilos para los iconos del toolbar */
+.apexcharts-toolbar {
+  z-index: 40 !important; /* Un poco menos que el menú pero aún alto */
+}
+
+.apexcharts-toolbar svg {
+  fill: hsl(var(--muted-foreground)) !important;
+}
+
+.apexcharts-toolbar-custom-icon:hover svg,
+.apexcharts-toolbar-tool-icon:hover svg {
+  fill: hsl(var(--foreground)) !important;
+}
+
+/* Tooltip de ApexCharts */
+.apexcharts-tooltip {
+  background-color: hsl(var(--popover)) !important;
+  color: hsl(var(--popover-foreground)) !important;
+  border: 1px solid hsl(var(--border)) !important;
+  border-radius: var(--radius) !important;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1) !important;
+  padding: 0.5rem 0.75rem !important; /* py-2 px-3 */
+}
+
+.apexcharts-tooltip-title {
+  background-color: hsl(var(--accent)) !important;
+  color: hsl(var(--accent-foreground)) !important;
+  border-bottom: 1px solid hsl(var(--border)) !important;
+  padding: 0.375rem 0.75rem !important; /* py-1.5 px-3 */
+  font-weight: 500 !important; /* medium */
+}
+
+.apexcharts-tooltip-series-group {
+  padding: 0.375rem 0.75rem !important; /* py-1.5 px-3 */
+}
+
+.apexcharts-tooltip-marker {
+  margin-right: 0.5rem !important; /* mr-2 */
+}

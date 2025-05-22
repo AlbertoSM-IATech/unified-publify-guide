@@ -1,28 +1,25 @@
 
-import { createRoot } from 'react-dom/client'
-import { BrowserRouter } from 'react-router-dom';
+import React from 'react'
+import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
-import { ThemeProvider } from './hooks/useTheme.tsx'
-import { AuthProvider } from './contexts/AuthContext';
-import { UserProvider } from './contexts/UserContext';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { AuthProvider } from './contexts/AuthContext.tsx';
+import { UserProvider } from './contexts/UserContext.tsx';
+import { ThemeProvider } from './hooks/useTheme.tsx';
+import './styles/custom-apexcharts.css'; // Importar los estilos personalizados de ApexCharts
 
-const container = document.getElementById('root');
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <React.StrictMode>
+    <Router>
+      <AuthProvider>
+        <UserProvider>
+          <ThemeProvider>
+            <App />
+          </ThemeProvider>
+        </UserProvider>
+      </AuthProvider>
+    </Router>
+  </React.StrictMode>,
+)
 
-if (!container) {
-  throw new Error('Root element not found. Cannot mount React application.');
-}
-
-const root = createRoot(container);
-
-root.render(
-  <BrowserRouter>
-    <AuthProvider>
-      <UserProvider>
-        <ThemeProvider>
-          <App />
-        </ThemeProvider>
-      </UserProvider>
-    </AuthProvider>
-  </BrowserRouter>
-);
