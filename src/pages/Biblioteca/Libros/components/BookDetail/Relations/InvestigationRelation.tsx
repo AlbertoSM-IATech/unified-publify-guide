@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { useEffect, useState } from "react";
+import { Card } from "@/components/ui/card";
 
 interface InvestigationRelationProps {
   book: Book;
@@ -59,64 +60,64 @@ export const InvestigationRelation = ({
   };
 
   return (
-    <div className="grid gap-3">
-      <Label htmlFor="investigacion">Investigación Relacionada</Label>
+    <div className="w-full">
+      <h3 className="text-lg font-semibold mb-3">Investigación Relacionada</h3>
+      
       {isEditing ? (
-        <div className="space-y-3">
-          <div className="relative">
-            <Input type="text" placeholder="Buscar investigación..." value={searchTerm} onChange={e => setSearchTerm(e.target.value)} className="pl-9" />
+        <div className="space-y-3 w-full">
+          <div className="relative w-full">
+            <Input type="text" placeholder="Buscar investigación..." value={searchTerm} onChange={e => setSearchTerm(e.target.value)} className="pl-9 w-full" />
             <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
           </div>
           
           <Select onValueChange={handleInvestigacionChange} defaultValue={book.investigacionId ? book.investigacionId.toString() : "none"}>
-            <SelectTrigger id="investigacion" className="hover:border-[#FB923C] transition-colors duration-200">
+            <SelectTrigger id="investigacion" className="w-full hover:border-[#FB923C] transition-colors duration-200">
               <SelectValue placeholder={investigations.length > 0 ? "Seleccionar investigación" : "No hay investigaciones disponibles"} />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="none">Ninguna</SelectItem>
-              {filteredInvestigations.map(inv => <SelectItem key={inv.id} value={inv.id.toString()}>
-                  {inv.titulo}
-                </SelectItem>)}
+              {filteredInvestigations.map(inv => (
+                <SelectItem key={inv.id} value={inv.id.toString()}>{inv.titulo}</SelectItem>
+              ))}
             </SelectContent>
           </Select>
         </div>
       ) : (
-        // En modo visualización, mostrar "Ninguna..." si no hay investigación seleccionada.
-        // Si hay una, no mostrar nada aquí, ya que la tarjeta de abajo lo hará.
         !selectedInvestigacion ? (
-          <div className="rounded-md border border-input px-3 py-2 bg-muted/50">
+          <div className="rounded-md border border-input px-3 py-2 bg-muted/50 w-full">
             Ninguna investigación seleccionada
           </div>
         ) : null 
       )}
       
-      {/* La tarjeta de detalles solo se muestra si hay una investigación seleccionada y no estamos editando */}
       {selectedInvestigacion && !isEditing && (
-        <motion.div 
-          className="mt-2 p-3 bg-slate-50 dark:bg-slate-900/50 rounded-md border border-slate-200 dark:border-slate-800" 
-          initial={{ opacity: 0, y: 5 }} 
-          animate={{ opacity: 1, y: 0 }} 
-          transition={{ duration: 0.3 }}
-        >
-          <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <h4 className="text-sm font-medium">{selectedInvestigacion.titulo}</h4>
+        <Card className="mt-2 overflow-hidden border-slate-800">
+          <motion.div 
+            className="p-4 bg-slate-900 rounded-md" 
+            initial={{ opacity: 0, y: 5 }} 
+            animate={{ opacity: 1, y: 0 }} 
+            transition={{ duration: 0.3 }}
+          >
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <h4 className="text-sm font-medium text-white">{selectedInvestigacion.titulo}</h4>
+              </div>
+              
+              <p className="text-xs text-slate-300 line-clamp-2">
+                {selectedInvestigacion.descripcion}
+              </p>
+              
+              <Link 
+                to={`/biblioteca/investigaciones`} 
+                state={{ selectInvestigacion: selectedInvestigacion.id }} 
+                className="flex items-center text-sm text-amber-400 hover:underline hover:text-[#FB923C] transition-colors duration-200"
+              >
+                <ExternalLink size={14} className="mr-1" />
+                Ver investigación
+              </Link>
             </div>
-            
-            <p className="text-xs text-muted-foreground line-clamp-2">
-              {selectedInvestigacion.descripcion}
-            </p>
-            
-            <Link 
-              to={`/biblioteca/investigaciones`} 
-              state={{ selectInvestigacion: selectedInvestigacion.id }} 
-              className="flex items-center text-sm text-primary hover:underline hover:text-[#FB923C] transition-colors duration-200"
-            >
-              <ExternalLink size={14} className="mr-1" />
-              Ver investigación
-            </Link>
-          </div>
-        </motion.div>
+          </motion.div>
+        </Card>
       )}
     </div>
   );

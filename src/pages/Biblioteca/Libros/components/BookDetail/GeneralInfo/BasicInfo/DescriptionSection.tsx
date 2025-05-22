@@ -45,7 +45,7 @@ export const DescriptionSection = ({
   return (
     <div className="space-y-6 mt-8">
       <div className="flex items-center">
-        <h3 className="text-lg text-blue-500 font-extrabold">Descripción</h3>
+        <h3 className="text-lg text-blue-500 font-semibold">Descripción</h3>
         <Separator className="flex-grow ml-3" />
       </div>
       
@@ -76,4 +76,3 @@ export const DescriptionSection = ({
     </div>
   );
 };
-

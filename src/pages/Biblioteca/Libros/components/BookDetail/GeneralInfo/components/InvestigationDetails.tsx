@@ -41,17 +41,19 @@ export const InvestigationDetails = ({
   }, [book?.investigacionId]);
 
   return (
-    <div className="grid gap-3">
-      <Label>Investigación Relacionada</Label>
+    <div className="w-full">
+      <Label className="text-base font-medium">Investigación Relacionada</Label>
       {loadingLists || loadingInvestigacion ? (
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-2 mt-2">
           <Loader2 className="h-4 w-4 animate-spin" />
           <span className="text-sm text-muted-foreground">Cargando...</span>
         </div>
       ) : selectedInvestigacion ? (
-        <ViewInvestigationDetailsCard investigacion={selectedInvestigacion} />
+        <div className="mt-2">
+          <ViewInvestigationDetailsCard investigacion={selectedInvestigacion} />
+        </div>
       ) : (
-        <div className="rounded-md border border-input px-3 py-2 bg-muted/50">
+        <div className="rounded-md border border-input px-3 py-2 bg-muted/50 mt-2">
           Ninguna investigación seleccionada
         </div>
       )}

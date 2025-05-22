@@ -1,3 +1,4 @@
+
 import { Book } from "../../../types/bookTypes";
 import { UseFormReturn } from "react-hook-form"; 
 import { useRelationData } from "./hooks/useRelationData";
@@ -16,18 +17,21 @@ export const RelationFields = ({
   const { loadingLists } = useRelationData();
   
   return (
-    <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-      {/* Investigación Relacionada */}
-      <InvestigationDetails 
-        book={book} 
-        loadingLists={loadingLists} 
-      />
+    <div className="w-full">
+      <h3 className="text-lg font-semibold mb-3 text-blue-500">Relaciones</h3>
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+        {/* Investigación Relacionada */}
+        <InvestigationDetails 
+          book={book} 
+          loadingLists={loadingLists} 
+        />
 
-      {/* Colección Relacionada */}
-      <CollectionDetails 
-        book={book} 
-        loadingLists={loadingLists} 
-      />
+        {/* Colección Relacionada */}
+        <CollectionDetails 
+          book={book} 
+          loadingLists={loadingLists} 
+        />
+      </div>
     </div>
   );
 };

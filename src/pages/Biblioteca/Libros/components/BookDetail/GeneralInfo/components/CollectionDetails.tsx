@@ -28,7 +28,7 @@ export const CollectionDetails = ({
         try {
           const coleccion = await fetchColeccionById(book.proyectoId);
           setSelectedColeccion(coleccion);
-        } catch (error) { // Llaves restauradas aquí
+        } catch (error) {
           console.error("Error fetching related collection:", error);
         } finally {
           setLoadingColeccion(false);
@@ -41,21 +41,22 @@ export const CollectionDetails = ({
   }, [book?.proyectoId]);
 
   return (
-    <div className="grid gap-3">
-      <Label>Serie Relacionada</Label>
+    <div className="w-full">
+      <Label className="text-base font-medium">Serie Relacionada</Label>
       {loadingLists || loadingColeccion ? (
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-2 mt-2">
           <Loader2 className="h-4 w-4 animate-spin" />
           <span className="text-sm text-muted-foreground">Cargando...</span>
         </div>
       ) : selectedColeccion ? (
-        <ViewCollectionDetailsCard coleccion={selectedColeccion} />
+        <div className="mt-2">
+          <ViewCollectionDetailsCard coleccion={selectedColeccion} />
+        </div>
       ) : (
-        <div className="rounded-md border border-input px-3 py-2 bg-muted/50">
+        <div className="rounded-md border border-input px-3 py-2 bg-muted/50 mt-2">
           Ninguna serie seleccionada
         </div>
       )}
     </div>
   );
 };
-

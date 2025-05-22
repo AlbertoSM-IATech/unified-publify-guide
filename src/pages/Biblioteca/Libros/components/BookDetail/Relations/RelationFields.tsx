@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { investigacionesSimuladas } from "../../../utils/mockData/investigacionesData";
 import { coleccionesSimuladas } from "../../../utils/mockData/coleccionesData";
 import { Investigacion } from "@/pages/Biblioteca/Investigaciones/types/investigacionTypes"; // Importar el tipo Investigacion
+import { Separator } from "@/components/ui/separator";
 
 interface RelationFieldsProps {
   book: Book;
@@ -68,20 +69,26 @@ export const RelationFields = ({ book, isEditing, onUpdateBook }: RelationFields
   }, [book.investigacionId, book.coleccionesIds, book.id, book.titulo, storedInvestigations, storedCollections, setStoredInvestigations, setStoredCollections]);
 
   return (
-    <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-      <InvestigationRelation 
-        book={book}
-        isEditing={isEditing}
-        onUpdateBook={onUpdateBook}
-        investigations={storedInvestigations}
-      />
-      <CollectionRelation
-        book={book}
-        isEditing={isEditing}
-        onUpdateBook={onUpdateBook}
-        collections={storedCollections}
-      />
+    <div className="w-full">
+      <h2 className="text-xl font-semibold text-blue-500 mb-6">Relaciones</h2>
+      <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+        <div className="space-y-4">
+          <InvestigationRelation 
+            book={book}
+            isEditing={isEditing}
+            onUpdateBook={onUpdateBook}
+            investigations={storedInvestigations}
+          />
+        </div>
+        <div className="space-y-4">
+          <CollectionRelation
+            book={book}
+            isEditing={isEditing}
+            onUpdateBook={onUpdateBook}
+            collections={storedCollections}
+          />
+        </div>
+      </div>
     </div>
   );
 };
-

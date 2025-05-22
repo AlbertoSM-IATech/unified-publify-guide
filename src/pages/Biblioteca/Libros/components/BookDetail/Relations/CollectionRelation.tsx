@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useEffect, useState } from "react";
+import { Card } from "@/components/ui/card";
 
 interface CollectionRelationProps {
   book: Book;
@@ -29,7 +30,6 @@ export const CollectionRelation = ({
   collections
 }: CollectionRelationProps) => {
   const [selectedCollections, setSelectedCollections] = useState<any[]>([]);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   // Load related collections when component mounts or book changes
   useEffect(() => {
@@ -65,11 +65,11 @@ export const CollectionRelation = ({
   };
 
   return (
-    <div className="grid gap-3">
-      <Label htmlFor="colecciones">Series Relacionadas</Label>
+    <div className="w-full">
+      <h3 className="text-lg font-semibold mb-3">Series Relacionadas</h3>
       
       {isEditing ? (
-        <div className="space-y-4">
+        <div className="space-y-4 w-full">
           <div className="w-full border border-input rounded-md p-4 bg-background">
             <div className="text-sm font-medium mb-2">Selecciona las series:</div>
             
@@ -124,23 +124,19 @@ export const CollectionRelation = ({
       ) : (
         <>
           {selectedCollections.length > 0 ? (
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2 mb-4">
               {selectedCollections.map(collection => (
-                <Link 
+                <Badge 
                   key={collection.id}
-                  to={`/biblioteca/colecciones/${collection.id}`}
+                  variant="outline"
+                  className="bg-slate-800 text-white border-slate-700 hover:bg-slate-700 transition-colors px-3 py-1 cursor-pointer"
                 >
-                  <Badge 
-                    variant="secondary"
-                    className="hover:bg-muted transition-colors px-3 py-1 cursor-pointer"
-                  >
-                    {collection.nombre}
-                  </Badge>
-                </Link>
+                  {collection.nombre}
+                </Badge>
               ))}
             </div>
           ) : (
-            <div className="rounded-md border border-input px-3 py-2 bg-muted/50">
+            <div className="rounded-md border border-input px-3 py-2 bg-muted/50 w-full mb-4">
               Este libro no pertenece a ninguna serie
             </div>
           )}
@@ -148,38 +144,38 @@ export const CollectionRelation = ({
       )}
       
       {selectedCollections.length > 0 && !isEditing && (
-        <div className="space-y-2 mt-2">
+        <div className="grid grid-cols-1 gap-3 w-full">
           {selectedCollections.map(collection => (
-            <motion.div 
-              key={collection.id}
-              className="p-3 bg-slate-50 dark:bg-slate-900/50 rounded-md border border-slate-200 dark:border-slate-800"
-              initial={{ opacity: 0, y: 5 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3 }}
-            >
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <h4 className="text-sm font-medium">{collection.nombre}</h4>
-                  <Badge variant="outline" className="text-xs">{collection.estado || "Activa"}</Badge>
+            <Card key={collection.id} className="overflow-hidden border-slate-800">
+              <motion.div 
+                className="p-4 bg-slate-900 rounded-md"
+                initial={{ opacity: 0, y: 5 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <h4 className="text-sm font-medium text-white">{collection.nombre}</h4>
+                    <Badge variant="outline" className="text-xs bg-transparent text-amber-400 border-amber-500">{collection.estado || "Activa"}</Badge>
+                  </div>
+                  
+                  <p className="text-xs text-slate-300 line-clamp-2">
+                    {collection.descripcion}
+                  </p>
+                  
+                  <Link 
+                    to={`/biblioteca/colecciones/${collection.id}`}
+                    className="flex items-center text-sm text-amber-400 hover:underline hover:text-[#FB923C] transition-colors duration-200"
+                  >
+                    <ExternalLink size={14} className="mr-1" />
+                    Ver serie
+                  </Link>
                 </div>
-                
-                <p className="text-xs text-muted-foreground line-clamp-2">
-                  {collection.descripcion}
-                </p>
-                
-                <Link 
-                  to={`/biblioteca/colecciones/${collection.id}`}
-                  className="flex items-center text-sm text-primary hover:underline hover:text-[#FB923C] transition-colors duration-200"
-                >
-                  <ExternalLink size={14} className="mr-1" />
-                  Ver serie
-                </Link>
-              </div>
-            </motion.div>
+              </motion.div>
+            </Card>
           ))}
         </div>
       )}
     </div>
   );
 };
-
