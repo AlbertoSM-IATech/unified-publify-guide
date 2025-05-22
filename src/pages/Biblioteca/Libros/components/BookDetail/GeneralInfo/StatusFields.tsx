@@ -20,6 +20,7 @@ interface StatusFieldsProps {
 }
 
 export const StatusFields = ({ book, isEditing, form, onUpdateBook }: StatusFieldsProps) => {
+  // Sincronizar valores del libro con el formulario cuando no está en modo edición
   useEffect(() => {
     if (!isEditing && book) {
       form.setValue("estado", book.estado, { shouldDirty: false, shouldValidate: false });
@@ -27,6 +28,7 @@ export const StatusFields = ({ book, isEditing, form, onUpdateBook }: StatusFiel
     }
   }, [book, form, isEditing]);
 
+  // Manejadores para actualizar los valores y notificar al componente padre
   const handleStatusChange = (value: string) => {
     form.setValue("estado", value);
     if (isEditing) {
@@ -110,4 +112,3 @@ export const StatusFields = ({ book, isEditing, form, onUpdateBook }: StatusFiel
     </div>
   );
 };
-
