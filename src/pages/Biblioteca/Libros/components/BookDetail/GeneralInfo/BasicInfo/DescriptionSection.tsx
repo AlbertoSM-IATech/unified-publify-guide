@@ -1,15 +1,13 @@
 
 import { Book } from "../../../../types/bookTypes";
 import { Separator } from "@/components/ui/separator";
-import { useHtmlDescription } from "./hooks/useHtmlDescription";
 import { DescriptionEditorView } from "./components/DescriptionEditorView";
-import { HtmlActionButtons } from "./components/HtmlActionButtons";
-import { HtmlCodePreview } from "./components/HtmlCodePreview";
+// Eliminadas importaciones de useHtmlDescription, HtmlActionButtons, HtmlCodePreview
 
 interface DescriptionSectionProps {
   book: Book;
   isEditing: boolean;
-  form: any;
+  form: any; // Type for react-hook-form instance
 }
 
 export const DescriptionSection = ({
@@ -17,28 +15,15 @@ export const DescriptionSection = ({
   isEditing,
   form
 }: DescriptionSectionProps) => {
-  const {
-    showHtmlPreview,
-    setShowHtmlPreview,
-    copied,
-    generateHtml,
-    copyHtml,
-    hasGeneratedThisEditSession,
-    setHasGeneratedThisEditSession
-  } = useHtmlDescription(book, form);
 
   const handleEditorChange = (html: string) => {
-    form.setValue("descripcion", html, { 
-      shouldValidate: false,
-      shouldDirty: true,
-      shouldTouch: true 
+    // Actualizamos el campo 'descripcionHtml' del formulario.
+    // El RichTextEditor ahora está vinculado a 'descripcionHtml'.
+    form.setValue("descripcionHtml", html, {
+      shouldValidate: false, // No validar en cada cambio para mejor rendimiento
+      shouldDirty: true,    // Marcar el campo como modificado
+      shouldTouch: true     // Marcar el campo como tocado
     });
-    
-    // Si el usuario edita el contenido, reseteamos el estado de generación y ocultamos la vista previa
-    if (hasGeneratedThisEditSession) {
-      setShowHtmlPreview(false);
-      setHasGeneratedThisEditSession(false);
-    }
   };
 
   return (
@@ -48,34 +33,14 @@ export const DescriptionSection = ({
         <Separator className="flex-grow ml-3" />
       </div>
       
-      <DescriptionEditorView 
+      <DescriptionEditorView
         book={book}
         isEditing={isEditing}
         form={form}
         handleEditorChange={handleEditorChange}
       />
 
-      <div className="mt-4">
-        <HtmlActionButtons
-          isEditing={isEditing}
-          generateHtml={generateHtml}
-          showHtmlPreview={showHtmlPreview}
-          setShowHtmlPreview={setShowHtmlPreview}
-          bookDescripcionHtml={book.descripcionHtml}
-          hasGeneratedThisEditSession={hasGeneratedThisEditSession}
-        />
-        
-        {showHtmlPreview && (
-          <HtmlCodePreview
-            form={form}
-            book={book}
-            isEditing={isEditing}
-            copyHtml={copyHtml}
-            copied={copied}
-            showHtmlPreview={showHtmlPreview}
-          />
-        )}
-      </div>
+      {/* La sección de HtmlActionButtons y HtmlCodePreview ha sido eliminada */}
     </div>
   );
 };
