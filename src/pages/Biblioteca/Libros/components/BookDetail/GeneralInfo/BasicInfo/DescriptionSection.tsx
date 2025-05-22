@@ -18,6 +18,7 @@ export const DescriptionSection = ({
   form
 }: DescriptionSectionProps) => {
   const {
+    // htmlOutput, // No se usa y se eliminará del hook
     showHtmlPreview,
     setShowHtmlPreview,
     copied,
@@ -25,27 +26,20 @@ export const DescriptionSection = ({
     copyHtml
   } = useHtmlDescription(book, form);
 
-  // Handle rich text editor changes without causing infinite recursion
+  // Handle rich text editor changes
   const handleEditorChange = (html: string) => {
-    // Prevent recursive updates by temporarily disabling watch
-    const watchState = form.formState.isSubmitted;
-    form._options.shouldUnregister = true;
-    
+    // Actualiza el campo 'descripcion' que está vinculado al editor
     form.setValue("descripcion", html, { 
-      shouldValidate: false,
+      shouldValidate: false, // O true si se necesita validación en cada cambio
       shouldDirty: true,
       shouldTouch: true 
     });
     
-    // También actualizamos el HTML
+    // Actualiza también 'descripcionHtml' para la vista previa en tiempo real
     form.setValue("descripcionHtml", html, { 
       shouldValidate: false,
-      shouldDirty: true,
-      shouldTouch: true 
+      shouldDirty: true 
     });
-    
-    form._options.shouldUnregister = false;
-    form.formState.isSubmitted = watchState;
   };
   
   return (
@@ -82,3 +76,4 @@ export const DescriptionSection = ({
     </div>
   );
 };
+
