@@ -1,7 +1,7 @@
 
 import React from "react";
 import { Book } from "../../../types/bookTypes";
-import { Separator } from "@/components/ui/separator";
+// Separator ya no es necesario aquí directamente si el diseño cambia
 import { Card } from "@/components/ui/card";
 import { Users, Target, Sparkles } from "lucide-react";
 import { UseFormReturn } from "react-hook-form";
@@ -19,15 +19,14 @@ export const AudienceSection = ({
   form
 }: AudienceSectionProps) => {
   return (
-    <div className="space-y-6 mt-4">
-      <div className="flex items-center">
-        <h3 className="text-lg font-extrabold text-blue-500">Audiencia y Posicionamiento</h3>
-        <Separator className="flex-grow ml-3" />
-      </div>
+    <div className="space-y-6"> {/* mt-4 eliminado */}
+      <Card className="p-4 bg-muted/40 dark:bg-muted/10">
+        <h3 className="text-xl font-semibold">Audiencia y Posicionamiento del Libro</h3>
+      </Card>
       
       {/* Target Audience Section */}
       <Card className="p-5 space-y-4 shadow-sm border-slate-200 dark:border-slate-700">
-        <div className="flex items-center gap-2 text-blue-500 mb-1">
+        <div className="flex items-center gap-2 text-primary mb-1"> {/* Cambiado text-blue-500 a text-primary */}
           <Users size={18} />
           <h4 className="text-md font-semibold">Audiencia Objetivo</h4>
         </div>
@@ -47,7 +46,7 @@ export const AudienceSection = ({
       
       {/* Market Avatar */}
       <Card className="p-5 space-y-4 shadow-sm border-slate-200 dark:border-slate-700">
-        <div className="flex items-center gap-2 text-blue-500 mb-1">
+        <div className="flex items-center gap-2 text-primary mb-1"> {/* Cambiado text-blue-500 a text-primary */}
           <Target size={18} />
           <h4 className="text-md font-semibold">Avatar Personalizado</h4>
         </div>
@@ -67,7 +66,7 @@ export const AudienceSection = ({
       
       {/* Unique Value Proposition */}
       <Card className="p-5 space-y-4 shadow-sm border-slate-200 dark:border-slate-700">
-        <div className="flex items-center gap-2 text-blue-500 mb-1">
+        <div className="flex items-center gap-2 text-primary mb-1"> {/* Cambiado text-blue-500 a text-primary */}
           <Sparkles size={18} />
           <h4 className="text-md font-semibold">Propuesta de Valor Única</h4>
         </div>
@@ -87,3 +86,4 @@ export const AudienceSection = ({
     </div>
   );
 };
+
