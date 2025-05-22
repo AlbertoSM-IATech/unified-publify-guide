@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Calculator, HelpCircle } from "lucide-react";
 import { formatDecimal, parseDecimalInput } from "../../../../utils/formatUtils";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+
 interface PricingInputsProps {
   formatType: string;
   format: BookFormat;
@@ -13,6 +14,7 @@ interface PricingInputsProps {
   onUpdateFormat?: (formatType: string, updatedData: Partial<BookFormat>) => void;
   triggerCalculation?: () => void;
 }
+
 export const PricingInputs = ({
   formatType,
   format,
@@ -21,17 +23,23 @@ export const PricingInputs = ({
   triggerCalculation
 }: PricingInputsProps) => {
   // Local state for input fields to handle display formatting
-  const [priceInput, setPriceInput] = useState(format.price ? formatDecimal(format.price) : "");
-  const [royaltyInput, setRoyaltyInput] = useState(format.royaltyPercentage ? (format.royaltyPercentage * 100).toString() : "");
-  const [printingCostInput, setPrintingCostInput] = useState(format.printingCost ? formatDecimal(format.printingCost) : "");
+  const [priceInput, setPriceInput] = useState(
+    typeof format.price === 'number' ? formatDecimal(format.price) : ""
+  );
+  const [royaltyInput, setRoyaltyInput] = useState(
+    typeof format.royaltyPercentage === 'number' ? (format.royaltyPercentage * 100).toString() : ""
+  );
+  const [printingCostInput, setPrintingCostInput] = useState(
+    typeof format.printingCost === 'number' ? formatDecimal(format.printingCost) : ""
+  );
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   // Update local input state when format changes from parent
   useEffect(() => {
     if (format) {
-      setPriceInput(format.price ? formatDecimal(format.price) : "");
-      setRoyaltyInput(format.royaltyPercentage ? (format.royaltyPercentage * 100).toString() : "");
-      setPrintingCostInput(format.printingCost ? formatDecimal(format.printingCost) : "");
+      setPriceInput(typeof format.price === 'number' ? formatDecimal(format.price) : "");
+      setRoyaltyInput(typeof format.royaltyPercentage === 'number' ? (format.royaltyPercentage * 100).toString() : "");
+      setPrintingCostInput(typeof format.printingCost === 'number' ? formatDecimal(format.printingCost) : "");
     }
   }, [format]);
 
@@ -48,8 +56,9 @@ export const PricingInputs = ({
       }
     }
     if (field === 'royalty') {
-      if (value && (parseInt(value) < 0 || parseInt(value) > 100)) {
-        newErrors.royalty = "El porcentaje debe estar entre 0 y 100";
+      // Allow empty string for royalty to clear the field
+      if (value && (parseInt(value) < 0 || parseInt(value) > 100 || !/^\d+$/.test(value))) {
+        newErrors.royalty = "El porcentaje debe ser un número entero entre 0 y 100";
       } else {
         delete newErrors.royalty;
       }
@@ -69,28 +78,46 @@ export const PricingInputs = ({
   const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setPriceInput(value);
-    if (validateField('price', value) && onUpdateFormat) {
-      const numericValue = parseDecimalInput(value);
-      onUpdateFormat(formatType, {
-        price: numericValue
-      });
+    if (validateField('price', value)) {
+      if (onUpdateFormat) {
+        const numericValue = parseDecimalInput(value);
+        if (value === "") {
+          onUpdateFormat(formatType, { price: undefined });
+        } else if (numericValue !== null && !isNaN(numericValue)) {
+          onUpdateFormat(formatType, { price: numericValue });
+        }
+        // If numericValue is null but value is not "", it means invalid input not caught by regex,
+        // so we don't update, error message should show.
+      }
     }
   };
 
   // Handle royalty percentage change
   const handleRoyaltyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-
-    // Only allow integers from 0 to 100
-    if (/^[0-9]{0,3}$/.test(value) || value === "") {
-      setRoyaltyInput(value);
-      if (validateField('royalty', value) && onUpdateFormat && value) {
-        // Convert to decimal (e.g., 60 -> 0.6)
-        const percentage = parseInt(value, 10) / 100;
-        onUpdateFormat(formatType, {
-          royaltyPercentage: isNaN(percentage) ? 0 : percentage
-        });
+     // Allow only integers or empty string
+    if (/^\d*$/.test(value) && (value === "" || (parseInt(value) >= 0 && parseInt(value) <= 100))) {
+      setRoyaltyInput(value); // Update UI immediately
+      if (validateField('royalty', value)) { // Validate
+        if (onUpdateFormat) {
+          if (value === "") {
+            onUpdateFormat(formatType, { royaltyPercentage: undefined });
+          } else {
+            const percentage = parseInt(value, 10) / 100;
+            // Ensure percentage is a valid number before updating
+            if (!isNaN(percentage)) {
+              onUpdateFormat(formatType, { royaltyPercentage: percentage });
+            }
+          }
+        }
       }
+    } else if (value === "") { // Handle case where user deletes all content
+        setRoyaltyInput("");
+        if (validateField('royalty', "")) {
+            if (onUpdateFormat) {
+                onUpdateFormat(formatType, { royaltyPercentage: undefined });
+            }
+        }
     }
   };
 
@@ -98,11 +125,15 @@ export const PricingInputs = ({
   const handlePrintingCostChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setPrintingCostInput(value);
-    if (validateField('printingCost', value) && onUpdateFormat) {
-      const numericValue = parseDecimalInput(value);
-      onUpdateFormat(formatType, {
-        printingCost: numericValue
-      });
+    if (validateField('printingCost', value)) {
+      if (onUpdateFormat) {
+        const numericValue = parseDecimalInput(value);
+        if (value === "") {
+          onUpdateFormat(formatType, { printingCost: undefined });
+        } else if (numericValue !== null && !isNaN(numericValue)) {
+          onUpdateFormat(formatType, { printingCost: numericValue });
+        }
+      }
     }
   };
 
@@ -158,7 +189,7 @@ export const PricingInputs = ({
             </TooltipProvider>
           </div>
           {isEditing ? <>
-              <Input id="royalty" value={royaltyInput} onChange={handleRoyaltyChange} placeholder="0" className={`bg-white dark:bg-slate-900 ${errors.royalty ? "border-red-500" : ""}`} />
+              <Input id="royalty" value={royaltyInput} onChange={handleRoyaltyChange} placeholder="0" className={`bg-white dark:bg-slate-900 ${errors.royalty ? "border-red-500" : ""}`} maxLength={3} />
               {errors.royalty && <p className="text-xs text-red-500">{errors.royalty}</p>}
             </> : <div className="h-10 px-3 py-2 rounded-md border border-input bg-muted/50 flex items-center">
               {format.royaltyPercentage ? (format.royaltyPercentage * 100).toFixed(0) : "0"}%
