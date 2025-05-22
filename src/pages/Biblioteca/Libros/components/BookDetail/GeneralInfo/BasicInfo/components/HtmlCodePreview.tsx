@@ -73,7 +73,7 @@ export const HtmlCodePreview = ({
 
         <Label className="text-sm font-medium block mb-2 text-foreground">Vista previa</Label>
         <div
-          className="p-3 border rounded-md bg-slate-900 dark:bg-slate-900 mt-1 text-sm prose prose-sm max-w-none prose-invert shadow-inner"
+          className="p-3 border rounded-md bg-[#FB923C]/10 dark:bg-[#FB923C]/5 mt-1 text-sm prose prose-sm max-w-none dark:prose-invert shadow-inner"
           dangerouslySetInnerHTML={{ __html: htmlContent || "" }}
         />
       </Card>

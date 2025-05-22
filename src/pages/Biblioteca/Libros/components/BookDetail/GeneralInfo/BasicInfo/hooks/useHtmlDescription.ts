@@ -21,7 +21,7 @@ export const useHtmlDescription = (book: Book, form: UseFormReturn<any>) => {
       return;
     }
     
-    // Usamos directamente el HTML del editor para ambos campos
+    // Usamos directamente el HTML del editor como HTML generado
     form.setValue("descripcionHtml", description, { 
       shouldValidate: false,
       shouldDirty: true

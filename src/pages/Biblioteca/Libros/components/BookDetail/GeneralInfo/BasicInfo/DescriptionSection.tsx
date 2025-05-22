@@ -27,17 +27,13 @@ export const DescriptionSection = ({
 
   // Handle rich text editor changes - actualiza tanto descripcion como descripcionHtml
   const handleEditorChange = (html: string) => {
+    console.log("Editor content changed:", html);
+    
     // Actualiza el campo 'descripcion' que está vinculado al editor
     form.setValue("descripcion", html, { 
       shouldValidate: false,
       shouldDirty: true,
       shouldTouch: true 
-    });
-    
-    // También actualizamos descripcionHtml para mantenerlos sincronizados
-    form.setValue("descripcionHtml", html, { 
-      shouldValidate: false,
-      shouldDirty: true 
     });
   };
   
