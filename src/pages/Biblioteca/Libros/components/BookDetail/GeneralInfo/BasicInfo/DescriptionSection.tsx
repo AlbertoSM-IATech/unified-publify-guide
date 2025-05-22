@@ -25,10 +25,9 @@ export const DescriptionSection = ({
     copyHtml
   } = useHtmlDescription(book, form);
 
-  // Handle rich text editor changes - actualiza tanto descripcion como descripcionHtml
+  // Handle rich text editor changes - actualiza solo descripcion
   const handleEditorChange = (html: string) => {
-    console.log("DescriptionSection handleEditorChange: Received HTML from RichTextEditor:", html);
-    // console.log("DescriptionSection handleEditorChange: Current form.descripcion BEFORE setValue:", form.getValues("descripcion"));
+    console.log("DescriptionSection handleEditorChange: Recibido HTML del editor:", html ? html.substring(0, 50) + "..." : "vacío");
     
     // Actualiza el campo 'descripcion' que está vinculado al editor
     form.setValue("descripcion", html, { 
@@ -36,11 +35,9 @@ export const DescriptionSection = ({
       shouldDirty: true,
       shouldTouch: true 
     });
-    // console.log("DescriptionSection handleEditorChange: Form.descripcion AFTER setValue:", form.getValues("descripcion"));
+    
+    console.log("DescriptionSection handleEditorChange: Form.descripcion DESPUÉS de setValue:", form.getValues("descripcion") ? form.getValues("descripcion").substring(0, 50) + "..." : "vacío");
   };
-  
-  console.log("DescriptionSection render: isEditing:", isEditing, "Book description:", book.descripcion);
-  console.log("DescriptionSection render: Form values for descripcion:", form.getValues("descripcion"));
 
   return (
     <div className="space-y-6 mt-8">

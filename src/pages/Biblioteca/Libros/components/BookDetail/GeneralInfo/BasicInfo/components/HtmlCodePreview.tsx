@@ -28,7 +28,9 @@ export const HtmlCodePreview = ({
     return null;
   }
 
+  // Obtener contenido HTML del formulario o del libro
   const htmlContent = isEditing ? form.getValues("descripcionHtml") : book.descripcionHtml;
+  console.log("HtmlCodePreview: Mostrando contenido HTML:", htmlContent ? htmlContent.substring(0, 50) + "..." : "vacío");
 
   if (!htmlContent && !isEditing) { // Don't show if not editing and no HTML content
     return null;
@@ -63,6 +65,7 @@ export const HtmlCodePreview = ({
           readOnly={!isEditing}
           onChange={(e) => {
             if (isEditing) {
+              console.log("HtmlCodePreview: Usuario editando manualmente el HTML");
               form.setValue("descripcionHtml", e.target.value, {
                 shouldValidate: false,
                 shouldDirty: true,

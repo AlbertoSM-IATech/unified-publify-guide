@@ -18,6 +18,7 @@ export const DescriptionEditorView = ({
   handleEditorChange,
 }: DescriptionEditorViewProps) => {
   console.log("DescriptionEditorView render: isEditing:", isEditing);
+  console.log("DescriptionEditorView render: Valor actual form.descripcion:", form.getValues("descripcion") ? form.getValues("descripcion").substring(0, 50) + "..." : "vacío");
   
   return (
     <div className="grid gap-3">
@@ -27,18 +28,17 @@ export const DescriptionEditorView = ({
           control={form.control}
           name="descripcion"
           render={({ field }) => {
-            console.log("DescriptionEditorView FormField render (isEditing=true): field.value for 'descripcion':", field.value ? field.value.substring(0, 50) + "..." : "undefined/empty");
+            console.log("DescriptionEditorView FormField render: field.value:", field.value ? field.value.substring(0, 50) + "..." : "undefined/empty");
             return (
               <FormItem className="w-full">
                 <FormControl>
                   <RichTextEditor
-                    content={field.value || ""} // book.descripcion ya está en form.defaultValues
+                    content={field.value || ""} // Usa el valor del campo
                     onChange={(html) => {
-                      // console.log("DescriptionEditorView RichTextEditor onChange: Calling handleEditorChange with HTML:", html ? html.substring(0,50) + "..." : "empty");
+                      console.log("DescriptionEditorView: Editor cambió. Llamando a handleEditorChange");
                       handleEditorChange(html);
                     }}
                     placeholder="Ingresa la descripción del libro"
-                    // readOnly={!isEditing} // RichTextEditor ya maneja esto internamente basado en su prop readOnly
                   />
                 </FormControl>
               </FormItem>

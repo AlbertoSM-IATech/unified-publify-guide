@@ -12,6 +12,8 @@ export const useHtmlDescription = (book: Book, form: UseFormReturn<any>) => {
     // Obtener la descripción del formulario (contenido del RichTextEditor)
     const description = form.getValues("descripcion");
     
+    console.log("generateHtml: Contenido actual descripcion:", description);
+    
     if (!description) {
       toast({
         title: "Error",
@@ -20,6 +22,8 @@ export const useHtmlDescription = (book: Book, form: UseFormReturn<any>) => {
       });
       return;
     }
+    
+    console.log("generateHtml: Estableciendo descripcionHtml con el contenido de descripcion");
     
     // Usamos directamente el HTML del editor como HTML generado
     form.setValue("descripcionHtml", description, { 
@@ -39,6 +43,8 @@ export const useHtmlDescription = (book: Book, form: UseFormReturn<any>) => {
   const copyHtml = () => {
     // Obtener el HTML del campo 'descripcionHtml' del formulario, o del libro como fallback
     const htmlToCopy = form.getValues("descripcionHtml") || book.descripcionHtml || "";
+    
+    console.log("copyHtml: Contenido a copiar:", htmlToCopy);
     
     if (!htmlToCopy) {
       toast({
