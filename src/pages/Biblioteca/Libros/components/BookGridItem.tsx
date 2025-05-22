@@ -1,3 +1,4 @@
+
 import { Link } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { Book } from "../types/bookTypes";
@@ -75,7 +76,7 @@ export const BookGridItem = memo(({
                     <Badge 
                       key={col.id} 
                       variant="outline"
-                      className="text-xs px-1.5 py-0.5 truncate max-w-[100px]"
+                      className="text-xs px-1.5 py-0.5" // Se eliminó truncate y max-w-[100px]
                     >
                       {col.nombre}
                     </Badge>
@@ -103,3 +104,4 @@ export const BookGridItem = memo(({
 });
 
 BookGridItem.displayName = 'BookGridItem';
+

@@ -1,3 +1,4 @@
+
 import { Link } from "react-router-dom";
 import { Book } from "../types/bookTypes";
 import { Eye } from "lucide-react";
@@ -18,7 +19,7 @@ export const BookListItem = memo(({ libro }: BookListItemProps) => {
   const netRoyalties = calculateNetRoyalties(libro.hardcover || libro.paperback || libro.ebook).replace('.', ',');
   
   const [imgSrc, setImgSrc] = useState(libro.imageUrl || libro.portadaUrl || DEFAULT_COVER_URL);
-  const [collections, setCollections] = useLocalStorage<Collection[]>(
+  const [collectionsData] = useLocalStorage<Collection[]>( // Renombrado para evitar conflicto con collections en scope
     'coleccionesData', 
     coleccionesSimuladas
   );
@@ -26,7 +27,7 @@ export const BookListItem = memo(({ libro }: BookListItemProps) => {
   
   useEffect(() => {
     if (libro.coleccionesIds && libro.coleccionesIds.length > 0) {
-      const relatedCollections = collections
+      const relatedCollections = collectionsData
         .filter(col => libro.coleccionesIds?.includes(col.id))
         .map(col => ({id: col.id, nombre: col.nombre}));
       
@@ -34,7 +35,7 @@ export const BookListItem = memo(({ libro }: BookListItemProps) => {
     } else {
       setBookCollections([]); // Asegurar que se vacíe si no hay colecciones
     }
-  }, [libro.coleccionesIds, collections]);
+  }, [libro.coleccionesIds, collectionsData]); // Usar collectionsData aquí
   
   const handleImageError = () => {
     console.log(`Failed to load image for book: ${libro.id}, falling back to default`);
@@ -73,7 +74,7 @@ export const BookListItem = memo(({ libro }: BookListItemProps) => {
                   <Badge 
                     key={col.id} 
                     variant="outline"
-                    className="text-xs px-1.5 py-0 truncate max-w-[100px] flex items-center"
+                    className="text-xs px-1.5 py-0 flex items-center" // Se eliminó truncate y max-w-[100px]
                   >
                     {col.nombre}
                   </Badge>
@@ -118,3 +119,4 @@ export const BookListItem = memo(({ libro }: BookListItemProps) => {
 });
 
 BookListItem.displayName = 'BookListItem';
+
