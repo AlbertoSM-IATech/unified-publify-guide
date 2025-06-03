@@ -1,5 +1,4 @@
 
-
 import { useState } from "react";
 import { Book } from "../../types/bookTypes";
 import { Card, CardContent } from "@/components/ui/card";
@@ -107,4 +106,3 @@ export const GeneralInfoSection = ({
     </motion.div>
   );
 };
-
