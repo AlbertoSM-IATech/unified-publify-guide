@@ -7,7 +7,6 @@ import { useEffect } from "react";
 import { investigacionesSimuladas } from "../../../utils/mockData/investigacionesData";
 import { coleccionesSimuladas } from "../../../utils/mockData/coleccionesData";
 import { Investigacion } from "@/pages/Biblioteca/Investigaciones/types/investigacionTypes";
-import { Separator } from "@/components/ui/separator";
 
 interface RelationFieldsProps {
   book: Book;
@@ -81,9 +80,15 @@ export const RelationFields = ({ book, isEditing, onUpdateBook }: RelationFields
   console.log("RelationFields - About to render UI");
 
   return (
-    <div className="w-full">
-      <h2 className="text-xl font-semibold text-blue-500 mb-6">Relaciones</h2>
-      <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+    <div className="space-y-8">
+      <div>
+        <h2 className="text-xl font-semibold text-blue-500 mb-6">Relaciones</h2>
+        <p className="text-sm text-muted-foreground mb-6">
+          Conecta este libro con investigaciones y series relacionadas para una mejor organización de tu biblioteca.
+        </p>
+      </div>
+      
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
         <div className="space-y-4">
           <InvestigationRelation 
             book={book}
