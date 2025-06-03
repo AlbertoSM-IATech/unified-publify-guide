@@ -104,12 +104,16 @@ export const GeneralInfoSection = ({
               </TabsContent>
 
               <TabsContent value="relations" className="mt-0">
-                {console.log("Rendering relations tab content")}
-                <RelationFields 
-                  book={book} 
-                  isEditing={isEditing} 
-                  onUpdateBook={onUpdateBook}
-                />
+                {(() => {
+                  console.log("Rendering relations tab content");
+                  return (
+                    <RelationFields 
+                      book={book} 
+                      isEditing={isEditing} 
+                      onUpdateBook={onUpdateBook}
+                    />
+                  );
+                })()}
               </TabsContent>
             </CardContent>
           </Card>
