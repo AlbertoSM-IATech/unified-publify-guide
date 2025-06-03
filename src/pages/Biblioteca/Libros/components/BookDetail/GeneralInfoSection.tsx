@@ -1,4 +1,5 @@
 
+
 import { useState } from "react";
 import { Book } from "../../types/bookTypes";
 import { Card, CardContent } from "@/components/ui/card";
@@ -6,8 +7,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useGeneralInfoForm } from "./GeneralInfo/useGeneralInfoForm";
 import { BasicInfoFields } from "./GeneralInfo/BasicInfo";
 import { ContentAplusSection } from "./GeneralInfo/ContentAplusSection";
+import { RelationFields } from "./Relations/RelationFields";
 import { motion } from "framer-motion";
-import { FileText, LayoutPanelTop } from "lucide-react";
+import { FileText, LayoutPanelTop, Link } from "lucide-react";
 import { Form } from "@/components/ui/form";
 import { StatusFields } from "./GeneralInfo/StatusFields";
 
@@ -33,13 +35,13 @@ export const GeneralInfoSection = ({
       transition={{ duration: 0.4 }}
       className="w-full"
     >
-      <Form {...form}> {/* Cambiado de form.formProps a form */}
+      <Form {...form}>
         <Tabs 
           defaultValue="basic-info" 
           className="w-full"
           onValueChange={(value) => setActiveTab(value)}
         >
-          <TabsList className="mb-4 grid w-full grid-cols-2 bg-muted/80 p-1">
+          <TabsList className="mb-4 grid w-full grid-cols-3 bg-muted/80 p-1">
             <TabsTrigger 
               value="basic-info"
             >
@@ -55,6 +57,15 @@ export const GeneralInfoSection = ({
               <div className="flex items-center gap-2">
                 <LayoutPanelTop size={16} />
                 <span className="hidden md:block">Contenido A+</span>
+              </div>
+            </TabsTrigger>
+
+            <TabsTrigger 
+              value="relations"
+            >
+              <div className="flex items-center gap-2">
+                <Link size={16} />
+                <span className="hidden md:block">Relaciones</span>
               </div>
             </TabsTrigger>
           </TabsList>
@@ -81,6 +92,14 @@ export const GeneralInfoSection = ({
               <TabsContent value="aplus-content" className="mt-0">
                 <ContentAplusSection book={book} isEditing={isEditing} form={form} />
               </TabsContent>
+
+              <TabsContent value="relations" className="mt-0">
+                <RelationFields 
+                  book={book} 
+                  isEditing={isEditing} 
+                  onUpdateBook={onUpdateBook}
+                />
+              </TabsContent>
             </CardContent>
           </Card>
         </Tabs>
@@ -88,3 +107,4 @@ export const GeneralInfoSection = ({
     </motion.div>
   );
 };
+
