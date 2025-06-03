@@ -6,7 +6,7 @@ import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { useEffect } from "react";
 import { investigacionesSimuladas } from "../../../utils/mockData/investigacionesData";
 import { coleccionesSimuladas } from "../../../utils/mockData/coleccionesData";
-import { Investigacion } from "@/pages/Biblioteca/Investigaciones/types/investigacionTypes"; // Importar el tipo Investigacion
+import { Investigacion } from "@/pages/Biblioteca/Investigaciones/types/investigacionTypes";
 import { Separator } from "@/components/ui/separator";
 
 interface RelationFieldsProps {
@@ -16,12 +16,22 @@ interface RelationFieldsProps {
 }
 
 export const RelationFields = ({ book, isEditing, onUpdateBook }: RelationFieldsProps) => {
+  // Debug logging
+  console.log("RelationFields - Component rendered with:", {
+    bookTitle: book?.titulo,
+    investigacionId: book?.investigacionId,
+    coleccionesIds: book?.coleccionesIds,
+    isEditing
+  });
+
   // Store relationships in localStorage for persistence
   const [storedInvestigations, setStoredInvestigations] = useLocalStorage<Investigacion[]>('investigacionesData', investigacionesSimuladas);
   const [storedCollections, setStoredCollections] = useLocalStorage('coleccionesData', coleccionesSimuladas);
 
   // Update relationships when book changes
   useEffect(() => {
+    console.log("RelationFields - useEffect triggered");
+    
     // Update investigation relationships
     if (book.investigacionId) {
       const updatedInvestigations = storedInvestigations.map(investigation => {
@@ -29,7 +39,7 @@ export const RelationFields = ({ book, isEditing, onUpdateBook }: RelationFields
           // Make sure this book is linked to the investigation
           return {
             ...investigation,
-            libroId: book.id.toString(), // Convertir book.id a string
+            libroId: book.id.toString(),
             libroTitulo: book.titulo
           };
         }
@@ -67,6 +77,8 @@ export const RelationFields = ({ book, isEditing, onUpdateBook }: RelationFields
       setStoredCollections(updatedCollections);
     }
   }, [book.investigacionId, book.coleccionesIds, book.id, book.titulo, storedInvestigations, storedCollections, setStoredInvestigations, setStoredCollections]);
+
+  console.log("RelationFields - About to render UI");
 
   return (
     <div className="w-full">

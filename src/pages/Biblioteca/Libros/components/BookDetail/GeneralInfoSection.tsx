@@ -27,6 +27,14 @@ export const GeneralInfoSection = ({
   
   const { form } = useGeneralInfoForm(book, isEditing, onUpdateBook);
 
+  // Debug logging
+  console.log("GeneralInfoSection - Rendering with:", {
+    activeTab,
+    book: book?.titulo,
+    isEditing,
+    hasRelationFields: !!RelationFields
+  });
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 10 }}
@@ -38,7 +46,10 @@ export const GeneralInfoSection = ({
         <Tabs 
           defaultValue="basic-info" 
           className="w-full"
-          onValueChange={(value) => setActiveTab(value)}
+          onValueChange={(value) => {
+            console.log("Tab changed to:", value);
+            setActiveTab(value);
+          }}
         >
           <TabsList className="mb-4 grid w-full grid-cols-3 bg-muted/80 p-1">
             <TabsTrigger 
@@ -93,6 +104,7 @@ export const GeneralInfoSection = ({
               </TabsContent>
 
               <TabsContent value="relations" className="mt-0">
+                {console.log("Rendering relations tab content")}
                 <RelationFields 
                   book={book} 
                   isEditing={isEditing} 

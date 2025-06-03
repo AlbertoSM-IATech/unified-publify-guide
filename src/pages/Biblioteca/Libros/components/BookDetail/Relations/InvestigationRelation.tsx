@@ -13,7 +13,7 @@ interface InvestigationRelationProps {
   book: Book;
   isEditing: boolean;
   onUpdateBook: (updatedData: Partial<Book>) => void;
-  investigations: any[]; // Investigations from localStorage
+  investigations: any[];
 }
 
 export const InvestigationRelation = ({
@@ -22,6 +22,12 @@ export const InvestigationRelation = ({
   onUpdateBook,
   investigations
 }: InvestigationRelationProps) => {
+  console.log("InvestigationRelation - Rendered with:", { 
+    bookId: book?.id, 
+    investigacionId: book?.investigacionId,
+    investigationsCount: investigations?.length 
+  });
+
   const [selectedInvestigacion, setSelectedInvestigacion] = useState<any | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredInvestigations, setFilteredInvestigations] = useState(investigations);
