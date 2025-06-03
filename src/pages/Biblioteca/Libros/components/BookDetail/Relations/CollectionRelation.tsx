@@ -56,18 +56,18 @@ export const CollectionRelation = ({
   };
 
   return (
-    <Card className="h-fit">
+    <Card className="border-neutral-200 dark:border-neutral-700 shadow-sm">
       <CardHeader className="pb-4">
-        <CardTitle className="flex items-center gap-2 text-lg">
-          <BookOpen className="h-5 w-5 text-[#FB923C]" />
+        <CardTitle className="flex items-center gap-2 text-lg text-neutral-700 dark:text-neutral-300">
+          <BookOpen className="h-5 w-5 text-neutral-500" />
           Series Relacionadas
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
         {isEditing ? (
           <div className="space-y-4">
-            <div className="border border-input rounded-lg p-4 bg-muted/30">
-              <div className="text-sm font-medium mb-3">Selecciona las series:</div>
+            <div className="border border-neutral-300 dark:border-neutral-600 rounded-lg p-4 bg-neutral-50/50 dark:bg-neutral-800/20">
+              <div className="text-sm font-medium mb-3 text-neutral-700 dark:text-neutral-300">Selecciona las series:</div>
               
               {collections.length > 0 ? (
                 <ScrollArea className="h-32">
@@ -83,7 +83,7 @@ export const CollectionRelation = ({
                         />
                         <Label 
                           htmlFor={`collection-${collection.id}`}
-                          className="text-sm font-normal cursor-pointer flex-1"
+                          className="text-sm font-normal cursor-pointer flex-1 text-neutral-700 dark:text-neutral-300"
                         >
                           {collection.nombre}
                         </Label>
@@ -104,7 +104,7 @@ export const CollectionRelation = ({
                   <Badge 
                     key={collection.id} 
                     variant="secondary"
-                    className="flex items-center gap-1 px-2 py-1"
+                    className="flex items-center gap-1 px-2 py-1 bg-neutral-200 dark:bg-neutral-700 text-neutral-700 dark:text-neutral-300"
                   >
                     {collection.nombre}
                     <button 
@@ -121,8 +121,8 @@ export const CollectionRelation = ({
           </div>
         ) : (
           selectedCollections.length === 0 ? (
-            <div className="text-center py-6 text-muted-foreground">
-              <BookOpen className="h-8 w-8 mx-auto mb-2 opacity-50" />
+            <div className="text-center py-8 text-muted-foreground">
+              <BookOpen className="h-8 w-8 mx-auto mb-2 opacity-40" />
               <p className="text-sm">Este libro no pertenece a ninguna serie</p>
             </div>
           ) : null
@@ -133,26 +133,26 @@ export const CollectionRelation = ({
             {selectedCollections.map(collection => (
               <motion.div
                 key={collection.id}
-                className="p-4 bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-950/50 dark:to-orange-900/50 rounded-lg border border-orange-200 dark:border-orange-800"
+                className="p-4 bg-neutral-50 dark:bg-neutral-800/30 rounded-lg border border-neutral-200 dark:border-neutral-700"
                 initial={{ opacity: 0, y: 5 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3 }}
               >
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
-                    <h4 className="font-medium text-orange-900 dark:text-orange-100">{collection.nombre}</h4>
-                    <Badge variant="outline" className="text-xs border-orange-300 text-orange-600 dark:border-orange-700 dark:text-orange-400">
+                    <h4 className="font-medium text-neutral-800 dark:text-neutral-200">{collection.nombre}</h4>
+                    <Badge variant="outline" className="text-xs border-neutral-400 dark:border-neutral-600 text-neutral-600 dark:text-neutral-400">
                       {collection.estado || "Activa"}
                     </Badge>
                   </div>
                   
-                  <p className="text-xs text-orange-700 dark:text-orange-300 line-clamp-2">
+                  <p className="text-xs text-neutral-600 dark:text-neutral-400 line-clamp-2">
                     {collection.descripcion}
                   </p>
                   
                   <Link 
                     to={`/biblioteca/colecciones/${collection.id}`}
-                    className="inline-flex items-center text-sm text-orange-600 hover:text-orange-700 dark:text-orange-400 dark:hover:text-orange-300 hover:underline transition-colors duration-200"
+                    className="inline-flex items-center text-sm text-neutral-600 hover:text-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-300 hover:underline transition-colors duration-200"
                   >
                     <ExternalLink size={14} className="mr-1" />
                     Ver serie

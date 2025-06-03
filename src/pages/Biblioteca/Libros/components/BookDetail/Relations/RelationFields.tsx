@@ -15,27 +15,16 @@ interface RelationFieldsProps {
 }
 
 export const RelationFields = ({ book, isEditing, onUpdateBook }: RelationFieldsProps) => {
-  // Debug logging
-  console.log("RelationFields - Component rendered with:", {
-    bookTitle: book?.titulo,
-    investigacionId: book?.investigacionId,
-    coleccionesIds: book?.coleccionesIds,
-    isEditing
-  });
-
   // Store relationships in localStorage for persistence
   const [storedInvestigations, setStoredInvestigations] = useLocalStorage<Investigacion[]>('investigacionesData', investigacionesSimuladas);
   const [storedCollections, setStoredCollections] = useLocalStorage('coleccionesData', coleccionesSimuladas);
 
   // Update relationships when book changes
   useEffect(() => {
-    console.log("RelationFields - useEffect triggered");
-    
     // Update investigation relationships
     if (book.investigacionId) {
       const updatedInvestigations = storedInvestigations.map(investigation => {
         if (investigation.id === book.investigacionId) {
-          // Make sure this book is linked to the investigation
           return {
             ...investigation,
             libroId: book.id.toString(),
@@ -50,9 +39,7 @@ export const RelationFields = ({ book, isEditing, onUpdateBook }: RelationFields
     // Update collection relationships
     if (book.coleccionesIds && book.coleccionesIds.length > 0) {
       const updatedCollections = storedCollections.map(collection => {
-        // If this collection is linked to the book
         if (book.coleccionesIds?.includes(collection.id)) {
-          // Add the book to the collection if it's not already there
           if (!collection.libros.includes(book.id)) {
             return {
               ...collection,
@@ -61,7 +48,6 @@ export const RelationFields = ({ book, isEditing, onUpdateBook }: RelationFields
             };
           }
         } else {
-          // Remove the book from the collection if it's there but shouldn't be
           if (collection.libros.includes(book.id)) {
             const updatedLibros = collection.libros.filter(id => id !== book.id);
             return {
@@ -77,18 +63,16 @@ export const RelationFields = ({ book, isEditing, onUpdateBook }: RelationFields
     }
   }, [book.investigacionId, book.coleccionesIds, book.id, book.titulo, storedInvestigations, storedCollections, setStoredInvestigations, setStoredCollections]);
 
-  console.log("RelationFields - About to render UI");
-
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       <div>
-        <h2 className="text-xl font-semibold text-blue-500 mb-6">Relaciones</h2>
-        <p className="text-sm text-muted-foreground mb-6">
+        <h2 className="text-xl font-semibold text-neutral-700 dark:text-neutral-300 mb-2">Relaciones</h2>
+        <p className="text-sm text-muted-foreground">
           Conecta este libro con investigaciones y series relacionadas para una mejor organización de tu biblioteca.
         </p>
       </div>
       
-      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         <div className="space-y-4">
           <InvestigationRelation 
             book={book}
