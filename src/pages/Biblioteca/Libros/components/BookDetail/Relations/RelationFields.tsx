@@ -1,4 +1,3 @@
-
 import { Book } from "../../../types/bookTypes";
 import { InvestigationRelation } from "./InvestigationRelation";
 import { CollectionRelation } from "./CollectionRelation";
@@ -7,14 +6,16 @@ import { useEffect } from "react";
 import { investigacionesSimuladas } from "../../../utils/mockData/investigacionesData";
 import { coleccionesSimuladas } from "../../../utils/mockData/coleccionesData";
 import { Investigacion } from "@/pages/Biblioteca/Investigaciones/types/investigacionTypes";
-
 interface RelationFieldsProps {
   book: Book;
   isEditing: boolean;
   onUpdateBook: (updatedData: Partial<Book>) => void;
 }
-
-export const RelationFields = ({ book, isEditing, onUpdateBook }: RelationFieldsProps) => {
+export const RelationFields = ({
+  book,
+  isEditing,
+  onUpdateBook
+}: RelationFieldsProps) => {
   // Store relationships in localStorage for persistence
   const [storedInvestigations, setStoredInvestigations] = useLocalStorage<Investigacion[]>('investigacionesData', investigacionesSimuladas);
   const [storedCollections, setStoredCollections] = useLocalStorage('coleccionesData', coleccionesSimuladas);
@@ -62,11 +63,9 @@ export const RelationFields = ({ book, isEditing, onUpdateBook }: RelationFields
       setStoredCollections(updatedCollections);
     }
   }, [book.investigacionId, book.coleccionesIds, book.id, book.titulo, storedInvestigations, storedCollections, setStoredInvestigations, setStoredCollections]);
-
-  return (
-    <div className="space-y-6">
+  return <div className="space-y-6">
       <div>
-        <h2 className="text-xl font-semibold text-neutral-700 dark:text-neutral-300 mb-2">Relaciones</h2>
+        <h2 className="text-xl font-semibold mb-2 text-content-medium">Relaciones</h2>
         <p className="text-sm text-muted-foreground">
           Conecta este libro con investigaciones y series relacionadas para una mejor organización de tu biblioteca.
         </p>
@@ -74,22 +73,11 @@ export const RelationFields = ({ book, isEditing, onUpdateBook }: RelationFields
       
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         <div className="space-y-4">
-          <InvestigationRelation 
-            book={book}
-            isEditing={isEditing}
-            onUpdateBook={onUpdateBook}
-            investigations={storedInvestigations}
-          />
+          <InvestigationRelation book={book} isEditing={isEditing} onUpdateBook={onUpdateBook} investigations={storedInvestigations} />
         </div>
         <div className="space-y-4">
-          <CollectionRelation
-            book={book}
-            isEditing={isEditing}
-            onUpdateBook={onUpdateBook}
-            collections={storedCollections}
-          />
+          <CollectionRelation book={book} isEditing={isEditing} onUpdateBook={onUpdateBook} collections={storedCollections} />
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };

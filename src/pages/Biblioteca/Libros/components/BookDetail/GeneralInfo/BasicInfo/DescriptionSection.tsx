@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Book } from "../../../../types/bookTypes";
 import { Separator } from "@/components/ui/separator";
@@ -8,14 +7,12 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Copy } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-
 interface DescriptionSectionProps {
   book: Book;
   isEditing: boolean;
   form: any; // Type for react-hook-form instance
   onUpdateBook: (updatedData: Partial<Book>) => void;
 }
-
 export const DescriptionSection = ({
   book,
   isEditing,
@@ -23,8 +20,9 @@ export const DescriptionSection = ({
   onUpdateBook
 }: DescriptionSectionProps) => {
   const [activeTab, setActiveTab] = useState("editor");
-  const { toast } = useToast();
-
+  const {
+    toast
+  } = useToast();
   const handleEditorChange = (html: string) => {
     form.setValue("descripcionHtml", html, {
       shouldValidate: false,
@@ -41,40 +39,34 @@ export const DescriptionSection = ({
   // Observamos el valor de descripcionHtml directamente desde el formulario
   // para asegurar que la pestaña HTML muestre el contenido más reciente durante la edición.
   const currentHtmlDescription = form.watch("descripcionHtml");
-
   const htmlContentForTab = isEditing ? currentHtmlDescription : book.descripcionHtml;
-
   const handleCopyHtml = () => {
     if (htmlContentForTab) {
-      navigator.clipboard.writeText(htmlContentForTab)
-        .then(() => {
-          toast({
-            title: "HTML Copiado",
-            description: "El código HTML de la descripción se ha copiado al portapapeles.",
-            variant: "default",
-          });
-        })
-        .catch(err => {
-          console.error("Error al copiar HTML: ", err);
-          toast({
-            title: "Error al copiar",
-            description: "No se pudo copiar el código HTML.",
-            variant: "destructive",
-          });
+      navigator.clipboard.writeText(htmlContentForTab).then(() => {
+        toast({
+          title: "HTML Copiado",
+          description: "El código HTML de la descripción se ha copiado al portapapeles.",
+          variant: "default"
         });
+      }).catch(err => {
+        console.error("Error al copiar HTML: ", err);
+        toast({
+          title: "Error al copiar",
+          description: "No se pudo copiar el código HTML.",
+          variant: "destructive"
+        });
+      });
     } else {
       toast({
         title: "Nada que copiar",
         description: "No hay contenido HTML para copiar.",
-        variant: "default",
+        variant: "default"
       });
     }
   };
-
-  return (
-    <div className="space-y-6 mt-8">
+  return <div className="space-y-6 mt-8">
       <div className="flex items-center">
-        <h3 className="text-lg text-blue-500 font-semibold">Descripción</h3>
+        <h3 className="text-lg font-semibold text-content-medium">Descripción</h3>
         <Separator className="flex-grow ml-3" />
       </div>
 
@@ -85,23 +77,12 @@ export const DescriptionSection = ({
         </TabsList>
 
         <TabsContent value="editor">
-          <DescriptionEditorView 
-            book={book} 
-            isEditing={isEditing} 
-            form={form} 
-            handleEditorChange={handleEditorChange} 
-          />
+          <DescriptionEditorView book={book} isEditing={isEditing} form={form} handleEditorChange={handleEditorChange} />
         </TabsContent>
 
         <TabsContent value="html">
           <div className="space-y-2">
-            <Textarea
-              value={htmlContentForTab || "No hay descripción HTML disponible."}
-              readOnly
-              rows={10}
-              className="font-mono text-xs bg-muted/30 border-border focus-visible:ring-ring w-full"
-              aria-label="Código HTML de la descripción"
-            />
+            <Textarea value={htmlContentForTab || "No hay descripción HTML disponible."} readOnly rows={10} className="font-mono text-xs bg-muted/30 border-border focus-visible:ring-ring w-full" aria-label="Código HTML de la descripción" />
             <Button onClick={handleCopyHtml} variant="outline" size="sm">
               <Copy size={16} className="mr-2" />
               Copiar HTML
@@ -109,6 +90,5 @@ export const DescriptionSection = ({
           </div>
         </TabsContent>
       </Tabs>
-    </div>
-  );
+    </div>;
 };
