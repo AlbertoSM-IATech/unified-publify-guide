@@ -34,7 +34,7 @@ function App() {
         <AuthProvider>
           <NotificationProvider>
             <Router>
-              <div className="min-h-screen">
+              <div className="min-h-screen bg-background">
                 <Routes>
                   <Route path="/" element={<LandingPage />} />
                   <Route path="/login" element={<LoginPage />} />
@@ -50,8 +50,8 @@ function App() {
                     <Route path="colecciones/:id" element={<ColeccionDetail />} />
                   </Route>
                 </Routes>
+                <Toaster />
               </div>
-              <Toaster />
             </Router>
           </NotificationProvider>
         </AuthProvider>
