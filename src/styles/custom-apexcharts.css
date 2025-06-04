@@ -5,58 +5,155 @@
   color: hsl(var(--popover-foreground)) !important;
   border: 1px solid hsl(var(--border)) !important;
   border-radius: var(--radius) !important;
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1) !important; /* Sombra similar a popover */
-  padding: 0.25rem !important; /* p-1 */
-  z-index: 50 !important; /* Asegurar que esté por encima de otros elementos */
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1) !important;
+  padding: 0.25rem !important;
+  z-index: 50 !important;
+  backdrop-filter: blur(8px) !important;
 }
 
 .apexcharts-menu-item {
-  padding: 0.5rem 1rem !important; /* py-2 px-4 */
-  font-size: 0.875rem !important; /* text-sm */
+  padding: 0.5rem 1rem !important;
+  font-size: 0.875rem !important;
   cursor: pointer !important;
+  border-radius: calc(var(--radius) - 2px) !important;
+  transition: all 0.2s ease-in-out !important;
 }
 
 .apexcharts-menu-item:hover {
   background-color: hsl(var(--accent)) !important;
   color: hsl(var(--accent-foreground)) !important;
+  transform: translateX(2px) !important;
 }
 
 /* Estilos para los iconos del toolbar */
 .apexcharts-toolbar {
-  z-index: 40 !important; /* Un poco menos que el menú pero aún alto */
+  z-index: 40 !important;
 }
 
 .apexcharts-toolbar svg {
   fill: hsl(var(--muted-foreground)) !important;
+  transition: all 0.3s ease-in-out !important;
 }
 
 .apexcharts-toolbar-custom-icon:hover svg,
 .apexcharts-toolbar-tool-icon:hover svg {
   fill: hsl(var(--foreground)) !important;
+  transform: scale(1.1) !important;
 }
 
-/* Tooltip de ApexCharts */
+.apexcharts-toolbar-custom-icon:hover,
+.apexcharts-toolbar-tool-icon:hover {
+  background-color: hsl(var(--muted)) !important;
+  border-radius: 4px !important;
+}
+
+/* Tooltip de ApexCharts mejorado */
 .apexcharts-tooltip {
   background-color: hsl(var(--popover)) !important;
   color: hsl(var(--popover-foreground)) !important;
   border: 1px solid hsl(var(--border)) !important;
   border-radius: var(--radius) !important;
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1) !important;
-  padding: 0.5rem 0.75rem !important; /* py-2 px-3 */
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1) !important;
+  padding: 0.75rem !important;
+  backdrop-filter: blur(12px) !important;
+  animation: tooltipFadeIn 0.2s ease-out !important;
+}
+
+@keyframes tooltipFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 .apexcharts-tooltip-title {
   background-color: hsl(var(--accent)) !important;
   color: hsl(var(--accent-foreground)) !important;
   border-bottom: 1px solid hsl(var(--border)) !important;
-  padding: 0.375rem 0.75rem !important; /* py-1.5 px-3 */
-  font-weight: 500 !important; /* medium */
+  padding: 0.5rem 0.75rem !important;
+  font-weight: 600 !important;
+  border-radius: calc(var(--radius) - 2px) calc(var(--radius) - 2px) 0 0 !important;
+  margin: -0.75rem -0.75rem 0.5rem -0.75rem !important;
 }
 
 .apexcharts-tooltip-series-group {
-  padding: 0.375rem 0.75rem !important; /* py-1.5 px-3 */
+  padding: 0.25rem 0 !important;
 }
 
 .apexcharts-tooltip-marker {
-  margin-right: 0.5rem !important; /* mr-2 */
+  margin-right: 0.5rem !important;
+  border-radius: 50% !important;
+  border: 2px solid rgba(255, 255, 255, 0.8) !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
+
+.apexcharts-tooltip-y-group {
+  padding: 0.25rem 0 !important;
+}
+
+.apexcharts-tooltip-text-y-label {
+  font-weight: 500 !important;
+  margin-right: 0.5rem !important;
+}
+
+.apexcharts-tooltip-text-y-value {
+  font-weight: 700 !important;
+  color: hsl(var(--foreground)) !important;
+}
+
+/* Estilos para elementos de gráfico interactivos */
+.apexcharts-pie-slice:hover {
+  filter: brightness(1.1) saturate(1.2) !important;
+  transform: scale(1.02) !important;
+  transition: all 0.3s ease-out !important;
+}
+
+.apexcharts-bar-area:hover {
+  filter: brightness(1.15) saturate(1.1) !important;
+  transition: all 0.2s ease-out !important;
+}
+
+.apexcharts-line-series .apexcharts-series:hover {
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2)) !important;
+}
+
+/* Leyenda mejorada */
+.apexcharts-legend {
+  font-family: inherit !important;
+}
+
+.apexcharts-legend-series:hover {
+  background-color: hsl(var(--muted)) !important;
+  border-radius: 4px !important;
+  transition: all 0.2s ease-in-out !important;
+}
+
+.apexcharts-legend-marker {
+  border-radius: 50% !important;
+  border: 2px solid rgba(255, 255, 255, 0.8) !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Animaciones suaves para datos */
+.apexcharts-series path,
+.apexcharts-series rect,
+.apexcharts-series circle {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Estilos para el centro del donut */
+.apexcharts-datalabel-label {
+  font-weight: 600 !important;
+  font-size: 14px !important;
+  fill: hsl(var(--muted-foreground)) !important;
+}
+
+.apexcharts-datalabel-value {
+  font-weight: 700 !important;
+  font-size: 24px !important;
+  fill: hsl(var(--foreground)) !important;
 }
