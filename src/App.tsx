@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from "@/hooks/useTheme";
 import { AuthProvider } from "@/contexts/AuthContext";
+import { NotificationProvider } from "@/contexts/NotificationContext";
 
 // Importar páginas
 import LandingPage from "./pages/LandingPage/LandingPage";
@@ -27,25 +28,27 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
         <AuthProvider>
-          <Router>
-            <div className="min-h-screen bg-background">
-              <Routes>
-                <Route path="/" element={<LandingPage />} />
-                <Route path="/login" element={<LoginPage />} />
-                <Route path="/register" element={<RegisterPage />} />
-                <Route path="/contacto" element={<ContactoPage />} />
-                
-                {/* Rutas que usan MainLayout */}
-                <Route path="/dashboard" element={<MainLayout />}>
-                  <Route index element={<Dashboard />} />
-                </Route>
-                
-                {/* Ruta de fallback */}
-                <Route path="*" element={<Dashboard />} />
-              </Routes>
-              <Toaster />
-            </div>
-          </Router>
+          <NotificationProvider>
+            <Router>
+              <div className="min-h-screen bg-background">
+                <Routes>
+                  <Route path="/" element={<LandingPage />} />
+                  <Route path="/login" element={<LoginPage />} />
+                  <Route path="/register" element={<RegisterPage />} />
+                  <Route path="/contacto" element={<ContactoPage />} />
+                  
+                  {/* Rutas que usan MainLayout */}
+                  <Route path="/dashboard" element={<MainLayout />}>
+                    <Route index element={<Dashboard />} />
+                  </Route>
+                  
+                  {/* Ruta de fallback */}
+                  <Route path="*" element={<Dashboard />} />
+                </Routes>
+                <Toaster />
+              </div>
+            </Router>
+          </NotificationProvider>
         </AuthProvider>
       </ThemeProvider>
     </QueryClientProvider>
