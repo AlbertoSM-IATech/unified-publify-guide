@@ -46,7 +46,7 @@ export const NoteItem = ({
 }: NoteItemProps) => {
   const [isReminderDialogOpen, setIsReminderDialogOpen] = useState(false);
   const [isEditingText, setIsEditingText] = useState(false);
-  const [editText, setEditText] = useState(note.text);
+  const [editText, setEditText] = useState(note.text || "");
 
   const handleSetReminder = (reminderData: {
     dateTime: string;
@@ -64,17 +64,30 @@ export const NoteItem = ({
   };
 
   const handleCancelEdit = () => {
-    setEditText(note.text);
+    setEditText(note.text || "");
     setIsEditingText(false);
   };
 
   const formatReminderDate = (dateTime: string) => {
-    return format(new Date(dateTime), "d MMM yyyy, HH:mm", { locale: es });
+    try {
+      return format(new Date(dateTime), "d MMM yyyy, HH:mm", { locale: es });
+    } catch (error) {
+      return "Fecha inválida";
+    }
   };
 
   const isReminderPast = (dateTime: string) => {
-    return new Date(dateTime) < new Date();
+    try {
+      return new Date(dateTime) < new Date();
+    } catch (error) {
+      return false;
+    }
   };
+
+  // Validar que note tiene los campos requeridos
+  if (!note || typeof note.id === 'undefined') {
+    return null;
+  }
 
   return (
     <>
@@ -88,7 +101,7 @@ export const NoteItem = ({
         <CardHeader className="pb-2 pt-4 px-4">
           <div className="flex items-center justify-between">
             <div className="text-xs text-muted-foreground">
-              {format(new Date(note.date), "d 'de' MMMM 'de' yyyy, HH:mm", { locale: es })}
+              {note.date ? format(new Date(note.date), "d 'de' MMMM 'de' yyyy, HH:mm", { locale: es }) : "Sin fecha"}
             </div>
             {isEditing && (
               <div className="flex gap-2">
@@ -198,7 +211,7 @@ export const NoteItem = ({
               className="resize-none"
             />
           ) : (
-            <p className="text-sm whitespace-pre-wrap">{note.text}</p>
+            <p className="text-sm whitespace-pre-wrap">{note.text || "Sin contenido"}</p>
           )}
         </CardContent>
       </Card>
