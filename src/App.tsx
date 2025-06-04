@@ -14,7 +14,6 @@ import Biblioteca from "./pages/Dashboard/Dashboard";
 import Libros from "./pages/Biblioteca/Libros/LibrosList";
 import BookDetail from "./pages/Biblioteca/Libros/BookDetail";
 import Investigaciones from "./pages/Biblioteca/Investigaciones/InvestigacionesList";
-import InvestigacionDetail from "./pages/Biblioteca/Investigaciones/InvestigacionDetail";
 import Colecciones from "./pages/Biblioteca/Colecciones/ColeccionesList";
 import ColeccionDetail from "./pages/Biblioteca/Colecciones/ColeccionDetail";
 import ContactoPage from "./pages/Contact/Contact";
@@ -47,7 +46,6 @@ function App() {
                     <Route path="libros" element={<Libros />} />
                     <Route path="libros/:id" element={<BookDetail />} />
                     <Route path="investigaciones" element={<Investigaciones />} />
-                    <Route path="investigaciones/:id" element={<InvestigacionDetail />} />
                     <Route path="colecciones" element={<Colecciones />} />
                     <Route path="colecciones/:id" element={<ColeccionDetail />} />
                   </Route>

@@ -2,9 +2,10 @@
 import { useState } from "react";
 import { BookNote } from "../../../types/bookTypes";
 import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
-import { PenLine, Trash, GripVertical, Bell, BellOff, Calendar } from "lucide-react";
+import { PenLine, Trash, GripVertical, Bell, BellOff, Calendar, Check, X } from "lucide-react";
 import { 
   AlertDialog,
   AlertDialogAction,
@@ -31,6 +32,7 @@ interface NoteItemProps {
     title?: string;
   }) => void;
   onRemoveReminder: (noteId: number) => void;
+  onUpdateNote?: (noteId: number, newText: string) => void;
 }
 
 export const NoteItem = ({ 
@@ -39,9 +41,12 @@ export const NoteItem = ({
   onEdit, 
   onDelete, 
   onSetReminder, 
-  onRemoveReminder 
+  onRemoveReminder,
+  onUpdateNote 
 }: NoteItemProps) => {
   const [isReminderDialogOpen, setIsReminderDialogOpen] = useState(false);
+  const [isEditingText, setIsEditingText] = useState(false);
+  const [editText, setEditText] = useState(note.text);
 
   const handleSetReminder = (reminderData: {
     dateTime: string;
@@ -49,6 +54,18 @@ export const NoteItem = ({
     title?: string;
   }) => {
     onSetReminder(note.id, reminderData);
+  };
+
+  const handleSaveEdit = () => {
+    if (onUpdateNote && editText.trim()) {
+      onUpdateNote(note.id, editText);
+      setIsEditingText(false);
+    }
+  };
+
+  const handleCancelEdit = () => {
+    setEditText(note.text);
+    setIsEditingText(false);
   };
 
   const formatReminderDate = (dateTime: string) => {
@@ -95,15 +112,38 @@ export const NoteItem = ({
                     <BellOff className="h-4 w-4 text-muted-foreground" />
                   </Button>
                 )}
-                <Button 
-                  variant="ghost" 
-                  size="sm" 
-                  className="h-8 w-8 p-0"
-                  onClick={() => onEdit(note.id)}
-                >
-                  <PenLine className="h-4 w-4" />
-                  <span className="sr-only">Editar nota</span>
-                </Button>
+                {!isEditingText ? (
+                  <Button 
+                    variant="ghost" 
+                    size="sm" 
+                    className="h-8 w-8 p-0"
+                    onClick={() => setIsEditingText(true)}
+                  >
+                    <PenLine className="h-4 w-4" />
+                    <span className="sr-only">Editar nota</span>
+                  </Button>
+                ) : (
+                  <>
+                    <Button 
+                      variant="ghost" 
+                      size="sm" 
+                      className="h-8 w-8 p-0"
+                      onClick={handleSaveEdit}
+                    >
+                      <Check className="h-4 w-4 text-green-500" />
+                      <span className="sr-only">Guardar</span>
+                    </Button>
+                    <Button 
+                      variant="ghost" 
+                      size="sm" 
+                      className="h-8 w-8 p-0"
+                      onClick={handleCancelEdit}
+                    >
+                      <X className="h-4 w-4 text-red-500" />
+                      <span className="sr-only">Cancelar</span>
+                    </Button>
+                  </>
+                )}
                 <AlertDialog>
                   <AlertDialogTrigger asChild>
                     <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-red-500">
@@ -143,11 +183,23 @@ export const NoteItem = ({
                 <Calendar className="h-3 w-3 mr-1" />
                 {formatReminderDate(note.reminder.dateTime)}
               </Badge>
+              {note.reminder.title && (
+                <p className="text-xs text-muted-foreground mt-1">{note.reminder.title}</p>
+              )}
             </div>
           )}
         </CardHeader>
         <CardContent className="pb-4 px-4 pt-0">
-          <p className="text-sm">{note.text}</p>
+          {isEditingText ? (
+            <Textarea
+              value={editText}
+              onChange={(e) => setEditText(e.target.value)}
+              rows={3}
+              className="resize-none"
+            />
+          ) : (
+            <p className="text-sm whitespace-pre-wrap">{note.text}</p>
+          )}
         </CardContent>
       </Card>
 

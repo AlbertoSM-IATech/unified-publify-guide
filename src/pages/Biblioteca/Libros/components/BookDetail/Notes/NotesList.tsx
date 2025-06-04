@@ -33,14 +33,41 @@ export const NotesList = ({
     );
   }
 
+  const updateNotesInStorage = (updatedNotes: BookNote[]) => {
+    const storedBooks = localStorage.getItem('librosData');
+    if (storedBooks) {
+      const books = JSON.parse(storedBooks);
+      const bookIndex = books.findIndex((b: Book) => b.id === book.id);
+      if (bookIndex !== -1) {
+        books[bookIndex] = {
+          ...books[bookIndex],
+          notes: updatedNotes
+        };
+        localStorage.setItem('librosData', JSON.stringify(books));
+      }
+    }
+  };
+
   const handleEditNote = (noteId: number) => {
     console.log("Editing note:", noteId);
+  };
+
+  const handleUpdateNote = (noteId: number, newText: string) => {
+    const updatedNotes = notes.map(note => 
+      note.id === noteId 
+        ? { ...note, text: newText, date: new Date().toISOString() }
+        : note
+    );
+    setNotes(updatedNotes);
+    onUpdateBook({ notes: updatedNotes });
+    updateNotesInStorage(updatedNotes);
   };
 
   const handleDeleteNote = (noteId: number) => {
     const updatedNotes = notes.filter(note => note.id !== noteId);
     setNotes(updatedNotes);
     onUpdateBook({ notes: updatedNotes });
+    updateNotesInStorage(updatedNotes);
   };
 
   const handleSetReminder = (noteId: number, reminderData: {
@@ -63,6 +90,7 @@ export const NotesList = ({
     
     setNotes(updatedNotes);
     onUpdateBook({ notes: updatedNotes });
+    updateNotesInStorage(updatedNotes);
   };
 
   const handleRemoveReminder = (noteId: number) => {
@@ -74,6 +102,7 @@ export const NotesList = ({
     
     setNotes(updatedNotes);
     onUpdateBook({ notes: updatedNotes });
+    updateNotesInStorage(updatedNotes);
   };
 
   const handleDragEnd = (result: DropResult) => {
@@ -85,6 +114,7 @@ export const NotesList = ({
     
     setNotes(reorderedNotes);
     onUpdateBook({ notes: reorderedNotes });
+    updateNotesInStorage(reorderedNotes);
   };
   
   return (
@@ -116,6 +146,7 @@ export const NotesList = ({
                       onDelete={() => handleDeleteNote(note.id)}
                       onSetReminder={handleSetReminder}
                       onRemoveReminder={handleRemoveReminder}
+                      onUpdateNote={handleUpdateNote}
                     />
                   </div>
                 )}
