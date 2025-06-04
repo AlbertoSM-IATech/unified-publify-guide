@@ -19,7 +19,7 @@ export const BookListItem = memo(({ libro }: BookListItemProps) => {
   const netRoyalties = calculateNetRoyalties(libro.hardcover || libro.paperback || libro.ebook).replace('.', ',');
   
   const [imgSrc, setImgSrc] = useState(libro.imageUrl || libro.portadaUrl || DEFAULT_COVER_URL);
-  const [collectionsData] = useLocalStorage<Collection[]>( // Renombrado para evitar conflicto con collections en scope
+  const [collectionsData] = useLocalStorage<Collection[]>( 
     'coleccionesData', 
     coleccionesSimuladas
   );
@@ -33,9 +33,9 @@ export const BookListItem = memo(({ libro }: BookListItemProps) => {
       
       setBookCollections(relatedCollections);
     } else {
-      setBookCollections([]); // Asegurar que se vacíe si no hay colecciones
+      setBookCollections([]);
     }
-  }, [libro.coleccionesIds, collectionsData]); // Usar collectionsData aquí
+  }, [libro.coleccionesIds, collectionsData]);
   
   const handleImageError = () => {
     console.log(`Failed to load image for book: ${libro.id}, falling back to default`);
@@ -58,8 +58,8 @@ export const BookListItem = memo(({ libro }: BookListItemProps) => {
             />
           </div>
           <div>
-            <div className="font-medium text-[#3B82F6]">
-              <Link to={`/biblioteca/libros/${libro.id}`} className="hover:underline focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-[#3B82F6] rounded-sm">
+            <div className="font-medium text-[#FB923C]">
+              <Link to={`/biblioteca/libros/${libro.id}`} className="hover:underline focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-[#FB923C] rounded-sm">
                 {libro.titulo}
               </Link>
             </div>
@@ -74,7 +74,7 @@ export const BookListItem = memo(({ libro }: BookListItemProps) => {
                   <Badge 
                     key={col.id} 
                     variant="outline"
-                    className="text-xs px-1.5 py-0 flex items-center" // Se eliminó truncate y max-w-[100px]
+                    className="text-xs px-1.5 py-0 flex items-center"
                   >
                     {col.nombre}
                   </Badge>
@@ -119,4 +119,3 @@ export const BookListItem = memo(({ libro }: BookListItemProps) => {
 });
 
 BookListItem.displayName = 'BookListItem';
-

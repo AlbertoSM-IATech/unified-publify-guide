@@ -51,7 +51,7 @@ export const BookGridItem = memo(({
         {/* Content Section */}
         <div className="flex-1 p-4 flex flex-col justify-between overflow-y-auto">
           <div>
-            <h3 className="font-medium text-foreground line-clamp-2 mb-1">{libro.titulo}</h3>
+            <h3 className="font-medium text-[#FB923C] line-clamp-2 mb-1">{libro.titulo}</h3>
             <p className="text-sm text-muted-foreground mb-3 line-clamp-1">{libro.autor}</p>
             
             <div className="flex justify-between items-center mb-2">
@@ -76,7 +76,7 @@ export const BookGridItem = memo(({
                     <Badge 
                       key={col.id} 
                       variant="outline"
-                      className="text-xs px-1.5 py-0.5" // Se eliminó truncate y max-w-[100px]
+                      className="text-xs px-1.5 py-0.5"
                     >
                       {col.nombre}
                     </Badge>
@@ -104,4 +104,3 @@ export const BookGridItem = memo(({
 });
 
 BookGridItem.displayName = 'BookGridItem';
-
