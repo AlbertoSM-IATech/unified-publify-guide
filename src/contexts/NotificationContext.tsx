@@ -1,6 +1,6 @@
-
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { BookNote } from '@/pages/Biblioteca/Libros/types/bookTypes';
+import { useNotificationPermissions } from '@/hooks/useNotificationPermissions';
 
 interface NotificationItem {
   id: string;
@@ -20,6 +20,7 @@ interface NotificationContextType {
   markAsRead: (id: string) => void;
   markAllAsRead: () => void;
   removeNotification: (id: string) => void;
+  requestNotificationPermission: () => Promise<boolean>;
 }
 
 const NotificationContext = createContext<NotificationContextType | undefined>(undefined);
@@ -38,6 +39,7 @@ interface NotificationProviderProps {
 
 export const NotificationProvider = ({ children }: NotificationProviderProps) => {
   const [notifications, setNotifications] = useState<NotificationItem[]>([]);
+  const { requestPermission, showNotification, canNotify } = useNotificationPermissions();
 
   // Cargar notificaciones desde localStorage al inicializar
   useEffect(() => {
@@ -67,13 +69,14 @@ export const NotificationProvider = ({ children }: NotificationProviderProps) =>
         try {
           const books = JSON.parse(storedBooks);
           books.forEach((book: any) => {
+            // Verificar recordatorios de notas
             if (book.notes) {
               book.notes.forEach((note: BookNote) => {
                 if (note.reminder && note.reminder.status === 'active') {
                   const reminderTime = new Date(note.reminder.dateTime).getTime();
                   const timeDiff = reminderTime - now;
                   
-                  // Si el recordatorio es en los próximos 60 segundos y no existe ya una notificación
+                  // Si el recordatorio es en los próximos 60 segundos
                   if (timeDiff > 0 && timeDiff <= 60000) {
                     const existingNotification = notifications.find(n => 
                       n.noteId === note.id && n.type === 'reminder'
@@ -88,11 +91,57 @@ export const NotificationProvider = ({ children }: NotificationProviderProps) =>
                         bookId: book.id,
                         noteId: note.id
                       });
+
+                      // Mostrar notificación nativa del navegador
+                      if (canNotify) {
+                        showNotification(note.reminder.title || 'Recordatorio de nota', {
+                          body: note.text.substring(0, 100) + (note.text.length > 100 ? '...' : ''),
+                          tag: `reminder-${note.id}`
+                        });
+                      }
                     }
                   }
                 }
               });
             }
+
+            // Verificar recordatorios de fechas del libro
+            ['publicationReminder', 'launchReminder'].forEach(reminderType => {
+              const reminder = book[reminderType];
+              if (reminder && reminder.status === 'active') {
+                const reminderTime = new Date(reminder.dateTime).getTime();
+                const timeDiff = reminderTime - now;
+                
+                if (timeDiff > 0 && timeDiff <= 60000) {
+                  const notificationType = reminderType === 'publicationReminder' ? 'publication' : 'launch';
+                  const existingNotification = notifications.find(n => 
+                    n.bookId === book.id && n.type === notificationType
+                  );
+                  
+                  if (!existingNotification) {
+                    const title = reminderType === 'publicationReminder' 
+                      ? 'Recordatorio de Publicación' 
+                      : 'Recordatorio de Lanzamiento';
+                    
+                    addNotification({
+                      title,
+                      message: `${book.titulo} - ${reminder.title || title}`,
+                      dateTime: reminder.dateTime,
+                      type: notificationType,
+                      bookId: book.id
+                    });
+
+                    // Mostrar notificación nativa del navegador
+                    if (canNotify) {
+                      showNotification(title, {
+                        body: `${book.titulo} - ${reminder.title || title}`,
+                        tag: `${notificationType}-${book.id}`
+                      });
+                    }
+                  }
+                }
+              }
+            });
           });
         } catch (error) {
           console.error('Error checking reminders:', error);
@@ -105,7 +154,7 @@ export const NotificationProvider = ({ children }: NotificationProviderProps) =>
     const interval = setInterval(checkReminders, 60000);
 
     return () => clearInterval(interval);
-  }, [notifications]);
+  }, [notifications, canNotify, showNotification]);
 
   const addNotification = (notification: Omit<NotificationItem, 'id' | 'read'>) => {
     const newNotification: NotificationItem = {
@@ -146,7 +195,8 @@ export const NotificationProvider = ({ children }: NotificationProviderProps) =>
       addNotification,
       markAsRead,
       markAllAsRead,
-      removeNotification
+      removeNotification,
+      requestNotificationPermission: requestPermission
     }}>
       {children}
     </NotificationContext.Provider>

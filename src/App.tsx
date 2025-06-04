@@ -1,3 +1,4 @@
+
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
@@ -5,18 +6,18 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import { NotificationProvider } from "@/contexts/NotificationContext";
 import { ThemeProvider } from "@/hooks/useTheme";
 import MainLayout from "./components/layout/MainLayout";
-import LandingPage from "./pages/LandingPage";
-import LoginPage from "./pages/LoginPage";
-import RegisterPage from "./pages/RegisterPage";
-import ProfilePage from "./pages/ProfilePage";
-import Biblioteca from "./pages/Biblioteca/Biblioteca";
-import Libros from "./pages/Biblioteca/Libros/Libros";
+import LandingPage from "./pages/LandingPage/LandingPage";
+import LoginPage from "./pages/Auth/Login";
+import RegisterPage from "./pages/Auth/Register";
+import ProfilePage from "./pages/Perfil/Perfil";
+import Biblioteca from "./pages/Dashboard/Dashboard";
+import Libros from "./pages/Biblioteca/Libros/LibrosList";
 import BookDetail from "./pages/Biblioteca/Libros/BookDetail";
-import Investigaciones from "./pages/Biblioteca/Investigaciones/Investigaciones";
+import Investigaciones from "./pages/Biblioteca/Investigaciones/InvestigacionesList";
 import InvestigacionDetail from "./pages/Biblioteca/Investigaciones/InvestigacionDetail";
-import Colecciones from "./pages/Biblioteca/Colecciones/Colecciones";
+import Colecciones from "./pages/Biblioteca/Colecciones/ColeccionesList";
 import ColeccionDetail from "./pages/Biblioteca/Colecciones/ColeccionDetail";
-import ContactoPage from "./pages/ContactoPage";
+import ContactoPage from "./pages/Contact/Contact";
 
 const queryClient = new QueryClient({
   defaultOptions: {

@@ -1,3 +1,4 @@
+
 export interface BookNote {
   id: number;
   text: string;
@@ -9,6 +10,14 @@ export interface BookNote {
     status: 'active' | 'completed' | 'dismissed';
     title?: string;
   };
+}
+
+export interface BookReminder {
+  id: string;
+  dateTime: string;
+  type: 'browser' | 'email';
+  status: 'active' | 'completed' | 'dismissed';
+  title?: string;
 }
 
 export interface BookFormat {
@@ -64,6 +73,10 @@ export interface Book {
   ebook?: BookFormat;
   notes?: BookNote[];
   coverFile?: File; // Add this property for handling the cover file
+  
+  // Date reminders
+  publicationReminder?: BookReminder;
+  launchReminder?: BookReminder;
   
   // Audience and positioning fields
   targetAge?: string; // Target age range (e.g., "25-45")
