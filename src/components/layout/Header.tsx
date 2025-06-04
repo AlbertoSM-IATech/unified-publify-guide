@@ -1,11 +1,10 @@
 
-import { Menu, User, Sun, Moon, LogOut } from "lucide-react";
+import { Bell, Menu, User, Sun, Moon, LogOut } from "lucide-react";
 import { useTheme } from "@/hooks/useTheme";
 import { useAuth } from "@/contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { NotificationDropdown } from "./NotificationDropdown";
 import { motion } from "framer-motion";
 
 const Header = ({
@@ -66,7 +65,14 @@ const Header = ({
         </motion.button>
         
         {/* Notificaciones */}
-        <NotificationDropdown />
+        <motion.button
+          className="rounded-full p-2 hover:bg-muted"
+          aria-label="Notificaciones"
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+        >
+          <Bell size={18} />
+        </motion.button>
         
         {/* Avatar del usuario con dropdown */}
         <DropdownMenu>

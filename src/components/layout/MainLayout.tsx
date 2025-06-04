@@ -31,20 +31,51 @@ const MainLayout = () => {
     setSidebarOpen(!sidebarOpen);
   };
 
+  // Animation variants for sidebar
+  const sidebarVariants = {
+    open: { 
+      x: 0,
+      opacity: 1,
+      transition: {
+        type: "spring",
+        stiffness: 300,
+        damping: 30
+      }
+    },
+    closed: { 
+      x: isMobile ? -300 : 0,
+      opacity: isMobile ? 0 : 1,
+      transition: {
+        type: "spring",
+        stiffness: 300,
+        damping: 30
+      }
+    }
+  };
+
+  // Animation variants for main content
+  const contentVariants = {
+    initial: { opacity: 0 },
+    animate: { 
+      opacity: 1,
+      transition: { duration: 0.3 }
+    },
+    exit: { 
+      opacity: 0,
+      transition: { duration: 0.2 }
+    }
+  };
+  
   return (
     <div className="flex h-screen w-full overflow-hidden bg-background">
-      {/* Sidebar */}
+      {/* Sidebar with animations */}
       <AnimatePresence>
         {(sidebarOpen || !isMobile) && (
           <motion.div
             initial={isMobile ? { x: -300, opacity: 0 } : { x: 0, opacity: 1 }}
-            animate={{ x: 0, opacity: 1 }}
-            exit={{ x: isMobile ? -300 : 0, opacity: isMobile ? 0 : 1 }}
-            transition={{
-              type: "spring",
-              stiffness: 300,
-              damping: 30
-            }}
+            animate="open"
+            exit="closed"
+            variants={sidebarVariants}
             className="z-30"
           >
             <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
@@ -53,13 +84,26 @@ const MainLayout = () => {
       </AnimatePresence>
       
       {/* Main content */}
-      <div className="flex flex-1 flex-col overflow-hidden">
+      <motion.div 
+        className="flex flex-1 flex-col overflow-hidden"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.3 }}
+      >
         <Header toggleSidebar={toggleSidebar} sidebarOpen={sidebarOpen} />
         
-        <main className="flex-1 overflow-y-auto p-4">
+        {/* Content with page transitions */}
+        <motion.main 
+          className="flex-1 overflow-y-auto p-4"
+          key={location.pathname}
+          variants={contentVariants}
+          initial="initial"
+          animate="animate"
+          exit="exit"
+        >
           <Outlet />
-        </main>
-      </div>
+        </motion.main>
+      </motion.div>
     </div>
   );
 };

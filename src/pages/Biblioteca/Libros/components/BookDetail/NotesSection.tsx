@@ -1,9 +1,9 @@
 
+import { Card, CardContent } from "@/components/ui/card";
 import { Book } from "../../types/bookTypes";
-import { NoteForm } from "./Notes/NoteForm";
 import { NotesList } from "./Notes/NotesList";
-import { BookDateReminders } from "./DateReminders/BookDateReminders";
-import { Separator } from "@/components/ui/separator";
+import { NoteForm } from "./Notes/NoteForm";
+import { motion } from "framer-motion";
 
 interface NotesSectionProps {
   book: Book;
@@ -11,40 +11,51 @@ interface NotesSectionProps {
   onUpdateBook: (updatedData: Partial<Book>) => void;
 }
 
-export const NotesSection = ({ 
-  book, 
-  isEditing, 
-  onUpdateBook 
+export const NotesSection = ({
+  book,
+  isEditing,
+  onUpdateBook
 }: NotesSectionProps) => {
   return (
-    <div className="space-y-6">
-      {/* Recordatorios de Fechas del Libro */}
-      <BookDateReminders 
-        book={book}
-        isEditing={isEditing}
-        onUpdateBook={onUpdateBook}
-      />
+    <motion.div
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3 }}
+      className="space-y-6" // Añadido para espaciar las tarjetas
+    >
+      {/* Tarjeta para el título de la sección */}
+      <Card className="p-4 bg-muted/40 dark:bg-muted/10">
+        <h3 className="text-xl font-semibold">Notas y Observaciones</h3>
+      </Card>
       
-      <Separator />
-      
-      {/* Formulario para nuevas notas */}
-      {isEditing && (
-        <NoteForm
-          book={book}
-          onUpdateBook={onUpdateBook}
-          isEditing={isEditing}
-        />
-      )}
-      
-      {/* Lista de notas existentes */}
-      <div>
-        <h3 className="mb-4 font-medium">Notas del Libro</h3>
-        <NotesList
-          book={book}
-          isEditing={isEditing}
-          onUpdateBook={onUpdateBook}
-        />
-      </div>
-    </div>
+      {/* Tarjeta para el contenido de las notas */}
+      <Card className="border-slate-200 dark:border-slate-700 shadow-md">
+        {/* CardHeader eliminado, el título ahora está en la tarjeta superior */}
+        <CardContent className="p-6">
+          {isEditing && (
+            <div className="mb-6">
+              <NoteForm 
+                book={book}
+                onUpdateBook={onUpdateBook}
+                isEditing={isEditing}
+              />
+            </div>
+          )}
+          
+          <NotesList 
+            book={book}
+            isEditing={isEditing} 
+            onUpdateBook={onUpdateBook}
+          />
+          
+          {!isEditing && (!book.notes || book.notes.length === 0) && (
+            <div className="text-center py-8 text-muted-foreground">
+              <p>No hay notas agregadas para este libro.</p>
+              <p className="text-sm mt-1">Edita este libro para agregar notas.</p>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+    </motion.div>
   );
 };
