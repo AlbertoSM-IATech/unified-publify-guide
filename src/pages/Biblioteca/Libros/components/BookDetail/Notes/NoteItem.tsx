@@ -46,25 +46,39 @@ export const NoteItem = ({
 }: NoteItemProps) => {
   const [isReminderDialogOpen, setIsReminderDialogOpen] = useState(false);
   const [isEditingText, setIsEditingText] = useState(false);
-  const [editText, setEditText] = useState(note.text || "");
+  const [editText, setEditText] = useState(note?.text || "");
+
+  // Validaciones de seguridad
+  if (!note || typeof note.id === 'undefined') {
+    console.log('NoteItem: Invalid note data', note);
+    return null;
+  }
 
   const handleSetReminder = (reminderData: {
     dateTime: string;
     type: 'browser' | 'email';
     title?: string;
   }) => {
-    onSetReminder(note.id, reminderData);
+    try {
+      onSetReminder(note.id, reminderData);
+    } catch (error) {
+      console.error('Error setting reminder:', error);
+    }
   };
 
   const handleSaveEdit = () => {
     if (onUpdateNote && editText.trim()) {
-      onUpdateNote(note.id, editText);
-      setIsEditingText(false);
+      try {
+        onUpdateNote(note.id, editText);
+        setIsEditingText(false);
+      } catch (error) {
+        console.error('Error updating note:', error);
+      }
     }
   };
 
   const handleCancelEdit = () => {
-    setEditText(note.text || "");
+    setEditText(note?.text || "");
     setIsEditingText(false);
   };
 
@@ -72,6 +86,7 @@ export const NoteItem = ({
     try {
       return format(new Date(dateTime), "d MMM yyyy, HH:mm", { locale: es });
     } catch (error) {
+      console.error('Error formatting date:', error);
       return "Fecha inválida";
     }
   };
@@ -80,14 +95,19 @@ export const NoteItem = ({
     try {
       return new Date(dateTime) < new Date();
     } catch (error) {
+      console.error('Error checking if reminder is past:', error);
       return false;
     }
   };
 
-  // Validar que note tiene los campos requeridos
-  if (!note || typeof note.id === 'undefined') {
-    return null;
-  }
+  const formatNoteDate = (date: string) => {
+    try {
+      return format(new Date(date), "d 'de' MMMM 'de' yyyy, HH:mm", { locale: es });
+    } catch (error) {
+      console.error('Error formatting note date:', error);
+      return "Sin fecha";
+    }
+  };
 
   return (
     <>
@@ -101,7 +121,7 @@ export const NoteItem = ({
         <CardHeader className="pb-2 pt-4 px-4">
           <div className="flex items-center justify-between">
             <div className="text-xs text-muted-foreground">
-              {note.date ? format(new Date(note.date), "d 'de' MMMM 'de' yyyy, HH:mm", { locale: es }) : "Sin fecha"}
+              {note.date ? formatNoteDate(note.date) : "Sin fecha"}
             </div>
             {isEditing && (
               <div className="flex gap-2">
