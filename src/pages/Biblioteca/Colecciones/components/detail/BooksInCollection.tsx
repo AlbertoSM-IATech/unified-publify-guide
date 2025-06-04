@@ -196,7 +196,7 @@ export const BooksInCollection = ({
                       }}
                     />
                     <div>
-                      <h4 className="font-medium text-[#3B82F6] line-clamp-2">{book.titulo}</h4>
+                      <h4 className="font-medium text-[#FB923C] line-clamp-2">{book.titulo}</h4>
                       <p className="text-sm text-muted-foreground">{book.autor}</p>
                       <div className="flex gap-2 mt-1">
                         <Badge variant="secondary" className="text-xs">
@@ -221,4 +221,3 @@ export const BooksInCollection = ({
     </Card>
   );
 };
-
