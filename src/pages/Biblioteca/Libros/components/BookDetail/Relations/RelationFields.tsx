@@ -65,7 +65,7 @@ export const RelationFields = ({
   }, [book.investigacionId, book.coleccionesIds, book.id, book.titulo, storedInvestigations, storedCollections, setStoredInvestigations, setStoredCollections]);
   return <div className="space-y-6">
       <div>
-        <h2 className="text-xl font-semibold mb-2 text-content-medium">Relaciones</h2>
+        
         <p className="text-sm text-muted-foreground">
           Conecta este libro con investigaciones y series relacionadas para una mejor organización de tu biblioteca.
         </p>

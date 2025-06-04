@@ -60,14 +60,7 @@ export const ContentAplusSection = ({
     setIsPreviewOpen(false);
   };
   return <div className="grid gap-6 mt-3 p-4 border rounded-md bg-muted/30">
-      <div className="flex items-center justify-between">
-        <h3 className="text-lg font-medium text-content-medium">Contenido A+</h3>
-        {isEditing && <Button size="sm" variant="outline" className="text-[#FB923C] border-[#FB923C] hover:bg-[#FB923C]/10"
-      // onClick={() => {/* Implementar lógica para ver guía A+ si es necesario */}}
-      >
-            <FilePlus2 size={16} className="mr-1" /> Ver guía A+
-          </Button>}
-      </div>
+      
 
       <Tabs defaultValue="text" className="w-full">
         <TabsList className="grid grid-cols-2 mb-4">

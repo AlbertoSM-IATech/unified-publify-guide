@@ -16,9 +16,7 @@ export const AudienceSection = ({
   form
 }: AudienceSectionProps) => {
   return <div className="space-y-6"> {/* mt-4 eliminado */}
-      <Card className="p-4 bg-muted/40 dark:bg-muted/10">
-        <h3 className="text-xl font-semibold text-content-medium">Estudio de Audiencia </h3>
-      </Card>
+      
       
       {/* Target Audience Section */}
       <Card className="p-5 space-y-4 shadow-sm border-slate-200 dark:border-slate-700">
