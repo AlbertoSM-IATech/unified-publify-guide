@@ -1,8 +1,14 @@
-
 export interface BookNote {
   id: number;
   text: string;
   date: string;
+  reminder?: {
+    id: string;
+    dateTime: string;
+    type: 'browser' | 'email';
+    status: 'active' | 'completed' | 'dismissed';
+    title?: string;
+  };
 }
 
 export interface BookFormat {

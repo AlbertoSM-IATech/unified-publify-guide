@@ -29,16 +29,13 @@ export const useNotes = (
         text: newNoteText,
         date: new Date().toISOString(),
       };
-      const updatedNotes = [newNote, ...notes]; // Más reciente primero
+      const updatedNotes = [newNote, ...notes];
       setNotes(updatedNotes);
       setNewNoteText("");
       setIsAddingNote(false);
       
-      // Update parent component with new notes
       if (onUpdateBook) {
         onUpdateBook({ notes: updatedNotes });
-        
-        // Mostrar confirmación
         toast({
           title: "Nota guardada",
           description: "La nota ha sido añadida con éxito."
@@ -72,11 +69,8 @@ export const useNotes = (
       setEditingNoteId(null);
       setEditingNoteText("");
       
-      // Update parent component with edited notes
       if (onUpdateBook) {
         onUpdateBook({ notes: updatedNotes });
-        
-        // Mostrar confirmación
         toast({
           title: "Nota actualizada",
           description: "La nota ha sido actualizada con éxito."
@@ -94,11 +88,8 @@ export const useNotes = (
     const updatedNotes = notes.filter(note => note.id !== noteId);
     setNotes(updatedNotes);
     
-    // Update parent component with deleted note
     if (onUpdateBook) {
       onUpdateBook({ notes: updatedNotes });
-      
-      // Mostrar confirmación
       toast({
         title: "Nota eliminada",
         description: "La nota ha sido eliminada con éxito.",
@@ -107,13 +98,87 @@ export const useNotes = (
     }
   };
 
-  // New function to handle reordering of notes
+  const handleSetReminder = (noteId: number, reminderData: {
+    dateTime: string;
+    type: 'browser' | 'email';
+    title?: string;
+  }) => {
+    const updatedNotes = notes.map(note => 
+      note.id === noteId 
+        ? { 
+            ...note, 
+            reminder: {
+              id: `${noteId}-${Date.now()}`,
+              ...reminderData,
+              status: 'active' as const
+            }
+          } 
+        : note
+    );
+    
+    setNotes(updatedNotes);
+    
+    if (onUpdateBook) {
+      onUpdateBook({ notes: updatedNotes });
+      toast({
+        title: "Recordatorio agregado",
+        description: `Recordatorio configurado para ${new Date(reminderData.dateTime).toLocaleDateString('es-ES')}`
+      });
+    }
+
+    // Configurar notificación del navegador
+    if (reminderData.type === 'browser') {
+      scheduleNotification(reminderData.dateTime, reminderData.title || "Recordatorio de nota");
+    }
+  };
+
+  const handleRemoveReminder = (noteId: number) => {
+    const updatedNotes = notes.map(note => 
+      note.id === noteId 
+        ? { ...note, reminder: undefined } 
+        : note
+    );
+    
+    setNotes(updatedNotes);
+    
+    if (onUpdateBook) {
+      onUpdateBook({ notes: updatedNotes });
+      toast({
+        title: "Recordatorio eliminado",
+        description: "El recordatorio ha sido eliminado."
+      });
+    }
+  };
+
   const handleReorderNotes = (reorderedNotes: BookNote[]) => {
     setNotes(reorderedNotes);
     
-    // Update parent component with reordered notes
     if (onUpdateBook) {
       onUpdateBook({ notes: reorderedNotes });
+    }
+  };
+
+  // Función para programar notificaciones del navegador
+  const scheduleNotification = (dateTime: string, title: string) => {
+    const targetTime = new Date(dateTime).getTime();
+    const currentTime = Date.now();
+    const delay = targetTime - currentTime;
+
+    if (delay > 0) {
+      // Solicitar permisos de notificación
+      if ('Notification' in window) {
+        Notification.requestPermission().then(permission => {
+          if (permission === 'granted') {
+            setTimeout(() => {
+              new Notification(title, {
+                body: "Es hora de revisar tu nota",
+                icon: "/favicon.ico",
+                tag: `reminder-${Date.now()}`
+              });
+            }, delay);
+          }
+        });
+      }
     }
   };
 
@@ -132,6 +197,8 @@ export const useNotes = (
     handleSaveEditedNote,
     handleCancelEditNote,
     handleDeleteNote,
-    handleReorderNotes
+    handleReorderNotes,
+    handleSetReminder,
+    handleRemoveReminder
   };
 };

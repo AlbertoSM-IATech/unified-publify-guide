@@ -17,12 +17,10 @@ export const NotesList = ({
 }: NotesListProps) => {
   const [notes, setNotes] = useState<BookNote[]>(book.notes || []);
   
-  // Update notes when book data changes
   useEffect(() => {
     setNotes(book.notes || []);
   }, [book.notes]);
 
-  // Ordenar notas por fecha (más reciente primero)
   const sortedNotes = [...notes].sort((a, b) => {
     return new Date(b.date).getTime() - new Date(a.date).getTime();
   });
@@ -36,12 +34,6 @@ export const NotesList = ({
   }
 
   const handleEditNote = (noteId: number) => {
-    // Find the note to edit
-    const noteToEdit = notes.find(note => note.id === noteId);
-    if (!noteToEdit) return;
-
-    // Implementation would depend on how you want to handle editing
-    // For now, just log the action
     console.log("Editing note:", noteId);
   };
 
@@ -51,16 +43,46 @@ export const NotesList = ({
     onUpdateBook({ notes: updatedNotes });
   };
 
+  const handleSetReminder = (noteId: number, reminderData: {
+    dateTime: string;
+    type: 'browser' | 'email';
+    title?: string;
+  }) => {
+    const updatedNotes = notes.map(note => 
+      note.id === noteId 
+        ? { 
+            ...note, 
+            reminder: {
+              id: `${noteId}-${Date.now()}`,
+              ...reminderData,
+              status: 'active' as const
+            }
+          } 
+        : note
+    );
+    
+    setNotes(updatedNotes);
+    onUpdateBook({ notes: updatedNotes });
+  };
+
+  const handleRemoveReminder = (noteId: number) => {
+    const updatedNotes = notes.map(note => 
+      note.id === noteId 
+        ? { ...note, reminder: undefined } 
+        : note
+    );
+    
+    setNotes(updatedNotes);
+    onUpdateBook({ notes: updatedNotes });
+  };
+
   const handleDragEnd = (result: DropResult) => {
-    // Dropped outside the list
     if (!result.destination) return;
 
-    // Reorder the notes array based on drag and drop result
     const reorderedNotes = [...sortedNotes];
     const [movedNote] = reorderedNotes.splice(result.source.index, 1);
     reorderedNotes.splice(result.destination.index, 0, movedNote);
     
-    // Update state and parent component
     setNotes(reorderedNotes);
     onUpdateBook({ notes: reorderedNotes });
   };
@@ -92,6 +114,8 @@ export const NotesList = ({
                       isEditing={isEditing}
                       onEdit={() => handleEditNote(note.id)}
                       onDelete={() => handleDeleteNote(note.id)}
+                      onSetReminder={handleSetReminder}
+                      onRemoveReminder={handleRemoveReminder}
                     />
                   </div>
                 )}
