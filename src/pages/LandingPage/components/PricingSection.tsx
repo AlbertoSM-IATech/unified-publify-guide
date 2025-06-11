@@ -110,8 +110,11 @@ export const PricingSection = () => {
           <h2 className="text-3xl font-bold mb-4 md:text-4xl">
             Planes y Precios
           </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-4">
             Elige el plan perfecto para tu carrera literaria. Comienza gratis y escala según crezcan tus necesidades.
+          </p>
+          <p className="text-sm text-muted-foreground">
+            * Precios sin IVA. Se aplicarán los impuestos correspondientes según tu ubicación.
           </p>
         </motion.div>
 
