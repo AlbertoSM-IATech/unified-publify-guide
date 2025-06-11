@@ -19,7 +19,9 @@ export const MenuItem = ({
   onToggleExpand,
   currentPath 
 }: MenuItemProps) => {
-  if (item.path === "/biblioteca") {
+  const hasSubItems = item.subItems && item.subItems.length > 0;
+  
+  if (hasSubItems) {
     return (
       <div className="space-y-1">
         <button

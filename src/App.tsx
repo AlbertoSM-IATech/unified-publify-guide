@@ -123,12 +123,11 @@ function App() {
           </Route>
         </Route>
         
-        <Route path="/index.html" element={<Navigate to="/" replace />} />
-        <Route path="*" element={<NotFound />} />
-        
         <Route path="/terminos-y-condiciones" element={<TermsAndConditions />} />
         <Route path="/politica-privacidad" element={<PrivacyPolicy />} />
         <Route path="/contacto" element={<Contact />} />
+        
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
   );

@@ -7,16 +7,32 @@ import { MenuItem } from "./MenuItem";
 export const NavigationMenu = () => {
   const location = useLocation();
   const [bibliotecaExpanded, setBibliotecaExpanded] = useState(false);
+  const [checkoutExpanded, setCheckoutExpanded] = useState(false);
 
   useEffect(() => {
     if (location.pathname.startsWith("/biblioteca")) {
       setBibliotecaExpanded(true);
+    }
+    if (location.pathname.startsWith("/checkout")) {
+      setCheckoutExpanded(true);
     }
   }, [location.pathname]);
 
   const isActive = (path: string) => {
     return location.pathname === path || 
            (path !== "/" && location.pathname.startsWith(path));
+  };
+
+  const getExpansionState = (itemPath: string) => {
+    if (itemPath === "/biblioteca") return bibliotecaExpanded;
+    if (itemPath === "/checkout") return checkoutExpanded;
+    return undefined;
+  };
+
+  const getToggleHandler = (itemPath: string) => {
+    if (itemPath === "/biblioteca") return () => setBibliotecaExpanded(!bibliotecaExpanded);
+    if (itemPath === "/checkout") return () => setCheckoutExpanded(!checkoutExpanded);
+    return undefined;
   };
 
   return (
@@ -26,8 +42,8 @@ export const NavigationMenu = () => {
           <MenuItem
             item={item}
             isActive={isActive(item.path)}
-            isExpanded={item.path === "/biblioteca" ? bibliotecaExpanded : undefined}
-            onToggleExpand={item.path === "/biblioteca" ? () => setBibliotecaExpanded(!bibliotecaExpanded) : undefined}
+            isExpanded={getExpansionState(item.path)}
+            onToggleExpand={getToggleHandler(item.path)}
             currentPath={location.pathname}
           />
         </div>
