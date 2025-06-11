@@ -7,14 +7,10 @@ import { MenuItem } from "./MenuItem";
 export const NavigationMenu = () => {
   const location = useLocation();
   const [bibliotecaExpanded, setBibliotecaExpanded] = useState(false);
-  const [checkoutExpanded, setCheckoutExpanded] = useState(false);
 
   useEffect(() => {
     if (location.pathname.startsWith("/biblioteca")) {
       setBibliotecaExpanded(true);
-    }
-    if (location.pathname.startsWith("/checkout")) {
-      setCheckoutExpanded(true);
     }
   }, [location.pathname]);
 
@@ -25,13 +21,11 @@ export const NavigationMenu = () => {
 
   const getExpansionState = (itemPath: string) => {
     if (itemPath === "/biblioteca") return bibliotecaExpanded;
-    if (itemPath === "/checkout") return checkoutExpanded;
     return undefined;
   };
 
   const getToggleHandler = (itemPath: string) => {
     if (itemPath === "/biblioteca") return () => setBibliotecaExpanded(!bibliotecaExpanded);
-    if (itemPath === "/checkout") return () => setCheckoutExpanded(!checkoutExpanded);
     return undefined;
   };
 

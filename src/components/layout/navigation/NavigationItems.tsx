@@ -1,7 +1,7 @@
 
 import { 
   Home, BookOpen, LineChart, PieChart, Settings, 
-  User, MegaphoneIcon, BookText, FolderIcon, FileSearch, ShoppingCart
+  User, MegaphoneIcon, BookText, FolderIcon, FileSearch
 } from "lucide-react";
 import { MenuItem } from "./types";
 
@@ -19,16 +19,6 @@ export const menuItems: MenuItem[] = [
   },
   { path: "/marketing", icon: <MegaphoneIcon size={20} className="text-gray-500" />, label: "Marketing" },
   { path: "/finanzas", icon: <PieChart size={20} className="text-gray-500" />, label: "Finanzas" },
-  { 
-    path: "/checkout", 
-    icon: <ShoppingCart size={20} className="text-gray-500" />, 
-    label: "Checkout",
-    subItems: [
-      { path: "/checkout", icon: <ShoppingCart size={18} className="text-gray-500" />, label: "Checkout" },
-      { path: "/checkout/success", icon: <ShoppingCart size={18} className="text-gray-500" />, label: "Éxito" },
-      { path: "/checkout/cancel", icon: <ShoppingCart size={18} className="text-gray-500" />, label: "Cancelado" },
-    ]
-  },
   { path: "/perfil", icon: <User size={20} className="text-gray-500" />, label: "Perfil" },
   { path: "/configuracion", icon: <Settings size={20} className="text-gray-500" />, label: "Configuración" },
   { path: "/contacto", icon: <MegaphoneIcon size={20} className="text-gray-500" />, label: "Contacto" },
