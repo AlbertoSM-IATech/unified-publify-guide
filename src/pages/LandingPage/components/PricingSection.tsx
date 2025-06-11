@@ -113,6 +113,9 @@ export const PricingSection = () => {
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             Elige el plan perfecto para tu carrera literaria. Comienza gratis y escala según crezcan tus necesidades.
           </p>
+          <p className="text-sm text-muted-foreground mt-2">
+            Precios sin IVA
+          </p>
         </motion.div>
 
         <motion.div

@@ -209,7 +209,7 @@ export const Checkout = () => {
                   onClick={handleCheckout}
                   disabled={!isFormValid || isLoading}
                 >
-                  {isLoading ? "Procesando..." : `Suscribirse por €${plan.price}/mes`}
+                  {isLoading ? "Procesando..." : `Suscribirse por €${plan.price}/mes (sin IVA)`}
                 </Button>
               </CardContent>
             </Card>
