@@ -9,6 +9,7 @@ import { BenefitsSection } from "./components/BenefitsSection";
 import { FinanceSection } from "./components/FinanceSection";
 import { TestimonialsSection } from "./components/TestimonialsSection";
 import { VisualsSection } from "./components/VisualsSection";
+import { PricingSection } from "./components/PricingSection";
 import { CtaSection } from "./components/CtaSection";
 import { FaqSection } from "./components/FaqSection";
 import { Footer } from "./components/Footer";
@@ -41,6 +42,7 @@ export const LandingPage = () => {
       <TestimonialsSection />
       <VisualsSection />
       <FinanceSection />
+      <PricingSection />
       <CtaSection />
       <FaqSection />
       <Footer />

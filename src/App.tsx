@@ -1,3 +1,4 @@
+
 import { useEffect } from "react";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import MainLayout from "@/components/layout/MainLayout";
@@ -28,6 +29,9 @@ import clsx from "clsx";
 import { TermsAndConditions } from "@/pages/Legal/TermsAndConditions";
 import { PrivacyPolicy } from "@/pages/Legal/PrivacyPolicy";
 import { Contact } from "@/pages/Contact/Contact";
+import Checkout from "@/pages/Checkout/Checkout";
+import CheckoutSuccess from "@/pages/Checkout/CheckoutSuccess";
+import CheckoutCancel from "@/pages/Checkout/CheckoutCancel";
 
 function App() {
   const { theme } = useTheme();
@@ -67,6 +71,11 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/verify-email" element={<VerifyEmail />} />
+        
+        {/* Rutas de checkout */}
+        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/checkout/success" element={<CheckoutSuccess />} />
+        <Route path="/checkout/cancel" element={<CheckoutCancel />} />
         
         <Route element={<ProtectedRoute />}>
           <Route element={<MainLayout />}>
