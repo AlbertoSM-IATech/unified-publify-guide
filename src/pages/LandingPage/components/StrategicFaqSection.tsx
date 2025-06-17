@@ -27,7 +27,7 @@ const strategicFaqs = [
 
 export const StrategicFaqSection = () => {
   return (
-    <section className="py-20 bg-white">
+    <section className="py-20 bg-background">
       <div className="container mx-auto px-4 max-w-4xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -35,7 +35,7 @@ export const StrategicFaqSection = () => {
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-foreground">
             Preguntas frecuentes
           </h2>
           <p className="text-xl text-muted-foreground">
@@ -53,9 +53,9 @@ export const StrategicFaqSection = () => {
               <AccordionItem 
                 key={index} 
                 value={`item-${index}`}
-                className="bg-gray-50 rounded-lg border px-6 py-2"
+                className="bg-muted/30 dark:bg-neutral-800/30 rounded-lg border border-border px-6 py-2"
               >
-                <AccordionTrigger className="text-left font-semibold hover:no-underline">
+                <AccordionTrigger className="text-left font-semibold hover:no-underline text-foreground">
                   {faq.question}
                 </AccordionTrigger>
                 <AccordionContent className="text-muted-foreground pt-2 pb-4">
@@ -70,9 +70,9 @@ export const StrategicFaqSection = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mt-12 p-6 bg-[#FB923C]/5 rounded-lg border border-[#FB923C]/20"
+          className="text-center mt-12 p-6 bg-[#FB923C]/5 dark:bg-[#FB923C]/10 rounded-lg border border-[#FB923C]/20"
         >
-          <p className="text-lg mb-2">
+          <p className="text-lg mb-2 text-foreground">
             ¿Tienes otra pregunta?
           </p>
           <p className="text-muted-foreground">

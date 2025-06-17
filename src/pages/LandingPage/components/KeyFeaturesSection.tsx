@@ -35,7 +35,7 @@ export const KeyFeaturesSection = () => {
   const navigate = useNavigate();
 
   return (
-    <section className="py-20 bg-white">
+    <section className="py-20 bg-background">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -43,7 +43,7 @@ export const KeyFeaturesSection = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-foreground">
             Todo lo que necesitas para triunfar
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
@@ -59,14 +59,14 @@ export const KeyFeaturesSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
-              className="bg-gradient-to-br from-gray-50 to-white p-8 rounded-xl border hover:shadow-lg transition-shadow"
+              className="bg-gradient-to-br from-muted/50 to-card dark:from-neutral-800/30 dark:to-card p-8 rounded-xl border border-border hover:shadow-lg transition-shadow"
             >
               <div className="flex items-start gap-6">
                 <div className="flex-shrink-0">
                   {feature.icon}
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold mb-3">{feature.title}</h3>
+                  <h3 className="text-xl font-bold mb-3 text-foreground">{feature.title}</h3>
                   <p className="text-muted-foreground mb-4">{feature.description}</p>
                   <div className="inline-block bg-[#FB923C]/10 text-[#FB923C] px-3 py-1 rounded-full text-sm font-medium">
                     {feature.benefit}

@@ -27,7 +27,7 @@ const benefits = [
 
 export const SecondaryBenefitsSection = () => {
   return (
-    <section className="py-16 bg-muted/30">
+    <section className="py-16 bg-muted/30 dark:bg-neutral-900/50">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -35,7 +35,7 @@ export const SecondaryBenefitsSection = () => {
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          <h2 className="text-2xl md:text-3xl font-bold mb-4">
+          <h2 className="text-2xl md:text-3xl font-bold mb-4 text-foreground">
             Más beneficios que te encantarán
           </h2>
         </motion.div>
@@ -48,12 +48,12 @@ export const SecondaryBenefitsSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
-              className="bg-white p-6 rounded-lg text-center shadow-sm border hover:shadow-md transition-shadow"
+              className="bg-card p-6 rounded-lg text-center shadow-sm border border-border hover:shadow-md transition-shadow"
             >
               <div className="flex justify-center mb-4">
                 {benefit.icon}
               </div>
-              <h3 className="font-semibold mb-3">{benefit.title}</h3>
+              <h3 className="font-semibold mb-3 text-foreground">{benefit.title}</h3>
               <p className="text-muted-foreground text-sm">{benefit.description}</p>
             </motion.div>
           ))}

@@ -1,34 +1,50 @@
 
 import { motion } from "framer-motion";
-import { AlertTriangle, Target, TrendingUp } from "lucide-react";
+import { AlertTriangle, CheckCircle, Clock, TrendingUp } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
-const problems = [
+const problemPoints = [
   {
-    icon: <AlertTriangle className="w-8 h-8 text-red-500" />,
-    title: "Caos editorial",
-    description: "Documentos dispersos, deadlines perdidos, ventas sin tracking"
+    icon: <AlertTriangle className="w-6 h-6 text-red-500" />,
+    title: "Documentos perdidos",
+    description: "Archivos dispersos en Google Drive, Dropbox y tu ordenador"
   },
   {
-    icon: <Target className="w-8 h-8 text-orange-500" />,
-    title: "Marketing improvisado", 
-    description: "Sin estrategia clara, audiencia dispersa, ROI desconocido"
+    icon: <Clock className="w-6 h-6 text-orange-500" />,
+    title: "Tiempo perdido",
+    description: "15+ horas semanales buscando información y organizando datos"
   },
   {
-    icon: <TrendingUp className="w-8 h-8 text-yellow-500" />,
-    title: "Finanzas opacas",
-    description: "Gastos sin control, regalías confusas, rentabilidad incierta"
+    icon: <TrendingUp className="w-6 h-6 text-blue-500" />,
+    title: "Ventas estancadas",
+    description: "Sin datos claros, no sabes qué funciona ni qué mejorar"
   }
 ];
 
-const solutions = [
-  "Centraliza toda tu editorial en un solo dashboard",
-  "Automatiza tu marketing y multiplica tu alcance",
-  "Controla cada euro y maximiza tu rentabilidad"
+const solutionPoints = [
+  {
+    icon: <CheckCircle className="w-6 h-6 text-green-500" />,
+    title: "Todo centralizado",
+    description: "Libros, series, investigaciones y finanzas en un solo lugar"
+  },
+  {
+    icon: <CheckCircle className="w-6 h-6 text-green-500" />,
+    title: "Analytics automático",
+    description: "Datos de ventas, rankings y tendencias actualizados en tiempo real"
+  },
+  {
+    icon: <CheckCircle className="w-6 h-6 text-green-500" />,
+    title: "Marketing inteligente",
+    description: "Campañas automatizadas que funcionan mientras duermes"
+  }
 ];
 
 export const ProblemSolutionSection = () => {
+  const navigate = useNavigate();
+
   return (
-    <section className="py-20 bg-gradient-to-b from-red-50 to-green-50">
+    <section className="py-20 bg-background">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -36,73 +52,91 @@ export const ProblemSolutionSection = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-foreground">
             ¿Te suena familiar?
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            El 87% de autores independientes pierden más de 10 horas semanales en tareas que podrían automatizar
+            La mayoría de autores pierde más tiempo organizando que escribiendo
           </p>
         </motion.div>
 
-        {/* Problems */}
-        <div className="grid md:grid-cols-3 gap-8 mb-16">
-          {problems.map((problem, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              className="bg-white/80 backdrop-blur p-6 rounded-xl border border-red-200 text-center"
-            >
-              <div className="flex justify-center mb-4">
-                {problem.icon}
-              </div>
-              <h3 className="font-semibold text-lg mb-3">{problem.title}</h3>
-              <p className="text-muted-foreground">{problem.description}</p>
-            </motion.div>
-          ))}
+        <div className="grid lg:grid-cols-2 gap-16 items-center mb-16">
+          {/* Problem Side */}
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+          >
+            <h3 className="text-2xl font-bold mb-8 text-red-600 dark:text-red-400">
+              ❌ Sin Publify
+            </h3>
+            <div className="space-y-6">
+              {problemPoints.map((point, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  className="flex items-start gap-4 p-4 bg-red-50 dark:bg-red-950/20 rounded-lg border border-red-200 dark:border-red-800/30"
+                >
+                  {point.icon}
+                  <div>
+                    <h4 className="font-semibold mb-2 text-foreground">{point.title}</h4>
+                    <p className="text-muted-foreground text-sm">{point.description}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Solution Side */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+          >
+            <h3 className="text-2xl font-bold mb-8 text-green-600 dark:text-green-400">
+              ✅ Con Publify
+            </h3>
+            <div className="space-y-6">
+              {solutionPoints.map((point, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  className="flex items-start gap-4 p-4 bg-green-50 dark:bg-green-950/20 rounded-lg border border-green-200 dark:border-green-800/30"
+                >
+                  {point.icon}
+                  <div>
+                    <h4 className="font-semibold mb-2 text-foreground">{point.title}</h4>
+                    <p className="text-muted-foreground text-sm">{point.description}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
         </div>
 
-        {/* Arrow */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.5 }}
-          whileInView={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center"
         >
-          <div className="w-16 h-16 mx-auto bg-[#FB923C] rounded-full flex items-center justify-center">
-            <motion.div
-              animate={{ y: [0, 5, 0] }}
-              transition={{ repeat: Infinity, duration: 1.5 }}
-              className="text-white text-2xl"
-            >
-              ↓
-            </motion.div>
-          </div>
-          <p className="mt-4 text-[#FB923C] font-semibold text-lg">
-            Publify resuelve esto automáticamente
+          <Button
+            size="lg"
+            onClick={() => navigate("/register")}
+            className="bg-[#FB923C] hover:bg-[#FB923C]/90 px-8 py-6 text-lg"
+          >
+            Quiero la solución completa
+          </Button>
+          <p className="text-sm text-muted-foreground mt-3">
+            Prueba gratis 14 días • Sin tarjeta de crédito
           </p>
         </motion.div>
-
-        {/* Solutions */}
-        <div className="space-y-6">
-          {solutions.map((solution, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              className="flex items-center gap-4 bg-green-100 p-4 rounded-lg"
-            >
-              <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
-                <span className="text-white font-bold">✓</span>
-              </div>
-              <p className="text-lg font-medium">{solution}</p>
-            </motion.div>
-          ))}
-        </div>
       </div>
     </section>
   );

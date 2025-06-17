@@ -29,7 +29,7 @@ const quickTestimonials = [
 
 export const EarlySocialProofSection = () => {
   return (
-    <section className="py-16 bg-[#FB923C]/5">
+    <section className="py-16 bg-muted/50 dark:bg-neutral-800/30">
       <div className="container mx-auto px-4">
         {/* Trust indicators */}
         <motion.div
@@ -82,9 +82,9 @@ export const EarlySocialProofSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
-              className="bg-white p-6 rounded-lg shadow-sm border"
+              className="bg-card p-6 rounded-lg shadow-sm border border-border"
             >
-              <p className="font-medium mb-3">"{testimonial.text}"</p>
+              <p className="font-medium mb-3 text-foreground">"{testimonial.text}"</p>
               <div className="text-sm text-muted-foreground">
                 <div className="font-medium">{testimonial.author}</div>
                 <div>{testimonial.role}</div>
