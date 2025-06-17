@@ -41,10 +41,28 @@ export const EarlySocialProofSection = () => {
           <h2 className="text-2xl md:text-3xl font-bold mb-4 text-foreground">
             Publify es para ti, Publisher Independiente
           </h2>
-          <p className="text-lg text-muted-foreground mb-6 max-w-3xl mx-auto">
-            Para autores independientes, emprendedores editoriales, equipos pequeños y editoriales emergentes 
-            que buscan orden y visión estratégica.
+          <p className="text-lg text-muted-foreground mb-6 max-w-4xl mx-auto">
+            Para autores independientes, emprendedores editoriales, equipos pequeños, editoriales emergentes 
+            y especialmente para quienes están empezando en KDP y se sienten abrumados gestionando su negocio editorial.
           </p>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6 max-w-4xl mx-auto text-sm">
+            <div className="bg-card p-4 rounded-lg border border-border">
+              <div className="font-semibold text-[#FB923C] mb-1">Autores independientes</div>
+              <div className="text-muted-foreground">Necesitan orden y visión estratégica</div>
+            </div>
+            <div className="bg-card p-4 rounded-lg border border-border">
+              <div className="font-semibold text-[#FB923C] mb-1">Emprendedores editoriales</div>
+              <div className="text-muted-foreground">Compaginan escritura con otros trabajos</div>
+            </div>
+            <div className="bg-card p-4 rounded-lg border border-border">
+              <div className="font-semibold text-[#FB923C] mb-1">Equipos pequeños</div>
+              <div className="text-muted-foreground">Buscan eficiencia sin sacrificar profesionalismo</div>
+            </div>
+            <div className="bg-card p-4 rounded-lg border border-border">
+              <div className="font-semibold text-[#FB923C] mb-1">Principiantes en KDP</div>
+              <div className="text-muted-foreground">Abrumados por la gestión del negocio</div>
+            </div>
+          </div>
           <div className="flex justify-center gap-8 flex-wrap">
             <div className="flex items-center gap-2 text-[#FB923C]">
               <Star className="w-5 h-5 fill-current" />
@@ -52,7 +70,7 @@ export const EarlySocialProofSection = () => {
               <Star className="w-5 h-5 fill-current" />
               <Star className="w-5 h-5 fill-current" />
               <Star className="w-5 h-5 fill-current" />
-              <span className="ml-2 font-semibold">Sistema profesional</span>
+              <span className="ml-2 font-semibold">Sistema profesional desde el día uno</span>
             </div>
           </div>
         </motion.div>
