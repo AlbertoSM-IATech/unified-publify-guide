@@ -1,29 +1,29 @@
 
 import { motion } from "framer-motion";
-import { Star, Users, BookOpen, TrendingUp } from "lucide-react";
+import { Users, FileText, Target, Star } from "lucide-react";
 
 const stats = [
-  { icon: <Users className="w-6 h-6" />, number: "2,847", label: "Autores activos" },
-  { icon: <BookOpen className="w-6 h-6" />, number: "12,394", label: "Libros gestionados" },
-  { icon: <TrendingUp className="w-6 h-6" />, number: "847%", label: "Incremento promedio en ventas" },
-  { icon: <Star className="w-6 h-6" />, number: "4.9/5", label: "Valoración promedio" }
+  { icon: <Users className="w-6 h-6" />, number: "2,847", label: "Publishers profesionales" },
+  { icon: <FileText className="w-6 h-6" />, number: "12,394", label: "Títulos gestionados" },
+  { icon: <Target className="w-6 h-6" />, number: "95%", label: "Reducción del caos editorial" },
+  { icon: <Star className="w-6 h-6" />, number: "4.9/5", label: "Satisfacción del sistema" }
 ];
 
-const quickTestimonials = [
+const testimonials = [
   {
-    text: "Mis ventas se triplicaron en 2 meses",
+    text: "Por fin tengo todo centralizado",
     author: "Ana Martínez",
-    role: "Romance bestseller"
+    role: "Autora independiente"
   },
   {
-    text: "Ahorro 15 horas a la semana",
-    author: "Carlos López", 
-    role: "Thriller independiente"
+    text: "Mi editorial ya no es un caos", 
+    author: "Carlos López",
+    role: "Publisher de thriller"
   },
   {
-    text: "Por fin entiendo mis números",
+    text: "Publify cambió mi forma de trabajar",
     author: "Laura García",
-    role: "Fantasía épica"
+    role: "Editorial emergente"
   }
 ];
 
@@ -31,15 +31,19 @@ export const EarlySocialProofSection = () => {
   return (
     <section className="py-16 bg-muted/50 dark:bg-neutral-800/30">
       <div className="container mx-auto px-4">
-        {/* Trust indicators */}
+        {/* Target audience clarification */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          <p className="text-sm text-muted-foreground mb-6">
-            Más de 2,800 autores confían en Publify
+          <h2 className="text-2xl md:text-3xl font-bold mb-4 text-foreground">
+            Publify es para ti, Publisher Independiente
+          </h2>
+          <p className="text-lg text-muted-foreground mb-6 max-w-3xl mx-auto">
+            Para autores independientes, emprendedores editoriales, equipos pequeños y editoriales emergentes 
+            que buscan orden y visión estratégica.
           </p>
           <div className="flex justify-center gap-8 flex-wrap">
             <div className="flex items-center gap-2 text-[#FB923C]">
@@ -48,7 +52,7 @@ export const EarlySocialProofSection = () => {
               <Star className="w-5 h-5 fill-current" />
               <Star className="w-5 h-5 fill-current" />
               <Star className="w-5 h-5 fill-current" />
-              <span className="ml-2 font-semibold">4.9/5 en Trustpilot</span>
+              <span className="ml-2 font-semibold">Sistema profesional</span>
             </div>
           </div>
         </motion.div>
@@ -73,9 +77,9 @@ export const EarlySocialProofSection = () => {
           ))}
         </div>
 
-        {/* Quick testimonials */}
+        {/* Testimonials */}
         <div className="grid md:grid-cols-3 gap-6">
-          {quickTestimonials.map((testimonial, index) => (
+          {testimonials.map((testimonial, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 20 }}

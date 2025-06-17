@@ -2,20 +2,13 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import { CheckCircle, Clock, Users } from "lucide-react";
+import { CheckCircle, Lock, Users } from "lucide-react";
 
-const urgencyPoints = [
-  "47 plazas restantes para acceso anticipado",
-  "Precio especial válido solo hasta fin de mes",
-  "Más de 200 autores se unieron esta semana"
-];
-
-const finalBenefits = [
-  "14 días gratis sin riesgo",
-  "Configuración incluida por expertos",
-  "Garantía de devolución 30 días",
-  "Soporte prioritario en español",
-  "Acceso a comunidad privada VIP"
+const accessBenefits = [
+  "Prioridad en el onboarding",
+  "Acceso preferente a actualizaciones", 
+  "Acompañamiento personalizado",
+  "Transición rápida y sin fricciones"
 ];
 
 export const FinalCtaSection = () => {
@@ -37,31 +30,32 @@ export const FinalCtaSection = () => {
           viewport={{ once: true }}
           className="text-center max-w-4xl mx-auto"
         >
+          <div className="flex items-center justify-center gap-3 mb-6">
+            <Lock className="w-8 h-8" />
+            <span className="text-2xl font-bold">Acceso Anticipado</span>
+          </div>
+
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            Únete a los autores que ya están triunfando
+            Publify no está disponible para todos
           </h2>
-          <p className="text-xl md:text-2xl mb-8 opacity-90">
-            No pierdas más tiempo con herramientas dispersas. 
-            Centraliza, automatiza y multiplica tu negocio editorial desde hoy.
+          
+          <p className="text-xl md:text-2xl mb-8 opacity-90 leading-relaxed">
+            Este no es un producto genérico. Está hecho para profesionales y autores 
+            con visión de crecimiento real.
           </p>
 
-          {/* Urgency indicators */}
-          <div className="grid md:grid-cols-3 gap-4 mb-8">
-            {urgencyPoints.map((point, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="bg-white/10 backdrop-blur p-4 rounded-lg border border-white/20"
-              >
-                <div className="flex items-center justify-center gap-2">
-                  <Clock className="w-5 h-5" />
-                  <span className="font-medium text-sm">{point}</span>
+          <div className="bg-white/10 backdrop-blur p-6 rounded-xl border border-white/20 mb-8">
+            <p className="text-lg mb-4">
+              Si sientes que estás listo para dejar de improvisar y empezar a trabajar con estrategia...
+            </p>
+            <div className="grid md:grid-cols-2 gap-4 text-sm">
+              {accessBenefits.map((benefit, index) => (
+                <div key={index} className="flex items-center gap-2">
+                  <CheckCircle className="w-4 h-4 flex-shrink-0" />
+                  <span>{benefit}</span>
                 </div>
-              </motion.div>
-            ))}
+              ))}
+            </div>
           </div>
 
           {/* Main CTA */}
@@ -76,38 +70,23 @@ export const FinalCtaSection = () => {
               onClick={() => navigate("/register")}
               className="bg-white text-[#FB923C] hover:bg-gray-100 px-12 py-6 text-xl font-bold shadow-xl"
             >
-              Comenzar mi prueba gratuita ahora
+              Solicitar acceso anticipado ahora
             </Button>
             <p className="text-sm mt-3 opacity-80">
-              Sin tarjeta de crédito • Acceso inmediato • Cancela cuando quieras
+              Para profesionales serios • Acompañamiento incluido • Onboarding prioritario
             </p>
           </motion.div>
 
-          {/* Final benefits */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="grid md:grid-cols-5 gap-4 text-sm opacity-90"
-          >
-            {finalBenefits.map((benefit, index) => (
-              <div key={index} className="flex items-center gap-2 justify-center">
-                <CheckCircle className="w-4 h-4 flex-shrink-0" />
-                <span>{benefit}</span>
-              </div>
-            ))}
-          </motion.div>
-
-          {/* Social proof reminder */}
+          {/* Final message */}
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="mt-8 pt-8 border-t border-white/20"
+            className="pt-8 border-t border-white/20"
           >
-            <div className="flex items-center justify-center gap-4 text-lg">
-              <Users className="w-6 h-6" />
-              <span>Más de 2,847 autores ya han transformado su negocio</span>
+            <div className="text-lg space-y-2">
+              <p className="font-bold">Esto no es el futuro del publishing.</p>
+              <p>Es el presente de quienes quieren crecer con orden, datos y claridad.</p>
             </div>
           </motion.div>
         </motion.div>

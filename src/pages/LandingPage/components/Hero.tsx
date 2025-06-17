@@ -77,23 +77,23 @@ export const Hero = () => {
       <div className="mx-auto max-w-7xl w-full grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
         <div className="text-center lg:text-left relative">
           <motion.h1 variants={fadeIn} className="font-heading text-4xl font-bold tracking-tight md:text-5xl text-inherit lg:text-5xl">
-            Gestiona y haz crecer tu editorial de{" "}
+            ¿De verdad tienes una editorial… o un{" "}
             <span className="relative inline-block">
-              <span className="text-orange-400">KDP</span>
+              <span className="text-[#FB923C]">caos editorial</span>
               <motion.span className="absolute bottom-1 left-0 h-[6px] bg-[#FB923C]/40 rounded-full" variants={highlightVariants} />
             </span>{" "}
-            desde un solo lugar
+            con nombre bonito?
           </motion.h1>
           
-          <motion.p variants={fadeIn} className="mt-6 text-lg font-light text-orange-400 md:text-xl">
-            Publify es tu Centro de Control para Publishers y Editoriales independientes. 
-            Unifica tu biblioteca, automatiza tu Marketing. Domina tu negocio editorial y elimina el caos del día a día.
+          <motion.p variants={fadeIn} className="mt-6 text-lg font-light text-muted-foreground md:text-xl">
+            Publify es un sistema completo para gestionar, escalar y entender tu negocio editorial desde un solo lugar. 
+            Con la lógica de un piloto, no de un malabarista digital.
           </motion.p>
           
           <motion.div variants={fadeIn} className="mt-8 flex flex-col space-y-4 sm:flex-row sm:justify-start sm:space-x-4 sm:space-y-0">
             <motion.div variants={buttonHoverVariants} whileHover="hover">
               <Button onClick={handleGetStarted} size="lg" className="group text-base w-full sm:w-auto bg-gradient-to-r from-primary to-[#FB923C] hover:shadow-lg hover:shadow-primary/20 py-6 px-8">
-                Quiero probar Publify
+                Mata el caos editorial
                 <motion.div className="ml-2 flex items-center" initial={{
                 x: 0
               }} whileHover={{
