@@ -2,16 +2,14 @@
 import { motion } from "framer-motion";
 import { Header } from "./components/Header";
 import { Hero } from "./components/Hero";
-import { ChaosSection } from "./components/ChaosSection";
-import { FeaturesSection } from "./components/FeaturesSection";
-import { FeaturesGrid } from "./components/FeaturesGrid";
-import { BenefitsSection } from "./components/BenefitsSection";
-import { FinanceSection } from "./components/FinanceSection";
-import { TestimonialsSection } from "./components/TestimonialsSection";
-import { VisualsSection } from "./components/VisualsSection";
+import { ProblemSolutionSection } from "./components/ProblemSolutionSection";
+import { EarlySocialProofSection } from "./components/EarlySocialProofSection";
+import { KeyFeaturesSection } from "./components/KeyFeaturesSection";
 import { PricingSection } from "./components/PricingSection";
-import { CtaSection } from "./components/CtaSection";
-import { FaqSection } from "./components/FaqSection";
+import { MockupsShowcaseSection } from "./components/MockupsShowcaseSection";
+import { SecondaryBenefitsSection } from "./components/SecondaryBenefitsSection";
+import { StrategicFaqSection } from "./components/StrategicFaqSection";
+import { FinalCtaSection } from "./components/FinalCtaSection";
 import { Footer } from "./components/Footer";
 
 // Animation variants for page sections
@@ -20,7 +18,7 @@ const pageVariants = {
   visible: { 
     opacity: 1,
     transition: {
-      staggerChildren: 0.2
+      staggerChildren: 0.1
     }
   }
 };
@@ -35,16 +33,14 @@ export const LandingPage = () => {
     >
       <Header />
       <Hero />
-      <ChaosSection />
-      <FeaturesSection />
-      <FeaturesGrid />
-      <BenefitsSection />
-      <TestimonialsSection />
-      <VisualsSection />
-      <FinanceSection />
+      <ProblemSolutionSection />
+      <EarlySocialProofSection />
+      <KeyFeaturesSection />
       <PricingSection />
-      <CtaSection />
-      <FaqSection />
+      <MockupsShowcaseSection />
+      <SecondaryBenefitsSection />
+      <StrategicFaqSection />
+      <FinalCtaSection />
       <Footer />
     </motion.div>
   );
