@@ -1,4 +1,3 @@
-
 import { motion } from "framer-motion";
 import { BookOpen, Search, Megaphone, Users, DollarSign } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -14,7 +13,7 @@ const keyFeatures = [
   {
     icon: <Search className="w-12 h-12 text-[#FB923C]" />,
     title: "Panel de Investigación", 
-    description: "Un espacio tipo Notion asociado a cada libro. Investiga, define estrategias, desarrolla contenido y organiza campañas.",
+    description: "Un espacio tipo Notion asociado a cada libro. Investiga, define estrategias, desarrolla contenido, crea checklists, incrusta imágenes y videos, e incluso escribe tu libro como en un editor de texto.",
     benefit: "Tu espacio libre con contexto"
   },
   {
