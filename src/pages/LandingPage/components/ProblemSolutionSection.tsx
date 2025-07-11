@@ -4,39 +4,45 @@ import { AlertTriangle, CheckCircle, Clock, Search, FileX, TrendingDown } from "
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 
-const problemPoints = [
+const timeWasters = [
   {
-    icon: <Search className="w-6 h-6 text-red-500" />,
-    title: "Tu Drive es un mercadillo digital",
-    description: "Todo está ahí, pero nunca sabes dónde encontrarlo"
+    icon: <Search className="w-8 h-8 text-red-500" />,
+    title: "5 horas semanales perdidas",
+    description: "Saltando entre Google Drive, Excels, email marketing, herramientas de diseño, KDP, redes sociales...",
+    impact: "260 horas anuales malgastadas"
   },
   {
-    icon: <Clock className="w-6 h-6 text-orange-500" />,
-    title: "Decisiones sin contexto",
-    description: "Actúas desde el cansancio, sin datos reales"
+    icon: <FileX className="w-8 h-8 text-red-500" />,
+    title: "Archivos y datos dispersos",
+    description: "Portadas en un sitio, manuscritos en otro, datos de ventas en Excel, leads en diferentes plataformas",
+    impact: "Decisiones lentas y poco informadas"
   },
   {
-    icon: <FileX className="w-6 h-6 text-red-500" />,
-    title: "Versiones que no reconoces",
-    description: "Campañas olvidadas, correos sin abrir, caos total"
+    icon: <TrendingDown className="w-8 h-8 text-red-500" />,
+    title: "Oportunidades perdidas",
+    description: "Leads sin seguimiento, campañas descoordinadas, no sabes qué libros son rentables",
+    impact: "Menos ventas de las que podrías tener"
   }
 ];
 
 const solutionPoints = [
   {
-    icon: <CheckCircle className="w-6 h-6 text-green-500" />,
-    title: "Sistema centralizado",
-    description: "Todos los activos, datos y tareas editoriales en un solo lugar"
+    icon: <CheckCircle className="w-8 h-8 text-green-500" />,
+    title: "Una sola plataforma, todo centralizado",
+    description: "Gestión de libros, marketing, finanzas y CRM desde un único panel",
+    benefit: "Ahorra 5+ horas semanales"
   },
   {
-    icon: <CheckCircle className="w-6 h-6 text-green-500" />,
-    title: "Automatización inteligente",
-    description: "Los procesos rutinarios se ejecutan solos"
+    icon: <CheckCircle className="w-8 h-8 text-green-500" />,
+    title: "Marketing automatizado sin complicaciones",
+    description: "Landing pages, email marketing, funnels y CRM integrado en español",
+    benefit: "Más leads, mejores conversiones"
   },
   {
-    icon: <CheckCircle className="w-6 h-6 text-green-500" />,
-    title: "Visión clara del negocio",
-    description: "Entiendes qué funciona y qué necesita atención"
+    icon: <CheckCircle className="w-8 h-8 text-green-500" />,
+    title: "Datos y finanzas cristalinas",
+    description: "Ve el rendimiento real de cada libro, controla gastos e ingresos fácilmente",
+    benefit: "Decisiones inteligentes basadas en datos"
   }
 ];
 
@@ -53,11 +59,11 @@ export const ProblemSolutionSection = () => {
           className="text-center mb-16"
         >
           <h2 className="text-3xl md:text-4xl font-bold mb-6 text-foreground">
-            Si somos sinceros...
+            ¿Cuánto tiempo pierdes realmente cada semana?
           </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Esa sensación cada vez más frecuente de que tu editorial se ha convertido en un monstruo 
-            que consume tu tiempo, tu energía y tus ideas.
+          <p className="text-xl text-muted-foreground max-w-4xl mx-auto">
+            La gestión editorial tradicional te tiene saltando entre herramientas como un malabarista digital. 
+            <strong className="text-foreground"> Publify centraliza todo para que recuperes el control.</strong>
           </p>
         </motion.div>
 
@@ -72,19 +78,22 @@ export const ProblemSolutionSection = () => {
               🔥 El caos editorial actual
             </h3>
             <div className="space-y-6">
-              {problemPoints.map((point, index) => (
+              {timeWasters.map((point, index) => (
                 <motion.div
                   key={index}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
-                  className="flex items-start gap-4 p-4 bg-red-50 dark:bg-red-950/20 rounded-lg border border-red-200 dark:border-red-800/30"
+                  className="flex items-start gap-4 p-6 bg-red-50 dark:bg-red-950/20 rounded-lg border border-red-200 dark:border-red-800/30"
                 >
                   {point.icon}
-                  <div>
+                  <div className="flex-1">
                     <h4 className="font-semibold mb-2 text-foreground">{point.title}</h4>
-                    <p className="text-muted-foreground text-sm">{point.description}</p>
+                    <p className="text-muted-foreground text-sm mb-2">{point.description}</p>
+                    <p className="text-xs font-medium text-red-600 dark:text-red-400">
+                      💸 {point.impact}
+                    </p>
                   </div>
                 </motion.div>
               ))}
@@ -108,12 +117,15 @@ export const ProblemSolutionSection = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
-                  className="flex items-start gap-4 p-4 bg-green-50 dark:bg-green-950/20 rounded-lg border border-green-200 dark:border-green-800/30"
+                  className="flex items-start gap-4 p-6 bg-green-50 dark:bg-green-950/20 rounded-lg border border-green-200 dark:border-green-800/30"
                 >
                   {point.icon}
-                  <div>
+                  <div className="flex-1">
                     <h4 className="font-semibold mb-2 text-foreground">{point.title}</h4>
-                    <p className="text-muted-foreground text-sm">{point.description}</p>
+                    <p className="text-muted-foreground text-sm mb-2">{point.description}</p>
+                    <p className="text-xs font-medium text-green-600 dark:text-green-400">
+                      ✨ {point.benefit}
+                    </p>
                   </div>
                 </motion.div>
               ))}

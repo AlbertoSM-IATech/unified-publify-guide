@@ -7,47 +7,55 @@ import { useNavigate } from "react-router-dom";
 const features = [
   {
     icon: <BookOpen className="w-6 h-6" />,
-    title: "Gestión Editorial Completa",
-    description: "Organiza libros, colecciones, investigaciones y todo tu contenido editorial en un sistema integrado.",
+    title: "Centro de Control Editorial",
+    description: "Gestiona toda tu biblioteca desde un dashboard intuitivo. Desde la idea hasta la venta, todo organizado.",
     benefits: [
-      "Fichas detalladas de cada libro",
-      "Seguimiento de estados y procesos",
-      "Gestión de colecciones y series",
-      "Control de versiones y archivos"
-    ]
+      "Fichas completas con ASIN, ISBN, BSR dinámico",
+      "Almacenamiento seguro en la nube de archivos",
+      "Organización por colecciones y categorías",
+      "Cálculo automático de regalías por formato",
+      "Panel de investigación tipo Notion integrado"
+    ],
+    highlight: "Todo tu catálogo centralizado"
   },
   {
     icon: <Zap className="w-6 h-6" />,
-    title: "Marketing Automatizado",
-    description: "Crea y gestiona campañas de marketing sin complicaciones técnicas.",
+    title: "Marketing Sin Complicaciones",
+    description: "Construye landing pages, automatiza emails y gestiona leads sin conocimientos técnicos.",
     benefits: [
-      "Landing pages profesionales",
-      "Email marketing automatizado",
-      "Formularios y lead magnets",
-      "Análisis de conversiones"
-    ]
+      "Constructor web ilimitado sin código",
+      "Email marketing con 2.000 emails/mes incluidos",
+      "Funnels de venta visuales paso a paso",
+      "CRM y pipeline integrado",
+      "Chat web con IA conversacional"
+    ],
+    highlight: "Deja de pagar múltiples plataformas"
   },
   {
     icon: <LineChart className="w-6 h-6" />,
-    title: "Análisis Financiero",
-    description: "Controla tus ingresos, gastos y rentabilidad por libro y campaña.",
+    title: "Finanzas Cristalinas",
+    description: "Ve realmente cuánto ganas con cada libro. Control total de ingresos, gastos y rentabilidad.",
     benefits: [
-      "Importación de regalías CSV",
+      "Dashboards visuales de rendimiento",
       "Seguimiento de gastos por proyecto",
-      "Informes de rentabilidad",
-      "Dashboards visuales"
-    ]
+      "Análisis de rentabilidad por libro",
+      "Exportación de informes detallados",
+      "Integración con datos de KDP"
+    ],
+    highlight: "Decisiones basadas en datos reales"
   },
   {
     icon: <Settings className="w-6 h-6" />,
-    title: "Integraciones Potentes",
-    description: "Conecta con las plataformas que ya usas para maximizar tu eficiencia.",
+    title: "Automatización Inteligente",
+    description: "Workflows automáticos que trabajan mientras tú creas. Todo sincronizado y con backups automáticos.",
     benefits: [
-      "Amazon KDP y otras plataformas",
-      "Herramientas de diseño",
-      "Sistemas de pago",
-      "Analytics y métricas"
-    ]
+      "Sincronización total entre dispositivos",
+      "Backups automáticos en la nube",
+      "Flujos de trabajo personalizables",
+      "Integraciones con herramientas que ya usas",
+      "Notificaciones inteligentes"
+    ],
+    highlight: "Tu negocio funciona solo"
   }
 ];
 
@@ -94,14 +102,20 @@ export const KeyFeaturesSection = () => {
                 {feature.description}
               </p>
               
-              <ul className="space-y-3">
+              <ul className="space-y-3 mb-4">
                 {feature.benefits.map((benefit, idx) => (
-                  <li key={idx} className="flex items-center gap-3 text-foreground">
-                    <div className="w-2 h-2 bg-[#FB923C] rounded-full" />
-                    {benefit}
+                  <li key={idx} className="flex items-start gap-3 text-sm text-foreground">
+                    <div className="w-2 h-2 bg-[#FB923C] rounded-full mt-2 flex-shrink-0" />
+                    <span>{benefit}</span>
                   </li>
                 ))}
               </ul>
+              
+              <div className="pt-4 border-t border-border">
+                <p className="text-sm font-semibold text-[#FB923C]">
+                  💡 {feature.highlight}
+                </p>
+              </div>
             </motion.div>
           ))}
         </div>

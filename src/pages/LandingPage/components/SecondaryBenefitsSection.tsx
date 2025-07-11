@@ -2,31 +2,36 @@
 import { motion } from "framer-motion";
 import { Target, Brain, BarChart3, TrendingUp, Users2 } from "lucide-react";
 
-const benefits = [
+const realBenefits = [
   {
     icon: <Target className="w-8 h-8 text-[#FB923C]" />,
-    title: "Todo centralizado",
-    description: "Archivos, tareas, enlaces y decisiones en un único lugar pensado para tu editorial"
+    title: "5+ horas recuperadas semanalmente",
+    description: "No más saltos entre Google Drive, KDP, Excel, plataformas de email... Todo centralizado.",
+    example: "De 3 horas actualizando datos → 10 minutos"
   },
   {
     icon: <Brain className="w-8 h-8 text-green-500" />,
-    title: "Tu cabeza despejada",
-    description: "Menos estrés, más foco en lo que mueve tu editorial hacia adelante"
+    title: "Menos estrés, más claridad",
+    description: "Sabes exactamente qué libros funcionan, cuáles necesitan atención y dónde invertir tiempo.",
+    example: "Decisiones rápidas basadas en datos reales"
   },
   {
     icon: <BarChart3 className="w-8 h-8 text-blue-500" />,
-    title: "Decisiones con datos",
-    description: "Ve qué funciona, qué necesita atención y qué puedes escalar"
+    title: "Finanzas que puedes entender",
+    description: "Ve de un vistazo cuánto ganas con cada libro, qué gastos tienes y tu rentabilidad real.",
+    example: "Panel visual en lugar de Excel complicados"
   },
   {
     icon: <TrendingUp className="w-8 h-8 text-purple-500" />,
-    title: "Escalas sin fricción",
-    description: "Cada nuevo título se apoya en un sistema que ya funciona"
+    title: "Marketing que funciona solo",
+    description: "Automatizaciones que captan leads, nutren contactos y convierten mientras tú creas.",
+    example: "De 0 a campañas automáticas en minutos"
   },
   {
     icon: <Users2 className="w-8 h-8 text-orange-500" />,
-    title: "Puedes delegar",
-    description: "Tu equipo sabe qué hacer porque el sistema lo indica con claridad"
+    title: "Escalabilidad real",
+    description: "Da igual si tienes 5 libros o 50: el sistema crece contigo sin complicarse.",
+    example: "Mismo workflow para 1 libro que para 100"
   }
 ];
 
@@ -49,20 +54,25 @@ export const SecondaryBenefitsSection = () => {
         </motion.div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {benefits.map((benefit, index) => (
+          {realBenefits.map((benefit, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
-              className="bg-card p-6 rounded-lg text-center shadow-sm border border-border hover:shadow-md transition-shadow"
+              className="bg-card p-6 rounded-lg shadow-sm border border-border hover:shadow-md transition-shadow"
             >
               <div className="flex justify-center mb-4">
                 {benefit.icon}
               </div>
               <h3 className="font-semibold mb-3 text-foreground">{benefit.title}</h3>
-              <p className="text-muted-foreground text-sm leading-relaxed">{benefit.description}</p>
+              <p className="text-muted-foreground text-sm leading-relaxed mb-3">{benefit.description}</p>
+              <div className="bg-[#FB923C]/10 border border-[#FB923C]/20 rounded-lg p-2">
+                <p className="text-xs font-medium text-[#FB923C]">
+                  ✨ {benefit.example}
+                </p>
+              </div>
             </motion.div>
           ))}
         </div>

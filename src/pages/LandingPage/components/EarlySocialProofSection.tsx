@@ -5,18 +5,21 @@ import { Star, Users, TrendingUp } from "lucide-react";
 const stats = [
   {
     icon: <Users className="w-8 h-8 text-[#FB923C]" />,
-    number: "2,800+",
-    label: "Autores activos"
-  },
-  {
-    icon: <Star className="w-8 h-8 text-yellow-500" />,
-    number: "4.9/5",
-    label: "Valoración media"
+    number: "200+",
+    label: "Publishers de KDP activos",
+    description: "Autores y editores independientes"
   },
   {
     icon: <TrendingUp className="w-8 h-8 text-green-500" />,
-    number: "300%",
-    label: "Crecimiento promedio en ventas"
+    number: "5 horas",
+    label: "Ahorradas por semana",
+    description: "Tiempo recuperado promedio"
+  },
+  {
+    icon: <Star className="w-8 h-8 text-yellow-500" />,
+    number: "100%",
+    label: "En español",
+    description: "Plataforma diseñada para hispanos"
   }
 ];
 
@@ -31,7 +34,7 @@ export const EarlySocialProofSection = () => {
           className="text-center mb-8"
         >
           <p className="text-muted-foreground text-lg">
-            Más de 200 autores se han unido esta semana
+            Únete a publishers que ya están transformando su negocio editorial
           </p>
         </motion.div>
         
@@ -51,8 +54,11 @@ export const EarlySocialProofSection = () => {
               <div className="text-3xl font-bold mb-2 text-foreground">
                 {stat.number}
               </div>
-              <div className="text-muted-foreground">
+              <div className="font-semibold text-foreground mb-1">
                 {stat.label}
+              </div>
+              <div className="text-sm text-muted-foreground">
+                {stat.description}
               </div>
             </motion.div>
           ))}
