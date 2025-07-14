@@ -65,10 +65,82 @@ export const Hero = () => {
   return <motion.section initial="hidden" whileInView="visible" viewport={{
     once: true
   }} className="relative flex flex-1 flex-col items-center px-4 pt-24 pb-16 md:pt-32 md:pb-24 overflow-hidden">
-      {/* Background effects */}
-      <div className="absolute inset-0 -z-10 opacity-30 pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-1/2 h-1/2 bg-primary/10 rounded-full blur-[100px]" />
-        <div className="absolute bottom-1/4 right-1/4 w-1/3 h-1/3 bg-[#FB923C]/20 rounded-full blur-[80px]" />
+      {/* Dynamic Animated Background */}
+      <div className="absolute inset-0 -z-10 pointer-events-none">
+        {/* Animated gradient mesh */}
+        <motion.div 
+          className="absolute inset-0 opacity-40"
+          animate={{
+            background: [
+              "radial-gradient(circle at 20% 50%, hsl(var(--primary) / 0.15) 0%, transparent 50%), radial-gradient(circle at 80% 20%, hsl(217 91% 60% / 0.15) 0%, transparent 50%), radial-gradient(circle at 40% 80%, hsl(var(--primary) / 0.1) 0%, transparent 50%)",
+              "radial-gradient(circle at 40% 20%, hsl(var(--primary) / 0.2) 0%, transparent 50%), radial-gradient(circle at 60% 80%, hsl(217 91% 60% / 0.1) 0%, transparent 50%), radial-gradient(circle at 80% 40%, hsl(var(--primary) / 0.15) 0%, transparent 50%)",
+              "radial-gradient(circle at 60% 70%, hsl(var(--primary) / 0.15) 0%, transparent 50%), radial-gradient(circle at 20% 40%, hsl(217 91% 60% / 0.2) 0%, transparent 50%), radial-gradient(circle at 80% 60%, hsl(var(--primary) / 0.1) 0%, transparent 50%)"
+            ]
+          }}
+          transition={{
+            duration: 20,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+        />
+        
+        {/* Floating orbs */}
+        {[...Array(6)].map((_, i) => (
+          <motion.div
+            key={i}
+            className={`absolute w-32 h-32 rounded-full blur-[60px] ${
+              i % 2 === 0 ? 'bg-primary/20' : 'bg-accent/15'
+            }`}
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+            }}
+            animate={{
+              x: [0, Math.random() * 100 - 50, 0],
+              y: [0, Math.random() * 100 - 50, 0],
+              scale: [1, 1.2, 1],
+              opacity: [0.3, 0.6, 0.3]
+            }}
+            transition={{
+              duration: 15 + Math.random() * 10,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: i * 2
+            }}
+          />
+        ))}
+        
+        {/* Grid pattern overlay */}
+        <div 
+          className="absolute inset-0 opacity-[0.02] dark:opacity-[0.05]"
+          style={{
+            backgroundImage: `
+              linear-gradient(hsl(var(--primary)) 1px, transparent 1px),
+              linear-gradient(90deg, hsl(var(--primary)) 1px, transparent 1px)
+            `,
+            backgroundSize: '50px 50px'
+          }}
+        />
+        
+        {/* Animated diagonal lines */}
+        <motion.div 
+          className="absolute inset-0 opacity-10"
+          animate={{
+            backgroundPosition: ['0% 0%', '100% 100%']
+          }}
+          transition={{
+            duration: 30,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+          style={{
+            backgroundImage: `
+              linear-gradient(45deg, transparent 40%, hsl(var(--primary) / 0.1) 50%, transparent 60%),
+              linear-gradient(-45deg, transparent 40%, hsl(217 91% 60% / 0.1) 50%, transparent 60%)
+            `,
+            backgroundSize: '200px 200px'
+          }}
+        />
       </div>
       
       <div className="mx-auto max-w-7xl w-full">
