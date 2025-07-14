@@ -74,7 +74,7 @@ export const Hero = () => {
       <div className="mx-auto max-w-7xl w-full">
         {/* Trust signal */}
         <motion.div variants={fadeIn} className="text-center mb-8">
-          <div className="inline-flex items-center gap-2 bg-[#FB923C]/10 border border-[#FB923C]/20 rounded-full px-4 py-2 text-sm font-medium text-[#FB923C]">
+          <div className="inline-flex items-center gap-2 bg-[#FB923C]/10 border border-[#FB923C]/20 py-2 text-sm font-medium text-[#FB923C] mx-[7px] my-0 px-[56px] rounded-3xl">
             <Sparkles size={16} />
             <span>La plataforma todo-en-uno para publishers de Amazon KDP</span>
           </div>
