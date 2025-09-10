@@ -232,8 +232,26 @@ const AdminDashboard: React.FC = memo(() => {
           </CardHeader>
           <CardContent>
             <ApexLineChart
-              series={userGrowthData.series}
-              categories={userGrowthData.categories}
+              title="Crecimiento de Usuarios"
+              description="Usuarios nuevos vs activos mensualmente"
+              data={[
+                { name: 'Ene', nuevos: 31, activos: 11 },
+                { name: 'Feb', nuevos: 40, activos: 32 },
+                { name: 'Mar', nuevos: 28, activos: 45 },
+                { name: 'Abr', nuevos: 51, activos: 32 },
+                { name: 'May', nuevos: 42, activos: 34 },
+                { name: 'Jun', nuevos: 109, activos: 52 },
+                { name: 'Jul', nuevos: 100, activos: 41 },
+                { name: 'Ago', nuevos: 91, activos: 65 },
+                { name: 'Sep', nuevos: 135, activos: 89 },
+                { name: 'Oct', nuevos: 84, activos: 73 },
+                { name: 'Nov', nuevos: 67, activos: 45 },
+                { name: 'Dic', nuevos: 89, activos: 67 }
+              ]}
+              series={[
+                { name: 'Nuevos usuarios', key: 'nuevos', color: '#8b5cf6' },
+                { name: 'Usuarios activos', key: 'activos', color: '#06b6d4' }
+              ]}
               height={300}
             />
           </CardContent>
@@ -248,8 +266,15 @@ const AdminDashboard: React.FC = memo(() => {
           </CardHeader>
           <CardContent>
             <ApexPieChart
-              series={booksByCategory.series}
-              labels={booksByCategory.labels}
+              title="Libros por Categoría"
+              description="Distribución de contenido en la plataforma"
+              data={[
+                { name: 'Ficción', value: 44, color: '#8b5cf6' },
+                { name: 'Educación', value: 55, color: '#06b6d4' },
+                { name: 'Negocios', value: 41, color: '#10b981' },
+                { name: 'Tecnología', value: 17, color: '#f59e0b' },
+                { name: 'Otros', value: 15, color: '#ef4444' }
+              ]}
               height={300}
             />
           </CardContent>

@@ -76,8 +76,15 @@ const AdminAnalytics: React.FC = memo(() => {
           </CardHeader>
           <CardContent>
             <ApexPieChart
-              series={analyticsData.trafficSources.series}
-              labels={analyticsData.trafficSources.labels}
+              title="Fuentes de Tráfico"
+              description="De dónde vienen los usuarios"
+              data={[
+                { name: 'Búsqueda Directa', value: 45, color: '#8b5cf6' },
+                { name: 'Redes Sociales', value: 23, color: '#06b6d4' },
+                { name: 'Email Marketing', value: 16, color: '#10b981' },
+                { name: 'Publicidad', value: 10, color: '#f59e0b' },
+                { name: 'Otros', value: 6, color: '#ef4444' }
+              ]}
               height={350}
             />
           </CardContent>
