@@ -152,17 +152,21 @@ export const Hero = () => {
           </div>
         </motion.div>
 
+        {/* Title - Full width */}
+        <div className="text-center mb-16">
+          <motion.h1 variants={fadeIn} className="font-heading text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl mb-8">
+            Ordena tu catálogo KDP.{" "}
+            <span className="relative inline-block">
+              <span className="text-primary">Centraliza tu marketing.</span>
+              <motion.span className="absolute bottom-1 left-0 h-[6px] bg-primary/40 rounded-full" variants={highlightVariants} />
+            </span>{" "}
+            Controla tus números.
+          </motion.h1>
+        </div>
+
+        {/* Content - Two columns */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="text-center lg:text-left">
-            <motion.h1 variants={fadeIn} className="font-heading text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl mb-6">
-              Ordena tu catálogo KDP.{" "}
-              <span className="relative inline-block">
-                <span className="text-primary">Centraliza tu marketing.</span>
-                <motion.span className="absolute bottom-1 left-0 h-[6px] bg-primary/40 rounded-full" variants={highlightVariants} />
-              </span>{" "}
-              Controla tus números.
-            </motion.h1>
-            
             <motion.p variants={fadeIn} className="text-xl text-muted-foreground mb-8 leading-relaxed">
               Publify es tu hub operativo para Amazon KDP. Te ayudamos a trabajar con calma: 
               una sola fuente de verdad para tu biblioteca, campañas y finanzas.
