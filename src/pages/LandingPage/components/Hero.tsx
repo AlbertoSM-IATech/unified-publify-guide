@@ -155,17 +155,17 @@ export const Hero = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="text-center lg:text-left">
             <motion.h1 variants={fadeIn} className="font-heading text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl mb-6">
-              Deja de perder{" "}
+              Ordena tu catálogo KDP.{" "}
               <span className="relative inline-block">
-                <span className="text-[#FB923C]">horas semanales</span>
-                <motion.span className="absolute bottom-1 left-0 h-[6px] bg-[#FB923C]/40 rounded-full" variants={highlightVariants} />
+                <span className="text-primary">Centraliza tu marketing.</span>
+                <motion.span className="absolute bottom-1 left-0 h-[6px] bg-primary/40 rounded-full" variants={highlightVariants} />
               </span>{" "}
-              saltando entre herramientas
+              Controla tus números.
             </motion.h1>
             
             <motion.p variants={fadeIn} className="text-xl text-muted-foreground mb-8 leading-relaxed">
-              <strong>Publify centraliza tu negocio editorial completo:</strong> gestión de libros, 
-              marketing automatizado, control financiero y CRM. Todo en español, sin líos.
+              Publify es tu hub operativo para Amazon KDP. Te ayudamos a trabajar con calma: 
+              una sola fuente de verdad para tu biblioteca, campañas y finanzas.
             </motion.p>
 
             {/* Pain points */}
@@ -183,8 +183,8 @@ export const Hero = () => {
             
             <motion.div variants={fadeIn} className="flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
               <motion.div variants={buttonHoverVariants} whileHover="hover">
-                <Button onClick={handleGetStarted} size="lg" className="group text-lg w-full sm:w-auto bg-gradient-to-r from-primary to-[#FB923C] hover:shadow-lg hover:shadow-primary/20 py-6 px-8">
-                  Centraliza tu negocio ahora
+                <Button onClick={handleGetStarted} size="lg" className="group text-lg w-full sm:w-auto bg-gradient-to-r from-primary to-primary hover:shadow-lg hover:shadow-primary/20 py-6 px-8">
+                  Acceso prioritario
                   <motion.div className="ml-2 flex items-center" initial={{
                   x: 0
                 }} whileHover={{
@@ -199,9 +199,9 @@ export const Hero = () => {
                 </Button>
               </motion.div>
               
-              <Button variant="outline" onClick={handlePlayVideo} size="lg" className="text-lg w-full sm:w-auto border-[#FB923C]/30 hover:border-[#FB923C]/80 hover:bg-[#FB923C]/10 py-6 px-8">
+              <Button variant="outline" onClick={handlePlayVideo} size="lg" className="text-lg w-full sm:w-auto border-primary/30 hover:border-primary/80 hover:bg-primary/10 py-6 px-8">
                 <Play size={18} className="mr-2" />
-                Ver demo (2 min)
+                Ver vídeo
               </Button>
             </motion.div>
 

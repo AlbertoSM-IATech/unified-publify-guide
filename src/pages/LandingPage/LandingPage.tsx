@@ -2,14 +2,14 @@
 import { motion } from "framer-motion";
 import { Header } from "./components/Header";
 import { Hero } from "./components/Hero";
-import { ProblemSolutionSection } from "./components/ProblemSolutionSection";
-import { EarlySocialProofSection } from "./components/EarlySocialProofSection";
-import { KeyFeaturesSection } from "./components/KeyFeaturesSection";
-import { PricingSection } from "./components/PricingSection";
-import { MockupsShowcaseSection } from "./components/MockupsShowcaseSection";
-import { SecondaryBenefitsSection } from "./components/SecondaryBenefitsSection";
-import { StrategicFaqSection } from "./components/StrategicFaqSection";
-import { FinalCtaSection } from "./components/FinalCtaSection";
+import { SocialProofSection } from "./components/SocialProofSection";
+import { NewProblemSolutionSection } from "./components/NewProblemSolutionSection";
+import { ThreePillarsSection } from "./components/ThreePillarsSection";
+import { HowItWorksSection } from "./components/HowItWorksSection";
+import { TargetAudienceSection } from "./components/TargetAudienceSection";
+import { KeyBenefitsSection } from "./components/KeyBenefitsSection";
+import { MainCtaSection } from "./components/MainCtaSection";
+import { FaqSection } from "./components/FaqSection";
 import { Footer } from "./components/Footer";
 
 // Animation variants for page sections
@@ -33,14 +33,14 @@ export const LandingPage = () => {
     >
       <Header />
       <Hero />
-      <ProblemSolutionSection />
-      <EarlySocialProofSection />
-      <KeyFeaturesSection />
-      <PricingSection />
-      <MockupsShowcaseSection />
-      <SecondaryBenefitsSection />
-      <StrategicFaqSection />
-      <FinalCtaSection />
+      <SocialProofSection />
+      <NewProblemSolutionSection />
+      <ThreePillarsSection />
+      <HowItWorksSection />
+      <TargetAudienceSection />
+      <KeyBenefitsSection />
+      <MainCtaSection />
+      <FaqSection />
       <Footer />
     </motion.div>
   );
