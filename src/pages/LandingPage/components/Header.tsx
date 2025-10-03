@@ -3,6 +3,8 @@ import { useNavigate, Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { useTheme } from "@/hooks/useTheme";
 import { Button } from "@/components/ui/button";
+import logoDark from "@/assets/publify-logo-dark.png";
+import logoLight from "@/assets/publify-logo-light.png";
 
 export const Header = () => {
   const navigate = useNavigate();
@@ -29,9 +31,13 @@ export const Header = () => {
   return (
     <header className={`fixed top-0 w-full z-50 border-b border-opacity-0 transition-all duration-300 ${scrolled ? "bg-background/95 backdrop-blur-md shadow-sm" : ""}`}>
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 md:px-8">
-        <div className="flex items-center">
-          <span className="font-heading text-2xl font-bold text-foreground">Publify</span>
-        </div>
+        <Link to="/" className="flex items-center">
+          <img 
+            src={theme === "dark" ? logoLight : logoDark} 
+            alt="Publify - La Herramienta de los Publishers Inteligentes" 
+            className="h-8 md:h-10 w-auto"
+          />
+        </Link>
         
         {/* Desktop Navigation */}
         <nav className="hidden space-x-6 md:flex">

@@ -2,6 +2,9 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { SocialIcons } from "@/components/common/SocialIcons";
+import { useTheme } from "@/hooks/useTheme";
+import logoDark from "@/assets/publify-logo-dark.png";
+import logoLight from "@/assets/publify-logo-light.png";
 
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
@@ -13,6 +16,8 @@ const fadeIn = {
 };
 
 export const Footer = () => {
+  const { theme } = useTheme();
+  
   return (
     <footer className="border-t border-border bg-card px-4 py-12">
       <motion.div 
@@ -24,7 +29,11 @@ export const Footer = () => {
       >
         <div className="flex flex-col items-center justify-between space-y-8 md:flex-row md:space-y-0">
           <div className="flex flex-col items-center md:items-start">
-            <span className="font-heading text-2xl font-bold mb-2">Publify</span>
+            <img 
+              src={theme === "dark" ? logoLight : logoDark} 
+              alt="Publify - La Herramienta de los Publishers Inteligentes" 
+              className="h-8 w-auto mb-4"
+            />
             <p className="text-sm text-muted-foreground text-center md:text-left">
               La plataforma todo-en-uno para autores y editoriales.
             </p>
