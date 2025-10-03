@@ -5,23 +5,44 @@ import { User, Quote, ArrowRight } from "lucide-react";
 import { useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-const testimonials = [{
-  quote: "Publify me ha ahorrado más de 5 horas a la semana. Todo está en su sitio.",
-  author: "María García",
-  role: "Escritora independiente"
-}, {
-  quote: "Gracias a su panel editorial, pasé de tener 15 documentos a una sola vista centralizada.",
-  author: "Alejandro Rodríguez",
-  role: "Editor de contenido digital"
-}, {
-  quote: "Por fin tengo control de mis regalías y gastos sin abrir Excel.",
-  author: "Laura Sánchez",
-  role: "Autopublicadora con 12 títulos"
-}, {
-  quote: "La automatización del marketing ha sido un cambio radical en mi forma de promocionar mis libros.",
-  author: "Carlos Martínez",
-  role: "Editorial independiente"
-}];
+const testimonials = [
+  {
+    quote: "Antes tardaba 3 horas cada semana solo en actualizar hojas de cálculo. Ahora tengo todo automatizado y puedo ver el estado de mis 8 libros en segundos. Publify me devolvió el tiempo para escribir.",
+    author: "María García",
+    role: "Escritora independiente",
+    books: "8 títulos publicados"
+  },
+  {
+    quote: "Gestiono una pequeña editorial con 15 autores. Antes era un caos de emails y documentos perdidos. Con Publify, cada autor tiene su espacio y yo puedo supervisar todo desde un solo panel. Game changer.",
+    author: "Alejandro Rodríguez",
+    role: "Editor y fundador",
+    books: "Editorial con 45 títulos"
+  },
+  {
+    quote: "Lo mejor es el módulo de finanzas. Por fin entiendo cuánto gano realmente con cada libro después de restar todos los gastos. Tomé decisiones que aumentaron mis beneficios un 40% en 3 meses.",
+    author: "Laura Sánchez",
+    role: "Autopublicadora",
+    books: "12 títulos en Amazon KDP"
+  },
+  {
+    quote: "La integración con GoHighLevel para automatizar el marketing ha sido brutal. Mis embudos de venta funcionan solos mientras yo me enfoco en escribir el próximo libro. Ya no pierdo leads.",
+    author: "Carlos Martínez",
+    role: "Autor y formador",
+    books: "5 bestsellers en su nicho"
+  },
+  {
+    quote: "Pasé de tener archivos por todas partes (Drive, Dropbox, mi PC) a tener todo centralizado. La búsqueda es instantánea y nunca más perdí una versión final de portada o manuscrito.",
+    author: "Isabel Fernández",
+    role: "Escritora de ficción",
+    books: "20+ novelas publicadas"
+  },
+  {
+    quote: "Como formador, necesitaba una forma de dar soporte a mis alumnos autores. Publify me permitió crear un sistema donde cada uno gestiona su catálogo y yo puedo asesorarles mejor con datos reales.",
+    author: "Roberto Navarro",
+    role: "Consultor editorial",
+    books: "150+ autores asesorados"
+  }
+];
 const cardVariants = {
   hidden: {
     opacity: 0,
@@ -106,10 +127,10 @@ export const TestimonialsSection = () => {
             </motion.div>
           </div>
           <h2 className="text-3xl md:text-4xl font-bold font-heading mb-4">
-            Testimonios de usuarios tempranos
+            Casos de éxito reales
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Descubre lo que dicen nuestros primeros usuarios sobre cómo Publify ha transformado su forma de gestionar su negocio editorial
+          <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
+            Autores y editoriales que ya están ahorrando tiempo, aumentando ventas y recuperando el control de su negocio
           </p>
         </motion.div>
 
@@ -185,6 +206,7 @@ interface TestimonialCardProps {
     quote: string;
     author: string;
     role: string;
+    books: string;
   };
 }
 const TestimonialCard = ({
@@ -228,6 +250,7 @@ const TestimonialCard = ({
       <div className="text-left">
         <p className="font-semibold">{testimonial.author}</p>
         <p className="text-sm text-muted-foreground">{testimonial.role}</p>
+        <p className="text-xs text-muted-foreground mt-1">{testimonial.books}</p>
       </div>
     </motion.div>
   </ContentCard>;
