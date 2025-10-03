@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
+import publisherWorking from "@/assets/publisher-working.png";
 const fadeIn = {
   hidden: {
     opacity: 0,
@@ -65,6 +66,17 @@ export const Hero = () => {
   return <motion.section initial="hidden" whileInView="visible" viewport={{
     once: true
   }} className="relative flex flex-1 flex-col items-center px-4 pt-24 pb-16 md:pt-32 md:pb-24 overflow-hidden">
+      {/* Publisher illustration background */}
+      <div 
+        className="absolute inset-0 -z-20 pointer-events-none opacity-[0.04]"
+        style={{
+          backgroundImage: `url(${publisherWorking})`,
+          backgroundSize: 'contain',
+          backgroundPosition: 'right center',
+          backgroundRepeat: 'no-repeat',
+        }}
+      />
+      
       {/* Dynamic Animated Background */}
       <div className="absolute inset-0 -z-10 pointer-events-none">
         {/* Animated gradient mesh */}
