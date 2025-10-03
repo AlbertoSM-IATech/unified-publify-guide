@@ -2,9 +2,10 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { ContentCard } from "@/components/common/ContentCard";
 import { User, Quote, ArrowRight } from "lucide-react";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
+import Autoplay from "embla-carousel-autoplay";
 const testimonials = [
   {
     quote: "Antes tardaba 3 horas cada semana solo en actualizar hojas de cálculo. Ahora tengo todo automatizado y puedo ver el estado de mis 8 libros en segundos. Publify me devolvió el tiempo para escribir.",
@@ -41,6 +42,42 @@ const testimonials = [
     author: "Roberto Navarro",
     role: "Consultor editorial",
     books: "150+ autores asesorados"
+  },
+  {
+    quote: "Llevaba años usando mil herramientas diferentes. Publify unificó todo: desde la gestión de ISBN hasta el seguimiento de campañas publicitarias. Mi productividad se multiplicó por 3.",
+    author: "Patricia Morales",
+    role: "Autora y marketer",
+    books: "15 títulos + 2 cursos"
+  },
+  {
+    quote: "El panel de métricas me permite ver en tiempo real qué libros están vendiendo mejor y ajustar mi estrategia al instante. Datos claros = mejores decisiones = más ingresos.",
+    author: "Fernando Campos",
+    role: "Autor de no ficción",
+    books: "Especialista en desarrollo personal"
+  },
+  {
+    quote: "Antes perdía oportunidades porque no tenía tiempo de hacer seguimiento a los lectores interesados. Ahora todo está automatizado y mi lista de email crece cada día sin que yo tenga que hacer nada.",
+    author: "Sofía Ramírez",
+    role: "Escritora romántica",
+    books: "25 novelas + newsletter con 10K suscriptores"
+  },
+  {
+    quote: "Como editorial pequeña, no podíamos permitirnos software caro ni un equipo grande. Publify nos dio herramientas de nivel profesional a un precio accesible. Ahora competimos con editoriales mucho más grandes.",
+    author: "David Ortega",
+    role: "Co-fundador",
+    books: "Editorial Horizonte - 60 títulos"
+  },
+  {
+    quote: "La función de trazabilidad financiera es oro puro. Ahora sé exactamente cuánto he invertido en cada libro (edición, portada, ads) y cuánto he recuperado. Nunca más voy a ciegas.",
+    author: "Elena Vega",
+    role: "Autopublicadora",
+    books: "10 títulos + blog de escritura"
+  },
+  {
+    quote: "Publify se integró perfectamente con mis procesos existentes. No tuve que cambiar nada drásticamente, solo mejorar y centralizar. En dos semanas ya estaba operando al 100% con el sistema.",
+    author: "Miguel Ángel Díaz",
+    role: "Escritor y podcaster",
+    books: "7 libros + 200 episodios"
   }
 ];
 const cardVariants = {
@@ -87,6 +124,15 @@ const quoteIconVariants = {
 export const TestimonialsSection = () => {
   const ref = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
+  
+  const autoplayPlugin = useRef(
+    Autoplay({ 
+      delay: 4000, 
+      stopOnInteraction: true,
+      stopOnMouseEnter: true,
+    })
+  );
+  
   const {
     scrollYProgress
   } = useScroll({
@@ -145,7 +191,14 @@ export const TestimonialsSection = () => {
 
         {/* Desktop view: Carousel */}
         <div className="hidden md:block">
-          <Carousel className="w-full max-w-5xl mx-auto">
+          <Carousel 
+            className="w-full max-w-5xl mx-auto"
+            plugins={[autoplayPlugin.current]}
+            opts={{
+              align: "start",
+              loop: true,
+            }}
+          >
             <CarouselContent className="-ml-4">
               {testimonials.map((testimonial, index) => <CarouselItem key={index} className="pl-4 md:basis-1/2 lg:basis-1/3">
                   <motion.div custom={index} initial="hidden" whileInView="visible" viewport={{
