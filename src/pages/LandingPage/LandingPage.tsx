@@ -10,7 +10,7 @@ import { KeyBenefitsSection } from "./components/KeyBenefitsSection";
 import { MainCtaSection } from "./components/MainCtaSection";
 import { FaqSection } from "./components/FaqSection";
 import { Footer } from "./components/Footer";
-import { ParallaxBackground } from "@/components/motion/ParallaxBackground";
+import { TechBackground } from "@/components/motion/TechBackground";
 
 // Animation variants for page sections
 const pageVariants = {
@@ -31,8 +31,8 @@ export const LandingPage = () => {
       animate="visible"
       variants={pageVariants}
     >
-      {/* Fondo abstracto con ondas para toda la página */}
-      <ParallaxBackground />
+      {/* Fondo abstracto tecnológico para toda la página */}
+      <TechBackground />
       
       <Header />
       <Hero />

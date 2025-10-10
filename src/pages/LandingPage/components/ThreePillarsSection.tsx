@@ -1,16 +1,7 @@
-import { motion } from "framer-motion";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { BookOpen, Target, BarChart3 } from "lucide-react";
-
-const fadeIn = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { 
-    opacity: 1, 
-    y: 0,
-    transition: { duration: 0.3, ease: "easeOut" }
-  }
-};
+import { ScrollReveal } from "@/components/motion/ScrollReveal";
 
 const pillars = [
   {
@@ -37,31 +28,25 @@ export const ThreePillarsSection = () => {
   return (
     <section className="py-24 bg-background">
       <div className="container mx-auto px-4">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={fadeIn}
-          className="max-w-6xl mx-auto"
-        >
-          <div className="text-center mb-16">
+        <div className="max-w-6xl mx-auto">
+          <ScrollReveal variant="zoom" duration={0.8}>
+            <div className="text-center mb-16">
             <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-4">
               Los 3 pilares de Publify
             </h2>
-            <p className="text-xl text-muted-foreground">
-              Una plataforma completa diseñada para tu crecimiento editorial
-            </p>
-          </div>
+              <p className="text-xl text-muted-foreground">
+                Una plataforma completa diseñada para tu crecimiento editorial
+              </p>
+            </div>
+          </ScrollReveal>
 
           <div className="grid md:grid-cols-3 gap-8">
             {pillars.map((pillar, index) => (
-              <motion.div
+              <ScrollReveal
                 key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1, duration: 0.3 }}
-                whileHover={{ y: -4 }}
+                variant="flip"
+                delay={index * 0.2}
+                duration={0.8}
                 className="h-full"
               >
                 <Card className="h-full bg-card border-border hover:border-primary/20 hover:shadow-lg transition-all duration-300 group">
@@ -86,10 +71,10 @@ export const ThreePillarsSection = () => {
                     </Button>
                   </CardContent>
                 </Card>
-              </motion.div>
+              </ScrollReveal>
             ))}
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

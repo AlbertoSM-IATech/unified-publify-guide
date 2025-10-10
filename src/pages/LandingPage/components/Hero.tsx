@@ -1,10 +1,9 @@
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { ArrowRight, Sparkles, Play } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useState, useRef } from "react";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import publisherWorking from "@/assets/publisher-working.png";
 // Animaciones espectaculares para los elementos
 const fadeInUp = {
   hidden: {
@@ -106,15 +105,7 @@ export const Hero = () => {
   const navigate = useNavigate();
   const [videoPlaying, setVideoPlaying] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
-  
-  // Parallax para el contenido
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start start", "end start"]
-  });
-  
-  const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
-  const contentOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+  const isInView = useInView(sectionRef, { once: false, amount: 0.3 });
   const handleGetStarted = () => {
     navigate("/register");
   };
@@ -126,27 +117,7 @@ export const Hero = () => {
       ref={sectionRef}
       className="relative flex flex-1 flex-col items-center px-4 pt-24 pb-16 md:pt-32 md:pb-24 overflow-hidden"
     >
-      {/* Publisher illustration background con parallax */}
-      <motion.div 
-        style={{ y: useTransform(scrollYProgress, [0, 1], ["0%", "40%"]) }}
-        className="absolute inset-0 -z-20 pointer-events-none opacity-[0.04]"
-      >
-        <div
-          style={{
-            backgroundImage: `url(${publisherWorking})`,
-            backgroundSize: 'contain',
-            backgroundPosition: 'right center',
-            backgroundRepeat: 'no-repeat',
-            height: '100%',
-            width: '100%'
-          }}
-        />
-      </motion.div>
-      
-      <motion.div 
-        style={{ y: contentY, opacity: contentOpacity }}
-        className="mx-auto max-w-7xl w-full"
-      >
+      <div className="mx-auto max-w-7xl w-full">
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -327,7 +298,7 @@ export const Hero = () => {
             </motion.div>
           </motion.div>
         </motion.div>
-      </motion.div>
+      </div>
     </section>
   );
 };
