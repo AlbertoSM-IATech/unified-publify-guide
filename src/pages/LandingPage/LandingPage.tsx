@@ -1,4 +1,3 @@
-
 import { motion } from "framer-motion";
 import { Header } from "./components/Header";
 import { Hero } from "./components/Hero";
@@ -11,6 +10,7 @@ import { KeyBenefitsSection } from "./components/KeyBenefitsSection";
 import { MainCtaSection } from "./components/MainCtaSection";
 import { FaqSection } from "./components/FaqSection";
 import { Footer } from "./components/Footer";
+import { ParallaxBackground } from "@/components/motion/ParallaxBackground";
 
 // Animation variants for page sections
 const pageVariants = {
@@ -26,11 +26,14 @@ const pageVariants = {
 export const LandingPage = () => {
   return (
     <motion.div 
-      className="flex min-h-screen flex-col bg-background font-sans"
+      className="relative flex min-h-screen flex-col font-sans"
       initial="hidden"
       animate="visible"
       variants={pageVariants}
     >
+      {/* Fondo abstracto con ondas para toda la página */}
+      <ParallaxBackground />
+      
       <Header />
       <Hero />
       <SocialProofSection />

@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import { useState, useRef } from "react";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import publisherWorking from "@/assets/publisher-working.png";
-import { ParallaxBackground } from "@/components/motion/ParallaxBackground";
 // Animaciones espectaculares para los elementos
 const fadeInUp = {
   hidden: {
@@ -127,9 +126,6 @@ export const Hero = () => {
       ref={sectionRef}
       className="relative flex flex-1 flex-col items-center px-4 pt-24 pb-16 md:pt-32 md:pb-24 overflow-hidden"
     >
-      {/* Fondo abstracto con parallax */}
-      <ParallaxBackground />
-      
       {/* Publisher illustration background con parallax */}
       <motion.div 
         style={{ y: useTransform(scrollYProgress, [0, 1], ["0%", "40%"]) }}
