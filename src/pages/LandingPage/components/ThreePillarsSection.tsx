@@ -12,8 +12,8 @@ const pillars = [
   },
   {
     icon: Target,
-    title: "Marketing 360 (integrado con GoHighLevel)",
-    description: "Webs/landings, formularios, CRM, embudos y email desde un mismo flujo.",
+    title: "Marketing 360",
+    description: "Webs/landings, formularios, CRM, embudos y email desde un mismo flujo. (Próximamente en fase Early Adopters)",
     cta: "Ver más"
   },
   {

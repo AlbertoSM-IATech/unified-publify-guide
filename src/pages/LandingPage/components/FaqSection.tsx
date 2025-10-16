@@ -21,10 +21,6 @@ const faqs = [
     answer: "Estamos en fase de lanzamiento progresivo con acceso prioritario. Los primeros usuarios ya están probando la plataforma y proporcionando feedback valioso que nos ayuda a perfeccionar la experiencia."
   },
   {
-    question: "¿Necesito GoHighLevel?",
-    answer: "No es obligatorio. Publify funciona de manera independiente y se integra perfectamente si ya usas GoHighLevel. Si no lo tienes, puedes aprovechar todas las funcionalidades de marketing directamente desde Publify."
-  },
-  {
     question: "¿Puedo migrar mi catálogo actual?",
     answer: "¡Por supuesto! Te guiamos paso a paso con plantillas predefinidas y checklist detallados. Nuestro equipo de onboarding te acompaña en todo el proceso de migración para que sea rápido y sin pérdidas."
   },

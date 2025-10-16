@@ -26,7 +26,7 @@ const testimonials = [
     books: "12 títulos en Amazon KDP"
   },
   {
-    quote: "La integración con GoHighLevel para automatizar el marketing ha sido brutal. Mis embudos de venta funcionan solos mientras yo me enfoco en escribir el próximo libro. Ya no pierdo leads.",
+    quote: "Publify me permite automatizar mi marketing post-venta. Mis embudos funcionan solos mientras yo me enfoco en escribir el próximo libro. Ya no pierdo leads ni tiempo.",
     author: "Carlos Martínez",
     role: "Autor y formador",
     books: "5 bestsellers en su nicho"

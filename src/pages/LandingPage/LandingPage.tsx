@@ -7,6 +7,7 @@ import { ThreePillarsSection } from "./components/ThreePillarsSection";
 import { HowItWorksSection } from "./components/HowItWorksSection";
 import { TargetAudienceSection } from "./components/TargetAudienceSection";
 import { KeyBenefitsSection } from "./components/KeyBenefitsSection";
+import { PricingSection } from "./components/PricingSection";
 import { MainCtaSection } from "./components/MainCtaSection";
 import { FaqSection } from "./components/FaqSection";
 import { Footer } from "./components/Footer";
@@ -42,6 +43,7 @@ export const LandingPage = () => {
       <HowItWorksSection />
       <TargetAudienceSection />
       <KeyBenefitsSection />
+      <PricingSection />
       <MainCtaSection />
       <FaqSection />
       <Footer />
