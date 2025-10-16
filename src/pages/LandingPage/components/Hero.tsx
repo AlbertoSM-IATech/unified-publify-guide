@@ -133,7 +133,7 @@ export const Hero = () => {
             <motion.h1 variants={fadeInUp} className="font-heading text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl mb-8">
               Autopublicar no es fácil.{" "}
               <span className="-bottom-0.5 -bottom-0 -bottom-0.5 text-center mx-0 px-0">
-                <span className="text-primary px-[36px] mx-[34px]">Si KDP fuera fácil, no vivirías apagando fuegos</span>
+                <span className="text-primary mx-0 px-0 font-thin">Si KDP fuera fácil, no vivirías apagando fuegos</span>
                 
               </span>
             </motion.h1>
