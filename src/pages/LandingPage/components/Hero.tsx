@@ -148,7 +148,7 @@ export const Hero = () => {
           <motion.div variants={fadeInLeft} className="text-center lg:text-left">
             <motion.p variants={fadeInUp} className="text-xl text-muted-foreground mb-8 leading-relaxed font-extralight text-justify">
               El verdadero negocio de KDP empieza cuando dejas de actuar como aficionado. Publify es el sistema operativo para publishers que ya se dieron cuenta de que no basta con subir libros y rezar.{" "}
-              <strong className="text-foreground">Centraliza, ordena y te da control real. Sin humo. Sin cuentos. Sin Excel.</strong>
+              <strong className="text-foreground">Publify Centraliza, ordena y te da control real. Sin humo. Sin cuentos. Sin Excel.</strong>
             </motion.p>
 
             {/* Pain points */}
