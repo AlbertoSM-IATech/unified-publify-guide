@@ -63,10 +63,10 @@ export const MainCtaSection = () => {
           <Card className="border-primary/20 shadow-xl bg-card/50 backdrop-blur-sm">
             <CardHeader className="text-center pb-8">
               <CardTitle className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-                Únete a la lista prioritaria
+                ✅ Tu editorial KDP, sin humo ni caos
               </CardTitle>
               <CardDescription className="text-xl text-muted-foreground">
-                Acceso temprano y recursos de implementación
+                Empieza gratis con el plan Starter. Activa Pro cuando lo necesites. Publify crece contigo.
               </CardDescription>
             </CardHeader>
             
@@ -166,7 +166,7 @@ export const MainCtaSection = () => {
                     disabled={isSubmitting}
                     className="bg-primary hover:bg-primary/90 text-white px-8 py-4 text-lg font-semibold shadow-lg group"
                   >
-                    {isSubmitting ? "Enviando..." : "Solicitar acceso prioritario"}
+                    {isSubmitting ? "Enviando..." : "📆 Empezar ahora"}
                     {!isSubmitting && (
                       <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                     )}
@@ -177,10 +177,10 @@ export const MainCtaSection = () => {
               {/* Demo option */}
               <div className="text-center pt-6 border-t border-border">
                 <p className="text-muted-foreground mb-4">
-                  ¿Prefieres una demo personalizada?
+                  ¿Prefieres hablar antes de empezar?
                 </p>
                 <Button variant="outline" className="border-primary/30 text-primary hover:bg-primary/10">
-                  Solicitar demo privada
+                  📅 Agendar demo
                 </Button>
               </div>
 

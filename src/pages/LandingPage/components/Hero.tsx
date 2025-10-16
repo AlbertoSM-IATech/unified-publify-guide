@@ -138,15 +138,14 @@ export const Hero = () => {
               variants={fadeInUp} 
               className="font-heading text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl mb-8"
             >
-              Ordena tu catálogo KDP.{" "}
+              Autopublicar no es fácil.{" "}
               <span className="relative inline-block">
-                <span className="text-primary">Centraliza tu marketing.</span>
+                <span className="text-primary">Y si te lo creíste, ya sabes lo que cuesta.</span>
                 <motion.span 
                   className="absolute bottom-1 left-0 h-[6px] bg-primary/40 rounded-full" 
                   variants={highlightVariants} 
                 />
-              </span>{" "}
-              Controla tus números.
+              </span>
             </motion.h1>
           </div>
         </motion.div>
@@ -164,8 +163,8 @@ export const Hero = () => {
               variants={fadeInUp}
               className="text-xl text-muted-foreground mb-8 leading-relaxed"
             >
-              Publify es tu hub operativo para Amazon KDP. Te ayudamos a trabajar con calma: 
-              una sola fuente de verdad para tu biblioteca, campañas y finanzas.
+              El verdadero negocio de KDP empieza cuando dejas de actuar como aficionado. Publify es el sistema operativo para publishers que ya se dieron cuenta de que no basta con subir libros y rezar.{" "}
+              <strong className="text-foreground">Centraliza, ordena y te da control real. Sin humo. Sin cuentos. Sin Excel.</strong>
             </motion.p>
 
             {/* Pain points */}
@@ -176,13 +175,13 @@ export const Hero = () => {
               className="mb-8 p-6 bg-red-50 dark:bg-red-950/20 rounded-xl border border-red-200 dark:border-red-800/30 backdrop-blur-sm"
             >
               <h3 className="font-semibold text-red-800 dark:text-red-300 mb-3">
-                ¿Te suena familiar?
+                ¿Te suena familiar? El caos editorial:
               </h3>
               <ul className="text-sm text-red-700 dark:text-red-400 space-y-2">
-                <li>• Archivos perdidos entre Google Drive, Dropbox y tu PC</li>
-                <li>• No sabes cuánto ganas realmente con cada libro</li>
-                <li>• Gestionar marketing desde 7 plataformas diferentes</li>
-                <li>• Perder clientes potenciales por falta de seguimiento</li>
+                <li>• Notion para las ideas, Drive para archivos, Excel para finanzas</li>
+                <li>• Formularios, CRMs, email marketing, embudos dispersos</li>
+                <li>• Trabajas como pulpo con Parkinson, sin foco ni sistema</li>
+                <li>• La sensación de que siempre vas tarde</li>
               </ul>
             </motion.div>
             
@@ -200,7 +199,7 @@ export const Hero = () => {
                   size="lg" 
                   className="group text-lg w-full sm:w-auto bg-gradient-to-r from-primary to-primary hover:shadow-2xl hover:shadow-primary/30 py-6 px-8"
                 >
-                  Acceso prioritario
+                  🔹 Empezar gratis
                   <motion.div 
                     className="ml-2 flex items-center" 
                     initial={{ x: 0 }}
@@ -222,8 +221,8 @@ export const Hero = () => {
                   size="lg" 
                   className="text-lg w-full sm:w-auto border-primary/30 hover:border-primary/80 hover:bg-primary/10 py-6 px-8"
                 >
-                  <Play size={18} className="mr-2" />
-                  Ver vídeo
+                  <span className="mr-2">👁</span>
+                  Ver demo de 3 minutos
                 </Button>
               </motion.div>
             </motion.div>
@@ -288,10 +287,10 @@ export const Hero = () => {
                   
                   <div className="absolute bottom-6 left-6 right-6 text-center">
                     <p className="text-white font-semibold text-lg mb-2">
-                      Descubre cómo Publify transforma tu negocio editorial
+                      El sistema operativo para publishers serios
                     </p>
                     <p className="text-white/80 text-sm">
-                      Ve el panel de control completo en 2 minutos
+                      Ve cómo funciona en 3 minutos
                     </p>
                   </div>
                 </AspectRatio>}

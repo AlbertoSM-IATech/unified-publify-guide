@@ -4,30 +4,34 @@ import { ScrollReveal } from "@/components/motion/ScrollReveal";
 const problems = [
   {
     icon: FileX2,
-    text: "Documentos sueltos"
+    text: "Notion para las ideas"
   },
   {
     icon: Zap,
-    text: "Campañas en mil herramientas"
+    text: "Drive para los archivos"
   },
   {
     icon: TrendingUp,
-    text: "Números confusos"
+    text: "Excel para las finanzas"
+  },
+  {
+    icon: Target,
+    text: "Formularios, CRMs, email marketing, embudos..."
   }
 ];
 
 const solutions = [
   {
     icon: BookOpen,
-    text: "Catálogo unificado"
+    text: "Centraliza tu catálogo editorial"
   },
   {
     icon: Target,
-    text: "Marketing 360 integrado"
+    text: "Gestiona el marketing post-venta"
   },
   {
     icon: BarChart3,
-    text: "Finanzas claras y trazables"
+    text: "Controla tus finanzas con sentido"
   }
 ];
 
@@ -39,10 +43,10 @@ export const NewProblemSolutionSection = () => {
           <ScrollReveal variant="fade" duration={0.8}>
             <div className="text-center mb-16">
             <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Cuando todo está disperso, se pierde foco
+              La promesa era: "Sube tu libro y en 72h estará vendiéndose en Amazon". La realidad: caos, cientos de horas y un negocio que no escala.
             </h2>
               <p className="text-xl text-muted-foreground">
-                Publify te devuelve el control: unifica catálogo, automatiza marketing y hace trazables tus resultados.
+                Amazon te lo pintó bonito: "autopublica gratis y fácil". Lo que no te dijeron es que, si quieres vivir de esto, necesitarás invertir en diseño, edición, anuncios, herramientas, equipo... y tiempo. Mucho tiempo.
               </p>
             </div>
           </ScrollReveal>
@@ -52,8 +56,11 @@ export const NewProblemSolutionSection = () => {
             <div className="space-y-6">
               <ScrollReveal variant="slide-right" delay={0.2}>
                 <h3 className="text-2xl font-bold text-destructive mb-8 text-center md:text-left">
-                  El problema actual
+                  ❌ El problema
                 </h3>
+                <p className="text-muted-foreground mb-6 leading-relaxed">
+                  Y cuando por fin lo entiendes, ya estás atrapado en mil herramientas sueltas:
+                </p>
               </ScrollReveal>
               {problems.map((problem, index) => (
                 <ScrollReveal
@@ -74,8 +81,11 @@ export const NewProblemSolutionSection = () => {
             <div className="space-y-6">
               <ScrollReveal variant="slide-left" delay={0.2}>
                 <h3 className="text-2xl font-bold text-primary mb-8 text-center md:text-left">
-                  Cómo lo resuelve Publify
+                  🤖 La solución
                 </h3>
+                <p className="text-muted-foreground mb-6 leading-relaxed">
+                  Publify es el cerebro operativo del publisher moderno. No hace magia. Hace que tu negocio funcione.
+                </p>
               </ScrollReveal>
               {solutions.map((solution, index) => (
                 <ScrollReveal

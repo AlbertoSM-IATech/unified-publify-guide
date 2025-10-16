@@ -12,20 +12,24 @@ const fadeIn = {
 
 const benefits = [
   {
-    icon: Focus,
-    text: "Menos dispersión, más claridad"
+    icon: Database,
+    text: "Tu catálogo vive en Publify. Con fichas claras, archivos, metadatos y enlaces."
+  },
+  {
+    icon: CheckCircle,
+    text: "Ya no usas excels ni docs perdidos."
   },
   {
     icon: Zap,
-    text: "Onboarding rápido"
+    text: "Tienes un flujo claro: idea → producción → publicación → postventa."
   },
   {
-    icon: Headphones,
-    text: "Soporte en español"
+    icon: Shield,
+    text: "Tu equipo está alineado. Todo está en el mismo sitio."
   },
   {
-    icon: Database,
-    text: "Base de datos única por libro/equipo"
+    icon: Focus,
+    text: "No repites datos. No pierdes tiempo. No improvisas."
   }
 ];
 
@@ -40,11 +44,14 @@ export const KeyBenefitsSection = () => {
           variants={fadeIn}
           className="max-w-4xl mx-auto text-center"
         >
-          <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-16">
-            Beneficios clave
+          <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-6">
+            📊 ¿Cómo sabes que Publify está funcionando?
           </h2>
+          <p className="text-xl text-muted-foreground mb-16 max-w-3xl mx-auto">
+            Resultados reales que verás desde el primer día
+          </p>
 
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {benefits.map((benefit, index) => (
               <motion.div
                 key={index}
@@ -57,9 +64,9 @@ export const KeyBenefitsSection = () => {
                 <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
                   <benefit.icon className="w-6 h-6 text-primary" strokeWidth={1.5} />
                 </div>
-                <span className="text-lg font-medium text-foreground">
+                <p className="text-base font-medium text-foreground leading-relaxed">
                   {benefit.text}
-                </span>
+                </p>
               </motion.div>
             ))}
           </div>
