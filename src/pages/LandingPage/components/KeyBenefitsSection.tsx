@@ -35,7 +35,7 @@ const benefits = [
 
 export const KeyBenefitsSection = () => {
   return (
-    <section className="py-24 bg-muted/30">
+    <section id="resultados" className="py-24 bg-muted/30">
       <div className="container mx-auto px-4">
         <motion.div
           initial="hidden"
@@ -45,10 +45,10 @@ export const KeyBenefitsSection = () => {
           className="max-w-4xl mx-auto text-center"
         >
           <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-6">
-            📊 ¿Cómo sabes que Publify está funcionando?
+            ¿Cómo sabes que Publify está funcionando?
           </h2>
           <p className="text-xl text-muted-foreground mb-16 max-w-3xl mx-auto">
-            Resultados reales que verás desde el primer día
+            Los resultados son claros y medibles desde el primer día
           </p>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">

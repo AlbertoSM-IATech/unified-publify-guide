@@ -40,27 +40,33 @@ export const Header = () => {
         </Link>
         
         {/* Desktop Navigation */}
-        <nav className="hidden space-x-6 md:flex">
-          <a href="#caracteristicas" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-            Características
+        <nav className="hidden space-x-6 md:flex items-center">
+          <a href="#realidad" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            La Realidad
           </a>
-          <a href="#beneficios" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-            Beneficios
+          <a href="#problema-solucion" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            Problema/Solución
+          </a>
+          <a href="#que-es-publify" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            ¿Qué es Publify?
+          </a>
+          <a href="#como-funciona" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            Cómo Funciona
+          </a>
+          <a href="#para-quien" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            Para Quién
+          </a>
+          <a href="#precios" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            Precios
           </a>
           <a href="#faq" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
             FAQ
           </a>
-          <Link 
-            to="/contacto" 
-            className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-          >
-            Contacto
-          </Link>
           <button 
             onClick={toggleTheme} 
             className="text-sm text-muted-foreground hover:text-foreground transition-colors"
           >
-            Modo {theme === "dark" ? "Claro" : "Oscuro"}
+            {theme === "dark" ? "☀️" : "🌙"}
           </button>
         </nav>
         
@@ -93,18 +99,46 @@ export const Header = () => {
         <div className="border-t border-border px-4 py-4 md:hidden bg-background">
           <nav className="flex flex-col space-y-4">
             <a 
-              href="#caracteristicas" 
+              href="#realidad" 
               className="text-sm text-muted-foreground hover:text-foreground transition-colors"
               onClick={() => setMenuOpen(false)}
             >
-              Características
+              La Realidad
             </a>
             <a 
-              href="#beneficios" 
+              href="#problema-solucion" 
               className="text-sm text-muted-foreground hover:text-foreground transition-colors"
               onClick={() => setMenuOpen(false)}
             >
-              Beneficios
+              Problema/Solución
+            </a>
+            <a 
+              href="#que-es-publify" 
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+              onClick={() => setMenuOpen(false)}
+            >
+              ¿Qué es Publify?
+            </a>
+            <a 
+              href="#como-funciona" 
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+              onClick={() => setMenuOpen(false)}
+            >
+              Cómo Funciona
+            </a>
+            <a 
+              href="#para-quien" 
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+              onClick={() => setMenuOpen(false)}
+            >
+              Para Quién
+            </a>
+            <a 
+              href="#precios" 
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+              onClick={() => setMenuOpen(false)}
+            >
+              Precios
             </a>
             <a 
               href="#faq" 
@@ -113,13 +147,6 @@ export const Header = () => {
             >
               FAQ
             </a>
-            <Link 
-              to="/contacto"
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-              onClick={() => setMenuOpen(false)}
-            >
-              Contacto
-            </Link>
             <button 
               onClick={() => {
                 toggleTheme();
@@ -127,7 +154,7 @@ export const Header = () => {
               }} 
               className="text-left text-sm text-muted-foreground hover:text-foreground transition-colors"
             >
-              Modo {theme === "dark" ? "Claro" : "Oscuro"}
+              {theme === "dark" ? "☀️ Modo Claro" : "🌙 Modo Oscuro"}
             </button>
             <div className="flex flex-col gap-3 pt-2">
               <Button 

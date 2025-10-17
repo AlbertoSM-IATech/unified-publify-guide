@@ -2,7 +2,9 @@ import { motion } from "framer-motion";
 import { Header } from "./components/Header";
 import { Hero } from "./components/Hero";
 import { SocialProofSection } from "./components/SocialProofSection";
+import { PromiseVsRealitySection } from "./components/PromiseVsRealitySection";
 import { NewProblemSolutionSection } from "./components/NewProblemSolutionSection";
+import { WhatIsPublifySection } from "./components/WhatIsPublifySection";
 import { ThreePillarsSection } from "./components/ThreePillarsSection";
 import { HowItWorksSection } from "./components/HowItWorksSection";
 import { TargetAudienceSection } from "./components/TargetAudienceSection";
@@ -38,7 +40,9 @@ export const LandingPage = () => {
       <Header />
       <Hero />
       <SocialProofSection />
+      <PromiseVsRealitySection />
       <NewProblemSolutionSection />
+      <WhatIsPublifySection />
       <ThreePillarsSection />
       <HowItWorksSection />
       <TargetAudienceSection />

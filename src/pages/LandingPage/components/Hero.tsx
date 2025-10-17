@@ -131,12 +131,12 @@ export const Hero = () => {
           {/* Title - Full width */}
           <div className="text-center mb-16">
             <motion.h1 variants={fadeInUp} className="font-heading text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl mb-8">
-              Autopublicar no es fácil.{" "}
-              <span className="-bottom-0.5 -bottom-0 -bottom-0.5 text-center mx-0 px-0">
-                <span className="text-primary mx-0 px-0 font-thin">Si KDP fuera fácil, no vivirías apagando fuegos</span>
-                
-              </span>
+              Un panel. Toda tu editorial. Todo bajo control.{" "}
+              <span className="text-primary">Convierte tu catálogo en un negocio editorial real.</span>
             </motion.h1>
+            <motion.p variants={fadeInUp} className="text-2xl text-muted-foreground mb-4 font-light">
+              Centraliza, ordena y escala tu negocio con un solo sistema. Sin humo, sin caos, sin parches.
+            </motion.p>
           </div>
         </motion.div>
 
@@ -146,29 +146,13 @@ export const Hero = () => {
         margin: "-50px"
       }} variants={staggerContainer} className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <motion.div variants={fadeInLeft} className="text-center lg:text-left">
-            <motion.p variants={fadeInUp} className="text-xl text-muted-foreground mb-8 leading-relaxed font-extralight text-justify">
-              El verdadero negocio de KDP empieza cuando dejas de actuar como aficionado. Publify es el sistema operativo para publishers que ya se dieron cuenta de que no basta con subir libros y rezar.{" "}
-              <strong className="text-foreground">Publify Centraliza, ordena y te da control real. Sin humo. Sin cuentos. Sin Excel.</strong>
+            <motion.p variants={fadeInUp} className="text-xl text-muted-foreground mb-6 leading-relaxed font-light text-justify">
+              Publify es el sistema operativo de los publishers profesionales en Amazon KDP. Diseñado para quienes ya entienden que autopublicar no es solo escribir: es crear activos, gestionar un negocio y escalarlo sin perder el control.
             </motion.p>
-
-            {/* Pain points */}
-            <motion.div variants={fadeInUp} whileHover={{
-            scale: 1.02,
-            boxShadow: "0 20px 40px rgba(239, 68, 68, 0.15)"
-          }} transition={{
-            type: "spring",
-            stiffness: 300
-          }} className="mb-8 p-6 bg-red-50 dark:bg-red-950/20 rounded-xl border border-red-200 dark:border-red-800/30 backdrop-blur-sm">
-              <h3 className="font-semibold text-red-800 dark:text-red-300 mb-3">
-                ¿Te suena familiar? El caos editorial:
-              </h3>
-              <ul className="text-sm text-red-700 dark:text-red-400 space-y-2">
-                <li>• Notion para las ideas, Drive para archivos, Excel para finanzas</li>
-                <li>• Formularios, CRMs, email marketing, embudos dispersos</li>
-                <li>• Trabajas como pulpo con Parkinson, sin foco ni sistema</li>
-                <li>• La sensación de que siempre vas tarde</li>
-              </ul>
-            </motion.div>
+            
+            <motion.p variants={fadeInUp} className="text-sm text-primary/80 italic mb-8 text-center lg:text-left">
+              "Creado por y para publishers de Amazon KDP."
+            </motion.p>
             
             <motion.div variants={fadeInUp} className="flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
               <motion.div variants={buttonHoverVariants} whileHover="hover" whileTap={{
@@ -203,7 +187,7 @@ export const Hero = () => {
             </motion.div>
 
             {/* Social proof numbers */}
-            <motion.div variants={fadeInUp} className="mt-8 flex flex-wrap gap-6 justify-center lg:justify-start text-sm text-muted-foreground">
+            <motion.div variants={fadeInUp} className="mt-10 flex flex-wrap gap-6 justify-center lg:justify-start text-sm text-muted-foreground">
               {[{
               label: "200+",
               desc: "Publishers activos"
