@@ -124,7 +124,7 @@ export const Hero = () => {
           <motion.div variants={fadeInUp} className="text-center mb-8">
             <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 py-2 text-sm font-medium text-primary mx-[7px] my-0 px-[56px] rounded-3xl shadow-lg shadow-primary/10">
               <Sparkles size={16} />
-              <span>La plataforma todo-en-uno para publishers de Amazon KDP</span>
+              <span>La navaja suiza de los Publishers Independientes</span>
             </div>
           </motion.div>
 
