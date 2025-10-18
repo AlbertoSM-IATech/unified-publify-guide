@@ -223,7 +223,7 @@ export const PricingSection = () => {
                     <ul className="space-y-2 mb-6 flex-1">
                       {plan.features.map((feature, index) => (
                         <li key={index} className="flex items-start text-sm">
-                          <Check className="w-4 h-4 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
+                          <Check className="w-4 h-4 text-primary mr-2 mt-0.5 flex-shrink-0" />
                           <span>{feature}</span>
                         </li>
                       ))}
