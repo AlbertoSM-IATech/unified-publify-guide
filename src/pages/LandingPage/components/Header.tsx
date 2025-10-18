@@ -30,7 +30,7 @@ export const Header = () => {
 
   return (
     <header className={`fixed top-0 w-full z-50 border-b border-opacity-0 transition-all duration-300 ${scrolled ? "bg-background/95 backdrop-blur-md shadow-sm" : ""}`}>
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 md:px-8">
+      <div className="mx-auto flex w-full items-center justify-between px-4 py-4 md:px-8">
         <Link to="/" className="flex items-center">
           <img 
             src={theme === "dark" ? logoLight : logoDark} 

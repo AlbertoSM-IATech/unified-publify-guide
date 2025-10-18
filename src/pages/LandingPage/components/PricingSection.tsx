@@ -56,15 +56,15 @@ const plans = [
     buttonVariant: "outline" as const,
     phases: {
       betaTesters: {
-        price: "0€ para siempre",
-        note: "En fase beta no se paga por el Marketing, dure lo que dure."
+        price: "0€ para siempre (sin marketing)",
+        note: "En fase beta no hay marketing disponible."
       },
       earlyAdopters: {
         option1: "299€ (pago único) licencia lifetime (sin marketing)",
         option2: "1 mes gratis y después 19,99€/mes (durante solo 1 año)"
       },
       preLaunch: {
-        price: "1 mes gratis + 29,97€/mes mientras aguante la suscripción",
+        price: "1 mes gratis + 29,97€/mes para siempre (solo mientras dure la suscripción)",
         discount: "(Ahorra 10€/mes = 25% dto.)"
       }
     }
@@ -91,15 +91,13 @@ const plans = [
       "Soporte < 24h (prioritario)"
     ],
     marketingModules: [
-      "Constructor web nativo",
-      "Formularios de captación",
-      "CRM de contactos y listas",
+      "Constructor web nativo (página de autor/editorial, landings, entrega de lead magnets)",
+      "Formularios de captación (embebibles por Libro/Serie, con consentimiento RGPD y asociación automática)",
+      "CRM de contactos y listas (contacto único con tags, origen y timeline)",
       "Email marketing esencial",
-      "Pipeline de leads básico",
-      "Automatizaciones post-venta (T1/T2)",
-      "Generador de Códigos QR trackeables",
-      "Import/Export CSV",
-      "Calendario editorial (sync Google)"
+      "Pipeline de leads básico (Nuevo → Interesado → Compró → Postventa; drag & drop + regla auto 'Compró')",
+      "Automatizaciones esenciales",
+      "Generador de Códigos QR"
     ],
     popular: true,
     badge: "Más Popular",
@@ -108,16 +106,16 @@ const plans = [
     comingSoon: true,
     phases: {
       betaTesters: {
-        price: "Solo pagan la diferencia: +39,97€/mes mientras aguante la suscripción",
+        price: "Solo pagan la diferencia: +39,97€/mes mientras aguante la suscripción (sin marketing)",
         discount: "(ahorra 17€/mes - 30% dto.)",
-        note: "En fase beta no se paga por el Marketing, dure lo que dure."
+        note: "En fase beta no hay marketing disponible."
       },
       earlyAdopters: {
         price: "Con Marketing: pagan la diferencia de 39,97€/mes",
         discount: "(ahorra 17€/mes - 30% dto.)"
       },
       preLaunch: {
-        price: "OFERTA DE LANZAMIENTO: +68€/mes (todo incluido) mientras aguante la suscripción",
+        price: "OFERTA DE LANZAMIENTO: +68€/mes (todo incluido) para siempre (solo mientras dure la suscripción)",
         discount: "(ahorra 29€/mes = 30% dto.)"
       }
     }
