@@ -3,17 +3,17 @@ import { AlertTriangle, CheckCircle, Clock, Search, FileX, TrendingDown } from "
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 const timeWasters = [{
-  icon: <Search className="w-8 h-8 text-red-500" />,
+  icon: <Search className="w-8 h-8 text-primary" />,
   title: "5 horas semanales perdidas",
   description: "Saltando entre Google Drive, Excels, email marketing, herramientas de diseño, KDP, redes sociales...",
   impact: "260 horas anuales malgastadas"
 }, {
-  icon: <FileX className="w-8 h-8 text-red-500" />,
+  icon: <FileX className="w-8 h-8 text-primary" />,
   title: "Archivos y datos dispersos",
   description: "Portadas en un sitio, manuscritos en otro, datos de ventas en Excel, leads en diferentes plataformas",
   impact: "Decisiones lentas y poco informadas"
 }, {
-  icon: <TrendingDown className="w-8 h-8 text-red-500" />,
+  icon: <TrendingDown className="w-8 h-8 text-primary" />,
   title: "Oportunidades perdidas",
   description: "Leads sin seguimiento, campañas descoordinadas, no sabes qué libros son rentables",
   impact: "Menos ventas de las que podrías tener"
@@ -43,7 +43,7 @@ export const ProblemSolutionSection = () => {
         {[...Array(8)].map((_, i) => (
           <motion.div
             key={i}
-            className="absolute w-6 h-6 bg-red-500/10 rounded-full"
+            className="absolute w-6 h-6 bg-primary/10 rounded-full"
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
@@ -93,17 +93,17 @@ export const ProblemSolutionSection = () => {
             initial={{ scale: 0 }}
             whileInView={{ scale: 1 }}
             viewport={{ once: true }}
-            className="inline-flex items-center gap-2 bg-red-100 dark:bg-red-950/30 px-6 py-3 rounded-full mb-6"
+            className="inline-flex items-center gap-2 bg-primary/10 dark:bg-primary/20 px-6 py-3 rounded-full mb-6"
           >
-            <Clock className="w-5 h-5 text-red-600" />
-            <span className="font-semibold text-red-600 dark:text-red-400">⏰ Realidad: Pierdes tiempo, dinero y oportunidades</span>
+            <Clock className="w-5 h-5 text-primary" />
+            <span className="font-semibold text-primary">⏰ Realidad: Pierdes tiempo, dinero y oportunidades</span>
           </motion.div>
           
           <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
-            El <span className="text-red-500 relative">
+            El <span className="text-primary relative">
               caos editorial
               <motion.div 
-                className="absolute -bottom-2 left-0 right-0 h-1 bg-red-500/30 rounded-full"
+                className="absolute -bottom-2 left-0 right-0 h-1 bg-primary/30 rounded-full"
                 initial={{ scaleX: 0 }}
                 whileInView={{ scaleX: 1 }}
                 viewport={{ once: true }}
@@ -141,25 +141,25 @@ export const ProblemSolutionSection = () => {
               <motion.div
                 animate={{ rotate: 360 }}
                 transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-                className="w-full h-full border-4 border-dashed border-red-500 rounded-full"
+                className="w-full h-full border-4 border-dashed border-primary rounded-full"
               />
               <motion.div
                 animate={{ rotate: -360 }}
                 transition={{ duration: 7, repeat: Infinity, ease: "linear" }}
-                className="absolute inset-2 border-2 border-dashed border-red-300 rounded-full"
+                className="absolute inset-2 border-2 border-dashed border-primary/30 rounded-full"
               />
             </div>
             
-            <div className="bg-red-50 dark:bg-red-950/20 p-8 rounded-2xl border-2 border-red-200 dark:border-red-800/30 shadow-lg">
+            <div className="bg-primary/5 dark:bg-primary/10 p-8 rounded-2xl border-2 border-primary/20 dark:border-primary/20 shadow-lg">
               <div className="flex items-center gap-3 mb-6">
                 <motion.div
                   animate={{ scale: [1, 1.2, 1] }}
                   transition={{ duration: 2, repeat: Infinity }}
-                  className="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center"
+                  className="w-12 h-12 bg-primary rounded-full flex items-center justify-center"
                 >
                   <AlertTriangle className="w-6 h-6 text-white" />
                 </motion.div>
-                <h3 className="text-2xl font-bold text-red-600 dark:text-red-400">El caos editorial actual</h3>
+                <h3 className="text-2xl font-bold text-primary">El caos editorial actual</h3>
               </div>
               
               <div className="space-y-6">
@@ -171,14 +171,14 @@ export const ProblemSolutionSection = () => {
                     viewport={{ once: true }} 
                     transition={{ delay: index * 0.15 }}
                     whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
-                    className="group flex items-start gap-4 p-6 bg-white/80 dark:bg-red-900/20 rounded-xl border border-red-200/50 dark:border-red-700/30 hover:shadow-md transition-all duration-300"
+                    className="group flex items-start gap-4 p-6 bg-white/80 dark:bg-primary/10 rounded-xl border border-primary/30 dark:border-primary/20 hover:shadow-md transition-all duration-300"
                   >
                     <div className="mt-1">{point.icon}</div>
                     <div className="flex-1">
-                      <h4 className="font-semibold mb-2 text-foreground group-hover:text-red-600 transition-colors">{point.title}</h4>
+                      <h4 className="font-semibold mb-2 text-foreground group-hover:text-primary transition-colors">{point.title}</h4>
                       <p className="text-muted-foreground text-sm mb-3 leading-relaxed">{point.description}</p>
                       <div className="flex items-center gap-2">
-                        <span className="text-xs font-bold text-red-600 dark:text-red-400 bg-red-100 dark:bg-red-900/30 px-3 py-1 rounded-full">
+                        <span className="text-xs font-bold text-primary bg-primary/10 dark:bg-primary/20 px-3 py-1 rounded-full">
                           💸 {point.impact}
                         </span>
                       </div>

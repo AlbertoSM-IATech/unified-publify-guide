@@ -16,13 +16,13 @@ export const PromiseVsRealitySection = () => {
             once: true
           }} transition={{
             duration: 0.5
-          }} className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-destructive/10 mb-6">
-              <AlertTriangle className="w-8 h-8 text-destructive" />
+          }} className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 mb-6">
+              <AlertTriangle className="w-8 h-8 text-primary" />
             </motion.div>
 
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
               Te han vendido que autopublicar es fácil, pero tu negocio editorial parece un{" "}
-              <span className="text-destructive">castillo de naipes</span>
+              <span className="text-primary">castillo de naipes</span>
             </h2>
 
             <div className="space-y-6 text-lg text-muted-foreground leading-relaxed">

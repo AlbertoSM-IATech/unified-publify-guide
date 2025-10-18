@@ -270,12 +270,12 @@ export const FinalCtaSection = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 1.5 }}
-                className="mt-8 inline-flex items-center gap-2 bg-red-500/20 border border-red-400/30 px-6 py-3 rounded-full"
+                className="mt-8 inline-flex items-center gap-2 bg-primary/15 border border-primary/30 px-6 py-3 rounded-full"
               >
                 <motion.div
                   animate={{ scale: [1, 1.2, 1] }}
                   transition={{ duration: 1, repeat: Infinity }}
-                  className="w-3 h-3 bg-red-400 rounded-full"
+                  className="w-3 h-3 bg-primary rounded-full"
                 />
                 <span className="font-semibold">Solo 23 plazas disponibles este mes</span>
               </motion.div>

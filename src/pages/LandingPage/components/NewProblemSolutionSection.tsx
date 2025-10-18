@@ -31,7 +31,7 @@ export const NewProblemSolutionSection = () => {
             <div className="text-center mb-16">
             <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-6">
               La promesa era: "Sube tu libro y en 72h estará vendiéndose en Amazon".{" "}
-              <span className="text-destructive">La realidad: caos, cientos de horas y un negocio que no escala.</span>
+              <span className="text-primary">La realidad: caos, cientos de horas y un negocio que no escala.</span>
             </h2>
               <div className="text-lg text-muted-foreground max-w-3xl mx-auto space-y-4 text-left">
                 <p>Parecía muy bonito: "autopublicar gratis y fácil". Lo que no te dijeron es que, si quieres vivir de esto, necesitarás invertir en diseño, edición, anuncios, herramientas, equipo... y tiempo. Mucho tiempo.</p>
@@ -44,12 +44,12 @@ export const NewProblemSolutionSection = () => {
             {/* Problems */}
             <div className="space-y-6">
               <ScrollReveal variant="slide-right" delay={0.2}>
-                <h3 className="text-destructive mb-6 text-center md:text-center font-normal text-3xl">La realidad de tu día a día</h3>
+                <h3 className="text-primary mb-6 text-center md:text-center font-normal text-3xl">La realidad de tu día a día</h3>
                 <p className="text-muted-foreground mb-6 leading-relaxed">Terminas trabajando como pulpo, con múltiples herramientas, datos dispersos, sin foco, sin sistema y con la sensación de que siempre vas tarde.</p>
               </ScrollReveal>
               {problems.map((problem, index) => <ScrollReveal key={index} variant="slide-right" delay={0.3 + index * 0.15} duration={0.5}>
-                  <div className="flex items-center gap-4 p-4 bg-destructive/5 border border-destructive/20 rounded-lg">
-                    <problem.icon className="w-6 h-6 text-destructive flex-shrink-0" strokeWidth={1.5} />
+                  <div className="flex items-center gap-4 p-4 bg-primary/5 border border-primary/20 rounded-lg">
+                    <problem.icon className="w-6 h-6 text-primary flex-shrink-0" strokeWidth={1.5} />
                     <span className="text-lg font-medium text-foreground">{problem.text}</span>
                   </div>
                 </ScrollReveal>)}
