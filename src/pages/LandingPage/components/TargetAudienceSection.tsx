@@ -2,16 +2,16 @@ import { motion } from "framer-motion";
 import { Check, X } from "lucide-react";
 
 const isFor = [
-  "Publishers activos en Amazon KDP (aunque sea con pocos libros)",
-  "Quien quiere profesionalizar su operativa editorial",
-  "Quien gestiona un catálogo y necesita trazabilidad y control",
-];
+"Publishers activos en Amazon KDP (aunque sea con pocos libros)",
+"Quien quiere profesionalizar su operativa editorial",
+"Quien gestiona un catálogo y necesita trazabilidad y control"];
+
 
 const isNotFor = [
-  "Quien busca dinero rápido con la autopublicación",
-  "Quien espera que una herramienta venda por él",
-  "Quien quiere promesas milagro o automatizaciones mágicas",
-];
+"Quien busca dinero rápido con la autopublicación",
+"Quien espera que una herramienta venda por él",
+"Quien quiere promesas milagro o automatizaciones mágicas"];
+
 
 export const TargetAudienceSection = () => {
   return (
@@ -21,8 +21,8 @@ export const TargetAudienceSection = () => {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-12"
-        >
+          className="text-center mb-12">
+          
           <h2 className="font-heading text-3xl md:text-4xl font-bold mb-4">
             Para publishers que quieren operar{" "}
             <span className="text-primary">como un negocio.</span>
@@ -38,16 +38,16 @@ export const TargetAudienceSection = () => {
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="p-6 rounded-xl border border-accent/20 bg-accent/5"
-          >
-            <h3 className="font-heading text-lg font-bold mb-6 text-accent">✅ Es para ti si…</h3>
+            className="p-6 rounded-xl border border-accent/20 bg-accent/5">
+            
+            <h3 className="font-heading text-lg font-bold mb-6 text-accent">Es para ti si…</h3>
             <ul className="space-y-4">
-              {isFor.map((item, i) => (
-                <li key={i} className="flex items-start gap-3">
+              {isFor.map((item, i) =>
+              <li key={i} className="flex items-start gap-3">
                   <Check className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
                   <span className="text-foreground">{item}</span>
                 </li>
-              ))}
+              )}
             </ul>
           </motion.div>
 
@@ -56,20 +56,20 @@ export const TargetAudienceSection = () => {
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="p-6 rounded-xl border border-border bg-card"
-          >
-            <h3 className="font-heading text-lg font-bold mb-6 text-muted-foreground">❌ No es para ti si…</h3>
+            className="p-6 rounded-xl border border-border bg-card">
+            
+            <h3 className="font-heading text-lg font-bold mb-6 text-destructive">No es para ti si…</h3>
             <ul className="space-y-4">
-              {isNotFor.map((item, i) => (
-                <li key={i} className="flex items-start gap-3">
+              {isNotFor.map((item, i) =>
+              <li key={i} className="flex items-start gap-3">
                   <X className="w-5 h-5 text-muted-foreground flex-shrink-0 mt-0.5" />
                   <span className="text-muted-foreground">{item}</span>
                 </li>
-              ))}
+              )}
             </ul>
           </motion.div>
         </div>
       </div>
-    </section>
-  );
+    </section>);
+
 };
