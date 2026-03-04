@@ -1,28 +1,22 @@
 import { motion } from "framer-motion";
 import { Header } from "./components/Header";
 import { Hero } from "./components/Hero";
-import { SocialProofSection } from "./components/SocialProofSection";
-import { PromiseVsRealitySection } from "./components/PromiseVsRealitySection";
-import { NewProblemSolutionSection } from "./components/NewProblemSolutionSection";
+import { ChaosSection } from "./components/ChaosSection";
 import { WhatIsPublifySection } from "./components/WhatIsPublifySection";
-import { ThreePillarsSection } from "./components/ThreePillarsSection";
 import { HowItWorksSection } from "./components/HowItWorksSection";
+import { WaitlistFormSection } from "./components/WaitlistFormSection";
+import { EarlyAdoptersSection } from "./components/EarlyAdoptersSection";
 import { TargetAudienceSection } from "./components/TargetAudienceSection";
-import { KeyBenefitsSection } from "./components/KeyBenefitsSection";
-import { PricingSection } from "./components/PricingSection";
-import { MainCtaSection } from "./components/MainCtaSection";
 import { FaqSection } from "./components/FaqSection";
+import { FinalCtaSection } from "./components/FinalCtaSection";
 import { Footer } from "./components/Footer";
 import { TechBackground } from "@/components/motion/TechBackground";
 
-// Animation variants for page sections
 const pageVariants = {
   hidden: { opacity: 0 },
   visible: { 
     opacity: 1,
-    transition: {
-      staggerChildren: 0.1
-    }
+    transition: { staggerChildren: 0.1 }
   }
 };
 
@@ -34,22 +28,17 @@ export const LandingPage = () => {
       animate="visible"
       variants={pageVariants}
     >
-      {/* Fondo abstracto tecnológico para toda la página */}
       <TechBackground />
-      
       <Header />
       <Hero />
-      <SocialProofSection />
-      <PromiseVsRealitySection />
-      <NewProblemSolutionSection />
+      <ChaosSection />
       <WhatIsPublifySection />
-      <ThreePillarsSection />
       <HowItWorksSection />
+      <WaitlistFormSection />
+      <EarlyAdoptersSection />
       <TargetAudienceSection />
-      <KeyBenefitsSection />
-      <PricingSection />
-      <MainCtaSection />
       <FaqSection />
+      <FinalCtaSection />
       <Footer />
     </motion.div>
   );

@@ -1,115 +1,152 @@
 import { motion } from "framer-motion";
-import { BookOpen, TrendingUp, Mail, Workflow } from "lucide-react";
-import { ScrollReveal } from "@/components/motion/ScrollReveal";
+import { Check, X, Database, Eye, BookOpen } from "lucide-react";
 
-const features = [
+const notIs = [
+  "El panel de KDP Reports ni herramienta para automatizar procesos de Amazon",
+  "Helium10 / spy tool",
+  "Un gestor nativo de Amazon Ads",
+  "Software de escritura, maquetación o diseño",
+  "Contabilidad fiscal completa",
+];
+
+const yesIs = [
+  "La capa cognitiva y operativa de tu negocio",
+  "El sistema donde operas tu editorial con orden, foco y centralización",
+  "La estructura que conecta tu operativa diaria alrededor del libro",
+  "La capa que convierte datos sueltos en decisiones con contexto",
+];
+
+const pillars = [
+  {
+    icon: Database,
+    title: "Fuente de verdad por libro",
+    desc: "Datos, versiones finales sin duplicados, menos \"¿dónde estaba esto?\""
+  },
+  {
+    icon: Eye,
+    title: "Control operativo",
+    desc: "Claridad de qué toca hacer y qué está bloqueado, sin depender de memoria"
+  },
   {
     icon: BookOpen,
-    title: "Biblioteca editorial organizada",
-    description: "Fichas por libro, colecciones, manuscritos, portadas, lead magnets, enlaces clave."
+    title: "Visión del negocio",
+    desc: "Por libro y global, de lo macro a lo micro, sin dolores de cabeza"
   },
-  {
-    icon: TrendingUp,
-    title: "Finanzas claras",
-    description: "Ingresos, gastos, márgenes, rentabilidad por título o colección."
-  },
-  {
-    icon: Mail,
-    title: "Marketing integrado",
-    description: "Landings, formularios, CRM, email y embudos post-venta..."
-  },
-  {
-    icon: Workflow,
-    title: "Flujo profesional",
-    description: "Idea → producción → publicación → postventa."
-  }
 ];
 
 export const WhatIsPublifySection = () => {
   return (
-    <section id="que-es-publify" className="py-24 bg-muted/30">
-      <div className="container mx-auto px-4">
-        <ScrollReveal>
-          <div className="max-w-4xl mx-auto text-center mb-16">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-              Publify es el sistema que convierte la autopublicación en KDP en un{" "}
-              <span className="text-primary">negocio real</span>
-            </h2>
+    <section id="que-es-publify" className="py-24 bg-background">
+      <div className="container mx-auto px-4 max-w-5xl">
+        {/* Headline */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-8"
+        >
+          <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
+            Publify no es otra herramienta.{" "}
+            <span className="text-primary">Es el sistema.</span>
+          </h2>
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+            Publify centraliza tu operativa editorial para que trabajes con{" "}
+            <strong className="text-foreground">una sola fuente de verdad</strong> y con el{" "}
+            <strong className="text-foreground">libro como unidad operativa</strong>.
+          </p>
+        </motion.div>
 
-            <p className="text-xl text-muted-foreground leading-relaxed mb-8">
-              Publify te da el control total de tu negocio editorial en Amazon KDP:
-            </p>
-          </div>
+        {/* 3 Pilares */}
+        <div className="grid md:grid-cols-3 gap-6 mb-16">
+          {pillars.map((pillar, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.15 }}
+              className="p-6 bg-card border border-border rounded-xl hover:border-accent/30 transition-colors text-center"
+            >
+              <div className="w-12 h-12 mx-auto mb-4 bg-accent/10 rounded-full flex items-center justify-center">
+                <pillar.icon className="w-6 h-6 text-accent" />
+              </div>
+              <h3 className="text-lg font-bold mb-2">{pillar.title}</h3>
+              <p className="text-sm text-muted-foreground">{pillar.desc}</p>
+            </motion.div>
+          ))}
+        </div>
 
-          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto mb-12">
-            {features.map((feature, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1, duration: 0.5 }}
-                whileHover={{ scale: 1.03, boxShadow: "0 10px 30px rgba(0,0,0,0.1)" }}
-                className="p-6 bg-background rounded-xl border border-border"
-              >
-                <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <feature.icon className="w-6 h-6 text-primary" />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-lg font-semibold mb-2">{feature.title}</h3>
-                    <p className="text-muted-foreground text-sm">{feature.description}</p>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-
+        {/* NO es / SÍ es */}
+        <div className="grid md:grid-cols-2 gap-8">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.5 }}
-            className="text-center"
+            className="p-6 rounded-xl border border-border bg-card"
           >
-            <p className="text-xl text-foreground font-semibold">
-              Y lo mejor: sin cambiar de herramienta cuando creces.{" "}
-              <span className="text-primary">Publify escala contigo.</span>
-            </p>
+            <h3 className="font-heading text-lg font-bold mb-4 text-muted-foreground">
+              Publify <span className="text-primary">NO</span> es:
+            </h3>
+            <ul className="space-y-3">
+              {notIs.map((item, i) => (
+                <li key={i} className="flex items-start gap-3 text-sm text-muted-foreground">
+                  <X className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.6 }}
-            className="mt-16 p-8 bg-primary/5 border border-primary/20 rounded-2xl"
+            className="p-6 rounded-xl border border-accent/20 bg-accent/5"
           >
-            <p className="text-xl md:text-2xl text-foreground font-bold mb-8 text-center">
-              <span className="text-primary">Publify pone orden y control</span> donde solo había caos. 
-              Creado por y para autores de Amazon KDP para ayudar a Publishers a gestionar, optimizar y escalar su negocio editorial.
-            </p>
+            <h3 className="font-heading text-lg font-bold mb-4 text-accent">
+              Publify <span className="font-bold">SÍ</span> es:
+            </h3>
+            <ul className="space-y-3">
+              {yesIs.map((item, i) => (
+                <li key={i} className="flex items-start gap-3 text-sm text-foreground">
+                  <Check className="w-4 h-4 text-accent flex-shrink-0 mt-0.5" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </motion.div>
+        </div>
 
-            <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-              <div className="space-y-3">
-                <h3 className="text-lg font-bold text-primary">Nuestra Misión</h3>
-                <p className="text-muted-foreground">
-                  Centralizar la gestión editorial, financiera y de marketing en un solo sistema, 
-                  eliminando el caos de herramientas dispersas y permitiendo que los publishers 
-                  gestionen sus catálogos de forma profesional.
-                </p>
-              </div>
-
-              <div className="space-y-3">
-                <h3 className="text-lg font-bold text-primary">Nuestra Visión</h3>
-                <p className="text-muted-foreground">
-                  Convertirse en la plataforma estándar para publishers de Amazon KDP en el mundo 
-                  hispanohablante, aportando orden, foco y escalabilidad al sector editorial independiente.
-                </p>
-              </div>
+        {/* Misión y Visión */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.3 }}
+          className="mt-16 p-8 bg-primary/5 border border-primary/20 rounded-2xl"
+        >
+          <p className="text-xl md:text-2xl text-foreground font-bold mb-8 text-center">
+            <span className="text-primary">Publify pone orden y control</span> donde solo había caos. 
+            Creado por y para publishers de Amazon KDP.
+          </p>
+          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <div className="space-y-3">
+              <h3 className="text-lg font-bold text-primary">Nuestra Misión</h3>
+              <p className="text-muted-foreground">
+                Centralizar la gestión editorial, financiera y de marketing en un solo sistema, 
+                eliminando el caos de herramientas dispersas y permitiendo que los publishers 
+                gestionen sus catálogos de forma profesional.
+              </p>
             </div>
-          </motion.div>
-        </ScrollReveal>
+            <div className="space-y-3">
+              <h3 className="text-lg font-bold text-primary">Nuestra Visión</h3>
+              <p className="text-muted-foreground">
+                Convertirse en la plataforma estándar para publishers de Amazon KDP en el mundo 
+                hispanohablante, aportando orden, foco y escalabilidad al sector editorial independiente.
+              </p>
+            </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );
