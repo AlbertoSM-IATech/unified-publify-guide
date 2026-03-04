@@ -1,175 +1,91 @@
 import { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { useTheme } from "@/hooks/useTheme";
 import { Button } from "@/components/ui/button";
 import logoDark from "@/assets/publify-logo-dark.png";
 import logoLight from "@/assets/publify-logo-light.png";
 
+const navLinks = [
+  { href: "#problema", label: "Problema" },
+  { href: "#como-funciona", label: "Cómo funciona" },
+  { href: "#early-adopters", label: "Early Adopters" },
+  { href: "#faq", label: "FAQ" },
+];
+
 export const Header = () => {
-  const navigate = useNavigate();
   const { theme, toggleTheme } = useTheme();
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
+    const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const handleLogin = () => {
-    navigate("/login");
-  };
-
-  const handleRegister = () => {
-    navigate("/register");
+  const scrollToWaitlist = () => {
+    document.getElementById("waitlist")?.scrollIntoView({ behavior: "smooth" });
+    setMenuOpen(false);
   };
 
   return (
-    <header className={`fixed top-0 w-full z-50 border-b border-opacity-0 transition-all duration-300 ${scrolled ? "bg-background/95 backdrop-blur-md shadow-sm" : ""}`}>
-      <div className="mx-auto flex w-full items-center justify-between px-4 py-4 md:px-8">
+    <header className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrolled ? "bg-background/95 backdrop-blur-md shadow-sm border-b border-border" : ""}`}>
+      <div className="mx-auto flex w-full items-center justify-between px-4 py-3 md:px-8">
         <Link to="/" className="flex items-center">
           <img 
             src={theme === "dark" ? logoLight : logoDark} 
-            alt="Publify - La Herramienta de los Publishers Inteligentes" 
+            alt="Publify - Sistema Operativo Editorial" 
             className="h-8 md:h-10 w-auto"
           />
         </Link>
         
         {/* Desktop Navigation */}
-        <nav className="hidden space-x-6 md:flex items-center">
-          <a href="#realidad" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-            La Realidad
-          </a>
-          <a href="#problema-solucion" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-            Problema/Solución
-          </a>
-          <a href="#que-es-publify" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-            ¿Qué es Publify?
-          </a>
-          <a href="#como-funciona" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-            Cómo Funciona
-          </a>
-          <a href="#para-quien" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-            Para Quién
-          </a>
-          <a href="#precios" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-            Precios
-          </a>
-          <a href="#faq" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-            FAQ
-          </a>
-          <button 
-            onClick={toggleTheme} 
-            className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-          >
+        <nav className="hidden md:flex items-center gap-6">
+          {navLinks.map((link) => (
+            <a key={link.href} href={link.href} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              {link.label}
+            </a>
+          ))}
+          <button onClick={toggleTheme} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
             {theme === "dark" ? "☀️" : "🌙"}
           </button>
         </nav>
         
-        {/* Mobile Menu Button */}
-        <button 
-          className="rounded-md p-2 md:hidden" 
-          onClick={() => setMenuOpen(!menuOpen)}
-        >
-          {menuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
-        
-        {/* Authentication Buttons (Desktop) */}
-        <div className="hidden space-x-4 md:flex">
-          <Button 
-            variant="outline"
-            onClick={handleLogin}
-          >
-            Iniciar sesión
-          </Button>
-          <Button 
-            onClick={handleRegister}
-          >
-            Registrarse
+        {/* CTA + Microcopy */}
+        <div className="hidden md:flex items-center gap-4">
+          <div className="text-right">
+            <p className="text-[10px] text-muted-foreground leading-tight">Gratis · Plazas limitadas</p>
+            <p className="text-[10px] text-muted-foreground leading-tight">Invitaciones desde el 1 de abril</p>
+          </div>
+          <Button onClick={scrollToWaitlist} size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold">
+            Unirme a la waitlist
           </Button>
         </div>
+        
+        {/* Mobile Menu Button */}
+        <button className="rounded-md p-2 md:hidden" onClick={() => setMenuOpen(!menuOpen)}>
+          {menuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
       </div>
       
       {/* Mobile Menu */}
       {menuOpen && (
         <div className="border-t border-border px-4 py-4 md:hidden bg-background">
           <nav className="flex flex-col space-y-4">
-            <a 
-              href="#realidad" 
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-              onClick={() => setMenuOpen(false)}
-            >
-              La Realidad
-            </a>
-            <a 
-              href="#problema-solucion" 
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-              onClick={() => setMenuOpen(false)}
-            >
-              Problema/Solución
-            </a>
-            <a 
-              href="#que-es-publify" 
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-              onClick={() => setMenuOpen(false)}
-            >
-              ¿Qué es Publify?
-            </a>
-            <a 
-              href="#como-funciona" 
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-              onClick={() => setMenuOpen(false)}
-            >
-              Cómo Funciona
-            </a>
-            <a 
-              href="#para-quien" 
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-              onClick={() => setMenuOpen(false)}
-            >
-              Para Quién
-            </a>
-            <a 
-              href="#precios" 
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-              onClick={() => setMenuOpen(false)}
-            >
-              Precios
-            </a>
-            <a 
-              href="#faq" 
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-              onClick={() => setMenuOpen(false)}
-            >
-              FAQ
-            </a>
-            <button 
-              onClick={() => {
-                toggleTheme();
-                setMenuOpen(false);
-              }} 
-              className="text-left text-sm text-muted-foreground hover:text-foreground transition-colors"
-            >
+            {navLinks.map((link) => (
+              <a key={link.href} href={link.href} className="text-sm text-muted-foreground hover:text-foreground transition-colors" onClick={() => setMenuOpen(false)}>
+                {link.label}
+              </a>
+            ))}
+            <button onClick={() => { toggleTheme(); setMenuOpen(false); }} className="text-left text-sm text-muted-foreground hover:text-foreground transition-colors">
               {theme === "dark" ? "☀️ Modo Claro" : "🌙 Modo Oscuro"}
             </button>
-            <div className="flex flex-col gap-3 pt-2">
-              <Button 
-                variant="outline"
-                onClick={handleLogin}
-                className="w-full"
-              >
-                Iniciar sesión
+            <div className="pt-2">
+              <Button onClick={scrollToWaitlist} className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold">
+                Unirme a la waitlist
               </Button>
-              <Button 
-                onClick={handleRegister}
-                className="w-full"
-              >
-                Registrarse
-              </Button>
+              <p className="text-[10px] text-muted-foreground text-center mt-2">Gratis · Plazas limitadas · Desde el 1 de abril</p>
             </div>
           </nav>
         </div>
