@@ -13,9 +13,9 @@ export const FinalCtaSection = () => {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-        >
-          <h2 className="font-heading text-3xl md:text-5xl font-bold mb-6">
+          viewport={{ once: true }}>
+          
+          <h2 className="font-heading text-3xl md:text-5xl font-bold mb-6 text-primary">
             Pon tu editorial en orden.
           </h2>
           <p className="text-xl text-muted-foreground mb-4">
@@ -33,12 +33,12 @@ export const FinalCtaSection = () => {
           </motion.div>
 
           <div className="mt-8">
-            <p className="text-sm text-muted-foreground italic">
+            <p className="text-sm italic text-accent">
               "El orden funciona. El caos no."
             </p>
           </div>
         </motion.div>
       </div>
-    </section>
-  );
+    </section>);
+
 };
