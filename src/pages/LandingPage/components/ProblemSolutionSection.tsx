@@ -224,9 +224,9 @@ export const ProblemSolutionSection = () => {
                 initial={{ scale: 0 }}
                 whileInView={{ scale: 1 }}
                 viewport={{ once: true }}
-                className="w-16 h-16 bg-gradient-to-r from-primary to-accent rounded-full flex items-center justify-center mx-auto mb-6"
+                className="w-14 h-14 bg-gradient-to-r from-primary to-accent rounded-full flex items-center justify-center mx-auto mb-5"
               >
-                <CheckCircle className="w-8 h-8 text-primary-foreground" />
+                <CheckCircle className="w-7 h-7 text-primary-foreground" />
               </motion.div>
               
               <TextReveal as="h3" className="text-3xl md:text-4xl font-bold mb-8 text-foreground">
