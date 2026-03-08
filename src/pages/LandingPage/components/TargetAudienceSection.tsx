@@ -2,15 +2,15 @@ import { motion } from "framer-motion";
 import { Check, X } from "lucide-react";
 
 const isFor = [
-"Publishers activos en Amazon KDP (aunque sea con pocos libros)",
-"Quien quiere profesionalizar su operativa editorial",
-"Quien gestiona un catálogo y necesita trazabilidad y control"];
+"Si eres un Publisher activo en Amazon KDP (aunque sea con pocos libros)",
+"Si quieres profesionalizar tu operativa editorial",
+"Gestionas un catálogo y necesitas trazabilidad y control"];
 
 
 const isNotFor = [
-"Quien busca dinero rápido con la autopublicación",
-"Quien espera que una herramienta venda por él",
-"Quien quiere promesas milagro o automatizaciones mágicas"];
+"Buscas dinero rápido con la autopublicación",
+"Esperas una herramienta que venda por ti",
+"Quieres promesas milagro o automatizaciones mágicas"];
 
 
 export const TargetAudienceSection = () => {
