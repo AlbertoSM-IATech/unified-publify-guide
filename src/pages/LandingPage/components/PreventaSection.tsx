@@ -119,7 +119,7 @@ export const PreventaSection = () => {
               className="p-8 bg-card border border-border rounded-2xl shadow-lg space-y-6 sticky top-28"
             >
               <div className="text-center">
-                <h3 className="font-heading text-2xl font-bold mb-2">Reservar mi acceso prioritario</h3>
+                <h3 className="font-heading text-xl font-bold mb-2">Reservar mi acceso prioritario</h3>
                 <p className="text-sm text-muted-foreground">
                   Apuntarte es gratis. Te avisaremos cuando abramos acceso.
                 </p>
