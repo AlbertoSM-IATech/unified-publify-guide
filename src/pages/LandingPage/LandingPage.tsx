@@ -13,9 +13,6 @@ import { FinalCtaSection } from "./components/FinalCtaSection";
 import { Footer } from "./components/Footer";
 import { TechBackground } from "@/components/motion/TechBackground";
 import { useScrollAnimations } from "@/hooks/useScrollAnimations";
-import { Footer } from "./components/Footer";
-import { TechBackground } from "@/components/motion/TechBackground";
-import { useScrollAnimations } from "@/hooks/useScrollAnimations";
 
 const pageVariants = {
   hidden: { opacity: 0 },
