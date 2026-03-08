@@ -5,6 +5,7 @@ import { ProblemSolutionSection } from "./components/ProblemSolutionSection";
 import { PreventaSection } from "./components/PreventaSection";
 import { Footer } from "./components/Footer";
 import { TechBackground } from "@/components/motion/TechBackground";
+import { useScrollAnimations } from "@/hooks/useScrollAnimations";
 
 const pageVariants = {
   hidden: { opacity: 0 },
