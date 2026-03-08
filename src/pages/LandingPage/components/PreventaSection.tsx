@@ -61,7 +61,7 @@ export const PreventaSection = () => {
           >
             Publify todavía no está abierto al público.
           </TextReveal>
-          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto">
             Consigue acceso prioritario al MVP, bloquea el mejor precio para siempre y ayuda a definir el producto.
           </p>
         </div>
