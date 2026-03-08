@@ -81,7 +81,7 @@ export const SecondaryBenefitsSection = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mt-12 text-center"
+          className="mt-16 text-center"
         >
           <div className="bg-gradient-to-r from-[#FB923C]/10 to-primary/10 dark:from-[#FB923C]/20 dark:to-primary/20 p-8 rounded-xl border border-[#FB923C]/20">
             <h3 className="text-xl font-bold mb-4 text-foreground">
