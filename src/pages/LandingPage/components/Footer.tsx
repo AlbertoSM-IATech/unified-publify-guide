@@ -33,18 +33,9 @@ export const Footer = () => {
           
           <div className="flex flex-col gap-6 sm:flex-row">
             <div>
-              <h4 className="font-heading text-sm font-medium mb-3 text-center sm:text-left">Enlaces</h4>
-              <ul className="space-y-2">
-                <li><a href="#problema" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Problema</a></li>
-                <li><a href="#como-funciona" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Cómo funciona</a></li>
-                <li><a href="#early-adopters" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Early Adopters</a></li>
-                <li><a href="#faq" className="text-sm text-muted-foreground hover:text-foreground transition-colors">FAQ</a></li>
-                <li><Link to="/contacto" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Contacto</Link></li>
-              </ul>
-            </div>
-            <div>
               <h4 className="font-heading text-sm font-medium mb-3 text-center sm:text-left">Legal</h4>
               <ul className="space-y-2">
+                <li><Link to="/contacto" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Contacto</Link></li>
                 <li><Link to="/terminos-y-condiciones" target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Términos y condiciones</Link></li>
                 <li><Link to="/politica-privacidad" target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Política de privacidad</Link></li>
               </ul>

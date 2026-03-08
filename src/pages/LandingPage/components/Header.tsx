@@ -8,9 +8,7 @@ import logoLight from "@/assets/publify-logo-light.png";
 
 const navLinks = [
   { href: "#problema", label: "Problema" },
-  { href: "#como-funciona", label: "Cómo funciona" },
-  { href: "#early-adopters", label: "Early Adopters" },
-  { href: "#faq", label: "FAQ" },
+  { href: "#waitlist", label: "Preventa" },
 ];
 
 export const Header = () => {
@@ -40,7 +38,6 @@ export const Header = () => {
           />
         </Link>
         
-        {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-6">
           {navLinks.map((link) => (
             <a key={link.href} href={link.href} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
@@ -52,24 +49,20 @@ export const Header = () => {
           </button>
         </nav>
         
-        {/* CTA + Microcopy */}
         <div className="hidden md:flex items-center gap-4">
           <div className="text-right">
             <p className="text-[10px] text-muted-foreground leading-tight">Gratis · Plazas limitadas</p>
-            <p className="text-[10px] text-muted-foreground leading-tight">Invitaciones desde el 1 de abril</p>
           </div>
           <Button onClick={scrollToWaitlist} size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold">
-            Unirme a la waitlist
+            Quiero acceso prioritario
           </Button>
         </div>
         
-        {/* Mobile Menu Button */}
         <button className="rounded-md p-2 md:hidden" onClick={() => setMenuOpen(!menuOpen)}>
           {menuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
       
-      {/* Mobile Menu */}
       {menuOpen && (
         <div className="border-t border-border px-4 py-4 md:hidden bg-background">
           <nav className="flex flex-col space-y-4">
@@ -83,9 +76,8 @@ export const Header = () => {
             </button>
             <div className="pt-2">
               <Button onClick={scrollToWaitlist} className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold">
-                Unirme a la waitlist
+                Quiero acceso prioritario
               </Button>
-              <p className="text-[10px] text-muted-foreground text-center mt-2">Gratis · Plazas limitadas · Desde el 1 de abril</p>
             </div>
           </nav>
         </div>
