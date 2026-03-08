@@ -50,7 +50,7 @@ export const PreventaSection = () => {
 
       <div className="container mx-auto max-w-4xl px-0 relative z-10">
         {/* Header */}
-        <div data-gsap="section-header" className="text-center mb-16 px-0 mx-0">
+        <div data-gsap="section-header" className="text-center mb-12 px-0 mx-0">
           <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 px-4 py-2 rounded-full text-sm font-medium text-primary mb-6">
             <Sparkles size={16} />
             Plazas limitadas: 20–30 early adopters
