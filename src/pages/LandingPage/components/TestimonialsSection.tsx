@@ -142,7 +142,7 @@ export const TestimonialsSection = () => {
   });
   const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
   const opacity = useTransform(scrollYProgress, [0, 0.3, 0.6], [0.6, 1, 0.6]);
-  return <motion.section ref={ref} className="relative py-32 px-4 overflow-hidden bg-muted/20">
+  return <motion.section ref={ref} className="relative py-20 px-4 overflow-hidden bg-muted/20">
       {/* Dynamic background effect */}
       <motion.div className="absolute inset-0 -z-10" style={{
       y: backgroundY,
@@ -165,7 +165,7 @@ export const TestimonialsSection = () => {
         once: true
       }} transition={{
         duration: 0.6
-      }} className="text-center mb-20">
+      }} className="text-center mb-14">
           <div className="flex justify-center mb-4">
             <motion.div className="rounded-full bg-primary/10 p-3 text-primary" initial="initial" whileInView="animate" viewport={{
             once: true
@@ -173,10 +173,10 @@ export const TestimonialsSection = () => {
               <Quote size={24} />
             </motion.div>
           </div>
-          <TextReveal as="h2" className="text-3xl md:text-4xl lg:text-5xl font-bold font-heading mb-6">
+          <TextReveal as="h2" className="text-2xl md:text-3xl lg:text-4xl font-bold font-heading mb-4">
             Casos de éxito reales
           </TextReveal>
-          <p className="text-muted-foreground max-w-2xl mx-auto text-lg md:text-xl">
+          <p className="text-muted-foreground max-w-2xl mx-auto text-base md:text-lg">
             Autores y editoriales que ya están ahorrando tiempo, aumentando ventas y recuperando el control de su negocio
           </p>
         </motion.div>
@@ -228,7 +228,7 @@ export const TestimonialsSection = () => {
       }} transition={{
         delay: 0.4,
         duration: 0.6
-      }} className="mt-20 text-center">
+      }} className="mt-14 text-center">
           <motion.div whileHover={{
           scale: 1.05
         }} transition={{
@@ -236,7 +236,7 @@ export const TestimonialsSection = () => {
           stiffness: 400,
           damping: 10
         }}>
-            <Button onClick={() => navigate("/register")} className="bg-gradient-to-r from-primary to-primary/80 hover:shadow-lg px-[60px] py-[30px] font-semibold text-lg text-primary-foreground">
+            <Button onClick={() => navigate("/register")} className="bg-gradient-to-r from-primary to-primary/80 hover:shadow-lg px-10 py-5 font-semibold text-base text-primary-foreground">
               Únete a ellos
               <motion.div className="ml-2" initial={{
               x: 0
