@@ -116,7 +116,7 @@ export const PreventaSection = () => {
             <form
               onSubmit={handleSubmit}
               data-gsap="preventa-card"
-              className="p-10 bg-card border border-border rounded-2xl shadow-lg space-y-8 sticky top-28"
+              className="p-8 bg-card border border-border rounded-2xl shadow-lg space-y-6 sticky top-28"
             >
               <div className="text-center">
                 <h3 className="font-heading text-2xl font-bold mb-2">Reservar mi acceso prioritario</h3>
