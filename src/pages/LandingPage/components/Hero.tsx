@@ -43,6 +43,11 @@ export const Hero = () => {
             <strong className="text-foreground">sistema claro para publishers</strong>.
           </motion.p>
 
+          {/* Tagline */}
+          <motion.p variants={fadeInUp} className="text-sm md:text-base font-semibold tracking-widest uppercase text-blue-500 mb-10">
+            Investiga → Crea → Analiza → Escala
+          </motion.p>
+
           {/* Benefits grid */}
           <motion.div variants={fadeInUp} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 max-w-3xl mx-auto mb-10">
             {benefits.map((b, i) =>
