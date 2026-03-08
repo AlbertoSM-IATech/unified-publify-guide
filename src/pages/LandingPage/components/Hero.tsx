@@ -28,7 +28,7 @@ export const Hero = () => {
   };
 
   return (
-    <section className="relative flex flex-col items-center px-4 pt-28 pb-16 md:pt-36 md:pb-24 overflow-hidden">
+    <section className="relative flex flex-col items-center px-4 pt-36 pb-28 md:pt-48 md:pb-40 overflow-hidden">
       {/* tsParticles profesionales */}
       <div className="absolute inset-0 overflow-hidden">
         <ParticlesBackground />
