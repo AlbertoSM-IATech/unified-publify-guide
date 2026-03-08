@@ -40,7 +40,7 @@ export const WaitlistFormSection = () => {
           <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
             Entra en la waitlist <span className="text-primary">(Early Adopters)</span>
           </h2>
-          <p className="text-lg text-muted-foreground">
+          <p className="text-lg md:text-xl text-muted-foreground">
             Apúntate ahora y recibe invitación cuando abramos plazas.
           </p>
         </motion.div>
