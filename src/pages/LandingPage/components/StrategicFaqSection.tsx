@@ -55,7 +55,7 @@ export const StrategicFaqSection = () => {
                 value={`item-${index}`}
                 className="bg-muted/30 dark:bg-neutral-800/30 rounded-lg border border-border px-8 py-4"
               >
-                <AccordionTrigger className="text-left font-semibold hover:no-underline text-foreground">
+                <AccordionTrigger className="text-left font-semibold hover:no-underline text-foreground text-lg">
                   {faq.question}
                 </AccordionTrigger>
                 <AccordionContent className="text-muted-foreground pt-2 pb-4">
