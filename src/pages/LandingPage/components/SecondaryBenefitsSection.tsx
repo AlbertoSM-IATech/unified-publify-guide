@@ -37,23 +37,23 @@ const realBenefits = [
 
 export const SecondaryBenefitsSection = () => {
   return (
-    <section className="py-16 bg-background">
+    <section className="py-28 bg-background">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-12"
+          className="text-center mb-16"
         >
-          <h2 className="text-2xl md:text-3xl font-bold mb-4 text-foreground">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-foreground">
             Beneficios tangibles (no promesas vacías)
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
             Publify se convierte en la columna vertebral de tu negocio editorial
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {realBenefits.map((benefit, index) => (
             <motion.div
               key={index}
@@ -61,7 +61,7 @@ export const SecondaryBenefitsSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
-              className="bg-card p-6 rounded-lg shadow-sm border border-border hover:shadow-md transition-shadow"
+              className="bg-card p-8 rounded-lg shadow-sm border border-border hover:shadow-md transition-shadow"
             >
               <div className="flex justify-center mb-4">
                 {benefit.icon}
@@ -81,9 +81,9 @@ export const SecondaryBenefitsSection = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mt-12 text-center"
+          className="mt-16 text-center"
         >
-          <div className="bg-gradient-to-r from-[#FB923C]/10 to-primary/10 dark:from-[#FB923C]/20 dark:to-primary/20 p-8 rounded-xl border border-[#FB923C]/20">
+          <div className="bg-gradient-to-r from-[#FB923C]/10 to-primary/10 dark:from-[#FB923C]/20 dark:to-primary/20 p-12 rounded-xl border border-[#FB923C]/20">
             <h3 className="text-xl font-bold mb-4 text-foreground">
               "Publify no se limita a ser útil. Se convierte en la columna vertebral de tu negocio editorial."
             </h3>

@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { AlertTriangle } from "lucide-react";
 import { ScrollReveal } from "@/components/motion/ScrollReveal";
 export const PromiseVsRealitySection = () => {
-  return <section id="realidad" className="py-24 bg-background">
+  return <section id="realidad" className="py-36 bg-background">
       <div className="container mx-auto px-4">
         <ScrollReveal>
           <div className="max-w-4xl mx-auto text-center">
@@ -20,12 +20,12 @@ export const PromiseVsRealitySection = () => {
               <AlertTriangle className="w-8 h-8 text-primary" />
             </motion.div>
 
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
+            <h2 className="text-3xl md:text-4xl lg:text-6xl font-bold mb-8">
               Te han vendido que autopublicar es fácil, pero tu negocio editorial parece un{" "}
               <span className="text-primary">castillo de naipes</span>
             </h2>
 
-            <div className="space-y-6 text-lg text-muted-foreground leading-relaxed">
+            <div className="space-y-8 text-lg md:text-xl text-muted-foreground leading-relaxed">
               <p>
                 Amazon KDP te prometió que subirías un libro y en 72h estaría a la venta. Técnicamente es cierto. Pero la realidad para quien se toma esto como un negocio de verdad es otra: herramientas sueltas, documentos perdidos, tareas sin seguimiento, campañas desordenadas y una sensación constante de ir apagando fuegos.
               </p>

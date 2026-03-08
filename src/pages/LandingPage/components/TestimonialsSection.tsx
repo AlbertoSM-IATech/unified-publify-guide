@@ -141,7 +141,7 @@ export const TestimonialsSection = () => {
   });
   const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
   const opacity = useTransform(scrollYProgress, [0, 0.3, 0.6], [0.6, 1, 0.6]);
-  return <motion.section ref={ref} className="relative py-20 px-4 overflow-hidden bg-muted/20">
+  return <motion.section ref={ref} className="relative py-32 px-4 overflow-hidden bg-muted/20">
       {/* Dynamic background effect */}
       <motion.div className="absolute inset-0 -z-10" style={{
       y: backgroundY,
@@ -164,7 +164,7 @@ export const TestimonialsSection = () => {
         once: true
       }} transition={{
         duration: 0.6
-      }} className="text-center mb-12">
+      }} className="text-center mb-20">
           <div className="flex justify-center mb-4">
             <motion.div className="rounded-full bg-[#FB923C]/10 p-3 text-[#FB923C]" initial="initial" whileInView="animate" viewport={{
             once: true
@@ -172,16 +172,16 @@ export const TestimonialsSection = () => {
               <Quote size={24} />
             </motion.div>
           </div>
-          <h2 className="text-3xl md:text-4xl font-bold font-heading mb-4" data-gsap="text-reveal">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-heading mb-6" data-gsap="text-reveal">
             Casos de éxito reales
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
+          <p className="text-muted-foreground max-w-2xl mx-auto text-lg md:text-xl">
             Autores y editoriales que ya están ahorrando tiempo, aumentando ventas y recuperando el control de su negocio
           </p>
         </motion.div>
 
         {/* Mobile view: Stacked cards */}
-        <div className="md:hidden space-y-4">
+        <div className="md:hidden space-y-6">
           {testimonials.map((testimonial, index) => <motion.div key={index} custom={index} initial="hidden" whileInView="visible" viewport={{
           once: true
         }} variants={cardVariants} whileHover="hover" className="will-change-transform" data-gsap="testimonial-card">
@@ -227,7 +227,7 @@ export const TestimonialsSection = () => {
       }} transition={{
         delay: 0.4,
         duration: 0.6
-      }} className="mt-14 text-center">
+      }} className="mt-20 text-center">
           <motion.div whileHover={{
           scale: 1.05
         }} transition={{

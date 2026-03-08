@@ -29,18 +29,18 @@ export const WaitlistFormSection = () => {
   };
 
   return (
-    <section id="waitlist" className="py-24 bg-background">
+    <section id="waitlist" className="py-36 bg-background">
       <div className="container mx-auto px-4 max-w-2xl">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-10"
+          className="text-center mb-14"
         >
-          <h2 className="font-heading text-3xl md:text-4xl font-bold mb-4">
+          <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
             Entra en la waitlist <span className="text-primary">(Early Adopters)</span>
           </h2>
-          <p className="text-lg text-muted-foreground">
+          <p className="text-lg md:text-xl text-muted-foreground">
             Apúntate ahora y recibe invitación cuando abramos plazas.
           </p>
         </motion.div>
@@ -51,7 +51,7 @@ export const WaitlistFormSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.2 }}
-          className="flex flex-wrap justify-center gap-6 mb-10 text-sm"
+          className="flex flex-wrap justify-center gap-8 mb-14 text-sm"
         >
           <div className="flex items-center gap-2 text-muted-foreground">
             <Mail className="w-4 h-4 text-primary" />
@@ -74,7 +74,7 @@ export const WaitlistFormSection = () => {
           viewport={{ once: true }}
           transition={{ delay: 0.3 }}
         >
-          <form onSubmit={handleSubmit} className="p-8 bg-card border border-border rounded-2xl shadow-lg space-y-5">
+          <form onSubmit={handleSubmit} className="p-10 bg-card border border-border rounded-2xl shadow-lg space-y-6">
             <div className="space-y-2">
               <Label htmlFor="waitlist-name">Nombre</Label>
               <Input

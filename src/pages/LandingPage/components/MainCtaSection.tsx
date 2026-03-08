@@ -15,7 +15,7 @@ export const MainCtaSection = () => {
   };
 
   return (
-    <section id="cta-final" className="relative py-24 overflow-hidden">
+    <section id="cta-final" className="relative py-36 overflow-hidden">
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-primary/5" />
       
@@ -27,11 +27,11 @@ export const MainCtaSection = () => {
           transition={{ duration: 0.6 }}
           className="max-w-4xl mx-auto text-center"
         >
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
+          <h2 className="text-3xl md:text-4xl lg:text-6xl font-bold mb-8">
             Tu editorial KDP, sin humo ni caos.
           </h2>
           
-          <p className="text-xl text-muted-foreground mb-12 max-w-2xl mx-auto">
+          <p className="text-xl md:text-2xl text-muted-foreground mb-16 max-w-2xl mx-auto">
             Empieza gratis con el plan Starter. Activa Pro cuando lo necesites. Publify crece contigo.
           </p>
 

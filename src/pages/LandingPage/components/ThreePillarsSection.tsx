@@ -26,21 +26,21 @@ const pillars = [
 
 export const ThreePillarsSection = () => {
   return (
-    <section className="py-24 bg-background">
+    <section className="py-36 bg-background">
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           <ScrollReveal variant="zoom" duration={0.8}>
-            <div className="text-center mb-16">
-            <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-4">
+            <div className="text-center mb-20">
+            <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
               Los 3 pilares de Publify
             </h2>
-              <p className="text-xl text-muted-foreground">
+              <p className="text-xl md:text-2xl text-muted-foreground">
                 Una plataforma completa diseñada para tu crecimiento editorial
               </p>
             </div>
           </ScrollReveal>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-3 gap-10">
             {pillars.map((pillar, index) => (
               <ScrollReveal
                 key={index}

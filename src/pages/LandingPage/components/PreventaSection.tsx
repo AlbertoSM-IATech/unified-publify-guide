@@ -38,7 +38,7 @@ export const PreventaSection = () => {
   };
 
   return (
-    <section id="waitlist" className="py-24 bg-background relative overflow-hidden">
+    <section id="waitlist" className="py-36 bg-background relative overflow-hidden">
       {/* Parallax background layer */}
       <div data-gsap="parallax-bg" className="absolute inset-0 pointer-events-none">
         <div className="absolute top-20 right-10 w-72 h-72 bg-primary/5 rounded-full blur-3xl" />
@@ -47,27 +47,27 @@ export const PreventaSection = () => {
 
       <div className="container mx-auto max-w-4xl px-0 relative z-10">
         {/* Header */}
-        <div data-gsap="section-header" className="text-center mb-12 px-0 mx-0">
+        <div data-gsap="section-header" className="text-center mb-16 px-0 mx-0">
           <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 px-4 py-2 rounded-full text-sm font-medium text-primary mb-6">
             <Sparkles size={16} />
             Plazas limitadas: 20–30 early adopters
           </div>
           <h2
             data-gsap="text-reveal"
-            className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold mb-4"
+            className="font-heading text-3xl md:text-4xl lg:text-6xl font-bold mb-6"
             style={{ perspective: "600px" }}
           >
             Publify todavía no está abierto al público.
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
             Consigue acceso prioritario al MVP, bloquea el mejor precio para siempre y ayuda a definir el producto.
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-8 mb-12">
+        <div className="grid lg:grid-cols-2 gap-12 mb-16">
           {/* Benefits + Pricing */}
-          <div className="space-y-6">
-            <div className="p-6 bg-card border border-border rounded-xl">
+          <div className="space-y-8">
+            <div className="p-8 bg-card border border-border rounded-xl">
               <h3 className="font-heading text-lg font-bold mb-4">¿Por qué entrar ahora?</h3>
               <ul className="space-y-3">
                 {benefits.map((item, i) =>
@@ -79,7 +79,7 @@ export const PreventaSection = () => {
               </ul>
             </div>
 
-            <div className="p-6 bg-card border border-primary/20 rounded-xl">
+            <div className="p-8 bg-card border border-primary/20 rounded-xl">
               <h3 className="font-heading text-lg font-bold mb-4">Precio escalonado (abril — Plan Plus)</h3>
               <p className="text-sm text-muted-foreground mb-4">
                 Cuanto antes entres, menos pagas. El precio se mantiene <strong className="text-foreground">para siempre</strong> mientras mantengas tu suscripción activa.
@@ -114,7 +114,7 @@ export const PreventaSection = () => {
             <form
               onSubmit={handleSubmit}
               data-gsap="preventa-card"
-              className="p-8 bg-card border border-border rounded-2xl shadow-lg space-y-6 sticky top-28"
+              className="p-10 bg-card border border-border rounded-2xl shadow-lg space-y-8 sticky top-28"
             >
               <div className="text-center">
                 <h3 className="font-heading text-2xl font-bold mb-2">Reservar mi acceso prioritario</h3>

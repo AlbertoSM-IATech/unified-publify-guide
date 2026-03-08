@@ -40,7 +40,7 @@ const solutionPoints = [{
 export const ProblemSolutionSection = () => {
   const navigate = useNavigate();
   return (
-    <section className="relative py-20 bg-background overflow-hidden">
+    <section className="relative py-32 bg-background overflow-hidden">
       {/* Parallax background */}
       <div className="absolute inset-0 pointer-events-none">
         <div data-gsap="parallax-bg" className="absolute inset-0">
@@ -81,7 +81,7 @@ export const ProblemSolutionSection = () => {
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
-        <div data-gsap="section-header" className="text-center mb-16">
+        <div data-gsap="section-header" className="text-center mb-24">
           <motion.div
             initial={{ scale: 0 }}
             whileInView={{ scale: 1 }}
@@ -92,17 +92,17 @@ export const ProblemSolutionSection = () => {
             <span className="font-semibold text-primary">⏰ Realidad: Pierdes tiempo, dinero y oportunidades</span>
           </motion.div>
           
-          <h2 data-gsap="text-reveal" className="text-4xl md:text-5xl font-bold mb-6 text-foreground" style={{ perspective: "600px" }}>
+          <h2 data-gsap="text-reveal" className="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 text-foreground" style={{ perspective: "600px" }}>
             El caos editorial vs el control total
           </h2>
           
-          <p className="text-xl text-muted-foreground max-w-4xl mx-auto leading-relaxed">
+          <p className="text-xl md:text-2xl text-muted-foreground max-w-4xl mx-auto leading-relaxed">
             La gestión editorial tradicional te tiene corriendo como un pollo sin cabeza. 
             <strong className="text-foreground"> Publify centraliza todo para que recuperes la cordura.</strong>
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-16 items-start mb-16">
+        <div className="grid lg:grid-cols-2 gap-20 items-start mb-24">
           {/* Problem Side */}
           <div className="relative">
             <div className="absolute -top-4 -right-4 w-20 h-20 opacity-20">
@@ -118,7 +118,7 @@ export const ProblemSolutionSection = () => {
               />
             </div>
             
-            <div className="bg-primary/5 dark:bg-primary/10 p-8 rounded-2xl border-2 border-primary/20 dark:border-primary/20 shadow-lg">
+            <div className="bg-primary/5 dark:bg-primary/10 p-10 md:p-12 rounded-2xl border-2 border-primary/20 dark:border-primary/20 shadow-lg">
               <div className="flex items-center gap-3 mb-6">
                 <motion.div
                   animate={{ scale: [1, 1.2, 1] }}
@@ -133,12 +133,12 @@ export const ProblemSolutionSection = () => {
                 </div>
               </div>
               
-              <div className="space-y-6">
+              <div className="space-y-8">
                 {timeWasters.map((point, index) => (
                   <div 
                     key={index}
                     data-gsap="problem-card"
-                    className="group flex items-start gap-4 p-6 bg-card/80 dark:bg-primary/10 rounded-xl border border-primary/30 dark:border-primary/20 hover:shadow-md transition-all duration-300"
+                    className="group flex items-start gap-5 p-8 bg-card/80 dark:bg-primary/10 rounded-xl border border-primary/30 dark:border-primary/20 hover:shadow-md transition-all duration-300"
                   >
                     <div className="mt-1">{point.icon}</div>
                     <div className="flex-1">
@@ -169,7 +169,7 @@ export const ProblemSolutionSection = () => {
               />
             </div>
             
-            <div className="bg-green-50 dark:bg-green-950/20 p-8 rounded-2xl border-2 border-green-200 dark:border-green-800/30 shadow-lg">
+            <div className="bg-green-50 dark:bg-green-950/20 p-10 md:p-12 rounded-2xl border-2 border-green-200 dark:border-green-800/30 shadow-lg">
               <div className="flex items-center gap-3 mb-6">
                 <motion.div
                   animate={{ 
@@ -190,12 +190,12 @@ export const ProblemSolutionSection = () => {
                 </div>
               </div>
               
-              <div className="space-y-6">
+              <div className="space-y-8">
                 {solutionPoints.map((point, index) => (
                   <div 
                     key={index}
                     data-gsap="solution-card"
-                    className="group flex items-start gap-4 p-6 bg-card/80 dark:bg-green-900/20 rounded-xl border border-green-200/50 dark:border-green-700/30 hover:shadow-md transition-all duration-300"
+                    className="group flex items-start gap-5 p-8 bg-card/80 dark:bg-green-900/20 rounded-xl border border-green-200/50 dark:border-green-700/30 hover:shadow-md transition-all duration-300"
                   >
                     <div className="mt-1">{point.icon}</div>
                     <div className="flex-1">
@@ -217,7 +217,7 @@ export const ProblemSolutionSection = () => {
         {/* Enhanced CTA Section */}
         <div data-gsap="cta-pin" className="relative">
           <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-primary/10 to-primary/5 rounded-2xl" />
-          <div data-gsap="cta-content" className="relative bg-gradient-to-br from-primary/10 via-transparent to-accent/5 p-10 rounded-2xl border-2 border-primary/20 backdrop-blur-sm">
+          <div data-gsap="cta-content" className="relative bg-gradient-to-br from-primary/10 via-transparent to-accent/5 p-14 md:p-16 rounded-2xl border-2 border-primary/20 backdrop-blur-sm">
             <div className="text-center max-w-3xl mx-auto">
               <motion.div
                 initial={{ scale: 0 }}
@@ -228,7 +228,7 @@ export const ProblemSolutionSection = () => {
                 <CheckCircle className="w-8 h-8 text-primary-foreground" />
               </motion.div>
               
-              <h3 data-gsap="text-reveal" className="text-3xl font-bold mb-6 text-foreground" style={{ perspective: "600px" }}>
+              <h3 data-gsap="text-reveal" className="text-3xl md:text-4xl font-bold mb-8 text-foreground" style={{ perspective: "600px" }}>
                 Publify no te da más trabajo. Te devuelve la vida que habías perdido.
               </h3>
               

@@ -28,20 +28,20 @@ export const Hero = () => {
   };
 
   return (
-    <section className="relative flex flex-col items-center px-4 pt-28 pb-16 md:pt-36 md:pb-24 overflow-hidden">
+    <section className="relative flex flex-col items-center px-4 pt-36 pb-28 md:pt-48 md:pb-40 overflow-hidden">
       {/* tsParticles profesionales */}
       <div className="absolute inset-0 overflow-hidden">
         <ParticlesBackground />
       </div>
       <div className="mx-auto w-[90%]">
-        <motion.div initial="hidden" animate="visible" variants={stagger} className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <motion.div initial="hidden" animate="visible" variants={stagger} className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
           
           {/* Left — Text */}
           <div className="text-left">
             {/* GSAP text reveal — letter by letter */}
             <h1
               data-gsap="hero-title"
-              className="font-heading text-4xl md:text-5xl font-bold tracking-tight mb-4 text-primary lg:text-6xl"
+              className="font-heading text-5xl md:text-6xl font-bold tracking-tight mb-6 text-primary lg:text-7xl"
               style={{ perspective: "600px" }}>
               
               Gestiona toda tu editorial desde un solo lugar
@@ -49,17 +49,17 @@ export const Hero = () => {
 
             <p
               data-gsap="hero-subtitle"
-              className="text-lg mb-6 md:text-3xl font-light text-primary-foreground"
+              className="text-xl mb-8 md:text-3xl lg:text-4xl font-light text-primary-foreground"
               style={{ perspective: "400px" }}>
               
               Recupera horas cada semana con el único sistema diseñado para publishers KDP.
             </p>
 
-            <motion.p variants={fadeInUp} className="text-base md:text-lg text-muted-foreground mb-4 leading-relaxed">
+            <motion.p variants={fadeInUp} className="text-lg md:text-xl text-muted-foreground mb-6 leading-relaxed">
               Con Publify puedes gestionar todo tu negocio editorial en un solo lugar:
             </motion.p>
 
-            <motion.div variants={fadeInUp} className="flex flex-wrap items-center gap-2 mb-8">
+            <motion.div variants={fadeInUp} className="flex flex-wrap items-center gap-3 mb-12">
               {["Investiga", "Crea", "Analiza", "Escala"].map((step, i) =>
               <span key={step} className="flex items-center gap-2 text-xs">
                   <motion.span
@@ -108,7 +108,7 @@ export const Hero = () => {
               )}
             </motion.div>
 
-            <motion.div variants={fadeInUp} className="grid grid-cols-5 sm:grid-cols-5 gap-3 mb-8">
+            <motion.div variants={fadeInUp} className="grid grid-cols-5 sm:grid-cols-5 gap-4 mb-12">
               {benefits.map((b, i) =>
               <motion.div
                 key={i}
@@ -116,7 +116,7 @@ export const Hero = () => {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 + i * 0.1 }}
-                className="flex items-center gap-3 p-3 rounded-lg bg-card/80 border border-border text-left">
+                className="flex items-center gap-4 p-4 rounded-lg bg-card/80 border border-border text-left">
                 
                   <b.icon className="w-5 h-5 text-primary flex-shrink-0" />
                   <span className="text-sm text-foreground">{b.text}</span>

@@ -15,30 +15,30 @@ const isNotFor = [
 
 export const TargetAudienceSection = () => {
   return (
-    <section id="para-quien" className="py-24 bg-background">
+    <section id="para-quien" className="py-36 bg-background">
       <div className="container mx-auto px-4 max-w-4xl">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-12">
+          className="text-center mb-16">
           
-          <h2 className="font-heading text-3xl md:text-4xl font-bold mb-4">
+          <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
             Para publishers que quieren operar{" "}
             <span className="text-primary">como un negocio.</span>
           </h2>
-          <p className="text-lg text-muted-foreground">
+          <p className="text-lg md:text-xl text-muted-foreground">
             "Publicar es fácil. Gestionar una editorial, no."
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid md:grid-cols-2 gap-12">
           {/* Es para */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="p-6 rounded-xl border border-accent/20 bg-accent/5">
+            className="p-8 rounded-xl border border-accent/20 bg-accent/5">
             
             <h3 className="font-heading text-lg font-bold mb-6 text-accent">Es para ti si…</h3>
             <ul className="space-y-4">
@@ -56,7 +56,7 @@ export const TargetAudienceSection = () => {
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="p-6 rounded-xl border border-border bg-card">
+            className="p-8 rounded-xl border border-border bg-card">
             
             <h3 className="font-heading text-lg font-bold mb-6 text-destructive">No es para ti si…</h3>
             <ul className="space-y-4">
