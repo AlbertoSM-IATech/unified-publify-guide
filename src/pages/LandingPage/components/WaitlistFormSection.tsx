@@ -29,7 +29,7 @@ export const WaitlistFormSection = () => {
   };
 
   return (
-    <section id="waitlist" className="py-24 bg-background">
+    <section id="waitlist" className="py-36 bg-background">
       <div className="container mx-auto px-4 max-w-2xl">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
