@@ -92,7 +92,7 @@ export const ProblemSolutionSection = () => {
             <span className="font-semibold text-primary">⏰ Realidad: Pierdes tiempo, dinero y oportunidades</span>
           </motion.div>
           
-          <h2 data-gsap="text-reveal" className="text-4xl md:text-5xl font-bold mb-6 text-foreground" style={{ perspective: "600px" }}>
+          <h2 data-gsap="text-reveal" className="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 text-foreground" style={{ perspective: "600px" }}>
             El caos editorial vs el control total
           </h2>
           
