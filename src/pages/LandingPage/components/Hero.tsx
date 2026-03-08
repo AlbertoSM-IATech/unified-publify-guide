@@ -44,7 +44,7 @@ export const Hero = () => {
           </motion.p>
 
           {/* Tagline */}
-          <motion.p variants={fadeInUp} className="text-sm md:text-base font-semibold tracking-widest uppercase text-blue-500 mb-10">
+          <motion.p variants={fadeInUp} className="text-sm md:text-base font-semibold tracking-widest uppercase text-accent-foreground mb-10" style={{ color: 'hsl(217, 91%, 60%)' }}>
             Investiga → Crea → Analiza → Escala
           </motion.p>
 
