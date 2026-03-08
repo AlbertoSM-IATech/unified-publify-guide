@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Header } from "./components/Header";
 import { Hero } from "./components/Hero";
+import { TaglineSection } from "./components/TaglineSection";
 import { ProblemSolutionSection } from "./components/ProblemSolutionSection";
 import { WhatIsPublifySection } from "./components/WhatIsPublifySection";
 import { TargetAudienceSection } from "./components/TargetAudienceSection";
@@ -32,6 +33,7 @@ export const LandingPage = () => {
       <TechBackground />
       <Header />
       <Hero />
+      <TaglineSection />
       <ProblemSolutionSection />
       <WhatIsPublifySection />
       <TargetAudienceSection />
