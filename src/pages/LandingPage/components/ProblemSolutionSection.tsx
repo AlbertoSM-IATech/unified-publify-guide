@@ -32,7 +32,7 @@ const solutionPoints = [{
   description: "Landing pages, email marketing, funnels y CRM integrado en español",
   benefit: "Más leads, mejores conversiones"
 }, {
-  icon: <CheckCircle className="w-8 h-8 text-green-500" />,
+  icon: <CheckCircle className="w-6 h-6 text-green-500" />,
   title: "Datos y finanzas cristalinas",
   description: "Ve el rendimiento real de cada libro, controla gastos e ingresos fácilmente",
   benefit: "Decisiones inteligentes basadas en datos"
