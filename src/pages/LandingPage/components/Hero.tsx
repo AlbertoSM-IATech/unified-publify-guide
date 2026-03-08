@@ -54,7 +54,7 @@ export const Hero = () => {
 
             <TextReveal
               as="p"
-              className="text-xl mb-8 md:text-3xl lg:text-4xl font-light text-foreground/80"
+              className="text-lg mb-6 md:text-xl lg:text-2xl font-light text-foreground/80"
               immediate
               delay={0.9}
               stagger={0.01}
