@@ -48,7 +48,7 @@ export const ProblemSolutionSection = () => {
           {[...Array(8)].map((_, i) => (
             <motion.div
               key={i}
-              className="absolute w-6 h-6 bg-primary/10 rounded-full"
+              className="absolute w-6 h-6 bg-primary/10 dark:bg-primary/25 rounded-full"
               style={{
                 left: `${Math.random() * 100}%`,
                 top: `${Math.random() * 100}%`,

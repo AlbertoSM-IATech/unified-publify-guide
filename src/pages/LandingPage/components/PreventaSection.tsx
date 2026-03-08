@@ -44,8 +44,8 @@ export const PreventaSection = () => {
     <section id="waitlist" className="py-36 bg-background relative overflow-hidden">
       {/* Parallax background layer */}
       <div data-gsap="parallax-bg" className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-20 right-10 w-72 h-72 bg-primary/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-10 left-10 w-56 h-56 bg-accent/5 rounded-full blur-3xl" />
+        <div className="absolute top-20 right-10 w-72 h-72 bg-primary/5 dark:bg-primary/15 rounded-full blur-3xl" />
+        <div className="absolute bottom-10 left-10 w-56 h-56 bg-accent/5 dark:bg-accent/15 rounded-full blur-3xl" />
       </div>
 
       <div className="container mx-auto max-w-4xl px-0 relative z-10">
