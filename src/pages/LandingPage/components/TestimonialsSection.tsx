@@ -227,7 +227,7 @@ export const TestimonialsSection = () => {
       }} transition={{
         delay: 0.4,
         duration: 0.6
-      }} className="mt-14 text-center">
+      }} className="mt-20 text-center">
           <motion.div whileHover={{
           scale: 1.05
         }} transition={{
