@@ -181,7 +181,7 @@ export const TestimonialsSection = () => {
         </motion.div>
 
         {/* Mobile view: Stacked cards */}
-        <div className="md:hidden space-y-4">
+        <div className="md:hidden space-y-6">
           {testimonials.map((testimonial, index) => <motion.div key={index} custom={index} initial="hidden" whileInView="visible" viewport={{
           once: true
         }} variants={cardVariants} whileHover="hover" className="will-change-transform" data-gsap="testimonial-card">
