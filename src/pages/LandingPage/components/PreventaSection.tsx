@@ -125,7 +125,16 @@ export const PreventaSection = () => {
                 </p>
               </div>
 
-              <div className="space-y-2">
+              <div className="space-y-3">
+                <Input
+                  type="text"
+                  placeholder="Tu nombre"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                  maxLength={100}
+                  className="h-12 text-base"
+                />
                 <Input
                   type="email"
                   placeholder="tu@email.com"
