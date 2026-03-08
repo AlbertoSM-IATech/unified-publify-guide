@@ -27,8 +27,8 @@ export const PreventaSection = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email.trim()) {
-      toast({ title: "Introduce tu email", variant: "destructive" });
+    if (!name.trim() || !email.trim()) {
+      toast({ title: "Introduce tu nombre y email", variant: "destructive" });
       return;
     }
     setLoading(true);
