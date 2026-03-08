@@ -148,9 +148,9 @@ export const TestimonialsSection = () => {
       y: backgroundY,
       opacity
     }}>
-        <div className="absolute top-0 left-0 right-0 h-1/2 bg-gradient-to-b from-[#FB923C]/5 to-transparent" />
+        <div className="absolute top-0 left-0 right-0 h-1/2 bg-gradient-to-b from-primary/5 to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-primary/5 to-transparent" />
-        <div className="absolute top-1/4 left-1/3 w-1/3 h-1/3 rounded-full bg-[#FB923C]/10 blur-[80px]" />
+        <div className="absolute top-1/4 left-1/3 w-1/3 h-1/3 rounded-full bg-primary/10 blur-[80px]" />
         <div className="absolute bottom-1/4 right-1/3 w-1/3 h-1/3 rounded-full bg-primary/10 blur-[80px]" />
       </motion.div>
       
