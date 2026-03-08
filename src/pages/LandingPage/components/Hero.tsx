@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { ArrowRight, BookOpen, BarChart3, Eye, Layers, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ParticlesBackground } from "@/components/motion/ParticlesBackground";
 import dashboardImg from "@/assets/publify-dashboard-concept.jpg";
 
 const fadeInUp = {
