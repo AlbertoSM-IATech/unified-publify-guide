@@ -181,7 +181,7 @@ export const ProblemSolutionSection = () => {
                     ]
                   }}
                   transition={{ duration: 2, repeat: Infinity }}
-                  className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center"
+                  className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center"
                 >
                   <CheckCircle className="w-6 h-6 text-primary-foreground" />
                 </motion.div>
