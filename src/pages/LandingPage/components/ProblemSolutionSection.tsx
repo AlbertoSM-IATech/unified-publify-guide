@@ -233,7 +233,7 @@ export const ProblemSolutionSection = () => {
                 Publify no te da más trabajo. Te devuelve la vida que habías perdido.
               </TextReveal>
               
-              <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
+              <p className="text-base text-muted-foreground mb-6 leading-relaxed">
                 Imagina tener todos tus libros, datos financieros, campañas de marketing y contactos 
                 organizados en un solo lugar. <strong>Sin caos. Sin pérdidas de tiempo. Solo claridad.</strong>
               </p>
