@@ -93,9 +93,9 @@ export const ProblemSolutionSection = () => {
             <span className="font-semibold text-primary">⏰ Realidad: Pierdes tiempo, dinero y oportunidades</span>
           </motion.div>
           
-          <h2 data-gsap="text-reveal" className="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 text-foreground" style={{ perspective: "600px" }}>
+          <TextReveal as="h2" className="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 text-foreground">
             El caos editorial vs el control total
-          </h2>
+          </TextReveal>
           
           <p className="text-xl md:text-2xl text-muted-foreground max-w-4xl mx-auto leading-relaxed">
             La gestión editorial tradicional te tiene corriendo como un pollo sin cabeza. 
