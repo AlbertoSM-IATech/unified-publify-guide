@@ -164,7 +164,7 @@ export const TestimonialsSection = () => {
         once: true
       }} transition={{
         duration: 0.6
-      }} className="text-center mb-12">
+      }} className="text-center mb-20">
           <div className="flex justify-center mb-4">
             <motion.div className="rounded-full bg-[#FB923C]/10 p-3 text-[#FB923C]" initial="initial" whileInView="animate" viewport={{
             once: true
