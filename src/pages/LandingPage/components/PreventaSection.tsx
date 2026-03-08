@@ -66,7 +66,7 @@ export const PreventaSection = () => {
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-12 mb-16">
+        <div className="grid lg:grid-cols-2 gap-10 mb-12">
           {/* Benefits + Pricing */}
           <div className="space-y-8">
             <div className="p-8 bg-card border border-border rounded-xl">
