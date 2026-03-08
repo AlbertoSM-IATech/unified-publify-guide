@@ -34,6 +34,7 @@ export const PreventaSection = () => {
     setLoading(true);
     setTimeout(() => {
       toast({ title: "¡Te has unido a la waitlist!", description: "Te avisaremos cuando abramos plazas." });
+      setName("");
       setEmail("");
       setLoading(false);
     }, 1000);
