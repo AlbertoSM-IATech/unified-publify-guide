@@ -4,44 +4,6 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-/**
- * Splits text nodes inside an element into individual <span> characters,
- * preserving existing child elements (e.g. colored <span> tags).
- */
-const splitTextIntoChars = (element: Element): HTMLSpanElement[] => {
-  const chars: HTMLSpanElement[] = [];
-
-  const walkNodes = (parent: Node) => {
-    // Snapshot child nodes so we can modify safely
-    const children = Array.from(parent.childNodes);
-
-    children.forEach((node) => {
-      if (node.nodeType === Node.TEXT_NODE) {
-        const text = node.textContent || "";
-        const frag = document.createDocumentFragment();
-        for (const char of text) {
-          const span = document.createElement("span");
-          span.textContent = char;
-          span.style.display = "inline-block";
-          span.style.opacity = "0";
-          span.style.transform = "translateY(40px) rotateX(-90deg)";
-          span.style.transformOrigin = "bottom";
-          if (char === " ") span.style.width = "0.3em";
-          frag.appendChild(span);
-          chars.push(span);
-        }
-        parent.replaceChild(frag, node);
-      } else if (node.nodeType === Node.ELEMENT_NODE) {
-        // Recurse into child elements (preserving <span>, <strong>, etc.)
-        walkNodes(node);
-      }
-    });
-  };
-
-  walkNodes(element);
-  return chars;
-};
-
 export const useScrollAnimations = () => {
   const initialized = useRef(false);
 
