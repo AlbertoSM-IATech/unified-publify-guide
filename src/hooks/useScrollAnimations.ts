@@ -19,14 +19,16 @@ export const useScrollAnimations = () => {
       const dashboardEl = document.querySelector("[data-gsap='hero-dashboard']");
       if (dashboardEl) {
         gsap.to(dashboardEl, {
-          y: 120,
-          scale: 0.95,
+          y: 200,
+          scale: 0.88,
+          rotateX: 8,
+          opacity: 0.6,
           ease: "none",
           scrollTrigger: {
             trigger: dashboardEl,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 1.5,
+            start: "top 80%",
+            end: "top -30%",
+            scrub: 1.2,
           },
         });
       }
