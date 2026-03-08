@@ -172,7 +172,7 @@ export const TestimonialsSection = () => {
               <Quote size={24} />
             </motion.div>
           </div>
-          <h2 className="text-3xl md:text-4xl font-bold font-heading mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold font-heading mb-4" data-gsap="text-reveal">
             Casos de éxito reales
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
@@ -184,7 +184,7 @@ export const TestimonialsSection = () => {
         <div className="md:hidden space-y-4">
           {testimonials.map((testimonial, index) => <motion.div key={index} custom={index} initial="hidden" whileInView="visible" viewport={{
           once: true
-        }} variants={cardVariants} whileHover="hover" className="will-change-transform">
+        }} variants={cardVariants} whileHover="hover" className="will-change-transform" data-gsap="testimonial-card">
               <TestimonialCard testimonial={testimonial} />
             </motion.div>)}
         </div>
@@ -203,7 +203,7 @@ export const TestimonialsSection = () => {
               {testimonials.map((testimonial, index) => <CarouselItem key={index} className="pl-4 md:basis-1/2 lg:basis-1/3">
                   <motion.div custom={index} initial="hidden" whileInView="visible" viewport={{
                 once: true
-              }} variants={cardVariants} whileHover="hover" className="h-full will-change-transform">
+              }} variants={cardVariants} whileHover="hover" className="h-full will-change-transform" data-gsap="testimonial-card">
                     <TestimonialCard testimonial={testimonial} />
                   </motion.div>
                 </CarouselItem>)}
