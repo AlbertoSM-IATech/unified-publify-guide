@@ -184,7 +184,7 @@ export const TestimonialsSection = () => {
         <div className="md:hidden space-y-4">
           {testimonials.map((testimonial, index) => <motion.div key={index} custom={index} initial="hidden" whileInView="visible" viewport={{
           once: true
-        }} variants={cardVariants} whileHover="hover" className="will-change-transform">
+        }} variants={cardVariants} whileHover="hover" className="will-change-transform" data-gsap="testimonial-card">
               <TestimonialCard testimonial={testimonial} />
             </motion.div>)}
         </div>
