@@ -41,7 +41,7 @@ export const Hero = () => {
             {/* GSAP text reveal — letter by letter */}
             <h1
               data-gsap="hero-title"
-              className="font-heading text-4xl md:text-5xl font-bold tracking-tight mb-4 text-primary lg:text-6xl"
+              className="font-heading text-5xl md:text-6xl font-bold tracking-tight mb-6 text-primary lg:text-7xl"
               style={{ perspective: "600px" }}>
               
               Gestiona toda tu editorial desde un solo lugar
