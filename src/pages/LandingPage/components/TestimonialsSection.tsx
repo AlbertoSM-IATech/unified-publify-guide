@@ -172,7 +172,7 @@ export const TestimonialsSection = () => {
               <Quote size={24} />
             </motion.div>
           </div>
-          <h2 className="text-3xl md:text-4xl font-bold font-heading mb-4" data-gsap="text-reveal">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-heading mb-6" data-gsap="text-reveal">
             Casos de éxito reales
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
