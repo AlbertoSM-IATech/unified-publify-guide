@@ -67,7 +67,7 @@ export const PreventaSection = () => {
         <div className="grid lg:grid-cols-2 gap-12 mb-16">
           {/* Benefits + Pricing */}
           <div className="space-y-8">
-            <div className="p-6 bg-card border border-border rounded-xl">
+            <div className="p-8 bg-card border border-border rounded-xl">
               <h3 className="font-heading text-lg font-bold mb-4">¿Por qué entrar ahora?</h3>
               <ul className="space-y-3">
                 {benefits.map((item, i) =>
