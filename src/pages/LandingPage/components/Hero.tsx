@@ -49,7 +49,7 @@ export const Hero = () => {
 
             <p
               data-gsap="hero-subtitle"
-              className="text-lg mb-6 md:text-3xl font-light text-primary-foreground"
+              className="text-xl mb-8 md:text-3xl lg:text-4xl font-light text-primary-foreground"
               style={{ perspective: "400px" }}>
               
               Recupera horas cada semana con el único sistema diseñado para publishers KDP.
