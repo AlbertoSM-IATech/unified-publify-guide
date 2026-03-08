@@ -35,7 +35,7 @@ export const WaitlistFormSection = () => {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-10"
+          className="text-center mb-14"
         >
           <h2 className="font-heading text-3xl md:text-4xl font-bold mb-4">
             Entra en la waitlist <span className="text-primary">(Early Adopters)</span>
