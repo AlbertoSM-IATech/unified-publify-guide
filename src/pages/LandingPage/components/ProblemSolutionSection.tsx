@@ -229,7 +229,7 @@ export const ProblemSolutionSection = () => {
                 <CheckCircle className="w-7 h-7 text-primary-foreground" />
               </motion.div>
               
-              <TextReveal as="h3" className="text-3xl md:text-4xl font-bold mb-8 text-foreground">
+              <TextReveal as="h3" className="text-2xl md:text-3xl font-bold mb-6 text-foreground">
                 Publify no te da más trabajo. Te devuelve la vida que habías perdido.
               </TextReveal>
               
