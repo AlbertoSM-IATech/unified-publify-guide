@@ -173,7 +173,7 @@ export const TestimonialsSection = () => {
               <Quote size={24} />
             </motion.div>
           </div>
-          <TextReveal as="h2" className="text-3xl md:text-4xl lg:text-5xl font-bold font-heading mb-6">
+          <TextReveal as="h2" className="text-2xl md:text-3xl lg:text-4xl font-bold font-heading mb-4">
             Casos de éxito reales
           </TextReveal>
           <p className="text-muted-foreground max-w-2xl mx-auto text-lg md:text-xl">
