@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { AlertTriangle, CheckCircle, Clock, Search, FileX, TrendingDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
+import { TextReveal } from "@/components/motion/TextReveal";
 
 const timeWasters = [{
   icon: <Search className="w-8 h-8 text-primary" />,
