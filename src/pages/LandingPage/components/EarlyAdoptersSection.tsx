@@ -3,27 +3,27 @@ import { Button } from "@/components/ui/button";
 import { Check, ArrowRight, Sparkles, BookOpen, DollarSign } from "lucide-react";
 
 const includes = [
-  "Acceso prioritario al MVP (Biblioteca + Finanzas básicas)",
-  "Onboarding y soporte inicial personalizado",
-  "Feedback prioritario: tus fricciones tienen prioridad",
-  "Posible opción Lifetime más adelante (si aplica, para early adopters)",
-];
+"Acceso prioritario al MVP (Biblioteca + Finanzas básicas)",
+"Onboarding y soporte inicial personalizado",
+"Feedback prioritario: tus fricciones tienen prioridad",
+"Posible opción Lifetime más adelante (si aplica, para early adopters)"];
+
 
 const pricingTiers = [
-  { dates: "1–10 abril", price: "15", highlight: true },
-  { dates: "11–20 abril", price: "20", highlight: false },
-  { dates: "21–30 abril", price: "25", highlight: false },
-];
+{ dates: "1–10 abril", price: "15", highlight: true },
+{ dates: "11–20 abril", price: "20", highlight: false },
+{ dates: "21–30 abril", price: "25", highlight: false }];
+
 
 const roadmapItems = [
-  "Calculadora de viabilidad",
-  "Estudio de KW y scoring",
-  "Análisis de campañas y KW",
-  "Calendario editorial",
-  "Integraciones",
-  "Generación de QRs personalizados",
-  "Y más…",
-];
+"Calculadora de viabilidad",
+"Estudio de KW y scoring",
+"Análisis de campañas y KW",
+"Calendario editorial",
+"Integraciones",
+"Generación de QRs personalizados",
+"Y más…"];
+
 
 export const EarlyAdoptersSection = () => {
   const scrollToWaitlist = () => {
@@ -37,14 +37,14 @@ export const EarlyAdoptersSection = () => {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-12"
-        >
+          className="text-center mb-12">
+          
           <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 px-4 py-2 rounded-full text-sm font-medium text-primary mb-6">
             <Sparkles size={16} />
             Plazas limitadas: 20–30 early adopters
           </div>
-          <h2 className="font-heading text-3xl md:text-4xl font-bold mb-4">
-            Early Adopters: acceso prioritario al MVP
+          <h2 className="font-heading text-3xl font-bold mb-4 text-primary md:text-5xl">
+            Early Adopters: acceso prioritario 
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Entra antes que nadie y bloquea el mejor precio para siempre (mientras mantengas tu suscripción activa).
@@ -57,16 +57,16 @@ export const EarlyAdoptersSection = () => {
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="p-6 bg-card border border-border rounded-xl"
-          >
+            className="p-6 bg-card border rounded-xl border-accent">
+            
             <h3 className="font-heading text-xl font-bold mb-6">Qué incluye</h3>
             <ul className="space-y-4">
-              {includes.map((item, i) => (
-                <li key={i} className="flex items-start gap-3">
+              {includes.map((item, i) =>
+              <li key={i} className="flex items-start gap-3">
                   <Check className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
                   <span className="text-foreground">{item}</span>
                 </li>
-              ))}
+              )}
             </ul>
 
             {/* MVP actual */}
@@ -84,11 +84,11 @@ export const EarlyAdoptersSection = () => {
             <div className="mt-4 p-4 bg-muted/50 border border-border rounded-lg">
               <p className="text-sm font-semibold text-foreground mb-2">En el roadmap:</p>
               <div className="flex flex-wrap gap-2">
-                {roadmapItems.map((item, i) => (
-                  <span key={i} className="text-xs bg-background border border-border rounded-full px-3 py-1 text-muted-foreground">
+                {roadmapItems.map((item, i) =>
+                <span key={i} className="text-xs bg-background border border-border rounded-full px-3 py-1 text-muted-foreground">
                     {item}
                   </span>
-                ))}
+                )}
               </div>
             </div>
           </motion.div>
@@ -98,8 +98,8 @@ export const EarlyAdoptersSection = () => {
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="p-6 bg-card border border-primary/20 rounded-xl"
-          >
+            className="p-6 bg-card border rounded-xl border-primary">
+            
             <div className="flex items-center gap-2 mb-6">
               <DollarSign className="w-5 h-5 text-primary" />
               <h3 className="font-heading text-xl font-bold">Precio escalonado (abril — Plan Plus)</h3>
@@ -110,26 +110,26 @@ export const EarlyAdoptersSection = () => {
             </p>
             
             <div className="space-y-3 mb-6">
-              {pricingTiers.map((tier, i) => (
-                <div
-                  key={i}
-                  className={`flex items-center justify-between p-4 rounded-lg border ${
-                    tier.highlight 
-                      ? "bg-primary/10 border-primary/30" 
-                      : "bg-background border-border"
-                  }`}
-                >
+              {pricingTiers.map((tier, i) =>
+              <div
+                key={i}
+                className={`flex items-center justify-between p-4 rounded-lg border ${
+                tier.highlight ?
+                "bg-primary/10 border-primary/30" :
+                "bg-background border-border"}`
+                }>
+                
                   <span className="font-medium">{tier.dates}</span>
                   <span className={`text-2xl font-bold ${tier.highlight ? "text-primary" : ""}`}>
                     {tier.price} €<span className="text-sm font-normal text-muted-foreground">/mes</span>
                   </span>
                 </div>
-              ))}
+              )}
             </div>
 
             <div className="p-4 bg-muted/50 border border-border rounded-lg mb-6 space-y-2">
               <p className="text-sm text-foreground">
-                <strong>Desde 1 de mayo:</strong> 29 €/mes Básico | 49 €/mes Plus
+                <strong className="text-primary">Desde 1 de mayo:</strong> 29 €/mes Básico | 49 €/mes Plus
               </p>
               <p className="text-xs text-muted-foreground">
                 Si cancelas, al volver tendrás que pagar el precio vigente sin descuento.
@@ -137,7 +137,7 @@ export const EarlyAdoptersSection = () => {
               <p className="text-xs text-muted-foreground">
                 El plan PRO no está incluido en esta oferta, pero si entras ahora solo pagarás la diferencia de precio manteniendo tu precio de early adopter.
               </p>
-              <p className="text-xs text-muted-foreground">
+              <p className="text-xs text-primary">
                 Precios sin IVA.
               </p>
             </div>
@@ -154,6 +154,6 @@ export const EarlyAdoptersSection = () => {
           </motion.div>
         </div>
       </div>
-    </section>
-  );
+    </section>);
+
 };

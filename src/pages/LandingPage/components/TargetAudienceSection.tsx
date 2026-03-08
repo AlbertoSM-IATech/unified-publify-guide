@@ -16,7 +16,7 @@ const isNotFor = [
 export const TargetAudienceSection = () => {
   return (
     <section id="para-quien" className="py-36 bg-background">
-      <div className="container mx-auto px-4 max-w-4xl">
+      <div className="container mx-auto max-w-4xl px-0">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -25,10 +25,10 @@ export const TargetAudienceSection = () => {
           
           <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
             Para publishers que quieren operar{" "}
-            <span className="text-primary">como un negocio.</span>
+            <span className="text-primary">como una editorial.</span>
           </h2>
           <p className="text-lg md:text-xl text-muted-foreground">
-            "Publicar es fácil. Gestionar una editorial, no."
+            "Publicar es fácil. Gestionar una editorial, no, pero con Publify es más fácil"
           </p>
         </motion.div>
 
@@ -40,7 +40,7 @@ export const TargetAudienceSection = () => {
             viewport={{ once: true }}
             className="p-8 rounded-xl border border-accent/20 bg-accent/5">
             
-            <h3 className="font-heading text-lg font-bold mb-6 text-accent">Es para ti si…</h3>
+            <h3 className="font-heading text-lg font-bold mb-6 text-accent">Publify Es para ti si…</h3>
             <ul className="space-y-4">
               {isFor.map((item, i) =>
               <li key={i} className="flex items-start gap-3">
