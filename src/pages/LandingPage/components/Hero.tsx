@@ -147,66 +147,106 @@ export const Hero = () => {
           {/* Right — Dashboard image */}
           <motion.div
             variants={fadeInUp}
-            className="relative"
+            className="relative self-center"
             style={{ perspective: "1200px" }}>
             
-            <div className="absolute -inset-8 rounded-3xl bg-primary/15 blur-3xl" />
+            {/* Glow behind laptop */}
+            <div className="absolute -inset-10 rounded-3xl bg-primary/20 blur-[60px]" />
+            <div className="absolute -inset-6 rounded-3xl bg-accent/10 blur-[40px]" />
+            
             <motion.div
               data-gsap="hero-dashboard"
-              initial={{ opacity: 0, y: 60, rotateX: 8, scale: 0.92 }}
-              animate={{ opacity: 1, y: 0, rotateX: 2, scale: 1 }}
-              transition={{ duration: 1.2, delay: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-              whileHover={{ rotateX: 0, scale: 1.02, transition: { duration: 0.4 } }}
+              initial={{ opacity: 0, y: 60, rotateX: 12, scale: 0.88 }}
+              animate={{ opacity: 1, y: 0, rotateX: 3, scale: 1 }}
+              transition={{ duration: 1.4, delay: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
+              whileHover={{ rotateX: 0, scale: 1.03, transition: { duration: 0.5 } }}
               className="relative"
               style={{ transformStyle: "preserve-3d" }}>
               
-              {/* Laptop frame */}
+              {/* Monitor frame */}
               <div
-                className="relative rounded-t-xl overflow-hidden bg-neutral-900 p-[3px] pt-0"
+                className="relative rounded-2xl overflow-hidden border border-neutral-700/50"
                 style={{
-                  boxShadow: "0 25px 60px -12px hsl(var(--primary) / 0.25), 0 12px 30px -8px rgba(0,0,0,0.4)",
+                  background: "linear-gradient(180deg, #2a2a2e 0%, #1a1a1e 100%)",
+                  padding: "2px",
+                  boxShadow: "0 30px 80px -15px hsl(var(--primary) / 0.3), 0 15px 40px -10px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05)",
                 }}>
                 
-                {/* Browser top bar */}
-                <div className="flex items-center gap-2 px-4 py-2.5 bg-neutral-800 rounded-t-lg">
-                  <div className="flex items-center gap-1.5">
-                    <span className="w-2.5 h-2.5 rounded-full bg-red-500" />
-                    <span className="w-2.5 h-2.5 rounded-full bg-yellow-500" />
-                    <span className="w-2.5 h-2.5 rounded-full bg-green-500" />
-                  </div>
-                  <div className="flex-1 flex justify-center">
-                    <div className="flex items-center gap-1.5 px-4 py-1 rounded-md bg-neutral-700/60 text-neutral-400 text-xs font-mono">
-                      <svg className="w-3 h-3 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                      </svg>
-                      app.publify.io
+                {/* Inner bezel */}
+                <div className="rounded-xl overflow-hidden" style={{ background: "#1a1a1e" }}>
+                  {/* Browser top bar */}
+                  <div className="flex items-center gap-3 px-4 py-2" style={{ background: "linear-gradient(180deg, #333338 0%, #2a2a2e 100%)" }}>
+                    <div className="flex items-center gap-2">
+                      <span className="w-3 h-3 rounded-full" style={{ background: "linear-gradient(135deg, #ff5f57, #e0443e)" }} />
+                      <span className="w-3 h-3 rounded-full" style={{ background: "linear-gradient(135deg, #febc2e, #d4a019)" }} />
+                      <span className="w-3 h-3 rounded-full" style={{ background: "linear-gradient(135deg, #28c840, #1fa834)" }} />
                     </div>
+                    
+                    {/* Navigation arrows */}
+                    <div className="flex items-center gap-1 ml-2">
+                      <span className="text-neutral-500 text-xs">◀</span>
+                      <span className="text-neutral-500 text-xs">▶</span>
+                    </div>
+                    
+                    {/* URL bar */}
+                    <div className="flex-1 flex justify-center">
+                      <div className="flex items-center gap-2 px-5 py-1.5 rounded-lg text-xs font-mono" style={{ background: "rgba(0,0,0,0.3)", minWidth: "200px" }}>
+                        <svg className="w-3 h-3 flex-shrink-0" style={{ color: "#28c840" }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                        </svg>
+                        <span className="text-neutral-400">app.publify.io</span>
+                      </div>
+                    </div>
+                    
+                    {/* Spacer for symmetry */}
+                    <div className="w-16" />
                   </div>
-                </div>
 
-                {/* Screen / dashboard image */}
-                <div className="relative">
-                  <img
-                    src={dashboardImg}
-                    alt="Publify Dashboard - Sistema Operativo Editorial"
-                    className="w-full h-auto block"
-                    loading="lazy" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-background/30 via-transparent to-transparent" />
+                  {/* Screen content */}
+                  <div className="relative">
+                    <img
+                      src={dashboardImg}
+                      alt="Publify Dashboard - Sistema Operativo Editorial"
+                      className="w-full h-auto block"
+                      loading="lazy" />
+                    
+                    {/* Screen reflection */}
+                    <motion.div
+                      className="absolute inset-0 pointer-events-none"
+                      style={{
+                        background: "linear-gradient(115deg, transparent 40%, rgba(255,255,255,0.03) 45%, rgba(255,255,255,0.06) 50%, transparent 55%)",
+                      }}
+                      animate={{ 
+                        backgroundPosition: ["200% 0%", "-200% 0%"],
+                      }}
+                      transition={{ duration: 6, repeat: Infinity, repeatDelay: 4, ease: "easeInOut" }}
+                    />
+                    
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
+                  </div>
                 </div>
               </div>
 
-              {/* Laptop base */}
-              <div
-                className="mx-auto h-3 bg-neutral-800 rounded-b-lg"
-                style={{
-                  width: "70%",
-                  clipPath: "polygon(4% 0, 96% 0, 100% 100%, 0% 100%)",
-                }}
-              />
-              <div
-                className="mx-auto h-[3px] rounded-b bg-neutral-700"
-                style={{ width: "20%" }}
-              />
+              {/* Laptop base / stand */}
+              <div className="relative mx-auto" style={{ width: "60%", marginTop: "-1px" }}>
+                <div
+                  className="h-4 rounded-b-lg"
+                  style={{
+                    background: "linear-gradient(180deg, #2a2a2e 0%, #222226 100%)",
+                    clipPath: "polygon(5% 0, 95% 0, 100% 100%, 0% 100%)",
+                    borderBottom: "1px solid rgba(255,255,255,0.05)",
+                  }}
+                />
+                {/* Hinge notch */}
+                <div
+                  className="mx-auto h-1 rounded-b-sm"
+                  style={{ 
+                    width: "30%", 
+                    background: "linear-gradient(180deg, #333 0%, #2a2a2e 100%)",
+                    boxShadow: "0 2px 8px rgba(0,0,0,0.3)",
+                  }}
+                />
+              </div>
             </motion.div>
           </motion.div>
 
