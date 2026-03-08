@@ -191,7 +191,7 @@ export const ProblemSolutionSection = () => {
                 </div>
               </div>
               
-              <div className="space-y-8">
+              <div className="space-y-5">
                 {solutionPoints.map((point, index) => (
                   <div 
                     key={index}
