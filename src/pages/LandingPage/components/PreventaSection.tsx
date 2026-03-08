@@ -54,7 +54,7 @@ export const PreventaSection = () => {
           </div>
           <h2
             data-gsap="text-reveal"
-            className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold mb-4"
+            className="font-heading text-3xl md:text-4xl lg:text-6xl font-bold mb-6"
             style={{ perspective: "600px" }}
           >
             Publify todavía no está abierto al público.
