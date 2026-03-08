@@ -139,7 +139,7 @@ export const ProblemSolutionSection = () => {
                   <div 
                     key={index}
                     data-gsap="problem-card"
-                    className="group flex items-start gap-5 p-8 bg-card/80 dark:bg-primary/10 rounded-xl border border-primary/30 dark:border-primary/20 hover:shadow-md transition-all duration-300"
+                    className="group flex items-start gap-4 p-5 bg-card/80 dark:bg-primary/10 rounded-xl border border-primary/30 dark:border-primary/20 hover:shadow-md transition-all duration-300"
                   >
                     <div className="mt-1">{point.icon}</div>
                     <div className="flex-1">
