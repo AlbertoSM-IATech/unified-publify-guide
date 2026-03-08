@@ -40,21 +40,27 @@ export const Hero = () => {
           {/* Left — Text */}
           <div className="text-left">
             {/* GSAP text reveal — letter by letter */}
-            <h1
-              data-gsap="hero-title"
+            <TextReveal
+              as="h1"
               className="font-heading text-5xl md:text-6xl font-bold tracking-tight mb-6 text-primary lg:text-7xl"
-              style={{ perspective: "600px" }}>
-              
+              immediate
+              delay={0.3}
+              stagger={0.015}
+              duration={0.5}
+            >
               Gestiona toda tu editorial desde un solo lugar
-            </h1>
+            </TextReveal>
 
-            <p
-              data-gsap="hero-subtitle"
+            <TextReveal
+              as="p"
               className="text-xl mb-8 md:text-3xl lg:text-4xl font-light text-primary-foreground"
-              style={{ perspective: "400px" }}>
-              
+              immediate
+              delay={0.9}
+              stagger={0.01}
+              duration={0.4}
+            >
               Recupera horas cada semana con el único sistema diseñado para publishers KDP.
-            </p>
+            </TextReveal>
 
             <motion.p variants={fadeInUp} className="text-lg md:text-xl text-muted-foreground mb-6 leading-relaxed">
               Con Publify puedes gestionar todo tu negocio editorial en un solo lugar:

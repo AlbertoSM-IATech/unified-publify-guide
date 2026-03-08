@@ -173,9 +173,9 @@ export const TestimonialsSection = () => {
               <Quote size={24} />
             </motion.div>
           </div>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-heading mb-6" data-gsap="text-reveal">
+          <TextReveal as="h2" className="text-3xl md:text-4xl lg:text-5xl font-bold font-heading mb-6">
             Casos de éxito reales
-          </h2>
+          </TextReveal>
           <p className="text-muted-foreground max-w-2xl mx-auto text-lg md:text-xl">
             Autores y editoriales que ya están ahorrando tiempo, aumentando ventas y recuperando el control de su negocio
           </p>

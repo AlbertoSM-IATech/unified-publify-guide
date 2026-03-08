@@ -229,9 +229,9 @@ export const ProblemSolutionSection = () => {
                 <CheckCircle className="w-8 h-8 text-primary-foreground" />
               </motion.div>
               
-              <h3 data-gsap="text-reveal" className="text-3xl md:text-4xl font-bold mb-8 text-foreground" style={{ perspective: "600px" }}>
+              <TextReveal as="h3" className="text-3xl md:text-4xl font-bold mb-8 text-foreground">
                 Publify no te da más trabajo. Te devuelve la vida que habías perdido.
-              </h3>
+              </TextReveal>
               
               <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
                 Imagina tener todos tus libros, datos financieros, campañas de marketing y contactos 
