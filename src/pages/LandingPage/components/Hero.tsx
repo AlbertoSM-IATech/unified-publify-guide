@@ -33,17 +33,19 @@ export const Hero = () => {
           
           {/* Left — Text */}
           <div className="text-left">
-            <motion.h1 variants={fadeInUp} className="font-heading text-4xl md:text-5xl lg:text-5xl font-bold tracking-tight mb-6">
-              Gestiona tu editorial desde un solo lugar{" "}
-              <span className="text-primary">y ahorra horas cada semana.</span>
+            <motion.h1 variants={fadeInUp} className="font-heading text-4xl md:text-5xl lg:text-5xl font-bold tracking-tight mb-4">
+              Gestiona toda tu editorial desde un solo lugar
             </motion.h1>
 
-            <motion.p variants={fadeInUp} className="text-lg md:text-xl text-muted-foreground mb-6 leading-relaxed">
-              Publify convierte el caos de usar herramientas genéricas como Sheets, Notion, Drive y el panel de KDP en un{" "}
-              <strong className="text-foreground">sistema claro para publishers</strong>.
+            <motion.p variants={fadeInUp} className="text-lg md:text-xl text-primary font-semibold mb-6">
+              Recupera horas cada semana con el único sistema diseñado para publishers KDP.
             </motion.p>
 
-            <motion.p variants={fadeInUp} className="text-sm md:text-base font-semibold tracking-widest uppercase text-accent-foreground mb-8" style={{ color: 'hsl(217, 91%, 60%)' }}>
+            <motion.p variants={fadeInUp} className="text-base md:text-lg text-muted-foreground mb-4 leading-relaxed">
+              Con Publify puedes gestionar todo tu negocio editorial en un solo lugar:
+            </motion.p>
+
+            <motion.p variants={fadeInUp} className="text-sm md:text-base font-semibold tracking-widest uppercase mb-8" style={{ color: 'hsl(217, 91%, 60%)' }}>
               Investiga → Crea → Analiza → Escala
             </motion.p>
 
