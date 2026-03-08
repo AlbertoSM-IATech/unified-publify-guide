@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { AlertTriangle } from "lucide-react";
 import { ScrollReveal } from "@/components/motion/ScrollReveal";
 export const PromiseVsRealitySection = () => {
-  return <section id="realidad" className="py-24 bg-background">
+  return <section id="realidad" className="py-36 bg-background">
       <div className="container mx-auto px-4">
         <ScrollReveal>
           <div className="max-w-4xl mx-auto text-center">
