@@ -169,7 +169,7 @@ export const ProblemSolutionSection = () => {
               />
             </div>
             
-            <div className="bg-green-50 dark:bg-green-950/20 p-8 rounded-2xl border-2 border-green-200 dark:border-green-800/30 shadow-lg">
+            <div className="bg-green-50 dark:bg-green-950/20 p-10 md:p-12 rounded-2xl border-2 border-green-200 dark:border-green-800/30 shadow-lg">
               <div className="flex items-center gap-3 mb-6">
                 <motion.div
                   animate={{ 
