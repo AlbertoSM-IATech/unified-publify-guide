@@ -190,12 +190,12 @@ export const ProblemSolutionSection = () => {
                 </div>
               </div>
               
-              <div className="space-y-6">
+              <div className="space-y-8">
                 {solutionPoints.map((point, index) => (
                   <div 
                     key={index}
                     data-gsap="solution-card"
-                    className="group flex items-start gap-4 p-6 bg-card/80 dark:bg-green-900/20 rounded-xl border border-green-200/50 dark:border-green-700/30 hover:shadow-md transition-all duration-300"
+                    className="group flex items-start gap-5 p-8 bg-card/80 dark:bg-green-900/20 rounded-xl border border-green-200/50 dark:border-green-700/30 hover:shadow-md transition-all duration-300"
                   >
                     <div className="mt-1">{point.icon}</div>
                     <div className="flex-1">
