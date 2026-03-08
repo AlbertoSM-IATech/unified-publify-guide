@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Header } from "./components/Header";
 import { Hero } from "./components/Hero";
 import { ProblemSolutionSection } from "./components/ProblemSolutionSection";
+import { TestimonialsSection } from "./components/TestimonialsSection";
 import { PreventaSection } from "./components/PreventaSection";
 import { Footer } from "./components/Footer";
 import { TechBackground } from "@/components/motion/TechBackground";
@@ -28,6 +29,7 @@ export const LandingPage = () => {
       <Header />
       <Hero />
       <ProblemSolutionSection />
+      <TestimonialsSection />
       <PreventaSection />
       <Footer />
     </motion.div>

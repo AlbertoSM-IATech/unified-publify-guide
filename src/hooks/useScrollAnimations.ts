@@ -271,6 +271,52 @@ export const useScrollAnimations = () => {
         );
       }
 
+      // ═══════════════════════════════════════════
+      // 10. TESTIMONIAL CARDS — Stagger reveal
+      // ═══════════════════════════════════════════
+      const testimonialCards = document.querySelectorAll("[data-gsap='testimonial-card']");
+      if (testimonialCards.length) {
+        gsap.fromTo(
+          testimonialCards,
+          { y: 60, opacity: 0, scale: 0.9, rotateX: -10 },
+          {
+            y: 0,
+            opacity: 1,
+            scale: 1,
+            rotateX: 0,
+            duration: 0.7,
+            stagger: 0.12,
+            ease: "back.out(1.4)",
+            scrollTrigger: {
+              trigger: testimonialCards[0],
+              start: "top 85%",
+              toggleActions: "play none none none",
+            },
+          }
+        );
+      }
+
+      // Testimonial main quote — cinematic scale
+      const testimonialQuote = document.querySelector("[data-gsap='testimonial-quote']");
+      if (testimonialQuote) {
+        gsap.fromTo(
+          testimonialQuote,
+          { scale: 0.8, opacity: 0, y: 40 },
+          {
+            scale: 1,
+            opacity: 1,
+            y: 0,
+            duration: 1,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: testimonialQuote,
+              start: "top 80%",
+              toggleActions: "play none none none",
+            },
+          }
+        );
+      }
+
     }, 100);
 
     return () => {
