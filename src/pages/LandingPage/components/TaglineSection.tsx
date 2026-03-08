@@ -17,6 +17,15 @@ export const TaglineSection = () => {
           <br />
           para publishers de Amazon KDP
         </motion.h2>
+        <motion.p
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
+          className="text-lg md:text-xl text-muted-foreground text-center mt-5 max-w-2xl mx-auto"
+        >
+          Un solo lugar para investigar, crear, analizar y escalar tu negocio editorial.
+        </motion.p>
       </div>
     </section>
   );
