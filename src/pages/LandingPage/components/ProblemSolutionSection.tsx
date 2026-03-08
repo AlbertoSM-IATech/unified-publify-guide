@@ -186,7 +186,7 @@ export const ProblemSolutionSection = () => {
                   <CheckCircle className="w-5 h-5 text-primary-foreground" />
                 </motion.div>
                 <div>
-                  <h3 className="text-2xl font-bold text-green-600 dark:text-green-400">Publify: Control total</h3>
+                  <h3 className="text-lg font-bold text-green-600 dark:text-green-400">Publify: Control total</h3>
                   <p className="text-sm text-muted-foreground mt-1">Todo tu negocio editorial en un solo sistema. <span className="text-green-600 dark:text-green-400 font-semibold">Por fin.</span></p>
                 </div>
               </div>
