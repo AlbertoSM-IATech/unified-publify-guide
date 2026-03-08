@@ -82,7 +82,7 @@ export const ProblemSolutionSection = () => {
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
-        <div data-gsap="section-header" className="text-center mb-24">
+        <div data-gsap="section-header" className="text-center mb-16">
           <motion.div
             initial={{ scale: 0 }}
             whileInView={{ scale: 1 }}
