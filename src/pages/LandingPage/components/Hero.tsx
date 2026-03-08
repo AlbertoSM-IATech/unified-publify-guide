@@ -37,7 +37,7 @@ export const Hero = () => {
               Gestiona toda tu editorial desde un solo lugar
             </motion.h1>
 
-            <motion.p variants={fadeInUp} className="text-lg md:text-xl text-primary font-semibold mb-6">
+            <motion.p variants={fadeInUp} className="text-lg text-primary mb-6 md:text-3xl font-light">
               Recupera horas cada semana con el único sistema diseñado para publishers KDP.
             </motion.p>
 
@@ -46,44 +46,44 @@ export const Hero = () => {
             </motion.p>
 
             <motion.div variants={fadeInUp} className="flex flex-wrap items-center gap-2 mb-8">
-              {["Investiga", "Crea", "Analiza", "Escala"].map((step, i) => (
-                <span key={step} className="flex items-center gap-2">
+              {["Investiga", "Crea", "Analiza", "Escala"].map((step, i) =>
+              <span key={step} className="flex items-center gap-2 text-xs">
                   <motion.span
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.8 + i * 0.25, duration: 0.4 }}
-                    className="inline-flex items-center px-3 py-1.5 rounded-full text-sm md:text-base font-semibold tracking-wide uppercase"
-                    style={{
-                      color: 'hsl(217, 91%, 60%)',
-                      background: 'hsl(217, 91%, 60%, 0.1)',
-                      border: '1px solid hsl(217, 91%, 60%, 0.25)',
-                    }}
-                  >
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.8 + i * 0.25, duration: 0.4 }}
+                  className="inline-flex items-center px-3 py-1.5 rounded-full md:text-base font-semibold tracking-wide uppercase text-xs text-accent bg-secondary"
+                  style={{
+                    color: 'hsl(217, 91%, 60%)',
+                    background: 'hsl(217, 91%, 60%, 0.1)',
+                    border: '1px solid hsl(217, 91%, 60%, 0.25)'
+                  }}>
+                  
                     {step}
                   </motion.span>
-                  {i < 3 && (
-                    <motion.span
-                      initial={{ opacity: 0, scaleX: 0 }}
-                      animate={{ opacity: 1, scaleX: 1 }}
-                      transition={{ delay: 1.0 + i * 0.25, duration: 0.3 }}
-                      className="text-lg"
-                      style={{ color: 'hsl(217, 91%, 60%)' }}
-                    >
+                  {i < 3 &&
+                <motion.span
+                  initial={{ opacity: 0, scaleX: 0 }}
+                  animate={{ opacity: 1, scaleX: 1 }}
+                  transition={{ delay: 1.0 + i * 0.25, duration: 0.3 }}
+                  className="text-lg"
+                  style={{ color: 'hsl(217, 91%, 60%)' }}>
+                  
                       →
                     </motion.span>
-                  )}
+                }
                 </span>
-              ))}
+              )}
             </motion.div>
 
             <motion.div variants={fadeInUp} className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
               {benefits.map((b, i) =>
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.5 + i * 0.1 }}
-                  className="flex items-center gap-3 p-3 rounded-lg bg-card/80 border border-border text-left">
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5 + i * 0.1 }}
+                className="flex items-center gap-3 p-3 rounded-lg bg-card/80 border border-border text-left">
                   <b.icon className="w-5 h-5 text-primary flex-shrink-0" />
                   <span className="text-sm text-foreground">{b.text}</span>
                 </motion.div>
@@ -118,7 +118,7 @@ export const Hero = () => {
               className="relative rounded-xl overflow-hidden border-2 border-border"
               style={{
                 boxShadow: "0 25px 60px -12px hsl(var(--primary) / 0.25), 0 12px 30px -8px rgba(0,0,0,0.3)",
-                transformStyle: "preserve-3d",
+                transformStyle: "preserve-3d"
               }}>
               <img
                 src={dashboardImg}
