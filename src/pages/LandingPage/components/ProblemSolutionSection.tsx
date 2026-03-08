@@ -217,7 +217,7 @@ export const ProblemSolutionSection = () => {
         {/* Enhanced CTA Section */}
         <div data-gsap="cta-pin" className="relative">
           <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-primary/10 to-primary/5 rounded-2xl" />
-          <div data-gsap="cta-content" className="relative bg-gradient-to-br from-primary/10 via-transparent to-accent/5 p-10 rounded-2xl border-2 border-primary/20 backdrop-blur-sm">
+          <div data-gsap="cta-content" className="relative bg-gradient-to-br from-primary/10 via-transparent to-accent/5 p-14 md:p-16 rounded-2xl border-2 border-primary/20 backdrop-blur-sm">
             <div className="text-center max-w-3xl mx-auto">
               <motion.div
                 initial={{ scale: 0 }}
