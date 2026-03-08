@@ -20,21 +20,21 @@ const FloatingShape = ({
 
   useFrame((state) => {
     if (!meshRef.current) return;
-    meshRef.current.rotation.x = state.clock.elapsedTime * speed * 0.3;
-    meshRef.current.rotation.y = state.clock.elapsedTime * speed * 0.2;
+    meshRef.current.rotation.x = state.clock.elapsedTime * speed * 0.15;
+    meshRef.current.rotation.y = state.clock.elapsedTime * speed * 0.1;
   });
 
   return (
-    <Float speed={speed} rotationIntensity={0.4} floatIntensity={1.5}>
+    <Float speed={speed} rotationIntensity={0.2} floatIntensity={0.8}>
       <mesh ref={meshRef} position={position}>
         <icosahedronGeometry args={[size, 1]} />
         <MeshDistortMaterial
           color={color}
           transparent
-          opacity={0.15}
+          opacity={0.06}
           wireframe
           distort={distort}
-          speed={2}
+          speed={1}
         />
       </mesh>
     </Float>
@@ -57,19 +57,19 @@ const FloatingSphere = ({
   useFrame((state) => {
     if (!meshRef.current) return;
     meshRef.current.position.y =
-      position[1] + Math.sin(state.clock.elapsedTime * speed) * 0.5;
+      position[1] + Math.sin(state.clock.elapsedTime * speed) * 0.3;
   });
 
   return (
-    <Float speed={speed * 0.5} floatIntensity={1}>
+    <Float speed={speed * 0.3} floatIntensity={0.6}>
       <mesh ref={meshRef} position={position}>
         <sphereGeometry args={[size, 16, 16]} />
         <MeshDistortMaterial
           color={color}
           transparent
-          opacity={0.08}
-          distort={0.4}
-          speed={1.5}
+          opacity={0.04}
+          distort={0.3}
+          speed={0.8}
         />
       </mesh>
     </Float>
@@ -79,28 +79,26 @@ const FloatingSphere = ({
 const Shapes = () => {
   const shapes = useMemo(
     () => [
-      { pos: [-4, 2, -5] as [number, number, number], color: "#FB923C", size: 1.2, speed: 0.4, distort: 0.3 },
-      { pos: [4, -1, -6] as [number, number, number], color: "#3B82F6", size: 1.5, speed: 0.3, distort: 0.4 },
-      { pos: [-2, -2, -4] as [number, number, number], color: "#F97316", size: 0.8, speed: 0.5, distort: 0.25 },
-      { pos: [3, 3, -7] as [number, number, number], color: "#3B82F6", size: 1.0, speed: 0.35, distort: 0.35 },
-      { pos: [0, 0, -8] as [number, number, number], color: "#FB923C", size: 2.0, speed: 0.2, distort: 0.5 },
+      { pos: [-5, 2, -8] as [number, number, number], color: "hsl(24, 94%, 59%)", size: 1.0, speed: 0.25, distort: 0.2 },
+      { pos: [5, -1, -10] as [number, number, number], color: "hsl(217, 91%, 60%)", size: 1.3, speed: 0.2, distort: 0.3 },
+      { pos: [-2, -3, -7] as [number, number, number], color: "hsl(24, 94%, 50%)", size: 0.7, speed: 0.3, distort: 0.15 },
+      { pos: [3, 3, -12] as [number, number, number], color: "hsl(217, 91%, 60%)", size: 1.8, speed: 0.15, distort: 0.4 },
     ],
     []
   );
 
   const spheres = useMemo(
     () => [
-      { pos: [-3, 1, -3] as [number, number, number], color: "#3B82F6", size: 0.6, speed: 0.6 },
-      { pos: [2, -2, -4] as [number, number, number], color: "#FB923C", size: 0.4, speed: 0.8 },
-      { pos: [5, 1, -5] as [number, number, number], color: "#F97316", size: 0.5, speed: 0.5 },
+      { pos: [-4, 1, -6] as [number, number, number], color: "hsl(217, 91%, 60%)", size: 0.5, speed: 0.4 },
+      { pos: [3, -2, -8] as [number, number, number], color: "hsl(24, 94%, 59%)", size: 0.3, speed: 0.5 },
     ],
     []
   );
 
   return (
     <>
-      <ambientLight intensity={0.5} />
-      <pointLight position={[10, 10, 10]} intensity={0.3} />
+      <ambientLight intensity={0.3} />
+      <pointLight position={[10, 10, 10]} intensity={0.15} />
       {shapes.map((s, i) => (
         <FloatingShape
           key={`shape-${i}`}
