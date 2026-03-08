@@ -10,6 +10,25 @@ import { FinalCtaSection } from "./components/FinalCtaSection";
 import { Footer } from "./components/Footer";
 import { TechBackground } from "@/components/motion/TechBackground";
 import { useScrollAnimations } from "@/hooks/useScrollAnimations";
+
+const pageVariants = {
+  hidden: { opacity: 0 },
+  visible: { 
+    opacity: 1,
+    transition: { staggerChildren: 0.1 }
+  }
+};
+
+export const LandingPage = () => {
+  useScrollAnimations();
+  return (
+    <motion.div 
+      className="relative flex min-h-screen flex-col font-sans"
+      initial="hidden"
+      animate="visible"
+      variants={pageVariants}
+    >
+      <TechBackground />
       <Header />
       <Hero />
       <ProblemSolutionSection />
