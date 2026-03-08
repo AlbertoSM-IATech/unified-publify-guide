@@ -21,7 +21,7 @@ export const TargetAudienceSection = () => {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-12">
+          className="text-center mb-16">
           
           <h2 className="font-heading text-3xl md:text-4xl font-bold mb-4">
             Para publishers que quieren operar{" "}
