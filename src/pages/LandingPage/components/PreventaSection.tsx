@@ -57,7 +57,7 @@ export const PreventaSection = () => {
           </div>
           <TextReveal
             as="h2"
-            className="font-heading text-3xl md:text-4xl lg:text-6xl font-bold mb-6"
+            className="font-heading text-2xl md:text-3xl lg:text-4xl font-bold mb-4"
           >
             Publify todavía no está abierto al público.
           </TextReveal>
