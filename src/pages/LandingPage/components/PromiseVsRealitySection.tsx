@@ -20,7 +20,7 @@ export const PromiseVsRealitySection = () => {
               <AlertTriangle className="w-8 h-8 text-primary" />
             </motion.div>
 
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
+            <h2 className="text-3xl md:text-4xl lg:text-6xl font-bold mb-8">
               Te han vendido que autopublicar es fácil, pero tu negocio editorial parece un{" "}
               <span className="text-primary">castillo de naipes</span>
             </h2>
