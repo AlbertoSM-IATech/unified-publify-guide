@@ -31,133 +31,133 @@ export const Hero = () => {
       {/* Partículas y formas geométricas flotantes */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {/* Triángulos flotantes */}
-        {[...Array(5)].map((_, i) => (
-          <motion.div
-            key={`tri-${i}`}
-            className="absolute"
-            style={{
-              left: `${10 + i * 20}%`,
-              top: `${15 + (i % 3) * 25}%`,
-            }}
-            animate={{
-              y: [0, -40, 0],
-              rotate: [0, 180, 360],
-              opacity: [0.08, 0.18, 0.08],
-            }}
-            transition={{
-              duration: 12 + i * 3,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: i * 1.5,
-            }}
-          >
+        {[...Array(5)].map((_, i) =>
+        <motion.div
+          key={`tri-${i}`}
+          className="absolute"
+          style={{
+            left: `${10 + i * 20}%`,
+            top: `${15 + i % 3 * 25}%`
+          }}
+          animate={{
+            y: [0, -40, 0],
+            rotate: [0, 180, 360],
+            opacity: [0.08, 0.18, 0.08]
+          }}
+          transition={{
+            duration: 12 + i * 3,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: i * 1.5
+          }}>
+          
             <svg width={20 + i * 8} height={20 + i * 8} viewBox="0 0 40 40">
               <polygon
-                points="20,4 36,36 4,36"
-                fill="none"
-                stroke="hsl(var(--primary))"
-                strokeWidth="1.5"
-                opacity="0.5"
-              />
+              points="20,4 36,36 4,36"
+              fill="none"
+              stroke="hsl(var(--primary))"
+              strokeWidth="1.5"
+              opacity="0.5" />
+            
             </svg>
           </motion.div>
-        ))}
+        )}
 
         {/* Círculos pulsantes */}
-        {[...Array(6)].map((_, i) => (
-          <motion.div
-            key={`dot-${i}`}
-            className="absolute rounded-full"
-            style={{
-              width: 4 + i * 2,
-              height: 4 + i * 2,
-              left: `${5 + i * 18}%`,
-              top: `${20 + ((i * 37) % 60)}%`,
-              background: i % 2 === 0
-                ? 'hsl(var(--primary))'
-                : 'hsl(var(--accent))',
-            }}
-            animate={{
-              y: [0, -60 - i * 10, 0],
-              x: [0, (i % 2 === 0 ? 20 : -20), 0],
-              opacity: [0, 0.4, 0],
-              scale: [0.5, 1.5, 0.5],
-            }}
-            transition={{
-              duration: 8 + i * 2,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: i * 1.2,
-            }}
-          />
-        ))}
+        {[...Array(6)].map((_, i) =>
+        <motion.div
+          key={`dot-${i}`}
+          className="absolute rounded-full"
+          style={{
+            width: 4 + i * 2,
+            height: 4 + i * 2,
+            left: `${5 + i * 18}%`,
+            top: `${20 + i * 37 % 60}%`,
+            background: i % 2 === 0 ?
+            'hsl(var(--primary))' :
+            'hsl(var(--accent))'
+          }}
+          animate={{
+            y: [0, -60 - i * 10, 0],
+            x: [0, i % 2 === 0 ? 20 : -20, 0],
+            opacity: [0, 0.4, 0],
+            scale: [0.5, 1.5, 0.5]
+          }}
+          transition={{
+            duration: 8 + i * 2,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: i * 1.2
+          }} />
+
+        )}
 
         {/* Hexágonos */}
-        {[...Array(3)].map((_, i) => (
-          <motion.div
-            key={`hex-${i}`}
-            className="absolute"
-            style={{
-              right: `${8 + i * 15}%`,
-              top: `${10 + i * 30}%`,
-            }}
-            animate={{
-              rotate: [0, 120, 240, 360],
-              opacity: [0.05, 0.15, 0.05],
-              scale: [0.9, 1.1, 0.9],
-            }}
-            transition={{
-              duration: 20 + i * 5,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: i * 2,
-            }}
-          >
+        {[...Array(3)].map((_, i) =>
+        <motion.div
+          key={`hex-${i}`}
+          className="absolute"
+          style={{
+            right: `${8 + i * 15}%`,
+            top: `${10 + i * 30}%`
+          }}
+          animate={{
+            rotate: [0, 120, 240, 360],
+            opacity: [0.05, 0.15, 0.05],
+            scale: [0.9, 1.1, 0.9]
+          }}
+          transition={{
+            duration: 20 + i * 5,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: i * 2
+          }}>
+          
             <svg width={30 + i * 12} height={30 + i * 12} viewBox="0 0 50 50">
               <polygon
-                points="25,2 46,14 46,36 25,48 4,36 4,14"
-                fill="none"
-                stroke="hsl(var(--accent))"
-                strokeWidth="1"
-                opacity="0.4"
-              />
+              points="25,2 46,14 46,36 25,48 4,36 4,14"
+              fill="none"
+              stroke="hsl(var(--accent))"
+              strokeWidth="1"
+              opacity="0.4" />
+            
             </svg>
           </motion.div>
-        ))}
+        )}
 
         {/* Líneas diagonales cruzando */}
-        {[...Array(3)].map((_, i) => (
-          <motion.div
-            key={`line-${i}`}
-            className="absolute h-[1px] w-40"
-            style={{
-              top: `${25 + i * 25}%`,
-              left: '-10%',
-              background: `linear-gradient(90deg, transparent, hsl(var(--primary) / 0.2), transparent)`,
-            }}
-            animate={{
-              x: ['0%', '400%'],
-              opacity: [0, 0.5, 0],
-            }}
-            transition={{
-              duration: 10 + i * 3,
-              repeat: Infinity,
-              ease: "linear",
-              delay: i * 3,
-            }}
-          />
-        ))}
+        {[...Array(3)].map((_, i) =>
+        <motion.div
+          key={`line-${i}`}
+          className="absolute h-[1px] w-40"
+          style={{
+            top: `${25 + i * 25}%`,
+            left: '-10%',
+            background: `linear-gradient(90deg, transparent, hsl(var(--primary) / 0.2), transparent)`
+          }}
+          animate={{
+            x: ['0%', '400%'],
+            opacity: [0, 0.5, 0]
+          }}
+          transition={{
+            duration: 10 + i * 3,
+            repeat: Infinity,
+            ease: "linear",
+            delay: i * 3
+          }} />
+
+        )}
       </div>
       <div className="mx-auto w-[90%]">
         <motion.div initial="hidden" animate="visible" variants={stagger} className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           
           {/* Left — Text */}
           <div className="text-left">
-            <motion.h1 variants={fadeInUp} className="font-heading text-4xl md:text-5xl lg:text-5xl font-bold tracking-tight mb-4">
+            <motion.h1 variants={fadeInUp} className="font-heading text-4xl md:text-5xl font-bold tracking-tight mb-4 text-primary lg:text-6xl">
               Gestiona toda tu editorial desde un solo lugar
             </motion.h1>
 
-            <motion.p variants={fadeInUp} className="text-lg text-primary mb-6 md:text-3xl font-light">
+            <motion.p variants={fadeInUp} className="text-lg mb-6 md:text-3xl font-light text-primary-foreground">
               Recupera horas cada semana con el único sistema diseñado para publishers KDP.
             </motion.p>
 
@@ -180,21 +180,21 @@ export const Hero = () => {
                   }}>
                     {/* Highlight que recorre cada paso */}
                     <motion.span
-                      className="absolute inset-0 rounded-full"
-                      style={{
-                        background: 'linear-gradient(90deg, transparent 0%, hsl(217, 91%, 60%, 0.3) 50%, transparent 100%)',
-                      }}
-                      animate={{
-                        x: ['-100%', '200%'],
-                      }}
-                      transition={{
-                        duration: 2,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                        delay: 2 + i * 0.6,
-                        repeatDelay: 2.4 - i * 0.6 + 1.8,
-                      }}
-                    />
+                    className="absolute inset-0 rounded-full"
+                    style={{
+                      background: 'linear-gradient(90deg, transparent 0%, hsl(217, 91%, 60%, 0.3) 50%, transparent 100%)'
+                    }}
+                    animate={{
+                      x: ['-100%', '200%']
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                      delay: 2 + i * 0.6,
+                      repeatDelay: 2.4 - i * 0.6 + 1.8
+                    }} />
+                  
                     <span className="relative z-10">{step}</span>
                   </motion.span>
                   {i < 3 &&
@@ -205,14 +205,14 @@ export const Hero = () => {
                   className="text-lg"
                   style={{ color: 'hsl(217, 91%, 60%)' }}>
                     <motion.span
-                      animate={{ opacity: [0.4, 1, 0.4] }}
-                      transition={{
-                        duration: 2,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                        delay: 2.3 + i * 0.6,
-                      }}
-                    >
+                    animate={{ opacity: [0.4, 1, 0.4] }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                      delay: 2.3 + i * 0.6
+                    }}>
+                    
                       →
                     </motion.span>
                   </motion.span>
