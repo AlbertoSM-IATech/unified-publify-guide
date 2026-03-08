@@ -103,7 +103,7 @@ export const ProblemSolutionSection = () => {
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-20 items-start mb-24">
+        <div className="grid lg:grid-cols-2 gap-12 items-start mb-16">
           {/* Problem Side */}
           <div className="relative">
             <div className="absolute -top-4 -right-4 w-20 h-20 opacity-20">
