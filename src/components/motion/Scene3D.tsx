@@ -5,7 +5,7 @@ const Scene3DCanvas = lazy(() => import("./Scene3DCanvas"));
 export const Scene3D = () => {
   return (
     <Suspense fallback={null}>
-      <div className="absolute inset-0 pointer-events-none opacity-60">
+      <div className="absolute inset-0 pointer-events-none opacity-60 dark:opacity-80">
         <Scene3DCanvas />
       </div>
     </Suspense>

@@ -1,6 +1,6 @@
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Float, MeshDistortMaterial } from "@react-three/drei";
-import { useRef, useMemo } from "react";
+import { useRef, useMemo, useEffect, useState } from "react";
 import * as THREE from "three";
 
 const FloatingShape = ({
@@ -24,6 +24,9 @@ const FloatingShape = ({
     meshRef.current.rotation.y = state.clock.elapsedTime * speed * 0.1;
   });
 
+  const isDark = useIsDarkMode();
+  const opacity = isDark ? 0.12 : 0.06;
+
   return (
     <Float speed={speed} rotationIntensity={0.2} floatIntensity={0.8}>
       <mesh ref={meshRef} position={position}>
@@ -31,7 +34,7 @@ const FloatingShape = ({
         <MeshDistortMaterial
           color={color}
           transparent
-          opacity={0.06}
+          opacity={opacity}
           wireframe
           distort={distort}
           speed={1}
@@ -60,6 +63,9 @@ const FloatingSphere = ({
       position[1] + Math.sin(state.clock.elapsedTime * speed) * 0.3;
   });
 
+  const isDark = useIsDarkMode();
+  const opacity = isDark ? 0.1 : 0.04;
+
   return (
     <Float speed={speed * 0.3} floatIntensity={0.6}>
       <mesh ref={meshRef} position={position}>
@@ -67,7 +73,7 @@ const FloatingSphere = ({
         <MeshDistortMaterial
           color={color}
           transparent
-          opacity={0.04}
+          opacity={opacity}
           distort={0.3}
           speed={0.8}
         />
@@ -76,7 +82,24 @@ const FloatingSphere = ({
   );
 };
 
+/** Hook to detect dark mode inside Canvas */
+function useIsDarkMode() {
+  const [isDark, setIsDark] = useState(false);
+  
+  useEffect(() => {
+    const check = () => setIsDark(document.documentElement.classList.contains("dark"));
+    check();
+    const observer = new MutationObserver(check);
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+    return () => observer.disconnect();
+  }, []);
+  
+  return isDark;
+}
+
 const Shapes = () => {
+  const isDark = useIsDarkMode();
+  
   const shapes = useMemo(
     () => [
       { pos: [-5, 2, -8] as [number, number, number], color: "hsl(24, 94%, 59%)", size: 1.0, speed: 0.25, distort: 0.2 },
@@ -97,8 +120,8 @@ const Shapes = () => {
 
   return (
     <>
-      <ambientLight intensity={0.3} />
-      <pointLight position={[10, 10, 10]} intensity={0.15} />
+      <ambientLight intensity={isDark ? 0.5 : 0.3} />
+      <pointLight position={[10, 10, 10]} intensity={isDark ? 0.3 : 0.15} />
       {shapes.map((s, i) => (
         <FloatingShape
           key={`shape-${i}`}

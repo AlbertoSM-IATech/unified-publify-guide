@@ -9,7 +9,7 @@ export const TechBackground = () => {
   return (
     <div className="fixed inset-0 -z-50 overflow-hidden bg-background">
       {/* Grid de líneas tecnológicas */}
-      <div className="absolute inset-0 opacity-[0.02] dark:opacity-[0.05]">
+      <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.08]">
         <div 
           className="absolute inset-0"
           style={{
@@ -22,15 +22,15 @@ export const TechBackground = () => {
         />
       </div>
 
-      {/* Gradientes circulares flotantes — more subtle */}
+      {/* Gradientes circulares flotantes — more visible in dark */}
       <motion.div 
-        className="absolute -top-40 -right-40 w-[600px] h-[600px] rounded-full opacity-10 dark:opacity-15 blur-3xl"
+        className="absolute -top-40 -right-40 w-[600px] h-[600px] rounded-full opacity-10 dark:opacity-[0.25] blur-3xl"
         style={{
           background: 'radial-gradient(circle, hsl(var(--primary)) 0%, transparent 70%)'
         }}
         animate={{
           scale: [1, 1.15, 1],
-          opacity: [0.1, 0.15, 0.1],
+          opacity: [0.1, 0.18, 0.1],
         }}
         transition={{
           duration: 25,
@@ -40,13 +40,13 @@ export const TechBackground = () => {
       />
 
       <motion.div 
-        className="absolute -bottom-40 -left-40 w-[500px] h-[500px] rounded-full opacity-8 dark:opacity-12 blur-3xl"
+        className="absolute -bottom-40 -left-40 w-[500px] h-[500px] rounded-full opacity-8 dark:opacity-[0.2] blur-3xl"
         style={{
           background: 'radial-gradient(circle, hsl(var(--accent)) 0%, transparent 70%)'
         }}
         animate={{
           scale: [1, 1.2, 1],
-          opacity: [0.08, 0.12, 0.08],
+          opacity: [0.08, 0.16, 0.08],
         }}
         transition={{
           duration: 30,
@@ -56,19 +56,36 @@ export const TechBackground = () => {
         }}
       />
 
-      {/* Líneas diagonales — fewer, more subtle */}
+      {/* Extra center glow for dark mode depth */}
+      <motion.div 
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full opacity-0 dark:opacity-[0.08] blur-[100px]"
+        style={{
+          background: 'radial-gradient(circle, hsl(var(--primary)) 0%, hsl(var(--accent) / 0.5) 40%, transparent 70%)'
+        }}
+        animate={{
+          scale: [1, 1.1, 1],
+        }}
+        transition={{
+          duration: 20,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 5
+        }}
+      />
+
+      {/* Líneas diagonales — more visible in dark */}
       {[...Array(4)].map((_, i) => (
         <motion.div
           key={`diagonal-${i}`}
           className="absolute h-[1px] w-full origin-left"
           style={{
             top: `${20 + i * 20}%`,
-            background: `linear-gradient(90deg, transparent, hsl(var(--primary) / 0.06), transparent)`,
+            background: `linear-gradient(90deg, transparent, hsl(var(--primary) / 0.08), transparent)`,
             transform: 'rotate(-45deg) translateX(-100%)',
           }}
           animate={{
             x: ['0%', '200%'],
-            opacity: [0, 0.2, 0],
+            opacity: [0, 0.3, 0],
           }}
           transition={{
             duration: 18 + i * 3,
@@ -79,7 +96,7 @@ export const TechBackground = () => {
         />
       ))}
 
-      {/* Partículas flotantes — reduced count, more subtle */}
+      {/* Partículas flotantes — more visible in dark */}
       <div className="absolute inset-0">
         {[...Array(15)].map((_, i) => {
           const size = 1.5 + Math.random() * 3;
@@ -98,13 +115,13 @@ export const TechBackground = () => {
                   ? 'hsl(var(--accent))' 
                   : 'hsl(var(--primary))',
                 boxShadow: isAccent
-                  ? '0 0 6px hsl(var(--accent) / 0.3)'
-                  : '0 0 5px hsl(var(--primary) / 0.3)',
+                  ? '0 0 8px hsl(var(--accent) / 0.5)'
+                  : '0 0 8px hsl(var(--primary) / 0.5)',
               }}
               animate={{
                 y: [0, -80 - Math.random() * 60, 0],
                 x: [0, Math.random() * 30 - 15, 0],
-                opacity: [0, 0.35, 0],
+                opacity: [0, 0.5, 0],
                 scale: [0.5, 1.2, 0.5],
               }}
               transition={{
@@ -118,15 +135,15 @@ export const TechBackground = () => {
         })}
       </div>
 
-      {/* Círculos concéntricos animados — subtler */}
+      {/* Círculos concéntricos animados — more visible in dark */}
       <div className="absolute top-1/4 right-1/4 w-[250px] h-[250px]">
         {[...Array(3)].map((_, i) => (
           <motion.div
             key={`circle-${i}`}
-            className="absolute inset-0 border border-primary/10 dark:border-primary/15 rounded-full"
+            className="absolute inset-0 border border-primary/10 dark:border-primary/25 rounded-full"
             animate={{
               scale: [1 + i * 0.3, 2 + i * 0.3],
-              opacity: [0.2, 0],
+              opacity: [0.3, 0],
             }}
             transition={{
               duration: 5,
@@ -138,9 +155,9 @@ export const TechBackground = () => {
         ))}
       </div>
 
-      {/* Hexágonos decorativos — subtler */}
+      {/* Hexágonos decorativos — more visible in dark */}
       <motion.div
-        className="absolute top-20 left-20 w-20 h-20 opacity-[0.03] dark:opacity-[0.06]"
+        className="absolute top-20 left-20 w-20 h-20 opacity-[0.04] dark:opacity-[0.12]"
         animate={{ rotate: [0, 360] }}
         transition={{ duration: 50, repeat: Infinity, ease: "linear" }}
       >
@@ -161,7 +178,7 @@ export const TechBackground = () => {
       </motion.div>
 
       <motion.div
-        className="absolute bottom-32 right-32 w-28 h-28 opacity-[0.03] dark:opacity-[0.06]"
+        className="absolute bottom-32 right-32 w-28 h-28 opacity-[0.04] dark:opacity-[0.12]"
         animate={{ rotate: [360, 0] }}
         transition={{ duration: 45, repeat: Infinity, ease: "linear" }}
       >
