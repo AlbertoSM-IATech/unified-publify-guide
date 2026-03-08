@@ -40,7 +40,7 @@ const solutionPoints = [{
 export const ProblemSolutionSection = () => {
   const navigate = useNavigate();
   return (
-    <section className="relative py-20 bg-background overflow-hidden">
+    <section className="relative py-32 bg-background overflow-hidden">
       {/* Parallax background */}
       <div className="absolute inset-0 pointer-events-none">
         <div data-gsap="parallax-bg" className="absolute inset-0">
