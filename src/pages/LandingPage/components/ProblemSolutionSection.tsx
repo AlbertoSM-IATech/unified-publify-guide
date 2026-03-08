@@ -118,7 +118,7 @@ export const ProblemSolutionSection = () => {
               />
             </div>
             
-            <div className="bg-primary/5 dark:bg-primary/10 p-8 rounded-2xl border-2 border-primary/20 dark:border-primary/20 shadow-lg">
+            <div className="bg-primary/5 dark:bg-primary/10 p-10 md:p-12 rounded-2xl border-2 border-primary/20 dark:border-primary/20 shadow-lg">
               <div className="flex items-center gap-3 mb-6">
                 <motion.div
                   animate={{ scale: [1, 1.2, 1] }}
