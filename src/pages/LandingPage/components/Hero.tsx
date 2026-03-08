@@ -79,18 +79,26 @@ export const Hero = () => {
           {/* Right — Dashboard image */}
           <motion.div
             variants={fadeInUp}
-            className="relative">
+            className="relative"
+            style={{ perspective: "1200px" }}>
+            {/* Glow behind the image */}
+            <div className="absolute -inset-4 rounded-2xl bg-primary/15 blur-2xl" />
             <motion.div
-              initial={{ opacity: 0, y: 60, scale: 0.95 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ duration: 1, delay: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-              className="relative rounded-xl overflow-hidden border-2 border-border shadow-2xl shadow-primary/10">
+              initial={{ opacity: 0, y: 60, rotateX: 8, scale: 0.92 }}
+              animate={{ opacity: 1, y: 0, rotateX: 2, scale: 1 }}
+              transition={{ duration: 1.2, delay: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
+              whileHover={{ rotateX: 0, scale: 1.02, transition: { duration: 0.4 } }}
+              className="relative rounded-xl overflow-hidden border-2 border-border"
+              style={{
+                boxShadow: "0 25px 60px -12px hsl(var(--primary) / 0.25), 0 12px 30px -8px rgba(0,0,0,0.3)",
+                transformStyle: "preserve-3d",
+              }}>
               <img
                 src={dashboardImg}
                 alt="Publify Dashboard - Sistema Operativo Editorial"
                 className="w-full h-auto"
                 loading="lazy" />
-              <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-background/40 via-transparent to-transparent" />
             </motion.div>
           </motion.div>
 
