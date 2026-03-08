@@ -200,8 +200,8 @@ export const ProblemSolutionSection = () => {
                   >
                     <div className="mt-1">{point.icon}</div>
                     <div className="flex-1">
-                      <h4 className="font-semibold mb-2 text-foreground group-hover:text-green-600 transition-colors">{point.title}</h4>
-                      <p className="text-muted-foreground text-sm mb-3 leading-relaxed">{point.description}</p>
+                      <h4 className="font-semibold mb-1 text-sm text-foreground group-hover:text-green-600 transition-colors">{point.title}</h4>
+                      <p className="text-muted-foreground text-xs mb-2 leading-relaxed">{point.description}</p>
                       <div className="flex items-center gap-2">
                         <span className="text-xs font-bold text-green-600 dark:text-green-400 bg-green-100 dark:bg-green-900/30 px-3 py-1 rounded-full">
                           ✨ {point.benefit}
