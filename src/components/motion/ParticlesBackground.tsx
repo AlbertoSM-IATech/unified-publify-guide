@@ -14,43 +14,43 @@ export const ParticlesBackground = () => {
       fpsLimit: 60,
       particles: {
         number: {
-          value: 45,
+          value: 35,
           density: { enable: true, width: 1920, height: 1080 },
         },
         color: {
-          value: ["#FB923C", "#3B82F6", "#F97316"],
+          value: ["hsl(24, 94%, 59%)", "hsl(217, 91%, 60%)", "hsl(24, 94%, 50%)"],
         },
-        shape: { type: ["circle", "triangle"] },
+        shape: { type: ["circle"] },
         opacity: {
-          value: { min: 0.1, max: 0.5 },
+          value: { min: 0.05, max: 0.25 },
           animation: {
             enable: true,
-            speed: 0.8,
+            speed: 0.5,
             sync: false,
           },
         },
         size: {
-          value: { min: 1, max: 4 },
+          value: { min: 1, max: 3 },
           animation: {
             enable: true,
-            speed: 2,
+            speed: 1.5,
             sync: false,
           },
         },
         links: {
           enable: true,
-          distance: 150,
-          color: "#3B82F6",
-          opacity: 0.15,
-          width: 1,
+          distance: 160,
+          color: "hsl(217, 91%, 60%)",
+          opacity: 0.08,
+          width: 0.8,
           triangles: {
             enable: true,
-            opacity: 0.03,
+            opacity: 0.015,
           },
         },
         move: {
           enable: true,
-          speed: 0.8,
+          speed: 0.5,
           direction: "none" as const,
           random: true,
           straight: false,
@@ -75,10 +75,10 @@ export const ParticlesBackground = () => {
         },
         modes: {
           grab: {
-            distance: 200,
-            links: { opacity: 0.4, color: "#FB923C" },
+            distance: 180,
+            links: { opacity: 0.2, color: "hsl(24, 94%, 59%)" },
           },
-          push: { quantity: 2 },
+          push: { quantity: 1 },
         },
       },
       detectRetina: true,

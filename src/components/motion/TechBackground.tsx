@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Scene3D } from "./Scene3D";
+
 /**
  * Fondo abstracto y tecnológico moderno
  * Usa los colores de la marca y crea un ambiente elegante
@@ -8,7 +9,7 @@ export const TechBackground = () => {
   return (
     <div className="fixed inset-0 -z-50 overflow-hidden bg-background">
       {/* Grid de líneas tecnológicas */}
-      <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.08]">
+      <div className="absolute inset-0 opacity-[0.02] dark:opacity-[0.05]">
         <div 
           className="absolute inset-0"
           style={{
@@ -16,91 +17,72 @@ export const TechBackground = () => {
               linear-gradient(hsl(var(--primary)) 1px, transparent 1px),
               linear-gradient(90deg, hsl(var(--primary)) 1px, transparent 1px)
             `,
-            backgroundSize: '100px 100px'
+            backgroundSize: '120px 120px'
           }}
         />
       </div>
 
-      {/* Gradientes circulares flotantes grandes */}
+      {/* Gradientes circulares flotantes — more subtle */}
       <motion.div 
-        className="absolute -top-40 -right-40 w-[600px] h-[600px] rounded-full opacity-20 dark:opacity-30 blur-3xl"
+        className="absolute -top-40 -right-40 w-[600px] h-[600px] rounded-full opacity-10 dark:opacity-15 blur-3xl"
         style={{
           background: 'radial-gradient(circle, hsl(var(--primary)) 0%, transparent 70%)'
         }}
         animate={{
-          scale: [1, 1.2, 1],
-          opacity: [0.2, 0.3, 0.2],
+          scale: [1, 1.15, 1],
+          opacity: [0.1, 0.15, 0.1],
         }}
         transition={{
-          duration: 20,
+          duration: 25,
           repeat: Infinity,
           ease: "easeInOut"
         }}
       />
 
       <motion.div 
-        className="absolute -bottom-40 -left-40 w-[500px] h-[500px] rounded-full opacity-15 dark:opacity-25 blur-3xl"
+        className="absolute -bottom-40 -left-40 w-[500px] h-[500px] rounded-full opacity-8 dark:opacity-12 blur-3xl"
         style={{
           background: 'radial-gradient(circle, hsl(var(--accent)) 0%, transparent 70%)'
         }}
         animate={{
-          scale: [1, 1.3, 1],
-          opacity: [0.15, 0.25, 0.15],
+          scale: [1, 1.2, 1],
+          opacity: [0.08, 0.12, 0.08],
         }}
         transition={{
-          duration: 25,
+          duration: 30,
           repeat: Infinity,
           ease: "easeInOut",
-          delay: 2
+          delay: 3
         }}
       />
 
-      <motion.div 
-        className="absolute top-1/2 left-1/3 w-[400px] h-[400px] rounded-full opacity-10 dark:opacity-20 blur-3xl"
-        style={{
-          background: 'radial-gradient(circle, hsl(var(--primary)) 0%, transparent 70%)'
-        }}
-        animate={{
-          scale: [1, 1.15, 1],
-          x: [0, 50, 0],
-          y: [0, -30, 0],
-          opacity: [0.1, 0.2, 0.1],
-        }}
-        transition={{
-          duration: 18,
-          repeat: Infinity,
-          ease: "easeInOut",
-          delay: 5
-        }}
-      />
-
-      {/* Líneas diagonales sutiles */}
-      {[...Array(6)].map((_, i) => (
+      {/* Líneas diagonales — fewer, more subtle */}
+      {[...Array(4)].map((_, i) => (
         <motion.div
           key={`diagonal-${i}`}
-          className="absolute h-[2px] w-full origin-left"
+          className="absolute h-[1px] w-full origin-left"
           style={{
-            top: `${15 + i * 15}%`,
-            background: `linear-gradient(90deg, transparent, hsl(var(--primary) / 0.1), transparent)`,
+            top: `${20 + i * 20}%`,
+            background: `linear-gradient(90deg, transparent, hsl(var(--primary) / 0.06), transparent)`,
             transform: 'rotate(-45deg) translateX(-100%)',
           }}
           animate={{
             x: ['0%', '200%'],
-            opacity: [0, 0.3, 0],
+            opacity: [0, 0.2, 0],
           }}
           transition={{
-            duration: 15 + i * 2,
+            duration: 18 + i * 3,
             repeat: Infinity,
             ease: "linear",
-            delay: i * 2,
+            delay: i * 3,
           }}
         />
       ))}
 
-      {/* Partículas flotantes con efecto de profundidad */}
+      {/* Partículas flotantes — reduced count, more subtle */}
       <div className="absolute inset-0">
-        {[...Array(30)].map((_, i) => {
-          const size = 2 + Math.random() * 6;
+        {[...Array(15)].map((_, i) => {
+          const size = 1.5 + Math.random() * 3;
           const isAccent = i % 3 === 0;
           
           return (
@@ -116,57 +98,51 @@ export const TechBackground = () => {
                   ? 'hsl(var(--accent))' 
                   : 'hsl(var(--primary))',
                 boxShadow: isAccent
-                  ? '0 0 10px hsl(var(--accent) / 0.5)'
-                  : '0 0 8px hsl(var(--primary) / 0.5)',
+                  ? '0 0 6px hsl(var(--accent) / 0.3)'
+                  : '0 0 5px hsl(var(--primary) / 0.3)',
               }}
               animate={{
-                y: [0, -100 - Math.random() * 100, 0],
-                x: [0, Math.random() * 50 - 25, 0],
-                opacity: [0, 0.6, 0],
-                scale: [0.5, 1.5, 0.5],
+                y: [0, -80 - Math.random() * 60, 0],
+                x: [0, Math.random() * 30 - 15, 0],
+                opacity: [0, 0.35, 0],
+                scale: [0.5, 1.2, 0.5],
               }}
               transition={{
-                duration: 10 + Math.random() * 10,
+                duration: 12 + Math.random() * 10,
                 repeat: Infinity,
                 ease: "easeInOut",
-                delay: Math.random() * 10,
+                delay: Math.random() * 12,
               }}
             />
           );
         })}
       </div>
 
-      {/* Círculos concéntricos animados */}
-      <div className="absolute top-1/4 right-1/4 w-[300px] h-[300px]">
+      {/* Círculos concéntricos animados — subtler */}
+      <div className="absolute top-1/4 right-1/4 w-[250px] h-[250px]">
         {[...Array(3)].map((_, i) => (
           <motion.div
             key={`circle-${i}`}
-            className="absolute inset-0 border border-primary/20 dark:border-primary/30 rounded-full"
+            className="absolute inset-0 border border-primary/10 dark:border-primary/15 rounded-full"
             animate={{
               scale: [1 + i * 0.3, 2 + i * 0.3],
-              opacity: [0.4, 0],
+              opacity: [0.2, 0],
             }}
             transition={{
-              duration: 4,
+              duration: 5,
               repeat: Infinity,
               ease: "easeOut",
-              delay: i * 1.3,
+              delay: i * 1.5,
             }}
           />
         ))}
       </div>
 
-      {/* Hexágonos decorativos en las esquinas */}
+      {/* Hexágonos decorativos — subtler */}
       <motion.div
-        className="absolute top-20 left-20 w-24 h-24 opacity-5 dark:opacity-10"
-        animate={{
-          rotate: [0, 360],
-        }}
-        transition={{
-          duration: 40,
-          repeat: Infinity,
-          ease: "linear",
-        }}
+        className="absolute top-20 left-20 w-20 h-20 opacity-[0.03] dark:opacity-[0.06]"
+        animate={{ rotate: [0, 360] }}
+        transition={{ duration: 50, repeat: Infinity, ease: "linear" }}
       >
         <svg viewBox="0 0 100 100" className="w-full h-full">
           <polygon
@@ -185,15 +161,9 @@ export const TechBackground = () => {
       </motion.div>
 
       <motion.div
-        className="absolute bottom-32 right-32 w-32 h-32 opacity-5 dark:opacity-10"
-        animate={{
-          rotate: [360, 0],
-        }}
-        transition={{
-          duration: 35,
-          repeat: Infinity,
-          ease: "linear",
-        }}
+        className="absolute bottom-32 right-32 w-28 h-28 opacity-[0.03] dark:opacity-[0.06]"
+        animate={{ rotate: [360, 0] }}
+        transition={{ duration: 45, repeat: Infinity, ease: "linear" }}
       >
         <svg viewBox="0 0 100 100" className="w-full h-full">
           <polygon
@@ -211,48 +181,7 @@ export const TechBackground = () => {
         </svg>
       </motion.div>
 
-      {/* Ondas sutiles de datos */}
-      <svg className="absolute inset-0 w-full h-full opacity-[0.02] dark:opacity-[0.05]" preserveAspectRatio="none">
-        <motion.path
-          d="M0,50 Q250,25 500,50 T1000,50 T1500,50 T2000,50"
-          fill="none"
-          stroke="hsl(var(--primary))"
-          strokeWidth="2"
-          animate={{
-            d: [
-              "M0,50 Q250,25 500,50 T1000,50 T1500,50 T2000,50",
-              "M0,50 Q250,75 500,50 T1000,50 T1500,50 T2000,50",
-              "M0,50 Q250,25 500,50 T1000,50 T1500,50 T2000,50",
-            ],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
-        <motion.path
-          d="M0,100 Q300,80 600,100 T1200,100 T1800,100"
-          fill="none"
-          stroke="hsl(var(--accent))"
-          strokeWidth="2"
-          animate={{
-            d: [
-              "M0,100 Q300,80 600,100 T1200,100 T1800,100",
-              "M0,100 Q300,120 600,100 T1200,100 T1800,100",
-              "M0,100 Q300,80 600,100 T1200,100 T1800,100",
-            ],
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 1,
-          }}
-        />
-      </svg>
-
-      {/* 3D Scene */}
+      {/* 3D Scene — behind everything as subtle depth layer */}
       <Scene3D />
     </div>
   );

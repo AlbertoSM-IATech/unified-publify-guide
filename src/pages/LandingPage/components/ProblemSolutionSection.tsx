@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { AlertTriangle, CheckCircle, Clock, Search, FileX, TrendingDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
+
 const timeWasters = [{
   icon: <Search className="w-8 h-8 text-primary" />,
   title: "5 horas semanales perdidas",
@@ -18,6 +19,7 @@ const timeWasters = [{
   description: "Leads sin seguimiento, campañas descoordinadas, no sabes qué libros son rentables",
   impact: "Menos ventas de las que podrías tener"
 }];
+
 const solutionPoints = [{
   icon: <CheckCircle className="w-8 h-8 text-green-500" />,
   title: "Una sola plataforma, todo centralizado",
@@ -34,44 +36,40 @@ const solutionPoints = [{
   description: "Ve el rendimiento real de cada libro, controla gastos e ingresos fácilmente",
   benefit: "Decisiones inteligentes basadas en datos"
 }];
+
 export const ProblemSolutionSection = () => {
   const navigate = useNavigate();
-  return <section className="relative py-20 bg-background overflow-hidden">
-      {/* Creative animated background */}
+  return (
+    <section className="relative py-20 bg-background overflow-hidden">
+      {/* Parallax background */}
       <div className="absolute inset-0 pointer-events-none">
-        {/* Floating problem elements */}
-        {[...Array(8)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-6 h-6 bg-primary/10 rounded-full"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              y: [0, -20, 0],
-              opacity: [0.2, 0.6, 0.2],
-              scale: [1, 1.2, 1]
-            }}
-            transition={{
-              duration: 3 + Math.random() * 2,
-              repeat: Infinity,
-              delay: i * 0.5
-            }}
-          />
-        ))}
+        <div data-gsap="parallax-bg" className="absolute inset-0">
+          {[...Array(8)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-6 h-6 bg-primary/10 rounded-full"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+              }}
+              animate={{
+                y: [0, -20, 0],
+                opacity: [0.2, 0.6, 0.2],
+                scale: [1, 1.2, 1]
+              }}
+              transition={{
+                duration: 3 + Math.random() * 2,
+                repeat: Infinity,
+                delay: i * 0.5
+              }}
+            />
+          ))}
+        </div>
         
-        {/* Connecting lines animation */}
         <motion.div 
           className="absolute inset-0 opacity-5"
-          animate={{
-            backgroundPosition: ['0% 0%', '100% 100%']
-          }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            ease: "linear"
-          }}
+          animate={{ backgroundPosition: ['0% 0%', '100% 100%'] }}
+          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
           style={{
             backgroundImage: `
               linear-gradient(45deg, transparent 49%, hsl(var(--primary)) 50%, transparent 51%),
@@ -83,12 +81,7 @@ export const ProblemSolutionSection = () => {
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }} 
-          whileInView={{ opacity: 1, y: 0 }} 
-          viewport={{ once: true }} 
-          className="text-center mb-16"
-        >
+        <div data-gsap="section-header" className="text-center mb-16">
           <motion.div
             initial={{ scale: 0 }}
             whileInView={{ scale: 1 }}
@@ -99,44 +92,19 @@ export const ProblemSolutionSection = () => {
             <span className="font-semibold text-primary">⏰ Realidad: Pierdes tiempo, dinero y oportunidades</span>
           </motion.div>
           
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
-            El <span className="text-primary relative">
-              caos editorial
-              <motion.div 
-                className="absolute -bottom-2 left-0 right-0 h-1 bg-primary/30 rounded-full"
-                initial={{ scaleX: 0 }}
-                whileInView={{ scaleX: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.5, duration: 0.8 }}
-              />
-            </span> vs{" "}
-            <span className="text-green-500 relative">
-              el control total
-              <motion.div 
-                className="absolute -bottom-2 left-0 right-0 h-1 bg-green-500/30 rounded-full"
-                initial={{ scaleX: 0 }}
-                whileInView={{ scaleX: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: 1, duration: 0.8 }}
-              />
-            </span>
+          <h2 data-gsap="text-reveal" className="text-4xl md:text-5xl font-bold mb-6 text-foreground" style={{ perspective: "600px" }}>
+            El caos editorial vs el control total
           </h2>
           
           <p className="text-xl text-muted-foreground max-w-4xl mx-auto leading-relaxed">
             La gestión editorial tradicional te tiene corriendo como un pollo sin cabeza. 
             <strong className="text-foreground"> Publify centraliza todo para que recuperes la cordura.</strong>
           </p>
-        </motion.div>
+        </div>
 
         <div className="grid lg:grid-cols-2 gap-16 items-start mb-16">
-          {/* Problem Side - Enhanced */}
-          <motion.div 
-            initial={{ opacity: 0, x: -50 }} 
-            whileInView={{ opacity: 1, x: 0 }} 
-            viewport={{ once: true }}
-            className="relative"
-          >
-            {/* Animated chaos visualization */}
+          {/* Problem Side */}
+          <div className="relative">
             <div className="absolute -top-4 -right-4 w-20 h-20 opacity-20">
               <motion.div
                 animate={{ rotate: 360 }}
@@ -157,22 +125,17 @@ export const ProblemSolutionSection = () => {
                   transition={{ duration: 2, repeat: Infinity }}
                   className="w-12 h-12 bg-primary rounded-full flex items-center justify-center"
                 >
-                  <AlertTriangle className="w-6 h-6 text-white" />
+                  <AlertTriangle className="w-6 h-6 text-primary-foreground" />
                 </motion.div>
                 <h3 className="text-2xl font-bold text-primary">El caos editorial actual</h3>
               </div>
               
               <div className="space-y-6">
                 {timeWasters.map((point, index) => (
-                  <motion.div 
+                  <div 
                     key={index}
                     data-gsap="problem-card"
-                    initial={{ opacity: 0, y: 20 }} 
-                    whileInView={{ opacity: 1, y: 0 }} 
-                    viewport={{ once: true }} 
-                    transition={{ delay: index * 0.15 }}
-                    whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
-                    className="group flex items-start gap-4 p-6 bg-white/80 dark:bg-primary/10 rounded-xl border border-primary/30 dark:border-primary/20 hover:shadow-md transition-all duration-300"
+                    className="group flex items-start gap-4 p-6 bg-card/80 dark:bg-primary/10 rounded-xl border border-primary/30 dark:border-primary/20 hover:shadow-md transition-all duration-300"
                   >
                     <div className="mt-1">{point.icon}</div>
                     <div className="flex-1">
@@ -184,20 +147,14 @@ export const ProblemSolutionSection = () => {
                         </span>
                       </div>
                     </div>
-                  </motion.div>
+                  </div>
                 ))}
               </div>
             </div>
-          </motion.div>
+          </div>
 
-          {/* Solution Side - Enhanced */}
-          <motion.div 
-            initial={{ opacity: 0, x: 50 }} 
-            whileInView={{ opacity: 1, x: 0 }} 
-            viewport={{ once: true }}
-            className="relative"
-          >
-            {/* Animated success visualization */}
+          {/* Solution Side */}
+          <div className="relative">
             <div className="absolute -top-4 -left-4 w-20 h-20 opacity-20">
               <motion.div
                 animate={{ 
@@ -222,22 +179,17 @@ export const ProblemSolutionSection = () => {
                   transition={{ duration: 2, repeat: Infinity }}
                   className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center"
                 >
-                  <CheckCircle className="w-6 h-6 text-white" />
+                  <CheckCircle className="w-6 h-6 text-primary-foreground" />
                 </motion.div>
                 <h3 className="text-2xl font-bold text-green-600 dark:text-green-400">Publify: Control total</h3>
               </div>
               
               <div className="space-y-6">
                 {solutionPoints.map((point, index) => (
-                  <motion.div 
+                  <div 
                     key={index}
                     data-gsap="solution-card"
-                    initial={{ opacity: 0, y: 20 }} 
-                    whileInView={{ opacity: 1, y: 0 }} 
-                    viewport={{ once: true }} 
-                    transition={{ delay: index * 0.15 }}
-                    whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
-                    className="group flex items-start gap-4 p-6 bg-white/80 dark:bg-green-900/20 rounded-xl border border-green-200/50 dark:border-green-700/30 hover:shadow-md transition-all duration-300"
+                    className="group flex items-start gap-4 p-6 bg-card/80 dark:bg-green-900/20 rounded-xl border border-green-200/50 dark:border-green-700/30 hover:shadow-md transition-all duration-300"
                   >
                     <div className="mt-1">{point.icon}</div>
                     <div className="flex-1">
@@ -249,35 +201,29 @@ export const ProblemSolutionSection = () => {
                         </span>
                       </div>
                     </div>
-                  </motion.div>
+                  </div>
                 ))}
               </div>
             </div>
-          </motion.div>
+          </div>
         </div>
 
         {/* Enhanced CTA Section */}
-        <motion.div 
-          initial={{ opacity: 0, y: 30 }} 
-          whileInView={{ opacity: 1, y: 0 }} 
-          viewport={{ once: true }}
-          className="relative"
-        >
-          <div className="absolute inset-0 bg-gradient-to-r from-[#FB923C]/5 via-[#FB923C]/10 to-[#FB923C]/5 rounded-2xl" />
-          <div className="relative bg-gradient-to-br from-[#FB923C]/10 via-transparent to-primary/5 p-10 rounded-2xl border-2 border-[#FB923C]/20 backdrop-blur-sm">
+        <div data-gsap="cta-pin" className="relative">
+          <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-primary/10 to-primary/5 rounded-2xl" />
+          <div data-gsap="cta-content" className="relative bg-gradient-to-br from-primary/10 via-transparent to-accent/5 p-10 rounded-2xl border-2 border-primary/20 backdrop-blur-sm">
             <div className="text-center max-w-3xl mx-auto">
               <motion.div
                 initial={{ scale: 0 }}
                 whileInView={{ scale: 1 }}
                 viewport={{ once: true }}
-                className="w-16 h-16 bg-gradient-to-r from-[#FB923C] to-primary rounded-full flex items-center justify-center mx-auto mb-6"
+                className="w-16 h-16 bg-gradient-to-r from-primary to-accent rounded-full flex items-center justify-center mx-auto mb-6"
               >
-                <CheckCircle className="w-8 h-8 text-white" />
+                <CheckCircle className="w-8 h-8 text-primary-foreground" />
               </motion.div>
               
-              <h3 className="text-3xl font-bold mb-6 text-foreground">
-                Publify no te da más trabajo.{" "}
-                <span className="text-[#FB923C]">Te devuelve la vida que habías perdido.</span>
+              <h3 data-gsap="text-reveal" className="text-3xl font-bold mb-6 text-foreground" style={{ perspective: "600px" }}>
+                Publify no te da más trabajo. Te devuelve la vida que habías perdido.
               </h3>
               
               <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
@@ -292,7 +238,7 @@ export const ProblemSolutionSection = () => {
                 <Button 
                   size="lg" 
                   onClick={() => navigate("/register")} 
-                  className="bg-gradient-to-r from-[#FB923C] to-primary hover:shadow-lg hover:shadow-[#FB923C]/30 px-10 py-6 text-lg font-bold"
+                  className="bg-gradient-to-r from-primary to-accent hover:shadow-lg hover:shadow-primary/30 px-10 py-6 text-lg font-bold text-primary-foreground"
                 >
                   🚀 Recupera el control de tu editorial
                 </Button>
@@ -314,7 +260,8 @@ export const ProblemSolutionSection = () => {
               </div>
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
-    </section>;
+    </section>
+  );
 };
