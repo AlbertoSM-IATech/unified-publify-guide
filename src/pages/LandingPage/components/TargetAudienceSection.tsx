@@ -23,7 +23,7 @@ export const TargetAudienceSection = () => {
           viewport={{ once: true }}
           className="text-center mb-16">
           
-          <h2 className="font-heading text-3xl md:text-4xl font-bold mb-4">
+          <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
             Para publishers que quieren operar{" "}
             <span className="text-primary">como un negocio.</span>
           </h2>
