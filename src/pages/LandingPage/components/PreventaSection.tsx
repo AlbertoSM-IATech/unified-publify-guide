@@ -147,7 +147,7 @@ export const PreventaSection = () => {
               </div>
 
               <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                <Button type="submit" size="lg" className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-lg py-6" disabled={loading}>
+                <Button type="submit" size="lg" className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-base py-5" disabled={loading}>
                   {loading ? "Enviando..." : "Reservar mi acceso prioritario"}
                   <ArrowRight className="ml-2" size={20} />
                 </Button>

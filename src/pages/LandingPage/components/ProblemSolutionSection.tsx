@@ -245,7 +245,7 @@ export const ProblemSolutionSection = () => {
                 <Button 
                   size="lg" 
                   onClick={() => navigate("/register")} 
-                  className="bg-gradient-to-r from-primary to-accent hover:shadow-lg hover:shadow-primary/30 px-10 py-6 text-lg font-bold text-primary-foreground"
+                  className="bg-gradient-to-r from-primary to-accent hover:shadow-lg hover:shadow-primary/30 px-8 py-5 text-base font-bold text-primary-foreground"
                 >
                   🚀 Recupera el control de tu editorial
                 </Button>
