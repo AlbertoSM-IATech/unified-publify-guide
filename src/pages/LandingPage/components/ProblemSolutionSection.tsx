@@ -96,7 +96,7 @@ export const ProblemSolutionSection = () => {
             El caos editorial vs el control total
           </h2>
           
-          <p className="text-xl text-muted-foreground max-w-4xl mx-auto leading-relaxed">
+          <p className="text-xl md:text-2xl text-muted-foreground max-w-4xl mx-auto leading-relaxed">
             La gestión editorial tradicional te tiene corriendo como un pollo sin cabeza. 
             <strong className="text-foreground"> Publify centraliza todo para que recuperes la cordura.</strong>
           </p>
