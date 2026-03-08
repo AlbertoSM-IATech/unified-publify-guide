@@ -15,12 +15,12 @@ const fadeInUp = {
 };
 
 const benefits = [
-  { icon: BookOpen, text: "Toda la información de cada libro en un solo lugar" },
-  { icon: BarChart3, text: "Decisiones con datos reales" },
-  { icon: Eye, text: "Visión clara de tu catálogo" },
-  { icon: Layers, text: "Escalar tu editorial sin caos" },
-  { icon: TrendingUp, text: "Recuperar horas cada semana" },
-];
+{ icon: BookOpen, text: "Toda la información de cada libro en un solo lugar" },
+{ icon: BarChart3, text: "Decisiones con datos reales" },
+{ icon: Eye, text: "Visión clara de tu catálogo" },
+{ icon: Layers, text: "Escalar tu editorial sin caos" },
+{ icon: TrendingUp, text: "Recuperar horas cada semana" }];
+
 
 export const Hero = () => {
   const scrollToWaitlist = () => {
@@ -42,16 +42,16 @@ export const Hero = () => {
             <h1
               data-gsap="hero-title"
               className="font-heading text-4xl md:text-5xl font-bold tracking-tight mb-4 text-primary lg:text-6xl"
-              style={{ perspective: "600px" }}
-            >
+              style={{ perspective: "600px" }}>
+              
               Gestiona toda tu editorial desde un solo lugar
             </h1>
 
             <p
               data-gsap="hero-subtitle"
               className="text-lg mb-6 md:text-3xl font-light text-primary-foreground"
-              style={{ perspective: "400px" }}
-            >
+              style={{ perspective: "400px" }}>
+              
               Recupera horas cada semana con el único sistema diseñado para publishers KDP.
             </p>
 
@@ -61,63 +61,63 @@ export const Hero = () => {
 
             <motion.div variants={fadeInUp} className="flex flex-wrap items-center gap-2 mb-8">
               {["Investiga", "Crea", "Analiza", "Escala"].map((step, i) =>
-                <span key={step} className="flex items-center gap-2 text-xs">
+              <span key={step} className="flex items-center gap-2 text-xs">
                   <motion.span
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.8 + i * 0.25, duration: 0.4 }}
-                    className="relative inline-flex items-center px-3 py-1.5 rounded-full md:text-base font-semibold tracking-wide uppercase text-xs overflow-hidden bg-accent/10 text-accent border border-accent/25"
-                  >
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.8 + i * 0.25, duration: 0.4 }}
+                  className="relative inline-flex items-center px-3 py-1.5 rounded-full md:text-base font-semibold tracking-wide uppercase text-xs overflow-hidden bg-accent/10 text-accent border border-accent/25">
+                  
                     <motion.span
-                      className="absolute inset-0 rounded-full"
-                      style={{
-                        background: 'linear-gradient(90deg, transparent 0%, hsl(var(--accent) / 0.3) 50%, transparent 100%)'
-                      }}
-                      animate={{ x: ['-100%', '200%'] }}
-                      transition={{
-                        duration: 2,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                        delay: 2 + i * 0.6,
-                        repeatDelay: 2.4 - i * 0.6 + 1.8
-                      }}
-                    />
-                    <span className="relative z-10">{step}</span>
+                    className="absolute inset-0 rounded-full"
+                    style={{
+                      background: 'linear-gradient(90deg, transparent 0%, hsl(var(--accent) / 0.3) 50%, transparent 100%)'
+                    }}
+                    animate={{ x: ['-100%', '200%'] }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                      delay: 2 + i * 0.6,
+                      repeatDelay: 2.4 - i * 0.6 + 1.8
+                    }} />
+                  
+                    <span className="relative z-10 text-xs">{step}</span>
                   </motion.span>
                   {i < 3 &&
-                    <motion.span
-                      initial={{ opacity: 0, scaleX: 0 }}
-                      animate={{ opacity: 1, scaleX: 1 }}
-                      transition={{ delay: 1.0 + i * 0.25, duration: 0.3 }}
-                      className="text-lg text-accent"
-                    >
+                <motion.span
+                  initial={{ opacity: 0, scaleX: 0 }}
+                  animate={{ opacity: 1, scaleX: 1 }}
+                  transition={{ delay: 1.0 + i * 0.25, duration: 0.3 }}
+                  className="text-lg text-accent">
+                  
                       <motion.span
-                        animate={{ opacity: [0.4, 1, 0.4] }}
-                        transition={{
-                          duration: 2,
-                          repeat: Infinity,
-                          ease: "easeInOut",
-                          delay: 2.3 + i * 0.6
-                        }}
-                      >
+                    animate={{ opacity: [0.4, 1, 0.4] }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                      delay: 2.3 + i * 0.6
+                    }}>
+                    
                         →
                       </motion.span>
                     </motion.span>
-                  }
+                }
                 </span>
               )}
             </motion.div>
 
             <motion.div variants={fadeInUp} className="grid grid-cols-5 sm:grid-cols-5 gap-3 mb-8">
               {benefits.map((b, i) =>
-                <motion.div
-                  key={i}
-                  data-gsap="benefit-item"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.5 + i * 0.1 }}
-                  className="flex items-center gap-3 p-3 rounded-lg bg-card/80 border border-border text-left"
-                >
+              <motion.div
+                key={i}
+                data-gsap="benefit-item"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5 + i * 0.1 }}
+                className="flex items-center gap-3 p-3 rounded-lg bg-card/80 border border-border text-left">
+                
                   <b.icon className="w-5 h-5 text-primary flex-shrink-0" />
                   <span className="text-sm text-foreground">{b.text}</span>
                 </motion.div>
@@ -131,7 +131,7 @@ export const Hero = () => {
                   <ArrowRight className="ml-2" size={20} />
                 </Button>
               </motion.div>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-accent">
                 Solo tu email. Sin tarjeta. Sin compromiso.
               </p>
             </motion.div>
@@ -141,8 +141,8 @@ export const Hero = () => {
           <motion.div
             variants={fadeInUp}
             className="relative"
-            style={{ perspective: "1200px" }}
-          >
+            style={{ perspective: "1200px" }}>
+            
             <div className="absolute -inset-4 rounded-2xl bg-primary/15 blur-2xl" />
             <motion.div
               data-gsap="hero-dashboard"
@@ -154,20 +154,20 @@ export const Hero = () => {
               style={{
                 boxShadow: "0 25px 60px -12px hsl(var(--primary) / 0.25), 0 12px 30px -8px rgba(0,0,0,0.3)",
                 transformStyle: "preserve-3d"
-              }}
-            >
+              }}>
+              
               <img
                 src={dashboardImg}
                 alt="Publify Dashboard - Sistema Operativo Editorial"
                 className="w-full h-auto"
-                loading="lazy"
-              />
+                loading="lazy" />
+              
               <div className="absolute inset-0 bg-gradient-to-t from-background/40 via-transparent to-transparent" />
             </motion.div>
           </motion.div>
 
         </motion.div>
       </div>
-    </section>
-  );
+    </section>);
+
 };
