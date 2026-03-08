@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { ArrowRight, Check, Sparkles } from "lucide-react";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { TextReveal } from "@/components/motion/TextReveal";
 
 const benefits = [
   "Acceso antes del lanzamiento",
