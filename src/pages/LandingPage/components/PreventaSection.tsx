@@ -20,19 +20,21 @@ const pricingTiers = [
 ];
 
 export const PreventaSection = () => {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email.trim()) {
-      toast({ title: "Introduce tu email", variant: "destructive" });
+    if (!name.trim() || !email.trim()) {
+      toast({ title: "Introduce tu nombre y email", variant: "destructive" });
       return;
     }
     setLoading(true);
     setTimeout(() => {
       toast({ title: "¡Te has unido a la waitlist!", description: "Te avisaremos cuando abramos plazas." });
+      setName("");
       setEmail("");
       setLoading(false);
     }, 1000);
@@ -123,7 +125,16 @@ export const PreventaSection = () => {
                 </p>
               </div>
 
-              <div className="space-y-2">
+              <div className="space-y-3">
+                <Input
+                  type="text"
+                  placeholder="Tu nombre"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                  maxLength={100}
+                  className="h-12 text-base"
+                />
                 <Input
                   type="email"
                   placeholder="tu@email.com"
