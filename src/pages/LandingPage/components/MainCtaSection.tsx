@@ -27,7 +27,7 @@ export const MainCtaSection = () => {
           transition={{ duration: 0.6 }}
           className="max-w-4xl mx-auto text-center"
         >
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
+          <h2 className="text-3xl md:text-4xl lg:text-6xl font-bold mb-8">
             Tu editorial KDP, sin humo ni caos.
           </h2>
           
