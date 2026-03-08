@@ -41,11 +41,11 @@ export const ParticlesBackground = () => {
           enable: true,
           distance: 160,
           color: "hsl(217, 91%, 60%)",
-          opacity: 0.08,
-          width: 0.8,
+          opacity: 0.15,
+          width: 1,
           triangles: {
             enable: true,
-            opacity: 0.015,
+            opacity: 0.03,
           },
         },
         move: {
