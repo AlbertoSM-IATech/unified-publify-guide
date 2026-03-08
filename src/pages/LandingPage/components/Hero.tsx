@@ -67,7 +67,7 @@ export const Hero = () => {
               Con Publify puedes gestionar todo tu negocio editorial en un solo lugar:
             </motion.p>
 
-            <motion.div variants={fadeInUp} className="flex flex-wrap items-center gap-3 mb-12">
+            <motion.div variants={fadeInUp} className="flex flex-wrap items-center gap-2.5 mb-8">
               {["Investiga", "Crea", "Analiza", "Escala"].map((step, i) =>
               <span key={step} className="flex items-center gap-2 text-xs">
                   <motion.span
