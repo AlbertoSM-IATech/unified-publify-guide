@@ -141,6 +141,7 @@ export const Hero = () => {
             {/* Glow behind the image */}
             <div className="absolute -inset-4 rounded-2xl bg-primary/15 blur-2xl" />
             <motion.div
+              data-gsap="hero-dashboard"
               initial={{ opacity: 0, y: 60, rotateX: 8, scale: 0.92 }}
               animate={{ opacity: 1, y: 0, rotateX: 2, scale: 1 }}
               transition={{ duration: 1.2, delay: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
