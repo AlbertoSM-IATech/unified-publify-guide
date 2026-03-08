@@ -134,7 +134,7 @@ export const ProblemSolutionSection = () => {
                 </div>
               </div>
               
-              <div className="space-y-5">
+              <div className="space-y-3">
                 {timeWasters.map((point, index) => (
                   <div 
                     key={index}
