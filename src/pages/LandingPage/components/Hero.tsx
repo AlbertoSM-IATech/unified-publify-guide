@@ -116,7 +116,7 @@ export const Hero = () => {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 + i * 0.1 }}
-                className="flex items-center gap-3 p-3 rounded-lg bg-card/80 border border-border text-left">
+                className="flex items-center gap-4 p-4 rounded-lg bg-card/80 border border-border text-left">
                 
                   <b.icon className="w-5 h-5 text-primary flex-shrink-0" />
                   <span className="text-sm text-foreground">{b.text}</span>
