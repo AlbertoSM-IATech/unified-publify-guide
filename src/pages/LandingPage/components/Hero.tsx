@@ -63,7 +63,7 @@ export const Hero = () => {
               Recupera horas cada semana con el único sistema diseñado para publishers KDP.
             </TextReveal>
 
-            <motion.p variants={fadeInUp} className="text-lg md:text-xl text-muted-foreground mb-6 leading-relaxed">
+            <motion.p variants={fadeInUp} className="text-base md:text-lg text-muted-foreground mb-5 leading-relaxed">
               Con Publify puedes gestionar todo tu negocio editorial en un solo lugar:
             </motion.p>
 
