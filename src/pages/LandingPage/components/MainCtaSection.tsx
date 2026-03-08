@@ -31,7 +31,7 @@ export const MainCtaSection = () => {
             Tu editorial KDP, sin humo ni caos.
           </h2>
           
-          <p className="text-xl text-muted-foreground mb-12 max-w-2xl mx-auto">
+          <p className="text-xl md:text-2xl text-muted-foreground mb-16 max-w-2xl mx-auto">
             Empieza gratis con el plan Starter. Activa Pro cuando lo necesites. Publify crece contigo.
           </p>
 

@@ -25,7 +25,7 @@ export const PromiseVsRealitySection = () => {
               <span className="text-primary">castillo de naipes</span>
             </h2>
 
-            <div className="space-y-6 text-lg text-muted-foreground leading-relaxed">
+            <div className="space-y-8 text-lg md:text-xl text-muted-foreground leading-relaxed">
               <p>
                 Amazon KDP te prometió que subirías un libro y en 72h estaría a la venta. Técnicamente es cierto. Pero la realidad para quien se toma esto como un negocio de verdad es otra: herramientas sueltas, documentos perdidos, tareas sin seguimiento, campañas desordenadas y una sensación constante de ir apagando fuegos.
               </p>

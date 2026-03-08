@@ -40,7 +40,7 @@ export const ThreePillarsSection = () => {
             </div>
           </ScrollReveal>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-3 gap-10">
             {pillars.map((pillar, index) => (
               <ScrollReveal
                 key={index}

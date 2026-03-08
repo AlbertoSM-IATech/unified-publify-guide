@@ -56,7 +56,7 @@ export const TargetAudienceSection = () => {
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="p-6 rounded-xl border border-border bg-card">
+            className="p-8 rounded-xl border border-border bg-card">
             
             <h3 className="font-heading text-lg font-bold mb-6 text-destructive">No es para ti si…</h3>
             <ul className="space-y-4">

@@ -70,7 +70,7 @@ export const StrategicFaqSection = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mt-12 p-6 bg-[#FB923C]/5 dark:bg-[#FB923C]/10 rounded-lg border border-[#FB923C]/20"
+          className="text-center mt-16 p-8 bg-[#FB923C]/5 dark:bg-[#FB923C]/10 rounded-lg border border-[#FB923C]/20"
         >
           <p className="text-lg mb-2 text-foreground">
             ¿Tienes otra pregunta?

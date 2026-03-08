@@ -83,7 +83,7 @@ export const SecondaryBenefitsSection = () => {
           viewport={{ once: true }}
           className="mt-16 text-center"
         >
-          <div className="bg-gradient-to-r from-[#FB923C]/10 to-primary/10 dark:from-[#FB923C]/20 dark:to-primary/20 p-8 rounded-xl border border-[#FB923C]/20">
+          <div className="bg-gradient-to-r from-[#FB923C]/10 to-primary/10 dark:from-[#FB923C]/20 dark:to-primary/20 p-12 rounded-xl border border-[#FB923C]/20">
             <h3 className="text-xl font-bold mb-4 text-foreground">
               "Publify no se limita a ser útil. Se convierte en la columna vertebral de tu negocio editorial."
             </h3>

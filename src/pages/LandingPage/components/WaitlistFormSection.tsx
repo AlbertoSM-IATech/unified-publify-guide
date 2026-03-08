@@ -74,7 +74,7 @@ export const WaitlistFormSection = () => {
           viewport={{ once: true }}
           transition={{ delay: 0.3 }}
         >
-          <form onSubmit={handleSubmit} className="p-8 bg-card border border-border rounded-2xl shadow-lg space-y-5">
+          <form onSubmit={handleSubmit} className="p-10 bg-card border border-border rounded-2xl shadow-lg space-y-6">
             <div className="space-y-2">
               <Label htmlFor="waitlist-name">Nombre</Label>
               <Input
