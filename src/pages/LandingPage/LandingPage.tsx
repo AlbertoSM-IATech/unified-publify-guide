@@ -33,6 +33,7 @@ export const LandingPage = () => {
       <Header />
       <Hero />
       <ProblemSolutionSection />
+      <WhatIsPublifySection />
       <TargetAudienceSection />
       <EarlyAdoptersSection />
       <TestimonialsSection />
