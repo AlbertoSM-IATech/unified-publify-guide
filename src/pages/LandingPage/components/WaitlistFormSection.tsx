@@ -51,7 +51,7 @@ export const WaitlistFormSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.2 }}
-          className="flex flex-wrap justify-center gap-6 mb-10 text-sm"
+          className="flex flex-wrap justify-center gap-8 mb-14 text-sm"
         >
           <div className="flex items-center gap-2 text-muted-foreground">
             <Mail className="w-4 h-4 text-primary" />
