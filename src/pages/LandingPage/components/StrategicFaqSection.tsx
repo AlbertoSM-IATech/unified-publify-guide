@@ -48,7 +48,7 @@ export const StrategicFaqSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
-          <Accordion type="single" collapsible className="space-y-4">
+          <Accordion type="single" collapsible className="space-y-5">
             {strategicFaqs.map((faq, index) => (
               <AccordionItem 
                 key={index} 
