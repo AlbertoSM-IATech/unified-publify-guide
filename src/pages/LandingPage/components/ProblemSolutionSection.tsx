@@ -10,7 +10,7 @@ const timeWasters = [{
   description: "Saltando entre Google Drive, Excels, email marketing, herramientas de diseño, KDP, redes sociales...",
   impact: "260 horas anuales malgastadas"
 }, {
-  icon: <FileX className="w-8 h-8 text-primary" />,
+  icon: <FileX className="w-6 h-6 text-primary" />,
   title: "Archivos y datos dispersos",
   description: "Portadas en un sitio, manuscritos en otro, datos de ventas en Excel, leads en diferentes plataformas",
   impact: "Decisiones lentas y poco informadas"
