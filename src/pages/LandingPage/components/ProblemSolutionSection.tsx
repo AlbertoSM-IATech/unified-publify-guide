@@ -93,7 +93,7 @@ export const ProblemSolutionSection = () => {
             <span className="font-semibold text-primary">⏰ Realidad: Pierdes tiempo, dinero y oportunidades</span>
           </motion.div>
           
-          <TextReveal as="h2" className="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 text-foreground">
+          <TextReveal as="h2" className="text-2xl md:text-3xl lg:text-4xl font-bold mb-6 text-foreground">
             El caos editorial vs el control total
           </TextReveal>
           
