@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-
+import { Scene3D } from "./Scene3D";
 /**
  * Fondo abstracto y tecnológico moderno
  * Usa los colores de la marca y crea un ambiente elegante
