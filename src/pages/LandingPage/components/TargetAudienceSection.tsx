@@ -27,7 +27,7 @@ export const TargetAudienceSection = () => {
             Para publishers que quieren operar{" "}
             <span className="text-primary">como un negocio.</span>
           </h2>
-          <p className="text-lg text-muted-foreground">
+          <p className="text-lg md:text-xl text-muted-foreground">
             "Publicar es fácil. Gestionar una editorial, no."
           </p>
         </motion.div>
