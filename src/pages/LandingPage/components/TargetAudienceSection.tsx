@@ -32,7 +32,7 @@ export const TargetAudienceSection = () => {
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid md:grid-cols-2 gap-12">
           {/* Es para */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
