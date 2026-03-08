@@ -44,6 +44,7 @@ export const LandingPage = () => {
       <EarlyAdoptersSection />
       <TestimonialsSection />
       <PreventaSection />
+      <FaqSection />
       <FinalCtaSection />
       <Footer />
     </motion.div>
