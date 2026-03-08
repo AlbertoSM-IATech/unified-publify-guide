@@ -61,7 +61,7 @@ export const SecondaryBenefitsSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
-              className="bg-card p-6 rounded-lg shadow-sm border border-border hover:shadow-md transition-shadow"
+              className="bg-card p-8 rounded-lg shadow-sm border border-border hover:shadow-md transition-shadow"
             >
               <div className="flex justify-center mb-4">
                 {benefit.icon}
