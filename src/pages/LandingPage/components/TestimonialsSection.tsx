@@ -203,7 +203,7 @@ export const TestimonialsSection = () => {
               {testimonials.map((testimonial, index) => <CarouselItem key={index} className="pl-4 md:basis-1/2 lg:basis-1/3">
                   <motion.div custom={index} initial="hidden" whileInView="visible" viewport={{
                 once: true
-              }} variants={cardVariants} whileHover="hover" className="h-full will-change-transform">
+              }} variants={cardVariants} whileHover="hover" className="h-full will-change-transform" data-gsap="testimonial-card">
                     <TestimonialCard testimonial={testimonial} />
                   </motion.div>
                 </CarouselItem>)}
