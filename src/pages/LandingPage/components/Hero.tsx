@@ -45,9 +45,36 @@ export const Hero = () => {
               Con Publify puedes gestionar todo tu negocio editorial en un solo lugar:
             </motion.p>
 
-            <motion.p variants={fadeInUp} className="text-sm md:text-base font-semibold tracking-widest uppercase mb-8" style={{ color: 'hsl(217, 91%, 60%)' }}>
-              Investiga → Crea → Analiza → Escala
-            </motion.p>
+            <motion.div variants={fadeInUp} className="flex flex-wrap items-center gap-2 mb-8">
+              {["Investiga", "Crea", "Analiza", "Escala"].map((step, i) => (
+                <span key={step} className="flex items-center gap-2">
+                  <motion.span
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.8 + i * 0.25, duration: 0.4 }}
+                    className="inline-flex items-center px-3 py-1.5 rounded-full text-sm md:text-base font-semibold tracking-wide uppercase"
+                    style={{
+                      color: 'hsl(217, 91%, 60%)',
+                      background: 'hsl(217, 91%, 60%, 0.1)',
+                      border: '1px solid hsl(217, 91%, 60%, 0.25)',
+                    }}
+                  >
+                    {step}
+                  </motion.span>
+                  {i < 3 && (
+                    <motion.span
+                      initial={{ opacity: 0, scaleX: 0 }}
+                      animate={{ opacity: 1, scaleX: 1 }}
+                      transition={{ delay: 1.0 + i * 0.25, duration: 0.3 }}
+                      className="text-lg"
+                      style={{ color: 'hsl(217, 91%, 60%)' }}
+                    >
+                      →
+                    </motion.span>
+                  )}
+                </span>
+              ))}
+            </motion.div>
 
             <motion.div variants={fadeInUp} className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
               {benefits.map((b, i) =>
