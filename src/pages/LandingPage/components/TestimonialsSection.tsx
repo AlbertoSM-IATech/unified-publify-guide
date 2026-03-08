@@ -298,8 +298,8 @@ const TestimonialCard = ({
     delay: 0.2,
     duration: 0.4
   }}>
-      <div className="rounded-full bg-[#FB923C]/10 p-2">
-        <User size={20} className="text-[#FB923C]" />
+      <div className="rounded-full bg-primary/10 p-2">
+        <User size={20} className="text-primary" />
       </div>
       <div className="text-left">
         <p className="font-semibold">{testimonial.author}</p>
