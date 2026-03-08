@@ -267,7 +267,7 @@ const TestimonialCard = ({
   testimonial
 }: TestimonialCardProps) => <ContentCard className="h-full bg-background border shadow-sm backdrop-blur-sm" contentClassName="flex flex-col h-full">
     <div className="flex-1">
-      <div className="text-[#FB923C] mb-4">
+      <div className="text-primary mb-4">
         <motion.div initial={{
         rotate: -10,
         scale: 0.9
