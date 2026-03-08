@@ -28,7 +28,7 @@ export const Hero = () => {
 
   return (
     <section className="relative flex flex-col items-center px-4 pt-28 pb-16 md:pt-36 md:pb-24 overflow-hidden">
-      <div className="mx-auto max-w-6xl w-full">
+      <div className="mx-auto w-[90%]">
         <motion.div initial="hidden" animate="visible" variants={stagger} className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           
           {/* Left — Text */}
