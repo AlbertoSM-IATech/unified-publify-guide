@@ -25,7 +25,7 @@ export const TextReveal = ({
   immediate = false,
   delay = 0,
   stagger = 0.02,
-  duration = 0.6,
+  duration = 0.6
 }: TextRevealProps) => {
   const containerRef = useRef<HTMLElement>(null);
   const charsRef = useRef<(HTMLSpanElement | null)[]>([]);
@@ -44,7 +44,7 @@ export const TextReveal = ({
       duration,
       stagger,
       ease: "back.out(1.7)",
-      delay,
+      delay
     };
 
     if (immediate) {
@@ -55,8 +55,8 @@ export const TextReveal = ({
         scrollTrigger: {
           trigger: containerRef.current,
           start: "top 85%",
-          toggleActions: "play none none none",
-        },
+          toggleActions: "play none none none"
+        }
       });
     }
 
@@ -73,32 +73,32 @@ export const TextReveal = ({
     <Tag
       ref={containerRef as any}
       className={className}
-      style={{ perspective: "600px" }}
-    >
-      {words.map((word, wi) => (
-        <span key={wi} style={{ display: "inline-block", whiteSpace: "pre" }}>
+      style={{ perspective: "600px" }}>
+      
+      {words.map((word, wi) =>
+      <span key={wi} style={{ display: "inline-block", whiteSpace: "pre" }} className="text-primary">
           {Array.from(word).map((char) => {
-            const idx = charIndex++;
-            return (
-              <span
-                key={idx}
-                ref={(el) => { charsRef.current[idx] = el; }}
-                style={{
-                  display: "inline-block",
-                  opacity: 0,
-                  transform: "translateY(40px) rotateX(-90deg)",
-                  transformOrigin: "bottom",
-                }}
-              >
+          const idx = charIndex++;
+          return (
+            <span
+              key={idx}
+              ref={(el) => {charsRef.current[idx] = el;}}
+              style={{
+                display: "inline-block",
+                opacity: 0,
+                transform: "translateY(40px) rotateX(-90deg)",
+                transformOrigin: "bottom"
+              }}>
+              
                 {char}
-              </span>
-            );
-          })}
-          {wi < words.length - 1 && (
-            <span style={{ display: "inline-block", width: "0.3em" }}>&nbsp;</span>
-          )}
+              </span>);
+
+        })}
+          {wi < words.length - 1 &&
+        <span style={{ display: "inline-block", width: "0.3em" }}>&nbsp;</span>
+        }
         </span>
-      ))}
-    </Tag>
-  );
+      )}
+    </Tag>);
+
 };
