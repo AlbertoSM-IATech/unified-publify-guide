@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ArrowRight, ArrowDown } from "lucide-react";
+import { ArrowRight, BookOpen, BarChart3, Eye, Layers, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import dashboardImg from "@/assets/publify-dashboard-concept.jpg";
 
@@ -10,16 +10,20 @@ const fadeInUp = {
 
 const stagger = {
   hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { staggerChildren: 0.15, delayChildren: 0.2 } }
+  visible: { opacity: 1, transition: { staggerChildren: 0.12, delayChildren: 0.2 } }
 };
+
+const benefits = [
+  { icon: BookOpen, text: "Toda la información de cada libro en un solo lugar" },
+  { icon: BarChart3, text: "Decisiones con datos reales" },
+  { icon: Eye, text: "Visión clara de tu catálogo" },
+  { icon: Layers, text: "Escalar tu editorial sin caos" },
+  { icon: TrendingUp, text: "Recuperar horas cada semana" },
+];
 
 export const Hero = () => {
   const scrollToWaitlist = () => {
     document.getElementById("waitlist")?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  const scrollToHowItWorks = () => {
-    document.getElementById("como-funciona")?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
@@ -27,54 +31,51 @@ export const Hero = () => {
       <div className="mx-auto max-w-6xl w-full">
         <motion.div initial="hidden" animate="visible" variants={stagger} className="text-center">
           
-          {/* Título principal */}
-          <motion.h1 variants={fadeInUp} className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-4">
-            Sistema Operativo Editorial{" "}
-            <span className="text-primary">para publishers de KDP</span>
+          {/* Headline */}
+          <motion.h1 variants={fadeInUp} className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
+            Gestiona tu editorial desde un solo lugar{" "}
+            <span className="text-primary">y recupera horas cada semana.</span>
           </motion.h1>
 
-          {/* Subtítulo */}
-          <motion.p variants={fadeInUp} className="text-2xl md:text-3xl font-semibold text-foreground mb-6">
-            Todo tu negocio editorial en un solo sistema. Por fin.
+          {/* Subheadline */}
+          <motion.p variants={fadeInUp} className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-10 leading-relaxed">
+            Publify convierte el caos de usar herramientas genéricas como Sheets, Notion, Drive y el panel de KDP en un{" "}
+            <strong className="text-foreground">sistema claro para publishers</strong>.
           </motion.p>
 
-          {/* Texto de dolor */}
-          <motion.p variants={fadeInUp} className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-4 leading-relaxed">
-            Si tu operativa vive entre Drive, Sheets, Notion, freelancers y Ads, no tienes control. Tienes parches.
-          </motion.p>
+          {/* Benefits grid */}
+          <motion.div variants={fadeInUp} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 max-w-3xl mx-auto mb-10">
+            {benefits.map((b, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5 + i * 0.1 }}
+                className="flex items-center gap-3 p-3 rounded-lg bg-card/80 border border-border text-left"
+              >
+                <b.icon className="w-5 h-5 text-primary flex-shrink-0" />
+                <span className="text-sm text-foreground">{b.text}</span>
+              </motion.div>
+            ))}
+          </motion.div>
 
-          {/* Tagline en azul */}
-          <motion.p variants={fadeInUp} className="text-base md:text-lg font-semibold text-accent mb-10">
-            Investiga → Crea → Analiza → Escala
-          </motion.p>
-
-          {/* CTAs */}
-          <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row gap-4 justify-center mb-6">
+          {/* CTA */}
+          <motion.div variants={fadeInUp} className="flex flex-col items-center gap-3 mb-6">
             <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}>
-              <Button onClick={scrollToWaitlist} size="lg" className="text-lg px-8 py-6 bg-primary hover:bg-primary/90 text-primary-foreground font-bold shadow-lg shadow-primary/25">
-                Unirme a la waitlist
+              <Button onClick={scrollToWaitlist} size="lg" className="text-lg px-10 py-7 bg-primary hover:bg-primary/90 text-primary-foreground font-bold shadow-lg shadow-primary/25">
+                Quiero acceso prioritario
                 <ArrowRight className="ml-2" size={20} />
               </Button>
             </motion.div>
-            <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}>
-              <Button onClick={scrollToHowItWorks} variant="outline" size="lg" className="text-lg px-8 py-6 border-border hover:border-primary/50 hover:bg-primary/5">
-                <ArrowDown className="mr-2" size={18} />
-                Ver cómo funciona
-              </Button>
-            </motion.div>
-          </motion.div>
-
-          {/* Microcopy conversión */}
-          <motion.div variants={fadeInUp} className="flex flex-wrap justify-center gap-4 text-sm text-muted-foreground mb-16">
-            <span>✓ Apuntarte es gratis</span>
-            <span>✓ Acceso progresivo desde el 1 de abril</span>
-            <span>✓ Cupo: 20–30 early adopters</span>
+            <p className="text-sm text-muted-foreground">
+              Solo tu email. Sin tarjeta. Sin compromiso.
+            </p>
           </motion.div>
 
           {/* Dashboard mockup */}
           <motion.div
             variants={fadeInUp}
-            className="relative max-w-5xl mx-auto"
+            className="relative max-w-5xl mx-auto mt-12"
           >
             <motion.div
               initial={{ opacity: 0, y: 60, scale: 0.95 }}
@@ -84,7 +85,7 @@ export const Hero = () => {
             >
               <img 
                 src={dashboardImg} 
-                alt="Publify Dashboard - Sistema Operativo Editorial con el libro como nodo central" 
+                alt="Publify Dashboard - Sistema Operativo Editorial" 
                 className="w-full h-auto"
                 loading="lazy"
               />

@@ -1,14 +1,8 @@
 import { motion } from "framer-motion";
 import { Header } from "./components/Header";
 import { Hero } from "./components/Hero";
-import { ChaosSection } from "./components/ChaosSection";
-import { WhatIsPublifySection } from "./components/WhatIsPublifySection";
-import { HowItWorksSection } from "./components/HowItWorksSection";
-import { WaitlistFormSection } from "./components/WaitlistFormSection";
-import { EarlyAdoptersSection } from "./components/EarlyAdoptersSection";
-import { TargetAudienceSection } from "./components/TargetAudienceSection";
-import { FaqSection } from "./components/FaqSection";
-import { FinalCtaSection } from "./components/FinalCtaSection";
+import { ProblemSolutionSection } from "./components/ProblemSolutionSection";
+import { PreventaSection } from "./components/PreventaSection";
 import { Footer } from "./components/Footer";
 import { TechBackground } from "@/components/motion/TechBackground";
 
@@ -31,14 +25,8 @@ export const LandingPage = () => {
       <TechBackground />
       <Header />
       <Hero />
-      <ChaosSection />
-      <WhatIsPublifySection />
-      <HowItWorksSection />
-      <WaitlistFormSection />
-      <EarlyAdoptersSection />
-      <TargetAudienceSection />
-      <FaqSection />
-      <FinalCtaSection />
+      <ProblemSolutionSection />
+      <PreventaSection />
       <Footer />
     </motion.div>
   );
