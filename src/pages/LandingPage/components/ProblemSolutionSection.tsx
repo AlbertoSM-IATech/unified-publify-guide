@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { AlertTriangle, CheckCircle, Clock, Search, FileX, TrendingDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
+import { TextReveal } from "@/components/motion/TextReveal";
 
 const timeWasters = [{
   icon: <Search className="w-8 h-8 text-primary" />,
@@ -92,9 +93,9 @@ export const ProblemSolutionSection = () => {
             <span className="font-semibold text-primary">⏰ Realidad: Pierdes tiempo, dinero y oportunidades</span>
           </motion.div>
           
-          <h2 data-gsap="text-reveal" className="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 text-foreground" style={{ perspective: "600px" }}>
+          <TextReveal as="h2" className="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 text-foreground">
             El caos editorial vs el control total
-          </h2>
+          </TextReveal>
           
           <p className="text-xl md:text-2xl text-muted-foreground max-w-4xl mx-auto leading-relaxed">
             La gestión editorial tradicional te tiene corriendo como un pollo sin cabeza. 
@@ -228,9 +229,9 @@ export const ProblemSolutionSection = () => {
                 <CheckCircle className="w-8 h-8 text-primary-foreground" />
               </motion.div>
               
-              <h3 data-gsap="text-reveal" className="text-3xl md:text-4xl font-bold mb-8 text-foreground" style={{ perspective: "600px" }}>
+              <TextReveal as="h3" className="text-3xl md:text-4xl font-bold mb-8 text-foreground">
                 Publify no te da más trabajo. Te devuelve la vida que habías perdido.
-              </h3>
+              </TextReveal>
               
               <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
                 Imagina tener todos tus libros, datos financieros, campañas de marketing y contactos 

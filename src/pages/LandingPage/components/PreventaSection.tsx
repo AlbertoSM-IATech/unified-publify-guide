@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { ArrowRight, Check, Sparkles } from "lucide-react";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { TextReveal } from "@/components/motion/TextReveal";
 
 const benefits = [
   "Acceso antes del lanzamiento",
@@ -52,13 +53,12 @@ export const PreventaSection = () => {
             <Sparkles size={16} />
             Plazas limitadas: 20–30 early adopters
           </div>
-          <h2
-            data-gsap="text-reveal"
+          <TextReveal
+            as="h2"
             className="font-heading text-3xl md:text-4xl lg:text-6xl font-bold mb-6"
-            style={{ perspective: "600px" }}
           >
             Publify todavía no está abierto al público.
-          </h2>
+          </TextReveal>
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
             Consigue acceso prioritario al MVP, bloquea el mejor precio para siempre y ayuda a definir el producto.
           </p>

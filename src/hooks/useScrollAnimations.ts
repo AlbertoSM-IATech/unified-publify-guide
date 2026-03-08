@@ -4,44 +4,6 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-/**
- * Splits text nodes inside an element into individual <span> characters,
- * preserving existing child elements (e.g. colored <span> tags).
- */
-const splitTextIntoChars = (element: Element): HTMLSpanElement[] => {
-  const chars: HTMLSpanElement[] = [];
-
-  const walkNodes = (parent: Node) => {
-    // Snapshot child nodes so we can modify safely
-    const children = Array.from(parent.childNodes);
-
-    children.forEach((node) => {
-      if (node.nodeType === Node.TEXT_NODE) {
-        const text = node.textContent || "";
-        const frag = document.createDocumentFragment();
-        for (const char of text) {
-          const span = document.createElement("span");
-          span.textContent = char;
-          span.style.display = "inline-block";
-          span.style.opacity = "0";
-          span.style.transform = "translateY(40px) rotateX(-90deg)";
-          span.style.transformOrigin = "bottom";
-          if (char === " ") span.style.width = "0.3em";
-          frag.appendChild(span);
-          chars.push(span);
-        }
-        parent.replaceChild(frag, node);
-      } else if (node.nodeType === Node.ELEMENT_NODE) {
-        // Recurse into child elements (preserving <span>, <strong>, etc.)
-        walkNodes(node);
-      }
-    });
-  };
-
-  walkNodes(element);
-  return chars;
-};
-
 export const useScrollAnimations = () => {
   const initialized = useRef(false);
 
@@ -69,57 +31,7 @@ export const useScrollAnimations = () => {
         });
       }
 
-      // ═══════════════════════════════════════════
-      // 2. TEXT REVEALS — Letter-by-letter animation
-      // ═══════════════════════════════════════════
-      const textRevealElements = document.querySelectorAll("[data-gsap='text-reveal']");
-      textRevealElements.forEach((el) => {
-        const chars = splitTextIntoChars(el);
-        
-        gsap.to(chars, {
-          opacity: 1,
-          y: 0,
-          rotateX: 0,
-          duration: 0.6,
-          stagger: 0.02,
-          ease: "back.out(2)",
-          scrollTrigger: {
-            trigger: el,
-            start: "top 85%",
-            toggleActions: "play none none none",
-          },
-        });
-      });
-
-      // Hero title — special treatment (plays on load, no scroll trigger)
-      const heroTitle = document.querySelector("[data-gsap='hero-title']");
-      if (heroTitle) {
-        const chars = splitTextIntoChars(heroTitle);
-        gsap.to(chars, {
-          opacity: 1,
-          y: 0,
-          rotateX: 0,
-          duration: 0.5,
-          stagger: 0.015,
-          ease: "back.out(1.7)",
-          delay: 0.3,
-        });
-      }
-
-      // Hero subtitle
-      const heroSubtitle = document.querySelector("[data-gsap='hero-subtitle']");
-      if (heroSubtitle) {
-        const chars = splitTextIntoChars(heroSubtitle);
-        gsap.to(chars, {
-          opacity: 1,
-          y: 0,
-          rotateX: 0,
-          duration: 0.4,
-          stagger: 0.01,
-          ease: "power3.out",
-          delay: 0.9,
-        });
-      }
+      // Text reveals are now handled by the <TextReveal> React component
 
       // ═══════════════════════════════════════════
       // 3. PROBLEM CARDS — Reveal from left with stagger
