@@ -20,6 +20,7 @@ const pricingTiers = [
 ];
 
 export const PreventaSection = () => {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
