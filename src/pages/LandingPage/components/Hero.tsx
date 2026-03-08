@@ -108,7 +108,7 @@ export const Hero = () => {
               )}
             </motion.div>
 
-            <motion.div variants={fadeInUp} className="grid grid-cols-5 sm:grid-cols-5 gap-3 mb-8">
+            <motion.div variants={fadeInUp} className="grid grid-cols-5 sm:grid-cols-5 gap-4 mb-12">
               {benefits.map((b, i) =>
               <motion.div
                 key={i}
