@@ -150,26 +150,63 @@ export const Hero = () => {
             className="relative"
             style={{ perspective: "1200px" }}>
             
-            <div className="absolute -inset-4 rounded-2xl bg-primary/15 blur-2xl" />
+            <div className="absolute -inset-8 rounded-3xl bg-primary/15 blur-3xl" />
             <motion.div
               data-gsap="hero-dashboard"
               initial={{ opacity: 0, y: 60, rotateX: 8, scale: 0.92 }}
               animate={{ opacity: 1, y: 0, rotateX: 2, scale: 1 }}
               transition={{ duration: 1.2, delay: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
               whileHover={{ rotateX: 0, scale: 1.02, transition: { duration: 0.4 } }}
-              className="relative rounded-xl overflow-hidden border-2 border-border"
-              style={{
-                boxShadow: "0 25px 60px -12px hsl(var(--primary) / 0.25), 0 12px 30px -8px rgba(0,0,0,0.3)",
-                transformStyle: "preserve-3d"
-              }}>
+              className="relative"
+              style={{ transformStyle: "preserve-3d" }}>
               
-              <img
-                src={dashboardImg}
-                alt="Publify Dashboard - Sistema Operativo Editorial"
-                className="w-full h-auto"
-                loading="lazy" />
-              
-              <div className="absolute inset-0 bg-gradient-to-t from-background/40 via-transparent to-transparent" />
+              {/* Laptop frame */}
+              <div
+                className="relative rounded-t-xl overflow-hidden bg-neutral-900 p-[3px] pt-0"
+                style={{
+                  boxShadow: "0 25px 60px -12px hsl(var(--primary) / 0.25), 0 12px 30px -8px rgba(0,0,0,0.4)",
+                }}>
+                
+                {/* Browser top bar */}
+                <div className="flex items-center gap-2 px-4 py-2.5 bg-neutral-800 rounded-t-lg">
+                  <div className="flex items-center gap-1.5">
+                    <span className="w-2.5 h-2.5 rounded-full bg-red-500" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-yellow-500" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-green-500" />
+                  </div>
+                  <div className="flex-1 flex justify-center">
+                    <div className="flex items-center gap-1.5 px-4 py-1 rounded-md bg-neutral-700/60 text-neutral-400 text-xs font-mono">
+                      <svg className="w-3 h-3 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                      </svg>
+                      app.publify.io
+                    </div>
+                  </div>
+                </div>
+
+                {/* Screen / dashboard image */}
+                <div className="relative">
+                  <img
+                    src={dashboardImg}
+                    alt="Publify Dashboard - Sistema Operativo Editorial"
+                    className="w-full h-auto block"
+                    loading="lazy" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-background/30 via-transparent to-transparent" />
+                </div>
+              </div>
+
+              {/* Laptop base */}
+              <div
+                className="mx-auto h-3 bg-neutral-800 rounded-b-lg"
+                style={{
+                  width: "70%",
+                  clipPath: "polygon(4% 0, 96% 0, 100% 100%, 0% 100%)",
+                }}
+              />
+              <div
+                className="mx-auto h-[3px] rounded-b bg-neutral-700"
+                style={{ width: "20%" }}
+              />
             </motion.div>
           </motion.div>
 
