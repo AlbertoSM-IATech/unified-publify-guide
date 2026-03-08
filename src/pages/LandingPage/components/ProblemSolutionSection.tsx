@@ -124,9 +124,9 @@ export const ProblemSolutionSection = () => {
                 <motion.div
                   animate={{ scale: [1, 1.2, 1] }}
                   transition={{ duration: 2, repeat: Infinity }}
-                  className="w-12 h-12 bg-primary rounded-full flex items-center justify-center"
+                  className="w-10 h-10 bg-primary rounded-full flex items-center justify-center"
                 >
-                  <AlertTriangle className="w-6 h-6 text-primary-foreground" />
+                  <AlertTriangle className="w-5 h-5 text-primary-foreground" />
                 </motion.div>
                 <div>
                   <h3 className="text-2xl font-bold text-primary">El caos editorial actual</h3>
