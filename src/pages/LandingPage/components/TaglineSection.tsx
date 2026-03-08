@@ -10,7 +10,7 @@ export const TaglineSection = () => {
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="font-heading text-4xl md:text-6xl lg:text-7xl font-black text-center leading-tight"
+          className="font-heading text-3xl md:text-4xl lg:text-5xl font-black text-center leading-tight"
         >
           El{" "}
           <span className="text-primary">Sistema Operativo Editorial</span>

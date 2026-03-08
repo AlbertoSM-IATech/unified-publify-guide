@@ -30,7 +30,7 @@ export const Hero = () => {
   };
 
   return (
-    <section className="relative flex flex-col items-center px-4 pt-36 pb-28 md:pt-48 md:pb-40 overflow-hidden">
+    <section className="relative flex flex-col items-center px-4 pt-28 pb-20 md:pt-36 md:pb-28 overflow-hidden">
       {/* tsParticles profesionales */}
       <div className="absolute inset-0 overflow-hidden">
         <ParticlesBackground />
@@ -43,7 +43,7 @@ export const Hero = () => {
             {/* GSAP text reveal — letter by letter */}
             <TextReveal
               as="h1"
-              className="font-heading text-5xl md:text-6xl font-bold tracking-tight mb-6 text-primary lg:text-7xl"
+              className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-4 text-primary"
               immediate
               delay={0.3}
               stagger={0.015}
@@ -54,7 +54,7 @@ export const Hero = () => {
 
             <TextReveal
               as="p"
-              className="text-xl mb-8 md:text-3xl lg:text-4xl font-light text-foreground/80"
+              className="text-lg mb-6 md:text-xl lg:text-2xl font-light text-foreground/80"
               immediate
               delay={0.9}
               stagger={0.01}
@@ -63,11 +63,11 @@ export const Hero = () => {
               Recupera horas cada semana con el único sistema diseñado para publishers KDP.
             </TextReveal>
 
-            <motion.p variants={fadeInUp} className="text-lg md:text-xl text-muted-foreground mb-6 leading-relaxed">
+            <motion.p variants={fadeInUp} className="text-base md:text-lg text-muted-foreground mb-5 leading-relaxed">
               Con Publify puedes gestionar todo tu negocio editorial en un solo lugar:
             </motion.p>
 
-            <motion.div variants={fadeInUp} className="flex flex-wrap items-center gap-3 mb-12">
+            <motion.div variants={fadeInUp} className="flex flex-wrap items-center gap-2.5 mb-8">
               {["Investiga", "Crea", "Analiza", "Escala"].map((step, i) =>
               <span key={step} className="flex items-center gap-2 text-xs">
                   <motion.span
@@ -116,7 +116,7 @@ export const Hero = () => {
               )}
             </motion.div>
 
-            <motion.div variants={fadeInUp} className="grid grid-cols-5 sm:grid-cols-5 gap-4 mb-12">
+            <motion.div variants={fadeInUp} className="grid grid-cols-5 sm:grid-cols-5 gap-3 mb-8">
               {benefits.map((b, i) =>
               <motion.div
                 key={i}
@@ -124,19 +124,19 @@ export const Hero = () => {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 + i * 0.1 }}
-                className="flex items-center gap-4 p-4 rounded-lg bg-card/80 border border-border text-left">
+                className="flex items-center gap-3 p-3 rounded-lg bg-card/80 border border-border text-left">
                 
-                  <b.icon className="w-5 h-5 text-primary flex-shrink-0" />
-                  <span className="text-sm text-foreground">{b.text}</span>
+                  <b.icon className="w-4 h-4 text-primary flex-shrink-0" />
+                  <span className="text-xs text-foreground">{b.text}</span>
                 </motion.div>
               )}
             </motion.div>
 
             <motion.div variants={fadeInUp} className="flex flex-col items-start gap-3">
               <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}>
-                <Button onClick={scrollToWaitlist} size="lg" className="text-lg px-10 py-7 bg-primary hover:bg-primary/90 text-primary-foreground font-bold shadow-lg shadow-primary/25">
+                <Button onClick={scrollToWaitlist} size="lg" className="text-base px-8 py-5 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-lg shadow-primary/25">
                   Unirme a la Waitlist
-                  <ArrowRight className="ml-2" size={20} />
+                  <ArrowRight className="ml-2" size={18} />
                 </Button>
               </motion.div>
               <p className="text-sm text-accent">
