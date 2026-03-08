@@ -236,7 +236,7 @@ export const TestimonialsSection = () => {
           stiffness: 400,
           damping: 10
         }}>
-            <Button onClick={() => navigate("/register")} className="bg-gradient-to-r from-primary to-[#FB923C] hover:shadow-lg px-[60px] py-[30px] font-semibold text-lg">
+            <Button onClick={() => navigate("/register")} className="bg-gradient-to-r from-primary to-primary/80 hover:shadow-lg px-[60px] py-[30px] font-semibold text-lg text-primary-foreground">
               Únete a ellos
               <motion.div className="ml-2" initial={{
               x: 0
