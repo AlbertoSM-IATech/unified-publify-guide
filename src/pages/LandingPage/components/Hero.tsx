@@ -3,6 +3,7 @@ import { ArrowRight, BookOpen, BarChart3, Eye, Layers, TrendingUp } from "lucide
 import { Button } from "@/components/ui/button";
 import { ParticlesBackground } from "@/components/motion/ParticlesBackground";
 import { TextReveal } from "@/components/motion/TextReveal";
+import { TypewriterURL } from "@/components/motion/TypewriterURL";
 import dashboardImg from "@/assets/publify-dashboard-concept.jpg";
 
 const stagger = {
@@ -53,7 +54,7 @@ export const Hero = () => {
 
             <TextReveal
               as="p"
-              className="text-xl mb-8 md:text-3xl lg:text-4xl font-light text-primary-foreground"
+              className="text-xl mb-8 md:text-3xl lg:text-4xl font-light text-foreground/80"
               immediate
               delay={0.9}
               stagger={0.01}
@@ -194,7 +195,7 @@ export const Hero = () => {
                         <svg className="w-3 h-3 flex-shrink-0" style={{ color: "#28c840" }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                           <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                         </svg>
-                        <span className="text-neutral-400">app.publify.io</span>
+                        <TypewriterURL text="app.publify.io" delay={1.8} speed={0.08} />
                       </div>
                     </div>
                     

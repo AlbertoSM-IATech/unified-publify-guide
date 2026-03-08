@@ -148,9 +148,9 @@ export const TestimonialsSection = () => {
       y: backgroundY,
       opacity
     }}>
-        <div className="absolute top-0 left-0 right-0 h-1/2 bg-gradient-to-b from-[#FB923C]/5 to-transparent" />
+        <div className="absolute top-0 left-0 right-0 h-1/2 bg-gradient-to-b from-primary/5 to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-primary/5 to-transparent" />
-        <div className="absolute top-1/4 left-1/3 w-1/3 h-1/3 rounded-full bg-[#FB923C]/10 blur-[80px]" />
+        <div className="absolute top-1/4 left-1/3 w-1/3 h-1/3 rounded-full bg-primary/10 blur-[80px]" />
         <div className="absolute bottom-1/4 right-1/3 w-1/3 h-1/3 rounded-full bg-primary/10 blur-[80px]" />
       </motion.div>
       
@@ -167,7 +167,7 @@ export const TestimonialsSection = () => {
         duration: 0.6
       }} className="text-center mb-20">
           <div className="flex justify-center mb-4">
-            <motion.div className="rounded-full bg-[#FB923C]/10 p-3 text-[#FB923C]" initial="initial" whileInView="animate" viewport={{
+            <motion.div className="rounded-full bg-primary/10 p-3 text-primary" initial="initial" whileInView="animate" viewport={{
             once: true
           }} variants={quoteIconVariants}>
               <Quote size={24} />
@@ -236,7 +236,7 @@ export const TestimonialsSection = () => {
           stiffness: 400,
           damping: 10
         }}>
-            <Button onClick={() => navigate("/register")} className="bg-gradient-to-r from-primary to-[#FB923C] hover:shadow-lg px-[60px] py-[30px] font-semibold text-lg">
+            <Button onClick={() => navigate("/register")} className="bg-gradient-to-r from-primary to-primary/80 hover:shadow-lg px-[60px] py-[30px] font-semibold text-lg text-primary-foreground">
               Únete a ellos
               <motion.div className="ml-2" initial={{
               x: 0
@@ -267,7 +267,7 @@ const TestimonialCard = ({
   testimonial
 }: TestimonialCardProps) => <ContentCard className="h-full bg-background border shadow-sm backdrop-blur-sm" contentClassName="flex flex-col h-full">
     <div className="flex-1">
-      <div className="text-[#FB923C] mb-4">
+      <div className="text-primary mb-4">
         <motion.div initial={{
         rotate: -10,
         scale: 0.9
@@ -298,8 +298,8 @@ const TestimonialCard = ({
     delay: 0.2,
     duration: 0.4
   }}>
-      <div className="rounded-full bg-[#FB923C]/10 p-2">
-        <User size={20} className="text-[#FB923C]" />
+      <div className="rounded-full bg-primary/10 p-2">
+        <User size={20} className="text-primary" />
       </div>
       <div className="text-left">
         <p className="font-semibold">{testimonial.author}</p>
