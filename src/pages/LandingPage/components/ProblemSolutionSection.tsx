@@ -129,7 +129,7 @@ export const ProblemSolutionSection = () => {
                   <AlertTriangle className="w-5 h-5 text-primary-foreground" />
                 </motion.div>
                 <div>
-                  <h3 className="text-2xl font-bold text-primary">El caos editorial actual</h3>
+                  <h3 className="text-lg font-bold text-primary">El caos editorial actual</h3>
                   <p className="text-sm text-muted-foreground mt-1">El problema no es que trabajes mucho. <span className="text-primary font-semibold">Es que trabajas sin un sistema.</span></p>
                 </div>
               </div>
