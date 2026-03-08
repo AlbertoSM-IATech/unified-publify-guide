@@ -6,17 +6,17 @@ import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 
 const benefits = [
-  "Acceso antes del lanzamiento",
-  "Precio más bajo que existirá (se mantiene para siempre)",
-  "Participar en la evolución del producto",
-  "Onboarding y soporte personalizado",
-];
+"Acceso antes del lanzamiento",
+"Precio más bajo que existirá (se mantiene para siempre)",
+"Participar en la evolución del producto",
+"Onboarding y soporte personalizado"];
+
 
 const pricingTiers = [
-  { dates: "1–10 abril", price: "15", highlight: true },
-  { dates: "11–20 abril", price: "20", highlight: false },
-  { dates: "21–30 abril", price: "25", highlight: false },
-];
+{ dates: "1–10 abril", price: "15", highlight: true },
+{ dates: "11–20 abril", price: "20", highlight: false },
+{ dates: "21–30 abril", price: "25", highlight: false }];
+
 
 export const PreventaSection = () => {
   const [email, setEmail] = useState("");
@@ -39,14 +39,14 @@ export const PreventaSection = () => {
 
   return (
     <section id="waitlist" className="py-24 bg-background">
-      <div className="container mx-auto px-4 max-w-4xl">
+      <div className="container mx-auto max-w-4xl px-0">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-12"
-        >
+          className="text-center mb-12 px-0 mx-0">
+          
           <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 px-4 py-2 rounded-full text-sm font-medium text-primary mb-6">
             <Sparkles size={16} />
             Plazas limitadas: 20–30 early adopters
@@ -65,18 +65,18 @@ export const PreventaSection = () => {
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="space-y-6"
-          >
+            className="space-y-6">
+            
             {/* Benefits */}
             <div className="p-6 bg-card border border-border rounded-xl">
               <h3 className="font-heading text-lg font-bold mb-4">¿Por qué entrar ahora?</h3>
               <ul className="space-y-3">
-                {benefits.map((item, i) => (
-                  <li key={i} className="flex items-start gap-3">
+                {benefits.map((item, i) =>
+                <li key={i} className="flex items-start gap-3">
                     <Check className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
                     <span className="text-foreground">{item}</span>
                   </li>
-                ))}
+                )}
               </ul>
             </div>
 
@@ -87,21 +87,21 @@ export const PreventaSection = () => {
                 Cuanto antes entres, menos pagas. El precio se mantiene <strong className="text-foreground">para siempre</strong> mientras mantengas tu suscripción activa.
               </p>
               <div className="space-y-2 mb-4">
-                {pricingTiers.map((tier, i) => (
-                  <div
-                    key={i}
-                    className={`flex items-center justify-between p-3 rounded-lg border ${
-                      tier.highlight
-                        ? "bg-primary/10 border-primary/30"
-                        : "bg-background border-border"
-                    }`}
-                  >
+                {pricingTiers.map((tier, i) =>
+                <div
+                  key={i}
+                  className={`flex items-center justify-between p-3 rounded-lg border ${
+                  tier.highlight ?
+                  "bg-primary/10 border-primary/30" :
+                  "bg-background border-border"}`
+                  }>
+                  
                     <span className="font-medium text-sm">{tier.dates}</span>
                     <span className={`text-xl font-bold ${tier.highlight ? "text-primary" : ""}`}>
                       {tier.price} €<span className="text-xs font-normal text-muted-foreground">/mes</span>
                     </span>
                   </div>
-                ))}
+                )}
               </div>
               <div className="space-y-1 text-xs text-muted-foreground">
                 <p><strong className="text-foreground">Desde mayo:</strong> 29 €/mes Básico | 49 €/mes Plus</p>
@@ -115,8 +115,8 @@ export const PreventaSection = () => {
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-          >
+            viewport={{ once: true }}>
+            
             <form onSubmit={handleSubmit} className="p-8 bg-card border border-border rounded-2xl shadow-lg space-y-6 sticky top-28">
               <div className="text-center">
                 <h3 className="font-heading text-2xl font-bold mb-2">Reservar mi acceso prioritario</h3>
@@ -133,8 +133,8 @@ export const PreventaSection = () => {
                   onChange={(e) => setEmail(e.target.value)}
                   required
                   maxLength={255}
-                  className="h-12 text-base"
-                />
+                  className="h-12 text-base" />
+                
               </div>
 
               <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
@@ -151,6 +151,6 @@ export const PreventaSection = () => {
           </motion.div>
         </div>
       </div>
-    </section>
-  );
+    </section>);
+
 };

@@ -14,12 +14,12 @@ const stagger = {
 };
 
 const benefits = [
-  { icon: BookOpen, text: "Toda la información de cada libro en un solo lugar" },
-  { icon: BarChart3, text: "Decisiones con datos reales" },
-  { icon: Eye, text: "Visión clara de tu catálogo" },
-  { icon: Layers, text: "Escalar tu editorial sin caos" },
-  { icon: TrendingUp, text: "Recuperar horas cada semana" },
-];
+{ icon: BookOpen, text: "Toda la información de cada libro en un solo lugar" },
+{ icon: BarChart3, text: "Decisiones con datos reales" },
+{ icon: Eye, text: "Visión clara de tu catálogo" },
+{ icon: Layers, text: "Escalar tu editorial sin caos" },
+{ icon: TrendingUp, text: "Recuperar horas cada semana" }];
+
 
 export const Hero = () => {
   const scrollToWaitlist = () => {
@@ -34,29 +34,29 @@ export const Hero = () => {
           {/* Headline */}
           <motion.h1 variants={fadeInUp} className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
             Gestiona tu editorial desde un solo lugar{" "}
-            <span className="text-primary">y recupera horas cada semana.</span>
+            <span className="text-primary">y ahorra horas cada semana.</span>
           </motion.h1>
 
           {/* Subheadline */}
-          <motion.p variants={fadeInUp} className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-10 leading-relaxed">
+          <motion.p variants={fadeInUp} className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-10 leading-relaxed px-0">
             Publify convierte el caos de usar herramientas genéricas como Sheets, Notion, Drive y el panel de KDP en un{" "}
             <strong className="text-foreground">sistema claro para publishers</strong>.
           </motion.p>
 
           {/* Benefits grid */}
           <motion.div variants={fadeInUp} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 max-w-3xl mx-auto mb-10">
-            {benefits.map((b, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5 + i * 0.1 }}
-                className="flex items-center gap-3 p-3 rounded-lg bg-card/80 border border-border text-left"
-              >
+            {benefits.map((b, i) =>
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 + i * 0.1 }}
+              className="flex items-center gap-3 p-3 rounded-lg bg-card/80 border border-border text-left">
+              
                 <b.icon className="w-5 h-5 text-primary flex-shrink-0" />
                 <span className="text-sm text-foreground">{b.text}</span>
               </motion.div>
-            ))}
+            )}
           </motion.div>
 
           {/* CTA */}
@@ -75,25 +75,25 @@ export const Hero = () => {
           {/* Dashboard mockup */}
           <motion.div
             variants={fadeInUp}
-            className="relative max-w-5xl mx-auto mt-12"
-          >
+            className="relative max-w-5xl mx-auto mt-12">
+            
             <motion.div
               initial={{ opacity: 0, y: 60, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               transition={{ duration: 1, delay: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-              className="relative rounded-xl overflow-hidden border-2 border-border shadow-2xl shadow-primary/10"
-            >
-              <img 
-                src={dashboardImg} 
-                alt="Publify Dashboard - Sistema Operativo Editorial" 
+              className="relative rounded-xl overflow-hidden border-2 border-border shadow-2xl shadow-primary/10">
+              
+              <img
+                src={dashboardImg}
+                alt="Publify Dashboard - Sistema Operativo Editorial"
                 className="w-full h-auto"
-                loading="lazy"
-              />
+                loading="lazy" />
+              
               <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent" />
             </motion.div>
           </motion.div>
         </motion.div>
       </div>
-    </section>
-  );
+    </section>);
+
 };
