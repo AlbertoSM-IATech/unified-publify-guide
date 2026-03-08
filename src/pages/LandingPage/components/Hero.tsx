@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { ArrowRight, BookOpen, BarChart3, Eye, Layers, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import dashboardImg from "@/assets/publify-dashboard-portrait.jpg";
+import dashboardImg from "@/assets/publify-dashboard-concept.jpg";
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 40 },
