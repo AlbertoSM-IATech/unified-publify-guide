@@ -34,7 +34,7 @@ export const Hero = () => {
         <ParticlesBackground />
       </div>
       <div className="mx-auto w-[90%]">
-        <motion.div initial="hidden" animate="visible" variants={stagger} className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <motion.div initial="hidden" animate="visible" variants={stagger} className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
           
           {/* Left — Text */}
           <div className="text-left">
