@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { ArrowRight, BookOpen, BarChart3, Eye, Layers, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ParticlesBackground } from "@/components/motion/ParticlesBackground";
 import dashboardImg from "@/assets/publify-dashboard-concept.jpg";
 
 const fadeInUp = {
@@ -28,125 +29,9 @@ export const Hero = () => {
 
   return (
     <section className="relative flex flex-col items-center px-4 pt-28 pb-16 md:pt-36 md:pb-24 overflow-hidden">
-      {/* Partículas y formas geométricas flotantes */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {/* Triángulos flotantes */}
-        {[...Array(5)].map((_, i) =>
-        <motion.div
-          key={`tri-${i}`}
-          className="absolute"
-          style={{
-            left: `${10 + i * 20}%`,
-            top: `${15 + i % 3 * 25}%`
-          }}
-          animate={{
-            y: [0, -40, 0],
-            rotate: [0, 180, 360],
-            opacity: [0.08, 0.18, 0.08]
-          }}
-          transition={{
-            duration: 12 + i * 3,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: i * 1.5
-          }}>
-          
-            <svg width={20 + i * 8} height={20 + i * 8} viewBox="0 0 40 40">
-              <polygon
-              points="20,4 36,36 4,36"
-              fill="none"
-              stroke="hsl(var(--primary))"
-              strokeWidth="1.5"
-              opacity="0.5" />
-            
-            </svg>
-          </motion.div>
-        )}
-
-        {/* Círculos pulsantes */}
-        {[...Array(6)].map((_, i) =>
-        <motion.div
-          key={`dot-${i}`}
-          className="absolute rounded-full"
-          style={{
-            width: 4 + i * 2,
-            height: 4 + i * 2,
-            left: `${5 + i * 18}%`,
-            top: `${20 + i * 37 % 60}%`,
-            background: i % 2 === 0 ?
-            'hsl(var(--primary))' :
-            'hsl(var(--accent))'
-          }}
-          animate={{
-            y: [0, -60 - i * 10, 0],
-            x: [0, i % 2 === 0 ? 20 : -20, 0],
-            opacity: [0, 0.4, 0],
-            scale: [0.5, 1.5, 0.5]
-          }}
-          transition={{
-            duration: 8 + i * 2,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: i * 1.2
-          }} />
-
-        )}
-
-        {/* Hexágonos */}
-        {[...Array(3)].map((_, i) =>
-        <motion.div
-          key={`hex-${i}`}
-          className="absolute"
-          style={{
-            right: `${8 + i * 15}%`,
-            top: `${10 + i * 30}%`
-          }}
-          animate={{
-            rotate: [0, 120, 240, 360],
-            opacity: [0.05, 0.15, 0.05],
-            scale: [0.9, 1.1, 0.9]
-          }}
-          transition={{
-            duration: 20 + i * 5,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: i * 2
-          }}>
-          
-            <svg width={30 + i * 12} height={30 + i * 12} viewBox="0 0 50 50">
-              <polygon
-              points="25,2 46,14 46,36 25,48 4,36 4,14"
-              fill="none"
-              stroke="hsl(var(--accent))"
-              strokeWidth="1"
-              opacity="0.4" />
-            
-            </svg>
-          </motion.div>
-        )}
-
-        {/* Líneas diagonales cruzando */}
-        {[...Array(3)].map((_, i) =>
-        <motion.div
-          key={`line-${i}`}
-          className="absolute h-[1px] w-40"
-          style={{
-            top: `${25 + i * 25}%`,
-            left: '-10%',
-            background: `linear-gradient(90deg, transparent, hsl(var(--primary) / 0.2), transparent)`
-          }}
-          animate={{
-            x: ['0%', '400%'],
-            opacity: [0, 0.5, 0]
-          }}
-          transition={{
-            duration: 10 + i * 3,
-            repeat: Infinity,
-            ease: "linear",
-            delay: i * 3
-          }} />
-
-        )}
+      {/* tsParticles profesionales */}
+      <div className="absolute inset-0 overflow-hidden">
+        <ParticlesBackground />
       </div>
       <div className="mx-auto w-[90%]">
         <motion.div initial="hidden" animate="visible" variants={stagger} className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -256,6 +141,7 @@ export const Hero = () => {
             {/* Glow behind the image */}
             <div className="absolute -inset-4 rounded-2xl bg-primary/15 blur-2xl" />
             <motion.div
+              data-gsap="hero-dashboard"
               initial={{ opacity: 0, y: 60, rotateX: 8, scale: 0.92 }}
               animate={{ opacity: 1, y: 0, rotateX: 2, scale: 1 }}
               transition={{ duration: 1.2, delay: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}

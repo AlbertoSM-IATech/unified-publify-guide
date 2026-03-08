@@ -5,6 +5,7 @@ import { ProblemSolutionSection } from "./components/ProblemSolutionSection";
 import { PreventaSection } from "./components/PreventaSection";
 import { Footer } from "./components/Footer";
 import { TechBackground } from "@/components/motion/TechBackground";
+import { useScrollAnimations } from "@/hooks/useScrollAnimations";
 
 const pageVariants = {
   hidden: { opacity: 0 },
@@ -15,6 +16,7 @@ const pageVariants = {
 };
 
 export const LandingPage = () => {
+  useScrollAnimations();
   return (
     <motion.div 
       className="relative flex min-h-screen flex-col font-sans"
