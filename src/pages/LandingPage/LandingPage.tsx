@@ -16,6 +16,7 @@ const pageVariants = {
 };
 
 export const LandingPage = () => {
+  useScrollAnimations();
   return (
     <motion.div 
       className="relative flex min-h-screen flex-col font-sans"

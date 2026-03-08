@@ -251,6 +251,9 @@ export const TechBackground = () => {
           }}
         />
       </svg>
+
+      {/* 3D Scene */}
+      <Scene3D />
     </div>
   );
 };
