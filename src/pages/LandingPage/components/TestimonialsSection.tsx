@@ -176,7 +176,7 @@ export const TestimonialsSection = () => {
           <TextReveal as="h2" className="text-2xl md:text-3xl lg:text-4xl font-bold font-heading mb-4">
             Casos de éxito reales
           </TextReveal>
-          <p className="text-muted-foreground max-w-2xl mx-auto text-lg md:text-xl">
+          <p className="text-muted-foreground max-w-2xl mx-auto text-base md:text-lg">
             Autores y editoriales que ya están ahorrando tiempo, aumentando ventas y recuperando el control de su negocio
           </p>
         </motion.div>
