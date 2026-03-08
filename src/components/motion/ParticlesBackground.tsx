@@ -22,7 +22,7 @@ export const ParticlesBackground = () => {
         },
         shape: { type: ["circle"] },
         opacity: {
-          value: { min: 0.05, max: 0.25 },
+          value: { min: 0.08, max: 0.4 },
           animation: {
             enable: true,
             speed: 0.5,
