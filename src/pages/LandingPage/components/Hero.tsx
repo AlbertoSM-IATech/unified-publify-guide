@@ -172,14 +172,30 @@ export const Hero = () => {
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.8 + i * 0.25, duration: 0.4 }}
-                  className="inline-flex items-center px-3 py-1.5 rounded-full md:text-base font-semibold tracking-wide uppercase text-xs text-accent bg-secondary"
+                  className="relative inline-flex items-center px-3 py-1.5 rounded-full md:text-base font-semibold tracking-wide uppercase text-xs overflow-hidden"
                   style={{
                     color: 'hsl(217, 91%, 60%)',
                     background: 'hsl(217, 91%, 60%, 0.1)',
                     border: '1px solid hsl(217, 91%, 60%, 0.25)'
                   }}>
-                  
-                    {step}
+                    {/* Highlight que recorre cada paso */}
+                    <motion.span
+                      className="absolute inset-0 rounded-full"
+                      style={{
+                        background: 'linear-gradient(90deg, transparent 0%, hsl(217, 91%, 60%, 0.3) 50%, transparent 100%)',
+                      }}
+                      animate={{
+                        x: ['-100%', '200%'],
+                      }}
+                      transition={{
+                        duration: 2,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                        delay: 2 + i * 0.6,
+                        repeatDelay: 2.4 - i * 0.6 + 1.8,
+                      }}
+                    />
+                    <span className="relative z-10">{step}</span>
                   </motion.span>
                   {i < 3 &&
                 <motion.span
@@ -188,9 +204,18 @@ export const Hero = () => {
                   transition={{ delay: 1.0 + i * 0.25, duration: 0.3 }}
                   className="text-lg"
                   style={{ color: 'hsl(217, 91%, 60%)' }}>
-                  
+                    <motion.span
+                      animate={{ opacity: [0.4, 1, 0.4] }}
+                      transition={{
+                        duration: 2,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                        delay: 2.3 + i * 0.6,
+                      }}
+                    >
                       →
                     </motion.span>
+                  </motion.span>
                 }
                 </span>
               )}
