@@ -175,7 +175,7 @@ export const TestimonialsSection = () => {
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-heading mb-6" data-gsap="text-reveal">
             Casos de éxito reales
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
+          <p className="text-muted-foreground max-w-2xl mx-auto text-lg md:text-xl">
             Autores y editoriales que ya están ahorrando tiempo, aumentando ventas y recuperando el control de su negocio
           </p>
         </motion.div>
