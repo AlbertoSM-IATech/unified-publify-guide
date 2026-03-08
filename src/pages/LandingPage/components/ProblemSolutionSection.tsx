@@ -15,7 +15,7 @@ const timeWasters = [{
   description: "Portadas en un sitio, manuscritos en otro, datos de ventas en Excel, leads en diferentes plataformas",
   impact: "Decisiones lentas y poco informadas"
 }, {
-  icon: <TrendingDown className="w-8 h-8 text-primary" />,
+  icon: <TrendingDown className="w-6 h-6 text-primary" />,
   title: "Oportunidades perdidas",
   description: "Leads sin seguimiento, campañas descoordinadas, no sabes qué libros son rentables",
   impact: "Menos ventas de las que podrías tener"
