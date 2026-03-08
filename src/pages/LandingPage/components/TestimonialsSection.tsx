@@ -141,7 +141,7 @@ export const TestimonialsSection = () => {
   });
   const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
   const opacity = useTransform(scrollYProgress, [0, 0.3, 0.6], [0.6, 1, 0.6]);
-  return <motion.section ref={ref} className="relative py-20 px-4 overflow-hidden bg-muted/20">
+  return <motion.section ref={ref} className="relative py-32 px-4 overflow-hidden bg-muted/20">
       {/* Dynamic background effect */}
       <motion.div className="absolute inset-0 -z-10" style={{
       y: backgroundY,
