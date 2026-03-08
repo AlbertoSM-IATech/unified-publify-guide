@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { TextReveal } from "@/components/motion/TextReveal";
 
 const timeWasters = [{
-  icon: <Search className="w-8 h-8 text-primary" />,
+  icon: <Search className="w-6 h-6 text-primary" />,
   title: "5 horas semanales perdidas",
   description: "Saltando entre Google Drive, Excels, email marketing, herramientas de diseño, KDP, redes sociales...",
   impact: "260 horas anuales malgastadas"
