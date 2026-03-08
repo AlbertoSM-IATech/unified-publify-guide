@@ -2,10 +2,11 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { ContentCard } from "@/components/common/ContentCard";
 import { User, Quote, ArrowRight } from "lucide-react";
-import { useRef, useEffect } from "react";
+import { useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import Autoplay from "embla-carousel-autoplay";
+import { TextReveal } from "@/components/motion/TextReveal";
 const testimonials = [
   {
     quote: "Antes tardaba 3 horas cada semana solo en actualizar hojas de cálculo. Ahora tengo todo automatizado y puedo ver el estado de mis 8 libros en segundos. Publify me devolvió el tiempo para escribir.",
