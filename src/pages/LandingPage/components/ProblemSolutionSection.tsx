@@ -27,7 +27,7 @@ const solutionPoints = [{
   description: "Gestión de libros, marketing, finanzas y CRM desde un único panel",
   benefit: "Ahorra 5+ horas semanales"
 }, {
-  icon: <CheckCircle className="w-8 h-8 text-green-500" />,
+  icon: <CheckCircle className="w-6 h-6 text-green-500" />,
   title: "Marketing automatizado sin complicaciones",
   description: "Landing pages, email marketing, funnels y CRM integrado en español",
   benefit: "Más leads, mejores conversiones"
