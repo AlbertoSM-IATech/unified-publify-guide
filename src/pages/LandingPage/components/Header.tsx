@@ -45,7 +45,7 @@ export const Header = () => {
             </a>
           ))}
           <button onClick={toggleTheme} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-            {theme === "dark" ? "☀️" : "🌙"}
+            {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
           </button>
         </nav>
         
