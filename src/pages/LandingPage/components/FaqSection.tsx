@@ -48,7 +48,8 @@ export const FaqSection = () => {
           className="text-center mb-12"
         >
           <h2 className="font-heading text-3xl md:text-4xl font-bold mb-4">
-            Preguntas frecuentes
+            Preguntas{" "}
+            <span className="text-primary">frecuentes</span>
           </h2>
         </motion.div>
 
