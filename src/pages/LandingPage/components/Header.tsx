@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Sun, Moon } from "lucide-react";
 import { useTheme } from "@/hooks/useTheme";
 import { Button } from "@/components/ui/button";
 import logoDark from "@/assets/publify-logo-dark.png";
