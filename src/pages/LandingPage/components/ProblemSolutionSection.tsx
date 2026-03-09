@@ -7,34 +7,34 @@ import { TextReveal } from "@/components/motion/TextReveal";
 const timeWasters = [{
   icon: <Search className="w-6 h-6 text-primary" />,
   title: "5 horas semanales perdidas",
-  description: "Saltando entre Google Drive, Excels, email marketing, herramientas de diseño, KDP, redes sociales...",
+  description: "Saltando entre tu ordenador, Google Drive, Excels, Docs, Calendar, Notion, KDP, Analizando campañas de Ads, Estudiando la viabilidad de nichos y Keywords...",
   impact: "260 horas anuales malgastadas"
 }, {
   icon: <FileX className="w-6 h-6 text-primary" />,
   title: "Archivos y datos dispersos",
-  description: "Portadas en un sitio, manuscritos en otro, datos de ventas en Excel, leads en diferentes plataformas",
-  impact: "Decisiones lentas y poco informadas"
+  description: "Portadas en carpetas, manuscritos en Drive, Palabras clave en Excel, Enlaces, ISBN, ASIN, Dimensiones, Numero de páginas en Notion o Docs...",
+  impact: "Saltos entre herramientas genéricas constante y perdida de foco"
 }, {
   icon: <TrendingDown className="w-6 h-6 text-primary" />,
-  title: "Oportunidades perdidas",
-  description: "Leads sin seguimiento, campañas descoordinadas, no sabes qué libros son rentables",
+  title: "Gestión de producción caótica y sin trazabilidad",
+  description: "Tareas desorganizadas, notas dispersas, ideas en APPs de notas o en WhatsApp, freelancers descontrolados...",
   impact: "Menos ventas de las que podrías tener"
 }];
 
 const solutionPoints = [{
   icon: <CheckCircle className="w-6 h-6 text-green-500" />,
-  title: "Una sola plataforma, todo centralizado",
-  description: "Gestión de libros, marketing, finanzas y CRM desde un único panel",
+  title: "Una sola plataforma, todo centralizado, decisiones fundamentadas",
+  description: "Análisis de nicho/kw y campañas de Ads, gestión de biblioteca de libros, finanzas y marketing desde un único panel",
   benefit: "Ahorra 5+ horas semanales"
 }, {
   icon: <CheckCircle className="w-6 h-6 text-green-500" />,
-  title: "Marketing automatizado sin complicaciones",
+  title: "Marketing sin complicaciones (Incluido en el Plan Pro)",
   description: "Landing pages, email marketing, funnels y CRM integrado en español",
-  benefit: "Más leads, mejores conversiones"
+  benefit: "Próximamente (incluido en RoadMap)"
 }, {
   icon: <CheckCircle className="w-6 h-6 text-green-500" />,
   title: "Datos y finanzas cristalinas",
-  description: "Ve el rendimiento real de cada libro, controla gastos e ingresos fácilmente",
+  description: "Ve el rendimiento real de cada libro, controla la inversión inicial de cada libro, los gastos y los ingresos fácilmente. Una visión clara de micro a macro de tu negocio editorial",
   benefit: "Decisiones inteligentes basadas en datos"
 }];
 
@@ -98,8 +98,8 @@ export const ProblemSolutionSection = () => {
           </TextReveal>
           
           <p className="text-base md:text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            La gestión editorial tradicional te tiene corriendo como un pollo sin cabeza. 
-            <strong className="text-foreground"> Publify centraliza todo para que recuperes la cordura.</strong>
+            La gestión de tu negocio editorial te tiene corriendo como un pollo sin cabeza. 
+            <strong className="text-foreground"> Publify centraliza todo para que recuperes el control.</strong>
           </p>
         </div>
 

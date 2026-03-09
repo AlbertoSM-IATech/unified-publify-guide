@@ -3,7 +3,7 @@ import { Check, X, Database, Eye, BookOpen } from "lucide-react";
 
 const notIs = [
 "El panel de KDP Reports ni herramienta para automatizar procesos de Amazon",
-"Helium10 / spy tool",
+"Herramientas de Investigación de mercado, Palabras Clave y SEO Helium10 / Bookbeamestigación de mercado, Palabras Clave y SEO Helium10 / Bookbeam",
 "Un gestor nativo de Amazon Ads",
 "Software de escritura, maquetación o diseño",
 "Contabilidad fiscal completa"];
@@ -30,7 +30,7 @@ const pillars = [
 {
   icon: BookOpen,
   title: "Visión del negocio",
-  desc: "Por libro y global, de lo macro a lo micro, sin dolores de cabeza"
+  desc: "Por libro y global, de lo micro a lo macro, sin dolores de cabeza"
 }];
 
 
