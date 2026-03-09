@@ -17,10 +17,10 @@ const fadeInUp = {
 };
 
 const benefits = [
-{ icon: BookOpen, text: "Toda la información de cada libro en un solo lugar" },
+{ icon: BookOpen, text: "Información Centralizada" },
 { icon: BarChart3, text: "Decisiones con datos reales" },
-{ icon: Eye, text: "Visión clara de tu catálogo" },
-{ icon: Layers, text: "Escalar tu editorial sin caos" },
+{ icon: Eye, text: "Visión clara de tu negocio" },
+{ icon: Layers, text: "Escalar sin caos" },
 { icon: TrendingUp, text: "Recuperar horas cada semana" }];
 
 
