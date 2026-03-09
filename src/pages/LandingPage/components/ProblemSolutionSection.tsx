@@ -7,17 +7,17 @@ import { TextReveal } from "@/components/motion/TextReveal";
 const timeWasters = [{
   icon: <Search className="w-6 h-6 text-primary" />,
   title: "5 horas semanales perdidas",
-  description: "Saltando entre Google Drive, Excels, email marketing, herramientas de diseño, KDP, redes sociales...",
+  description: "Saltando entre tu ordenador, Google Drive, Excels, Docs, Calendar, Notion, KDP, Analizando campañas de Ads, Estudiando la viabilidad de nichos y Keywords...",
   impact: "260 horas anuales malgastadas"
 }, {
   icon: <FileX className="w-6 h-6 text-primary" />,
   title: "Archivos y datos dispersos",
-  description: "Portadas en un sitio, manuscritos en otro, datos de ventas en Excel, leads en diferentes plataformas",
-  impact: "Decisiones lentas y poco informadas"
+  description: "Portadas en carpetas, manuscritos en Drive, Palabras clave en Excel, Enlaces, ISBN, ASIN, Dimensiones, Numero de páginas en Notion o Docs...",
+  impact: "Saltos entre herramientas genéricas constante y perdida de foco"
 }, {
   icon: <TrendingDown className="w-6 h-6 text-primary" />,
-  title: "Oportunidades perdidas",
-  description: "Leads sin seguimiento, campañas descoordinadas, no sabes qué libros son rentables",
+  title: "Gestión de producción caótica y sin trazabilidad",
+  description: "Tareas desorganizadas, notas dispersas, ideas en APPs de notas o en WhatsApp, freelancers descontrolados...",
   impact: "Menos ventas de las que podrías tener"
 }];
 
