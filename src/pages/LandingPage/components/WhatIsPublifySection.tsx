@@ -3,7 +3,7 @@ import { Check, X, Database, Eye, BookOpen } from "lucide-react";
 
 const notIs = [
 "El panel de KDP Reports ni herramienta para automatizar procesos de Amazon",
-"Herramientas de Investigación de mercado, Palabras Clave y SEO Helium10 / Bookbeamestigación de mercado, Palabras Clave y SEO Helium10 / Bookbeam",
+"Helium10 / spy tool",
 "Un gestor nativo de Amazon Ads",
 "Software de escritura, maquetación o diseño",
 "Contabilidad fiscal completa"];
@@ -30,7 +30,7 @@ const pillars = [
 {
   icon: BookOpen,
   title: "Visión del negocio",
-  desc: "Por libro y global, de lo micro a lo macro, sin dolores de cabeza"
+  desc: "Por libro y global, de lo macro a lo micro, sin dolores de cabeza"
 }];
 
 
@@ -125,7 +125,7 @@ export const WhatIsPublifySection = () => {
           transition={{ delay: 0.3 }}
           className="mt-16 p-8 bg-primary/5 border border-primary/20 rounded-2xl">
           
-          <p className="text-xl md:text-2xl text-foreground font-bold mb-8 text-center">
+          <p className="text-xl text-foreground font-bold mb-8 text-center md:text-4xl">
             <span className="text-primary">Publify pone orden y control</span> donde solo había caos. 
             Creado por y para publishers de Amazon KDP.
           </p>
