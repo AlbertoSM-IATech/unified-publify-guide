@@ -29,8 +29,8 @@ const pillars = [
 },
 {
   icon: BookOpen,
-  tiicro a lo man del negocio",
-  desc: "Por libro y global, de lo macro a lo micro, sin dolores de cabeza"
+  title: "Visión del negocio",
+  desc: "Por libro y global, de lo micro a lo macro, sin dolores de cabeza"
 }];
 
 
