@@ -23,18 +23,18 @@ const timeWasters = [{
 
 const solutionPoints = [{
   icon: <CheckCircle className="w-6 h-6 text-green-500" />,
-  title: "Una sola plataforma, todo centralizado",
-  description: "Gestión de libros, marketing, finanzas y CRM desde un único panel",
+  title: "Una sola plataforma, todo centralizado, decisiones fundamentadas",
+  description: "Análisis de nicho/kw y campañas de Ads, gestión de biblioteca de libros, finanzas y marketing desde un único panel",
   benefit: "Ahorra 5+ horas semanales"
 }, {
   icon: <CheckCircle className="w-6 h-6 text-green-500" />,
-  title: "Marketing automatizado sin complicaciones",
+  title: "Marketing sin complicaciones (Incluido en el Plan Pro)",
   description: "Landing pages, email marketing, funnels y CRM integrado en español",
-  benefit: "Más leads, mejores conversiones"
+  benefit: "Próximamente (incluido en RoadMap)"
 }, {
   icon: <CheckCircle className="w-6 h-6 text-green-500" />,
   title: "Datos y finanzas cristalinas",
-  description: "Ve el rendimiento real de cada libro, controla gastos e ingresos fácilmente",
+  description: "Ve el rendimiento real de cada libro, controla la inversión inicial de cada libro, los gastos y los ingresos fácilmente. Una visión clara de micro a macro de tu negocio editorial",
   benefit: "Decisiones inteligentes basadas en datos"
 }];
 
