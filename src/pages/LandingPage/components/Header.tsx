@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Sun, Moon } from "lucide-react";
 import { useTheme } from "@/hooks/useTheme";
 import { Button } from "@/components/ui/button";
 import logoDark from "@/assets/publify-logo-dark.png";
@@ -45,7 +45,7 @@ export const Header = () => {
             </a>
           ))}
           <button onClick={toggleTheme} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-            {theme === "dark" ? "☀️" : "🌙"}
+            {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
           </button>
         </nav>
         
@@ -72,7 +72,7 @@ export const Header = () => {
               </a>
             ))}
             <button onClick={() => { toggleTheme(); setMenuOpen(false); }} className="text-left text-sm text-muted-foreground hover:text-foreground transition-colors">
-              {theme === "dark" ? "☀️ Modo Claro" : "🌙 Modo Oscuro"}
+             {theme === "dark" ? <><Sun size={16} className="inline mr-1" /> Modo Claro</> : <><Moon size={16} className="inline mr-1" /> Modo Oscuro</>}
             </button>
             <div className="pt-2">
               <Button onClick={scrollToWaitlist} className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold">
