@@ -45,29 +45,29 @@ export const ProblemSolutionSection = () => {
       {/* Parallax background */}
       <div className="absolute inset-0 pointer-events-none">
         <div data-gsap="parallax-bg" className="absolute inset-0">
-          {[...Array(8)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute w-6 h-6 bg-primary/10 dark:bg-primary/25 rounded-full"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-              }}
-              animate={{
-                y: [0, -20, 0],
-                opacity: [0.2, 0.6, 0.2],
-                scale: [1, 1.2, 1]
-              }}
-              transition={{
-                duration: 3 + Math.random() * 2,
-                repeat: Infinity,
-                delay: i * 0.5
-              }}
-            />
-          ))}
+          {[...Array(8)].map((_, i) =>
+          <motion.div
+            key={i}
+            className="absolute w-6 h-6 bg-primary/10 dark:bg-primary/25 rounded-full"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`
+            }}
+            animate={{
+              y: [0, -20, 0],
+              opacity: [0.2, 0.6, 0.2],
+              scale: [1, 1.2, 1]
+            }}
+            transition={{
+              duration: 3 + Math.random() * 2,
+              repeat: Infinity,
+              delay: i * 0.5
+            }} />
+
+          )}
         </div>
         
-        <motion.div 
+        <motion.div
           className="absolute inset-0 opacity-5"
           animate={{ backgroundPosition: ['0% 0%', '100% 100%'] }}
           transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
@@ -77,8 +77,8 @@ export const ProblemSolutionSection = () => {
               linear-gradient(-45deg, transparent 49%, hsl(var(--accent)) 50%, transparent 51%)
             `,
             backgroundSize: '60px 60px'
-          }}
-        />
+          }} />
+        
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
@@ -87,10 +87,10 @@ export const ProblemSolutionSection = () => {
             initial={{ scale: 0 }}
             whileInView={{ scale: 1 }}
             viewport={{ once: true }}
-            className="inline-flex items-center gap-2 bg-primary/10 dark:bg-primary/20 px-6 py-3 rounded-full mb-6"
-          >
+            className="inline-flex items-center gap-2 bg-primary/10 dark:bg-primary/20 px-6 py-3 rounded-full mb-6">
+            
             <Clock className="w-5 h-5 text-primary" />
-            <span className="font-semibold text-primary">⏰ Realidad: Pierdes tiempo, dinero y oportunidades</span>
+            <span className="font-semibold text-primary text-xs">La realidad del día a día: Pierdes tiempo, dinero y oportunidades</span>
           </motion.div>
           
           <TextReveal as="h2" className="text-2xl md:text-3xl lg:text-4xl font-bold mb-6 text-foreground">
@@ -110,13 +110,13 @@ export const ProblemSolutionSection = () => {
               <motion.div
                 animate={{ rotate: 360 }}
                 transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-                className="w-full h-full border-4 border-dashed border-primary rounded-full"
-              />
+                className="w-full h-full border-4 border-dashed border-primary rounded-full" />
+              
               <motion.div
                 animate={{ rotate: -360 }}
                 transition={{ duration: 7, repeat: Infinity, ease: "linear" }}
-                className="absolute inset-2 border-2 border-dashed border-primary/30 rounded-full"
-              />
+                className="absolute inset-2 border-2 border-dashed border-primary/30 rounded-full" />
+              
             </div>
             
             <div className="bg-primary/5 dark:bg-primary/10 p-8 md:p-10 rounded-2xl border-2 border-primary/20 dark:border-primary/20 shadow-lg">
@@ -124,8 +124,8 @@ export const ProblemSolutionSection = () => {
                 <motion.div
                   animate={{ scale: [1, 1.2, 1] }}
                   transition={{ duration: 2, repeat: Infinity }}
-                  className="w-10 h-10 bg-primary rounded-full flex items-center justify-center"
-                >
+                  className="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
+                  
                   <AlertTriangle className="w-5 h-5 text-primary-foreground" />
                 </motion.div>
                 <div>
@@ -135,12 +135,12 @@ export const ProblemSolutionSection = () => {
               </div>
               
               <div className="space-y-3">
-                {timeWasters.map((point, index) => (
-                  <div 
-                    key={index}
-                    data-gsap="problem-card"
-                    className="group flex items-start gap-3 p-4 bg-card/80 dark:bg-primary/10 rounded-lg border border-primary/30 dark:border-primary/20 hover:shadow-md transition-all duration-300"
-                  >
+                {timeWasters.map((point, index) =>
+                <div
+                  key={index}
+                  data-gsap="problem-card"
+                  className="group flex items-start gap-3 p-4 bg-card/80 dark:bg-primary/10 rounded-lg border border-primary/30 dark:border-primary/20 hover:shadow-md transition-all duration-300">
+                  
                     <div className="mt-1">{point.icon}</div>
                     <div className="flex-1">
                       <h4 className="font-semibold mb-1 text-sm text-foreground group-hover:text-primary transition-colors">{point.title}</h4>
@@ -152,7 +152,7 @@ export const ProblemSolutionSection = () => {
                       </div>
                     </div>
                   </div>
-                ))}
+                )}
               </div>
             </div>
           </div>
@@ -161,28 +161,28 @@ export const ProblemSolutionSection = () => {
           <div className="relative">
             <div className="absolute -top-4 -left-4 w-20 h-20 opacity-20">
               <motion.div
-                animate={{ 
+                animate={{
                   scale: [1, 1.1, 1],
                   rotate: [0, 180, 360]
                 }}
                 transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-                className="w-full h-full bg-gradient-to-r from-green-400 to-green-600 rounded-full"
-              />
+                className="w-full h-full bg-gradient-to-r from-green-400 to-green-600 rounded-full" />
+              
             </div>
             
             <div className="bg-green-50 dark:bg-green-950/20 p-8 md:p-10 rounded-2xl border-2 border-green-200 dark:border-green-800/30 shadow-lg">
               <div className="flex items-center gap-3 mb-6">
                 <motion.div
-                  animate={{ 
+                  animate={{
                     boxShadow: [
-                      "0 0 0 0 rgba(34, 197, 94, 0.4)",
-                      "0 0 0 10px rgba(34, 197, 94, 0)",
-                      "0 0 0 0 rgba(34, 197, 94, 0)"
-                    ]
+                    "0 0 0 0 rgba(34, 197, 94, 0.4)",
+                    "0 0 0 10px rgba(34, 197, 94, 0)",
+                    "0 0 0 0 rgba(34, 197, 94, 0)"]
+
                   }}
                   transition={{ duration: 2, repeat: Infinity }}
-                  className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center"
-                >
+                  className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center">
+                  
                   <CheckCircle className="w-5 h-5 text-primary-foreground" />
                 </motion.div>
                 <div>
@@ -192,12 +192,12 @@ export const ProblemSolutionSection = () => {
               </div>
               
               <div className="space-y-3">
-                {solutionPoints.map((point, index) => (
-                  <div 
-                    key={index}
-                    data-gsap="solution-card"
-                    className="group flex items-start gap-3 p-4 bg-card/80 dark:bg-green-900/20 rounded-lg border border-green-200/50 dark:border-green-700/30 hover:shadow-md transition-all duration-300"
-                  >
+                {solutionPoints.map((point, index) =>
+                <div
+                  key={index}
+                  data-gsap="solution-card"
+                  className="group flex items-start gap-3 p-4 bg-card/80 dark:bg-green-900/20 rounded-lg border border-green-200/50 dark:border-green-700/30 hover:shadow-md transition-all duration-300">
+                  
                     <div className="mt-1">{point.icon}</div>
                     <div className="flex-1">
                       <h4 className="font-semibold mb-1 text-sm text-foreground group-hover:text-green-600 transition-colors">{point.title}</h4>
@@ -209,7 +209,7 @@ export const ProblemSolutionSection = () => {
                       </div>
                     </div>
                   </div>
-                ))}
+                )}
               </div>
             </div>
           </div>
@@ -224,8 +224,8 @@ export const ProblemSolutionSection = () => {
                 initial={{ scale: 0 }}
                 whileInView={{ scale: 1 }}
                 viewport={{ once: true }}
-                className="w-14 h-14 bg-gradient-to-r from-primary to-accent rounded-full flex items-center justify-center mx-auto mb-5"
-              >
+                className="w-14 h-14 bg-gradient-to-r from-primary to-accent rounded-full flex items-center justify-center mx-auto mb-5">
+                
                 <CheckCircle className="w-7 h-7 text-primary-foreground" />
               </motion.div>
               
@@ -240,13 +240,13 @@ export const ProblemSolutionSection = () => {
               
               <motion.div
                 whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Button 
-                  size="lg" 
-                  onClick={() => navigate("/register")} 
-                  className="bg-gradient-to-r from-primary to-accent hover:shadow-lg hover:shadow-primary/30 px-8 py-5 text-base font-bold text-primary-foreground"
-                >
+                whileTap={{ scale: 0.95 }}>
+                
+                <Button
+                  size="lg"
+                  onClick={() => navigate("/register")}
+                  className="bg-gradient-to-r from-primary to-accent hover:shadow-lg hover:shadow-primary/30 px-8 py-5 text-base font-bold text-primary-foreground">
+                  
                   🚀 Recupera el control de tu editorial
                 </Button>
               </motion.div>
@@ -269,6 +269,6 @@ export const ProblemSolutionSection = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>);
+
 };

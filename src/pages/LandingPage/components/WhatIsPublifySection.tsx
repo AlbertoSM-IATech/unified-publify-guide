@@ -51,8 +51,8 @@ export const WhatIsPublifySection = () => {
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
             Publify centraliza tu operativa editorial para que trabajes con{" "}
-            <strong className="text-foreground">una sola fuente de verdad</strong> y con el{" "}
-            <strong className="text-foreground">libro como unidad operativa</strong>.
+            <strong className="text-primary">una sola fuente de verdad</strong> y con el{" "}
+            <strong className="text-primary">libro como unidad central operativa</strong>.
           </p>
         </motion.div>
 

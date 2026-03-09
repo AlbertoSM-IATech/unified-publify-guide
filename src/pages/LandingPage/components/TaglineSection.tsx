@@ -10,8 +10,8 @@ export const TaglineSection = () => {
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="font-heading text-3xl md:text-4xl lg:text-5xl font-black text-center leading-tight"
-        >
+          className="font-heading text-3xl md:text-4xl lg:text-5xl font-black text-center leading-tight">
+          
           El{" "}
           <span className="text-primary">Sistema Operativo Editorial</span>
           <br />
@@ -22,11 +22,11 @@ export const TaglineSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
-          className="text-lg md:text-xl text-muted-foreground text-center mt-5 max-w-2xl mx-auto"
-        >
-          Un solo lugar para investigar, crear, analizar y escalar tu negocio editorial.
+          className="text-lg md:text-xl text-center mt-5 max-w-2xl mx-auto text-accent">
+          
+          La Navaja Suiza de los Publishers independientes: Un solo lugar para investigar, crear, analizar y escalar tu negocio editorial.
         </motion.p>
       </div>
-    </section>
-  );
+    </section>);
+
 };
