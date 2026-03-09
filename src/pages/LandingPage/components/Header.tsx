@@ -7,8 +7,10 @@ import logoDark from "@/assets/publify-logo-dark.png";
 import logoLight from "@/assets/publify-logo-light.png";
 
 const navLinks = [
-  { href: "#problema", label: "Problema" },
-  { href: "#waitlist", label: "Preventa" },
+  { href: "#que-es-publify", label: "Qué es Publify" },
+  { href: "#para-quien", label: "Para quién" },
+  { href: "#early-adopters", label: "Early Adopters" },
+  { href: "#faq", label: "FAQ" },
 ];
 
 export const Header = () => {
