@@ -98,8 +98,8 @@ export const ProblemSolutionSection = () => {
           </TextReveal>
           
           <p className="text-base md:text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            La gestión editorial tradicional te tiene corriendo como un pollo sin cabeza. 
-            <strong className="text-foreground"> Publify centraliza todo para que recuperes la cordura.</strong>
+            La gestión de tu negocio editorial te tiene corriendo como un pollo sin cabeza. 
+            <strong className="text-foreground"> Publify centraliza todo para que recuperes el control.</strong>
           </p>
         </div>
 
