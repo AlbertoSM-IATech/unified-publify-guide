@@ -147,12 +147,12 @@ export const EarlyAdoptersSection = () => {
 
             <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
               <Button onClick={scrollToWaitlist} size="lg" className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-lg py-6">
-                Unirme a la waitlist
+                Bloquear mi precio de early adopter
                 <ArrowRight className="ml-2" size={20} />
               </Button>
             </motion.div>
             <p className="text-xs text-muted-foreground text-center mt-3">
-              Plazas limitadas. Entramos por orden y encaje.
+              El precio sube cada 10 plazas. Una vez dentro, es tuyo para siempre.
             </p>
           </motion.div>
         </div>

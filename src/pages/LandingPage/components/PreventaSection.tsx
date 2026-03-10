@@ -156,7 +156,7 @@ export const PreventaSection = () => {
               </motion.div>
 
               <p className="text-xs text-muted-foreground text-center">
-                Solo tu email. Te avisaremos cuando abramos acceso.
+                El precio sube cada 10 plazas. Una vez dentro, es tuyo para siempre.
               </p>
             </form>
           </div>
