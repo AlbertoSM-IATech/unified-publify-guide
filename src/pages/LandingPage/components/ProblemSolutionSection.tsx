@@ -18,7 +18,7 @@ const timeWasters = [{
   icon: <TrendingDown className="w-6 h-6 text-primary" />,
   title: "Gestión de producción caótica y sin trazabilidad",
   description: "Tareas desorganizadas, notas dispersas, ideas en APPs de notas o en WhatsApp, freelancers descontrolados...",
-  impact: "Menos ventas de las que podrías tener"
+  impact: "Descontrol de la producción, sin orden y sin trazabilidad"
 }];
 
 const solutionPoints = [{
