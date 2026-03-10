@@ -44,7 +44,7 @@ export const EarlyAdoptersSection = () => {
             Plazas limitadas: 20–30 early adopters
           </div>
           <h2 className="font-heading text-3xl font-bold mb-4 text-primary md:text-5xl">
-            Early Adopters: acceso prioritario 
+            Acceso prioritario 
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Entra antes que nadie y bloquea el mejor precio para siempre (mientras mantengas tu suscripción activa).
