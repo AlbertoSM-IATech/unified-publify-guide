@@ -9,35 +9,46 @@ import {
 const faqs = [
   {
     question: "¿Apuntarme tiene coste?",
-    answer: "No. Apuntarte a la waitlist es completamente gratis. Solo necesitas tu nombre y email."
+    answer: "No. Apuntarte a la waitlist es completamente gratis. Solo necesitas tu nombre y email.",
+    defaultOpen: false,
   },
   {
     question: "¿Cuándo abrís acceso?",
-    answer: "A partir del 1 de abril de 2026, de forma progresiva. Las invitaciones se enviarán por orden de inscripción."
+    answer: "A partir del 1 de abril de 2026, de forma progresiva. Las invitaciones se enviarán por orden de inscripción.",
+    defaultOpen: true,
   },
   {
     question: "¿Cuántas plazas hay?",
-    answer: "Entre 20 y 30 plazas para la fase de early adopters. Queremos asegurar un onboarding de calidad y feedback real."
+    answer: "Entre 20 y 30 plazas para la fase de early adopters. Queremos asegurar un onboarding de calidad y feedback real.",
+    defaultOpen: false,
   },
   {
     question: "¿Qué precio tendrá?",
-    answer: "Precio escalonado en abril (Plan Plus): 15 €/mes si entras del 1 al 10, 20 €/mes del 11 al 20, y 25 €/mes del 21 al 30. Desde mayo: 29 €/mes Básico o 49 €/mes Plus. El precio de early adopter se mantiene para siempre mientras mantengas tu suscripción activa. Precios sin IVA."
+    answer: "Precio escalonado en abril (Plan Plus): 15 €/mes si entras del 1 al 10, 20 €/mes del 11 al 20, y 25 €/mes del 21 al 30. Desde mayo: 29 €/mes Básico o 49 €/mes Plus. El precio de early adopter se mantiene para siempre mientras mantengas tu suscripción activa. Precios sin IVA.",
+    defaultOpen: true,
   },
   {
     question: "¿Qué funcionalidades tiene ahora mismo?",
-    answer: "El MVP incluye Biblioteca editorial y Finanzas básicas. Las funcionalidades avanzadas (calculadora de viabilidad, estudio de KW, análisis de campañas, calendario editorial, integraciones, QRs y más) están en el roadmap y se integrarán progresivamente."
+    answer: "El MVP incluye Biblioteca editorial y Finanzas básicas. Las funcionalidades avanzadas (calculadora de viabilidad, estudio de KW, análisis de campañas, calendario editorial, integraciones, QRs y más) están en el roadmap y se integrarán progresivamente.",
+    defaultOpen: true,
   },
   {
     question: "¿Publify sustituye mis herramientas?",
-    answer: "No las sustituye directamente. Publify es la capa de orden que conecta tu operativa. Aporta sistema y centralización sobre lo que ya usas."
+    answer: "No las sustituye directamente. Publify es la capa de orden que conecta tu operativa. Aporta sistema y centralización sobre lo que ya usas.",
+    defaultOpen: false,
   },
   {
     question: "¿Qué pasa si cancelo mi suscripción?",
-    answer: "Si cancelas y vuelves más adelante, tendrás que pagar el precio vigente en ese momento, sin el descuento de early adopter."
+    answer: "Si cancelas y vuelves más adelante, tendrás que pagar el precio vigente en ese momento, sin el descuento de early adopter.",
+    defaultOpen: false,
   },
 ];
 
 export const FaqSection = () => {
+  const defaultOpenItems = faqs
+    .map((faq, index) => (faq.defaultOpen ? `item-${index}` : null))
+    .filter(Boolean) as string[];
+
   return (
     <section id="faq" className="py-24 bg-muted/30">
       <div className="container mx-auto px-4 max-w-3xl">
@@ -59,10 +70,10 @@ export const FaqSection = () => {
           viewport={{ once: true }}
           transition={{ delay: 0.2 }}
         >
-          <Accordion type="single" collapsible className="w-full space-y-3">
+          <Accordion type="multiple" defaultValue={defaultOpenItems} className="w-full space-y-3">
             {faqs.map((faq, index) => (
-              <AccordionItem 
-                key={index} 
+              <AccordionItem
+                key={index}
                 value={`item-${index}`}
                 className="border border-border rounded-lg px-6 bg-card hover:border-primary/20 transition-colors"
               >

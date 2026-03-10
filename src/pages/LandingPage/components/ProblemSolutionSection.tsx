@@ -244,27 +244,18 @@ export const ProblemSolutionSection = () => {
                 
                 <Button
                   size="lg"
-                  onClick={() => navigate("/register")}
+                  onClick={() => {
+                    document.getElementById("waitlist")?.scrollIntoView({ behavior: "smooth" });
+                  }}
                   className="bg-gradient-to-r from-primary to-accent hover:shadow-lg hover:shadow-primary/30 px-8 py-5 text-base font-bold text-primary-foreground">
                   
-                  🚀 Recupera el control de tu editorial
+                  Sí, quiero dejar el caos atrás
                 </Button>
               </motion.div>
               
-              <div className="flex flex-wrap justify-center gap-6 mt-8 text-sm text-muted-foreground">
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-                  <span>Sistema completo de gestión</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-                  <span>Acceso inmediato</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-                  <span>Soporte en español</span>
-                </div>
-              </div>
+              <p className="text-sm text-muted-foreground mt-4">
+                Entra antes del lanzamiento y bloquea el mejor precio.
+              </p>
             </div>
           </div>
         </div>

@@ -144,7 +144,7 @@ export const Hero = () => {
             <motion.div variants={fadeInUp} className="flex flex-col items-start gap-3">
               <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}>
                 <Button onClick={scrollToWaitlist} size="lg" className="text-base px-8 py-5 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-lg shadow-primary/25">
-                  Unirme a la Waitlist
+                  Quiero acceso prioritario
                   <ArrowRight className="ml-2" size={18} />
                 </Button>
               </motion.div>
