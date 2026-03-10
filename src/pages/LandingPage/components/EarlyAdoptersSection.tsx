@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Check, ArrowRight, Sparkles, BookOpen, DollarSign } from "lucide-react";
+import { ValueAnchorBlock } from "./ValueAnchorBlock";
 
 const includes = [
 "Acceso prioritario al MVP (Biblioteca + Finanzas básicas)",
