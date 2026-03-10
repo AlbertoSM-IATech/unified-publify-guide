@@ -5,6 +5,7 @@ import { ArrowRight, Check, Sparkles } from "lucide-react";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { TextReveal } from "@/components/motion/TextReveal";
+import { ValueAnchorBlock } from "./ValueAnchorBlock";
 
 const benefits = [
   "Acceso antes del lanzamiento",
