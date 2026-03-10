@@ -100,6 +100,8 @@ export const EarlyAdoptersSection = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             className="p-6 bg-card border rounded-xl border-primary">
+
+            <ValueAnchorBlock />
             
             <div className="flex items-center gap-2 mb-6">
               <DollarSign className="w-5 h-5 text-primary" />
