@@ -44,12 +44,12 @@ export const Hero = () => {
             <div className="mb-4">
               <TextReveal
                 as="h1"
-                className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-foreground"
+                className="font-heading text-3xl md:text-4xl font-bold tracking-tight text-primary lg:text-5xl"
                 immediate
                 delay={0.3}
                 stagger={0.015}
-                duration={0.5}
-              >
+                duration={0.5}>
+                
                 Gestiona toda tu editorial
               </TextReveal>
               <TextReveal
@@ -58,8 +58,8 @@ export const Hero = () => {
                 immediate
                 delay={0.6}
                 stagger={0.015}
-                duration={0.5}
-              >
+                duration={0.5}>
+                
                 desde un solo lugar
               </TextReveal>
             </div>
@@ -70,8 +70,8 @@ export const Hero = () => {
               immediate
               delay={0.9}
               stagger={0.01}
-              duration={0.4}
-            >
+              duration={0.4}>
+              
               Recupera horas cada semana con el único sistema diseñado para publishers KDP.
             </TextReveal>
 
@@ -179,7 +179,7 @@ export const Hero = () => {
                 style={{
                   background: "linear-gradient(180deg, #2a2a2e 0%, #1a1a1e 100%)",
                   padding: "2px",
-                  boxShadow: "0 30px 80px -15px hsl(var(--primary) / 0.3), 0 15px 40px -10px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05)",
+                  boxShadow: "0 30px 80px -15px hsl(var(--primary) / 0.3), 0 15px 40px -10px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05)"
                 }}>
                 
                 {/* Inner bezel */}
@@ -224,13 +224,13 @@ export const Hero = () => {
                     <motion.div
                       className="absolute inset-0 pointer-events-none"
                       style={{
-                        background: "linear-gradient(115deg, transparent 40%, rgba(255,255,255,0.03) 45%, rgba(255,255,255,0.06) 50%, transparent 55%)",
+                        background: "linear-gradient(115deg, transparent 40%, rgba(255,255,255,0.03) 45%, rgba(255,255,255,0.06) 50%, transparent 55%)"
                       }}
-                      animate={{ 
-                        backgroundPosition: ["200% 0%", "-200% 0%"],
+                      animate={{
+                        backgroundPosition: ["200% 0%", "-200% 0%"]
                       }}
-                      transition={{ duration: 6, repeat: Infinity, repeatDelay: 4, ease: "easeInOut" }}
-                    />
+                      transition={{ duration: 6, repeat: Infinity, repeatDelay: 4, ease: "easeInOut" }} />
+                    
                     
                     <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
                   </div>
@@ -244,18 +244,18 @@ export const Hero = () => {
                   style={{
                     background: "linear-gradient(180deg, #2a2a2e 0%, #222226 100%)",
                     clipPath: "polygon(5% 0, 95% 0, 100% 100%, 0% 100%)",
-                    borderBottom: "1px solid rgba(255,255,255,0.05)",
-                  }}
-                />
+                    borderBottom: "1px solid rgba(255,255,255,0.05)"
+                  }} />
+                
                 {/* Hinge notch */}
                 <div
                   className="mx-auto h-1 rounded-b-sm"
-                  style={{ 
-                    width: "30%", 
+                  style={{
+                    width: "30%",
                     background: "linear-gradient(180deg, #333 0%, #2a2a2e 100%)",
-                    boxShadow: "0 2px 8px rgba(0,0,0,0.3)",
-                  }}
-                />
+                    boxShadow: "0 2px 8px rgba(0,0,0,0.3)"
+                  }} />
+                
               </div>
             </motion.div>
           </motion.div>

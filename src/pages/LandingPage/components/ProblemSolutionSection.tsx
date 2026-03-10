@@ -235,7 +235,7 @@ export const ProblemSolutionSection = () => {
               
               <p className="text-base text-muted-foreground mb-6 leading-relaxed">
                 Imagina tener todos tus libros, datos financieros, campañas de marketing y contactos 
-                organizados en un solo lugar. <strong>Sin caos. Sin pérdidas de tiempo. Solo claridad.</strong>
+                organizados en un solo lugar. <strong className="text-primary">Sin caos. Sin pérdidas de tiempo. Solo claridad.</strong>
               </p>
               
               <motion.div
