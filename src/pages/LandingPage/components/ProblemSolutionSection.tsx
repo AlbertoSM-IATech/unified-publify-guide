@@ -230,7 +230,7 @@ export const ProblemSolutionSection = () => {
               </motion.div>
               
               <TextReveal as="h3" className="text-2xl md:text-3xl font-bold mb-6 text-foreground">
-                Publify no te da más trabajo. Te devuelve la vida que habías perdido.
+                Publify no te da más trabajo. Te devuelve el control de tu negocio. Creemos que cada libro es un activo único, un nodo central, y que juntos forman tu negocio completo.
               </TextReveal>
               
               <p className="text-base text-muted-foreground mb-6 leading-relaxed">
