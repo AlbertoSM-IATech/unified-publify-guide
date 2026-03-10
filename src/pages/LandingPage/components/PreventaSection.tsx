@@ -82,6 +82,7 @@ export const PreventaSection = () => {
               </ul>
             </div>
 
+            <ValueAnchorBlock />
             <div className="p-6 bg-card border border-primary/20 rounded-xl">
               <h3 className="font-heading text-lg font-bold mb-4">Precio escalonado (abril — Plan Plus)</h3>
               <p className="text-sm text-muted-foreground mb-4">
