@@ -5,6 +5,7 @@ import { ArrowRight, Check, Sparkles } from "lucide-react";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { TextReveal } from "@/components/motion/TextReveal";
+import { ValueAnchorBlock } from "./ValueAnchorBlock";
 
 const benefits = [
   "Acceso antes del lanzamiento",
@@ -81,6 +82,7 @@ export const PreventaSection = () => {
               </ul>
             </div>
 
+            <ValueAnchorBlock />
             <div className="p-6 bg-card border border-primary/20 rounded-xl">
               <h3 className="font-heading text-lg font-bold mb-4">Precio escalonado (abril — Plan Plus)</h3>
               <p className="text-sm text-muted-foreground mb-4">
@@ -148,13 +150,13 @@ export const PreventaSection = () => {
 
               <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
                 <Button type="submit" size="lg" className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-base py-5" disabled={loading}>
-                  {loading ? "Enviando..." : "Reservar mi acceso prioritario"}
+                  {loading ? "Enviando..." : "Bloquear mi precio de early adopter"}
                   <ArrowRight className="ml-2" size={20} />
                 </Button>
               </motion.div>
 
               <p className="text-xs text-muted-foreground text-center">
-                Solo tu email. Te avisaremos cuando abramos acceso.
+                El precio sube cada 10 plazas. Una vez dentro, es tuyo para siempre.
               </p>
             </form>
           </div>

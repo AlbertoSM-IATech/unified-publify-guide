@@ -41,6 +41,15 @@ export const Footer = () => {
               </ul>
             </div>
           </div>
+          
+          <div className="text-center md:text-right max-w-xs">
+            <p className="text-xs text-muted-foreground italic leading-relaxed">
+              <span className="font-semibold text-primary/70">Misión:</span> Centralizar la gestión editorial en un solo sistema para publishers KDP.
+            </p>
+            <p className="text-xs text-muted-foreground italic leading-relaxed mt-1">
+              <span className="font-semibold text-primary/70">Visión:</span> Ser la plataforma estándar para publishers en el mundo hispanohablante.
+            </p>
+          </div>
         </div>
         
         <div className="mt-8 border-t border-border pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">

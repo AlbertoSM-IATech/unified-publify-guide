@@ -4,6 +4,7 @@ import { Hero } from "./components/Hero";
 import { TaglineSection } from "./components/TaglineSection";
 import { ProblemSolutionSection } from "./components/ProblemSolutionSection";
 import { WhatIsPublifySection } from "./components/WhatIsPublifySection";
+import { NewHowItWorksSection } from "./components/NewHowItWorksSection";
 import { TargetAudienceSection } from "./components/TargetAudienceSection";
 import { EarlyAdoptersSection } from "./components/EarlyAdoptersSection";
 import { TestimonialsSection } from "./components/TestimonialsSection";
@@ -37,6 +38,7 @@ export const LandingPage = () => {
       <TaglineSection />
       <ProblemSolutionSection />
       <WhatIsPublifySection />
+      <NewHowItWorksSection />
       <TargetAudienceSection />
       <EarlyAdoptersSection />
       <TestimonialsSection />

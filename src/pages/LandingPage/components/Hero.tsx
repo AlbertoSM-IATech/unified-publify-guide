@@ -42,25 +42,25 @@ export const Hero = () => {
           <div className="text-left">
             {/* GSAP text reveal — letter by letter */}
             <div className="mb-4">
-              <TextReveal
+            <TextReveal
                 as="h1"
-                className="font-heading text-3xl md:text-4xl font-bold tracking-tight text-primary lg:text-5xl"
+                className="font-heading text-3xl md:text-4xl font-bold tracking-tight text-foreground lg:text-5xl"
                 immediate
                 delay={0.3}
                 stagger={0.015}
                 duration={0.5}>
                 
-                Gestiona toda tu editorial
+                Deja de trabajar en tu editorial.
               </TextReveal>
               <TextReveal
                 as="h1"
-                className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-primary"
+                className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-accent"
                 immediate
                 delay={0.6}
                 stagger={0.015}
                 duration={0.5}>
                 
-                desde un solo lugar
+                Empieza a dirigirla.
               </TextReveal>
             </div>
 
@@ -144,7 +144,7 @@ export const Hero = () => {
             <motion.div variants={fadeInUp} className="flex flex-col items-start gap-3">
               <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}>
                 <Button onClick={scrollToWaitlist} size="lg" className="text-base px-8 py-5 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-lg shadow-primary/25">
-                  Unirme a la Waitlist
+                  Quiero acceso prioritario
                   <ArrowRight className="ml-2" size={18} />
                 </Button>
               </motion.div>

@@ -117,36 +117,6 @@ export const WhatIsPublifySection = () => {
           </motion.div>
         </div>
 
-        {/* Misión y Visión */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.3 }}
-          className="mt-16 p-8 bg-primary/5 border border-primary/20 rounded-2xl">
-          
-          <p className="text-xl md:text-2xl text-foreground font-bold mb-8 text-center">
-            <span className="text-primary">Publify pone orden y control</span> donde solo había caos. 
-            Creado por y para publishers de Amazon KDP.
-          </p>
-          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            <div className="space-y-3">
-              <h3 className="text-lg font-bold text-primary">Nuestra Misión</h3>
-              <p className="text-muted-foreground">
-                Centralizar la gestión editorial, financiera y de marketing en un solo sistema, 
-                eliminando el caos de herramientas dispersas y permitiendo que los publishers 
-                gestionen sus catálogos de forma profesional.
-              </p>
-            </div>
-            <div className="space-y-3">
-              <h3 className="text-lg font-bold text-primary">Nuestra Visión</h3>
-              <p className="text-muted-foreground">
-                Convertirnos en la plataforma estándar para publishers de Amazon KDP en el mundo hispanohablante, aportando orden, foco y escalabilidad al sector editorial independiente.
-              
-              </p>
-            </div>
-          </div>
-        </motion.div>
       </div>
     </section>);
 

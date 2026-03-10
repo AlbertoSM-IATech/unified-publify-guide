@@ -15,30 +15,30 @@ export const FinalCtaSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}>
           
-          <h2 className="font-heading text-3xl md:text-5xl font-bold mb-6 text-primary">
-            Pon tu editorial en orden.
+          <h2 className="font-heading text-3xl md:text-5xl font-bold mb-8 text-primary">
+            Pon tu editorial en orden. Hoy.
           </h2>
-          <p className="text-xl text-muted-foreground mb-4">
-            Únete a la waitlist y recibe invitación cuando abramos plazas.
-          </p>
-          <p className="text-sm text-muted-foreground mb-10">
-            Acceso progresivo desde el 1 de abril · Cupo limitado: 20–30 plazas
-          </p>
+          
+          <div className="text-lg md:text-xl text-muted-foreground space-y-4 mb-10 max-w-2xl mx-auto text-left md:text-center leading-relaxed">
+            <p>Empezaste en KDP para tener libertad.</p>
+            <p>No para gestionar caos entre diez herramientas distintas.</p>
+            <p className="text-foreground font-semibold">Los publishers que operan con sistema escalan.</p>
+            <p className="text-foreground font-semibold">Los que operan con caos, sobreviven.</p>
+            <p className="text-accent font-bold">Tú ya sabes en cuál de los dos grupos quieres estar.</p>
+          </div>
 
           <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }} className="inline-block">
             <Button onClick={scrollToWaitlist} size="lg" className="text-xl px-12 py-7 bg-primary hover:bg-primary/90 text-primary-foreground font-bold shadow-lg shadow-primary/25">
-              Unirme a la waitlist
+              Pon tu editorial en orden
               <ArrowRight className="ml-2" size={22} />
             </Button>
           </motion.div>
 
-          <div className="mt-8">
-            <p className="text-sm italic text-accent">
-              "El orden funciona. El caos no."
-            </p>
-          </div>
+          <p className="mt-4 text-sm text-muted-foreground">
+            Te avisamos cuando abramos. Sin spam.
+          </p>
         </motion.div>
       </div>
-    </section>);
-
+    </section>
+  );
 };
