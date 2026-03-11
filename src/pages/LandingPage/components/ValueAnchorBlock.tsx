@@ -6,9 +6,9 @@ export const ValueAnchorBlock = () => {
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      className="p-6 md:p-8 bg-accent/5 border border-accent/20 rounded-xl mb-8"
+      className="p-4 md:p-8 bg-accent/5 border border-accent/20 rounded-xl mb-8 overflow-hidden"
     >
-      <div className="max-w-2xl mx-auto space-y-3 text-center">
+      <div className="max-w-2xl mx-auto space-y-3 text-center break-words">
         <p className="text-lg md:text-xl font-semibold text-foreground">
           Pierdes 5 horas a la semana saltando entre herramientas.
         </p>

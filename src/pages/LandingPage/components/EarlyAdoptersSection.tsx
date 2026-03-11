@@ -105,7 +105,7 @@ export const EarlyAdoptersSection = () => {
             
             <div className="flex items-center gap-2 mb-6">
               <DollarSign className="w-5 h-5 text-primary" />
-              <h3 className="font-heading text-xl font-bold">Precio escalonado (abril — Plan Plus)</h3>
+              <h3 className="font-heading text-base md:text-xl font-bold">Precio escalonado (abril — Plan Plus)</h3>
             </div>
 
             <p className="text-sm text-muted-foreground mb-6">
