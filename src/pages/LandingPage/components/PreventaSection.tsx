@@ -83,8 +83,8 @@ export const PreventaSection = () => {
             </div>
 
             <ValueAnchorBlock />
-            <div className="p-6 bg-card border border-primary/20 rounded-xl">
-              <h3 className="font-heading text-lg font-bold mb-4">Precio escalonado (abril — Plan Plus)</h3>
+            <div className="p-4 md:p-6 bg-card border border-primary/20 rounded-xl overflow-hidden">
+              <h3 className="font-heading text-base md:text-lg font-bold mb-4">Precio escalonado (abril — Plan Plus)</h3>
               <p className="text-sm text-muted-foreground mb-4">
                 Cuanto antes entres, menos pagas. El precio se mantiene <strong className="text-foreground">para siempre</strong> mientras mantengas tu suscripción activa.
               </p>
