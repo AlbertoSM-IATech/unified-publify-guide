@@ -9,10 +9,10 @@ export const ValueAnchorBlock = () => {
       className="p-4 md:p-8 bg-accent/5 border border-accent/20 rounded-xl mb-8 overflow-hidden"
     >
       <div className="max-w-2xl mx-auto space-y-3 text-center break-words">
-        <p className="text-lg md:text-xl font-semibold text-foreground">
+        <p className="text-base md:text-lg font-semibold text-foreground">
           Pierdes 5 horas a la semana saltando entre herramientas.
         </p>
-        <p className="text-base text-muted-foreground italic">
+        <p className="text-sm md:text-base text-muted-foreground italic">
           Son 260 horas al año. Más de 6 semanas completas de trabajo que no vuelven.
         </p>
         <p className="text-base text-foreground font-medium">
