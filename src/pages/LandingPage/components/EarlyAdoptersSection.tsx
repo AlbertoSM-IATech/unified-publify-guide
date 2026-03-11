@@ -33,7 +33,7 @@ export const EarlyAdoptersSection = () => {
 
   return (
     <section id="early-adopters" className="py-24 bg-muted/30">
-      <div className="container mx-auto px-4 max-w-5xl overflow-hidden">
+      <div className="container mx-auto px-4 max-w-5xl">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
