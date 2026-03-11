@@ -49,9 +49,9 @@ export const PreventaSection = () => {
         <div className="absolute bottom-10 left-10 w-56 h-56 bg-accent/5 dark:bg-accent/15 rounded-full blur-3xl" />
       </div>
 
-      <div className="container mx-auto max-w-4xl px-0 relative z-10">
+      <div className="container mx-auto max-w-4xl px-4 relative z-10">
         {/* Header */}
-        <div data-gsap="section-header" className="text-center mb-12 px-0 mx-0">
+        <div data-gsap="section-header" className="text-center mb-12">
           <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 px-4 py-2 rounded-full text-sm font-medium text-primary mb-6">
             <Sparkles size={16} />
             Plazas limitadas: 20–30 early adopters
@@ -83,8 +83,8 @@ export const PreventaSection = () => {
             </div>
 
             <ValueAnchorBlock />
-            <div className="p-6 bg-card border border-primary/20 rounded-xl">
-              <h3 className="font-heading text-lg font-bold mb-4">Precio escalonado (abril — Plan Plus)</h3>
+            <div className="p-4 md:p-6 bg-card border border-primary/20 rounded-xl overflow-hidden">
+              <h3 className="font-heading text-base md:text-lg font-bold mb-4">Precio escalonado (abril — Plan Plus)</h3>
               <p className="text-sm text-muted-foreground mb-4">
                 Cuanto antes entres, menos pagas. El precio se mantiene <strong className="text-foreground">para siempre</strong> mientras mantengas tu suscripción activa.
               </p>

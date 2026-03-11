@@ -99,13 +99,13 @@ export const EarlyAdoptersSection = () => {
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="p-6 bg-card border rounded-xl border-primary">
+            className="p-4 md:p-6 bg-card border rounded-xl border-primary overflow-hidden">
 
             <ValueAnchorBlock />
             
             <div className="flex items-center gap-2 mb-6">
               <DollarSign className="w-5 h-5 text-primary" />
-              <h3 className="font-heading text-xl font-bold">Precio escalonado (abril — Plan Plus)</h3>
+              <h3 className="font-heading text-base md:text-xl font-bold">Precio escalonado (abril — Plan Plus)</h3>
             </div>
 
             <p className="text-sm text-muted-foreground mb-6">
