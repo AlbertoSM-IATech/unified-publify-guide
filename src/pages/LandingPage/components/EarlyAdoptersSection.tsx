@@ -99,7 +99,7 @@ export const EarlyAdoptersSection = () => {
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="p-6 bg-card border rounded-xl border-primary">
+            className="p-4 md:p-6 bg-card border rounded-xl border-primary overflow-hidden">
 
             <ValueAnchorBlock />
             
