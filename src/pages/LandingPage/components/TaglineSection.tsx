@@ -24,7 +24,7 @@ export const TaglineSection = () => {
           transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
           className="text-lg md:text-xl text-center mt-5 max-w-2xl mx-auto text-accent">
           
-          La Navaja Suiza de los Publishers independientes: Un solo lugar para investigar, crear, analizar y escalar tu negocio editorial.
+          Publify es la Navaja Suiza de los Publishers independientes: Un solo lugar para investigar, crear, analizar y escalar tu negocio editorial.
         </motion.p>
       </div>
     </section>);
