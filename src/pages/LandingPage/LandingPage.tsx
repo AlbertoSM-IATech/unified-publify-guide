@@ -7,11 +7,11 @@ import { WhatIsPublifySection } from "./components/WhatIsPublifySection";
 import { NewHowItWorksSection } from "./components/NewHowItWorksSection";
 import { TargetAudienceSection } from "./components/TargetAudienceSection";
 import { EarlyAdoptersSection } from "./components/EarlyAdoptersSection";
-import { TestimonialsSection } from "./components/TestimonialsSection";
 import { PreventaSection } from "./components/PreventaSection";
 import { FaqSection } from "./components/FaqSection";
 import { FinalCtaSection } from "./components/FinalCtaSection";
 import { Footer } from "./components/Footer";
+import { StickyMobileCTA } from "./components/StickyMobileCTA";
 import { TechBackground } from "@/components/motion/TechBackground";
 import { useScrollAnimations } from "@/hooks/useScrollAnimations";
 
@@ -41,11 +41,11 @@ export const LandingPage = () => {
       <NewHowItWorksSection />
       <TargetAudienceSection />
       <EarlyAdoptersSection />
-      <TestimonialsSection />
       <PreventaSection />
       <FaqSection />
       <FinalCtaSection />
       <Footer />
+      <StickyMobileCTA />
     </motion.div>
   );
 };

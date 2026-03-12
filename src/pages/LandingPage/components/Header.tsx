@@ -53,10 +53,11 @@ export const Header = () => {
         
         <div className="hidden md:flex items-center gap-4">
           <div className="text-right">
-            <p className="text-[10px] text-muted-foreground leading-tight">Gratis · Plazas limitadas</p>
+            <p className="text-xs font-semibold text-accent leading-tight">desde 15€/mes</p>
+            <p className="text-[10px] text-muted-foreground leading-tight">Plazas limitadas</p>
           </div>
           <Button onClick={scrollToWaitlist} size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold">
-            Quiero acceso prioritario
+            Reservar plaza
           </Button>
         </div>
         
@@ -78,7 +79,7 @@ export const Header = () => {
             </button>
             <div className="pt-2">
               <Button onClick={scrollToWaitlist} className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold">
-                Quiero acceso prioritario
+                Reservar plaza — desde 15€/mes
               </Button>
             </div>
           </nav>
