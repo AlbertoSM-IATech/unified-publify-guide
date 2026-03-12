@@ -6,7 +6,7 @@ import { TextReveal } from "@/components/motion/TextReveal";
 
 const timeWasters = [{
   icon: <Search className="w-6 h-6 text-primary" />,
-  title: "5 horas semanales perdidas",
+  title: "5+ horas semanales perdidas",
   description: "Saltando entre tu ordenador, Google Drive, Excels, Docs, Calendar, Notion, KDP, Analizando campañas de Ads, Estudiando la viabilidad de nichos y Keywords...",
   impact: "260 horas anuales malgastadas"
 }, {
