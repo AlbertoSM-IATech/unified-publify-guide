@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import publifyLogo from "@/assets/publify-logo.png";
 
 export const TaglineSection = () => {
   return (
@@ -26,6 +27,19 @@ export const TaglineSection = () => {
           
           Publify es la Navaja Suiza de los Publishers independientes: Un solo lugar para investigar, crear, analizar y escalar tu negocio editorial.
         </motion.p>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, ease: "easeOut", delay: 0.5 }}
+          className="mt-8 flex justify-center"
+        >
+          <img 
+            src={publifyLogo} 
+            alt="Publify - Navaja Suiza Editorial" 
+            className="h-16 md:h-20 w-auto"
+          />
+        </motion.div>
       </div>
     </section>);
 
