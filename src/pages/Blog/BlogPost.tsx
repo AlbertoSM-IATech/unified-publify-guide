@@ -222,7 +222,9 @@ export default function BlogPost() {
           </Link>
 
           <Badge className="mb-4 bg-accent/10 text-accent border-accent/20">{post.category}</Badge>
-          <h1 className="text-3xl md:text-5xl font-bold font-[Poppins] leading-tight">{post.title}</h1>
+          <h1 className="text-3xl md:text-5xl font-bold font-[Poppins] leading-tight">
+            {post.number ? <span className="text-accent/60 mr-2">#{post.number}</span> : null}{post.title}
+          </h1>
 
           <div className="mt-6 flex flex-wrap items-center gap-4 text-sm text-muted-foreground border-b border-border pb-6">
             <div className="flex items-center gap-2">

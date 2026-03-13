@@ -167,7 +167,7 @@ export default function Blog() {
                   <div className="flex flex-1 flex-col p-5">
                     <Badge className="w-fit mb-2 bg-accent/10 text-accent border-accent/20 text-xs">{post.category}</Badge>
                     <h3 className="font-bold font-[Poppins] text-lg leading-snug group-hover:text-accent transition-colors">
-                      {post.title}
+                      {post.number ? <span className="text-accent/60 mr-1.5">#{post.number}</span> : null}{post.title}
                     </h3>
                     <p className="mt-2 text-sm text-muted-foreground line-clamp-2 flex-1">{post.excerpt}</p>
                     <div className="mt-4 flex items-center justify-between text-xs text-muted-foreground">

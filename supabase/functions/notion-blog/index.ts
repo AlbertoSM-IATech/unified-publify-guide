@@ -228,6 +228,7 @@ serve(async (req) => {
 
       return {
         id: page.id,
+        number: props['Nº']?.number ?? 0,
         slug: richTextToPlain(props['Slug']?.rich_text) || page.id,
         title: richTextToPlain(props['Título']?.title) || 'Sin título',
         excerpt: richTextToPlain(props['Meta description']?.rich_text) || '',
