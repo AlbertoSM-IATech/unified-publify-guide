@@ -165,7 +165,7 @@ export default function Blog() {
           initial="hidden"
           animate="visible"
         >
-          {filtered.map((post, i) => (
+          {paginatedPosts.map((post, i) => (
             <motion.div key={post.slug} variants={cardVariants}>
               <Link to={`/blog/${post.slug}`} className="group block h-full">
                 <article className="flex h-full flex-col rounded-xl border border-border bg-card overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
@@ -194,6 +194,41 @@ export default function Blog() {
             </motion.div>
           ))}
         </motion.div>
+
+        {/* Pagination */}
+        {totalPages > 1 && (
+          <div className="mt-10 flex items-center justify-center gap-2">
+            <button
+              onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+              disabled={currentPage === 1}
+              className="rounded-lg p-2 text-muted-foreground transition-colors hover:bg-muted disabled:opacity-30 disabled:cursor-not-allowed"
+              aria-label="Página anterior"
+            >
+              <ChevronLeft size={20} />
+            </button>
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+              <button
+                key={page}
+                onClick={() => setCurrentPage(page)}
+                className={`min-w-[36px] rounded-lg px-3 py-1.5 text-sm font-medium transition-colors ${
+                  currentPage === page
+                    ? "bg-accent text-accent-foreground"
+                    : "text-muted-foreground hover:bg-muted"
+                }`}
+              >
+                {page}
+              </button>
+            ))}
+            <button
+              onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+              disabled={currentPage === totalPages}
+              className="rounded-lg p-2 text-muted-foreground transition-colors hover:bg-muted disabled:opacity-30 disabled:cursor-not-allowed"
+              aria-label="Página siguiente"
+            >
+              <ChevronRight size={20} />
+            </button>
+          </div>
+        )}
       </section>
 
       {/* Newsletter CTA */}
