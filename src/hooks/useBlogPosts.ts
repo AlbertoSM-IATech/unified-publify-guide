@@ -20,7 +20,9 @@ async function fetchBlogPosts(): Promise<BlogFetchResult> {
     if (!res.ok) return { posts: [], notionConnected: false };
 
     const data = await res.json();
-    const posts = Array.isArray(data) ? data : [];
+    const posts: BlogPost[] = Array.isArray(data) ? data : [];
+    // Sort by Nº (descending so highest number = newest first)
+    posts.sort((a, b) => (b.number ?? 0) - (a.number ?? 0));
     return { posts, notionConnected: posts.length > 0 };
   } catch {
     return { posts: [], notionConnected: false };

@@ -6,7 +6,6 @@ import { Header } from "@/pages/LandingPage/components/Header";
 import { Footer } from "@/pages/LandingPage/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { blogPosts as staticPosts, categories } from "./blogData";
 import { useBlogPosts } from "@/hooks/useBlogPosts";
 
 const gradients = [
@@ -33,8 +32,7 @@ export default function Blog() {
   const { data, isLoading } = useBlogPosts();
 
   const notionConnected = data?.notionConnected ?? false;
-  const notionPosts = data?.posts ?? [];
-  const blogPosts = notionPosts.length > 0 ? notionPosts : staticPosts;
+  const blogPosts = data?.posts ?? [];
 
   const featured = blogPosts.find((p) => p.featured);
   const filtered = blogPosts
@@ -105,7 +103,7 @@ export default function Blog() {
                 <div className="p-6 md:p-10 flex flex-col justify-center">
                   <Badge className="w-fit mb-3 bg-accent/10 text-accent border-accent/20">{featured.category}</Badge>
                   <h2 className="text-2xl md:text-3xl font-bold font-[Poppins] group-hover:text-accent transition-colors">
-                    {featured.title}
+                    {featured.number ? <span className="text-accent/60 mr-2">#{featured.number}</span> : null}{featured.title}
                   </h2>
                   <p className="mt-3 text-muted-foreground leading-relaxed">{featured.excerpt}</p>
                   <div className="mt-6 flex items-center gap-4 text-sm text-muted-foreground">
@@ -169,7 +167,7 @@ export default function Blog() {
                   <div className="flex flex-1 flex-col p-5">
                     <Badge className="w-fit mb-2 bg-accent/10 text-accent border-accent/20 text-xs">{post.category}</Badge>
                     <h3 className="font-bold font-[Poppins] text-lg leading-snug group-hover:text-accent transition-colors">
-                      {post.title}
+                      {post.number ? <span className="text-accent/60 mr-1.5">#{post.number}</span> : null}{post.title}
                     </h3>
                     <p className="mt-2 text-sm text-muted-foreground line-clamp-2 flex-1">{post.excerpt}</p>
                     <div className="mt-4 flex items-center justify-between text-xs text-muted-foreground">

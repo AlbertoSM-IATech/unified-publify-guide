@@ -6,7 +6,6 @@ import { Header } from "@/pages/LandingPage/components/Header";
 import { Footer } from "@/pages/LandingPage/components/Footer";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { blogPosts as staticPosts } from "./blogData";
 import { useBlogPost, useBlogPosts } from "@/hooks/useBlogPosts";
 
 const defaultContent = `
@@ -169,13 +168,10 @@ export default function BlogPost() {
   const { data: notionPost, isLoading: isLoadingPost } = useBlogPost(slug || "");
   const { data: allPostsData } = useBlogPosts();
 
-  // Fallback to static data
-  const staticPost = staticPosts.find((p) => p.slug === slug);
-  const post = notionPost || staticPost;
-  const notionPosts = allPostsData?.posts ?? [];
-  const blogPosts = notionPosts.length > 0 ? notionPosts : staticPosts;
+  const post = notionPost;
+  const blogPosts = allPostsData?.posts ?? [];
 
-  if (isLoadingPost && !staticPost) {
+  if (isLoadingPost) {
     return (
       <div className="min-h-screen bg-background text-foreground">
         <Header />
@@ -226,7 +222,9 @@ export default function BlogPost() {
           </Link>
 
           <Badge className="mb-4 bg-accent/10 text-accent border-accent/20">{post.category}</Badge>
-          <h1 className="text-3xl md:text-5xl font-bold font-[Poppins] leading-tight">{post.title}</h1>
+          <h1 className="text-3xl md:text-5xl font-bold font-[Poppins] leading-tight">
+            {post.number ? <span className="text-accent/60 mr-2">#{post.number}</span> : null}{post.title}
+          </h1>
 
           <div className="mt-6 flex flex-wrap items-center gap-4 text-sm text-muted-foreground border-b border-border pb-6">
             <div className="flex items-center gap-2">
