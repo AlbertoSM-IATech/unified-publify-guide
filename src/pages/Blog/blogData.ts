@@ -8,6 +8,7 @@ export interface BlogPost {
   author: { name: string; role: string };
   featured?: boolean;
   content?: string;
+  coverImage?: string;
 }
 
 export const categories = ["Todos", "Self-Publishing", "Marketing", "Finanzas", "Productividad"];
