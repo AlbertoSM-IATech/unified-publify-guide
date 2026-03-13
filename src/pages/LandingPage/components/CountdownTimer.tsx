@@ -60,7 +60,7 @@ export const CountdownTimer = ({ compact = false }: Props) => {
       <div className="flex gap-1.5">
         {units.map((u) =>
         <div key={u.label} className="flex flex-col items-center">
-            <span className="font-bold text-accent tabular-nums leading-none bg-accent/10 rounded px-1.5 py-1 min-w-[28px] text-center text-2xl">
+            <span className="font-bold tabular-nums leading-none bg-accent/10 rounded px-1.5 py-1 min-w-[28px] text-center text-2xl text-primary">
               {String(u.value).padStart(2, "0")}
             </span>
             <span className="text-[9px] text-muted-foreground mt-0.5">{u.label}</span>
