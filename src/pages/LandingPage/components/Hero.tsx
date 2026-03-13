@@ -66,48 +66,22 @@ export const Hero = () => {
               <CountdownTimer />
             </motion.div>
 
-            {/* Inline Waitlist Form */}
+            {/* CTA Button */}
             <motion.div variants={fadeInUp} className="mb-6">
-              {submitted ? (
-                <WaitlistSuccessState compact />
-              ) : (
-                <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-2">
-                  <Input
-                    type="text"
-                    placeholder="Tu nombre"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    required
-                    maxLength={100}
-                    className="h-11 text-sm flex-1"
-                  />
-                  <Input
-                    type="email"
-                    placeholder="tu@email.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                    maxLength={255}
-                    className="h-11 text-sm flex-1"
-                  />
-                  <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
-                    <Button
-                      type="submit"
-                      size="lg"
-                      disabled={loading}
-                      className="h-11 text-sm px-6 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-lg shadow-primary/25 whitespace-nowrap"
-                    >
-                      {loading ? "Enviando..." : "Bloquear precio desde 15€/mes"}
-                      <ArrowRight className="ml-1.5" size={16} />
-                    </Button>
-                  </motion.div>
-                </form>
-              )}
-              {!submitted && (
-                <p className="text-sm text-accent mt-2">
-                  Solo tu email. Sin tarjeta. Sin compromiso.
-                </p>
-              )}
+              <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
+                <Button
+                  onClick={openDialog}
+                  size="lg"
+                  className="h-11 text-sm px-6 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-lg shadow-primary/25 whitespace-nowrap"
+                >
+                  Bloquear precio desde 15€/mes
+                  <ArrowRight className="ml-1.5" size={16} />
+                </Button>
+              </motion.div>
+              <p className="text-sm text-accent mt-2">
+                Solo tu email. Sin tarjeta. Sin compromiso.
+              </p>
+              <WaitlistDialog open={open} onOpenChange={setOpen} />
             </motion.div>
 
             <motion.div variants={fadeInUp} className="flex flex-wrap items-center gap-2.5 mb-6">

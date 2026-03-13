@@ -1,11 +1,10 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
+import { WaitlistDialog, useWaitlistDialog } from "@/components/WaitlistDialog";
 
 export const FinalCtaSection = () => {
-  const scrollToWaitlist = () => {
-    document.getElementById("waitlist")?.scrollIntoView({ behavior: "smooth" });
-  };
+  const { open, setOpen, openDialog } = useWaitlistDialog();
 
   return (
     <section className="py-24 bg-gradient-to-br from-primary/10 via-background to-primary/5">
@@ -28,7 +27,7 @@ export const FinalCtaSection = () => {
           </div>
 
           <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }} className="inline-block">
-            <Button onClick={scrollToWaitlist} size="lg" className="text-xl px-12 py-7 bg-primary hover:bg-primary/90 text-primary-foreground font-bold shadow-lg shadow-primary/25">
+            <Button onClick={openDialog} size="lg" className="text-xl px-12 py-7 bg-primary hover:bg-primary/90 text-primary-foreground font-bold shadow-lg shadow-primary/25">
               Pon tu editorial en orden
               <ArrowRight className="ml-2" size={22} />
             </Button>
@@ -39,6 +38,7 @@ export const FinalCtaSection = () => {
           </p>
         </motion.div>
       </div>
+      <WaitlistDialog open={open} onOpenChange={setOpen} />
     </section>
   );
 };
