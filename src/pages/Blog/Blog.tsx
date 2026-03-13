@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Clock, ArrowRight, Mail } from "lucide-react";
+import { Clock, ArrowRight, Mail, Loader2 } from "lucide-react";
 import { Header } from "@/pages/LandingPage/components/Header";
 import { Footer } from "@/pages/LandingPage/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { blogPosts, categories } from "./blogData";
+import { blogPosts as staticPosts, categories } from "./blogData";
+import { useBlogPosts } from "@/hooks/useBlogPosts";
 
 const gradients = [
   "from-primary/80 to-accent/60",
@@ -29,11 +30,17 @@ const cardVariants = {
 
 export default function Blog() {
   const [activeCategory, setActiveCategory] = useState("Todos");
+  const { data: notionPosts, isLoading } = useBlogPosts();
+
+  const blogPosts = notionPosts && notionPosts.length > 0 ? notionPosts : staticPosts;
 
   const featured = blogPosts.find((p) => p.featured);
   const filtered = blogPosts
     .filter((p) => !p.featured)
     .filter((p) => activeCategory === "Todos" || p.category === activeCategory);
+
+  // Build dynamic categories from posts
+  const dynamicCategories = ["Todos", ...Array.from(new Set(blogPosts.map((p) => p.category)))];
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -57,6 +64,12 @@ export default function Blog() {
           </motion.div>
         </div>
       </section>
+
+      {isLoading && (
+        <div className="flex justify-center py-12">
+          <Loader2 className="h-8 w-8 animate-spin text-accent" />
+        </div>
+      )}
 
       {/* Featured post */}
       {featured && (
@@ -93,7 +106,7 @@ export default function Blog() {
       {/* Category filter */}
       <section className="mx-auto max-w-7xl px-4 pb-8">
         <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
-          {categories.map((cat) => (
+          {dynamicCategories.map((cat) => (
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}

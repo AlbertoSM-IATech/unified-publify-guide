@@ -1,11 +1,12 @@
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowLeft, Clock, Calendar } from "lucide-react";
+import { ArrowLeft, Clock, Calendar, Loader2 } from "lucide-react";
 import { Header } from "@/pages/LandingPage/components/Header";
 import { Footer } from "@/pages/LandingPage/components/Footer";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { blogPosts } from "./blogData";
+import { blogPosts as staticPosts } from "./blogData";
+import { useBlogPost, useBlogPosts } from "@/hooks/useBlogPosts";
 
 const defaultContent = `
 ## Introducción
@@ -27,7 +28,25 @@ Mantente atento a las actualizaciones de este artículo. Estamos preparando cont
 
 export default function BlogPost() {
   const { slug } = useParams<{ slug: string }>();
-  const post = blogPosts.find((p) => p.slug === slug);
+  const { data: notionPost, isLoading: isLoadingPost } = useBlogPost(slug || "");
+  const { data: allPosts } = useBlogPosts();
+
+  // Fallback to static data
+  const staticPost = staticPosts.find((p) => p.slug === slug);
+  const post = notionPost || staticPost;
+  const blogPosts = allPosts && allPosts.length > 0 ? allPosts : staticPosts;
+
+  if (isLoadingPost && !staticPost) {
+    return (
+      <div className="min-h-screen bg-background text-foreground">
+        <Header />
+        <div className="flex items-center justify-center py-40">
+          <Loader2 className="h-10 w-10 animate-spin text-accent" />
+        </div>
+        <Footer />
+      </div>
+    );
+  }
 
   if (!post) {
     return (
