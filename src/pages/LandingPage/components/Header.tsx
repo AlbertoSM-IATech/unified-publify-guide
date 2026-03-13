@@ -11,6 +11,7 @@ const navLinks = [
   { href: "#para-quien", label: "Para quién" },
   { href: "#early-adopters", label: "Acceso Founders" },
   { href: "#faq", label: "FAQ" },
+  { href: "/blog", label: "Blog", isRoute: true },
 ];
 
 export const Header = () => {
