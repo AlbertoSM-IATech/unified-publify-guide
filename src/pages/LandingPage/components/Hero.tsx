@@ -1,14 +1,12 @@
 import { motion } from "framer-motion";
 import { ArrowRight, BookOpen, BarChart3, Eye, Layers, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { ParticlesBackground } from "@/components/motion/ParticlesBackground";
 import { TextReveal } from "@/components/motion/TextReveal";
 import { TypewriterURL } from "@/components/motion/TypewriterURL";
 import { CountdownTimer } from "./CountdownTimer";
-import { WaitlistSuccessState } from "./WaitlistSuccessState";
 import dashboardImg from "@/assets/publify-dashboard-concept.jpg";
-import { useWaitlistForm } from "../hooks/useWaitlistForm";
+import { WaitlistDialog, useWaitlistDialog } from "@/components/WaitlistDialog";
 
 const stagger = {
   hidden: { opacity: 0 },
