@@ -1,12 +1,10 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { ArrowRight, Check, Sparkles, DollarSign, BookOpen, Shield, Zap, Crown } from "lucide-react";
 import { TextReveal } from "@/components/motion/TextReveal";
 import { ValueAnchorBlock } from "./ValueAnchorBlock";
 import { CountdownTimer } from "./CountdownTimer";
-import { WaitlistSuccessState } from "./WaitlistSuccessState";
-import { useWaitlistForm } from "../hooks/useWaitlistForm";
+import { WaitlistDialog, useWaitlistDialog } from "@/components/WaitlistDialog";
 
 const includes = [
   { icon: Zap, text: "Acceso prioritario al MVP (Biblioteca + Finanzas básicas)" },
