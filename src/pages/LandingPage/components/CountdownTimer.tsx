@@ -35,16 +35,16 @@ export const CountdownTimer = ({ compact = false }: Props) => {
 
   const units = [
     { label: "días", value: timeLeft.days },
-    { label: "hrs", value: timeLeft.hours },
+    { label: "horas", value: timeLeft.hours },
     { label: "min", value: timeLeft.minutes },
     { label: "seg", value: timeLeft.seconds },
   ];
 
   if (compact) {
     return (
-      <div className="flex items-center gap-1.5 text-xs text-accent font-medium">
-        <Clock className="w-3 h-3" />
-        <span>{timeLeft.days}d {timeLeft.hours}h {timeLeft.minutes}m</span>
+      <div className="flex items-center gap-2 text-sm text-accent font-semibold">
+        <Clock className="w-4 h-4" />
+        <span>La preventa empieza en {timeLeft.days}d {timeLeft.hours}h {timeLeft.minutes}m</span>
       </div>
     );
   }
@@ -53,17 +53,19 @@ export const CountdownTimer = ({ compact = false }: Props) => {
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      className="flex items-center gap-3"
+      className="inline-flex flex-col items-center gap-3 p-5 bg-accent/5 border border-accent/20 rounded-2xl"
     >
-      <Clock className="w-4 h-4 text-accent flex-shrink-0" />
-      <span className="text-xs text-muted-foreground font-medium">La preventa empieza en:</span>
-      <div className="flex gap-1.5">
+      <div className="flex items-center gap-2">
+        <Clock className="w-4 h-4 text-accent" />
+        <span className="text-sm text-accent font-semibold tracking-wide uppercase">La preventa empieza en</span>
+      </div>
+      <div className="flex gap-3">
         {units.map((u) => (
           <div key={u.label} className="flex flex-col items-center">
-            <span className="text-sm font-bold text-accent tabular-nums leading-none bg-accent/10 rounded px-1.5 py-1 min-w-[28px] text-center">
+            <span className="text-2xl md:text-3xl font-bold text-accent tabular-nums leading-none bg-accent/10 border border-accent/20 rounded-xl px-3 py-2.5 min-w-[52px] md:min-w-[60px] text-center shadow-sm">
               {String(u.value).padStart(2, "0")}
             </span>
-            <span className="text-[9px] text-muted-foreground mt-0.5">{u.label}</span>
+            <span className="text-[10px] text-accent/70 font-medium mt-1.5 uppercase tracking-wider">{u.label}</span>
           </div>
         ))}
       </div>
