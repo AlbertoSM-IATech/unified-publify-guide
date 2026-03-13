@@ -1,12 +1,10 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { ArrowRight, Check, Sparkles, DollarSign, BookOpen, Shield, Zap, Crown } from "lucide-react";
 import { TextReveal } from "@/components/motion/TextReveal";
 import { ValueAnchorBlock } from "./ValueAnchorBlock";
 import { CountdownTimer } from "./CountdownTimer";
-import { WaitlistSuccessState } from "./WaitlistSuccessState";
-import { useWaitlistForm } from "../hooks/useWaitlistForm";
+import { WaitlistDialog, useWaitlistDialog } from "@/components/WaitlistDialog";
 
 const includes = [
   { icon: Zap, text: "Acceso prioritario al MVP (Biblioteca + Finanzas básicas)" },
@@ -48,7 +46,7 @@ const cardVariants = {
 };
 
 export const PreventaSection = () => {
-  const { name, email, loading, submitted, setName, setEmail, handleSubmit } = useWaitlistForm();
+  const { open, setOpen, openDialog } = useWaitlistDialog();
 
   return (
     <section id="waitlist" className="py-24 bg-background relative overflow-hidden">
@@ -229,71 +227,42 @@ export const PreventaSection = () => {
             </motion.div>
           </div>
 
-          {/* Right column: sticky form (2 cols) */}
+          {/* Right column: sticky CTA card */}
           <div className="lg:col-span-2">
-            {submitted ? (
-              <div className="sticky top-28">
-                <WaitlistSuccessState />
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="p-8 bg-card border border-border rounded-2xl shadow-lg space-y-6 sticky top-28 relative overflow-hidden"
+            >
+              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-accent/50 via-accent to-accent/50 rounded-t-2xl" />
+
+              <div className="text-center pt-2">
+                <h3 className="font-heading text-xl font-bold mb-2">Reservar mi acceso prioritario</h3>
+                <p className="text-sm text-muted-foreground">
+                  Apuntarte es gratis. Te avisaremos cuando abramos acceso.
+                </p>
               </div>
-            ) : (
-              <motion.form
-                onSubmit={handleSubmit}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="p-8 bg-card border border-border rounded-2xl shadow-lg space-y-6 sticky top-28 relative overflow-hidden"
-              >
-                {/* Top accent line */}
-                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-accent/50 via-accent to-accent/50 rounded-t-2xl" />
 
-                <div className="text-center pt-2">
-                  <h3 className="font-heading text-xl font-bold mb-2">Reservar mi acceso prioritario</h3>
-                  <p className="text-sm text-muted-foreground">
-                    Apuntarte es gratis. Te avisaremos cuando abramos acceso.
-                  </p>
-                </div>
+              <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                <Button
+                  onClick={openDialog}
+                  size="lg"
+                  className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-base py-5 rounded-xl shadow-lg shadow-primary/20"
+                >
+                  Bloquear mi precio desde 15€/mes
+                  <ArrowRight className="ml-2" size={20} />
+                </Button>
+              </motion.div>
 
-                <div className="space-y-3">
-                  <Input
-                    type="text"
-                    placeholder="Tu nombre"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    required
-                    maxLength={100}
-                    className="h-12 text-base rounded-xl"
-                  />
-                  <Input
-                    type="email"
-                    placeholder="tu@email.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                    maxLength={255}
-                    className="h-12 text-base rounded-xl"
-                  />
-                </div>
-
-                <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                  <Button
-                    type="submit"
-                    size="lg"
-                    className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-base py-5 rounded-xl shadow-lg shadow-primary/20"
-                    disabled={loading}
-                  >
-                    {loading ? "Enviando..." : "Bloquear mi precio desde 15€/mes"}
-                    <ArrowRight className="ml-2" size={20} />
-                  </Button>
-                </motion.div>
-
-                <p className="text-sm text-accent text-center font-medium">
-                  Solo tu email. Sin tarjeta. Sin compromiso.
-                </p>
-                <p className="text-xs text-muted-foreground text-center">
-                  El precio sube con cada tramo. Una vez dentro, es tuyo para siempre.
-                </p>
-              </motion.form>
-            )}
+              <p className="text-sm text-accent text-center font-medium">
+                Solo tu email. Sin tarjeta. Sin compromiso.
+              </p>
+              <p className="text-xs text-muted-foreground text-center">
+                El precio sube con cada tramo. Una vez dentro, es tuyo para siempre.
+              </p>
+            </motion.div>
+            <WaitlistDialog open={open} onOpenChange={setOpen} />
           </div>
         </div>
       </div>
