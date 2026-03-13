@@ -40,30 +40,93 @@ function richTextToPlain(richText: NotionRichText[]): string {
   return richText?.map((t) => t.plain_text).join('') || '';
 }
 
+function richTextToMarkdown(richText: any[]): string {
+  if (!richText) return '';
+  return richText.map((t) => {
+    let text = t.plain_text || '';
+    if (!text) return '';
+
+    // Apply annotations
+    const a = t.annotations || {};
+    if (a.code) text = `\`${text}\``;
+    if (a.bold) text = `**${text}**`;
+    if (a.italic) text = `*${text}*`;
+    if (a.strikethrough) text = `~~${text}~~`;
+    if (a.underline) text = `<u>${text}</u>`;
+
+    // Apply link
+    if (t.href) text = `[${text}](${t.href})`;
+
+    return text;
+  }).join('');
+}
+
 function blocksToMarkdown(blocks: NotionBlock[]): string {
-  return blocks.map((block) => {
+  const lines: string[] = [];
+  let numberedIndex = 0;
+
+  for (const block of blocks) {
     const type = block.type;
+
+    // Reset numbered list counter when not in a numbered list
+    if (type !== 'numbered_list_item') numberedIndex = 0;
+
     switch (type) {
       case 'heading_1':
-        return `## ${richTextToPlain(block.heading_1.rich_text)}`;
+        lines.push(`# ${richTextToMarkdown(block.heading_1.rich_text)}`);
+        break;
       case 'heading_2':
-        return `## ${richTextToPlain(block.heading_2.rich_text)}`;
+        lines.push(`## ${richTextToMarkdown(block.heading_2.rich_text)}`);
+        break;
       case 'heading_3':
-        return `### ${richTextToPlain(block.heading_3.rich_text)}`;
-      case 'paragraph':
-        return richTextToPlain(block.paragraph.rich_text);
+        lines.push(`### ${richTextToMarkdown(block.heading_3.rich_text)}`);
+        break;
+      case 'paragraph': {
+        const text = richTextToMarkdown(block.paragraph.rich_text);
+        lines.push(text || '');
+        break;
+      }
       case 'bulleted_list_item':
-        return `- ${richTextToPlain(block.bulleted_list_item.rich_text)}`;
+        lines.push(`- ${richTextToMarkdown(block.bulleted_list_item.rich_text)}`);
+        break;
       case 'numbered_list_item':
-        return `- ${richTextToPlain(block.numbered_list_item.rich_text)}`;
+        numberedIndex++;
+        lines.push(`${numberedIndex}. ${richTextToMarkdown(block.numbered_list_item.rich_text)}`);
+        break;
       case 'quote':
-        return `> ${richTextToPlain(block.quote.rich_text)}`;
+        lines.push(`> ${richTextToMarkdown(block.quote.rich_text)}`);
+        break;
+      case 'callout':
+        lines.push(`> 💡 ${richTextToMarkdown(block.callout.rich_text)}`);
+        break;
+      case 'code':
+        lines.push(`\`\`\`${block.code.language || ''}\n${richTextToPlain(block.code.rich_text)}\n\`\`\``);
+        break;
+      case 'image': {
+        const url = block.image.type === 'external'
+          ? block.image.external?.url
+          : block.image.file?.url;
+        const caption = richTextToPlain(block.image.caption);
+        if (url) lines.push(`![${caption || 'imagen'}](${url})`);
+        break;
+      }
       case 'divider':
-        return '---';
+        lines.push('---');
+        break;
+      case 'toggle':
+        lines.push(`**${richTextToMarkdown(block.toggle.rich_text)}**`);
+        break;
+      case 'to_do': {
+        const checked = block.to_do.checked ? 'x' : ' ';
+        lines.push(`- [${checked}] ${richTextToMarkdown(block.to_do.rich_text)}`);
+        break;
+      }
       default:
-        return '';
+        break;
     }
-  }).filter(Boolean).join('\n\n');
+  }
+
+  return lines.join('\n\n');
 }
 
 serve(async (req) => {
