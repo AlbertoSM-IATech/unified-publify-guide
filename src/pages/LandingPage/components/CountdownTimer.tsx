@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Clock } from "lucide-react";
 
-const TARGET_DATE = new Date("2026-04-01T00:00:00");
+const TARGET_DATE = new Date("2026-04-01T00:00:00+01:00"); // Midnight CET (Spain)
 
 interface TimeLeft {
   days: number;
@@ -53,14 +53,14 @@ export const CountdownTimer = ({ compact = false }: Props) => {
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      className="gap-3 items-center justify-center flex flex-row">
+      className="flex items-center gap-3">
       
-      <Clock className="text-accent flex-shrink-0 w-[31px] h-[30px]" />
-      <span className="text-muted-foreground font-medium text-xl">La preventa empieza en:</span>
+      <Clock className="w-4 h-4 text-accent flex-shrink-0" />
+      <span className="text-muted-foreground font-medium text-sm">La preventa empieza en:</span>
       <div className="flex gap-1.5">
         {units.map((u) =>
         <div key={u.label} className="flex flex-col items-center">
-            <span className="font-bold tabular-nums leading-none bg-accent/10 rounded py-1 min-w-[28px] text-center text-primary text-5xl px-[13px] font-mono">
+            <span className="font-bold tabular-nums leading-none bg-accent/10 rounded px-1.5 py-1 min-w-[28px] text-center text-2xl text-primary">
               {String(u.value).padStart(2, "0")}
             </span>
             <span className="text-[9px] text-muted-foreground mt-0.5">{u.label}</span>
