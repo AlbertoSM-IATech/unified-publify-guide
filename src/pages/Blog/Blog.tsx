@@ -78,7 +78,7 @@ export default function Blog() {
             <div>
               <p className="font-medium text-foreground">Notion no está conectado</p>
               <p>
-                Verifica que la base de datos esté compartida con tu integración y que el ID sea correcto. Mientras tanto se muestran artículos de ejemplo.
+                Verifica que la base de datos esté compartida con tu integración y que el ID sea correcto. Hasta entonces, no se mostrarán artículos.
               </p>
             </div>
           </div>

@@ -8,26 +8,8 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useBlogPost, useBlogPosts } from "@/hooks/useBlogPosts";
 
-const defaultContent = `
-## Introducción
-
-Este es un artículo de ejemplo que pronto tendrá contenido real. Mientras tanto, aquí tienes un adelanto de lo que cubriremos.
-
-### Puntos clave
-
-- Estrategias probadas por autores exitosos
-- Datos actualizados del mercado editorial digital
-- Herramientas y recursos recomendados
-
-> "Publicar un libro ya no es un sueño inalcanzable. Con las herramientas correctas, cualquiera puede convertirse en autor." — Equipo Publify
-
-### Próximos pasos
-
-Mantente atento a las actualizaciones de este artículo. Estamos preparando contenido de alto valor para ayudarte en tu camino como autor independiente.
-`;
 function parseInline(text: string): React.ReactNode[] {
   const nodes: React.ReactNode[] = [];
-  // Regex for: links, bold, italic, code, strikethrough, underline
   const regex = /\[([^\]]+)\]\(([^)]+)\)|\*\*(.+?)\*\*|\*(.+?)\*|`(.+?)`|~~(.+?)~~|<u>(.+?)<\/u>/g;
   let lastIndex = 0;
   let match: RegExpExecArray | null;
@@ -60,7 +42,7 @@ function parseInline(text: string): React.ReactNode[] {
 }
 
 function renderMarkdown(md: string): React.ReactNode[] {
-  const lines = md.split('\n');
+  const lines = md.split("\n");
   const elements: React.ReactNode[] = [];
   let i = 0;
   let keyIdx = 0;
@@ -69,83 +51,83 @@ function renderMarkdown(md: string): React.ReactNode[] {
     const line = lines[i];
     const trimmed = line.trim();
 
-    // Empty lines
-    if (!trimmed) { i++; continue; }
+    if (!trimmed) {
+      i++;
+      continue;
+    }
 
-    // Headings (order matters: check ### before ## before #)
-    if (trimmed.startsWith('### ')) {
+    if (trimmed.startsWith("### ")) {
       elements.push(<h3 key={keyIdx++} className="text-xl md:text-2xl font-bold font-[Poppins] mt-8 mb-3">{parseInline(trimmed.slice(4))}</h3>);
-      i++; continue;
+      i++;
+      continue;
     }
-    if (trimmed.startsWith('## ')) {
+    if (trimmed.startsWith("## ")) {
       elements.push(<h2 key={keyIdx++} className="text-2xl md:text-3xl font-bold font-[Poppins] mt-10 mb-4">{parseInline(trimmed.slice(3))}</h2>);
-      i++; continue;
+      i++;
+      continue;
     }
-    if (trimmed.startsWith('# ')) {
+    if (trimmed.startsWith("# ")) {
       elements.push(<h1 key={keyIdx++} className="text-3xl md:text-4xl font-bold font-[Poppins] mt-12 mb-5">{parseInline(trimmed.slice(2))}</h1>);
-      i++; continue;
+      i++;
+      continue;
     }
 
-    // Blockquote
-    if (trimmed.startsWith('> ')) {
+    if (trimmed.startsWith("> ")) {
       const quoteLines: string[] = [];
-      while (i < lines.length && lines[i].trim().startsWith('> ')) {
+      while (i < lines.length && lines[i].trim().startsWith("> ")) {
         quoteLines.push(lines[i].trim().slice(2));
         i++;
       }
       elements.push(
         <blockquote key={keyIdx++} className="border-l-4 border-accent pl-4 my-4 italic text-muted-foreground">
           {quoteLines.map((q, qi) => <p key={qi}>{parseInline(q)}</p>)}
-        </blockquote>
+        </blockquote>,
       );
       continue;
     }
 
-    // Code block
-    if (trimmed.startsWith('```')) {
+    if (trimmed.startsWith("```")) {
       const codeLines: string[] = [];
       i++;
-      while (i < lines.length && !lines[i].trim().startsWith('```')) {
+      while (i < lines.length && !lines[i].trim().startsWith("```")) {
         codeLines.push(lines[i]);
         i++;
       }
-      i++; // skip closing ```
-      elements.push(<pre key={keyIdx++} className="rounded-lg bg-muted p-4 overflow-x-auto text-sm my-4"><code>{codeLines.join('\n')}</code></pre>);
+      i++;
+      elements.push(<pre key={keyIdx++} className="rounded-lg bg-muted p-4 overflow-x-auto text-sm my-4"><code>{codeLines.join("\n")}</code></pre>);
       continue;
     }
 
-    // Divider
-    if (trimmed === '---') {
+    if (trimmed === "---") {
       elements.push(<hr key={keyIdx++} className="my-8 border-border" />);
-      i++; continue;
+      i++;
+      continue;
     }
 
-    // Image
     const imgMatch = trimmed.match(/^!\[([^\]]*)\]\(([^)]+)\)$/);
     if (imgMatch) {
       elements.push(<img key={keyIdx++} src={imgMatch[2]} alt={imgMatch[1]} className="rounded-lg my-4 max-w-full" loading="lazy" />);
-      i++; continue;
+      i++;
+      continue;
     }
 
-    // Numbered list
     if (/^\d+\.\s/.test(trimmed)) {
       const items: React.ReactNode[] = [];
       while (i < lines.length && /^\d+\.\s/.test(lines[i].trim())) {
-        items.push(<li key={keyIdx++}>{parseInline(lines[i].trim().replace(/^\d+\.\s/, ''))}</li>);
+        items.push(<li key={keyIdx++}>{parseInline(lines[i].trim().replace(/^\d+\.\s/, ""))}</li>);
         i++;
       }
       elements.push(<ol key={keyIdx++} className="list-decimal pl-6 my-4 space-y-1 text-muted-foreground">{items}</ol>);
       continue;
     }
 
-    // Bulleted list (and checkboxes)
-    if (trimmed.startsWith('- ')) {
+    if (trimmed.startsWith("- ")) {
       const items: React.ReactNode[] = [];
-      while (i < lines.length && lines[i].trim().startsWith('- ')) {
+      while (i < lines.length && lines[i].trim().startsWith("- ")) {
         const itemText = lines[i].trim().slice(2);
         const todoMatch = itemText.match(/^\[([x ])\]\s*(.*)/);
         if (todoMatch) {
-          items.push(<li key={keyIdx++} className="flex items-start gap-2 list-none"><input type="checkbox" checked={todoMatch[1] === 'x'} readOnly className="mt-1" /><span>{parseInline(todoMatch[2])}</span></li>);
+          items.push(<li key={keyIdx++} className="flex items-start gap-2 list-none"><input type="checkbox" checked={todoMatch[1] === "x"} readOnly className="mt-1" /><span>{parseInline(todoMatch[2])}</span></li>);
         } else {
           items.push(<li key={keyIdx++}>{parseInline(itemText)}</li>);
         }
@@ -155,7 +137,6 @@ function renderMarkdown(md: string): React.ReactNode[] {
       continue;
     }
 
-    // Paragraph (default)
     elements.push(<p key={keyIdx++} className="my-4 leading-relaxed text-muted-foreground">{parseInline(trimmed)}</p>);
     i++;
   }
@@ -196,14 +177,13 @@ export default function BlogPost() {
     );
   }
 
-  const content = post.content || defaultContent;
+  const content = post.content?.trim() ?? "";
   const related = blogPosts.filter((p) => p.slug !== slug && p.category === post.category).slice(0, 3);
 
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Header />
 
-      {/* Hero cover image */}
       {post.coverImage && (
         <div className="relative w-full h-[280px] md:h-[420px] mt-16 overflow-hidden">
           <img
@@ -215,7 +195,7 @@ export default function BlogPost() {
         </div>
       )}
 
-      <article className={`mx-auto max-w-3xl px-4 pb-16 ${post.coverImage ? 'pt-8 -mt-20 relative z-10' : 'pt-28 md:pt-36'}`}>
+      <article className={`mx-auto max-w-3xl px-4 pb-16 ${post.coverImage ? "pt-8 -mt-20 relative z-10" : "pt-28 md:pt-36"}`}>
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45 }}>
           <Link to="/blog" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-accent transition-colors mb-8">
             <ArrowLeft size={16} /> Volver al blog
@@ -241,7 +221,6 @@ export default function BlogPost() {
           </div>
         </motion.div>
 
-        {/* Article body */}
         <motion.div
           className="prose prose-lg dark:prose-invert max-w-none mt-10
             prose-headings:font-[Poppins] prose-headings:font-bold
@@ -256,10 +235,13 @@ export default function BlogPost() {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.2 }}
         >
-          {renderMarkdown(content)}
+          {content ? (
+            renderMarkdown(content)
+          ) : (
+            <p className="my-4 leading-relaxed text-muted-foreground">Este artículo todavía no tiene contenido sincronizado desde Notion.</p>
+          )}
         </motion.div>
 
-        {/* Waitlist CTA */}
         <motion.div
           className="mt-16 rounded-2xl bg-accent/10 border border-accent/20 p-8 text-center"
           initial={{ opacity: 0, y: 20 }}
@@ -276,7 +258,6 @@ export default function BlogPost() {
         </motion.div>
       </article>
 
-      {/* Related posts */}
       {related.length > 0 && (
         <section className="mx-auto max-w-7xl px-4 pb-20">
           <h3 className="text-2xl font-bold font-[Poppins] mb-6">Artículos relacionados</h3>

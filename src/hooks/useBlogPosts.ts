@@ -16,14 +16,13 @@ export interface BlogFetchResult {
 
 async function fetchBlogPosts(): Promise<BlogFetchResult> {
   try {
-    const res = await fetch(BASE_URL, { headers });
+    const res = await fetch(BASE_URL, { headers, cache: "no-store" });
     if (!res.ok) return { posts: [], notionConnected: false };
 
     const data = await res.json();
     const posts: BlogPost[] = Array.isArray(data) ? data : [];
-    // Sort by Nº (descending so highest number = newest first)
     posts.sort((a, b) => (b.number ?? 0) - (a.number ?? 0));
-    return { posts, notionConnected: posts.length > 0 };
+    return { posts, notionConnected: true };
   } catch {
     return { posts: [], notionConnected: false };
   }
@@ -31,7 +30,10 @@ async function fetchBlogPosts(): Promise<BlogFetchResult> {
 
 async function fetchBlogPost(slug: string): Promise<BlogPost | null> {
   try {
-    const res = await fetch(`${BASE_URL}?slug=${encodeURIComponent(slug)}&content=true`, { headers });
+    const res = await fetch(`${BASE_URL}?slug=${encodeURIComponent(slug)}&content=true`, {
+      headers,
+      cache: "no-store",
+    });
     if (!res.ok) return null;
 
     const data = await res.json();
@@ -45,7 +47,9 @@ export function useBlogPosts() {
   return useQuery({
     queryKey: ["blog-posts"],
     queryFn: fetchBlogPosts,
-    staleTime: 5 * 60 * 1000,
+    staleTime: 30 * 1000,
+    refetchOnWindowFocus: true,
+    refetchOnReconnect: true,
   });
 }
 
@@ -54,6 +58,8 @@ export function useBlogPost(slug: string) {
     queryKey: ["blog-post", slug],
     queryFn: () => fetchBlogPost(slug),
     enabled: !!slug,
-    staleTime: 5 * 60 * 1000,
+    staleTime: 30 * 1000,
+    refetchOnWindowFocus: true,
+    refetchOnReconnect: true,
   });
 }
