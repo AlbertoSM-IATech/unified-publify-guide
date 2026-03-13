@@ -56,33 +56,10 @@ export const Hero = () => {
 
             <TextReveal
               as="p"
-              className="text-lg mb-4 md:text-xl lg:text-2xl font-light text-foreground/80"
+              className="text-lg mb-8 md:text-xl lg:text-2xl font-light text-foreground/80"
               immediate delay={0.9} stagger={0.01} duration={0.4}>
               Recupera horas cada semana con el único sistema diseñado para publishers KDP.
             </TextReveal>
-
-            {/* Countdown */}
-            <motion.div variants={fadeInUp} className="mb-6">
-              <CountdownTimer />
-            </motion.div>
-
-            {/* CTA Button */}
-            <motion.div variants={fadeInUp} className="mb-6">
-              <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
-                <Button
-                  onClick={openDialog}
-                  size="lg"
-                  className="h-11 text-sm px-6 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-lg shadow-primary/25 whitespace-nowrap"
-                >
-                  Bloquear precio desde 15€/mes
-                  <ArrowRight className="ml-1.5" size={16} />
-                </Button>
-              </motion.div>
-              <p className="text-sm text-accent mt-2">
-                Solo tu email. Sin tarjeta. Sin compromiso.
-              </p>
-              <WaitlistDialog open={open} onOpenChange={setOpen} />
-            </motion.div>
 
             <motion.div variants={fadeInUp} className="flex flex-wrap items-center gap-2.5 mb-6">
               {["Investiga", "Crea", "Analiza", "Escala"].map((step, i) =>
@@ -113,7 +90,7 @@ export const Hero = () => {
               )}
             </motion.div>
 
-            <motion.div variants={fadeInUp} className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+            <motion.div variants={fadeInUp} className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mb-8">
               {benefits.map((b, i) =>
                 <motion.div
                   key={i}
@@ -125,6 +102,29 @@ export const Hero = () => {
                   <span className="text-xs text-foreground">{b.text}</span>
                 </motion.div>
               )}
+            </motion.div>
+
+            {/* Countdown */}
+            <motion.div variants={fadeInUp} className="mb-4">
+              <CountdownTimer />
+            </motion.div>
+
+            {/* CTA Button */}
+            <motion.div variants={fadeInUp} className="mb-6">
+              <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
+                <Button
+                  onClick={openDialog}
+                  size="lg"
+                  className="h-11 text-sm px-6 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-lg shadow-primary/25 whitespace-nowrap"
+                >
+                  Bloquear precio desde 15€/mes
+                  <ArrowRight className="ml-1.5" size={16} />
+                </Button>
+              </motion.div>
+              <p className="text-sm text-accent mt-2">
+                Solo tu email. Sin tarjeta. Sin compromiso.
+              </p>
+              <WaitlistDialog open={open} onOpenChange={setOpen} />
             </motion.div>
           </div>
 
