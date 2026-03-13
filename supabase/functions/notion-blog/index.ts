@@ -6,10 +6,16 @@ const corsHeaders = {
 };
 
 const NOTION_API_URL = 'https://api.notion.com/v1';
-const DATABASE_ID = 'bd8d89104b68447d8d99d1abd63f83bf';
+const DEFAULT_DATABASE_ID = 'bd8d89104b68447d8d99d1abd63f83bf';
 
 interface NotionRichText {
   plain_text: string;
+}
+
+interface NotionApiError {
+  status?: number;
+  code?: string;
+  message?: string;
 }
 
 interface NotionBlock {
@@ -17,8 +23,17 @@ interface NotionBlock {
   [key: string]: any;
 }
 
-function richTextToPlain(richText: NotionRichText[]): string {
-  return richText?.map((t) => t.plain_text).join('') || '';
+function parseNotionError(raw: string): NotionApiError | null {
+  try {
+    return JSON.parse(raw) as NotionApiError;
+  } catch {
+    return null;
+  }
+}
+
+function resolveDatabaseId(): string {
+  const configured = Deno.env.get('NOTION_DATABASE_ID') || DEFAULT_DATABASE_ID;
+  return configured.replace(/-/g, '');
 }
 
 function blocksToMarkdown(blocks: NotionBlock[]): string {
