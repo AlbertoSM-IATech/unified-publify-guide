@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Clock, ArrowRight, Mail, Loader2 } from "lucide-react";
+import { Clock, ArrowRight, Mail, Loader2, AlertTriangle } from "lucide-react";
 import { Header } from "@/pages/LandingPage/components/Header";
 import { Footer } from "@/pages/LandingPage/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -30,9 +30,11 @@ const cardVariants = {
 
 export default function Blog() {
   const [activeCategory, setActiveCategory] = useState("Todos");
-  const { data: notionPosts, isLoading } = useBlogPosts();
+  const { data, isLoading } = useBlogPosts();
 
-  const blogPosts = notionPosts && notionPosts.length > 0 ? notionPosts : staticPosts;
+  const notionConnected = data?.notionConnected ?? false;
+  const notionPosts = data?.posts ?? [];
+  const blogPosts = notionPosts.length > 0 ? notionPosts : staticPosts;
 
   const featured = blogPosts.find((p) => p.featured);
   const filtered = blogPosts
@@ -68,6 +70,20 @@ export default function Blog() {
       {isLoading && (
         <div className="flex justify-center py-12">
           <Loader2 className="h-8 w-8 animate-spin text-accent" />
+        </div>
+      )}
+
+      {!isLoading && !notionConnected && (
+        <div className="mx-auto max-w-7xl px-4 pb-6">
+          <div className="flex items-center gap-3 rounded-lg border border-accent/30 bg-accent/10 p-4 text-sm text-muted-foreground">
+            <AlertTriangle className="h-5 w-5 shrink-0 text-accent" />
+            <div>
+              <p className="font-medium text-foreground">Notion no está conectado</p>
+              <p>
+                Verifica que la base de datos esté compartida con tu integración y que el ID sea correcto. Mientras tanto se muestran artículos de ejemplo.
+              </p>
+            </div>
+          </div>
         </div>
       )}
 
