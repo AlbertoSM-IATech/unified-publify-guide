@@ -202,7 +202,19 @@ export default function BlogPost() {
     <div className="min-h-screen bg-background text-foreground">
       <Header />
 
-      <article className="mx-auto max-w-3xl px-4 pt-28 pb-16 md:pt-36">
+      {/* Hero cover image */}
+      {post.coverImage && (
+        <div className="relative w-full h-[280px] md:h-[420px] mt-16 overflow-hidden">
+          <img
+            src={post.coverImage}
+            alt={post.title}
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
+        </div>
+      )}
+
+      <article className={`mx-auto max-w-3xl px-4 pb-16 ${post.coverImage ? 'pt-8 -mt-20 relative z-10' : 'pt-28 md:pt-36'}`}>
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45 }}>
           <Link to="/blog" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-accent transition-colors mb-8">
             <ArrowLeft size={16} /> Volver al blog
