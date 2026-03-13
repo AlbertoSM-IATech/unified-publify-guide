@@ -23,9 +23,9 @@ const includes = [
 ];
 
 const pricingTiers = [
-  { dates: "1–10 abril", price: "15", highlight: true },
-  { dates: "11–20 abril", price: "20", highlight: false },
-  { dates: "21–30 abril", price: "25", highlight: false },
+  { dates: "1–30 abril", price: "15", highlight: true },
+  { dates: "1–15 mayo", price: "20", highlight: false },
+  { dates: "16–31 mayo", price: "25", highlight: false },
 ];
 
 const roadmapItems = [
@@ -121,7 +121,7 @@ export const PreventaSection = () => {
             <div className="p-6 bg-card border border-primary/20 rounded-xl">
               <div className="flex items-center gap-2 mb-4">
                 <DollarSign className="w-5 h-5 text-primary" />
-                <h3 className="font-heading text-lg font-bold">Precio escalonado (abril — Plan Plus)</h3>
+                <h3 className="font-heading text-lg font-bold">Precio escalonado (abril–mayo — Plan Plus)</h3>
               </div>
               <p className="text-sm text-muted-foreground mb-4">
                 Cuanto antes entres, menos pagas. El precio se mantiene <strong className="text-foreground">para siempre</strong> mientras mantengas tu suscripción activa.
@@ -142,7 +142,7 @@ export const PreventaSection = () => {
                 )}
               </div>
               <div className="space-y-1 text-xs text-muted-foreground">
-                <p><strong className="text-foreground">Desde mayo:</strong> 29 €/mes Básico | 49 €/mes Plus</p>
+                <p><strong className="text-foreground">Desde junio:</strong> 29 €/mes Básico | 49 €/mes Plus</p>
                 <p>Si cancelas, al volver pagarás el precio vigente sin descuento.</p>
                 <p>El plan PRO no está incluido en esta oferta, pero si entras ahora solo pagarás la diferencia de precio manteniendo tu precio de early adopter.</p>
                 <p className="text-primary">Precios sin IVA.</p>
