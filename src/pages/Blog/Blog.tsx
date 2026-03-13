@@ -27,8 +27,11 @@ const cardVariants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.45, ease: "easeOut" } },
 };
 
+const POSTS_PER_PAGE = 6;
+
 export default function Blog() {
   const [activeCategory, setActiveCategory] = useState("Todos");
+  const [currentPage, setCurrentPage] = useState(1);
   const { data, isLoading } = useBlogPosts();
 
   const notionConnected = data?.notionConnected ?? false;
@@ -38,6 +41,18 @@ export default function Blog() {
   const filtered = blogPosts
     .filter((p) => !p.featured)
     .filter((p) => activeCategory === "Todos" || p.category === activeCategory);
+
+  const totalPages = Math.max(1, Math.ceil(filtered.length / POSTS_PER_PAGE));
+  const paginatedPosts = useMemo(
+    () => filtered.slice((currentPage - 1) * POSTS_PER_PAGE, currentPage * POSTS_PER_PAGE),
+    [filtered, currentPage]
+  );
+
+  // Reset page when category changes
+  const handleCategoryChange = (cat: string) => {
+    setActiveCategory(cat);
+    setCurrentPage(1);
+  };
 
   // Build dynamic categories from posts
   const dynamicCategories = ["Todos", ...Array.from(new Set(blogPosts.map((p) => p.category)))];
