@@ -27,7 +27,7 @@ const benefits = [
 ];
 
 export const Hero = () => {
-  const { name, email, loading, submitted, setName, setEmail, handleSubmit } = useWaitlistForm();
+  const { open, setOpen, openDialog } = useWaitlistDialog();
 
   return (
     <section className="relative flex flex-col items-center px-4 pt-28 pb-20 md:pt-36 md:pb-28 overflow-hidden">
