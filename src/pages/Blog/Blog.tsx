@@ -148,8 +148,7 @@ export default function Blog() {
           className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
           variants={containerVariants}
           initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
+          animate="visible"
         >
           {filtered.map((post, i) => (
             <motion.div key={post.slug} variants={cardVariants}>
