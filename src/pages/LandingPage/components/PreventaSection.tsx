@@ -121,7 +121,7 @@ export const PreventaSection = () => {
             <div className="p-6 bg-card border border-primary/20 rounded-xl">
               <div className="flex items-center gap-2 mb-4">
                 <DollarSign className="w-5 h-5 text-primary" />
-                <h3 className="font-heading text-lg font-bold">Precio escalonado (abril — Plan Plus)</h3>
+                <h3 className="font-heading text-lg font-bold">Precio escalonado (abril–mayo — Plan Plus)</h3>
               </div>
               <p className="text-sm text-muted-foreground mb-4">
                 Cuanto antes entres, menos pagas. El precio se mantiene <strong className="text-foreground">para siempre</strong> mientras mantengas tu suscripción activa.
