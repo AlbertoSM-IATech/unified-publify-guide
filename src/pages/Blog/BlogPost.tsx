@@ -109,19 +109,7 @@ export default function BlogPost() {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.2 }}
         >
-          {content.split("\n").map((line, i) => {
-            const trimmed = line.trim();
-            if (!trimmed) return null;
-            if (trimmed.startsWith("## ")) return <h2 key={i}>{trimmed.slice(3)}</h2>;
-            if (trimmed.startsWith("### ")) return <h3 key={i}>{trimmed.slice(4)}</h3>;
-            if (trimmed.startsWith("> ")) return <blockquote key={i}><p>{trimmed.slice(2)}</p></blockquote>;
-            if (trimmed.startsWith("- **")) {
-              const match = trimmed.match(/^- \*\*(.+?)\*\*:?\s*(.*)/);
-              if (match) return <li key={i}><strong>{match[1]}</strong>{match[2] ? `: ${match[2]}` : ""}</li>;
-            }
-            if (trimmed.startsWith("- ")) return <li key={i}>{trimmed.slice(2)}</li>;
-            return <p key={i}>{trimmed}</p>;
-          })}
+          {renderMarkdown(content)}
         </motion.div>
 
         {/* Waitlist CTA */}
