@@ -103,7 +103,7 @@ export default function Blog() {
                 <div className="p-6 md:p-10 flex flex-col justify-center">
                   <Badge className="w-fit mb-3 bg-accent/10 text-accent border-accent/20">{featured.category}</Badge>
                   <h2 className="text-2xl md:text-3xl font-bold font-[Poppins] group-hover:text-accent transition-colors">
-                    {featured.title}
+                    {featured.number ? <span className="text-accent/60 mr-2">#{featured.number}</span> : null}{featured.title}
                   </h2>
                   <p className="mt-3 text-muted-foreground leading-relaxed">{featured.excerpt}</p>
                   <div className="mt-6 flex items-center gap-4 text-sm text-muted-foreground">
