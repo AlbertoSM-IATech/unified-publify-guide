@@ -157,9 +157,8 @@ function renderMarkdown(md: string): React.ReactNode[] {
   }
 
   return elements;
-}
 
-
+export default function BlogPost() {
   const { slug } = useParams<{ slug: string }>();
   const { data: notionPost, isLoading: isLoadingPost } = useBlogPost(slug || "");
   const { data: allPostsData } = useBlogPosts();
