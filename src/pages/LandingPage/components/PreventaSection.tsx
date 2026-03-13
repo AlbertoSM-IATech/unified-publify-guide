@@ -142,7 +142,7 @@ export const PreventaSection = () => {
                 )}
               </div>
               <div className="space-y-1 text-xs text-muted-foreground">
-                <p><strong className="text-foreground">Desde mayo:</strong> 29 €/mes Básico | 49 €/mes Plus</p>
+                <p><strong className="text-foreground">Desde junio:</strong> 29 €/mes Básico | 49 €/mes Plus</p>
                 <p>Si cancelas, al volver pagarás el precio vigente sin descuento.</p>
                 <p>El plan PRO no está incluido en esta oferta, pero si entras ahora solo pagarás la diferencia de precio manteniendo tu precio de early adopter.</p>
                 <p className="text-primary">Precios sin IVA.</p>
