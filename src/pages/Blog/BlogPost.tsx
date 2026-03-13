@@ -157,6 +157,7 @@ function renderMarkdown(md: string): React.ReactNode[] {
   }
 
   return elements;
+}
 
 export default function BlogPost() {
   const { slug } = useParams<{ slug: string }>();
