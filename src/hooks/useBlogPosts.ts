@@ -1,31 +1,23 @@
 import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
 import { BlogPost } from "@/pages/Blog/blogData";
 
+const BASE_URL = `https://${import.meta.env.VITE_SUPABASE_PROJECT_ID}.supabase.co/functions/v1/notion-blog`;
+const ANON_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
+
+const headers = {
+  Authorization: `Bearer ${ANON_KEY}`,
+  apikey: ANON_KEY,
+};
+
 async function fetchBlogPosts(): Promise<BlogPost[]> {
-  const { data, error } = await supabase.functions.invoke("notion-blog");
-  if (error) throw error;
-  return data as BlogPost[];
+  const res = await fetch(BASE_URL, { headers });
+  if (!res.ok) throw new Error("Failed to fetch blog posts");
+  return res.json();
 }
 
 async function fetchBlogPost(slug: string): Promise<BlogPost> {
-  const { data, error } = await supabase.functions.invoke("notion-blog", {
-    body: null,
-    headers: {},
-  });
-  // We need to pass query params — use fetch directly
-  const projectId = import.meta.env.VITE_SUPABASE_PROJECT_ID;
-  const anonKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
-  const res = await fetch(
-    `https://${projectId}.supabase.co/functions/v1/notion-blog?slug=${encodeURIComponent(slug)}&content=true`,
-    {
-      headers: {
-        Authorization: `Bearer ${anonKey}`,
-        apikey: anonKey,
-      },
-    }
-  );
-  if (!res.ok) throw new Error("Failed to fetch post");
+  const res = await fetch(`${BASE_URL}?slug=${encodeURIComponent(slug)}&content=true`, { headers });
+  if (!res.ok) throw new Error("Failed to fetch blog post");
   return res.json();
 }
 
