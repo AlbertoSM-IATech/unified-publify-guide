@@ -26,8 +26,140 @@ Este es un artículo de ejemplo que pronto tendrá contenido real. Mientras tant
 
 Mantente atento a las actualizaciones de este artículo. Estamos preparando contenido de alto valor para ayudarte en tu camino como autor independiente.
 `;
+function parseInline(text: string): React.ReactNode[] {
+  const nodes: React.ReactNode[] = [];
+  // Regex for: links, bold, italic, code, strikethrough, underline
+  const regex = /\[([^\]]+)\]\(([^)]+)\)|\*\*(.+?)\*\*|\*(.+?)\*|`(.+?)`|~~(.+?)~~|<u>(.+?)<\/u>/g;
+  let lastIndex = 0;
+  let match: RegExpExecArray | null;
 
-export default function BlogPost() {
+  while ((match = regex.exec(text)) !== null) {
+    if (match.index > lastIndex) {
+      nodes.push(text.slice(lastIndex, match.index));
+    }
+    if (match[1] && match[2]) {
+      nodes.push(<a key={match.index} href={match[2]} target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">{match[1]}</a>);
+    } else if (match[3]) {
+      nodes.push(<strong key={match.index}>{match[3]}</strong>);
+    } else if (match[4]) {
+      nodes.push(<em key={match.index}>{match[4]}</em>);
+    } else if (match[5]) {
+      nodes.push(<code key={match.index} className="rounded bg-muted px-1.5 py-0.5 text-sm">{match[5]}</code>);
+    } else if (match[6]) {
+      nodes.push(<s key={match.index}>{match[6]}</s>);
+    } else if (match[7]) {
+      nodes.push(<u key={match.index}>{match[7]}</u>);
+    }
+    lastIndex = match.index + match[0].length;
+  }
+
+  if (lastIndex < text.length) {
+    nodes.push(text.slice(lastIndex));
+  }
+
+  return nodes;
+}
+
+function renderMarkdown(md: string): React.ReactNode[] {
+  const lines = md.split('\n');
+  const elements: React.ReactNode[] = [];
+  let i = 0;
+
+  while (i < lines.length) {
+    const line = lines[i];
+    const trimmed = line.trim();
+
+    // Empty lines
+    if (!trimmed) { i++; continue; }
+
+    // Headings
+    if (trimmed.startsWith('# ') && !trimmed.startsWith('## ')) {
+      elements.push(<h1 key={i}>{parseInline(trimmed.slice(2))}</h1>);
+      i++; continue;
+    }
+    if (trimmed.startsWith('## ') && !trimmed.startsWith('### ')) {
+      elements.push(<h2 key={i}>{parseInline(trimmed.slice(3))}</h2>);
+      i++; continue;
+    }
+    if (trimmed.startsWith('### ')) {
+      elements.push(<h3 key={i}>{parseInline(trimmed.slice(4))}</h3>);
+      i++; continue;
+    }
+
+    // Blockquote
+    if (trimmed.startsWith('> ')) {
+      const quoteLines: string[] = [];
+      while (i < lines.length && lines[i].trim().startsWith('> ')) {
+        quoteLines.push(lines[i].trim().slice(2));
+        i++;
+      }
+      elements.push(<blockquote key={`q${i}`}>{quoteLines.map((q, qi) => <p key={qi}>{parseInline(q)}</p>)}</blockquote>);
+      continue;
+    }
+
+    // Code block
+    if (trimmed.startsWith('```')) {
+      const codeLines: string[] = [];
+      i++;
+      while (i < lines.length && !lines[i].trim().startsWith('```')) {
+        codeLines.push(lines[i]);
+        i++;
+      }
+      i++; // skip closing ```
+      elements.push(<pre key={`code${i}`} className="rounded-lg bg-muted p-4 overflow-x-auto text-sm"><code>{codeLines.join('\n')}</code></pre>);
+      continue;
+    }
+
+    // Divider
+    if (trimmed === '---') {
+      elements.push(<hr key={`hr${i}`} />);
+      i++; continue;
+    }
+
+    // Image
+    const imgMatch = trimmed.match(/^!\[([^\]]*)\]\(([^)]+)\)$/);
+    if (imgMatch) {
+      elements.push(<img key={`img${i}`} src={imgMatch[2]} alt={imgMatch[1]} className="rounded-lg my-4 max-w-full" loading="lazy" />);
+      i++; continue;
+    }
+
+    // Numbered list
+    if (/^\d+\.\s/.test(trimmed)) {
+      const items: React.ReactNode[] = [];
+      while (i < lines.length && /^\d+\.\s/.test(lines[i].trim())) {
+        items.push(<li key={`ol${i}`}>{parseInline(lines[i].trim().replace(/^\d+\.\s/, ''))}</li>);
+        i++;
+      }
+      elements.push(<ol key={`ol-group${i}`} className="list-decimal pl-6">{items}</ol>);
+      continue;
+    }
+
+    // Bulleted list (and checkboxes)
+    if (trimmed.startsWith('- ')) {
+      const items: React.ReactNode[] = [];
+      while (i < lines.length && lines[i].trim().startsWith('- ')) {
+        const itemText = lines[i].trim().slice(2);
+        const todoMatch = itemText.match(/^\[([x ])\]\s*(.*)/);
+        if (todoMatch) {
+          items.push(<li key={`li${i}`} className="flex items-start gap-2 list-none"><input type="checkbox" checked={todoMatch[1] === 'x'} readOnly className="mt-1" /><span>{parseInline(todoMatch[2])}</span></li>);
+        } else {
+          items.push(<li key={`li${i}`}>{parseInline(itemText)}</li>);
+        }
+        i++;
+      }
+      elements.push(<ul key={`ul${i}`} className="list-disc pl-6">{items}</ul>);
+      continue;
+    }
+
+    // Paragraph (default)
+    elements.push(<p key={i}>{parseInline(trimmed)}</p>);
+    i++;
+  }
+
+  return elements;
+}
+
+
   const { slug } = useParams<{ slug: string }>();
   const { data: notionPost, isLoading: isLoadingPost } = useBlogPost(slug || "");
   const { data: allPostsData } = useBlogPosts();
