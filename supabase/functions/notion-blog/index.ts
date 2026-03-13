@@ -130,6 +130,25 @@ serve(async (req) => {
     const posts = dbData.results.map((page: any) => {
       const props = page.properties;
       const palabras = props['Palabras']?.number || 0;
+
+      // Extract cover image: Notion supports external URL or uploaded file
+      let coverImage = '';
+      if (page.cover) {
+        if (page.cover.type === 'external') {
+          coverImage = page.cover.external?.url || '';
+        } else if (page.cover.type === 'file') {
+          coverImage = page.cover.file?.url || '';
+        }
+      }
+      // Fallback: check for a "Portada" Files & media property
+      if (!coverImage) {
+        const portadaFiles = props['Portada']?.files;
+        if (portadaFiles && portadaFiles.length > 0) {
+          const f = portadaFiles[0];
+          coverImage = f.type === 'external' ? f.external?.url : f.file?.url || '';
+        }
+      }
+
       return {
         id: page.id,
         slug: richTextToPlain(props['Slug']?.rich_text) || page.id,
@@ -138,6 +157,7 @@ serve(async (req) => {
         category: props['Pilar']?.select?.name || 'General',
         date: props['Fecha publicación']?.date?.start || '',
         readingTime: Math.max(1, Math.round(palabras / 250)),
+        coverImage,
         author: {
           name: richTextToPlain(props['Autor']?.rich_text) || 'Equipo Publify',
           role: 'Autor',

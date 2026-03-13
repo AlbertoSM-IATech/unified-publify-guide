@@ -93,9 +93,15 @@ export default function Blog() {
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.15 }}>
             <Link to={`/blog/${featured.slug}`} className="group block">
               <div className="grid md:grid-cols-2 gap-0 rounded-2xl overflow-hidden border border-border bg-card hover:shadow-xl transition-shadow duration-300">
-                <div className={`aspect-[16/10] md:aspect-auto bg-gradient-to-br ${gradients[0]} flex items-center justify-center`}>
-                  <span className="text-6xl md:text-8xl opacity-30 select-none">📖</span>
-                </div>
+                {featured.coverImage ? (
+                  <div className="aspect-[16/10] md:aspect-auto overflow-hidden">
+                    <img src={featured.coverImage} alt={featured.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                  </div>
+                ) : (
+                  <div className={`aspect-[16/10] md:aspect-auto bg-gradient-to-br ${gradients[0]} flex items-center justify-center`}>
+                    <span className="text-6xl md:text-8xl opacity-30 select-none">📖</span>
+                  </div>
+                )}
                 <div className="p-6 md:p-10 flex flex-col justify-center">
                   <Badge className="w-fit mb-3 bg-accent/10 text-accent border-accent/20">{featured.category}</Badge>
                   <h2 className="text-2xl md:text-3xl font-bold font-[Poppins] group-hover:text-accent transition-colors">
@@ -151,9 +157,15 @@ export default function Blog() {
             <motion.div key={post.slug} variants={cardVariants}>
               <Link to={`/blog/${post.slug}`} className="group block h-full">
                 <article className="flex h-full flex-col rounded-xl border border-border bg-card overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
-                  <div className={`aspect-[16/9] bg-gradient-to-br ${gradients[(i + 1) % gradients.length]} flex items-center justify-center`}>
-                    <span className="text-4xl opacity-20 select-none">✍️</span>
-                  </div>
+                  {post.coverImage ? (
+                    <div className="aspect-[16/9] overflow-hidden">
+                      <img src={post.coverImage} alt={post.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+                    </div>
+                  ) : (
+                    <div className={`aspect-[16/9] bg-gradient-to-br ${gradients[(i + 1) % gradients.length]} flex items-center justify-center`}>
+                      <span className="text-4xl opacity-20 select-none">✍️</span>
+                    </div>
+                  )}
                   <div className="flex flex-1 flex-col p-5">
                     <Badge className="w-fit mb-2 bg-accent/10 text-accent border-accent/20 text-xs">{post.category}</Badge>
                     <h3 className="font-bold font-[Poppins] text-lg leading-snug group-hover:text-accent transition-colors">
