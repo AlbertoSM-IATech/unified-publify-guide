@@ -144,7 +144,7 @@ export default function Blog() {
           {dynamicCategories.map((cat) => (
             <button
               key={cat}
-              onClick={() => setActiveCategory(cat)}
+              onClick={() => handleCategoryChange(cat)}
               className={`whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium transition-colors ${
                 activeCategory === cat
                   ? "bg-accent text-accent-foreground"
