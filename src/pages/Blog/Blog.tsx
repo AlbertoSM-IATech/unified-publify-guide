@@ -32,8 +32,7 @@ export default function Blog() {
   const { data, isLoading } = useBlogPosts();
 
   const notionConnected = data?.notionConnected ?? false;
-  const notionPosts = data?.posts ?? [];
-  const blogPosts = notionPosts.length > 0 ? notionPosts : staticPosts;
+  const blogPosts = data?.posts ?? [];
 
   const featured = blogPosts.find((p) => p.featured);
   const filtered = blogPosts
