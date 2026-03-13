@@ -142,6 +142,15 @@ export const NotFound = lazy(() =>
   }))
 );
 
+// Blog
+export const Blog = lazy(() => 
+  import('@/pages/Blog/Blog')
+);
+
+export const BlogPost = lazy(() => 
+  import('@/pages/Blog/BlogPost')
+);
+
 // Checkout
 export const Checkout = lazy(() => 
   import('@/pages/Checkout/Checkout')

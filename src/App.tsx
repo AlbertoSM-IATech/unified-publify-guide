@@ -32,6 +32,8 @@ import { Contact } from "@/pages/Contact/Contact";
 import Checkout from "@/pages/Checkout/Checkout";
 import CheckoutSuccess from "@/pages/Checkout/CheckoutSuccess";
 import CheckoutCancel from "@/pages/Checkout/CheckoutCancel";
+import Blog from "@/pages/Blog/Blog";
+import BlogPost from "@/pages/Blog/BlogPost";
 
 function App() {
   const { theme } = useTheme();
