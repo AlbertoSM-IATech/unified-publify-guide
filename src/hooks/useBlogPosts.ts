@@ -11,14 +11,18 @@ const headers = {
 
 async function fetchBlogPosts(): Promise<BlogPost[]> {
   const res = await fetch(BASE_URL, { headers });
-  if (!res.ok) throw new Error("Failed to fetch blog posts");
-  return res.json();
+  if (!res.ok) return [];
+
+  const data = await res.json();
+  return Array.isArray(data) ? data : [];
 }
 
-async function fetchBlogPost(slug: string): Promise<BlogPost> {
+async function fetchBlogPost(slug: string): Promise<BlogPost | null> {
   const res = await fetch(`${BASE_URL}?slug=${encodeURIComponent(slug)}&content=true`, { headers });
-  if (!res.ok) throw new Error("Failed to fetch blog post");
-  return res.json();
+  if (!res.ok) return null;
+
+  const data = await res.json();
+  return data && typeof data === "object" && "slug" in data ? (data as BlogPost) : null;
 }
 
 export function useBlogPosts() {
