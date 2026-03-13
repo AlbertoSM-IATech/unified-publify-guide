@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Clock, ArrowRight, Mail, Loader2, AlertTriangle } from "lucide-react";
