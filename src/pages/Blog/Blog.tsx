@@ -6,7 +6,6 @@ import { Header } from "@/pages/LandingPage/components/Header";
 import { Footer } from "@/pages/LandingPage/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { blogPosts as staticPosts, categories } from "./blogData";
 import { useBlogPosts } from "@/hooks/useBlogPosts";
 
 const gradients = [
