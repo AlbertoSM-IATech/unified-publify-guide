@@ -2,6 +2,7 @@ import { useState } from "react";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -19,10 +20,13 @@ export const WaitlistDialog = ({ open, onOpenChange }: WaitlistDialogProps) => {
           <DialogTitle className="font-heading text-xl font-bold text-center">
             Reserva tu acceso prioritario
           </DialogTitle>
+          <DialogDescription className="text-center text-sm text-muted-foreground">
+            Rellena el formulario para bloquear tu plaza.
+          </DialogDescription>
         </DialogHeader>
         <div className="px-2 pb-2">
           <iframe
-            src="https://wild-paperback-a33.notion.site/ebd//32283e512fb280f5aa76e0ed984c866f"
+            src="https://wild-paperback-a33.notion.site/ebd/32283e512fb280f5aa76e0ed984c866f"
             width="100%"
             height="600"
             frameBorder="0"
