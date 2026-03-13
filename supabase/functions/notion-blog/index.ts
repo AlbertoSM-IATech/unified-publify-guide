@@ -62,7 +62,7 @@ function richTextToMarkdown(richText: any[]): string {
 }
 
 function blocksToMarkdown(blocks: NotionBlock[]): string {
-  const lines: string[] = [];
+  const parts: { text: string; type: string }[] = [];
   let numberedIndex = 0;
 
   for (const block of blocks) {
@@ -71,62 +71,76 @@ function blocksToMarkdown(blocks: NotionBlock[]): string {
     // Reset numbered list counter when not in a numbered list
     if (type !== 'numbered_list_item') numberedIndex = 0;
 
+    let text = '';
     switch (type) {
       case 'heading_1':
-        lines.push(`# ${richTextToMarkdown(block.heading_1.rich_text)}`);
+        text = `# ${richTextToMarkdown(block.heading_1.rich_text)}`;
         break;
       case 'heading_2':
-        lines.push(`## ${richTextToMarkdown(block.heading_2.rich_text)}`);
+        text = `## ${richTextToMarkdown(block.heading_2.rich_text)}`;
         break;
       case 'heading_3':
-        lines.push(`### ${richTextToMarkdown(block.heading_3.rich_text)}`);
+        text = `### ${richTextToMarkdown(block.heading_3.rich_text)}`;
         break;
       case 'paragraph': {
-        const text = richTextToMarkdown(block.paragraph.rich_text);
-        lines.push(text || '');
+        text = richTextToMarkdown(block.paragraph.rich_text) || '';
         break;
       }
       case 'bulleted_list_item':
-        lines.push(`- ${richTextToMarkdown(block.bulleted_list_item.rich_text)}`);
+        text = `- ${richTextToMarkdown(block.bulleted_list_item.rich_text)}`;
         break;
       case 'numbered_list_item':
         numberedIndex++;
-        lines.push(`${numberedIndex}. ${richTextToMarkdown(block.numbered_list_item.rich_text)}`);
+        text = `${numberedIndex}. ${richTextToMarkdown(block.numbered_list_item.rich_text)}`;
         break;
       case 'quote':
-        lines.push(`> ${richTextToMarkdown(block.quote.rich_text)}`);
+        text = `> ${richTextToMarkdown(block.quote.rich_text)}`;
         break;
       case 'callout':
-        lines.push(`> 💡 ${richTextToMarkdown(block.callout.rich_text)}`);
+        text = `> 💡 ${richTextToMarkdown(block.callout.rich_text)}`;
         break;
       case 'code':
-        lines.push(`\`\`\`${block.code.language || ''}\n${richTextToPlain(block.code.rich_text)}\n\`\`\``);
+        text = `\`\`\`${block.code.language || ''}\n${richTextToPlain(block.code.rich_text)}\n\`\`\``;
         break;
       case 'image': {
         const url = block.image.type === 'external'
           ? block.image.external?.url
           : block.image.file?.url;
         const caption = richTextToPlain(block.image.caption);
-        if (url) lines.push(`![${caption || 'imagen'}](${url})`);
+        if (url) text = `![${caption || 'imagen'}](${url})`;
         break;
       }
       case 'divider':
-        lines.push('---');
+        text = '---';
         break;
       case 'toggle':
-        lines.push(`**${richTextToMarkdown(block.toggle.rich_text)}**`);
+        text = `**${richTextToMarkdown(block.toggle.rich_text)}**`;
         break;
       case 'to_do': {
         const checked = block.to_do.checked ? 'x' : ' ';
-        lines.push(`- [${checked}] ${richTextToMarkdown(block.to_do.rich_text)}`);
+        text = `- [${checked}] ${richTextToMarkdown(block.to_do.rich_text)}`;
         break;
       }
       default:
-        break;
+        continue;
+    }
+
+    parts.push({ text, type });
+  }
+
+  // Join with \n between consecutive list items, \n\n otherwise
+  const listTypes = new Set(['bulleted_list_item', 'numbered_list_item', 'to_do']);
+  const result: string[] = [];
+  for (let i = 0; i < parts.length; i++) {
+    result.push(parts[i].text);
+    if (i < parts.length - 1) {
+      const currentIsList = listTypes.has(parts[i].type);
+      const nextIsList = listTypes.has(parts[i + 1].type);
+      result.push(currentIsList && nextIsList ? '\n' : '\n\n');
     }
   }
 
-  return lines.join('\n\n');
+  return result.join('');
 }
 
 serve(async (req) => {

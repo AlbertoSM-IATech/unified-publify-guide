@@ -64,6 +64,7 @@ function renderMarkdown(md: string): React.ReactNode[] {
   const lines = md.split('\n');
   const elements: React.ReactNode[] = [];
   let i = 0;
+  let keyIdx = 0;
 
   while (i < lines.length) {
     const line = lines[i];
@@ -72,17 +73,17 @@ function renderMarkdown(md: string): React.ReactNode[] {
     // Empty lines
     if (!trimmed) { i++; continue; }
 
-    // Headings
-    if (trimmed.startsWith('# ') && !trimmed.startsWith('## ')) {
-      elements.push(<h1 key={i}>{parseInline(trimmed.slice(2))}</h1>);
-      i++; continue;
-    }
-    if (trimmed.startsWith('## ') && !trimmed.startsWith('### ')) {
-      elements.push(<h2 key={i}>{parseInline(trimmed.slice(3))}</h2>);
-      i++; continue;
-    }
+    // Headings (order matters: check ### before ## before #)
     if (trimmed.startsWith('### ')) {
-      elements.push(<h3 key={i}>{parseInline(trimmed.slice(4))}</h3>);
+      elements.push(<h3 key={keyIdx++} className="text-xl md:text-2xl font-bold font-[Poppins] mt-8 mb-3">{parseInline(trimmed.slice(4))}</h3>);
+      i++; continue;
+    }
+    if (trimmed.startsWith('## ')) {
+      elements.push(<h2 key={keyIdx++} className="text-2xl md:text-3xl font-bold font-[Poppins] mt-10 mb-4">{parseInline(trimmed.slice(3))}</h2>);
+      i++; continue;
+    }
+    if (trimmed.startsWith('# ')) {
+      elements.push(<h1 key={keyIdx++} className="text-3xl md:text-4xl font-bold font-[Poppins] mt-12 mb-5">{parseInline(trimmed.slice(2))}</h1>);
       i++; continue;
     }
 
@@ -93,7 +94,11 @@ function renderMarkdown(md: string): React.ReactNode[] {
         quoteLines.push(lines[i].trim().slice(2));
         i++;
       }
-      elements.push(<blockquote key={`q${i}`}>{quoteLines.map((q, qi) => <p key={qi}>{parseInline(q)}</p>)}</blockquote>);
+      elements.push(
+        <blockquote key={keyIdx++} className="border-l-4 border-accent pl-4 my-4 italic text-muted-foreground">
+          {quoteLines.map((q, qi) => <p key={qi}>{parseInline(q)}</p>)}
+        </blockquote>
+      );
       continue;
     }
 
@@ -106,20 +111,20 @@ function renderMarkdown(md: string): React.ReactNode[] {
         i++;
       }
       i++; // skip closing ```
-      elements.push(<pre key={`code${i}`} className="rounded-lg bg-muted p-4 overflow-x-auto text-sm"><code>{codeLines.join('\n')}</code></pre>);
+      elements.push(<pre key={keyIdx++} className="rounded-lg bg-muted p-4 overflow-x-auto text-sm my-4"><code>{codeLines.join('\n')}</code></pre>);
       continue;
     }
 
     // Divider
     if (trimmed === '---') {
-      elements.push(<hr key={`hr${i}`} />);
+      elements.push(<hr key={keyIdx++} className="my-8 border-border" />);
       i++; continue;
     }
 
     // Image
     const imgMatch = trimmed.match(/^!\[([^\]]*)\]\(([^)]+)\)$/);
     if (imgMatch) {
-      elements.push(<img key={`img${i}`} src={imgMatch[2]} alt={imgMatch[1]} className="rounded-lg my-4 max-w-full" loading="lazy" />);
+      elements.push(<img key={keyIdx++} src={imgMatch[2]} alt={imgMatch[1]} className="rounded-lg my-4 max-w-full" loading="lazy" />);
       i++; continue;
     }
 
@@ -127,10 +132,10 @@ function renderMarkdown(md: string): React.ReactNode[] {
     if (/^\d+\.\s/.test(trimmed)) {
       const items: React.ReactNode[] = [];
       while (i < lines.length && /^\d+\.\s/.test(lines[i].trim())) {
-        items.push(<li key={`ol${i}`}>{parseInline(lines[i].trim().replace(/^\d+\.\s/, ''))}</li>);
+        items.push(<li key={keyIdx++}>{parseInline(lines[i].trim().replace(/^\d+\.\s/, ''))}</li>);
         i++;
       }
-      elements.push(<ol key={`ol-group${i}`} className="list-decimal pl-6">{items}</ol>);
+      elements.push(<ol key={keyIdx++} className="list-decimal pl-6 my-4 space-y-1 text-muted-foreground">{items}</ol>);
       continue;
     }
 
@@ -141,18 +146,18 @@ function renderMarkdown(md: string): React.ReactNode[] {
         const itemText = lines[i].trim().slice(2);
         const todoMatch = itemText.match(/^\[([x ])\]\s*(.*)/);
         if (todoMatch) {
-          items.push(<li key={`li${i}`} className="flex items-start gap-2 list-none"><input type="checkbox" checked={todoMatch[1] === 'x'} readOnly className="mt-1" /><span>{parseInline(todoMatch[2])}</span></li>);
+          items.push(<li key={keyIdx++} className="flex items-start gap-2 list-none"><input type="checkbox" checked={todoMatch[1] === 'x'} readOnly className="mt-1" /><span>{parseInline(todoMatch[2])}</span></li>);
         } else {
-          items.push(<li key={`li${i}`}>{parseInline(itemText)}</li>);
+          items.push(<li key={keyIdx++}>{parseInline(itemText)}</li>);
         }
         i++;
       }
-      elements.push(<ul key={`ul${i}`} className="list-disc pl-6">{items}</ul>);
+      elements.push(<ul key={keyIdx++} className="list-disc pl-6 my-4 space-y-1 text-muted-foreground">{items}</ul>);
       continue;
     }
 
     // Paragraph (default)
-    elements.push(<p key={i}>{parseInline(trimmed)}</p>);
+    elements.push(<p key={keyIdx++} className="my-4 leading-relaxed text-muted-foreground">{parseInline(trimmed)}</p>);
     i++;
   }
 
