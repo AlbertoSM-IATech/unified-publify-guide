@@ -23,9 +23,9 @@ const includes = [
 ];
 
 const pricingTiers = [
-  { dates: "1–10 abril", price: "15", highlight: true },
-  { dates: "11–20 abril", price: "20", highlight: false },
-  { dates: "21–30 abril", price: "25", highlight: false },
+  { dates: "1–30 abril", price: "15", highlight: true },
+  { dates: "1–15 mayo", price: "20", highlight: false },
+  { dates: "16–31 mayo", price: "25", highlight: false },
 ];
 
 const roadmapItems = [
