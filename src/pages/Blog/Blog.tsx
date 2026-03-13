@@ -1,7 +1,7 @@
 import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Clock, ArrowRight, Mail, Loader2, AlertTriangle } from "lucide-react";
+import { Clock, ArrowRight, Mail, Loader2, AlertTriangle, ChevronLeft, ChevronRight } from "lucide-react";
 import { Header } from "@/pages/LandingPage/components/Header";
 import { Footer } from "@/pages/LandingPage/components/Footer";
 import { Button } from "@/components/ui/button";
