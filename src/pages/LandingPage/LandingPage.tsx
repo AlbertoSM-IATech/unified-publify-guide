@@ -14,6 +14,7 @@ import { Footer } from "./components/Footer";
 import { StickyMobileCTA } from "./components/StickyMobileCTA";
 import { TechBackground } from "@/components/motion/TechBackground";
 import { useScrollAnimations } from "@/hooks/useScrollAnimations";
+import { WaitlistProvider, useWaitlistState } from "./hooks/useWaitlistForm";
 
 const pageVariants = {
   hidden: { opacity: 0 },
@@ -23,7 +24,7 @@ const pageVariants = {
   }
 };
 
-export const LandingPage = () => {
+const LandingContent = () => {
   useScrollAnimations();
   return (
     <motion.div 
@@ -47,6 +48,15 @@ export const LandingPage = () => {
       <Footer />
       <StickyMobileCTA />
     </motion.div>
+  );
+};
+
+export const LandingPage = () => {
+  const waitlistState = useWaitlistState();
+  return (
+    <WaitlistProvider value={waitlistState}>
+      <LandingContent />
+    </WaitlistProvider>
   );
 };
 
