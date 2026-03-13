@@ -32,6 +32,8 @@ import { Contact } from "@/pages/Contact/Contact";
 import Checkout from "@/pages/Checkout/Checkout";
 import CheckoutSuccess from "@/pages/Checkout/CheckoutSuccess";
 import CheckoutCancel from "@/pages/Checkout/CheckoutCancel";
+import Blog from "@/pages/Blog/Blog";
+import BlogPost from "@/pages/Blog/BlogPost";
 
 function App() {
   const { theme } = useTheme();
@@ -123,6 +125,16 @@ function App() {
           </Route>
         </Route>
         
+        <Route path="/blog" element={
+          <Suspense fallback={<LoadingState text="Cargando blog..." />}>
+            <Blog />
+          </Suspense>
+        } />
+        <Route path="/blog/:slug" element={
+          <Suspense fallback={<LoadingState text="Cargando artículo..." />}>
+            <BlogPost />
+          </Suspense>
+        } />
         <Route path="/terminos-y-condiciones" element={<TermsAndConditions />} />
         <Route path="/politica-privacidad" element={<PrivacyPolicy />} />
         <Route path="/contacto" element={<Contact />} />

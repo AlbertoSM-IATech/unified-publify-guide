@@ -11,6 +11,7 @@ const navLinks = [
   { href: "#para-quien", label: "Para quién" },
   { href: "#early-adopters", label: "Acceso Founders" },
   { href: "#faq", label: "FAQ" },
+  { href: "/blog", label: "Blog", isRoute: true },
 ];
 
 export const Header = () => {
@@ -41,11 +42,17 @@ export const Header = () => {
         </Link>
         
         <nav className="hidden md:flex items-center gap-6">
-          {navLinks.map((link) => (
-            <a key={link.href} href={link.href} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-              {link.label}
-            </a>
-          ))}
+          {navLinks.map((link) =>
+            (link as any).isRoute ? (
+              <Link key={link.href} to={link.href} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                {link.label}
+              </Link>
+            ) : (
+              <a key={link.href} href={link.href} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                {link.label}
+              </a>
+            )
+          )}
           <button onClick={toggleTheme} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
             {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
           </button>
@@ -69,11 +76,17 @@ export const Header = () => {
       {menuOpen && (
         <div className="border-t border-border px-4 py-4 md:hidden bg-background">
           <nav className="flex flex-col space-y-4">
-            {navLinks.map((link) => (
-              <a key={link.href} href={link.href} className="text-sm text-muted-foreground hover:text-foreground transition-colors" onClick={() => setMenuOpen(false)}>
-                {link.label}
-              </a>
-            ))}
+            {navLinks.map((link) =>
+              (link as any).isRoute ? (
+                <Link key={link.href} to={link.href} className="text-sm text-muted-foreground hover:text-foreground transition-colors" onClick={() => setMenuOpen(false)}>
+                  {link.label}
+                </Link>
+              ) : (
+                <a key={link.href} href={link.href} className="text-sm text-muted-foreground hover:text-foreground transition-colors" onClick={() => setMenuOpen(false)}>
+                  {link.label}
+                </a>
+              )
+            )}
             <button onClick={() => { toggleTheme(); setMenuOpen(false); }} className="text-left text-sm text-muted-foreground hover:text-foreground transition-colors">
              {theme === "dark" ? <><Sun size={16} className="inline mr-1" /> Modo Claro</> : <><Moon size={16} className="inline mr-1" /> Modo Oscuro</>}
             </button>
