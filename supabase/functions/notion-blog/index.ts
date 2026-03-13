@@ -36,6 +36,10 @@ function resolveDatabaseId(): string {
   return configured.replace(/-/g, '');
 }
 
+function richTextToPlain(richText: NotionRichText[]): string {
+  return richText?.map((t) => t.plain_text).join('') || '';
+}
+
 function blocksToMarkdown(blocks: NotionBlock[]): string {
   return blocks.map((block) => {
     const type = block.type;
@@ -84,6 +88,7 @@ serve(async (req) => {
     const url = new URL(req.url);
     const slug = url.searchParams.get('slug');
     const withContent = url.searchParams.get('content') === 'true';
+    const databaseId = resolveDatabaseId();
 
     // Query the database — only published posts
     const queryBody: any = {
@@ -94,13 +99,30 @@ serve(async (req) => {
       sorts: [{ property: 'Fecha publicación', direction: 'descending' }],
     };
 
-    const dbRes = await fetch(`${NOTION_API_URL}/databases/${DATABASE_ID}/query`, {
+    const dbRes = await fetch(`${NOTION_API_URL}/databases/${databaseId}/query`, {
       method: 'POST', headers, body: JSON.stringify(queryBody),
     });
 
     if (!dbRes.ok) {
-      const err = await dbRes.text();
-      throw new Error(`Notion DB query failed [${dbRes.status}]: ${err}`);
+      const rawError = await dbRes.text();
+      const notionError = parseNotionError(rawError);
+
+      if (dbRes.status === 404 && notionError?.code === 'object_not_found') {
+        console.warn('Notion database not accessible. Verify database ID and sharing with the integration.');
+
+        if (slug && withContent) {
+          return new Response(JSON.stringify({ error: 'Post not found' }), {
+            status: 404,
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          });
+        }
+
+        return new Response(JSON.stringify([]), {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        });
+      }
+
+      throw new Error(`Notion DB query failed [${dbRes.status}]: ${rawError}`);
     }
 
     const dbData = await dbRes.json();
