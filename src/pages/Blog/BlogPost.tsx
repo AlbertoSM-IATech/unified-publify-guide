@@ -29,12 +29,13 @@ Mantente atento a las actualizaciones de este artículo. Estamos preparando cont
 export default function BlogPost() {
   const { slug } = useParams<{ slug: string }>();
   const { data: notionPost, isLoading: isLoadingPost } = useBlogPost(slug || "");
-  const { data: allPosts } = useBlogPosts();
+  const { data: allPostsData } = useBlogPosts();
 
   // Fallback to static data
   const staticPost = staticPosts.find((p) => p.slug === slug);
   const post = notionPost || staticPost;
-  const blogPosts = allPosts && allPosts.length > 0 ? allPosts : staticPosts;
+  const notionPosts = allPostsData?.posts ?? [];
+  const blogPosts = notionPosts.length > 0 ? notionPosts : staticPosts;
 
   if (isLoadingPost && !staticPost) {
     return (
