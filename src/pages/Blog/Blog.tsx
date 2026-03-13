@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Clock, ArrowRight, Mail, Loader2, AlertTriangle } from "lucide-react";
+import { Clock, ArrowRight, Mail, Loader2, AlertTriangle, ChevronLeft, ChevronRight } from "lucide-react";
 import { Header } from "@/pages/LandingPage/components/Header";
 import { Footer } from "@/pages/LandingPage/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -27,8 +27,11 @@ const cardVariants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.45, ease: "easeOut" } },
 };
 
+const POSTS_PER_PAGE = 6;
+
 export default function Blog() {
   const [activeCategory, setActiveCategory] = useState("Todos");
+  const [currentPage, setCurrentPage] = useState(1);
   const { data, isLoading } = useBlogPosts();
 
   const notionConnected = data?.notionConnected ?? false;
@@ -38,6 +41,18 @@ export default function Blog() {
   const filtered = blogPosts
     .filter((p) => !p.featured)
     .filter((p) => activeCategory === "Todos" || p.category === activeCategory);
+
+  const totalPages = Math.max(1, Math.ceil(filtered.length / POSTS_PER_PAGE));
+  const paginatedPosts = useMemo(
+    () => filtered.slice((currentPage - 1) * POSTS_PER_PAGE, currentPage * POSTS_PER_PAGE),
+    [filtered, currentPage]
+  );
+
+  // Reset page when category changes
+  const handleCategoryChange = (cat: string) => {
+    setActiveCategory(cat);
+    setCurrentPage(1);
+  };
 
   // Build dynamic categories from posts
   const dynamicCategories = ["Todos", ...Array.from(new Set(blogPosts.map((p) => p.category)))];
@@ -129,7 +144,7 @@ export default function Blog() {
           {dynamicCategories.map((cat) => (
             <button
               key={cat}
-              onClick={() => setActiveCategory(cat)}
+              onClick={() => handleCategoryChange(cat)}
               className={`whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium transition-colors ${
                 activeCategory === cat
                   ? "bg-accent text-accent-foreground"
@@ -150,7 +165,7 @@ export default function Blog() {
           initial="hidden"
           animate="visible"
         >
-          {filtered.map((post, i) => (
+          {paginatedPosts.map((post, i) => (
             <motion.div key={post.slug} variants={cardVariants}>
               <Link to={`/blog/${post.slug}`} className="group block h-full">
                 <article className="flex h-full flex-col rounded-xl border border-border bg-card overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
@@ -179,6 +194,41 @@ export default function Blog() {
             </motion.div>
           ))}
         </motion.div>
+
+        {/* Pagination */}
+        {totalPages > 1 && (
+          <div className="mt-10 flex items-center justify-center gap-2">
+            <button
+              onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+              disabled={currentPage === 1}
+              className="rounded-lg p-2 text-muted-foreground transition-colors hover:bg-muted disabled:opacity-30 disabled:cursor-not-allowed"
+              aria-label="Página anterior"
+            >
+              <ChevronLeft size={20} />
+            </button>
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+              <button
+                key={page}
+                onClick={() => setCurrentPage(page)}
+                className={`min-w-[36px] rounded-lg px-3 py-1.5 text-sm font-medium transition-colors ${
+                  currentPage === page
+                    ? "bg-accent text-accent-foreground"
+                    : "text-muted-foreground hover:bg-muted"
+                }`}
+              >
+                {page}
+              </button>
+            ))}
+            <button
+              onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+              disabled={currentPage === totalPages}
+              className="rounded-lg p-2 text-muted-foreground transition-colors hover:bg-muted disabled:opacity-30 disabled:cursor-not-allowed"
+              aria-label="Página siguiente"
+            >
+              <ChevronRight size={20} />
+            </button>
+          </div>
+        )}
       </section>
 
       {/* Newsletter CTA */}
