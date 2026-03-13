@@ -53,7 +53,7 @@ export const CountdownTimer = ({ compact = false }: Props) => {
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      className="gap-3 flex items-start justify-start">
+      className="gap-3 flex-col flex items-center justify-center">
       
       <Clock className="w-4 h-4 text-accent flex-shrink-0" />
       <span className="text-muted-foreground font-medium text-xl">La preventa empieza en:</span>
