@@ -1,12 +1,12 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 
 const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
-const NOTION_API_URL = 'https://api.notion.com/v1';
-const DEFAULT_DATABASE_ID = 'bd8d89104b68447d8d99d1abd63f83bf';
+const NOTION_API_URL = "https://api.notion.com/v1";
+const DEFAULT_DATABASE_ID = "bd8d89104b68447d8d99d1abd63f83bf";
 
 interface NotionRichText {
   plain_text: string;
@@ -32,33 +32,67 @@ function parseNotionError(raw: string): NotionApiError | null {
 }
 
 function resolveDatabaseId(): string {
-  const configured = Deno.env.get('NOTION_DATABASE_ID') || DEFAULT_DATABASE_ID;
-  return configured.replace(/-/g, '');
+  const configured = Deno.env.get("NOTION_DATABASE_ID") || DEFAULT_DATABASE_ID;
+  return configured.replace(/-/g, "");
 }
 
-function richTextToPlain(richText: NotionRichText[]): string {
-  return richText?.map((t) => t.plain_text).join('') || '';
+function richTextToPlain(richText: NotionRichText[] = []): string {
+  return richText.map((t) => t.plain_text).join("");
+}
+
+function resolveAuthorName(props: any): string {
+  const author = props["Autor"];
+  if (!author) return "Equipo Publify";
+
+  const richTextName = richTextToPlain(author.rich_text);
+  if (richTextName) return richTextName;
+
+  const titleName = richTextToPlain(author.title);
+  if (titleName) return titleName;
+
+  const peopleNames = (author.people ?? []).map((p: any) => p?.name).filter(Boolean);
+  if (peopleNames.length > 0) return peopleNames.join(", ");
+
+  if (author.select?.name) return author.select.name;
+  return "Equipo Publify";
+}
+
+function resolveSlug(props: any, pageId: string): string {
+  return richTextToPlain(props["Slug"]?.rich_text) || richTextToPlain(props["Slug"]?.title) || pageId;
+}
+
+function resolveCoverImage(page: any, props: any): string {
+  if (page.cover?.type === "external") return page.cover.external?.url || "";
+  if (page.cover?.type === "file") return page.cover.file?.url || "";
+
+  const portadaFiles = props["Portada"]?.files;
+  if (Array.isArray(portadaFiles) && portadaFiles.length > 0) {
+    const file = portadaFiles[0];
+    return file.type === "external" ? file.external?.url || "" : file.file?.url || "";
+  }
+
+  return "";
 }
 
 function richTextToMarkdown(richText: any[]): string {
-  if (!richText) return '';
-  return richText.map((t) => {
-    let text = t.plain_text || '';
-    if (!text) return '';
+  if (!richText) return "";
+  return richText
+    .map((t) => {
+      let text = t.plain_text || "";
+      if (!text) return "";
 
-    // Apply annotations
-    const a = t.annotations || {};
-    if (a.code) text = `\`${text}\``;
-    if (a.bold) text = `**${text}**`;
-    if (a.italic) text = `*${text}*`;
-    if (a.strikethrough) text = `~~${text}~~`;
-    if (a.underline) text = `<u>${text}</u>`;
+      const a = t.annotations || {};
+      if (a.code) text = `\`${text}\``;
+      if (a.bold) text = `**${text}**`;
+      if (a.italic) text = `*${text}*`;
+      if (a.strikethrough) text = `~~${text}~~`;
+      if (a.underline) text = `<u>${text}</u>`;
 
-    // Apply link
-    if (t.href) text = `[${text}](${t.href})`;
+      if (t.href) text = `[${text}](${t.href})`;
 
-    return text;
-  }).join('');
+      return text;
+    })
+    .join("");
 }
 
 function blocksToMarkdown(blocks: NotionBlock[]): string {
@@ -68,56 +102,52 @@ function blocksToMarkdown(blocks: NotionBlock[]): string {
   for (const block of blocks) {
     const type = block.type;
 
-    // Reset numbered list counter when not in a numbered list
-    if (type !== 'numbered_list_item') numberedIndex = 0;
+    if (type !== "numbered_list_item") numberedIndex = 0;
 
-    let text = '';
+    let text = "";
     switch (type) {
-      case 'heading_1':
+      case "heading_1":
         text = `# ${richTextToMarkdown(block.heading_1.rich_text)}`;
         break;
-      case 'heading_2':
+      case "heading_2":
         text = `## ${richTextToMarkdown(block.heading_2.rich_text)}`;
         break;
-      case 'heading_3':
+      case "heading_3":
         text = `### ${richTextToMarkdown(block.heading_3.rich_text)}`;
         break;
-      case 'paragraph': {
-        text = richTextToMarkdown(block.paragraph.rich_text) || '';
+      case "paragraph":
+        text = richTextToMarkdown(block.paragraph.rich_text) || "";
         break;
-      }
-      case 'bulleted_list_item':
+      case "bulleted_list_item":
         text = `- ${richTextToMarkdown(block.bulleted_list_item.rich_text)}`;
         break;
-      case 'numbered_list_item':
+      case "numbered_list_item":
         numberedIndex++;
         text = `${numberedIndex}. ${richTextToMarkdown(block.numbered_list_item.rich_text)}`;
         break;
-      case 'quote':
+      case "quote":
         text = `> ${richTextToMarkdown(block.quote.rich_text)}`;
         break;
-      case 'callout':
+      case "callout":
         text = `> 💡 ${richTextToMarkdown(block.callout.rich_text)}`;
         break;
-      case 'code':
-        text = `\`\`\`${block.code.language || ''}\n${richTextToPlain(block.code.rich_text)}\n\`\`\``;
+      case "code":
+        text = `\`\`\`${block.code.language || ""}\n${richTextToPlain(block.code.rich_text)}\n\`\`\``;
         break;
-      case 'image': {
-        const url = block.image.type === 'external'
-          ? block.image.external?.url
-          : block.image.file?.url;
+      case "image": {
+        const imageUrl = block.image.type === "external" ? block.image.external?.url : block.image.file?.url;
         const caption = richTextToPlain(block.image.caption);
-        if (url) text = `![${caption || 'imagen'}](${url})`;
+        if (imageUrl) text = `![${caption || "imagen"}](${imageUrl})`;
         break;
       }
-      case 'divider':
-        text = '---';
+      case "divider":
+        text = "---";
         break;
-      case 'toggle':
+      case "toggle":
         text = `**${richTextToMarkdown(block.toggle.rich_text)}**`;
         break;
-      case 'to_do': {
-        const checked = block.to_do.checked ? 'x' : ' ';
+      case "to_do": {
+        const checked = block.to_do.checked ? "x" : " ";
         text = `- [${checked}] ${richTextToMarkdown(block.to_do.rich_text)}`;
         break;
       }
@@ -128,153 +158,207 @@ function blocksToMarkdown(blocks: NotionBlock[]): string {
     parts.push({ text, type });
   }
 
-  // Join with \n between consecutive list items, \n\n otherwise
-  const listTypes = new Set(['bulleted_list_item', 'numbered_list_item', 'to_do']);
+  const listTypes = new Set(["bulleted_list_item", "numbered_list_item", "to_do"]);
   const result: string[] = [];
   for (let i = 0; i < parts.length; i++) {
     result.push(parts[i].text);
     if (i < parts.length - 1) {
       const currentIsList = listTypes.has(parts[i].type);
       const nextIsList = listTypes.has(parts[i + 1].type);
-      result.push(currentIsList && nextIsList ? '\n' : '\n\n');
+      result.push(currentIsList && nextIsList ? "\n" : "\n\n");
     }
   }
 
-  return result.join('');
+  return result.join("");
+}
+
+async function queryDatabasePages(
+  headers: Record<string, string>,
+  databaseId: string,
+  queryBody: Record<string, unknown>,
+  singlePage = false,
+): Promise<any[]> {
+  const pages: any[] = [];
+  let nextCursor: string | undefined;
+  let hasMore = true;
+
+  while (hasMore) {
+    const body = nextCursor ? { ...queryBody, start_cursor: nextCursor } : queryBody;
+
+    const response = await fetch(`${NOTION_API_URL}/databases/${databaseId}/query`, {
+      method: "POST",
+      headers,
+      body: JSON.stringify(body),
+    });
+
+    if (!response.ok) {
+      const rawError = await response.text();
+      const notionError = parseNotionError(rawError);
+      const error = new Error(`Notion DB query failed [${response.status}]: ${rawError}`) as Error & {
+        status?: number;
+        code?: string;
+      };
+      error.status = response.status;
+      error.code = notionError?.code;
+      throw error;
+    }
+
+    const data = await response.json();
+    pages.push(...(data.results ?? []));
+
+    if (singlePage) break;
+
+    hasMore = Boolean(data.has_more);
+    nextCursor = data.next_cursor ?? undefined;
+  }
+
+  return pages;
+}
+
+async function fetchAllPostBlocks(headers: Record<string, string>, pageId: string): Promise<NotionBlock[]> {
+  const blocks: NotionBlock[] = [];
+  let nextCursor: string | undefined;
+  let hasMore = true;
+
+  while (hasMore) {
+    const cursorParam = nextCursor ? `&start_cursor=${encodeURIComponent(nextCursor)}` : "";
+    const response = await fetch(`${NOTION_API_URL}/blocks/${pageId}/children?page_size=100${cursorParam}`, {
+      method: "GET",
+      headers,
+    });
+
+    if (!response.ok) {
+      console.warn(`Notion blocks query failed [${response.status}] for page ${pageId}`);
+      return blocks;
+    }
+
+    const data = await response.json();
+    blocks.push(...(data.results ?? []));
+    hasMore = Boolean(data.has_more);
+    nextCursor = data.next_cursor ?? undefined;
+  }
+
+  return blocks;
 }
 
 serve(async (req) => {
-  if (req.method === 'OPTIONS') {
-    return new Response(null, { headers: corsHeaders });
+  if (req.method === "OPTIONS") {
+    return new Response("ok", { headers: corsHeaders });
   }
 
-  const NOTION_API_KEY = Deno.env.get('NOTION_API_KEY');
+  const NOTION_API_KEY = Deno.env.get("NOTION_API_KEY");
   if (!NOTION_API_KEY) {
-    return new Response(JSON.stringify({ error: 'NOTION_API_KEY not configured' }), {
-      status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    return new Response(JSON.stringify({ error: "NOTION_API_KEY not configured" }), {
+      status: 500,
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   }
 
   const headers = {
-    'Authorization': `Bearer ${NOTION_API_KEY}`,
-    'Notion-Version': '2022-06-28',
-    'Content-Type': 'application/json',
+    Authorization: `Bearer ${NOTION_API_KEY}`,
+    "Notion-Version": "2022-06-28",
+    "Content-Type": "application/json",
   };
 
   try {
     const url = new URL(req.url);
-    const slug = url.searchParams.get('slug');
-    const withContent = url.searchParams.get('content') === 'true';
+    const slug = url.searchParams.get("slug")?.trim() || "";
+    const withContent = url.searchParams.get("content") === "true";
     const databaseId = resolveDatabaseId();
+    const isDetailRequest = Boolean(slug && withContent);
 
-    // Query the database — only published posts
-    const queryBody: any = {
-      filter: {
-        property: 'Estado',
-        status: { equals: 'Publicado' },
-      },
-      sorts: [{ property: 'Fecha publicación', direction: 'descending' }],
-    };
+    const queryBody: Record<string, unknown> = isDetailRequest
+      ? {
+          filter: {
+            and: [
+              { property: "Estado", status: { equals: "Publicado" } },
+              { property: "Slug", rich_text: { equals: slug } },
+            ],
+          },
+          page_size: 1,
+        }
+      : {
+          filter: {
+            property: "Estado",
+            status: { equals: "Publicado" },
+          },
+          sorts: [{ property: "Fecha publicación", direction: "descending" }],
+          page_size: 100,
+        };
 
-    const dbRes = await fetch(`${NOTION_API_URL}/databases/${databaseId}/query`, {
-      method: 'POST', headers, body: JSON.stringify(queryBody),
-    });
+    let pages: any[] = [];
 
-    if (!dbRes.ok) {
-      const rawError = await dbRes.text();
-      const notionError = parseNotionError(rawError);
+    try {
+      pages = await queryDatabasePages(headers, databaseId, queryBody, isDetailRequest);
+    } catch (error: unknown) {
+      const status = typeof error === "object" && error !== null ? (error as any).status : undefined;
+      const code = typeof error === "object" && error !== null ? (error as any).code : undefined;
 
-      if (dbRes.status === 404 && notionError?.code === 'object_not_found') {
-        console.warn('Notion database not accessible. Verify database ID and sharing with the integration.');
-
-        if (slug && withContent) {
-          return new Response(JSON.stringify({ error: 'Post not found' }), {
+      if (status === 404 && code === "object_not_found") {
+        if (isDetailRequest) {
+          return new Response(JSON.stringify({ error: "Post not found" }), {
             status: 404,
-            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+            headers: { ...corsHeaders, "Content-Type": "application/json" },
           });
         }
 
         return new Response(JSON.stringify([]), {
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
         });
       }
 
-      throw new Error(`Notion DB query failed [${dbRes.status}]: ${rawError}`);
+      throw error;
     }
 
-    const dbData = await dbRes.json();
-
-    const posts = dbData.results.map((page: any) => {
+    const posts = pages.map((page: any) => {
       const props = page.properties;
-      const palabras = props['Palabras']?.number || 0;
-
-      // Extract cover image: Notion supports external URL or uploaded file
-      let coverImage = '';
-      if (page.cover) {
-        if (page.cover.type === 'external') {
-          coverImage = page.cover.external?.url || '';
-        } else if (page.cover.type === 'file') {
-          coverImage = page.cover.file?.url || '';
-        }
-      }
-      // Fallback: check for a "Portada" Files & media property
-      if (!coverImage) {
-        const portadaFiles = props['Portada']?.files;
-        if (portadaFiles && portadaFiles.length > 0) {
-          const f = portadaFiles[0];
-          coverImage = f.type === 'external' ? f.external?.url : f.file?.url || '';
-        }
-      }
+      const palabras = props["Palabras"]?.number || 0;
 
       return {
         id: page.id,
-        number: props['Nº']?.number ?? 0,
-        slug: richTextToPlain(props['Slug']?.rich_text) || page.id,
-        title: richTextToPlain(props['Título']?.title) || 'Sin título',
-        excerpt: richTextToPlain(props['Meta description']?.rich_text) || '',
-        category: props['Pilar']?.select?.name || 'General',
-        date: props['Fecha publicación']?.date?.start || '',
+        number: props["Nº"]?.number ?? 0,
+        slug: resolveSlug(props, page.id),
+        title: richTextToPlain(props["Título"]?.title) || "Sin título",
+        excerpt: richTextToPlain(props["Meta description"]?.rich_text) || "",
+        category: props["Pilar"]?.select?.name || "General",
+        date: props["Fecha publicación"]?.date?.start || "",
         readingTime: Math.max(1, Math.round(palabras / 250)),
-        coverImage,
+        coverImage: resolveCoverImage(page, props),
         author: {
-          name: richTextToPlain(props['Autor']?.rich_text) || 'Equipo Publify',
-          role: 'Autor',
+          name: resolveAuthorName(props),
+          role: "Autor",
         },
-        featured: props['Destacado']?.checkbox || false,
+        featured: props["Destacado"]?.checkbox || false,
       };
     });
 
-    // If a specific slug is requested with content, fetch blocks
-    if (slug && withContent) {
-      const post = posts.find((p: any) => p.slug === slug);
+    if (isDetailRequest) {
+      const post = posts[0];
       if (!post) {
-        return new Response(JSON.stringify({ error: 'Post not found' }), {
-          status: 404, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        return new Response(JSON.stringify({ error: "Post not found" }), {
+          status: 404,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
         });
       }
 
-      const blocksRes = await fetch(`${NOTION_API_URL}/blocks/${post.id}/children?page_size=100`, {
-        method: 'GET', headers,
-      });
-
-      if (blocksRes.ok) {
-        const blocksData = await blocksRes.json();
-        post.content = blocksToMarkdown(blocksData.results);
-      }
+      const blocks = await fetchAllPostBlocks(headers, post.id);
+      post.content = blocksToMarkdown(blocks).trim();
 
       return new Response(JSON.stringify(post), {
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
 
+    posts.sort((a: any, b: any) => (b.number ?? 0) - (a.number ?? 0));
+
     return new Response(JSON.stringify(posts), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   } catch (error: unknown) {
-    console.error('Error:', error);
-    const message = error instanceof Error ? error.message : 'Unknown error';
+    const message = error instanceof Error ? error.message : "Unknown error";
     return new Response(JSON.stringify({ error: message }), {
-      status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      status: 500,
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   }
 });
