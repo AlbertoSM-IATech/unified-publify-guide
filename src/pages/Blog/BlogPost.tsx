@@ -168,13 +168,10 @@ export default function BlogPost() {
   const { data: notionPost, isLoading: isLoadingPost } = useBlogPost(slug || "");
   const { data: allPostsData } = useBlogPosts();
 
-  // Fallback to static data
-  const staticPost = staticPosts.find((p) => p.slug === slug);
-  const post = notionPost || staticPost;
-  const notionPosts = allPostsData?.posts ?? [];
-  const blogPosts = notionPosts.length > 0 ? notionPosts : staticPosts;
+  const post = notionPost;
+  const blogPosts = allPostsData?.posts ?? [];
 
-  if (isLoadingPost && !staticPost) {
+  if (isLoadingPost) {
     return (
       <div className="min-h-screen bg-background text-foreground">
         <Header />
