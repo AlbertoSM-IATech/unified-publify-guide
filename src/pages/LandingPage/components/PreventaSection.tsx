@@ -1,12 +1,19 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ArrowRight, Check, Sparkles, DollarSign, BookOpen } from "lucide-react";
+import { ArrowRight, Check, Sparkles, DollarSign, BookOpen, Shield, Zap, Crown } from "lucide-react";
 import { TextReveal } from "@/components/motion/TextReveal";
 import { ValueAnchorBlock } from "./ValueAnchorBlock";
 import { CountdownTimer } from "./CountdownTimer";
 import { WaitlistSuccessState } from "./WaitlistSuccessState";
 import { useWaitlistForm } from "../hooks/useWaitlistForm";
+
+const includes = [
+  { icon: Zap, text: "Acceso prioritario al MVP (Biblioteca + Finanzas básicas)" },
+  { icon: Shield, text: "Onboarding y soporte inicial personalizado" },
+  { icon: Crown, text: "Feedback prioritario: tus fricciones tienen prioridad" },
+  { icon: Sparkles, text: "Posible opción Lifetime más adelante (si aplica, para early adopters)" },
+];
 
 const benefits = [
   "Acceso antes del lanzamiento",
@@ -15,17 +22,10 @@ const benefits = [
   "Onboarding y soporte personalizado",
 ];
 
-const includes = [
-  "Acceso prioritario al MVP (Biblioteca + Finanzas básicas)",
-  "Onboarding y soporte inicial personalizado",
-  "Feedback prioritario: tus fricciones tienen prioridad",
-  "Posible opción Lifetime más adelante (si aplica, para early adopters)",
-];
-
 const pricingTiers = [
-  { dates: "1–30 abril", price: "15", highlight: true },
-  { dates: "1–15 mayo", price: "20", highlight: false },
-  { dates: "16–31 mayo", price: "25", highlight: false },
+  { dates: "1–30 abril", price: "15", highlight: true, badge: "Mejor precio" },
+  { dates: "1–15 mayo", price: "20", highlight: false, badge: null },
+  { dates: "16–31 mayo", price: "25", highlight: false, badge: null },
 ];
 
 const roadmapItems = [
@@ -38,131 +38,215 @@ const roadmapItems = [
   "Y más…",
 ];
 
+const cardVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: i * 0.1, duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] },
+  }),
+};
+
 export const PreventaSection = () => {
   const { name, email, loading, submitted, setName, setEmail, handleSubmit } = useWaitlistForm();
 
   return (
-    <section id="waitlist" className="py-20 bg-background relative overflow-hidden">
-      <div data-gsap="parallax-bg" className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-20 right-10 w-72 h-72 bg-primary/5 dark:bg-primary/15 rounded-full blur-3xl" />
-        <div className="absolute bottom-10 left-10 w-56 h-56 bg-accent/5 dark:bg-accent/15 rounded-full blur-3xl" />
+    <section id="waitlist" className="py-24 bg-background relative overflow-hidden">
+      {/* Decorative blobs */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-20 right-10 w-96 h-96 bg-primary/5 dark:bg-primary/10 rounded-full blur-[100px]" />
+        <div className="absolute bottom-10 left-10 w-72 h-72 bg-accent/5 dark:bg-accent/10 rounded-full blur-[80px]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/3 dark:bg-primary/5 rounded-full blur-[120px]" />
       </div>
 
-      <div className="container mx-auto max-w-5xl px-4 relative z-10">
+      <div className="container mx-auto max-w-6xl px-4 relative z-10">
         {/* Header */}
-        <div data-gsap="section-header" className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 px-4 py-2 rounded-full text-sm font-medium text-primary mb-6">
-            <Sparkles size={16} />
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 px-5 py-2.5 rounded-full text-sm font-semibold text-primary mb-8"
+          >
+            <Sparkles size={16} className="animate-pulse" />
             Acceso exclusivo para los primeros 30 publishers
-          </div>
-          <TextReveal as="h2" className="font-heading text-2xl md:text-3xl lg:text-4xl font-bold mb-4">
+          </motion.div>
+
+          <TextReveal as="h2" className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold mb-5">
             Solo para fundadores. Plazas limitadas.
           </TextReveal>
-          <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto">
+
+          <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto mb-6">
             Consigue acceso prioritario al MVP, bloquea el mejor precio para siempre y ayuda a definir el producto.
           </p>
-          <div className="mt-4 flex justify-center">
+
+          <div className="flex justify-center">
             <CountdownTimer />
           </div>
-        </div>
+        </motion.div>
 
-        {/* Main grid: Info + Form */}
-        <div className="grid lg:grid-cols-2 gap-10 mb-12">
-          {/* Left: All pricing & benefits consolidated */}
-          <div className="space-y-6">
+        {/* Main grid */}
+        <div className="grid lg:grid-cols-5 gap-8 mb-16">
+          {/* Left column: info cards (3 cols) */}
+          <div className="lg:col-span-3 space-y-6">
             {/* Qué incluye */}
-            <div className="p-6 bg-card border border-accent rounded-xl">
-              <h3 className="font-heading text-lg font-bold mb-4">Qué incluye</h3>
-              <ul className="space-y-3">
-                {includes.map((item, i) =>
-                  <li key={i} className="flex items-start gap-3">
-                    <Check className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
-                    <span className="text-foreground text-sm">{item}</span>
+            <motion.div
+              custom={0}
+              variants={cardVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              className="p-6 bg-card border border-accent/30 rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-300"
+            >
+              <h3 className="font-heading text-lg font-bold mb-5 flex items-center gap-2">
+                <div className="w-8 h-8 rounded-lg bg-accent/10 flex items-center justify-center">
+                  <Check className="w-4 h-4 text-accent" />
+                </div>
+                Qué incluye
+              </h3>
+              <ul className="space-y-4 mb-5">
+                {includes.map((item, i) => (
+                  <li key={i} className="flex items-start gap-3 group">
+                    <div className="w-8 h-8 rounded-lg bg-accent/5 border border-accent/10 flex items-center justify-center flex-shrink-0 group-hover:bg-accent/10 transition-colors">
+                      <item.icon className="w-4 h-4 text-accent" />
+                    </div>
+                    <span className="text-foreground text-sm leading-relaxed pt-1">{item.text}</span>
                   </li>
-                )}
+                ))}
               </ul>
-              <div className="mt-4 p-4 bg-accent/5 border border-accent/20 rounded-lg">
+
+              <div className="p-4 bg-accent/5 border border-accent/15 rounded-xl">
                 <div className="flex items-center gap-2 mb-2">
                   <BookOpen className="w-4 h-4 text-accent" />
                   <span className="text-sm font-semibold text-accent">MVP actual</span>
                 </div>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-muted-foreground leading-relaxed">
                   Biblioteca editorial + Finanzas básicas. Las funcionalidades avanzadas llegarán progresivamente.
                 </p>
               </div>
-              <div className="mt-3 p-4 bg-muted/50 border border-border rounded-lg">
-                <p className="text-sm font-semibold text-foreground mb-2">En el roadmap:</p>
+
+              <div className="mt-4 p-4 bg-muted/30 border border-border rounded-xl">
+                <p className="text-sm font-semibold text-foreground mb-3">En el roadmap:</p>
                 <div className="flex flex-wrap gap-2">
-                  {roadmapItems.map((item, i) =>
-                    <span key={i} className="text-xs bg-background border border-border rounded-full px-3 py-1 text-muted-foreground">
+                  {roadmapItems.map((item, i) => (
+                    <span
+                      key={i}
+                      className="text-xs bg-background border border-border rounded-full px-3 py-1.5 text-muted-foreground hover:border-primary/30 hover:text-foreground transition-colors cursor-default"
+                    >
                       {item}
                     </span>
-                  )}
+                  ))}
                 </div>
               </div>
-            </div>
+            </motion.div>
 
             {/* ¿Por qué entrar ahora? */}
-            <div className="p-6 bg-card border border-border rounded-xl">
-              <h3 className="font-heading text-lg font-bold mb-4">¿Por qué entrar ahora?</h3>
-              <ul className="space-y-3">
-                {benefits.map((item, i) =>
-                  <li key={i} className="flex items-start gap-3">
-                    <Check className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
+            <motion.div
+              custom={1}
+              variants={cardVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              className="p-6 bg-card border border-border rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-300"
+            >
+              <h3 className="font-heading text-lg font-bold mb-5 flex items-center gap-2">
+                <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
+                  <Zap className="w-4 h-4 text-primary" />
+                </div>
+                ¿Por qué entrar ahora?
+              </h3>
+              <ul className="grid sm:grid-cols-2 gap-3">
+                {benefits.map((item, i) => (
+                  <li key={i} className="flex items-start gap-3 p-3 rounded-xl bg-muted/30 border border-transparent hover:border-primary/10 transition-colors">
+                    <Check className="w-4 h-4 text-accent flex-shrink-0 mt-0.5" />
                     <span className="text-foreground text-sm">{item}</span>
                   </li>
-                )}
+                ))}
               </ul>
-            </div>
+            </motion.div>
 
             <ValueAnchorBlock />
 
-            {/* Pricing consolidado */}
-            <div className="p-6 bg-card border border-primary/20 rounded-xl">
-              <div className="flex items-center gap-2 mb-4">
-                <DollarSign className="w-5 h-5 text-primary" />
+            {/* Pricing */}
+            <motion.div
+              custom={2}
+              variants={cardVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              className="p-6 bg-card border border-primary/20 rounded-2xl shadow-sm relative overflow-hidden"
+            >
+              {/* Subtle gradient accent */}
+              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary/50 via-primary to-primary/50 rounded-t-2xl" />
+
+              <div className="flex items-center gap-2 mb-5">
+                <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
+                  <DollarSign className="w-4 h-4 text-primary" />
+                </div>
                 <h3 className="font-heading text-lg font-bold">Precio escalonado (abril–mayo — Plan Plus)</h3>
               </div>
-              <p className="text-sm text-muted-foreground mb-4">
+
+              <p className="text-sm text-muted-foreground mb-5 leading-relaxed">
                 Cuanto antes entres, menos pagas. El precio se mantiene <strong className="text-foreground">para siempre</strong> mientras mantengas tu suscripción activa.
               </p>
-              <div className="space-y-2 mb-4">
-                {pricingTiers.map((tier, i) =>
+
+              <div className="space-y-2.5 mb-5">
+                {pricingTiers.map((tier, i) => (
                   <div
                     key={i}
-                    className={`flex items-center justify-between p-3 rounded-lg border ${
-                      tier.highlight ? "bg-primary/10 border-primary/30" : "bg-background border-border"
+                    className={`flex items-center justify-between p-4 rounded-xl border transition-all duration-200 ${
+                      tier.highlight
+                        ? "bg-primary/10 border-primary/30 shadow-sm shadow-primary/10"
+                        : "bg-background border-border hover:border-primary/15"
                     }`}
                   >
-                    <span className="font-medium text-sm">{tier.dates}</span>
-                    <span className={`text-xl font-bold ${tier.highlight ? "text-primary" : ""}`}>
+                    <div className="flex items-center gap-3">
+                      <span className="font-medium text-sm">{tier.dates}</span>
+                      {tier.badge && (
+                        <span className="text-[10px] font-bold uppercase tracking-wider bg-primary text-primary-foreground px-2 py-0.5 rounded-full">
+                          {tier.badge}
+                        </span>
+                      )}
+                    </div>
+                    <span className={`text-2xl font-bold ${tier.highlight ? "text-primary" : "text-foreground"}`}>
                       {tier.price} €<span className="text-xs font-normal text-muted-foreground">/mes</span>
                     </span>
                   </div>
-                )}
+                ))}
               </div>
-              <div className="space-y-1 text-xs text-muted-foreground">
+
+              <div className="space-y-1.5 text-xs text-muted-foreground p-4 bg-muted/30 rounded-xl border border-border">
                 <p><strong className="text-foreground">Desde junio:</strong> 29 €/mes Básico | 49 €/mes Plus</p>
                 <p>Si cancelas, al volver pagarás el precio vigente sin descuento.</p>
                 <p>El plan PRO no está incluido en esta oferta, pero si entras ahora solo pagarás la diferencia de precio manteniendo tu precio de early adopter.</p>
-                <p className="text-primary">Precios sin IVA.</p>
+                <p className="text-primary font-medium">Precios sin IVA.</p>
               </div>
-            </div>
+            </motion.div>
           </div>
 
-          {/* Right: Form */}
-          <div>
+          {/* Right column: sticky form (2 cols) */}
+          <div className="lg:col-span-2">
             {submitted ? (
               <div className="sticky top-28">
                 <WaitlistSuccessState />
               </div>
             ) : (
-              <form
+              <motion.form
                 onSubmit={handleSubmit}
-                data-gsap="preventa-card"
-                className="p-8 bg-card border border-border rounded-2xl shadow-lg space-y-6 sticky top-28"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="p-8 bg-card border border-border rounded-2xl shadow-lg space-y-6 sticky top-28 relative overflow-hidden"
               >
-                <div className="text-center">
+                {/* Top accent line */}
+                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-accent/50 via-accent to-accent/50 rounded-t-2xl" />
+
+                <div className="text-center pt-2">
                   <h3 className="font-heading text-xl font-bold mb-2">Reservar mi acceso prioritario</h3>
                   <p className="text-sm text-muted-foreground">
                     Apuntarte es gratis. Te avisaremos cuando abramos acceso.
@@ -177,7 +261,7 @@ export const PreventaSection = () => {
                     onChange={(e) => setName(e.target.value)}
                     required
                     maxLength={100}
-                    className="h-12 text-base"
+                    className="h-12 text-base rounded-xl"
                   />
                   <Input
                     type="email"
@@ -186,24 +270,29 @@ export const PreventaSection = () => {
                     onChange={(e) => setEmail(e.target.value)}
                     required
                     maxLength={255}
-                    className="h-12 text-base"
+                    className="h-12 text-base rounded-xl"
                   />
                 </div>
 
                 <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                  <Button type="submit" size="lg" className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-base py-5" disabled={loading}>
+                  <Button
+                    type="submit"
+                    size="lg"
+                    className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-base py-5 rounded-xl shadow-lg shadow-primary/20"
+                    disabled={loading}
+                  >
                     {loading ? "Enviando..." : "Bloquear mi precio desde 15€/mes"}
                     <ArrowRight className="ml-2" size={20} />
                   </Button>
                 </motion.div>
 
-                <p className="text-sm text-accent text-center">
+                <p className="text-sm text-accent text-center font-medium">
                   Solo tu email. Sin tarjeta. Sin compromiso.
                 </p>
                 <p className="text-xs text-muted-foreground text-center">
-                  El precio sube cada 10 plazas. Una vez dentro, es tuyo para siempre.
+                  El precio sube con cada tramo. Una vez dentro, es tuyo para siempre.
                 </p>
-              </form>
+              </motion.form>
             )}
           </div>
         </div>
