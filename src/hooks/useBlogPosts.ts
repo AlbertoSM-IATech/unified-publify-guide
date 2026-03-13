@@ -9,20 +9,34 @@ const headers = {
   apikey: ANON_KEY,
 };
 
-async function fetchBlogPosts(): Promise<BlogPost[]> {
-  const res = await fetch(BASE_URL, { headers });
-  if (!res.ok) return [];
+export interface BlogFetchResult {
+  posts: BlogPost[];
+  notionConnected: boolean;
+}
 
-  const data = await res.json();
-  return Array.isArray(data) ? data : [];
+async function fetchBlogPosts(): Promise<BlogFetchResult> {
+  try {
+    const res = await fetch(BASE_URL, { headers });
+    if (!res.ok) return { posts: [], notionConnected: false };
+
+    const data = await res.json();
+    const posts = Array.isArray(data) ? data : [];
+    return { posts, notionConnected: posts.length > 0 };
+  } catch {
+    return { posts: [], notionConnected: false };
+  }
 }
 
 async function fetchBlogPost(slug: string): Promise<BlogPost | null> {
-  const res = await fetch(`${BASE_URL}?slug=${encodeURIComponent(slug)}&content=true`, { headers });
-  if (!res.ok) return null;
+  try {
+    const res = await fetch(`${BASE_URL}?slug=${encodeURIComponent(slug)}&content=true`, { headers });
+    if (!res.ok) return null;
 
-  const data = await res.json();
-  return data && typeof data === "object" && "slug" in data ? (data as BlogPost) : null;
+    const data = await res.json();
+    return data && typeof data === "object" && "slug" in data ? (data as BlogPost) : null;
+  } catch {
+    return null;
+  }
 }
 
 export function useBlogPosts() {

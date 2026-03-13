@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Clock, ArrowRight, Mail, Loader2 } from "lucide-react";
+import { Clock, ArrowRight, Mail, Loader2, AlertTriangle } from "lucide-react";
 import { Header } from "@/pages/LandingPage/components/Header";
 import { Footer } from "@/pages/LandingPage/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -30,9 +30,11 @@ const cardVariants = {
 
 export default function Blog() {
   const [activeCategory, setActiveCategory] = useState("Todos");
-  const { data: notionPosts, isLoading } = useBlogPosts();
+  const { data, isLoading } = useBlogPosts();
 
-  const blogPosts = notionPosts && notionPosts.length > 0 ? notionPosts : staticPosts;
+  const notionConnected = data?.notionConnected ?? false;
+  const notionPosts = data?.posts ?? [];
+  const blogPosts = notionPosts.length > 0 ? notionPosts : staticPosts;
 
   const featured = blogPosts.find((p) => p.featured);
   const filtered = blogPosts
