@@ -46,7 +46,7 @@ const cardVariants = {
 };
 
 export const PreventaSection = () => {
-  const { name, email, loading, submitted, setName, setEmail, handleSubmit } = useWaitlistForm();
+  const { open, setOpen, openDialog } = useWaitlistDialog();
 
   return (
     <section id="waitlist" className="py-24 bg-background relative overflow-hidden">
