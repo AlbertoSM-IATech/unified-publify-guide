@@ -73,6 +73,20 @@ export default function Blog() {
         </div>
       )}
 
+      {!isLoading && !notionConnected && (
+        <div className="mx-auto max-w-7xl px-4 pb-6">
+          <div className="flex items-center gap-3 rounded-lg border border-yellow-500/30 bg-yellow-500/10 p-4 text-sm text-yellow-200">
+            <AlertTriangle className="h-5 w-5 shrink-0 text-yellow-400" />
+            <div>
+              <p className="font-medium">Notion no está conectado</p>
+              <p className="text-yellow-300/70">
+                Verifica que la base de datos esté compartida con tu integración y que el ID sea correcto. Mientras tanto se muestran artículos de ejemplo.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Featured post */}
       {featured && (
         <section className="mx-auto max-w-7xl px-4 pb-12">
