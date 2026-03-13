@@ -6,7 +6,6 @@ import { Header } from "@/pages/LandingPage/components/Header";
 import { Footer } from "@/pages/LandingPage/components/Footer";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { blogPosts as staticPosts } from "./blogData";
 import { useBlogPost, useBlogPosts } from "@/hooks/useBlogPosts";
 
 const defaultContent = `
