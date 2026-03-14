@@ -14,8 +14,8 @@ export const EarlyAdoptersSection = () => {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="space-y-6"
-        >
+          className="space-y-6">
+          
           <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 px-4 py-2 rounded-full text-sm font-medium text-primary">
             <Sparkles size={16} />
             Acceso exclusivo para los primeros 30 publishers
@@ -34,10 +34,10 @@ export const EarlyAdoptersSection = () => {
             </Button>
           </motion.div>
           <p className="text-sm text-accent">
-            desde 15€/mes — El precio sube cada 10 plazas
+            desde 15€/mes
           </p>
         </motion.div>
       </div>
-    </section>
-  );
+    </section>);
+
 };
