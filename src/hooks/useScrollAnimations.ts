@@ -13,25 +13,7 @@ export const useScrollAnimations = () => {
 
     // Small delay to ensure DOM is ready
     const initTimeout = setTimeout(() => {
-      // ═══════════════════════════════════════════
-      // 1. HERO — Dashboard parallax (deeper effect)
-      // ═══════════════════════════════════════════
-      const dashboardEl = document.querySelector("[data-gsap='hero-dashboard']");
-      if (dashboardEl) {
-        gsap.to(dashboardEl, {
-          y: 200,
-          scale: 0.88,
-          rotateX: 8,
-          opacity: 0.6,
-          ease: "none",
-          scrollTrigger: {
-            trigger: dashboardEl,
-            start: "top 80%",
-            end: "top -30%",
-            scrub: 1.2,
-          },
-        });
-      }
+      // Hero dashboard animations disabled to prevent mobile flickering
 
       // Text reveals are now handled by the <TextReveal> React component
 
