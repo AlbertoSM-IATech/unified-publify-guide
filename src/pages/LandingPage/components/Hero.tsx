@@ -56,9 +56,9 @@ export const Hero = () => {
 
             <TextReveal
               as="p"
-              className="text-lg mb-8 md:text-xl lg:text-2xl font-light text-foreground/80"
+              className="text-lg mb-8 md:text-xl lg:text-2xl font-light text-white"
               immediate delay={0.9} stagger={0.01} duration={0.4}>
-              Publify centraliza tu catálogo, producción editorial y rentabilidad en un solo sistema. Para publishers de Amazon KDP que quieren tomar decisiones con datos, no con intuición.
+              Publify reúne en un solo sistema tu catálogo, tu producción editorial y la rentabilidad real de tu negocio.
             </TextReveal>
 
             <motion.div variants={fadeInUp} className="flex flex-wrap items-center gap-2.5 mb-6">
