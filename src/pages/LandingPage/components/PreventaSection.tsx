@@ -233,12 +233,12 @@ export const PreventaSection = () => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="p-8 bg-card border border-border rounded-2xl shadow-lg space-y-6 sticky top-28 relative overflow-hidden">
+              className="p-8 bg-card border border-border rounded-2xl shadow-lg space-y-6 sticky top-28 relative overflow-hidden px-[20px] py-[21px]">
               
               <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-accent/50 via-accent to-accent/50 rounded-t-2xl" />
 
-              <div className="text-center pt-2">
-                <h3 className="font-heading text-xl font-bold mb-2">Reservar mi acceso prioritario</h3>
+              <div className="text-center pt-2 px-0">
+                <h3 className="font-heading font-bold mb-2 text-primary text-2xl">Reservar mi acceso prioritario</h3>
                 <p className="text-sm text-muted-foreground">
                   Apuntarte es gratis. Te avisaremos cuando abramos acceso.
                 </p>
