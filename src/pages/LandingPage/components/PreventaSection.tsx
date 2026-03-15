@@ -92,87 +92,9 @@ export const PreventaSection = () => {
         <div className="grid lg:grid-cols-5 gap-8 mb-16">
           {/* Left column: info cards (3 cols) */}
           <div className="lg:col-span-3 space-y-6">
-            {/* Qué incluye */}
-            <motion.div
-              custom={0}
-              variants={cardVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              className="p-6 bg-card border border-accent/30 rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-300"
-            >
-              <h3 className="font-heading text-lg font-bold mb-5 flex items-center gap-2">
-                <div className="w-8 h-8 rounded-lg bg-accent/10 flex items-center justify-center">
-                  <Check className="w-4 h-4 text-accent" />
-                </div>
-                Qué incluye
-              </h3>
-              <ul className="space-y-4 mb-5">
-                {includes.map((item, i) => (
-                  <li key={i} className="flex items-start gap-3 group">
-                    <div className="w-8 h-8 rounded-lg bg-accent/5 border border-accent/10 flex items-center justify-center flex-shrink-0 group-hover:bg-accent/10 transition-colors">
-                      <item.icon className="w-4 h-4 text-accent" />
-                    </div>
-                    <span className="text-foreground text-sm leading-relaxed pt-1">{item.text}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <div className="p-4 bg-accent/5 border border-accent/15 rounded-xl">
-                <div className="flex items-center gap-2 mb-2">
-                  <BookOpen className="w-4 h-4 text-accent" />
-                  <span className="text-sm font-semibold text-accent">La base del sistema operativo editorial</span>
-                </div>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  El MVP incluye Biblioteca editorial completa y control financiero por libro. Es el cimiento sobre el que se construyen todas las funcionalidades avanzadas. No es una demo: es la primera pieza funcional de tu sistema.
-                </p>
-              </div>
-
-              <div className="mt-4 p-4 bg-muted/30 border border-border rounded-xl">
-                <p className="text-sm font-semibold text-foreground mb-3">En el roadmap:</p>
-                <div className="flex flex-wrap gap-2">
-                  {roadmapItems.map((item, i) => (
-                    <span
-                      key={i}
-                      className="text-xs bg-background border border-border rounded-full px-3 py-1.5 text-muted-foreground hover:border-primary/30 hover:text-foreground transition-colors cursor-default"
-                    >
-                      {item}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </motion.div>
-
-            {/* ¿Por qué entrar ahora? */}
-            <motion.div
-              custom={1}
-              variants={cardVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              className="p-6 bg-card border border-border rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-300"
-            >
-              <h3 className="font-heading text-lg font-bold mb-5 flex items-center gap-2">
-                <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
-                  <Zap className="w-4 h-4 text-primary" />
-                </div>
-                ¿Por qué entrar ahora?
-              </h3>
-              <ul className="grid sm:grid-cols-2 gap-3">
-                {benefits.map((item, i) => (
-                  <li key={i} className="flex items-start gap-3 p-3 rounded-xl bg-muted/30 border border-transparent hover:border-primary/10 transition-colors">
-                    <Check className="w-4 h-4 text-accent flex-shrink-0 mt-0.5" />
-                    <span className="text-foreground text-sm">{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
-
-            <ValueAnchorBlock />
-
             {/* Pricing */}
             <motion.div
-              custom={2}
+              custom={0}
               variants={cardVariants}
               initial="hidden"
               whileInView="visible"
@@ -225,6 +147,84 @@ export const PreventaSection = () => {
                 <p className="text-primary font-medium">Precios sin IVA.</p>
               </div>
             </motion.div>
+
+            {/* Qué incluye */}
+            <motion.div
+              custom={1}
+              variants={cardVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              className="p-6 bg-card border border-accent/30 rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-300"
+            >
+              <h3 className="font-heading text-lg font-bold mb-5 flex items-center gap-2">
+                <div className="w-8 h-8 rounded-lg bg-accent/10 flex items-center justify-center">
+                  <Check className="w-4 h-4 text-accent" />
+                </div>
+                Qué incluye
+              </h3>
+              <ul className="space-y-4 mb-5">
+                {includes.map((item, i) => (
+                  <li key={i} className="flex items-start gap-3 group">
+                    <div className="w-8 h-8 rounded-lg bg-accent/5 border border-accent/10 flex items-center justify-center flex-shrink-0 group-hover:bg-accent/10 transition-colors">
+                      <item.icon className="w-4 h-4 text-accent" />
+                    </div>
+                    <span className="text-foreground text-sm leading-relaxed pt-1">{item.text}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <div className="p-4 bg-accent/5 border border-accent/15 rounded-xl">
+                <div className="flex items-center gap-2 mb-2">
+                  <BookOpen className="w-4 h-4 text-accent" />
+                  <span className="text-sm font-semibold text-accent">La base del sistema operativo editorial</span>
+                </div>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  El MVP incluye Biblioteca editorial completa y control financiero por libro. Es el cimiento sobre el que se construyen todas las funcionalidades avanzadas. No es una demo: es la primera pieza funcional de tu sistema.
+                </p>
+              </div>
+
+              <div className="mt-4 p-4 bg-muted/30 border border-border rounded-xl">
+                <p className="text-sm font-semibold text-foreground mb-3">En el roadmap:</p>
+                <div className="flex flex-wrap gap-2">
+                  {roadmapItems.map((item, i) => (
+                    <span
+                      key={i}
+                      className="text-xs bg-background border border-border rounded-full px-3 py-1.5 text-muted-foreground hover:border-primary/30 hover:text-foreground transition-colors cursor-default"
+                    >
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+
+            {/* ¿Por qué entrar ahora? */}
+            <motion.div
+              custom={2}
+              variants={cardVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              className="p-6 bg-card border border-border rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-300"
+            >
+              <h3 className="font-heading text-lg font-bold mb-5 flex items-center gap-2">
+                <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
+                  <Zap className="w-4 h-4 text-primary" />
+                </div>
+                ¿Por qué entrar ahora?
+              </h3>
+              <ul className="grid sm:grid-cols-2 gap-3">
+                {benefits.map((item, i) => (
+                  <li key={i} className="flex items-start gap-3 p-3 rounded-xl bg-muted/30 border border-transparent hover:border-primary/10 transition-colors">
+                    <Check className="w-4 h-4 text-accent flex-shrink-0 mt-0.5" />
+                    <span className="text-foreground text-sm">{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+
+            <ValueAnchorBlock />
           </div>
 
           {/* Right column: sticky CTA card */}
