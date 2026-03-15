@@ -28,7 +28,7 @@ export const FinalCtaSection = () => {
 
           <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }} className="inline-block">
             <Button onClick={openDialog} size="lg" className="text-xl px-12 py-7 bg-primary hover:bg-primary/90 text-primary-foreground font-bold shadow-lg shadow-primary/25">
-              Pon tu editorial en orden
+              Opera tu editorial con sistema
               <ArrowRight className="ml-2" size={22} />
             </Button>
           </motion.div>
