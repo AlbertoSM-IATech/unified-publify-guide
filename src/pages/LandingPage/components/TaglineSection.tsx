@@ -11,13 +11,13 @@ export const TaglineSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="mb-8 flex justify-center"
-        >
-          <img 
-            src={publifyLogo} 
-            alt="Publify - Navaja Suiza Editorial" 
-            className="h-16 md:h-20 w-auto"
-          />
+          className="mb-8 flex justify-center">
+          
+          <img
+            src={publifyLogo}
+            alt="Publify - Navaja Suiza Editorial"
+            className="h-16 md:h-20 w-auto" />
+          
         </motion.div>
         <motion.h2
           initial={{ opacity: 0, scale: 0.9 }}
@@ -36,9 +36,9 @@ export const TaglineSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: "easeOut", delay: 0.4 }}
-          className="text-lg md:text-xl text-center mt-5 max-w-2xl mx-auto text-white">
+          className="text-lg md:text-xl text-center mt-5 max-w-2xl mx-auto text-accent">
           
-          Publify reúne en un solo sistema tu catálogo, tu producción editorial y la rentabilidad real de tu negocio.
+          Hecho por y para publishers de Amazon KDP
         </motion.p>
       </div>
     </section>);
