@@ -7,42 +7,42 @@ import { CountdownTimer } from "./CountdownTimer";
 import { WaitlistDialog, useWaitlistDialog } from "@/components/WaitlistDialog";
 
 const includes = [
-  { icon: Zap, text: "Acceso prioritario al MVP (Biblioteca + Finanzas básicas)" },
-  { icon: Shield, text: "Onboarding y soporte inicial personalizado" },
-  { icon: Crown, text: "Feedback prioritario: tus fricciones tienen prioridad" },
-  { icon: Sparkles, text: "Posible opción Lifetime más adelante (si aplica, para early adopters)" },
-];
+{ icon: Zap, text: "Acceso prioritario al MVP (Biblioteca + Finanzas básicas)" },
+{ icon: Shield, text: "Onboarding y soporte inicial personalizado" },
+{ icon: Crown, text: "Feedback prioritario: tus fricciones tienen prioridad" },
+{ icon: Sparkles, text: "Posible opción Lifetime más adelante (si aplica, para early adopters)" }];
+
 
 const benefits = [
-  "Acceso antes del lanzamiento",
-  "Precio más bajo que existirá (se mantiene para siempre)",
-  "Participar en la evolución del producto",
-  "Onboarding y soporte personalizado",
-];
+"Acceso antes del lanzamiento",
+"Precio más bajo que existirá (se mantiene para siempre)",
+"Participar en la evolución del producto",
+"Onboarding y soporte personalizado"];
+
 
 const pricingTiers = [
-  { dates: "1–30 abril", price: "15", highlight: true, badge: "Mejor precio" },
-  { dates: "1–15 mayo", price: "20", highlight: false, badge: null },
-  { dates: "16–31 mayo", price: "25", highlight: false, badge: null },
-];
+{ dates: "1–30 abril", price: "15", highlight: true, badge: "Mejor precio" },
+{ dates: "1–15 mayo", price: "20", highlight: false, badge: null },
+{ dates: "16–31 mayo", price: "25", highlight: false, badge: null }];
+
 
 const roadmapItems = [
-  "Calculadora de viabilidad",
-  "Estudio de KW y scoring",
-  "Análisis de campañas y KW",
-  "Calendario editorial",
-  "Integraciones",
-  "Generación de QRs personalizados",
-  "Y más…",
-];
+"Calculadora de viabilidad",
+"Estudio de KW y scoring",
+"Análisis de campañas y KW",
+"Calendario editorial",
+"Integraciones",
+"Generación de QRs personalizados",
+"Y más…"];
+
 
 const cardVariants = {
   hidden: { opacity: 0, y: 30 },
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: { delay: i * 0.1, duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] },
-  }),
+    transition: { delay: i * 0.1, duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }
+  })
 };
 
 export const PreventaSection = () => {
@@ -63,14 +63,14 @@ export const PreventaSection = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
-        >
+          className="text-center mb-16">
+          
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 px-5 py-2.5 rounded-full text-sm font-semibold text-primary mb-8"
-          >
+            className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 px-5 py-2.5 rounded-full text-sm font-semibold text-primary mb-8">
+            
             <Sparkles size={16} className="animate-pulse" />
             Acceso exclusivo para los primeros 30 publishers
           </motion.div>
@@ -99,8 +99,8 @@ export const PreventaSection = () => {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
-              className="p-6 bg-card border border-primary/20 rounded-2xl shadow-sm relative overflow-hidden"
-            >
+              className="p-6 bg-card border border-primary/20 rounded-2xl shadow-sm relative overflow-hidden">
+              
               {/* Subtle gradient accent */}
               <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary/50 via-primary to-primary/50 rounded-t-2xl" />
 
@@ -108,7 +108,7 @@ export const PreventaSection = () => {
                 <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
                   <DollarSign className="w-4 h-4 text-primary" />
                 </div>
-                <h3 className="font-heading text-lg font-bold">Precio escalonado (abril–mayo — Plan Plus)</h3>
+                <h3 className="font-heading text-lg font-bold text-primary">Precio escalonado (abril–mayo — Plan Plus)</h3>
               </div>
 
               <p className="text-sm text-muted-foreground mb-5 leading-relaxed">
@@ -116,28 +116,28 @@ export const PreventaSection = () => {
               </p>
 
               <div className="space-y-2.5 mb-5">
-                {pricingTiers.map((tier, i) => (
-                  <div
-                    key={i}
-                    className={`flex items-center justify-between p-4 rounded-xl border transition-all duration-200 ${
-                      tier.highlight
-                        ? "bg-primary/10 border-primary/30 shadow-sm shadow-primary/10"
-                        : "bg-background border-border hover:border-primary/15"
-                    }`}
-                  >
+                {pricingTiers.map((tier, i) =>
+                <div
+                  key={i}
+                  className={`flex items-center justify-between p-4 rounded-xl border transition-all duration-200 ${
+                  tier.highlight ?
+                  "bg-primary/10 border-primary/30 shadow-sm shadow-primary/10" :
+                  "bg-background border-border hover:border-primary/15"}`
+                  }>
+                  
                     <div className="flex items-center gap-3">
                       <span className="font-medium text-sm">{tier.dates}</span>
-                      {tier.badge && (
-                        <span className="text-[10px] font-bold uppercase tracking-wider bg-primary text-primary-foreground px-2 py-0.5 rounded-full">
+                      {tier.badge &&
+                    <span className="text-[10px] font-bold uppercase tracking-wider bg-primary text-primary-foreground px-2 py-0.5 rounded-full">
                           {tier.badge}
                         </span>
-                      )}
+                    }
                     </div>
                     <span className={`text-2xl font-bold ${tier.highlight ? "text-primary" : "text-foreground"}`}>
                       {tier.price} €<span className="text-xs font-normal text-muted-foreground">/mes</span>
                     </span>
                   </div>
-                ))}
+                )}
               </div>
 
               <div className="space-y-1.5 text-xs text-muted-foreground p-4 bg-muted/30 rounded-xl border border-border">
@@ -155,8 +155,8 @@ export const PreventaSection = () => {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
-              className="p-6 bg-card border border-accent/30 rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-300"
-            >
+              className="p-6 bg-card border border-accent/30 rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-300">
+              
               <h3 className="font-heading text-lg font-bold mb-5 flex items-center gap-2">
                 <div className="w-8 h-8 rounded-lg bg-accent/10 flex items-center justify-center">
                   <Check className="w-4 h-4 text-accent" />
@@ -164,14 +164,14 @@ export const PreventaSection = () => {
                 Qué incluye
               </h3>
               <ul className="space-y-4 mb-5">
-                {includes.map((item, i) => (
-                  <li key={i} className="flex items-start gap-3 group">
+                {includes.map((item, i) =>
+                <li key={i} className="flex items-start gap-3 group">
                     <div className="w-8 h-8 rounded-lg bg-accent/5 border border-accent/10 flex items-center justify-center flex-shrink-0 group-hover:bg-accent/10 transition-colors">
                       <item.icon className="w-4 h-4 text-accent" />
                     </div>
                     <span className="text-foreground text-sm leading-relaxed pt-1">{item.text}</span>
                   </li>
-                ))}
+                )}
               </ul>
 
               <div className="p-4 bg-accent/5 border border-accent/15 rounded-xl">
@@ -187,14 +187,14 @@ export const PreventaSection = () => {
               <div className="mt-4 p-4 bg-muted/30 border border-border rounded-xl">
                 <p className="text-sm font-semibold text-foreground mb-3">En el roadmap:</p>
                 <div className="flex flex-wrap gap-2">
-                  {roadmapItems.map((item, i) => (
-                    <span
-                      key={i}
-                      className="text-xs bg-background border border-border rounded-full px-3 py-1.5 text-muted-foreground hover:border-primary/30 hover:text-foreground transition-colors cursor-default"
-                    >
+                  {roadmapItems.map((item, i) =>
+                  <span
+                    key={i}
+                    className="text-xs bg-background border border-border rounded-full px-3 py-1.5 text-muted-foreground hover:border-primary/30 hover:text-foreground transition-colors cursor-default">
+                    
                       {item}
                     </span>
-                  ))}
+                  )}
                 </div>
               </div>
             </motion.div>
@@ -206,8 +206,8 @@ export const PreventaSection = () => {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
-              className="p-6 bg-card border border-border rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-300"
-            >
+              className="p-6 bg-card border border-border rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-300">
+              
               <h3 className="font-heading text-lg font-bold mb-5 flex items-center gap-2">
                 <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
                   <Zap className="w-4 h-4 text-primary" />
@@ -215,12 +215,12 @@ export const PreventaSection = () => {
                 ¿Por qué entrar ahora?
               </h3>
               <ul className="grid sm:grid-cols-2 gap-3">
-                {benefits.map((item, i) => (
-                  <li key={i} className="flex items-start gap-3 p-3 rounded-xl bg-muted/30 border border-transparent hover:border-primary/10 transition-colors">
+                {benefits.map((item, i) =>
+                <li key={i} className="flex items-start gap-3 p-3 rounded-xl bg-muted/30 border border-transparent hover:border-primary/10 transition-colors">
                     <Check className="w-4 h-4 text-accent flex-shrink-0 mt-0.5" />
                     <span className="text-foreground text-sm">{item}</span>
                   </li>
-                ))}
+                )}
               </ul>
             </motion.div>
 
@@ -233,8 +233,8 @@ export const PreventaSection = () => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="p-8 bg-card border border-border rounded-2xl shadow-lg space-y-6 sticky top-28 relative overflow-hidden"
-            >
+              className="p-8 bg-card border border-border rounded-2xl shadow-lg space-y-6 sticky top-28 relative overflow-hidden">
+              
               <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-accent/50 via-accent to-accent/50 rounded-t-2xl" />
 
               <div className="text-center pt-2">
@@ -248,8 +248,8 @@ export const PreventaSection = () => {
                 <Button
                   onClick={openDialog}
                   size="lg"
-                  className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-base py-5 rounded-xl shadow-lg shadow-primary/20"
-                >
+                  className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-base py-5 rounded-xl shadow-lg shadow-primary/20">
+                  
                   Bloquear mi precio desde 15€/mes
                   <ArrowRight className="ml-2" size={20} />
                 </Button>
@@ -266,6 +266,6 @@ export const PreventaSection = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>);
+
 };
