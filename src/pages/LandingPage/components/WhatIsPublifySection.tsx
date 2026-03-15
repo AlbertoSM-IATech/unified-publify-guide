@@ -10,10 +10,10 @@ const notIs = [
 
 
 const yesIs = [
-"La capa cognitiva y operativa de tu negocio",
-"El sistema donde operas tu editorial con orden, foco y centralización",
-"La estructura que conecta tu operativa diaria alrededor del libro",
-"La capa que convierte datos sueltos en decisiones con contexto"];
+"El sistema donde cada libro tiene costes, ingresos, assets y rendimiento en un solo lugar",
+"La capa operativa que conecta producción, finanzas y decisiones",
+"La estructura que te permite saber si un libro es rentable antes y después de publicarlo",
+"La visión de negocio que convierte datos sueltos en decisiones con contexto"];
 
 
 const pillars = [
