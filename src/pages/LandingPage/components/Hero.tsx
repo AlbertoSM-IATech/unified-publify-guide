@@ -44,13 +44,13 @@ export const Hero = () => {
                 as="h1"
                 className="font-heading text-3xl md:text-4xl font-bold tracking-tight text-foreground lg:text-5xl"
                 immediate delay={0.3} stagger={0.015} duration={0.5}>
-                Deja de trabajar en tu editorial.
+                Deja de improvisar tu editorial.
               </TextReveal>
               <TextReveal
                 as="h1"
                 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-accent"
                 immediate delay={0.6} stagger={0.015} duration={0.5}>
-                Empieza a dirigirla.
+                Opérala con sistema.
               </TextReveal>
             </div>
 
