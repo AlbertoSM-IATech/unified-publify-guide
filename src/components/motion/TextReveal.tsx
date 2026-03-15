@@ -76,7 +76,7 @@ export const TextReveal = ({
       style={{ perspective: "600px" }}>
       
       {words.map((word, wi) =>
-      <span key={wi} style={{ display: "inline-block", whiteSpace: "pre" }}>
+      <span key={wi} style={{ display: "inline-block", whiteSpace: "pre" }} className="text-primary">
           {Array.from(word).map((char) => {
           const idx = charIndex++;
           return (
