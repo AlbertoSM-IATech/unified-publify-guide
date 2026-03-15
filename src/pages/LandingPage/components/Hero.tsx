@@ -46,6 +46,8 @@ export const Hero = () => {
                 immediate delay={0.3} stagger={0.015} duration={0.5}>
                 Deja de improvisar en tu editorial. 
               </TextReveal>
+              <TextReveal
+                as="h1"
 
               </TextReveal>
               <TextReveal
