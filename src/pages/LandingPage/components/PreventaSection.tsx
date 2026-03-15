@@ -224,63 +224,6 @@ export const PreventaSection = () => {
               </ul>
             </motion.div>
 
-            <ValueAnchorBlock />
-
-            {/* Pricing */}
-            <motion.div
-              custom={2}
-              variants={cardVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              className="p-6 bg-card border border-primary/20 rounded-2xl shadow-sm relative overflow-hidden"
-            >
-              {/* Subtle gradient accent */}
-              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary/50 via-primary to-primary/50 rounded-t-2xl" />
-
-              <div className="flex items-center gap-2 mb-5">
-                <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
-                  <DollarSign className="w-4 h-4 text-primary" />
-                </div>
-                <h3 className="font-heading text-lg font-bold">Precio escalonado (abril–mayo — Plan Plus)</h3>
-              </div>
-
-              <p className="text-sm text-muted-foreground mb-5 leading-relaxed">
-                Cuanto antes entres, menos pagas. El precio se mantiene <strong className="text-foreground">para siempre</strong> mientras mantengas tu suscripción activa.
-              </p>
-
-              <div className="space-y-2.5 mb-5">
-                {pricingTiers.map((tier, i) => (
-                  <div
-                    key={i}
-                    className={`flex items-center justify-between p-4 rounded-xl border transition-all duration-200 ${
-                      tier.highlight
-                        ? "bg-primary/10 border-primary/30 shadow-sm shadow-primary/10"
-                        : "bg-background border-border hover:border-primary/15"
-                    }`}
-                  >
-                    <div className="flex items-center gap-3">
-                      <span className="font-medium text-sm">{tier.dates}</span>
-                      {tier.badge && (
-                        <span className="text-[10px] font-bold uppercase tracking-wider bg-primary text-primary-foreground px-2 py-0.5 rounded-full">
-                          {tier.badge}
-                        </span>
-                      )}
-                    </div>
-                    <span className={`text-2xl font-bold ${tier.highlight ? "text-primary" : "text-foreground"}`}>
-                      {tier.price} €<span className="text-xs font-normal text-muted-foreground">/mes</span>
-                    </span>
-                  </div>
-                ))}
-              </div>
-
-              <div className="space-y-1.5 text-xs text-muted-foreground p-4 bg-muted/30 rounded-xl border border-border">
-                <p><strong className="text-foreground">Desde junio:</strong> 29 €/mes Básico | 49 €/mes Plus</p>
-                <p>Si cancelas, al volver pagarás el precio vigente sin descuento.</p>
-                <p>El plan PRO no está incluido en esta oferta, pero si entras ahora solo pagarás la diferencia de precio manteniendo tu precio de early adopter.</p>
-                <p className="text-primary font-medium">Precios sin IVA.</p>
-              </div>
-            </motion.div>
           </div>
 
           {/* Right column: sticky CTA card */}
