@@ -108,7 +108,7 @@ export const PreventaSection = () => {
                 <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
                   <DollarSign className="w-4 h-4 text-primary" />
                 </div>
-                <h3 className="font-heading text-lg font-bold text-primary">Precio escalonado (abril–mayo — Plan Plus)</h3>
+                <h3 className="font-heading font-bold text-primary text-2xl">Precio escalonado (abril–mayo — Plan Plus)</h3>
               </div>
 
               <p className="text-sm text-muted-foreground mb-5 leading-relaxed">
