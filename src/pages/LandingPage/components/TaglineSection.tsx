@@ -36,9 +36,9 @@ export const TaglineSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: "easeOut", delay: 0.4 }}
-          className="text-lg md:text-xl text-center mt-5 max-w-2xl mx-auto text-accent">
+          className="text-lg md:text-xl text-center mt-5 max-w-2xl mx-auto text-white">
           
-          Gestiona tu catálogo, controla la producción, analiza la rentabilidad de cada libro y toma decisiones con datos reales. Sin saltar entre Excel, Drive, Notion y KDP Reports.
+          Publify reúne en un solo sistema tu catálogo, tu producción editorial y la rentabilidad real de tu negocio.
         </motion.p>
       </div>
     </section>);
