@@ -121,10 +121,10 @@ export const PreventaSection = () => {
               <div className="p-4 bg-accent/5 border border-accent/15 rounded-xl">
                 <div className="flex items-center gap-2 mb-2">
                   <BookOpen className="w-4 h-4 text-accent" />
-                  <span className="text-sm font-semibold text-accent">MVP actual</span>
+                  <span className="text-sm font-semibold text-accent">La base del sistema operativo editorial</span>
                 </div>
                 <p className="text-sm text-muted-foreground leading-relaxed">
-                  Biblioteca editorial + Finanzas básicas. Las funcionalidades avanzadas llegarán progresivamente.
+                  El MVP incluye Biblioteca editorial completa y control financiero por libro. Es el cimiento sobre el que se construyen todas las funcionalidades avanzadas. No es una demo: es la primera pieza funcional de tu sistema.
                 </p>
               </div>
 

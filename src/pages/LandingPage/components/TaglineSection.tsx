@@ -38,7 +38,7 @@ export const TaglineSection = () => {
           transition={{ duration: 0.6, ease: "easeOut", delay: 0.4 }}
           className="text-lg md:text-xl text-center mt-5 max-w-2xl mx-auto text-accent">
           
-          Publify es la Navaja Suiza de los Publishers independientes: Un solo lugar para investigar, crear, analizar y escalar tu negocio editorial.
+          Gestiona tu catálogo, controla la producción, analiza la rentabilidad de cada libro y toma decisiones con datos reales. Sin saltar entre Excel, Drive, Notion y KDP Reports.
         </motion.p>
       </div>
     </section>);

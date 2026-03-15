@@ -29,12 +29,12 @@ const faqs = [
   },
   {
     question: "¿Qué funcionalidades tiene ahora mismo?",
-    answer: "El MVP incluye Biblioteca editorial y Finanzas básicas. Las funcionalidades avanzadas (calculadora de viabilidad, estudio de KW, análisis de campañas, calendario editorial, integraciones, QRs y más) están en el roadmap y se integrarán progresivamente.",
+    answer: "El MVP incluye la Biblioteca editorial completa y control financiero por libro. Es la base del sistema operativo editorial: el cimiento funcional sobre el que se construyen las funcionalidades avanzadas (scoring de nichos, calendario editorial, análisis de campañas, QRs y más). No es una demo, es la primera pieza real de tu sistema.",
     defaultOpen: true,
   },
   {
     question: "¿Publify sustituye mis herramientas?",
-    answer: "No las sustituye directamente. Publify es la capa de orden que conecta tu operativa. Aporta sistema y centralización sobre lo que ya usas.",
+    answer: "Publify sustituye el Excel donde calculas rentabilidad, las notas dispersas en WhatsApp y Notion, el seguimiento manual de tu catálogo y la falta de visión financiera por libro. No sustituye Amazon Ads ni KDP, sino que te da el contexto que esas herramientas no tienen.",
     defaultOpen: false,
   },
   {
