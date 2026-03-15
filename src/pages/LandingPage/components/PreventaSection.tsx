@@ -49,7 +49,7 @@ export const PreventaSection = () => {
   const { open, setOpen, openDialog } = useWaitlistDialog();
 
   return (
-    <section id="waitlist" className="py-24 bg-background relative overflow-hidden">
+    <section id="waitlist" className="py-24 bg-background relative">
       {/* Decorative blobs */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-20 right-10 w-96 h-96 bg-primary/5 dark:bg-primary/10 rounded-full blur-[100px]" />
