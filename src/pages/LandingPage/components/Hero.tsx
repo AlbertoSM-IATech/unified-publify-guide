@@ -19,11 +19,11 @@ const fadeInUp = {
 };
 
 const benefits = [
-  { icon: BookOpen, text: "Información Centralizada" },
-  { icon: BarChart3, text: "Decisiones con datos reales" },
-  { icon: Eye, text: "Visión clara de tu negocio" },
-  { icon: Layers, text: "Escalar sin caos" },
-  { icon: TrendingUp, text: "Recuperar horas cada semana" },
+  { icon: BookOpen, text: "Catálogo centralizado" },
+  { icon: BarChart3, text: "Rentabilidad por libro" },
+  { icon: Eye, text: "Control de producción" },
+  { icon: Layers, text: "Decisiones con datos" },
+  { icon: TrendingUp, text: "Todo en un sistema" },
 ];
 
 export const Hero = () => {
