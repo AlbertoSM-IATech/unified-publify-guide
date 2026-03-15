@@ -44,7 +44,7 @@ export const Hero = () => {
                 as="h1"
                 className="font-heading text-3xl md:text-4xl font-bold tracking-tight text-foreground lg:text-5xl"
                 immediate delay={0.3} stagger={0.015} duration={0.5}>
-                Deja de improvisar en tu editorial.
+                Deja de improvisar en tu editorial. 1
               </TextReveal>
               <TextReveal
                 as="h1"
