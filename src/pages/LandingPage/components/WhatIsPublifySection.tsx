@@ -45,7 +45,7 @@ export const WhatIsPublifySection = () => {
           viewport={{ once: true }}
           className="text-center mb-8">
           
-          <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
+          <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-primary">
             El centro de tu negocio son tus libros
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
