@@ -46,8 +46,7 @@ export const WhatIsPublifySection = () => {
           className="text-center mb-8">
           
           <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-            Publify no es otra herramienta.{" "}
-            <span className="text-primary">Es el sistema.</span>
+            El centro de tu negocio son tus libros
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
             Publify centraliza tu operativa editorial para que trabajes con{" "}
