@@ -42,7 +42,7 @@ export const Hero = () => {
             <div className="mb-4">
               <TextReveal
                 as="h1"
-                className="font-heading text-3xl md:text-4xl font-bold tracking-tight text-foreground lg:text-5xl"
+                className="font-heading text-3xl md:text-4xl font-bold tracking-tight text-white lg:text-5xl"
                 immediate delay={0.3} stagger={0.015} duration={0.5}>
                 Tu siguiente nivel como publisher no es producir más. 
               </TextReveal>
