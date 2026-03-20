@@ -62,7 +62,7 @@ export const Hero = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
-              className="text-lg mb-8 md:text-xl lg:text-2xl font-light text-white">
+              className="text-lg mb-8 md:text-xl font-light font-mono text-accent lg:text-2xl">
               
               Deja de apagar fuegos y empieza a dirigir tu negocio.
             </motion.p>
