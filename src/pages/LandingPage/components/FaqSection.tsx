@@ -14,7 +14,7 @@ const faqs = [
   },
   {
     question: "¿Cuándo abrís acceso?",
-    answer: "A partir del 1 de abril de 2026, de forma progresiva. Las invitaciones se enviarán por orden de inscripción.",
+    answer: "A partir del 1 de mayo de 2026, de forma progresiva. Las invitaciones se enviarán por orden de inscripción.",
     defaultOpen: true,
   },
   {
