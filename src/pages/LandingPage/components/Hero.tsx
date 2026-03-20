@@ -74,7 +74,7 @@ export const Hero = () => {
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.8 + i * 0.25, duration: 0.4 }}
-                  className="relative inline-flex items-center px-3 py-1.5 rounded-full md:text-base font-semibold tracking-wide uppercase text-xs overflow-hidden bg-accent/10 text-accent border border-accent/25">
+                  className="relative inline-flex items-center py-1.5 rounded-full md:text-base font-semibold tracking-wide uppercase text-xs overflow-hidden bg-accent/10 border border-accent/25 text-primary px-[30px]">
                     <motion.span
                     className="absolute inset-0 rounded-full"
                     style={{ background: 'linear-gradient(90deg, transparent 0%, hsl(var(--accent) / 0.3) 50%, transparent 100%)' }}
