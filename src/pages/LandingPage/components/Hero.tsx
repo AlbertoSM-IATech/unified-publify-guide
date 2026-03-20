@@ -19,12 +19,12 @@ const fadeInUp = {
 };
 
 const benefits = [
-  { icon: BookOpen, text: "Catálogo centralizado" },
-  { icon: BarChart3, text: "Rentabilidad por libro" },
-  { icon: Eye, text: "Control de producción" },
-  { icon: Layers, text: "Decisiones con datos" },
-  { icon: TrendingUp, text: "Todo en un sistema" },
-];
+{ icon: BookOpen, text: "Catálogo centralizado" },
+{ icon: BarChart3, text: "Rentabilidad por libro" },
+{ icon: Eye, text: "Control de producción" },
+{ icon: Layers, text: "Decisiones con datos" },
+{ icon: TrendingUp, text: "Todo en un sistema" }];
+
 
 export const Hero = () => {
   const { open, setOpen, openDialog } = useWaitlistDialog();
@@ -44,16 +44,16 @@ export const Hero = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                className="font-heading text-3xl md:text-4xl font-bold tracking-tight text-white lg:text-5xl mb-2"
-              >
+                className="font-heading text-3xl md:text-4xl font-bold tracking-tight text-white lg:text-5xl mb-2">
+                
                 Tu siguiente nivel como publisher no es producir más.
               </motion.h1>
               <motion.h1
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-accent"
-              >
+                className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-primary">
+                
                 Es dirigir mejor.
               </motion.h1>
             </div>
@@ -62,48 +62,48 @@ export const Hero = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
-              className="text-lg mb-8 md:text-xl lg:text-2xl font-light text-white"
-            >
+              className="text-lg mb-8 md:text-xl lg:text-2xl font-light text-white">
+              
               Deja de apagar fuegos y empieza a dirigir tu negocio.
             </motion.p>
 
             <motion.div variants={fadeInUp} className="flex flex-wrap items-center gap-2.5 mb-6">
               {["Investiga", "Crea", "Analiza", "Escala"].map((step, i) =>
-                <span key={step} className="flex items-center gap-2 text-xs">
+              <span key={step} className="flex items-center gap-2 text-xs">
                   <motion.span
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.8 + i * 0.25, duration: 0.4 }}
-                    className="relative inline-flex items-center px-3 py-1.5 rounded-full md:text-base font-semibold tracking-wide uppercase text-xs overflow-hidden bg-accent/10 text-accent border border-accent/25">
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.8 + i * 0.25, duration: 0.4 }}
+                  className="relative inline-flex items-center px-3 py-1.5 rounded-full md:text-base font-semibold tracking-wide uppercase text-xs overflow-hidden bg-accent/10 text-accent border border-accent/25">
                     <motion.span
-                      className="absolute inset-0 rounded-full"
-                      style={{ background: 'linear-gradient(90deg, transparent 0%, hsl(var(--accent) / 0.3) 50%, transparent 100%)' }}
-                      animate={{ x: ['-100%', '200%'] }}
-                      transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 2 + i * 0.6, repeatDelay: 2.4 - i * 0.6 + 1.8 }}
-                    />
+                    className="absolute inset-0 rounded-full"
+                    style={{ background: 'linear-gradient(90deg, transparent 0%, hsl(var(--accent) / 0.3) 50%, transparent 100%)' }}
+                    animate={{ x: ['-100%', '200%'] }}
+                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 2 + i * 0.6, repeatDelay: 2.4 - i * 0.6 + 1.8 }} />
+                  
                     <span className="relative z-10 text-xs">{step}</span>
                   </motion.span>
                   {i < 3 &&
-                    <motion.span
-                      initial={{ opacity: 0, scaleX: 0 }}
-                      animate={{ opacity: 1, scaleX: 1 }}
-                      transition={{ delay: 1.0 + i * 0.25, duration: 0.3 }}
-                      className="text-lg text-accent">
+                <motion.span
+                  initial={{ opacity: 0, scaleX: 0 }}
+                  animate={{ opacity: 1, scaleX: 1 }}
+                  transition={{ delay: 1.0 + i * 0.25, duration: 0.3 }}
+                  className="text-lg text-accent">
                       <motion.span animate={{ opacity: [0.4, 1, 0.4] }} transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 2.3 + i * 0.6 }}>→</motion.span>
                     </motion.span>
-                  }
+                }
                 </span>
               )}
             </motion.div>
 
             <motion.div variants={fadeInUp} className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mb-8">
               {benefits.map((b, i) =>
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.5 + i * 0.1 }}
-                  className="flex items-center gap-3 p-3 rounded-lg bg-card/80 border border-border text-left">
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5 + i * 0.1 }}
+                className="flex items-center gap-3 p-3 rounded-lg bg-card/80 border border-border text-left">
                   <b.icon className="w-4 h-4 text-primary flex-shrink-0" />
                   <span className="text-xs text-foreground">{b.text}</span>
                 </motion.div>
@@ -121,8 +121,8 @@ export const Hero = () => {
                 <Button
                   onClick={openDialog}
                   size="lg"
-                  className="h-11 text-sm px-6 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-lg shadow-primary/25 whitespace-nowrap"
-                >
+                  className="h-11 text-sm px-6 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-lg shadow-primary/25 whitespace-nowrap">
+                  
                   Bloquear precio desde 15€/mes
                   <ArrowRight className="ml-1.5" size={16} />
                 </Button>
@@ -185,8 +185,8 @@ export const Hero = () => {
                       className="absolute inset-0 pointer-events-none"
                       style={{ background: "linear-gradient(115deg, transparent 40%, rgba(255,255,255,0.03) 45%, rgba(255,255,255,0.06) 50%, transparent 55%)" }}
                       animate={{ backgroundPosition: ["200% 0%", "-200% 0%"] }}
-                      transition={{ duration: 6, repeat: Infinity, repeatDelay: 4, ease: "easeInOut" }}
-                    />
+                      transition={{ duration: 6, repeat: Infinity, repeatDelay: 4, ease: "easeInOut" }} />
+                    
                     <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
                   </div>
                 </div>
@@ -200,6 +200,6 @@ export const Hero = () => {
           </motion.div>
         </motion.div>
       </div>
-    </section>
-  );
+    </section>);
+
 };
