@@ -58,7 +58,7 @@ export const Hero = () => {
               as="p"
               className="text-lg mb-8 md:text-xl lg:text-2xl font-light text-white"
               immediate delay={0.9} stagger={0.01} duration={0.4}>
-              Publify reúne en un solo sistema tu catálogo, tu producción editorial y la rentabilidad real de tu negocio.
+              Deja de apagar fuegos y empieza a dirigir tu negocio.
             </TextReveal>
 
             <motion.div variants={fadeInUp} className="flex flex-wrap items-center gap-2.5 mb-6">
