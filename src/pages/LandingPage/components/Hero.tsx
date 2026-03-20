@@ -44,13 +44,13 @@ export const Hero = () => {
                 as="h1"
                 className="font-heading text-3xl md:text-4xl font-bold tracking-tight text-foreground lg:text-5xl"
                 immediate delay={0.3} stagger={0.015} duration={0.5}>
-                Deja de improvisar en tu negocio. 
+                Tu siguiente nivel como publisher no es producir más. 
               </TextReveal>
               <TextReveal
                 as="h1"
                 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-accent"
                 immediate delay={0.6} stagger={0.015} duration={0.5}>
-                Opéralo con sistema.
+                Es dirigir mejor.
               </TextReveal>
             </div>
 
@@ -58,7 +58,7 @@ export const Hero = () => {
               as="p"
               className="text-lg mb-8 md:text-xl lg:text-2xl font-light text-white"
               immediate delay={0.9} stagger={0.01} duration={0.4}>
-              Publify reúne en un solo sistema tu catálogo, tu producción editorial y la rentabilidad real de tu negocio.
+              Deja de apagar fuegos y empieza a dirigir tu negocio.
             </TextReveal>
 
             <motion.div variants={fadeInUp} className="flex flex-wrap items-center gap-2.5 mb-6">
