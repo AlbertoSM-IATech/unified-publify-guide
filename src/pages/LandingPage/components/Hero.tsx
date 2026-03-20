@@ -40,26 +40,32 @@ export const Hero = () => {
           {/* Left — Text */}
           <div className="text-left">
             <div className="mb-4">
-              <TextReveal
-                as="h1"
-                className="font-heading text-3xl md:text-4xl font-bold tracking-tight text-white lg:text-5xl"
-                immediate delay={0.3} stagger={0.015} duration={0.5}>
-                Tu siguiente nivel como publisher no es producir más. 
-              </TextReveal>
-              <TextReveal
-                as="h1"
+              <motion.h1
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                className="font-heading text-3xl md:text-4xl font-bold tracking-tight text-white lg:text-5xl mb-2"
+              >
+                Tu siguiente nivel como publisher no es producir más.
+              </motion.h1>
+              <motion.h1
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
                 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-accent"
-                immediate delay={0.6} stagger={0.015} duration={0.5}>
+              >
                 Es dirigir mejor.
-              </TextReveal>
+              </motion.h1>
             </div>
 
-            <TextReveal
-              as="p"
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
               className="text-lg mb-8 md:text-xl lg:text-2xl font-light text-white"
-              immediate delay={0.9} stagger={0.01} duration={0.4}>
+            >
               Deja de apagar fuegos y empieza a dirigir tu negocio.
-            </TextReveal>
+            </motion.p>
 
             <motion.div variants={fadeInUp} className="flex flex-wrap items-center gap-2.5 mb-6">
               {["Investiga", "Crea", "Analiza", "Escala"].map((step, i) =>
