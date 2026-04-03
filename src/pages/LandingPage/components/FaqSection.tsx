@@ -69,14 +69,6 @@ const faqs = [
     answer: "No hay permanencia. Puedes cancelar cuando quieras y la baja es efectiva al final del periodo en curso.",
   },
   {
-    question: "¿Cómo es el onboarding?",
-    answer: "Depende del plan y del momento, pero el objetivo es que configures tu cuenta y entiendas la estructura en menos de 15 minutos, creando tu primer libro y completando lo esencial.",
-  },
-  {
-    question: "¿Puedo importar mis datos desde Excel o Google Sheets?",
-    answer: "Sí. Puedes importar datos por CSV o copiar/pegar. Para regalías y finanzas, el flujo recomendado es CSV. Hay automatizaciones de importación previstas a futuro.",
-  },
-  {
     question: "¿Puedo trabajar con mi equipo?",
     answer: "A día de hoy, no. Trabajar en equipo (roles, invitaciones, permisos y vistas por usuario) requiere mucho desarrollo y todavía no está incluido en el roadmap. Lo tenemos presente para futuro, pero por ahora Publify está optimizado para uso individual y operativa simple.",
   },
