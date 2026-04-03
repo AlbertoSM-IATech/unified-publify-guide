@@ -52,10 +52,6 @@ const faqs = [
     answer: "A partir del 1 de junio, los precios estándar serán: Trial: 30 días gratis, sin tarjeta (equivalente a Plus durante el trial). Starter: 19 €/mes. Plus: 49 €/mes. Pro: 99 €/mes (incluye Marketing 360, cuando aplique). Si entras como Early Adopter, mantienes tu precio promocional para siempre mientras tu suscripción siga activa.",
   },
   {
-    question: "¿Qué es exactamente la \"Lista de Espera / Early Adopters\"?",
-    answer: "Es el acceso prioritario a la primera cohorte pública del MVP. Te apuntas sin pagar y, cuando abramos acceso el 10 de abril, iremos dando entrada a los primeros (plazas limitadas a 20–30).",
-  },
-  {
     question: "¿Cuántas plazas hay?",
     answer: "Objetivo operativo: 20–30 early adopters y, si todo va bien, llegar a una lista prioritaria de alrededor de 100 personas.",
   },
