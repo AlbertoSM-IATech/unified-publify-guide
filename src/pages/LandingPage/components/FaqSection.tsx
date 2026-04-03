@@ -52,10 +52,6 @@ const faqs = [
     answer: "A partir del 1 de junio, los precios estándar serán: Trial: 30 días gratis, sin tarjeta (equivalente a Plus durante el trial). Starter: 19 €/mes. Plus: 49 €/mes. Pro: 99 €/mes (incluye Marketing 360, cuando aplique). Si entras como Early Adopter, mantienes tu precio promocional para siempre mientras tu suscripción siga activa.",
   },
   {
-    question: "¿Qué es exactamente la \"Lista de Espera / Early Adopters\"?",
-    answer: "Es el acceso prioritario a la primera cohorte pública del MVP. Te apuntas sin pagar y, cuando abramos acceso el 10 de abril, iremos dando entrada a los primeros (plazas limitadas a 20–30).",
-  },
-  {
     question: "¿Cuántas plazas hay?",
     answer: "Objetivo operativo: 20–30 early adopters y, si todo va bien, llegar a una lista prioritaria de alrededor de 100 personas.",
   },
@@ -71,14 +67,6 @@ const faqs = [
   {
     question: "¿Hay permanencia? ¿Puedo cancelar?",
     answer: "No hay permanencia. Puedes cancelar cuando quieras y la baja es efectiva al final del periodo en curso.",
-  },
-  {
-    question: "¿Cómo es el onboarding?",
-    answer: "Depende del plan y del momento, pero el objetivo es que configures tu cuenta y entiendas la estructura en menos de 15 minutos, creando tu primer libro y completando lo esencial.",
-  },
-  {
-    question: "¿Puedo importar mis datos desde Excel o Google Sheets?",
-    answer: "Sí. Puedes importar datos por CSV o copiar/pegar. Para regalías y finanzas, el flujo recomendado es CSV. Hay automatizaciones de importación previstas a futuro.",
   },
   {
     question: "¿Puedo trabajar con mi equipo?",
@@ -156,7 +144,7 @@ export const FaqSection = () => {
             ¿Tienes otra pregunta?
           </p>
           <p className="text-muted-foreground">
-            Escríbenos a <a href="mailto:hola@publify.ai" className="text-primary hover:underline">hola@publify.ai</a>
+            Escríbenos a <a href="mailto:test.publify@gmail.com" className="text-primary hover:underline">test.publify@gmail.com</a>
             {" "}y te respondemos lo antes posible.
           </p>
         </motion.div>

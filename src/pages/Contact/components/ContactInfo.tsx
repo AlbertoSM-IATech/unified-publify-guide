@@ -16,10 +16,10 @@ export const ContactInfo = () => {
         <div className="flex items-center space-x-3">
           <Mail className="w-5 h-5 text-muted-foreground" />
           <a 
-            href="mailto:contacto@publifyai.com"
+            href="mailto:test.publify@gmail.com"
             className="text-primary hover:underline"
           >
-            contacto@publifyai.com
+            test.publify@gmail.com
           </a>
         </div>
 
