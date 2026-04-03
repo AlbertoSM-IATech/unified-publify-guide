@@ -17,7 +17,7 @@ const faqs = [
   },
   {
     question: "¿Para quién es Publify?",
-    answer: "Para publishers profesionalizándose o ya profesionales (típicamente 10–100 libros) que quieren procesos repetibles y visibilidad de rentabilidad por libro.",
+    answer: "Para publishers profesionalizándose o ya profesionales (con 1–100 libros) que quieren procesos repetibles y visibilidad de rentabilidad por libro.",
   },
   {
     question: "¿Para quién NO es Publify?",
