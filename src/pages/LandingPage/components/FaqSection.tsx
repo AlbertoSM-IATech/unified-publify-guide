@@ -144,7 +144,7 @@ export const FaqSection = () => {
             ¿Tienes otra pregunta?
           </p>
           <p className="text-muted-foreground">
-            Escríbenos a <a href="mailto:hola@publify.ai" className="text-primary hover:underline">hola@publify.ai</a>
+            Escríbenos a <a href="mailto:test.publify@gmail.com" className="text-primary hover:underline">test.publify@gmail.com</a>
             {" "}y te respondemos lo antes posible.
           </p>
         </motion.div>

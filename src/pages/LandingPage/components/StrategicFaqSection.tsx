@@ -76,7 +76,7 @@ export const StrategicFaqSection = () => {
             ¿Tienes otra pregunta?
           </p>
           <p className="text-muted-foreground">
-            Escríbenos a <a href="mailto:hola@publify.ai" className="text-[#FB923C] hover:underline">hola@publify.ai</a> 
+            Escríbenos a <a href="mailto:test.publify@gmail.com" className="text-[#FB923C] hover:underline">test.publify@gmail.com</a> 
             {" "}y te respondemos en menos de 2 horas
           </p>
         </motion.div>
