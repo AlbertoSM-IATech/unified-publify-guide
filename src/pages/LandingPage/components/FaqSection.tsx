@@ -24,7 +24,7 @@ const faqs = [
   },
   {
     question: "¿Qué precio tendrá?",
-    answer: "Precio escalonado (Plan Plus): 15 €/mes del 1 al 30 de abril, 20 €/mes del 1 al 15 de mayo, y 25 €/mes del 16 al 31 de mayo. Desde el 1 de junio: 29 €/mes Básico o 49 €/mes Plus. El precio de early adopter se mantiene para siempre mientras mantengas tu suscripción activa. Precios sin IVA.",
+    answer: "Precio escalonado (Plan Plus): 15 €/mes del 10 al 30 de abril, 20 €/mes del 1 al 15 de mayo, y 25 €/mes del 16 al 31 de mayo. Desde el 1 de junio: 29 €/mes Básico o 49 €/mes Plus. El precio de early adopter se mantiene para siempre mientras mantengas tu suscripción activa. Precios sin IVA.",
     defaultOpen: true,
   },
   {

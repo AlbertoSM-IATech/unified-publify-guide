@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Clock } from "lucide-react";
 
-const TARGET_DATE = new Date("2026-04-01T00:00:00+01:00"); // Midnight CET (Spain)
+const TARGET_DATE = new Date("2026-04-10T00:00:00+02:00"); // Midnight CEST (Spain)
 
 interface TimeLeft {
   days: number;
