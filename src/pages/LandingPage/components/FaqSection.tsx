@@ -48,8 +48,8 @@ const faqs = [
     answer: "A nivel práctico, Publify organiza tu operativa por libro: Biblioteca (catálogo, series, estados), Producción (pipeline y ejecución), Finanzas (por libro y global), Research y contexto (según módulo y plan). Publify no promete \"más ventas\". Promete estructura profesional para operar con claridad.",
   },
   {
-    question: "¿Qué planes existen y cuánto cuesta Publify?",
-    answer: "Trial: 30 días gratis, sin tarjeta (equivalente a Plus durante el trial). Starter: 19 €/mes. Plus: 49 €/mes. Pro: 99 €/mes (incluye Marketing 360, cuando aplique).",
+    question: "¿Qué planes existen y cuánto costará Publify después de esta promoción?",
+    answer: "A partir del 1 de junio, los precios estándar serán: Trial: 30 días gratis, sin tarjeta (equivalente a Plus durante el trial). Starter: 19 €/mes. Plus: 49 €/mes. Pro: 99 €/mes (incluye Marketing 360, cuando aplique). Si entras como Early Adopter, mantienes tu precio promocional para siempre mientras tu suscripción siga activa.",
   },
   {
     question: "¿Qué es exactamente la \"Lista de Espera / Early Adopters\"?",
