@@ -21,7 +21,7 @@ const benefits = [
 
 
 const pricingTiers = [
-{ dates: "1–30 abril", price: "15", highlight: true, badge: "Mejor precio" },
+{ dates: "10–30 abril", price: "15", highlight: true, badge: "Mejor precio" },
 { dates: "1–15 mayo", price: "20", highlight: false, badge: null },
 { dates: "16–31 mayo", price: "25", highlight: false, badge: null }];
 

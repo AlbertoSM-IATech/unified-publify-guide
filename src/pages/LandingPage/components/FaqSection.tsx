@@ -8,45 +8,103 @@ import {
 
 const faqs = [
   {
-    question: "¿Apuntarme tiene coste?",
-    answer: "No. Apuntarte a la waitlist es completamente gratis. Solo necesitas tu nombre y email.",
-    defaultOpen: false,
+    question: "¿Qué es Publify, en una frase?",
+    answer: "Publify es el Sistema Operativo Editorial para publishers de Amazon KDP: un sistema que centraliza tu negocio editorial con una promesa simple: Orden, Foco y Centralización.",
   },
   {
-    question: "¿Cuándo abrís acceso?",
-    answer: "A partir del 1 de mayo de 2026, de forma progresiva. Las invitaciones se enviarán por orden de inscripción.",
-    defaultOpen: true,
+    question: "¿Qué problema resuelve Publify?",
+    answer: "El problema raíz es la fragmentación: datos y procesos repartidos entre Excel, Drive, Notion y herramientas sueltas que no se hablan. Esto genera errores, retrabajo, fatiga de decisión y te impide escalar con control.",
+  },
+  {
+    question: "¿Para quién es Publify?",
+    answer: "Para publishers profesionalizándose o ya profesionales (típicamente 10–100 libros) que quieren procesos repetibles y visibilidad de rentabilidad por libro.",
+  },
+  {
+    question: "¿Para quién NO es Publify?",
+    answer: "Para quien busca una spy tool tipo Helium10. Para quien busca un maquetador o software de escritura. Para quien quiere \"una app que haga Ads por ti\".",
+  },
+  {
+    question: "¿Cómo funciona Publify? (estructura para entenderlo)",
+    answer: "Publify está diseñado con un principio no negociable: el libro es el nodo central. Publify (capa global): visión y control del negocio completo. Libro (nodo central): cada libro tiene su Ficha. De la Ficha cuelgan dos ramas: Workspace (capa cognitiva, donde investigas y piensas) y Producción (capa operativa, donde ejecutas: archivos, metadatos, tareas, finanzas, etc.).",
+  },
+  {
+    question: "¿Qué es exactamente la \"Ficha de Libro\"?",
+    answer: "La Ficha es el centro de mando de cada libro: el contenedor estructurado donde viven metadatos, archivos, enlaces, estado del pipeline y finanzas. Es el nodo del sistema. El Workspace y la Producción cuelgan de aquí.",
+  },
+  {
+    question: "¿Qué es el Workspace y para qué sirve?",
+    answer: "El Workspace es la capa cognitiva de cada libro: un espacio libre pero estructurado para investigar nichos, documentar estrategia, guardar referencias y desarrollar el plan antes de ejecutar.",
+  },
+  {
+    question: "¿Publify sustituye a Helium10, Publisher Rocket, BookBeam, etc.?",
+    answer: "No. Publify no compite con herramientas especializadas. Publify las contextualiza dentro del ecosistema del libro para que dejes de tener información aislada en 7 sitios.",
+  },
+  {
+    question: "¿Publify se conecta directamente con Amazon KDP o Amazon Ads?",
+    answer: "No. Publify no se conecta directamente al panel de KDP ni modifica nada en tu cuenta. Tú importas o registras la información de forma controlada (CSV o copiar/pegar), evitando riesgos con los términos de Amazon.",
+  },
+  {
+    question: "¿Qué puedo gestionar en Publify hoy (MVP)?",
+    answer: "A nivel práctico, Publify organiza tu operativa por libro: Biblioteca (catálogo, series, estados), Producción (pipeline y ejecución), Finanzas (por libro y global), Research y contexto (según módulo y plan). Publify no promete \"más ventas\". Promete estructura profesional para operar con claridad.",
+  },
+  {
+    question: "¿Qué planes existen y cuánto cuesta Publify?",
+    answer: "Trial: 30 días gratis, sin tarjeta (equivalente a Plus durante el trial). Starter: 19 €/mes. Plus: 49 €/mes. Pro: 99 €/mes (incluye Marketing 360, cuando aplique).",
+  },
+  {
+    question: "¿Qué es exactamente la \"Lista de Espera / Early Adopters\"?",
+    answer: "Es el acceso prioritario a la primera cohorte pública del MVP. Te apuntas sin pagar y, cuando abramos acceso el 10 de abril, iremos dando entrada a los primeros (plazas limitadas a 20–30).",
   },
   {
     question: "¿Cuántas plazas hay?",
-    answer: "Entre 20 y 30 plazas para la fase de early adopters. Queremos asegurar un onboarding de calidad y feedback real.",
-    defaultOpen: false,
+    answer: "Objetivo operativo: 20–30 early adopters y, si todo va bien, llegar a una lista prioritaria de alrededor de 100 personas.",
   },
   {
-    question: "¿Qué precio tendrá?",
-    answer: "Precio escalonado (Plan Plus): 15 €/mes del 1 al 30 de abril, 20 €/mes del 1 al 15 de mayo, y 25 €/mes del 16 al 31 de mayo. Desde el 1 de junio: 29 €/mes Básico o 49 €/mes Plus. El precio de early adopter se mantiene para siempre mientras mantengas tu suscripción activa. Precios sin IVA.",
+    question: "¿Cuánto pagaré si entro como Early Adopter?",
+    answer: "Durante el periodo Early Adopter, el acceso tendrá este precio escalonado (Plan Plus): 10–30 de abril: 15 €/mes. 1–15 de mayo: 20 €/mes. 16–31 de mayo: 25 €/mes. A partir del 1 de junio, el precio sube al estándar (29 €/mes Básico | 49 €/mes Plus).",
     defaultOpen: true,
   },
   {
-    question: "¿Qué funcionalidades tiene ahora mismo?",
-    answer: "El MVP incluye la Biblioteca editorial completa y control financiero por libro. Es la base del sistema operativo editorial: el cimiento funcional sobre el que se construyen las funcionalidades avanzadas (scoring de nichos, calendario editorial, análisis de campañas, QRs y más). No es una demo, es la primera pieza real de tu sistema.",
-    defaultOpen: true,
+    question: "¿Qué incluye el acceso Early Adopter?",
+    answer: "Acceso prioritario al MVP. Posibilidad de influir en el roadmap con feedback (prioridad sobre mejoras de fricción real). Posible opción de licencia Lifetime más adelante, solo para early adopters (según oferta vigente).",
   },
   {
-    question: "¿Publify sustituye mis herramientas?",
-    answer: "Publify sustituye el Excel donde calculas rentabilidad, las notas dispersas en WhatsApp y Notion, el seguimiento manual de tu catálogo y la falta de visión financiera por libro. No sustituye Amazon Ads ni KDP, sino que te da el contexto que esas herramientas no tienen.",
-    defaultOpen: false,
+    question: "¿Hay permanencia? ¿Puedo cancelar?",
+    answer: "No hay permanencia. Puedes cancelar cuando quieras y la baja es efectiva al final del periodo en curso.",
   },
   {
-    question: "¿Qué pasa si cancelo mi suscripción?",
-    answer: "Si cancelas y vuelves más adelante, tendrás que pagar el precio vigente en ese momento, sin el descuento de early adopter.",
-    defaultOpen: false,
+    question: "¿Cómo es el onboarding?",
+    answer: "Depende del plan y del momento, pero el objetivo es que configures tu cuenta y entiendas la estructura en menos de 15 minutos, creando tu primer libro y completando lo esencial.",
+  },
+  {
+    question: "¿Puedo importar mis datos desde Excel o Google Sheets?",
+    answer: "Sí. Puedes importar datos por CSV o copiar/pegar. Para regalías y finanzas, el flujo recomendado es CSV. Hay automatizaciones de importación previstas a futuro.",
+  },
+  {
+    question: "¿Puedo trabajar con mi equipo?",
+    answer: "A día de hoy, no. Trabajar en equipo (roles, invitaciones, permisos y vistas por usuario) requiere mucho desarrollo y todavía no está incluido en el roadmap. Lo tenemos presente para futuro, pero por ahora Publify está optimizado para uso individual y operativa simple.",
+  },
+  {
+    question: "¿Mis datos son míos? ¿Puedo exportarlos?",
+    answer: "Sí. Puedes exportar tus datos en CSV en cualquier momento.",
+  },
+  {
+    question: "¿Cumple RGPD?",
+    answer: "Sí. Publify se plantea desde compliance y usa proveedores cloud. La política de privacidad detalla finalidades y derechos.",
+  },
+  {
+    question: "¿Qué NO hace Publify (para evitar expectativas falsas)?",
+    answer: "No sube libros a KDP automáticamente. No es una spy tool. No gestiona pujas automáticamente. No es contabilidad fiscal. No es un \"todo en uno genérico\".",
+  },
+  {
+    question: "¿Cómo contacto si tengo dudas?",
+    answer: "Escríbenos y te respondemos con el mejor siguiente paso según tu caso (catálogo, Ads, fase del negocio).",
   },
 ];
 
 export const FaqSection = () => {
   const defaultOpenItems = faqs
-    .map((faq, index) => (faq.defaultOpen ? `item-${index}` : null))
+    .map((faq, index) => ((faq as any).defaultOpen ? `item-${index}` : null))
     .filter(Boolean) as string[];
 
   return (
@@ -86,6 +144,21 @@ export const FaqSection = () => {
               </AccordionItem>
             ))}
           </Accordion>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mt-12 p-8 bg-primary/5 rounded-lg border border-primary/20"
+        >
+          <p className="text-lg mb-2 text-foreground">
+            ¿Tienes otra pregunta?
+          </p>
+          <p className="text-muted-foreground">
+            Escríbenos a <a href="mailto:hola@publify.ai" className="text-primary hover:underline">hola@publify.ai</a>
+            {" "}y te respondemos lo antes posible.
+          </p>
         </motion.div>
       </div>
     </section>
