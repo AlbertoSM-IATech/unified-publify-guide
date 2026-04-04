@@ -125,7 +125,7 @@ export const CtaSection = () => {
                 size="lg"
               >
                 <Sparkles size={18} className="mr-2" />
-                Solicitar acceso anticipado
+                Registrarme y bloquear precio
               </Button>
             </motion.div>
           </motion.div>
