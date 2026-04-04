@@ -73,7 +73,7 @@ const plans = [
     id: "pro",
     name: "Pro",
     tagline: "Más popular: escala y automatiza",
-    price: "97",
+    price: "39",
     period: "€/mes",
     annualPrice: "970 €/año",
     annualPeriod: "(80,83 €/mes)",
