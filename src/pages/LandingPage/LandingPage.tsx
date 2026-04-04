@@ -13,7 +13,7 @@ import { FaqSection } from "./components/FaqSection";
 import { FinalCtaSection } from "./components/FinalCtaSection";
 import { Footer } from "./components/Footer";
 import { StickyMobileCTA } from "./components/StickyMobileCTA";
-import { TechBackground } from "@/components/motion/TechBackground";
+
 import { useScrollAnimations } from "@/hooks/useScrollAnimations";
 
 const pageVariants = {
