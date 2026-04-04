@@ -34,9 +34,9 @@ const plans = [
     id: "starter",
     name: "Starter",
     tagline: "Pon tu editorial en orden",
-    price: "39,97",
+    price: "19",
     period: "€/mes",
-    annualPrice: "399,70 €/año",
+    annualPrice: "190 €/año",
     annualPeriod: "(33,31 €/mes)",
     description: "Autores serios con pocos títulos",
     features: [
