@@ -33,7 +33,7 @@ export const LandingPage = () => {
       animate="visible"
       variants={pageVariants}
     >
-      <TechBackground />
+      
       <Header />
       <Hero />
       <TaglineSection />
