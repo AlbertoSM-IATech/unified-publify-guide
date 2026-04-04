@@ -17,21 +17,21 @@ const yesIs = [
 
 
 const pillars = [
-{
-  icon: Database,
-  title: "Fuente de verdad por libro",
-  desc: "Costes, ingresos, assets, producción y rendimiento. Todo vinculado al libro como unidad de negocio."
-},
-{
-  icon: Eye,
-  title: "Control operativo",
-  desc: "Sabe qué toca hacer, qué está bloqueado y qué decisiones necesitan datos. Sin depender de memoria."
-},
-{
-  icon: BookOpen,
-  title: "Visión del negocio",
-  desc: "Rentabilidad por libro y global. De lo micro a lo macro. Las decisiones que escalan tu editorial."
-}];
+  {
+    icon: Database,
+    title: "Una única fuente de verdad ",
+    desc: "Costes, ingresos, assets, producción y rendimiento. Todo vinculado al libro como unidad de negocio."
+  },
+  {
+    icon: Eye,
+    title: "Control operativo",
+    desc: "Sabes qué toca hacer, qué está bloqueado y qué decisiones tomar. Sin depender de memoria."
+  },
+  {
+    icon: BookOpen,
+    title: "Visión financiera",
+    desc: "Rentabilidad por libro y global. De lo micro a lo macro. "
+  }];
 
 
 export const WhatIsPublifySection = () => {
