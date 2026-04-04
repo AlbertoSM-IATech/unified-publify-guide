@@ -69,7 +69,7 @@ export const WhatIsPublifySection = () => {
               <div className="w-12 h-12 mx-auto mb-4 bg-accent/10 rounded-full flex items-center justify-center">
                 <pillar.icon className="w-6 h-6 text-accent" />
               </div>
-              <h3 className="text-lg font-bold mb-2">{pillar.title}</h3>
+              <h3 className="text-lg font-bold mb-2 text-primary">{pillar.title}</h3>
               <p className="text-sm text-muted-foreground">{pillar.desc}</p>
             </motion.div>
           )}
