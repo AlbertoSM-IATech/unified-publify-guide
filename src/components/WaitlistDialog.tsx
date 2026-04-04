@@ -18,7 +18,7 @@ export const WaitlistDialog = ({ open, onOpenChange }: WaitlistDialogProps) => {
       <DialogContent className="sm:max-w-2xl max-h-[90vh] p-0 overflow-hidden">
         <DialogHeader className="px-6 pt-6 pb-2">
           <DialogTitle className="font-heading text-xl font-bold text-center">
-            Reserva tu acceso prioritario
+            Bloquea tu precio ahora
           </DialogTitle>
           <DialogDescription className="text-center text-sm text-muted-foreground">
             Rellena el formulario para bloquear tu plaza.
