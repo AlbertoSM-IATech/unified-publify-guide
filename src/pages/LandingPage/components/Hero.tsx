@@ -54,7 +54,7 @@ export const Hero = () => {
                 transition={{ duration: 0.6, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
                 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-primary">
                 
-                Es dirigir mejor.
+                Es gestionar mejor para escalar.
               </motion.h1>
             </div>
 
@@ -62,9 +62,9 @@ export const Hero = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
-              className="text-lg mb-8 md:text-xl font-light font-mono text-accent lg:text-2xl">
+              className="text-lg mb-8 md:text-xl text-primary-foreground font-sans lg:text-4xl font-normal">
               
-              Deja de improvisar y empieza a dirigir
+              Deja de improvisar y empieza a dirigir como un profesional.
             </motion.p>
 
             <motion.div variants={fadeInUp} className="flex flex-wrap items-center gap-2.5 mb-6">
