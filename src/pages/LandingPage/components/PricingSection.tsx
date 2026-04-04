@@ -73,10 +73,10 @@ const plans = [
     id: "pro",
     name: "Pro",
     tagline: "Más popular: escala y automatiza",
-    price: "39",
+    price: "99",
     period: "€/mes",
-    annualPrice: "970 €/año",
-    annualPeriod: "(80,83 €/mes)",
+    annualPrice: "990 €/año",
+    annualPeriod: "(82,50 €/mes)",
     description: "Publishers profesionales",
     features: [
       "3 usuarios (ampliables)",
