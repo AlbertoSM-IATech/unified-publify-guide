@@ -49,7 +49,7 @@ const faqs = [
   },
   {
     question: "¿Qué planes existen y cuánto costará Publify después de esta promoción?",
-    answer: "A partir del 1 de junio, los precios estándar serán: Trial: 30 días gratis, sin tarjeta (equivalente a Plus durante el trial). Starter: 19 €/mes. Plus: 49 €/mes. Pro: 99 €/mes (incluye Marketing 360, cuando aplique). Si entras como Early Adopter, mantienes tu precio promocional para siempre mientras tu suscripción siga activa.",
+    answer: "A partir del 1 de junio, los precios estándar serán: Trial: 30 días gratis, sin tarjeta (equivalente a Plus durante el trial). Starter: 19 €/mes. Plus: 39 €/mes. Pro: 99 €/mes (incluye Marketing 360, cuando aplique). Si entras como Early Adopter, mantienes tu precio promocional para siempre mientras tu suscripción siga activa.",
   },
   {
     question: "¿Cuántas plazas hay?",
@@ -57,7 +57,7 @@ const faqs = [
   },
   {
     question: "¿Cuánto pagaré si entro como Early Adopter?",
-    answer: "Durante el periodo Early Adopter, el acceso tendrá este precio escalonado (Plan Plus): 10–30 de abril: 15 €/mes. 1–15 de mayo: 20 €/mes. 16–31 de mayo: 25 €/mes. A partir del 1 de junio, el precio sube al estándar (29 €/mes Básico | 49 €/mes Plus).",
+    answer: "Durante el periodo Early Adopter, el acceso tendrá este precio escalonado (Plan Plus): 10–30 de abril: 15 €/mes. 1–15 de mayo: 20 €/mes. 16–31 de mayo: 25 €/mes. A partir del 1 de junio, el precio sube al estándar (19 €/mes Starter | 39 €/mes Plus).",
     defaultOpen: true,
   },
   {
