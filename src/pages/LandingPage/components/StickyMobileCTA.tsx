@@ -30,7 +30,7 @@ export const StickyMobileCTA = () => {
               onClick={openDialog}
               className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-3 text-sm"
             >
-              Reservar plaza — desde 15€/mes
+              Bloquear precio — desde 15€/mes
               <ArrowRight className="ml-2" size={16} />
             </Button>
           </motion.div>

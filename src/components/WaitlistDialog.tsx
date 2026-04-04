@@ -21,7 +21,7 @@ export const WaitlistDialog = ({ open, onOpenChange }: WaitlistDialogProps) => {
             Bloquea tu precio ahora
           </DialogTitle>
           <DialogDescription className="text-center text-sm text-muted-foreground">
-            Rellena el formulario para bloquear tu plaza.
+            Regístrate y te enviaremos los detalles del proceso de pago por email.
           </DialogDescription>
         </DialogHeader>
         <div className="px-2 pb-2">

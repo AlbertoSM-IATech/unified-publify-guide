@@ -92,7 +92,7 @@ export const Header = () => {
             </button>
             <div className="pt-2">
               <Button onClick={scrollToWaitlist} className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold">
-                Reservar plaza — desde 15€/mes
+                Bloquear precio — desde 15€/mes
               </Button>
             </div>
           </nav>

@@ -29,7 +29,7 @@ export const EarlyAdoptersSection = () => {
 
           <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }} className="inline-block pt-4">
             <Button onClick={scrollToWaitlist} size="lg" className="text-base px-8 py-5 bg-primary hover:bg-primary/90 text-primary-foreground font-bold shadow-lg shadow-primary/25">
-              Ver precios y reservar plaza
+              Ver precios y bloquear mi precio
               <ArrowRight className="ml-2" size={18} />
             </Button>
           </motion.div>
