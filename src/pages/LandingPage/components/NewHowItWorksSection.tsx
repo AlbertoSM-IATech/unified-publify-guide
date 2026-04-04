@@ -18,7 +18,7 @@ const steps = [
     icon: Settings,
     title: "Gestiona con claridad lo que toca hacer",
     description:
-      "Sabes en cada momento qué está pendiente, qué está bloqueado y qué está listo. Sin depender de memoria, sin notas en WhatsApp, sin tareas perdidas en cinco apps distintas.",
+      "Ejecuta lo que está pendiente, actúa sobre lo qué está bloqueado y controla lo qué está listo. Sin depender de memoria, sin notas en WhatsApp, sin tareas perdidas en cinco apps distintas.",
   },
   {
     number: "03",
@@ -75,14 +75,14 @@ export const NewHowItWorksSection = () => {
                 <div className="w-12 h-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-lg font-bold shadow-lg">
                   {step.number}
                 </div>
-                <span className="text-xs font-bold tracking-widest uppercase text-primary">
+                <span className="tracking-widest uppercase text-primary-foreground text-2xl font-extrabold">
                   {step.label}
                 </span>
               </div>
               <div className="w-10 h-10 mb-4 bg-accent/10 rounded-full flex items-center justify-center">
                 <step.icon className="w-5 h-5 text-accent" />
               </div>
-              <h3 className="text-lg font-bold mb-3 text-foreground">{step.title}</h3>
+              <h3 className="text-lg font-bold mb-3 text-primary">{step.title}</h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
                 {step.description}
               </p>

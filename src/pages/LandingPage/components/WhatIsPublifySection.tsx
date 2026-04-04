@@ -10,28 +10,28 @@ const notIs = [
 
 
 const yesIs = [
-"El sistema donde cada libro tiene costes, ingresos, assets y rendimiento en un solo lugar",
-"La capa operativa que conecta producción, finanzas y decisiones",
-"La estructura que te permite saber si un libro es rentable antes y después de publicarlo",
-"La visión de negocio que convierte datos sueltos en decisiones con contexto"];
+  "El sistema donde cada libro tiene costes, ingresos, assets y flujo de creación en un solo lugar",
+  "La capa operativa que conecta tu biblioteca, producción, finanzas y mas adelante el Marketing.",
+  "La estructura que te permite saber si un libro es rentable antes y después de publicarlo",
+  "La visión de negocio que convierte datos sueltos en decisiones con contexto"];
 
 
 const pillars = [
-{
-  icon: Database,
-  title: "Fuente de verdad por libro",
-  desc: "Costes, ingresos, assets, producción y rendimiento. Todo vinculado al libro como unidad de negocio."
-},
-{
-  icon: Eye,
-  title: "Control operativo",
-  desc: "Sabe qué toca hacer, qué está bloqueado y qué decisiones necesitan datos. Sin depender de memoria."
-},
-{
-  icon: BookOpen,
-  title: "Visión del negocio",
-  desc: "Rentabilidad por libro y global. De lo micro a lo macro. Las decisiones que escalan tu editorial."
-}];
+  {
+    icon: Database,
+    title: "Una única fuente de verdad ",
+    desc: "Costes, ingresos, assets, producción y rendimiento. Todo vinculado al libro como unidad de negocio."
+  },
+  {
+    icon: Eye,
+    title: "Control operativo",
+    desc: "Sabes qué toca hacer, qué está bloqueado y qué decisiones tomar. Sin depender de memoria."
+  },
+  {
+    icon: BookOpen,
+    title: "Visión financiera",
+    desc: "Rentabilidad por libro y global. De lo micro a lo macro. "
+  }];
 
 
 export const WhatIsPublifySection = () => {
@@ -69,7 +69,7 @@ export const WhatIsPublifySection = () => {
               <div className="w-12 h-12 mx-auto mb-4 bg-accent/10 rounded-full flex items-center justify-center">
                 <pillar.icon className="w-6 h-6 text-accent" />
               </div>
-              <h3 className="text-lg font-bold mb-2">{pillar.title}</h3>
+              <h3 className="text-lg font-bold mb-2 text-primary">{pillar.title}</h3>
               <p className="text-sm text-muted-foreground">{pillar.desc}</p>
             </motion.div>
           )}
@@ -108,7 +108,7 @@ export const WhatIsPublifySection = () => {
             <ul className="space-y-3">
               {yesIs.map((item, i) =>
               <li key={i} className="flex items-start gap-3 text-sm text-foreground">
-                  <Check className="w-4 h-4 text-accent flex-shrink-0 mt-0.5" />
+                  <Check className="w-4 h-4 flex-shrink-0 mt-0.5 text-lime-500 font-medium" />
                   <span>{item}</span>
                 </li>
               )}
