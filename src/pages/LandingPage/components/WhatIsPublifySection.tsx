@@ -108,7 +108,7 @@ export const WhatIsPublifySection = () => {
             <ul className="space-y-3">
               {yesIs.map((item, i) =>
               <li key={i} className="flex items-start gap-3 text-sm text-foreground">
-                  <Check className="w-4 h-4 text-accent flex-shrink-0 mt-0.5" />
+                  <Check className="w-4 h-4 flex-shrink-0 mt-0.5 text-lime-500 font-medium" />
                   <span>{item}</span>
                 </li>
               )}

@@ -82,7 +82,7 @@ export const NewHowItWorksSection = () => {
               <div className="w-10 h-10 mb-4 bg-accent/10 rounded-full flex items-center justify-center">
                 <step.icon className="w-5 h-5 text-accent" />
               </div>
-              <h3 className="text-lg font-bold mb-3 text-foreground">{step.title}</h3>
+              <h3 className="text-lg font-bold mb-3 text-primary">{step.title}</h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
                 {step.description}
               </p>
