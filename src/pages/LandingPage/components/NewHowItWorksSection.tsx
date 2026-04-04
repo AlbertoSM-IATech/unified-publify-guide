@@ -18,7 +18,7 @@ const steps = [
     icon: Settings,
     title: "Gestiona con claridad lo que toca hacer",
     description:
-      "Sabes en cada momento qué está pendiente, qué está bloqueado y qué está listo. Sin depender de memoria, sin notas en WhatsApp, sin tareas perdidas en cinco apps distintas.",
+      "Ejecuta lo que está pendiente, actúa sobre lo qué está bloqueado y controla lo qué está listo. Sin depender de memoria, sin notas en WhatsApp, sin tareas perdidas en cinco apps distintas.",
   },
   {
     number: "03",

@@ -10,10 +10,10 @@ const notIs = [
 
 
 const yesIs = [
-"El sistema donde cada libro tiene costes, ingresos, assets y rendimiento en un solo lugar",
-"La capa operativa que conecta producción, finanzas y decisiones",
-"La estructura que te permite saber si un libro es rentable antes y después de publicarlo",
-"La visión de negocio que convierte datos sueltos en decisiones con contexto"];
+  "El sistema donde cada libro tiene costes, ingresos, assets y flujo de creación en un solo lugar",
+  "La capa operativa que conecta tu biblioteca, producción, finanzas y mas adelante el Marketing.",
+  "La estructura que te permite saber si un libro es rentable antes y después de publicarlo",
+  "La visión de negocio que convierte datos sueltos en decisiones con contexto"];
 
 
 const pillars = [
