@@ -82,8 +82,8 @@ export const ControlSection = () => {
           className="text-center mb-14"
         >
           <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold mb-5">
-            Qué controla Publify{" "}
-            <span className="text-primary">en tu editorial</span>
+            ¿Qué vas a encontrar{" "}
+            <span className="text-primary">dentro de Publify?</span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Un solo sistema para operar cada área de tu negocio editorial. Sin
