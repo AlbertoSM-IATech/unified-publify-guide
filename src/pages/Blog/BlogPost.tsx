@@ -252,7 +252,7 @@ export default function BlogPost() {
           <p className="mt-2 text-sm text-muted-foreground">Publify te da todas las herramientas para gestionar tu editorial desde un solo lugar.</p>
           <Link to="/#waitlist">
             <Button className="mt-4 bg-accent hover:bg-accent/90 text-accent-foreground font-semibold">
-              Reservar mi plaza
+              Registrarme ahora
             </Button>
           </Link>
         </motion.div>

@@ -238,9 +238,9 @@ export const PreventaSection = () => {
               <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-accent/50 via-accent to-accent/50 rounded-t-2xl" />
 
               <div className="text-center pt-2 px-0">
-                <h3 className="font-heading font-bold mb-2 text-primary text-2xl">Reservar mi acceso prioritario</h3>
+                <h3 className="font-heading font-bold mb-2 text-primary text-2xl"><h3 className="font-heading font-bold mb-2 text-primary text-2xl">Bloquea tu precio ahora</h3></h3>
                 <p className="text-sm text-muted-foreground">
-                  Apuntarte es gratis. Te avisaremos cuando abramos acceso.
+                  Regístrate gratis. Te enviaremos un email con los detalles y el proceso de pago.
                 </p>
               </div>
 

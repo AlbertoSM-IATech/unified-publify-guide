@@ -64,7 +64,7 @@ export const Header = () => {
             <p className="text-[10px] text-muted-foreground leading-tight">Plazas limitadas</p>
           </div>
           <Button onClick={scrollToWaitlist} size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold">
-            Reservar plaza
+            Bloquear precio
           </Button>
         </div>
         
@@ -92,7 +92,7 @@ export const Header = () => {
             </button>
             <div className="pt-2">
               <Button onClick={scrollToWaitlist} className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold">
-                Reservar plaza — desde 15€/mes
+                Bloquear precio — desde 15€/mes
               </Button>
             </div>
           </nav>
