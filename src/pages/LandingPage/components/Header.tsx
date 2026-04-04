@@ -48,7 +48,7 @@ export const Header = () => {
                 {link.label}
               </Link>
             ) : (
-              <a key={link.href} href={link.href} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              <a key={link.href} href={link.href} className={link.label === "Acceso Founders" ? "text-sm transition-colors text-primary-foreground" : "text-sm text-muted-foreground hover:text-foreground transition-colors"}>
                 {link.label}
               </a>
             )
@@ -82,7 +82,7 @@ export const Header = () => {
                   {link.label}
                 </Link>
               ) : (
-                <a key={link.href} href={link.href} className="text-sm text-muted-foreground hover:text-foreground transition-colors" onClick={() => setMenuOpen(false)}>
+                <a key={link.href} href={link.href} className={link.label === "Acceso Founders" ? "text-sm transition-colors text-primary-foreground" : "text-sm text-muted-foreground hover:text-foreground transition-colors"} onClick={() => setMenuOpen(false)}>
                   {link.label}
                 </a>
               )
