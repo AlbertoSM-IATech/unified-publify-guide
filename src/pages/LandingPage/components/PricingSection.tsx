@@ -37,7 +37,7 @@ const plans = [
     price: "19",
     period: "€/mes",
     annualPrice: "190 €/año",
-    annualPeriod: "(33,31 €/mes)",
+    annualPeriod: "(15,83 €/mes)",
     description: "Autores serios con pocos títulos",
     features: [
       "2 usuarios",

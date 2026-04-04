@@ -57,7 +57,7 @@ const faqs = [
   },
   {
     question: "¿Cuánto pagaré si entro como Early Adopter?",
-    answer: "Durante el periodo Early Adopter, el acceso tendrá este precio escalonado (Plan Plus): 10–30 de abril: 15 €/mes. 1–15 de mayo: 20 €/mes. 16–31 de mayo: 25 €/mes. A partir del 1 de junio, el precio sube al estándar (29 €/mes Básico | 49 €/mes Plus).",
+    answer: "Durante el periodo Early Adopter, el acceso tendrá este precio escalonado (Plan Plus): 10–30 de abril: 15 €/mes. 1–15 de mayo: 20 €/mes. 16–31 de mayo: 25 €/mes. A partir del 1 de junio, el precio sube al estándar (19 €/mes Starter | 39 €/mes Plus).",
     defaultOpen: true,
   },
   {
