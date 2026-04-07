@@ -1,7 +1,7 @@
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowLeft, ArrowRight, Clock, Calendar, Loader2, ChevronLeft, ChevronRight } from "lucide-react";
-import React from "react";
+import React, { useEffect } from "react";
 import { Header } from "@/pages/LandingPage/components/Header";
 import { Footer } from "@/pages/LandingPage/components/Footer";
 import { Badge } from "@/components/ui/badge";
