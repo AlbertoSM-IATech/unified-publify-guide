@@ -137,6 +137,46 @@ function renderMarkdown(md: string): React.ReactNode[] {
       continue;
     }
 
+    // Markdown table
+    if (trimmed.startsWith("|") && trimmed.endsWith("|")) {
+      const tableRows: string[][] = [];
+      while (i < lines.length && lines[i].trim().startsWith("|") && lines[i].trim().endsWith("|")) {
+        const row = lines[i].trim();
+        // Skip separator row (| --- | --- |)
+        if (/^\|[\s\-:|]+\|$/.test(row)) { i++; continue; }
+        const cells = row.slice(1, -1).split("|").map(c => c.trim());
+        tableRows.push(cells);
+        i++;
+      }
+      if (tableRows.length > 0) {
+        const headerRow = tableRows[0];
+        const bodyRows = tableRows.slice(1);
+        elements.push(
+          <div key={keyIdx++} className="my-6 overflow-x-auto">
+            <table className="w-full border-collapse text-sm">
+              <thead>
+                <tr className="border-b-2 border-accent/30">
+                  {headerRow.map((cell, ci) => (
+                    <th key={ci} className="px-4 py-2.5 text-left font-semibold text-foreground bg-accent/5">{parseInline(cell)}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {bodyRows.map((row, ri) => (
+                  <tr key={ri} className="border-b border-border hover:bg-muted/50 transition-colors">
+                    {row.map((cell, ci) => (
+                      <td key={ci} className="px-4 py-2 text-muted-foreground">{parseInline(cell)}</td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        );
+      }
+      continue;
+    }
+
     elements.push(<p key={keyIdx++} className="my-4 leading-relaxed text-muted-foreground">{parseInline(trimmed)}</p>);
     i++;
   }

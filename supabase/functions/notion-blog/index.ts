@@ -95,6 +95,22 @@ function richTextToMarkdown(richText: any[]): string {
     .join("");
 }
 
+function tableToMarkdown(tableBlock: NotionBlock): string {
+  const rows: any[] = tableBlock._children || [];
+  if (rows.length === 0) return "";
+
+  const lines: string[] = [];
+  for (let r = 0; r < rows.length; r++) {
+    const cells: any[][] = rows[r].table_row?.cells || [];
+    const cellTexts = cells.map((cell) => richTextToMarkdown(cell).replace(/\|/g, "\\|"));
+    lines.push(`| ${cellTexts.join(" | ")} |`);
+    if (r === 0) {
+      lines.push(`| ${cellTexts.map(() => "---").join(" | ")} |`);
+    }
+  }
+  return lines.join("\n");
+}
+
 function blocksToMarkdown(blocks: NotionBlock[]): string {
   const parts: { text: string; type: string }[] = [];
   let numberedIndex = 0;
@@ -142,6 +158,9 @@ function blocksToMarkdown(blocks: NotionBlock[]): string {
       }
       case "divider":
         text = "---";
+        break;
+      case "table":
+        text = tableToMarkdown(block);
         break;
       case "toggle":
         text = `**${richTextToMarkdown(block.toggle.rich_text)}**`;
@@ -236,6 +255,25 @@ async function fetchAllPostBlocks(headers: Record<string, string>, pageId: strin
     blocks.push(...(data.results ?? []));
     hasMore = Boolean(data.has_more);
     nextCursor = data.next_cursor ?? undefined;
+  }
+
+  // Fetch children for table blocks
+  for (const block of blocks) {
+    if (block.type === "table" && block.has_children) {
+      const children: NotionBlock[] = [];
+      let childCursor: string | undefined;
+      let childHasMore = true;
+      while (childHasMore) {
+        const cp = childCursor ? `&start_cursor=${encodeURIComponent(childCursor)}` : "";
+        const cr = await fetch(`${NOTION_API_URL}/blocks/${block.id}/children?page_size=100${cp}`, { method: "GET", headers });
+        if (!cr.ok) break;
+        const cd = await cr.json();
+        children.push(...(cd.results ?? []));
+        childHasMore = Boolean(cd.has_more);
+        childCursor = cd.next_cursor ?? undefined;
+      }
+      block._children = children;
+    }
   }
 
   return blocks;
