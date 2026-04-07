@@ -257,6 +257,25 @@ async function fetchAllPostBlocks(headers: Record<string, string>, pageId: strin
     nextCursor = data.next_cursor ?? undefined;
   }
 
+  // Fetch children for table blocks
+  for (const block of blocks) {
+    if (block.type === "table" && block.has_children) {
+      const children: NotionBlock[] = [];
+      let childCursor: string | undefined;
+      let childHasMore = true;
+      while (childHasMore) {
+        const cp = childCursor ? `&start_cursor=${encodeURIComponent(childCursor)}` : "";
+        const cr = await fetch(`${NOTION_API_URL}/blocks/${block.id}/children?page_size=100${cp}`, { method: "GET", headers });
+        if (!cr.ok) break;
+        const cd = await cr.json();
+        children.push(...(cd.results ?? []));
+        childHasMore = Boolean(cd.has_more);
+        childCursor = cd.next_cursor ?? undefined;
+      }
+      block._children = children;
+    }
+  }
+
   return blocks;
 }
 
