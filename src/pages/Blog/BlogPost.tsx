@@ -192,9 +192,22 @@ export default function BlogPost() {
   const post = notionPost;
   const blogPosts = allPostsData?.posts ?? [];
 
+  const [readProgress, setReadProgress] = useState(0);
+
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
+    setReadProgress(0);
   }, [slug]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      setReadProgress(docHeight > 0 ? Math.min((scrollTop / docHeight) * 100, 100) : 0);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   if (isLoadingPost) {
     return (
