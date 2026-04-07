@@ -95,6 +95,22 @@ function richTextToMarkdown(richText: any[]): string {
     .join("");
 }
 
+function tableToMarkdown(tableBlock: NotionBlock): string {
+  const rows: any[] = tableBlock._children || [];
+  if (rows.length === 0) return "";
+
+  const lines: string[] = [];
+  for (let r = 0; r < rows.length; r++) {
+    const cells: any[][] = rows[r].table_row?.cells || [];
+    const cellTexts = cells.map((cell) => richTextToMarkdown(cell).replace(/\|/g, "\\|"));
+    lines.push(`| ${cellTexts.join(" | ")} |`);
+    if (r === 0) {
+      lines.push(`| ${cellTexts.map(() => "---").join(" | ")} |`);
+    }
+  }
+  return lines.join("\n");
+}
+
 function blocksToMarkdown(blocks: NotionBlock[]): string {
   const parts: { text: string; type: string }[] = [];
   let numberedIndex = 0;
