@@ -159,6 +159,9 @@ function blocksToMarkdown(blocks: NotionBlock[]): string {
       case "divider":
         text = "---";
         break;
+      case "table":
+        text = tableToMarkdown(block);
+        break;
       case "toggle":
         text = `**${richTextToMarkdown(block.toggle.rich_text)}**`;
         break;
