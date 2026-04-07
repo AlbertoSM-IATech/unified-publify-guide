@@ -220,10 +220,11 @@ export default function BlogPost() {
   const content = post.content?.trim() ?? "";
   const related = blogPosts.filter((p) => p.slug !== slug && p.category === post.category).slice(0, 3);
 
-  // Prev/Next navigation (posts sorted by number desc)
-  const currentIndex = blogPosts.findIndex((p) => p.slug === slug);
-  const prevPost = currentIndex > 0 ? blogPosts[currentIndex - 1] : null;
-  const nextPost = currentIndex < blogPosts.length - 1 ? blogPosts[currentIndex + 1] : null;
+  // Prev/Next navigation sorted by Nº (number) ascending
+  const sortedByNumber = [...blogPosts].sort((a, b) => (a.number ?? 0) - (b.number ?? 0));
+  const currentIndex = sortedByNumber.findIndex((p) => p.slug === slug);
+  const prevPost = currentIndex > 0 ? sortedByNumber[currentIndex - 1] : null;
+  const nextPost = currentIndex < sortedByNumber.length - 1 ? sortedByNumber[currentIndex + 1] : null;
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -303,23 +304,23 @@ export default function BlogPost() {
         </motion.div>
 
         {/* Prev / Next navigation */}
-        <nav className="mt-12 flex items-stretch gap-4">
+        <nav className="mt-10 flex items-stretch gap-3">
           {prevPost ? (
-            <Link to={`/blog/${prevPost.slug}`} className="group flex-1 flex items-center gap-3 rounded-xl border border-border bg-card p-4 hover:border-accent/40 transition-colors">
-              <ChevronLeft size={20} className="text-muted-foreground group-hover:text-accent shrink-0" />
+            <Link to={`/blog/${prevPost.slug}`} className="group flex-1 flex items-center gap-2 rounded-lg border border-border bg-card px-3 py-2.5 hover:border-accent/40 transition-colors">
+              <ChevronLeft size={16} className="text-muted-foreground group-hover:text-accent shrink-0" />
               <div className="min-w-0">
-                <p className="text-xs text-muted-foreground mb-1">Anterior</p>
-                <p className="font-semibold text-sm truncate group-hover:text-accent transition-colors">{prevPost.title}</p>
+                <p className="text-[11px] text-muted-foreground">Anterior</p>
+                <p className="font-medium text-xs leading-snug line-clamp-2 group-hover:text-accent transition-colors">{prevPost.title}</p>
               </div>
             </Link>
           ) : <div className="flex-1" />}
           {nextPost ? (
-            <Link to={`/blog/${nextPost.slug}`} className="group flex-1 flex items-center justify-end gap-3 rounded-xl border border-border bg-card p-4 hover:border-accent/40 transition-colors text-right">
+            <Link to={`/blog/${nextPost.slug}`} className="group flex-1 flex items-center justify-end gap-2 rounded-lg border border-border bg-card px-3 py-2.5 hover:border-accent/40 transition-colors text-right">
               <div className="min-w-0">
-                <p className="text-xs text-muted-foreground mb-1">Siguiente</p>
-                <p className="font-semibold text-sm truncate group-hover:text-accent transition-colors">{nextPost.title}</p>
+                <p className="text-[11px] text-muted-foreground">Siguiente</p>
+                <p className="font-medium text-xs leading-snug line-clamp-2 group-hover:text-accent transition-colors">{nextPost.title}</p>
               </div>
-              <ChevronRight size={20} className="text-muted-foreground group-hover:text-accent shrink-0" />
+              <ChevronRight size={16} className="text-muted-foreground group-hover:text-accent shrink-0" />
             </Link>
           ) : <div className="flex-1" />}
         </nav>
