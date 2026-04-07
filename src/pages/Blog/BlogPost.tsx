@@ -301,8 +301,29 @@ export default function BlogPost() {
             </Button>
           </Link>
         </motion.div>
-      </article>
 
+        {/* Prev / Next navigation */}
+        <nav className="mt-12 flex items-stretch gap-4">
+          {prevPost ? (
+            <Link to={`/blog/${prevPost.slug}`} className="group flex-1 flex items-center gap-3 rounded-xl border border-border bg-card p-4 hover:border-accent/40 transition-colors">
+              <ChevronLeft size={20} className="text-muted-foreground group-hover:text-accent shrink-0" />
+              <div className="min-w-0">
+                <p className="text-xs text-muted-foreground mb-1">Anterior</p>
+                <p className="font-semibold text-sm truncate group-hover:text-accent transition-colors">{prevPost.title}</p>
+              </div>
+            </Link>
+          ) : <div className="flex-1" />}
+          {nextPost ? (
+            <Link to={`/blog/${nextPost.slug}`} className="group flex-1 flex items-center justify-end gap-3 rounded-xl border border-border bg-card p-4 hover:border-accent/40 transition-colors text-right">
+              <div className="min-w-0">
+                <p className="text-xs text-muted-foreground mb-1">Siguiente</p>
+                <p className="font-semibold text-sm truncate group-hover:text-accent transition-colors">{nextPost.title}</p>
+              </div>
+              <ChevronRight size={20} className="text-muted-foreground group-hover:text-accent shrink-0" />
+            </Link>
+          ) : <div className="flex-1" />}
+        </nav>
+      </article>
       {related.length > 0 && (
         <section className="mx-auto max-w-7xl px-4 pb-20">
           <h3 className="text-2xl font-bold font-[Poppins] mb-6">Artículos relacionados</h3>
