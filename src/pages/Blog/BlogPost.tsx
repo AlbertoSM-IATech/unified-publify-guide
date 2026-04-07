@@ -245,6 +245,13 @@ export default function BlogPost() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      {/* Reading progress bar */}
+      <div className="fixed top-0 left-0 right-0 z-50 h-1 bg-muted/30">
+        <div
+          className="h-full bg-accent transition-[width] duration-150 ease-out"
+          style={{ width: `${readProgress}%` }}
+        />
+      </div>
       <Header />
 
       {post.coverImage && (
