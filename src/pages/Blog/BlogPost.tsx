@@ -220,6 +220,11 @@ export default function BlogPost() {
   const content = post.content?.trim() ?? "";
   const related = blogPosts.filter((p) => p.slug !== slug && p.category === post.category).slice(0, 3);
 
+  // Prev/Next navigation (posts sorted by number desc)
+  const currentIndex = blogPosts.findIndex((p) => p.slug === slug);
+  const prevPost = currentIndex > 0 ? blogPosts[currentIndex - 1] : null;
+  const nextPost = currentIndex < blogPosts.length - 1 ? blogPosts[currentIndex + 1] : null;
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Header />
