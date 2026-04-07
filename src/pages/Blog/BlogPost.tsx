@@ -192,6 +192,10 @@ export default function BlogPost() {
   const post = notionPost;
   const blogPosts = allPostsData?.posts ?? [];
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [slug]);
+
   if (isLoadingPost) {
     return (
       <div className="min-h-screen bg-background text-foreground">
