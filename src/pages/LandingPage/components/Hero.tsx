@@ -10,21 +10,21 @@ import { WaitlistDialog, useWaitlistDialog } from "@/components/WaitlistDialog";
 
 const stagger = {
   hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { staggerChildren: 0.12, delayChildren: 0.2 } }
+  visible: { opacity: 1, transition: { staggerChildren: 0.12, delayChildren: 0.2 } },
 };
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 40 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] } }
+  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] } },
 };
 
 const benefits = [
-{ icon: BookOpen, text: "Catálogo centralizado" },
-{ icon: BarChart3, text: "Rentabilidad por libro" },
-{ icon: Eye, text: "Control de producción" },
-{ icon: Layers, text: "Decisiones con datos" },
-{ icon: TrendingUp, text: "Todo en un sistema" }];
-
+  { icon: BookOpen, text: "Catálogo centralizado" },
+  { icon: BarChart3, text: "Rentabilidad por libro" },
+  { icon: Eye, text: "Control de producción" },
+  { icon: Layers, text: "Decisiones con datos" },
+  { icon: TrendingUp, text: "Todo en un sistema" },
+];
 
 export const Hero = () => {
   const { open, setOpen, openDialog } = useWaitlistDialog();
@@ -35,8 +35,12 @@ export const Hero = () => {
         <ParticlesBackground />
       </div>
       <div className="mx-auto w-[90%]">
-        <motion.div initial="hidden" animate="visible" variants={stagger} className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
-          
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={stagger}
+          className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center"
+        >
           {/* Left — Text */}
           <div className="text-left">
             <div className="mb-4">
@@ -44,17 +48,17 @@ export const Hero = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                className="font-heading text-3xl md:text-4xl font-bold tracking-tight text-foreground lg:text-5xl mb-2">
-                
+                className="font-heading text-3xl md:text-4xl font-bold tracking-tight text-foreground lg:text-5xl mb-2"
+              >
                 Tu siguiente nivel como publisher no es producir más.
               </motion.h1>
               <motion.h1
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-primary">
-                
-                Es gestionar mejor para escalar.
+                className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-primary"
+              >
+                Es gestionar profesionalmente.
               </motion.h1>
             </div>
 
@@ -62,52 +66,70 @@ export const Hero = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
-              className="text-lg mb-8 md:text-xl text-foreground font-sans font-normal lg:text-3xl">
-              
+              className="text-lg mb-8 md:text-xl text-foreground font-sans font-normal lg:text-3xl"
+            >
               Deja de improvisar y empieza a dirigir como un profesional.
             </motion.p>
 
             <motion.div variants={fadeInUp} className="flex flex-wrap items-center gap-2.5 mb-6">
-              {["Investiga", "Crea", "Analiza", "Escala"].map((step, i) =>
-              <span key={step} className="flex items-center gap-2 text-xs">
+              {["Investiga", "Crea", "Analiza", "Escala"].map((step, i) => (
+                <span key={step} className="flex items-center gap-2 text-xs">
                   <motion.span
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.8 + i * 0.25, duration: 0.4 }}
-                  className="relative inline-flex items-center py-1.5 rounded-full md:text-base font-semibold tracking-wide uppercase text-xs overflow-hidden bg-accent/10 border border-accent/25 text-primary px-[30px]">
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.8 + i * 0.25, duration: 0.4 }}
+                    className="relative inline-flex items-center py-1.5 rounded-full md:text-base font-semibold tracking-wide uppercase text-xs overflow-hidden bg-accent/10 border border-accent/25 text-primary px-[30px]"
+                  >
                     <motion.span
-                    className="absolute inset-0 rounded-full"
-                    style={{ background: 'linear-gradient(90deg, transparent 0%, hsl(var(--accent) / 0.3) 50%, transparent 100%)' }}
-                    animate={{ x: ['-100%', '200%'] }}
-                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 2 + i * 0.6, repeatDelay: 2.4 - i * 0.6 + 1.8 }} />
-                  
+                      className="absolute inset-0 rounded-full"
+                      style={{
+                        background:
+                          "linear-gradient(90deg, transparent 0%, hsl(var(--accent) / 0.3) 50%, transparent 100%)",
+                      }}
+                      animate={{ x: ["-100%", "200%"] }}
+                      transition={{
+                        duration: 2,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                        delay: 2 + i * 0.6,
+                        repeatDelay: 2.4 - i * 0.6 + 1.8,
+                      }}
+                    />
+
                     <span className="relative z-10 text-xs text-foreground">{step}</span>
                   </motion.span>
-                  {i < 3 &&
-                <motion.span
-                  initial={{ opacity: 0, scaleX: 0 }}
-                  animate={{ opacity: 1, scaleX: 1 }}
-                  transition={{ delay: 1.0 + i * 0.25, duration: 0.3 }}
-                  className="text-lg text-accent">
-                      <motion.span animate={{ opacity: [0.4, 1, 0.4] }} transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 2.3 + i * 0.6 }}>→</motion.span>
+                  {i < 3 && (
+                    <motion.span
+                      initial={{ opacity: 0, scaleX: 0 }}
+                      animate={{ opacity: 1, scaleX: 1 }}
+                      transition={{ delay: 1.0 + i * 0.25, duration: 0.3 }}
+                      className="text-lg text-accent"
+                    >
+                      <motion.span
+                        animate={{ opacity: [0.4, 1, 0.4] }}
+                        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 2.3 + i * 0.6 }}
+                      >
+                        →
+                      </motion.span>
                     </motion.span>
-                }
+                  )}
                 </span>
-              )}
+              ))}
             </motion.div>
 
             <motion.div variants={fadeInUp} className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mb-8">
-              {benefits.map((b, i) =>
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5 + i * 0.1 }}
-                className="flex items-center gap-3 p-3 rounded-lg bg-card/80 border border-border text-left">
+              {benefits.map((b, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5 + i * 0.1 }}
+                  className="flex items-center gap-3 p-3 rounded-lg bg-card/80 border border-border text-left"
+                >
                   <b.icon className="w-4 h-4 text-primary flex-shrink-0" />
                   <span className="text-xs text-foreground">{b.text}</span>
                 </motion.div>
-              )}
+              ))}
             </motion.div>
 
             {/* Countdown */}
@@ -121,27 +143,22 @@ export const Hero = () => {
                 <Button
                   onClick={openDialog}
                   size="lg"
-                  className="h-11 text-sm px-6 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-lg shadow-primary/25 whitespace-nowrap">
-                  
+                  className="h-11 text-sm px-6 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-lg shadow-primary/25 whitespace-nowrap"
+                >
                   Bloquear precio desde 15€/mes
                   <ArrowRight className="ml-1.5" size={16} />
                 </Button>
               </motion.div>
-              <p className="text-sm text-accent mt-2">
-                Solo tu email. Sin tarjeta. Sin compromiso.
-              </p>
+              <p className="text-sm text-accent mt-2">Solo tu email. Sin tarjeta. Sin compromiso.</p>
               <WaitlistDialog open={open} onOpenChange={setOpen} />
             </motion.div>
           </div>
 
           {/* Right — Dashboard image */}
-          <motion.div
-            variants={fadeInUp}
-            className="relative self-center"
-            style={{ perspective: "1200px" }}>
+          <motion.div variants={fadeInUp} className="relative self-center" style={{ perspective: "1200px" }}>
             <div className="absolute -inset-10 rounded-3xl bg-primary/20 blur-[60px]" />
             <div className="absolute -inset-6 rounded-3xl bg-accent/10 blur-[40px]" />
-            
+
             <motion.div
               data-gsap="hero-dashboard"
               initial={{ opacity: 0, y: 60, rotateX: 12, scale: 0.88 }}
@@ -149,30 +166,58 @@ export const Hero = () => {
               transition={{ duration: 1.4, delay: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
               whileHover={{ rotateX: 0, scale: 1.03, transition: { duration: 0.5 } }}
               className="relative"
-              style={{ transformStyle: "preserve-3d" }}>
-              
+              style={{ transformStyle: "preserve-3d" }}
+            >
               <div
                 className="relative rounded-2xl overflow-hidden border border-neutral-700/50"
                 style={{
                   background: "linear-gradient(180deg, #2a2a2e 0%, #1a1a1e 100%)",
                   padding: "2px",
-                  boxShadow: "0 30px 80px -15px hsl(var(--primary) / 0.3), 0 15px 40px -10px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05)"
-                }}>
+                  boxShadow:
+                    "0 30px 80px -15px hsl(var(--primary) / 0.3), 0 15px 40px -10px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05)",
+                }}
+              >
                 <div className="rounded-xl overflow-hidden" style={{ background: "#1a1a1e" }}>
-                  <div className="flex items-center gap-3 px-4 py-2" style={{ background: "linear-gradient(180deg, #333338 0%, #2a2a2e 100%)" }}>
+                  <div
+                    className="flex items-center gap-3 px-4 py-2"
+                    style={{ background: "linear-gradient(180deg, #333338 0%, #2a2a2e 100%)" }}
+                  >
                     <div className="flex items-center gap-2">
-                      <span className="w-3 h-3 rounded-full" style={{ background: "linear-gradient(135deg, #ff5f57, #e0443e)" }} />
-                      <span className="w-3 h-3 rounded-full" style={{ background: "linear-gradient(135deg, #febc2e, #d4a019)" }} />
-                      <span className="w-3 h-3 rounded-full" style={{ background: "linear-gradient(135deg, #28c840, #1fa834)" }} />
+                      <span
+                        className="w-3 h-3 rounded-full"
+                        style={{ background: "linear-gradient(135deg, #ff5f57, #e0443e)" }}
+                      />
+                      <span
+                        className="w-3 h-3 rounded-full"
+                        style={{ background: "linear-gradient(135deg, #febc2e, #d4a019)" }}
+                      />
+                      <span
+                        className="w-3 h-3 rounded-full"
+                        style={{ background: "linear-gradient(135deg, #28c840, #1fa834)" }}
+                      />
                     </div>
                     <div className="flex items-center gap-1 ml-2">
                       <span className="text-neutral-500 text-xs">◀</span>
                       <span className="text-neutral-500 text-xs">▶</span>
                     </div>
                     <div className="flex-1 flex justify-center">
-                      <div className="flex items-center gap-2 px-5 py-1.5 rounded-lg text-xs font-mono" style={{ background: "rgba(0,0,0,0.3)", minWidth: "200px" }}>
-                        <svg className="w-3 h-3 flex-shrink-0" style={{ color: "#28c840" }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                      <div
+                        className="flex items-center gap-2 px-5 py-1.5 rounded-lg text-xs font-mono"
+                        style={{ background: "rgba(0,0,0,0.3)", minWidth: "200px" }}
+                      >
+                        <svg
+                          className="w-3 h-3 flex-shrink-0"
+                          style={{ color: "#28c840" }}
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          strokeWidth={2.5}
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                          />
                         </svg>
                         <TypewriterURL text="app.publify.io" delay={1.8} speed={0.08} />
                       </div>
@@ -180,26 +225,49 @@ export const Hero = () => {
                     <div className="w-16" />
                   </div>
                   <div className="relative">
-                    <img src={dashboardImg} alt="Publify Dashboard - Sistema Operativo Editorial" className="w-full h-auto block" loading="lazy" />
+                    <img
+                      src={dashboardImg}
+                      alt="Publify Dashboard - Sistema Operativo Editorial"
+                      className="w-full h-auto block"
+                      loading="lazy"
+                    />
                     <motion.div
                       className="absolute inset-0 pointer-events-none"
-                      style={{ background: "linear-gradient(115deg, transparent 40%, rgba(255,255,255,0.03) 45%, rgba(255,255,255,0.06) 50%, transparent 55%)" }}
+                      style={{
+                        background:
+                          "linear-gradient(115deg, transparent 40%, rgba(255,255,255,0.03) 45%, rgba(255,255,255,0.06) 50%, transparent 55%)",
+                      }}
                       animate={{ backgroundPosition: ["200% 0%", "-200% 0%"] }}
-                      transition={{ duration: 6, repeat: Infinity, repeatDelay: 4, ease: "easeInOut" }} />
-                    
+                      transition={{ duration: 6, repeat: Infinity, repeatDelay: 4, ease: "easeInOut" }}
+                    />
+
                     <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
                   </div>
                 </div>
               </div>
 
               <div className="relative mx-auto" style={{ width: "60%", marginTop: "-1px" }}>
-                <div className="h-4 rounded-b-lg" style={{ background: "linear-gradient(180deg, #2a2a2e 0%, #222226 100%)", clipPath: "polygon(5% 0, 95% 0, 100% 100%, 0% 100%)", borderBottom: "1px solid rgba(255,255,255,0.05)" }} />
-                <div className="mx-auto h-1 rounded-b-sm" style={{ width: "30%", background: "linear-gradient(180deg, #333 0%, #2a2a2e 100%)", boxShadow: "0 2px 8px rgba(0,0,0,0.3)" }} />
+                <div
+                  className="h-4 rounded-b-lg"
+                  style={{
+                    background: "linear-gradient(180deg, #2a2a2e 0%, #222226 100%)",
+                    clipPath: "polygon(5% 0, 95% 0, 100% 100%, 0% 100%)",
+                    borderBottom: "1px solid rgba(255,255,255,0.05)",
+                  }}
+                />
+                <div
+                  className="mx-auto h-1 rounded-b-sm"
+                  style={{
+                    width: "30%",
+                    background: "linear-gradient(180deg, #333 0%, #2a2a2e 100%)",
+                    boxShadow: "0 2px 8px rgba(0,0,0,0.3)",
+                  }}
+                />
               </div>
             </motion.div>
           </motion.div>
         </motion.div>
       </div>
-    </section>);
-
+    </section>
+  );
 };
