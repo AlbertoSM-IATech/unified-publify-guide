@@ -66,9 +66,9 @@ export const Hero = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
-              className="text-lg mb-8 md:text-xl text-foreground font-sans font-normal lg:text-3xl"
+              className="text-lg mb-8 md:text-xl text-foreground font-sans font-normal lg:text-2xl"
             >
-              Deja de improvisar y empieza a dirigir como un profesional.
+              Deja de improvisar y empieza a dirigir como un CEO editorial.
             </motion.p>
 
             <motion.div variants={fadeInUp} className="flex flex-wrap items-center gap-2.5 mb-6">
