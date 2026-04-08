@@ -44,7 +44,7 @@ export const Hero = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                className="font-heading text-3xl md:text-4xl font-bold tracking-tight text-white lg:text-5xl mb-2">
+                className="font-heading text-3xl md:text-4xl font-bold tracking-tight text-foreground lg:text-5xl mb-2">
                 
                 Tu siguiente nivel como publisher no es producir más.
               </motion.h1>
