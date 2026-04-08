@@ -3,9 +3,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { WaitlistDialog, useWaitlistDialog } from "@/components/WaitlistDialog";
+import { getPromotionState } from "../utils/pricingTiers";
 
 export const StickyMobileCTA = () => {
   const [visible, setVisible] = useState(false);
+  const [promo] = useState(() => getPromotionState());
   const { open, setOpen, openDialog } = useWaitlistDialog();
 
   useEffect(() => {
@@ -15,6 +17,12 @@ export const StickyMobileCTA = () => {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  if (promo.isExpired) return null;
+
+  const currentPrice = promo.activeTierIndex >= 0
+    ? promo.tiers[promo.activeTierIndex].tier.price
+    : "15";
 
   return (
     <>
@@ -30,7 +38,7 @@ export const StickyMobileCTA = () => {
               onClick={openDialog}
               className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-3 text-sm"
             >
-              Bloquear precio — desde 15€/mes
+              Bloquear precio — desde {currentPrice}€/mes
               <ArrowRight className="ml-2" size={16} />
             </Button>
           </motion.div>
