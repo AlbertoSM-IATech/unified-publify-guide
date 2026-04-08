@@ -62,7 +62,7 @@ export const Hero = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
-              className="text-lg mb-8 md:text-xl text-primary-foreground font-sans lg:text-4xl font-normal">
+              className="text-lg mb-8 md:text-xl text-foreground font-sans lg:text-4xl font-normal">
               
               Deja de improvisar y empieza a dirigir como un profesional.
             </motion.p>
@@ -81,7 +81,7 @@ export const Hero = () => {
                     animate={{ x: ['-100%', '200%'] }}
                     transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 2 + i * 0.6, repeatDelay: 2.4 - i * 0.6 + 1.8 }} />
                   
-                    <span className="relative z-10 text-xs text-primary-foreground">{step}</span>
+                    <span className="relative z-10 text-xs text-foreground">{step}</span>
                   </motion.span>
                   {i < 3 &&
                 <motion.span

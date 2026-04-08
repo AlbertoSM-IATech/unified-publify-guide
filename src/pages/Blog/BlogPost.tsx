@@ -246,12 +246,24 @@ export default function BlogPost() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       {/* Reading progress bar */}
-      <div className="fixed top-0 left-0 right-0 z-50 h-1 bg-muted/30">
+      <div className="fixed top-0 left-0 right-0 z-[60] h-1.5 bg-muted/40">
         <div
-          className="h-full bg-accent transition-[width] duration-150 ease-out"
+          className="h-full bg-gradient-to-r from-primary to-accent transition-[width] duration-150 ease-out"
           style={{ width: `${readProgress}%` }}
         />
       </div>
+
+      {/* Scroll to top button */}
+      {readProgress > 20 && (
+        <button
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          className="fixed bottom-6 right-6 z-50 w-10 h-10 rounded-full bg-primary text-primary-foreground shadow-lg flex items-center justify-center hover:bg-primary/90 transition-all"
+          aria-label="Volver arriba"
+        >
+          <ChevronLeft size={20} className="rotate-90" />
+        </button>
+      )}
+
       <Header />
 
       {post.coverImage && (
