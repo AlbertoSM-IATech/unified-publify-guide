@@ -75,7 +75,7 @@ export const NewHowItWorksSection = () => {
                 <div className="w-12 h-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-lg font-bold shadow-lg">
                   {step.number}
                 </div>
-                <span className="tracking-widest uppercase text-primary-foreground text-2xl font-extrabold">
+                <span className="tracking-widest uppercase text-foreground text-2xl font-extrabold">
                   {step.label}
                 </span>
               </div>

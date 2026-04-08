@@ -81,7 +81,7 @@ export const Hero = () => {
                     animate={{ x: ['-100%', '200%'] }}
                     transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 2 + i * 0.6, repeatDelay: 2.4 - i * 0.6 + 1.8 }} />
                   
-                    <span className="relative z-10 text-xs text-primary-foreground">{step}</span>
+                    <span className="relative z-10 text-xs text-foreground">{step}</span>
                   </motion.span>
                   {i < 3 &&
                 <motion.span
