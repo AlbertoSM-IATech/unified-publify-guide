@@ -46,8 +46,8 @@ const controls = [
   },
   {
     icon: Workflow,
-    title: "Pipeline de producción",
-    desc: "Tareas, datos, audiencia, finanzas y assets por libro",
+    title: "Pipeline del Flujo editorial",
+    desc: "Organiza el trabajo del libro por fases. Mueve tareas entre columnas y controla el progreso real (tareas + subtareas)",
   },
   {
     icon: Layers,
@@ -82,12 +82,10 @@ export const ControlSection = () => {
           className="text-center mb-14"
         >
           <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold mb-5">
-            ¿Qué vas a encontrar{" "}
-            <span className="text-primary">dentro de Publify?</span>
+            ¿Qué vas a encontrar <span className="text-primary">dentro de Publify?</span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Un solo sistema para operar cada área de tu negocio editorial. Sin
-            parches, sin herramientas sueltas.
+            Un solo sistema para operar cada área de tu negocio editorial. Sin parches, sin herramientas sueltas.
           </p>
         </motion.div>
 
@@ -106,12 +104,8 @@ export const ControlSection = () => {
                   <item.icon className="w-5 h-5 text-primary" />
                 </div>
                 <div>
-                  <h3 className="text-sm font-bold text-foreground mb-1">
-                    {item.title}
-                  </h3>
-                  <p className="text-xs text-muted-foreground leading-relaxed">
-                    {item.desc}
-                  </p>
+                  <h3 className="text-sm font-bold text-foreground mb-1">{item.title}</h3>
+                  <p className="text-xs text-muted-foreground leading-relaxed">{item.desc}</p>
                 </div>
               </div>
             </motion.div>
