@@ -73,7 +73,8 @@ const controls = [
 
 export const ControlSection = () => {
   return (
-    <section className="py-24 bg-muted/30">
+    <section className="py-24 bg-background relative">
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/3 to-transparent dark:via-primary/5 pointer-events-none" />
       <div className="container mx-auto px-4 max-w-6xl">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
