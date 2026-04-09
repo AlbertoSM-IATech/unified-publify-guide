@@ -36,7 +36,7 @@ const pillars = [
 
 export const WhatIsPublifySection = () => {
   return (
-    <section id="que-es-publify" className="py-24 bg-background">
+    <section className="py-24 bg-background">
       <div className="container mx-auto px-4 max-w-5xl">
         {/* Headline */}
         <motion.div
