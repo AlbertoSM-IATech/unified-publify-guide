@@ -37,7 +37,7 @@ export const EarlyAdoptersSection = () => {
           <h2 className="font-heading text-3xl font-bold text-primary md:text-5xl">
             {promo.isExpired ? "Preventa finalizada" : "Acceso prioritario"}
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-muted-foreground max-w-2xl mx-auto text-2xl">
             {promo.isExpired
               ? "El periodo de inscripción para founders ha terminado. Consulta nuestros planes regulares."
               : "Entra antes que nadie, bloquea el mejor precio para siempre y ayuda a dar forma a Publify."}
