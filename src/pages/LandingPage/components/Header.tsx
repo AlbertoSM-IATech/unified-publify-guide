@@ -10,7 +10,6 @@ import logoLight from "@/assets/publify-logo-light.png";
 const navLinks = [
   { href: "#que-es-publify", label: "Qué es Publify" },
   { href: "#para-quien", label: "Para quién" },
-  { href: "#precios", label: "Planes" },
   { href: "#early-adopters", label: "Acceso Founders" },
   { href: "#faq", label: "FAQ" },
   { href: "/blog", label: "Blog", isRoute: true },
