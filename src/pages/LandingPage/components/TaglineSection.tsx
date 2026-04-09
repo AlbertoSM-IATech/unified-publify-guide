@@ -3,8 +3,8 @@ import publifyLogo from "@/assets/publify-logo.png";
 
 export const TaglineSection = () => {
   return (
-    <section id="que-es-publify" className="py-20 md:py-28 bg-background relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-transparent" />
+    <section id="que-es-publify" className="py-20 md:py-28 bg-secondary/50 dark:bg-secondary/40 relative overflow-hidden border-y border-border/50">
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/8 via-transparent to-accent/5 dark:from-primary/10 dark:to-accent/8" />
       <div className="container mx-auto px-4 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

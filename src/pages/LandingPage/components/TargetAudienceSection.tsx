@@ -15,7 +15,8 @@ const isNotFor = [
 
 export const TargetAudienceSection = () => {
   return (
-    <section id="para-quien" className="py-36 bg-background">
+    <section id="para-quien" className="py-36 bg-background relative">
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/3 to-transparent dark:via-primary/5 pointer-events-none" />
       <div className="container mx-auto max-w-4xl px-0">
         <motion.div
           initial={{ opacity: 0, y: 30 }}

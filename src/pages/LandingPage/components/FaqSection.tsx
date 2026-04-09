@@ -96,7 +96,8 @@ export const FaqSection = () => {
     .filter(Boolean) as string[];
 
   return (
-    <section id="faq" className="py-24 bg-muted/30">
+    <section id="faq" className="py-24 bg-background relative">
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-accent/3 to-transparent dark:via-accent/5 pointer-events-none" />
       <div className="container mx-auto px-4 max-w-3xl">
         <motion.div
           initial={{ opacity: 0, y: 30 }}

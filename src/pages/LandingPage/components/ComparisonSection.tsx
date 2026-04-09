@@ -20,7 +20,8 @@ const withPublify = [
 
 export const ComparisonSection = () => {
   return (
-    <section className="py-24 bg-background">
+    <section className="py-24 bg-secondary/50 dark:bg-secondary/40 border-y border-border/50 relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-br from-destructive/3 via-transparent to-accent/3 dark:from-destructive/5 dark:to-accent/5 pointer-events-none" />
       <div className="container mx-auto px-4 max-w-5xl">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
