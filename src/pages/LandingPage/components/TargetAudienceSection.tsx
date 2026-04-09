@@ -25,7 +25,7 @@ export const TargetAudienceSection = () => {
           
           <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
             Para publishers que quieren operar{" "}
-            <span className="text-primary">como un CEO editorial.</span>
+            <span className="text-primary">como CEO's editoriales.</span>
           </h2>
           <p className="text-lg md:text-xl text-muted-foreground">
             "Publicar es fácil. Gestionar una editorial, no, pero con Publify es más fácil"
