@@ -3,12 +3,14 @@ import { Link } from "react-router-dom";
 import { Menu, X, Sun, Moon } from "lucide-react";
 import { useTheme } from "@/hooks/useTheme";
 import { Button } from "@/components/ui/button";
+import { getPromotionState } from "../utils/pricingTiers";
 import logoDark from "@/assets/publify-logo-dark.png";
 import logoLight from "@/assets/publify-logo-light.png";
 
 const navLinks = [
   { href: "#que-es-publify", label: "Qué es Publify" },
   { href: "#para-quien", label: "Para quién" },
+  { href: "#precios", label: "Planes" },
   { href: "#early-adopters", label: "Acceso Founders" },
   { href: "#faq", label: "FAQ" },
   { href: "/blog", label: "Blog", isRoute: true },
@@ -18,6 +20,7 @@ export const Header = () => {
   const { theme, toggleTheme } = useTheme();
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const promo = getPromotionState();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -25,10 +28,19 @@ export const Header = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const scrollToWaitlist = () => {
-    document.getElementById("waitlist")?.scrollIntoView({ behavior: "smooth" });
+  const scrollToSection = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
     setMenuOpen(false);
   };
+
+  const handleNavClick = (href: string) => {
+    const id = href.replace("#", "");
+    scrollToSection(id);
+  };
+
+  const currentPrice = promo.isExpired
+    ? null
+    : promo.tiers[promo.activeTierIndex]?.tier.price ?? "15";
 
   return (
     <header className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrolled ? "bg-background/95 backdrop-blur-md shadow-sm border-b border-border" : ""}`}>
@@ -48,7 +60,12 @@ export const Header = () => {
                 {link.label}
               </Link>
             ) : (
-              <a key={link.href} href={link.href} className={link.label === "Acceso Founders" ? "text-sm transition-colors text-accent font-semibold" : "text-sm text-muted-foreground hover:text-foreground transition-colors"}>
+              <a
+                key={link.href}
+                href={link.href}
+                onClick={(e) => { e.preventDefault(); handleNavClick(link.href); }}
+                className={link.label === "Acceso Founders" ? "text-sm transition-colors text-accent font-semibold" : "text-sm text-muted-foreground hover:text-foreground transition-colors"}
+              >
                 {link.label}
               </a>
             )
@@ -59,12 +76,19 @@ export const Header = () => {
         </nav>
         
         <div className="hidden md:flex items-center gap-4">
-          <div className="text-right">
-            <p className="text-xs font-semibold text-accent leading-tight">desde 15€/mes</p>
-            <p className="text-[10px] text-muted-foreground leading-tight">Plazas limitadas</p>
-          </div>
-          <Button onClick={scrollToWaitlist} size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold">
-            Bloquear precio
+          {currentPrice && (
+            <div className="text-right">
+              <p className="text-xs font-semibold text-accent leading-tight">desde {currentPrice}€/mes</p>
+              <p className="text-[10px] text-muted-foreground leading-tight">Plazas limitadas</p>
+            </div>
+          )}
+          <Button
+            onClick={() => scrollToSection("waitlist")}
+            size="sm"
+            className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
+            disabled={promo.isExpired}
+          >
+            {promo.isExpired ? "Inscripción cerrada" : "Bloquear precio"}
           </Button>
         </div>
         
@@ -82,7 +106,12 @@ export const Header = () => {
                   {link.label}
                 </Link>
               ) : (
-                <a key={link.href} href={link.href} className={link.label === "Acceso Founders" ? "text-sm transition-colors text-accent font-semibold" : "text-sm text-muted-foreground hover:text-foreground transition-colors"} onClick={() => setMenuOpen(false)}>
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={(e) => { e.preventDefault(); handleNavClick(link.href); }}
+                  className={link.label === "Acceso Founders" ? "text-sm transition-colors text-accent font-semibold" : "text-sm text-muted-foreground hover:text-foreground transition-colors"}
+                >
                   {link.label}
                 </a>
               )
@@ -91,8 +120,12 @@ export const Header = () => {
              {theme === "dark" ? <><Sun size={16} className="inline mr-1" /> Modo Claro</> : <><Moon size={16} className="inline mr-1" /> Modo Oscuro</>}
             </button>
             <div className="pt-2">
-              <Button onClick={scrollToWaitlist} className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold">
-                Bloquear precio — desde 15€/mes
+              <Button
+                onClick={() => scrollToSection("waitlist")}
+                className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
+                disabled={promo.isExpired}
+              >
+                {promo.isExpired ? "Inscripción cerrada" : `Bloquear precio — desde ${currentPrice}€/mes`}
               </Button>
             </div>
           </nav>
