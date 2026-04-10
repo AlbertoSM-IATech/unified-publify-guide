@@ -69,7 +69,7 @@ export default function Blog() {
             <Badge className="mb-4 bg-accent/10 text-accent border-accent/20 hover:bg-accent/15">
               Blog de Publify
             </Badge>
-            <h1 className="text-4xl md:text-6xl font-bold tracking-tight font-[Poppins]">
+            <h1 className="text-4xl md:text-6xl tracking-tight font-[Poppins] font-extrabold text-accent">
               Blog
             </h1>
             <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
