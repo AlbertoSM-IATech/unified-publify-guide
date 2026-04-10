@@ -37,7 +37,7 @@ const pillars = [
 export const WhatIsPublifySection = () => {
   return (
     <section className="py-24 bg-background relative">
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-accent/3 to-transparent dark:via-accent/5 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-accent/5 to-transparent dark:via-accent/5 pointer-events-none" />
       <div className="container mx-auto px-4 max-w-5xl">
         {/* Headline */}
         <motion.div
