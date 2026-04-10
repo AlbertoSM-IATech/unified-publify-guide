@@ -63,7 +63,33 @@ export default function Blog() {
 
       {/* Hero */}
       <section className="relative overflow-hidden pt-28 pb-16 md:pt-36 md:pb-20">
-        <div className="absolute inset-0 bg-gradient-to-br from-accent/5 via-transparent to-primary/5" />
+        {/* Layered background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-accent/8 via-transparent to-primary/8" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,hsl(var(--accent)/0.15),transparent)]" />
+        
+        {/* Decorative grid pattern */}
+        <div className="absolute inset-0 opacity-[0.04] dark:opacity-[0.06]" style={{
+          backgroundImage: `linear-gradient(hsl(var(--accent)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--accent)) 1px, transparent 1px)`,
+          backgroundSize: '60px 60px'
+        }} />
+
+        {/* Floating accent shapes */}
+        <motion.div
+          className="absolute -top-20 -right-20 h-72 w-72 rounded-full bg-accent/10 blur-3xl"
+          animate={{ scale: [1, 1.15, 1], opacity: [0.3, 0.5, 0.3] }}
+          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div
+          className="absolute -bottom-16 -left-16 h-56 w-56 rounded-full bg-primary/10 blur-3xl"
+          animate={{ scale: [1.1, 1, 1.1], opacity: [0.25, 0.45, 0.25] }}
+          transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-40 w-40 rounded-full bg-accent/5 blur-2xl"
+          animate={{ scale: [1, 1.3, 1] }}
+          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+        />
+
         <div className="relative mx-auto max-w-7xl px-4 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
             <Badge className="mb-4 bg-accent/10 text-accent border-accent/20 hover:bg-accent/15">
