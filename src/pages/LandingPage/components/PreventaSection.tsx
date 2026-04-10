@@ -62,7 +62,7 @@ export const PreventaSection = () => {
     : "15";
 
   return (
-    <section id="waitlist" className="py-24 bg-secondary/50 dark:bg-secondary/40 border-y border-border/50 relative overflow-hidden">
+    <section id="waitlist" className="py-24 bg-muted dark:bg-secondary/40 border-y border-border/50 relative overflow-hidden">
       {/* Decorative blobs */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-20 right-10 w-96 h-96 bg-primary/5 dark:bg-primary/10 rounded-full blur-[100px]" />

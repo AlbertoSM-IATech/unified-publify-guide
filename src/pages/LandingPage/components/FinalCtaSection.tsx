@@ -7,8 +7,8 @@ export const FinalCtaSection = () => {
   const { open, setOpen, openDialog } = useWaitlistDialog();
 
   return (
-    <section className="py-24 bg-secondary/50 dark:bg-secondary/40 border-y border-border/50 relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-primary/8 dark:from-primary/15 dark:to-primary/10 pointer-events-none" />
+    <section className="py-24 bg-muted dark:bg-secondary/40 border-y border-border/50 relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/15 via-transparent to-primary/10 dark:from-primary/15 dark:to-primary/10 pointer-events-none" />
       <div className="container mx-auto px-4 max-w-3xl text-center">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
