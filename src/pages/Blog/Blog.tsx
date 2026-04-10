@@ -73,7 +73,7 @@ export default function Blog() {
               Blog
             </h1>
             <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
-              Estrategias, guías y recursos para autores independientes que quieren dominar Amazon KDP y vivir de sus libros.
+              Novedades, reflexiones y todo lo que rodea el mundo del self-publishing y Amazon KDP.
             </p>
           </motion.div>
         </div>
