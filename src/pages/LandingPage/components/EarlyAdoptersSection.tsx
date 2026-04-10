@@ -16,8 +16,8 @@ export const EarlyAdoptersSection = () => {
     : "15";
 
   return (
-    <section id="early-adopters" className="py-20 bg-secondary/50 dark:bg-secondary/40 border-y border-border/50 relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-br from-accent/5 via-transparent to-primary/5 dark:from-accent/8 dark:to-primary/8 pointer-events-none" />
+    <section id="early-adopters" className="py-20 bg-muted dark:bg-secondary/40 border-y border-border/50 relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-br from-accent/8 via-transparent to-primary/8 dark:from-accent/8 dark:to-primary/8 pointer-events-none" />
       <div className="container mx-auto px-4 max-w-3xl text-center">
         <motion.div
           initial={{ opacity: 0, y: 30 }}

@@ -36,8 +36,8 @@ export const NewHowItWorksSection = () => {
   };
 
   return (
-    <section id="como-funciona" className="py-24 bg-secondary/50 dark:bg-secondary/40 border-y border-border/50 relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 dark:from-primary/8 dark:to-accent/8 pointer-events-none" />
+    <section id="como-funciona" className="py-24 bg-muted dark:bg-secondary/40 border-y border-border/50 relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/8 via-transparent to-accent/8 dark:from-primary/8 dark:to-accent/8 pointer-events-none" />
       <div className="container mx-auto px-4 max-w-5xl">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
