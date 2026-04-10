@@ -70,7 +70,8 @@ export default function Blog() {
               Blog de Publify
             </Badge>
             <h1 className="text-4xl md:text-6xl font-bold tracking-tight font-[Poppins]">
-              Blog
+              Ideas para{" "}
+              <span className="text-accent">publicar mejor</span>
             </h1>
             <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
               Estrategias, guías y recursos para autores independientes que quieren dominar Amazon KDP y vivir de sus libros.
