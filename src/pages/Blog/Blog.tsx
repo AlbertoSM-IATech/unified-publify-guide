@@ -62,30 +62,33 @@ export default function Blog() {
       <Header />
 
       {/* Hero */}
-      <section className="relative overflow-hidden pt-28 pb-16 md:pt-36 md:pb-20">
+      <section className="relative overflow-hidden pt-28 pb-16 md:pt-36 md:pb-20 bg-muted/50 dark:bg-secondary/30">
         {/* Layered background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-accent/8 via-transparent to-primary/8" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,hsl(var(--accent)/0.15),transparent)]" />
+        <div className="absolute inset-0 bg-gradient-to-br from-accent/15 via-accent/5 to-primary/15" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,hsl(var(--accent)/0.25),transparent)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_40%_at_80%_80%,hsl(var(--primary)/0.12),transparent)]" />
         
-        {/* Decorative grid pattern */}
-        <div className="absolute inset-0 opacity-[0.04] dark:opacity-[0.06]" style={{
+        {/* Decorative grid pattern with fade edges */}
+        <div className="absolute inset-0 opacity-[0.08] dark:opacity-[0.12]" style={{
           backgroundImage: `linear-gradient(hsl(var(--accent)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--accent)) 1px, transparent 1px)`,
           backgroundSize: '60px 60px'
         }} />
+        {/* Grid fade mask - edges fade out */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_70%_at_50%_50%,transparent_30%,hsl(var(--background))_100%)]" />
 
         {/* Floating accent shapes */}
         <motion.div
-          className="absolute -top-20 -right-20 h-72 w-72 rounded-full bg-accent/10 blur-3xl"
-          animate={{ scale: [1, 1.15, 1], opacity: [0.3, 0.5, 0.3] }}
+          className="absolute -top-20 -right-20 h-80 w-80 rounded-full bg-accent/20 blur-3xl"
+          animate={{ scale: [1, 1.15, 1], opacity: [0.4, 0.6, 0.4] }}
           transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
         />
         <motion.div
-          className="absolute -bottom-16 -left-16 h-56 w-56 rounded-full bg-primary/10 blur-3xl"
-          animate={{ scale: [1.1, 1, 1.1], opacity: [0.25, 0.45, 0.25] }}
+          className="absolute -bottom-16 -left-16 h-64 w-64 rounded-full bg-primary/15 blur-3xl"
+          animate={{ scale: [1.1, 1, 1.1], opacity: [0.35, 0.55, 0.35] }}
           transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
         />
         <motion.div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-40 w-40 rounded-full bg-accent/5 blur-2xl"
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-48 w-48 rounded-full bg-accent/10 blur-2xl"
           animate={{ scale: [1, 1.3, 1] }}
           transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
         />
