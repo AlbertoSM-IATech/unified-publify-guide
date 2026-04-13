@@ -58,8 +58,8 @@ export const PillarCardsSection = () => {
                   <item.icon className="w-6 h-6 text-primary" />
                 </div>
                 <div>
-                  <h3 className="text-base font-bold text-foreground mb-2">{item.title}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
+                  <h3 className="font-bold mb-2 text-xl text-primary">{item.title}</h3>
+                  <p className="text-sm leading-relaxed text-primary-foreground">{item.desc}</p>
                 </div>
               </div>
             </motion.div>
