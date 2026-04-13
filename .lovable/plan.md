@@ -1,52 +1,34 @@
 
 
-## Plan: Reestructurar secciones de la Landing Page
+## Plan: Actualizar contenido de WhatIsPublifySection
 
 ### Resumen
-Añadir tres nuevas secciones y modificar dos existentes para reforzar el mensaje de validación, el dolor de la fragmentación y la propuesta de valor de Publify. No se borra ninguna sección existente.
+Reescribir el contenido de la sección "El centro de tu negocio son tus libros" con los nuevos textos proporcionados, actualizando subtítulo, los 3 pilares y las listas NO es / SÍ es.
 
-### Cambios
+### Cambios en `src/pages/LandingPage/components/WhatIsPublifySection.tsx`
 
-**1. Nueva sección: "Pilares de Publify" (4 cuadros)**
-- Archivo: `src/pages/LandingPage/components/PillarCardsSection.tsx`
-- Grid 2x2 responsive (1 col mobile, 2 col desktop) con 4 tarjetas:
-  - Gestión centralizada de activos digitales
-  - Workspace por libro
-  - Control de producción
-  - Visión financiera
-- Cada tarjeta con icono, título en negrita y descripción. Estilo consistente con las tarjetas existentes (border, bg-card, hover). Sin emojis.
-- Se inserta en `LandingPage.tsx` justo después de `WhatIsPublifySection`.
+**1. Subtítulo principal** — Reemplazar el párrafo descriptivo actual por:
+> "Deja de gestionar tu editorial entre 10 herramientas distintas. Ten una sola fuente de verdad con el libro como eje de cada decisión."
 
-**2. Modificar ControlSection — Añadir "Segmentación"**
-- Archivo: `src/pages/LandingPage/components/ControlSection.tsx`
-- Añadir un nuevo item al array `controls`:
-  - icon: `Users` (lucide), title: "Segmentación", desc: "Define y documenta a quién va dirigido cada libro, su avatar de lector y su propuesta de valor única. Todo dentro de la ficha del libro."
+**2. Pilares (3 tarjetas)** — Actualizar títulos y descripciones:
+- **Localiza en segundos dónde está cada cosa** — "Costes, ingresos, archivos, producción y rendimiento de cada libro, en un solo lugar. Sin buscar en carpetas, hojas de cálculo ni notas dispersas."
+- **Toma el control de tu operativa** — "Ten claro qué toca hacer, qué está pendiente y qué decisiones tienes por delante. Trabaja con estructura, no con memoria."
+- **Conoce la rentabilidad real de tu editorial** — "Sabe cuánto te deja cada libro y cómo rinde tu catálogo en conjunto. Decide dónde invertir y qué escalar con datos, no con intuición."
 
-**3. Nueva sección: "¿Por qué Publify?" (6 bloques)**
-- Archivo: `src/pages/LandingPage/components/WhyPublifySection.tsx`
-- 6 bloques independientes en grid (1 col mobile, 2 col md, 3 col lg)
-- Cada bloque: icono (lucide, sin emojis), título corto en negrita, subtítulo de una línea, párrafo descriptivo
-- Los 6 puntos del briefing (Fin a la dispersión, Visibilidad financiera, Menos retrabajo, Adiós fatiga de decisión, Escala sin caos, Opera como CEO editorial)
-- Se inserta después de `TargetAudienceSection`.
+**3. Lista "Esto NO es"** — Reemplazar con los 5 items nuevos:
+- Un sustituto de KDP ni una herramienta para automatizar procesos dentro de Amazon.
+- Una spy tool ni herramienta de research tipo Helium 10 o Bookbeam.
+- Un gestor de Amazon Ads.
+- Software de escritura, maquetación o diseño.
+- Contabilidad fiscal completa.
 
-**4. Modificar EarlyAdoptersSection — Mensaje de validación**
-- Archivo: `src/pages/LandingPage/components/EarlyAdoptersSection.tsx`
-- Añadir un párrafo debajo del subtítulo existente que explique la fase de validación: "Publify está en fase de validación. Necesitamos a los primeros publishers que quieran dar forma al sistema desde dentro. A cambio, ofrecemos condiciones que no se repetirán."
-- Añadir un segundo párrafo reforzando el dolor: "Tu stack actual está fragmentado: archivos en Drive, datos en Excel, tareas en Notion, finanzas a ojo. Publify nace para unificarlo todo en un solo sistema."
+**4. Lista "Esto SÍ es"** — Reemplazar con los 4 items nuevos:
+- El lugar donde cada libro tiene sus costes, ingresos, archivos y flujo de trabajo en un solo sitio.
+- La estructura que conecta tu biblioteca, producción y finanzas para que nada se quede suelto.
+- La forma de saber si un libro es rentable antes y después de publicarlo.
+- La visión que necesitas para dejar de improvisar y empezar a gestionar tu editorial como un negocio real.
 
-**5. Integrar en LandingPage.tsx**
-- Importar `PillarCardsSection` y `WhyPublifySection`
-- Orden final de secciones (sin borrar ninguna):
-  ```
-  Header → Hero → TaglineSection → ControlSection → ComparisonSection
-  → WhatIsPublifySection → PillarCardsSection (NUEVA)
-  → NewHowItWorksSection → TargetAudienceSection
-  → WhyPublifySection (NUEVA) → EarlyAdoptersSection (MODIFICADA)
-  → PreventaSection → FaqSection → FinalCtaSection → Footer → StickyMobileCTA
-  ```
-
-### Diseño
-- Mismo patrón visual que las secciones existentes: alternancia `bg-background` / `bg-muted dark:bg-secondary/40`, gradientes sutiles, bordes `border-border/50`, animaciones `motion` con `whileInView`.
-- Sin emojis. Tipografía `font-heading` para títulos. Tarjetas con `bg-card border border-border rounded-xl`.
-- Los 6 bloques de "¿Por qué Publify?" usan iconos de lucide-react apropiados al concepto de cada bloque.
+### Notas
+- Sin cambios en estructura, estilos ni orden de secciones.
+- Los encabezados de las listas cambian de "Publify NO es" → "Esto NO es" y "Publify SÍ es" → "Esto SÍ es".
 
