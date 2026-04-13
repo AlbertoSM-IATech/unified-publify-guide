@@ -5,8 +5,10 @@ import { TaglineSection } from "./components/TaglineSection";
 import { ControlSection } from "./components/ControlSection";
 import { ComparisonSection } from "./components/ComparisonSection";
 import { WhatIsPublifySection } from "./components/WhatIsPublifySection";
+import { PillarCardsSection } from "./components/PillarCardsSection";
 import { NewHowItWorksSection } from "./components/NewHowItWorksSection";
 import { TargetAudienceSection } from "./components/TargetAudienceSection";
+import { WhyPublifySection } from "./components/WhyPublifySection";
 import { EarlyAdoptersSection } from "./components/EarlyAdoptersSection";
 import { PreventaSection } from "./components/PreventaSection";
 import { FaqSection } from "./components/FaqSection";
@@ -40,8 +42,10 @@ export const LandingPage = () => {
       <ControlSection />
       <ComparisonSection />
       <WhatIsPublifySection />
+      <PillarCardsSection />
       <NewHowItWorksSection />
       <TargetAudienceSection />
+      <WhyPublifySection />
       <EarlyAdoptersSection />
       <PreventaSection />
       <FaqSection />

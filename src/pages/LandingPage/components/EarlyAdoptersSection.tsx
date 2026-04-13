@@ -45,6 +45,17 @@ export const EarlyAdoptersSection = () => {
           </p>
 
           {!promo.isExpired && (
+            <div className="space-y-4 max-w-2xl mx-auto pt-2">
+              <p className="text-base text-foreground/80 leading-relaxed">
+                Publify está en fase de validación. Necesitamos a los primeros publishers que quieran dar forma al sistema desde dentro. A cambio, ofrecemos condiciones que no se repetirán.
+              </p>
+              <p className="text-base text-foreground/80 leading-relaxed">
+                Tu stack actual está fragmentado: archivos en Drive, datos en Excel, tareas en Notion, finanzas a ojo. Publify nace para unificarlo todo en un solo sistema.
+              </p>
+            </div>
+          )}
+
+          {!promo.isExpired && (
             <>
               <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }} className="inline-block pt-4">
                 <Button onClick={scrollToWaitlist} size="lg" className="text-base px-8 py-5 bg-primary hover:bg-primary/90 text-primary-foreground font-bold shadow-lg shadow-primary/25">

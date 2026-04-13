@@ -11,6 +11,7 @@ import {
   BarChart3,
   QrCode,
   TrendingUp,
+  Users,
 } from "lucide-react";
 
 const controls = [
@@ -68,6 +69,11 @@ const controls = [
     icon: TrendingUp,
     title: "Rentabilidad real",
     desc: "Ingresos y gastos a nivel micro (libro) y macro (negocio)",
+  },
+  {
+    icon: Users,
+    title: "Segmentación",
+    desc: "Define y documenta a quién va dirigido cada libro, su avatar de lector y su propuesta de valor única. Todo dentro de la ficha del libro.",
   },
 ];
 
