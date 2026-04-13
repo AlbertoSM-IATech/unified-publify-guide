@@ -117,21 +117,6 @@ export const Hero = () => {
               ))}
             </motion.div>
 
-            <motion.div variants={fadeInUp} className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mb-8">
-              {benefits.map((b, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.5 + i * 0.1 }}
-                  className="flex items-center gap-3 p-3 rounded-lg bg-card/80 border border-border text-left"
-                >
-                  <b.icon className="w-4 h-4 text-primary flex-shrink-0" />
-                  <span className="text-xs text-foreground">{b.text}</span>
-                </motion.div>
-              ))}
-            </motion.div>
-
             {/* Countdown */}
             <motion.div variants={fadeInUp} className="mb-4">
               <CountdownTimer />
