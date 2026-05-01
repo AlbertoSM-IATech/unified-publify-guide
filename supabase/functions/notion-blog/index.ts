@@ -393,8 +393,10 @@ serve(async (req) => {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   } catch (error: unknown) {
-    const message = error instanceof Error ? error.message : "Unknown error";
-    return new Response(JSON.stringify({ error: message }), {
+    // Log full error details server-side only
+    console.error("notion-blog error:", error);
+    // Return a generic message to the client to avoid leaking internal details
+    return new Response(JSON.stringify({ error: "No se pudo obtener el contenido" }), {
       status: 500,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
