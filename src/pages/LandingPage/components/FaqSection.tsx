@@ -13,15 +13,15 @@ const faqs = [
   },
   {
     question: "¿Qué problema resuelve Publify?",
-    answer: "El problema raíz es la fragmentación: datos y procesos repartidos entre Excel, Drive, Notion y herramientas sueltas que no se hablan. Esto genera errores, retrabajo, fatiga de decisión y te impide escalar con control.",
+    answer: "El publisher KDP opera un negocio complejo sin un sistema propio para gestionarlo. Trabaja con un mosaico de herramientas inconexas y avanza a base de parches. La fragmentación opera en cuatro frentes: (1) sistema casero (genéricas + dedicadas KDP en silos), (2) pipeline editorial deficiente, (3) sin control financiero estructurado, (4) información aislada. Esto genera errores, retrabajo, fatiga de decisión y bloquea la capacidad de escalar con control.",
   },
   {
     question: "¿Para quién es Publify?",
-    answer: "Para publishers profesionalizándose o ya profesionales (con 1–100 libros) que quieren procesos repetibles y visibilidad de rentabilidad por libro.",
+    answer: "Para publishers KDP que operan un negocio editorial complejo de forma \"casera\" — con un mosaico de herramientas genéricas (Drive, Excel, Notion, Trello) más dedicadas KDP en silos — y quieren reemplazarlo por una operación profesional. No se define por número de libros: aplica desde el primer libro; el dolor se intensifica con el volumen.",
   },
   {
     question: "¿Para quién NO es Publify?",
-    answer: "Para quien busca una spy tool tipo Helium10. Para quien busca un maquetador o software de escritura. Para quien quiere \"una app que haga Ads por ti\".",
+    answer: "Para publishers que solo quieren probar suerte con un PDF y no buscan profesionalizar la operación. Para quien busca una spy tool tipo Helium10. Para quien busca un maquetador o software de escritura. Para quien quiere \"una app que haga Ads por ti\".",
   },
   {
     question: "¿Cómo funciona Publify? (estructura para entenderlo)",
@@ -37,7 +37,7 @@ const faqs = [
   },
   {
     question: "¿Publify sustituye a Helium10, Publisher Rocket, BookBeam, etc.?",
-    answer: "No. Publify no compite con herramientas especializadas. Publify las contextualiza dentro del ecosistema del libro para que dejes de tener información aislada en 7 sitios.",
+    answer: "No. Publify sustituye las herramientas genéricas (Drive, Excel, Notion, Trello…) que hoy adaptas para gestionar tu editorial. No sustituye las dedicadas KDP (Helium10, Publisher Rocket, BookBeam, Canva, Amazon Ads…): convive con ellas y aporta el contexto del libro para que dejes de tener información aislada en 7 sitios. En roadmap, Publify destilará los datos crudos de estas dedicadas — esa capa está fuera del MVP.",
   },
   {
     question: "¿Publify se conecta directamente con Amazon KDP o Amazon Ads?",
@@ -45,11 +45,11 @@ const faqs = [
   },
   {
     question: "¿Qué puedo gestionar en Publify hoy (MVP)?",
-    answer: "A nivel práctico, Publify organiza tu operativa por libro: Biblioteca (catálogo, series, estados), Producción (pipeline y ejecución), Finanzas (por libro y global), Research y contexto (según módulo y plan). Publify no promete \"más ventas\". Promete estructura profesional para operar con claridad.",
+    answer: "El MVP actual son dos módulos: Biblioteca (catálogo Biblioteca → Serie → Libro, con ficha operativa de cada libro: Workspace para investigar y decidir + Producción para metadatos, assets y pipeline) y Finanzas (rentabilidad por libro y agregada del catálogo). Publify no promete \"más ventas\": promete orden, foco y centralización para operar con claridad. El resto de capas (Marketing 360, integraciones) se incorporan después, sobre base validada.",
   },
   {
     question: "¿Qué planes existen y cuánto costará Publify después de esta promoción?",
-    answer: "A partir del 1 de junio, los precios estándar serán: Trial: 30 días gratis, sin tarjeta (equivalente a Plus durante el trial). Starter: 19 €/mes. Plus: 49 €/mes. Pro: 99 €/mes (incluye Marketing 360, cuando aplique). Si entras como Early Adopter, mantienes tu precio promocional para siempre mientras tu suscripción siga activa.",
+    answer: "A partir del 1 de junio de 2026, los precios estándar son: Starter 19 €/mes (Biblioteca) · Plus 49 €/mes (Biblioteca + Finanzas). Trial: 14 días gratis sin tarjeta, equivalente a Plus. Pro 99 €/mes está reservado para el futuro Plan Marketing 360, condicionado a validar primero el núcleo. Si entras como Early Adopter, mantienes tu precio promocional para siempre mientras tu suscripción siga activa.",
   },
   {
     question: "¿Cuántas plazas hay?",
@@ -70,7 +70,7 @@ const faqs = [
   },
   {
     question: "¿Puedo trabajar con mi equipo?",
-    answer: "A día de hoy, no. Trabajar en equipo (roles, invitaciones, permisos y vistas por usuario) requiere mucho desarrollo y todavía no está incluido en el roadmap. Lo tenemos presente para futuro, pero por ahora Publify está optimizado para uso individual y operativa simple.",
+    answer: "A día de hoy, no. Publify no es multi-asiento: no ofrece roles, invitaciones, permisos ni vistas por usuario, y no está en el roadmap inmediato. Lo que sí puedes hacer: gestionar internamente el trabajo de colaboradores externos (freelancers, diseñadores, ghostwriters) desde tu propio espacio — el pipeline editorial te permite trackear tareas y entregables, pero ellos no acceden a Publify.",
   },
   {
     question: "¿Mis datos son míos? ¿Puedo exportarlos?",

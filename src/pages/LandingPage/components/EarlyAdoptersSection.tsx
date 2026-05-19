@@ -50,7 +50,7 @@ export const EarlyAdoptersSection = () => {
                 Publify está en fase de validación. Necesitamos a los primeros publishers que quieran dar forma al sistema desde dentro. A cambio, ofrecemos condiciones que no se repetirán.
               </p>
               <p className="text-base text-foreground/80 leading-relaxed">
-                Tu stack actual está fragmentado: archivos en Drive, datos en Excel, tareas en Notion, finanzas a ojo. Publify nace para unificarlo todo en un solo sistema.
+                Tu stack actual es un mosaico de herramientas genéricas: archivos en Drive, datos en Excel, tareas en Notion, finanzas a ojo. Publify nace para reemplazarlo por un Sistema Operativo Editorial — una sola pieza integrada para el negocio editorial.
               </p>
             </div>
           )}

@@ -50,7 +50,7 @@ export const Hero = () => {
                 transition={{ duration: 0.6, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
                 className="font-heading text-3xl md:text-4xl font-bold tracking-tight text-foreground lg:text-5xl mb-2"
               >
-                Tu siguiente nivel como publisher no es producir más.
+                Gestiona tu negocio en Amazon KDP como una gran editorial.
               </motion.h1>
               <motion.h1
                 initial={{ opacity: 0, y: 20 }}
@@ -58,7 +58,7 @@ export const Hero = () => {
                 transition={{ duration: 0.6, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
                 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-primary"
               >
-                Es gestionar profesionalmente.
+                Sin parches, sin improvisación.
               </motion.h1>
             </div>
 
@@ -68,7 +68,7 @@ export const Hero = () => {
               transition={{ duration: 0.6, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
               className="text-lg mb-8 md:text-xl text-foreground font-sans font-normal lg:text-2xl"
             >
-              Deja de improvisar y empieza a dirigir como un CEO editorial.
+              Un negocio complejo no necesita herramientas genéricas. Necesita un Sistema Operativo Editorial. Pasa de publisher a CEO editorial.
             </motion.p>
 
             <motion.div variants={fadeInUp} className="flex flex-wrap items-center gap-2.5 mb-6">
