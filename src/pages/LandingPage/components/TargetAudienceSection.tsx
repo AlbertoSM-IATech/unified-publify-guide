@@ -2,9 +2,9 @@ import { motion } from "framer-motion";
 import { Check, X } from "lucide-react";
 
 const isFor = [
-"Si eres un Publisher activo en Amazon KDP (aunque sea con pocos libros)",
-"Si quieres profesionalizar tu operativa editorial",
-"Gestionas un catálogo y necesitas trazabilidad y control"];
+"Publicas en Amazon KDP y ya operas con cierta complejidad (research, producción, Ads, finanzas en marcha)",
+"Llevas tu editorial con un mosaico de herramientas que ya no te sostiene",
+"Quieres dar el salto a una operación profesional sin depender de la memoria"];
 
 
 const isNotFor = [
@@ -26,10 +26,13 @@ export const TargetAudienceSection = () => {
           
           <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
             Para publishers que quieren operar{" "}
-            <span className="text-primary">como CEO's editoriales.</span>
+            <span className="text-primary">como CEO editorial.</span>
           </h2>
-          <p className="text-lg md:text-xl text-muted-foreground">
+          <p className="text-lg md:text-xl text-muted-foreground mb-6">
             "Publicar es fácil. Gestionar una editorial, no, pero con Publify es más fácil"
+          </p>
+          <p className="text-base md:text-lg text-foreground max-w-3xl mx-auto">
+            Publify es para ti si eres un publisher KDP que opera un negocio editorial complejo de forma "casera" y quieres reemplazarlo por una operación profesional.
           </p>
         </motion.div>
 

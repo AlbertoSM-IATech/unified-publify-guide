@@ -37,7 +37,7 @@ const reasons = [
     icon: Rocket,
     title: "Escala sin caos",
     subtitle: "Crece sin que se te caiga todo.",
-    desc: "Publify escala contigo. Da igual si gestionas 5 libros o 50: la estructura se mantiene, el control no se pierde y cada nuevo título suma, no complica.",
+    desc: "Publify escala contigo. Da igual el tamaño de tu catálogo: la estructura se mantiene, el control no se pierde y cada nuevo título suma, no complica.",
   },
   {
     icon: Crown,
