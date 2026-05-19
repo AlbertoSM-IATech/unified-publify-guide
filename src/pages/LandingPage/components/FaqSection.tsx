@@ -16,12 +16,16 @@ const faqs = [
     answer: "El problema raíz es la fragmentación: datos y procesos repartidos entre Excel, Drive, Notion y herramientas sueltas que no se hablan. Esto genera errores, retrabajo, fatiga de decisión y te impide escalar con control.",
   },
   {
+    question: "¿Qué problema resuelve Publify?",
+    answer: "El publisher KDP opera un negocio complejo sin un sistema propio para gestionarlo. Trabaja con un mosaico de herramientas inconexas y avanza a base de parches. La fragmentación opera en cuatro frentes: (1) sistema casero (genéricas + dedicadas KDP en silos), (2) pipeline editorial deficiente, (3) sin control financiero estructurado, (4) información aislada. Esto genera errores, retrabajo, fatiga de decisión y bloquea la capacidad de escalar con control.",
+  },
+  {
     question: "¿Para quién es Publify?",
-    answer: "Para publishers profesionalizándose o ya profesionales (con 1–100 libros) que quieren procesos repetibles y visibilidad de rentabilidad por libro.",
+    answer: "Para publishers KDP que operan un negocio editorial complejo de forma \"casera\" — con un mosaico de herramientas genéricas (Drive, Excel, Notion, Trello) más dedicadas KDP en silos — y quieren reemplazarlo por una operación profesional. No se define por número de libros: aplica desde el primer libro; el dolor se intensifica con el volumen.",
   },
   {
     question: "¿Para quién NO es Publify?",
-    answer: "Para quien busca una spy tool tipo Helium10. Para quien busca un maquetador o software de escritura. Para quien quiere \"una app que haga Ads por ti\".",
+    answer: "Para publishers que solo quieren probar suerte con un PDF y no buscan profesionalizar la operación. Para quien busca una spy tool tipo Helium10. Para quien busca un maquetador o software de escritura. Para quien quiere \"una app que haga Ads por ti\".",
   },
   {
     question: "¿Cómo funciona Publify? (estructura para entenderlo)",
