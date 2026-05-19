@@ -45,11 +45,11 @@ const faqs = [
   },
   {
     question: "¿Qué puedo gestionar en Publify hoy (MVP)?",
-    answer: "A nivel práctico, Publify organiza tu operativa por libro: Biblioteca (catálogo, series, estados), Producción (pipeline y ejecución), Finanzas (por libro y global), Research y contexto (según módulo y plan). Publify no promete \"más ventas\". Promete estructura profesional para operar con claridad.",
+    answer: "El MVP actual son dos módulos: Biblioteca (catálogo Biblioteca → Serie → Libro, con ficha operativa de cada libro: Workspace para investigar y decidir + Producción para metadatos, assets y pipeline) y Finanzas (rentabilidad por libro y agregada del catálogo). Publify no promete \"más ventas\": promete orden, foco y centralización para operar con claridad. El resto de capas (Marketing 360, integraciones) se incorporan después, sobre base validada.",
   },
   {
     question: "¿Qué planes existen y cuánto costará Publify después de esta promoción?",
-    answer: "A partir del 1 de junio, los precios estándar serán: Trial: 30 días gratis, sin tarjeta (equivalente a Plus durante el trial). Starter: 19 €/mes. Plus: 49 €/mes. Pro: 99 €/mes (incluye Marketing 360, cuando aplique). Si entras como Early Adopter, mantienes tu precio promocional para siempre mientras tu suscripción siga activa.",
+    answer: "A partir del 1 de junio de 2026, los precios estándar son: Starter 19 €/mes (Biblioteca) · Plus 49 €/mes (Biblioteca + Finanzas). Trial: 14 días gratis sin tarjeta, equivalente a Plus. Pro 99 €/mes está reservado para el futuro Plan Marketing 360, condicionado a validar primero el núcleo. Si entras como Early Adopter, mantienes tu precio promocional para siempre mientras tu suscripción siga activa.",
   },
   {
     question: "¿Cuántas plazas hay?",
@@ -70,7 +70,7 @@ const faqs = [
   },
   {
     question: "¿Puedo trabajar con mi equipo?",
-    answer: "A día de hoy, no. Trabajar en equipo (roles, invitaciones, permisos y vistas por usuario) requiere mucho desarrollo y todavía no está incluido en el roadmap. Lo tenemos presente para futuro, pero por ahora Publify está optimizado para uso individual y operativa simple.",
+    answer: "A día de hoy, no. Publify no es multi-asiento: no ofrece roles, invitaciones, permisos ni vistas por usuario, y no está en el roadmap inmediato. Lo que sí puedes hacer: gestionar internamente el trabajo de colaboradores externos (freelancers, diseñadores, ghostwriters) desde tu propio espacio — el pipeline editorial te permite trackear tareas y entregables, pero ellos no acceden a Publify.",
   },
   {
     question: "¿Mis datos son míos? ¿Puedo exportarlos?",
