@@ -13,10 +13,6 @@ const faqs = [
   },
   {
     question: "¿Qué problema resuelve Publify?",
-    answer: "El problema raíz es la fragmentación: datos y procesos repartidos entre Excel, Drive, Notion y herramientas sueltas que no se hablan. Esto genera errores, retrabajo, fatiga de decisión y te impide escalar con control.",
-  },
-  {
-    question: "¿Qué problema resuelve Publify?",
     answer: "El publisher KDP opera un negocio complejo sin un sistema propio para gestionarlo. Trabaja con un mosaico de herramientas inconexas y avanza a base de parches. La fragmentación opera en cuatro frentes: (1) sistema casero (genéricas + dedicadas KDP en silos), (2) pipeline editorial deficiente, (3) sin control financiero estructurado, (4) información aislada. Esto genera errores, retrabajo, fatiga de decisión y bloquea la capacidad de escalar con control.",
   },
   {
@@ -41,7 +37,7 @@ const faqs = [
   },
   {
     question: "¿Publify sustituye a Helium10, Publisher Rocket, BookBeam, etc.?",
-    answer: "No. Publify no compite con herramientas especializadas. Publify las contextualiza dentro del ecosistema del libro para que dejes de tener información aislada en 7 sitios.",
+    answer: "No. Publify sustituye las herramientas genéricas (Drive, Excel, Notion, Trello…) que hoy adaptas para gestionar tu editorial. No sustituye las dedicadas KDP (Helium10, Publisher Rocket, BookBeam, Canva, Amazon Ads…): convive con ellas y aporta el contexto del libro para que dejes de tener información aislada en 7 sitios. En roadmap, Publify destilará los datos crudos de estas dedicadas — esa capa está fuera del MVP.",
   },
   {
     question: "¿Publify se conecta directamente con Amazon KDP o Amazon Ads?",
