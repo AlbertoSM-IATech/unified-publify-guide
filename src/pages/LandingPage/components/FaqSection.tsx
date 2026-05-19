@@ -124,7 +124,7 @@ export const FaqSection = () => {
                 value={`item-${index}`}
                 className="border border-border rounded-lg px-6 bg-card hover:border-primary/20 transition-colors"
               >
-                <AccordionTrigger className="text-left text-base font-semibold text-foreground hover:text-primary transition-colors">
+                <AccordionTrigger className="text-left text-base font-semibold text-primary hover:text-primary/80 transition-colors">
                   {faq.question}
                 </AccordionTrigger>
                 <AccordionContent className="text-muted-foreground leading-relaxed pb-4">
