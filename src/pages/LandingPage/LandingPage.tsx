@@ -11,6 +11,7 @@ import { TargetAudienceSection } from "./components/TargetAudienceSection";
 import { WhyPublifySection } from "./components/WhyPublifySection";
 import { EarlyAdoptersSection } from "./components/EarlyAdoptersSection";
 import { PreventaSection } from "./components/PreventaSection";
+import { PricingPlansSection } from "./components/PricingPlansSection";
 import { FaqSection } from "./components/FaqSection";
 import { FinalCtaSection } from "./components/FinalCtaSection";
 import { Footer } from "./components/Footer";
@@ -48,6 +49,7 @@ export const LandingPage = () => {
       <ComparisonSection />
       <EarlyAdoptersSection />
       <PreventaSection />
+      <PricingPlansSection />
       <FaqSection />
       <FinalCtaSection />
       <Footer />
