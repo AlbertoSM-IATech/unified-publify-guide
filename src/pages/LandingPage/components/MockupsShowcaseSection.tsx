@@ -103,7 +103,7 @@ export const MockupsShowcaseSection = () => {
             tu editorial
           </h2>
           
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+          <p className="text-muted-foreground max-w-3xl mx-auto leading-relaxed text-2xl">
             <strong>2,847 autores</strong> ya han elegido Publify para hacer crecer su negocio editorial. 
             Descubre por qué confían en nuestra plataforma.
           </p>

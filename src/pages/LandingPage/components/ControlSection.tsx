@@ -91,7 +91,7 @@ export const ControlSection = () => {
           <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold mb-5">
             ¿Qué vas a encontrar <span className="text-primary">dentro de Publify?</span>
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-muted-foreground max-w-2xl mx-auto text-2xl">
             Un solo sistema para operar cada área de tu negocio editorial. Sin parches, sin herramientas sueltas.
           </p>
         </motion.div>

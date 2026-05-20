@@ -61,7 +61,7 @@ export const WhyPublifySection = () => {
           <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold mb-5">
             ¿Por qué <span className="text-primary">Publify</span>?
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-muted-foreground max-w-2xl mx-auto text-2xl">
             Porque tu negocio editorial merece operar con la misma claridad que cualquier empresa seria.
           </p>
         </motion.div>

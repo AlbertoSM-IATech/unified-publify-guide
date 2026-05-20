@@ -49,7 +49,7 @@ export const WhatIsPublifySection = () => {
           <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-primary">
             El centro de tu negocio son tus libros
           </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+          <p className="text-muted-foreground max-w-3xl mx-auto leading-relaxed text-2xl">
             Deja de gestionar tu editorial entre 10 herramientas distintas. Ten una sola fuente de verdad con el{" "}
             <strong className="text-primary">libro como eje de cada decisión</strong>.
           </p>

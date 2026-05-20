@@ -56,7 +56,7 @@ export const NewHowItWorksSection = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.3 }}
-            className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto"
+            className="text-lg text-muted-foreground max-w-2xl mx-auto md:text-2xl"
           >
             Tres pasos para pasar del caos editorial al control total.
           </motion.p>

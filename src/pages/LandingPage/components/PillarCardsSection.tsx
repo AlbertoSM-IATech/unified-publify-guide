@@ -38,7 +38,7 @@ export const PillarCardsSection = () => {
           <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold mb-5">
             Los <span className="text-primary">4 pilares</span> de Publify
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-muted-foreground max-w-2xl mx-auto text-2xl">
             Cada libro es una unidad de negocio. Publify lo trata como tal.
           </p>
         </motion.div>
