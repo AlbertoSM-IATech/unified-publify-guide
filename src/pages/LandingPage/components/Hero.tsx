@@ -130,7 +130,7 @@ export const Hero = () => {
                   size="lg"
                   className="h-11 text-sm px-6 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-lg shadow-primary/25 whitespace-nowrap"
                 >
-                  Bloquear precio desde 15€/mes
+                  Bloquear precio desde 25€/mes
                   <ArrowRight className="ml-1.5" size={16} />
                 </Button>
               </motion.div>
