@@ -16,6 +16,7 @@ interface Plan {
   badge?: string;
   features: string[];
   ctaLabel: string;
+  disabled?: boolean;
 }
 
 export const PricingPlansSection = () => {
@@ -44,7 +45,8 @@ export const PricingPlansSection = () => {
         "Notas y workspace por libro",
         "Soporte por email",
       ],
-      ctaLabel: "Bloquear precio Starter",
+      ctaLabel: "Próximamente",
+      disabled: true,
     },
     {
       id: "plus",
@@ -80,7 +82,8 @@ export const PricingPlansSection = () => {
         "Integraciones (en roadmap)",
         "Soporte prioritario",
       ],
-      ctaLabel: "Bloquear precio Pro",
+      ctaLabel: "Próximamente",
+      disabled: true,
     },
   ];
 
@@ -118,7 +121,7 @@ export const PricingPlansSection = () => {
                   plan.highlighted
                     ? "border-primary/40 shadow-lg shadow-primary/15 md:scale-[1.03]"
                     : "border-border hover:border-primary/20"
-                }`}
+                } ${plan.disabled ? "opacity-60" : ""}`}
               >
                 {plan.badge && (
                   <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full shadow">
@@ -182,21 +185,24 @@ export const PricingPlansSection = () => {
                 </ul>
 
                 <Button
-                  onClick={openDialog}
+                  onClick={plan.disabled ? undefined : openDialog}
+                  disabled={plan.disabled}
                   size="lg"
                   className={`w-full font-semibold ${
-                    plan.highlighted
+                    plan.disabled
+                      ? "bg-muted text-muted-foreground cursor-not-allowed"
+                      : plan.highlighted
                       ? "bg-primary hover:bg-primary/90 text-primary-foreground shadow-md shadow-primary/20"
                       : "bg-card border border-primary/30 text-primary hover:bg-primary/10"
                   }`}
-                  variant={plan.highlighted ? "default" : "outline"}
+                  variant={plan.highlighted && !plan.disabled ? "default" : "outline"}
                 >
                   {plan.ctaLabel}
-                  <ArrowRight className="ml-2" size={18} />
+                  {!plan.disabled && <ArrowRight className="ml-2" size={18} />}
                 </Button>
 
                 <p className="text-xs text-muted-foreground text-center mt-3">
-                  Solo tu email. Sin tarjeta.
+                  {plan.disabled ? "Disponible más adelante" : "Solo tu email. Sin tarjeta."}
                 </p>
               </motion.div>
             );
