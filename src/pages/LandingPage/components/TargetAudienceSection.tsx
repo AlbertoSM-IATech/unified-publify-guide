@@ -29,9 +29,9 @@ export const TargetAudienceSection = () => {
             <span className="text-primary">como CEO editorial.</span>
           </h2>
           <p className="text-lg md:text-xl text-muted-foreground mb-6">
-            "Publicar es fácil. Gestionar una editorial, no, pero con Publify es más fácil"
+            {" "}
           </p>
-          <p className="text-base md:text-lg text-foreground max-w-3xl mx-auto">
+          <p className="text-base text-foreground max-w-3xl mx-auto md:text-2xl">
             Publify es para ti si eres un publisher KDP que opera un negocio editorial complejo de forma "casera" y quieres reemplazarlo por una operación profesional.
           </p>
         </motion.div>
