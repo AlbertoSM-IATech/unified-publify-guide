@@ -34,9 +34,6 @@ export const FinalCtaSection = () => {
             </Button>
           </motion.div>
 
-          <p className="mt-4 text-sm text-muted-foreground">
-            Te avisamos cuando abramos. Sin spam.
-          </p>
         </motion.div>
       </div>
       <WaitlistDialog open={open} onOpenChange={setOpen} />
