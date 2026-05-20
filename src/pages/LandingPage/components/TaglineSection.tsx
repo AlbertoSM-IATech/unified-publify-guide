@@ -36,7 +36,7 @@ export const TaglineSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: "easeOut", delay: 0.4 }}
-          className="text-lg md:text-xl text-center mt-5 max-w-2xl mx-auto text-accent">
+          className="text-lg text-center mt-5 max-w-2xl mx-auto text-accent md:text-2xl">
           
           Hecho por y para publishers de Amazon KDP
         </motion.p>
