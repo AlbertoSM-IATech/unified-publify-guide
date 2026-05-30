@@ -34,6 +34,11 @@ import CheckoutSuccess from "@/pages/Checkout/CheckoutSuccess";
 import CheckoutCancel from "@/pages/Checkout/CheckoutCancel";
 import Blog from "@/pages/Blog/Blog";
 import BlogPost from "@/pages/Blog/BlogPost";
+import Diagnostico from "@/pages/Diagnostico/Diagnostico";
+import AdminLogin from "@/pages/Admin/leads/AdminLogin";
+import AdminLeadsList from "@/pages/Admin/leads/AdminLeadsList";
+import AdminLeadDetail from "@/pages/Admin/leads/AdminLeadDetail";
+import AdminProtectedRoute from "@/pages/Admin/leads/AdminProtectedRoute";
 
 function App() {
   const { theme } = useTheme();
@@ -138,7 +143,13 @@ function App() {
         <Route path="/terminos-y-condiciones" element={<TermsAndConditions />} />
         <Route path="/politica-privacidad" element={<PrivacyPolicy />} />
         <Route path="/contacto" element={<Contact />} />
-        
+        <Route path="/diagnostico" element={<Diagnostico />} />
+
+        {/* Admin (privado, no enlazado) */}
+        <Route path="/admin/login" element={<AdminLogin />} />
+        <Route path="/admin/leads" element={<AdminProtectedRoute><AdminLeadsList /></AdminProtectedRoute>} />
+        <Route path="/admin/leads/:id" element={<AdminProtectedRoute><AdminLeadDetail /></AdminProtectedRoute>} />
+
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
