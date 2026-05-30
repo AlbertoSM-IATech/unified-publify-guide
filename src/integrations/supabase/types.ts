@@ -14,16 +14,178 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      leads: {
+        Row: {
+          ai_email_body: string | null
+          ai_email_cta: string | null
+          ai_email_generated_at: string | null
+          ai_email_personalization_snippets: Json | null
+          ai_email_subject: string | null
+          ai_email_tone_notes: string | null
+          ai_email_version: string | null
+          ai_error: string | null
+          ai_frictions: string[] | null
+          ai_next_steps: string[] | null
+          ai_objections: string[] | null
+          ai_opportunity: Json | null
+          ai_output: Json | null
+          ai_reply_recommendation_type: string | null
+          ai_sales_questions: string[] | null
+          ai_status: string | null
+          ai_summary: string | null
+          books_range: string | null
+          configure_first: string | null
+          created_at: string
+          email: string
+          id: string
+          impact_without_system: string[] | null
+          landing_path: string | null
+          lead_score_breakdown: Json | null
+          lead_score_total: number | null
+          lead_stage: Database["public"]["Enums"]["lead_stage"] | null
+          main_question_text: string | null
+          name: string
+          needs_system: string | null
+          next_step_preference: string | null
+          objections_text: string | null
+          pain_points: string[] | null
+          pain_text: string | null
+          preferred_schedule: string | null
+          situation_description: string | null
+          team_range: string | null
+          timing: string | null
+          updated_at: string
+          utm_campaign: string | null
+          utm_medium: string | null
+          utm_source: string | null
+        }
+        Insert: {
+          ai_email_body?: string | null
+          ai_email_cta?: string | null
+          ai_email_generated_at?: string | null
+          ai_email_personalization_snippets?: Json | null
+          ai_email_subject?: string | null
+          ai_email_tone_notes?: string | null
+          ai_email_version?: string | null
+          ai_error?: string | null
+          ai_frictions?: string[] | null
+          ai_next_steps?: string[] | null
+          ai_objections?: string[] | null
+          ai_opportunity?: Json | null
+          ai_output?: Json | null
+          ai_reply_recommendation_type?: string | null
+          ai_sales_questions?: string[] | null
+          ai_status?: string | null
+          ai_summary?: string | null
+          books_range?: string | null
+          configure_first?: string | null
+          created_at?: string
+          email: string
+          id?: string
+          impact_without_system?: string[] | null
+          landing_path?: string | null
+          lead_score_breakdown?: Json | null
+          lead_score_total?: number | null
+          lead_stage?: Database["public"]["Enums"]["lead_stage"] | null
+          main_question_text?: string | null
+          name: string
+          needs_system?: string | null
+          next_step_preference?: string | null
+          objections_text?: string | null
+          pain_points?: string[] | null
+          pain_text?: string | null
+          preferred_schedule?: string | null
+          situation_description?: string | null
+          team_range?: string | null
+          timing?: string | null
+          updated_at?: string
+          utm_campaign?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+        }
+        Update: {
+          ai_email_body?: string | null
+          ai_email_cta?: string | null
+          ai_email_generated_at?: string | null
+          ai_email_personalization_snippets?: Json | null
+          ai_email_subject?: string | null
+          ai_email_tone_notes?: string | null
+          ai_email_version?: string | null
+          ai_error?: string | null
+          ai_frictions?: string[] | null
+          ai_next_steps?: string[] | null
+          ai_objections?: string[] | null
+          ai_opportunity?: Json | null
+          ai_output?: Json | null
+          ai_reply_recommendation_type?: string | null
+          ai_sales_questions?: string[] | null
+          ai_status?: string | null
+          ai_summary?: string | null
+          books_range?: string | null
+          configure_first?: string | null
+          created_at?: string
+          email?: string
+          id?: string
+          impact_without_system?: string[] | null
+          landing_path?: string | null
+          lead_score_breakdown?: Json | null
+          lead_score_total?: number | null
+          lead_stage?: Database["public"]["Enums"]["lead_stage"] | null
+          main_question_text?: string | null
+          name?: string
+          needs_system?: string | null
+          next_step_preference?: string | null
+          objections_text?: string | null
+          pain_points?: string[] | null
+          pain_text?: string | null
+          preferred_schedule?: string | null
+          situation_description?: string | null
+          team_range?: string | null
+          timing?: string | null
+          updated_at?: string
+          utm_campaign?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin"
+      lead_stage: "high_intent" | "solution_aware" | "problem_aware" | "cold"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +312,9 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin"],
+      lead_stage: ["high_intent", "solution_aware", "problem_aware", "cold"],
+    },
   },
 } as const
