@@ -14,6 +14,7 @@ import { PreventaSection } from "./components/PreventaSection";
 import { PricingPlansSection } from "./components/PricingPlansSection";
 import { FaqSection } from "./components/FaqSection";
 import { FinalCtaSection } from "./components/FinalCtaSection";
+import DiagnosticoSection from "./components/diagnostico/DiagnosticoSection";
 import { Footer } from "./components/Footer";
 import { StickyMobileCTA } from "./components/StickyMobileCTA";
 
@@ -51,6 +52,7 @@ export const LandingPage = () => {
       <PreventaSection />
       <PricingPlansSection />
       <FaqSection />
+      <DiagnosticoSection />
       <FinalCtaSection />
       <Footer />
       <StickyMobileCTA />
