@@ -201,9 +201,11 @@ export const PricingPlansSection = () => {
                   {!plan.disabled && <ArrowRight className="ml-2" size={18} />}
                 </Button>
 
-                <p className="text-xs text-muted-foreground text-center mt-3">
-                  {plan.disabled ? "Disponible más adelante" : "Solo tu email. Sin tarjeta."}
-                </p>
+                {plan.disabled && (
+                  <p className="text-xs text-muted-foreground text-center mt-3">
+                    Disponible más adelante
+                  </p>
+                )}
               </motion.div>
             );
           })}

@@ -134,7 +134,7 @@ export const Hero = () => {
                   <ArrowRight className="ml-1.5" size={16} />
                 </Button>
               </motion.div>
-              <p className="text-sm text-accent mt-2">Solo tu email. Sin tarjeta. Sin compromiso.</p>
+              
               <WaitlistDialog open={open} onOpenChange={setOpen} />
             </motion.div>
           </div>

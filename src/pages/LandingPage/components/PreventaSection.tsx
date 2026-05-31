@@ -339,14 +339,9 @@ export const PreventaSection = () => {
               </motion.div>
 
               {!promo.isExpired && (
-                <>
-                  <p className="text-sm text-accent text-center font-medium">
-                    Solo tu email. Sin tarjeta. Sin compromiso.
-                  </p>
-                  <p className="text-xs text-muted-foreground text-center">
-                    El precio sube con cada tramo. Una vez dentro, es tuyo para siempre.
-                  </p>
-                </>
+                <p className="text-xs text-muted-foreground text-center">
+                  El precio sube con cada tramo. Una vez dentro, es tuyo para siempre.
+                </p>
               )}
             </motion.div>
             <WaitlistDialog open={open} onOpenChange={setOpen} />
