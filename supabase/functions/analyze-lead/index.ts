@@ -166,6 +166,26 @@ Deno.serve(async (req) => {
     const parsed = JSON.parse(toolCall.function.arguments);
     const email = parsed.email_suggestion;
 
+    // Calcula próxima versión
+    const { data: lastVer } = await supabase
+      .from("lead_email_versions")
+      .select("version")
+      .eq("lead_id", leadId)
+      .order("version", { ascending: false })
+      .limit(1)
+      .maybeSingle();
+    const nextVersion = (lastVer?.version ?? 0) + 1;
+
+    await supabase.from("lead_email_versions").insert({
+      lead_id: leadId,
+      version: nextVersion,
+      subject: email.subject,
+      body: email.body,
+      cta: email.cta,
+      tone_notes: email.tone_notes,
+      source: "ai",
+    });
+
     await supabase
       .from("leads")
       .update({
@@ -182,7 +202,7 @@ Deno.serve(async (req) => {
         ai_email_cta: email.cta,
         ai_email_tone_notes: email.tone_notes,
         ai_email_personalization_snippets: email.personalization_snippets,
-        ai_email_version: "v1",
+        ai_email_version: `v${nextVersion}`,
         ai_email_generated_at: new Date().toISOString(),
         ai_status: "done",
         ai_error: null,
