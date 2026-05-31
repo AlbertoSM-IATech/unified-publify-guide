@@ -14,6 +14,53 @@ export type Database = {
   }
   public: {
     Tables: {
+      lead_email_versions: {
+        Row: {
+          body: string
+          created_at: string
+          created_by: string | null
+          cta: string | null
+          id: string
+          lead_id: string
+          source: string
+          subject: string
+          tone_notes: string | null
+          version: number
+        }
+        Insert: {
+          body: string
+          created_at?: string
+          created_by?: string | null
+          cta?: string | null
+          id?: string
+          lead_id: string
+          source?: string
+          subject: string
+          tone_notes?: string | null
+          version: number
+        }
+        Update: {
+          body?: string
+          created_at?: string
+          created_by?: string | null
+          cta?: string | null
+          id?: string
+          lead_id?: string
+          source?: string
+          subject?: string
+          tone_notes?: string | null
+          version?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "lead_email_versions_lead_id_fkey"
+            columns: ["lead_id"]
+            isOneToOne: false
+            referencedRelation: "leads"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       leads: {
         Row: {
           ai_email_body: string | null

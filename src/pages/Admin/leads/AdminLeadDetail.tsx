@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft, Copy, Loader2, RefreshCw } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
+import EmailEditor from "./components/EmailEditor";
 
 const stageLabel: Record<string, string> = {
   high_intent: "High-intent",
@@ -234,37 +235,27 @@ export default function AdminLeadDetail() {
 
           {lead.ai_status === "done" && (
             <Section title="Email sugerido">
-              <div className="space-y-3">
-                <div>
-                  <p className="text-xs text-muted-foreground mb-1">Tipo / CTA</p>
-                  <p className="text-sm text-foreground">
-                    {lead.ai_reply_recommendation_type} · {lead.ai_email_cta}
-                  </p>
-                </div>
-                <div>
-                  <div className="flex items-center justify-between mb-1">
-                    <p className="text-xs text-muted-foreground">Asunto</p>
-                    <button onClick={() => copy(lead.ai_email_subject)} className="text-xs text-primary hover:underline flex items-center gap-1">
-                      <Copy className="h-3 w-3" /> Copiar
-                    </button>
-                  </div>
-                  <p className="text-sm text-foreground bg-muted/40 rounded p-2">{lead.ai_email_subject}</p>
-                </div>
-                <div>
-                  <div className="flex items-center justify-between mb-1">
-                    <p className="text-xs text-muted-foreground">Cuerpo</p>
-                    <button onClick={() => copy(lead.ai_email_body)} className="text-xs text-primary hover:underline flex items-center gap-1">
-                      <Copy className="h-3 w-3" /> Copiar
-                    </button>
-                  </div>
-                  <pre className="text-sm text-foreground bg-muted/40 rounded p-3 whitespace-pre-wrap font-sans">
-{lead.ai_email_body}
-                  </pre>
-                </div>
-                {lead.ai_email_tone_notes && (
-                  <p className="text-xs text-muted-foreground italic">Tono: {lead.ai_email_tone_notes}</p>
-                )}
+              <div className="mb-3">
+                <p className="text-xs text-muted-foreground mb-1">Tipo / CTA</p>
+                <p className="text-sm text-foreground">
+                  {lead.ai_reply_recommendation_type} · {lead.ai_email_cta}
+                </p>
               </div>
+              <EmailEditor
+                leadId={lead.id}
+                leadName={lead.name}
+                initialSubject={lead.ai_email_subject ?? ""}
+                initialBody={lead.ai_email_body ?? ""}
+                initialCta={lead.ai_email_cta}
+                initialToneNotes={lead.ai_email_tone_notes}
+                onRegenerate={retryAi}
+                regenerating={retrying}
+              />
+              {lead.ai_email_tone_notes && (
+                <p className="text-xs text-muted-foreground italic mt-3">
+                  Tono: {lead.ai_email_tone_notes}
+                </p>
+              )}
             </Section>
           )}
         </div>
