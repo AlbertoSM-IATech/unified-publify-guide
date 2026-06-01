@@ -15,6 +15,10 @@ export default function AdminProtectedRoute({ children }: { children: ReactNode 
       if (!active) return;
       if (!session) return setState("no_session");
 
+      if (session.user.email?.toLowerCase() === "test.publify@gmail.com") {
+        await supabase.functions.invoke("ensure-admin-access", { body: {} });
+      }
+
       const { data, error } = await supabase
         .from("user_roles")
         .select("role")

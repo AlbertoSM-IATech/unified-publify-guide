@@ -16,38 +16,50 @@ export type Database = {
     Tables: {
       lead_email_versions: {
         Row: {
+          author_email: string | null
           body: string
           created_at: string
           created_by: string | null
           cta: string | null
           id: string
           lead_id: string
+          prompt_text: string | null
+          reason: string | null
           source: string
           subject: string
+          token_values: Json
           tone_notes: string | null
           version: number
         }
         Insert: {
+          author_email?: string | null
           body: string
           created_at?: string
           created_by?: string | null
           cta?: string | null
           id?: string
           lead_id: string
+          prompt_text?: string | null
+          reason?: string | null
           source?: string
           subject: string
+          token_values?: Json
           tone_notes?: string | null
           version: number
         }
         Update: {
+          author_email?: string | null
           body?: string
           created_at?: string
           created_by?: string | null
           cta?: string | null
           id?: string
           lead_id?: string
+          prompt_text?: string | null
+          reason?: string | null
           source?: string
           subject?: string
+          token_values?: Json
           tone_notes?: string | null
           version?: number
         }
@@ -84,6 +96,11 @@ export type Database = {
           configure_first: string | null
           created_at: string
           email: string
+          email_send_error: string | null
+          email_send_status: string
+          email_sent_at: string | null
+          email_sent_by: string | null
+          email_sent_version: number | null
           id: string
           impact_without_system: string[] | null
           landing_path: string | null
@@ -128,6 +145,11 @@ export type Database = {
           configure_first?: string | null
           created_at?: string
           email: string
+          email_send_error?: string | null
+          email_send_status?: string
+          email_sent_at?: string | null
+          email_sent_by?: string | null
+          email_sent_version?: number | null
           id?: string
           impact_without_system?: string[] | null
           landing_path?: string | null
@@ -172,6 +194,11 @@ export type Database = {
           configure_first?: string | null
           created_at?: string
           email?: string
+          email_send_error?: string | null
+          email_send_status?: string
+          email_sent_at?: string | null
+          email_sent_by?: string | null
+          email_sent_version?: number | null
           id?: string
           impact_without_system?: string[] | null
           landing_path?: string | null
@@ -222,6 +249,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      ensure_allowed_admin: {
+        Args: { _email: string; _user_id: string }
+        Returns: boolean
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
