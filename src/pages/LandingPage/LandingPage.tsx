@@ -42,6 +42,7 @@ export const LandingPage = () => {
       <Hero />
       <TaglineSection />
       <PillarCardsSection />
+      <DiagnosticoSection />
       <WhyPublifySection />
       <TargetAudienceSection />
       <ControlSection />
@@ -52,7 +53,6 @@ export const LandingPage = () => {
       <PreventaSection />
       <PricingPlansSection />
       <FaqSection />
-      <DiagnosticoSection />
       <FinalCtaSection />
       <Footer />
       <StickyMobileCTA />
