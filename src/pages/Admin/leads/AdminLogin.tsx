@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
+import { lovable } from "@/integrations/lovable";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
-import { Loader2 } from "lucide-react";
+import { Chrome, Loader2 } from "lucide-react";
+
+const ADMIN_EMAIL = "test.publify@gmail.com";
 
 export default function AdminLogin() {
   const [mode, setMode] = useState<"login" | "signup">("login");
@@ -14,6 +17,13 @@ export default function AdminLogin() {
   const navigate = useNavigate();
   const location = useLocation();
   const redirectTo = (location.state as any)?.from ?? "/admin/leads";
+
+  const ensureAdminAccess = async () => {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (session?.user.email?.toLowerCase() === ADMIN_EMAIL) {
+      await supabase.functions.invoke("ensure-admin-access", { body: {} });
+    }
+  };
 
   useEffect(() => {
     document.title = "Acceso admin | Publify";
@@ -42,9 +52,31 @@ export default function AdminLogin() {
       }
       const { error } = await supabase.auth.signInWithPassword({ email, password });
       if (error) throw error;
+      await ensureAdminAccess();
       navigate(redirectTo, { replace: true });
     } catch (err: any) {
-      toast.error(err.message ?? "Error de autenticación");
+      const message = String(err.message ?? "Error de autenticación");
+      toast.error(
+        message.toLowerCase().includes("email not confirmed")
+          ? "Confirma el email de verificación o entra con Google."
+          : message,
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const signInWithGoogle = async () => {
+    setLoading(true);
+    try {
+      const result = await lovable.auth.signInWithOAuth("google", {
+        redirect_uri: `${window.location.origin}/admin/leads`,
+      });
+      if (result.error) throw result.error;
+      await ensureAdminAccess();
+      if (!result.redirected) navigate(redirectTo, { replace: true });
+    } catch (err: any) {
+      toast.error(err.message ?? "No se pudo iniciar sesión con Google");
     } finally {
       setLoading(false);
     }
@@ -83,6 +115,15 @@ export default function AdminLogin() {
           {loading && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
           {mode === "login" ? "Entrar" : "Crear cuenta y entrar"}
         </Button>
+
+        <Button type="button" variant="outline" className="w-full mt-3" disabled={loading} onClick={signInWithGoogle}>
+          <Chrome className="h-4 w-4 mr-2" />
+          Entrar con Google
+        </Button>
+
+        <p className="mt-3 text-xs text-muted-foreground text-center">
+          El acceso admin se activa automáticamente para {ADMIN_EMAIL}.
+        </p>
 
         <button
           type="button"

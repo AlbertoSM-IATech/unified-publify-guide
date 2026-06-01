@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Copy, Loader2, RefreshCw } from "lucide-react";
+import { ArrowLeft, Loader2, RefreshCw } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
 import EmailEditor from "./components/EmailEditor";
@@ -51,16 +51,11 @@ export default function AdminLeadDetail() {
     load();
   }, [id]);
 
-  const copy = async (text: string) => {
-    await navigator.clipboard.writeText(text);
-    toast.success("Copiado al portapapeles");
-  };
-
-  const retryAi = async () => {
+  const retryAi = async (customPrompt?: string) => {
     if (!id) return;
     setRetrying(true);
     try {
-      const { error } = await supabase.functions.invoke("analyze-lead", { body: { lead_id: id } });
+      const { error } = await supabase.functions.invoke("analyze-lead", { body: { lead_id: id, custom_prompt: customPrompt } });
       if (error) throw error;
       toast.success("Análisis IA regenerado");
       await load();
@@ -81,6 +76,11 @@ export default function AdminLeadDetail() {
   if (!lead) return <div className="p-8 text-foreground">Lead no encontrado</div>;
 
   const bd = lead.lead_score_breakdown ?? {};
+  const tokenDefaults = {
+    nombre: lead.name ?? "",
+    producto: lead.configure_first || lead.situation_description || "un libro concreto",
+    asin: "",
+  };
 
   return (
     <main className="min-h-screen bg-background">
@@ -185,7 +185,7 @@ export default function AdminLeadDetail() {
             {lead.ai_status === "error" && (
               <div>
                 <p className="text-sm text-red-600 mb-3">Error: {lead.ai_error}</p>
-                <Button size="sm" variant="outline" onClick={retryAi} disabled={retrying}>
+                <Button size="sm" variant="outline" onClick={() => retryAi()} disabled={retrying}>
                   {retrying ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <RefreshCw className="h-4 w-4 mr-2" />}
                   Reintentar
                 </Button>
@@ -225,7 +225,7 @@ export default function AdminLeadDetail() {
                     {(lead.ai_sales_questions ?? []).map((f: string, i: number) => <li key={i}>• {f}</li>)}
                   </ul>
                 </div>
-                <Button size="sm" variant="ghost" onClick={retryAi} disabled={retrying} className="mt-2">
+                <Button size="sm" variant="ghost" onClick={() => retryAi()} disabled={retrying} className="mt-2">
                   {retrying ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <RefreshCw className="h-4 w-4 mr-2" />}
                   Regenerar
                 </Button>
@@ -244,12 +244,19 @@ export default function AdminLeadDetail() {
               <EmailEditor
                 leadId={lead.id}
                 leadName={lead.name}
+                leadEmail={lead.email}
                 initialSubject={lead.ai_email_subject ?? ""}
                 initialBody={lead.ai_email_body ?? ""}
                 initialCta={lead.ai_email_cta}
                 initialToneNotes={lead.ai_email_tone_notes}
+                tokenDefaults={tokenDefaults}
+                emailSendStatus={lead.email_send_status}
+                emailSendError={lead.email_send_error}
+                emailSentAt={lead.email_sent_at}
+                emailSentVersion={lead.email_sent_version}
                 onRegenerate={retryAi}
                 regenerating={retrying}
+                onLeadUpdated={load}
               />
               {lead.ai_email_tone_notes && (
                 <p className="text-xs text-muted-foreground italic mt-3">
