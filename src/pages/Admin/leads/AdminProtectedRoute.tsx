@@ -3,8 +3,6 @@ import { Navigate, useLocation } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Loader2 } from "lucide-react";
 
-const ADMIN_EMAIL = "test.publify@gmail.com";
-
 const withTimeout = async <T,>(promise: Promise<T>, ms = 8000): Promise<T> => {
   let timeoutId: ReturnType<typeof setTimeout>;
   const timeout = new Promise<never>((_, reject) => {
@@ -36,9 +34,7 @@ export default function AdminProtectedRoute({ children }: { children: ReactNode 
         return setState("no_session");
       }
 
-      if (user.email?.toLowerCase() === ADMIN_EMAIL) {
-        await withTimeout(supabase.functions.invoke("ensure-admin-access", { body: {} })).catch(() => null);
-      }
+      await withTimeout(supabase.functions.invoke("ensure-admin-access", { body: {} })).catch(() => null);
 
       const { data, error } = await supabase
         .from("user_roles")
