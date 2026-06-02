@@ -146,6 +146,7 @@ function App() {
         <Route path="/diagnostico" element={<Diagnostico />} />
 
         {/* Admin (privado, no enlazado) */}
+        <Route path="/admin" element={<Navigate to="/admin/leads" replace />} />
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/admin/leads" element={<AdminProtectedRoute><AdminLeadsList /></AdminProtectedRoute>} />
         <Route path="/admin/leads/:id" element={<AdminProtectedRoute><AdminLeadDetail /></AdminProtectedRoute>} />
