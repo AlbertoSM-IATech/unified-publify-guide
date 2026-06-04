@@ -14,6 +14,56 @@ export type Database = {
   }
   public: {
     Tables: {
+      admin_notifications: {
+        Row: {
+          attempts: number
+          channel: string
+          created_at: string
+          error_message: string | null
+          id: string
+          lead_id: string
+          recipient: string | null
+          sent_at: string | null
+          status: string
+          subject: string | null
+          updated_at: string
+        }
+        Insert: {
+          attempts?: number
+          channel?: string
+          created_at?: string
+          error_message?: string | null
+          id?: string
+          lead_id: string
+          recipient?: string | null
+          sent_at?: string | null
+          status?: string
+          subject?: string | null
+          updated_at?: string
+        }
+        Update: {
+          attempts?: number
+          channel?: string
+          created_at?: string
+          error_message?: string | null
+          id?: string
+          lead_id?: string
+          recipient?: string | null
+          sent_at?: string | null
+          status?: string
+          subject?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "admin_notifications_lead_id_fkey"
+            columns: ["lead_id"]
+            isOneToOne: false
+            referencedRelation: "leads"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       lead_email_versions: {
         Row: {
           author_email: string | null
@@ -93,6 +143,7 @@ export type Database = {
           ai_status: string | null
           ai_summary: string | null
           books_range: string | null
+          client_request_id: string | null
           configure_first: string | null
           created_at: string
           email: string
@@ -142,6 +193,7 @@ export type Database = {
           ai_status?: string | null
           ai_summary?: string | null
           books_range?: string | null
+          client_request_id?: string | null
           configure_first?: string | null
           created_at?: string
           email: string
@@ -191,6 +243,7 @@ export type Database = {
           ai_status?: string | null
           ai_summary?: string | null
           books_range?: string | null
+          client_request_id?: string | null
           configure_first?: string | null
           created_at?: string
           email?: string
