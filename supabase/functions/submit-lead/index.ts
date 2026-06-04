@@ -26,6 +26,7 @@ type Payload = {
   utm_medium?: string;
   utm_campaign?: string;
   landing_path?: string;
+  client_request_id?: string;
 };
 
 function score(p: Payload) {
@@ -122,6 +123,22 @@ Deno.serve(async (req) => {
 
     const s = score(body);
 
+    // Idempotencia: si ya existe un lead con este client_request_id, lo devolvemos
+    // sin reescribir ni relanzar IA/aviso admin.
+    if (body.client_request_id) {
+      const { data: existing } = await supabase
+        .from("leads")
+        .select("id")
+        .eq("client_request_id", body.client_request_id)
+        .maybeSingle();
+      if (existing?.id) {
+        return new Response(JSON.stringify({ ok: true, lead_id: existing.id, deduped: true }), {
+          status: 200,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+    }
+
     const { data: lead, error } = await supabase
       .from("leads")
       .insert({
@@ -148,11 +165,26 @@ Deno.serve(async (req) => {
         lead_score_breakdown: s.breakdown,
         lead_stage: s.stage,
         ai_status: "pending",
+        client_request_id: body.client_request_id ?? null,
       })
       .select("id")
       .single();
 
     if (error) {
+      // Si fue una carrera con la condición de unicidad, devolvemos el id existente
+      if (error.code === "23505" && body.client_request_id) {
+        const { data: existing } = await supabase
+          .from("leads")
+          .select("id")
+          .eq("client_request_id", body.client_request_id)
+          .maybeSingle();
+        if (existing?.id) {
+          return new Response(JSON.stringify({ ok: true, lead_id: existing.id, deduped: true }), {
+            status: 200,
+            headers: { ...corsHeaders, "Content-Type": "application/json" },
+          });
+        }
+      }
       console.error("Insert error:", error);
       return new Response(JSON.stringify({ error: "No se pudo guardar el lead" }), {
         status: 500,
@@ -161,18 +193,28 @@ Deno.serve(async (req) => {
     }
 
     // Fire-and-forget IA analysis
-    const analyzeUrl = `${Deno.env.get("SUPABASE_URL")}/functions/v1/analyze-lead`;
-    const analyzePromise = fetch(analyzeUrl, {
+    const baseUrl = Deno.env.get("SUPABASE_URL");
+    const svcKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+    const analyzePromise = fetch(`${baseUrl}/functions/v1/analyze-lead`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")}`,
-      },
+      headers: { "Content-Type": "application/json", Authorization: `Bearer ${svcKey}` },
       body: JSON.stringify({ lead_id: lead.id }),
     }).catch((e) => console.error("analyze-lead trigger failed:", e));
 
+    // Fire-and-forget aviso al admin
+    const notifyPromise = fetch(`${baseUrl}/functions/v1/notify-admin-lead`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Authorization: `Bearer ${svcKey}` },
+      body: JSON.stringify({ lead_id: lead.id }),
+    }).catch((e) => console.error("notify-admin-lead trigger failed:", e));
+
     // @ts-ignore - EdgeRuntime is available in Supabase edge functions
-    if (typeof EdgeRuntime !== "undefined") EdgeRuntime.waitUntil(analyzePromise);
+    if (typeof EdgeRuntime !== "undefined") {
+      // @ts-ignore
+      EdgeRuntime.waitUntil(analyzePromise);
+      // @ts-ignore
+      EdgeRuntime.waitUntil(notifyPromise);
+    }
 
     return new Response(JSON.stringify({ ok: true, lead_id: lead.id }), {
       status: 200,

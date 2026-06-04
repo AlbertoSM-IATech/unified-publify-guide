@@ -6,6 +6,7 @@ import { ArrowLeft, Loader2, RefreshCw } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
 import EmailEditor from "./components/EmailEditor";
+import AdminNotificationsHistory from "./components/AdminNotificationsHistory";
 
 const stageLabel: Record<string, string> = {
   high_intent: "High-intent",
@@ -157,6 +158,10 @@ export default function AdminLeadDetail() {
 
         {/* Columna derecha: IA */}
         <div className="space-y-5">
+          <Section title="Aviso al admin">
+            <AdminNotificationsHistory leadId={lead.id} />
+          </Section>
+
           <Section title="Scoring breakdown">
             <Row label="FIT" value={bd.fit?.subtotal} />
             <Row label="  · Libros" value={bd.fit?.books} />
