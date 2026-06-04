@@ -58,10 +58,19 @@ export default function DiagnosticoForm() {
   const submit = async () => {
     setSubmitting(true);
     try {
-      const payload = { ...answers, ...getUtm() };
+      // Idempotencia: un mismo intento del usuario reusa el mismo id en reintentos.
+      const STORAGE_KEY = "publify_diagnostico_request_id";
+      let clientRequestId =
+        typeof window !== "undefined" ? window.sessionStorage.getItem(STORAGE_KEY) : null;
+      if (!clientRequestId) {
+        clientRequestId = crypto.randomUUID();
+        if (typeof window !== "undefined") window.sessionStorage.setItem(STORAGE_KEY, clientRequestId);
+      }
+      const payload = { ...answers, ...getUtm(), client_request_id: clientRequestId };
       const { data, error } = await supabase.functions.invoke("submit-lead", { body: payload });
       if (error) throw error;
       if (data?.error) throw new Error(data.error);
+      if (typeof window !== "undefined") window.sessionStorage.removeItem(STORAGE_KEY);
       setDone(true);
     } catch (e: any) {
       console.error(e);
