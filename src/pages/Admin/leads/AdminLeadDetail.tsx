@@ -6,6 +6,7 @@ import { ArrowLeft, Loader2, RefreshCw } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
 import EmailEditor from "./components/EmailEditor";
+import AdminNotificationsHistory from "./components/AdminNotificationsHistory";
 
 const stageLabel: Record<string, string> = {
   high_intent: "High-intent",
