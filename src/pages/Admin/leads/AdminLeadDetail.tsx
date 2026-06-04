@@ -158,6 +158,10 @@ export default function AdminLeadDetail() {
 
         {/* Columna derecha: IA */}
         <div className="space-y-5">
+          <Section title="Aviso al admin">
+            <AdminNotificationsHistory leadId={lead.id} />
+          </Section>
+
           <Section title="Scoring breakdown">
             <Row label="FIT" value={bd.fit?.subtotal} />
             <Row label="  · Libros" value={bd.fit?.books} />
