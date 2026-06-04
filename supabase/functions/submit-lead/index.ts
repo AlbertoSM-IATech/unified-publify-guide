@@ -26,6 +26,7 @@ type Payload = {
   utm_medium?: string;
   utm_campaign?: string;
   landing_path?: string;
+  client_request_id?: string;
 };
 
 function score(p: Payload) {
