@@ -7,6 +7,7 @@ import {
   Rocket,
   Crown,
 } from "lucide-react";
+import { EditorialSectionHeader } from "./EditorialSectionHeader";
 
 const reasons = [
   {
@@ -49,40 +50,44 @@ const reasons = [
 
 export const WhyPublifySection = () => {
   return (
-    <section className="py-24 bg-background relative">
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-accent/5 to-transparent dark:via-accent/5 pointer-events-none" />
-      <div className="container mx-auto px-4 max-w-6xl">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-14"
-        >
-          <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold mb-5">
-            ¿Por qué <span className="text-primary">Publify</span>?
-          </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto text-2xl">
-            Porque tu negocio editorial merece operar con la misma claridad que cualquier empresa seria.
-          </p>
-        </motion.div>
+    <section className="py-24 md:py-32 bg-background relative">
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-accent/5 to-transparent pointer-events-none" />
+      <div className="container mx-auto px-4 max-w-6xl relative">
+        <EditorialSectionHeader
+          kicker="Capítulo 02 · Tesis"
+          title={
+            <>
+              ¿Por qué <span className="text-primary italic">Publify</span>?
+            </>
+          }
+          subtitle="Porque tu negocio editorial merece operar con la misma claridad que cualquier empresa seria."
+        />
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-0 border-t border-l border-border/60">
           {reasons.map((item, i) => (
-            <motion.div
+            <motion.article
               key={i}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.08, duration: 0.5 }}
-              className="group p-6 bg-card border border-border rounded-xl hover:border-accent/30 transition-colors"
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ delay: i * 0.06, duration: 0.55 }}
+              className="group relative p-7 md:p-8 border-r border-b border-border/60 bg-card/30 hover:bg-card transition-colors"
             >
-              <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center mb-4 group-hover:bg-accent/20 transition-colors">
-                <item.icon className="w-5 h-5 text-accent" />
+              <div className="flex items-center gap-3 mb-5">
+                <span className="font-heading italic text-primary text-lg leading-none">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <span className="h-px flex-1 bg-border" />
+                <item.icon className="w-4 h-4 text-primary opacity-70 group-hover:opacity-100 transition-opacity" />
               </div>
-              <h3 className="text-base font-bold text-foreground mb-1">{item.title}</h3>
-              <p className="text-sm font-medium text-primary mb-3">{item.subtitle}</p>
-              <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
-            </motion.div>
+              <h3 className="font-heading text-2xl leading-tight text-foreground mb-2">
+                {item.title}
+              </h3>
+              <p className="text-sm font-medium text-primary mb-3 italic">{item.subtitle}</p>
+              <p className="text-sm text-muted-foreground leading-relaxed font-light">
+                {item.desc}
+              </p>
+            </motion.article>
           ))}
         </div>
       </div>
