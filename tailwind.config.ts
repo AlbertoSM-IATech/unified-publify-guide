@@ -24,8 +24,10 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
-        heading: ['Poppins', 'sans-serif'],
+        sans: ['"Fira Sans"', 'Inter', 'sans-serif'],
+        heading: ['"DM Serif Display"', 'Georgia', 'serif'],
+        editorial: ['"DM Serif Display"', 'Georgia', 'serif'],
+        mono: ['"Fira Sans"', 'sans-serif'],
       },
       colors: {
         border: 'hsl(var(--border))',
