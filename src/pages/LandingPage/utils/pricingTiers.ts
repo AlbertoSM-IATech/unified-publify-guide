@@ -1,4 +1,10 @@
-/** Pricing tier definitions and helpers for the founders promotion */
+/** Pricing tier definitions and helpers for the launch offer.
+ *
+ * NOTE: La preventa escalonada ha finalizado. Mantenemos un precio de
+ * lanzamiento único (25€/mes Plan Plus) para los primeros 30 publishers.
+ * Cuando se completen las plazas, se cerrará y pasaremos a precio normal.
+ * Sin cuenta atrás por fecha.
+ */
 
 export interface PricingTier {
   dates: string;
@@ -7,14 +13,17 @@ export interface PricingTier {
   end: Date;
 }
 
-export const PRICING_TIERS: PricingTier[] = [
-  { dates: "10–30 abril", price: "15", start: new Date("2026-04-10T00:00:00+02:00"), end: new Date("2026-05-01T00:00:00+02:00") },
-  { dates: "1–15 mayo", price: "20", start: new Date("2026-05-01T00:00:00+02:00"), end: new Date("2026-05-16T00:00:00+02:00") },
-  { dates: "16–31 mayo", price: "25", start: new Date("2026-05-16T00:00:00+02:00"), end: new Date("2026-06-01T00:00:00+02:00") },
-];
+/** Launch tier — precio único para los primeros 30 publishers */
+export const LAUNCH_TIER: PricingTier = {
+  dates: "Precio de lanzamiento",
+  price: "25",
+  start: new Date("2026-01-01T00:00:00+02:00"),
+  end: new Date("2099-12-31T23:59:59+02:00"),
+};
 
-/** Absolute deadline: May 31 at 23:59:59 CEST */
-export const FOUNDERS_DEADLINE = new Date("2026-05-31T23:59:59+02:00");
+/** Kept for backwards compatibility with existing imports */
+export const PRICING_TIERS: PricingTier[] = [LAUNCH_TIER];
+export const FOUNDERS_DEADLINE = LAUNCH_TIER.end;
 
 export type TierStatus = "expired" | "active" | "upcoming";
 
@@ -25,49 +34,21 @@ export interface TierInfo {
 
 export interface PromotionState {
   isExpired: boolean;
-  activeTierIndex: number; // -1 if before first tier or all expired
+  activeTierIndex: number;
   tiers: TierInfo[];
-  countdownTarget: Date | null; // null when fully expired
+  countdownTarget: Date | null;
+  /** Modo de la promoción: 'launch' = precio único para primeros 30 */
+  mode: "launch";
+  seatsTotal: number;
 }
 
-export function getPromotionState(now: Date = new Date()): PromotionState {
-  const nowMs = now.getTime();
-
-  // All expired
-  if (nowMs > FOUNDERS_DEADLINE.getTime()) {
-    return {
-      isExpired: true,
-      activeTierIndex: -1,
-      tiers: PRICING_TIERS.map(t => ({ tier: t, status: "expired" })),
-      countdownTarget: null,
-    };
-  }
-
-  // Before first tier starts — countdown to first tier
-  if (nowMs < PRICING_TIERS[0].start.getTime()) {
-    return {
-      isExpired: false,
-      activeTierIndex: 0,
-      tiers: PRICING_TIERS.map((t, i) => ({
-        tier: t,
-        status: i === 0 ? "active" : "upcoming",
-      })),
-      countdownTarget: PRICING_TIERS[0].start,
-    };
-  }
-
-  // Find active tier
-  let activeTierIndex = -1;
-  const tiers: TierInfo[] = PRICING_TIERS.map((t, i) => {
-    if (nowMs >= t.end.getTime()) return { tier: t, status: "expired" as TierStatus };
-    if (nowMs >= t.start.getTime() && nowMs < t.end.getTime()) {
-      activeTierIndex = i;
-      return { tier: t, status: "active" as TierStatus };
-    }
-    return { tier: t, status: "upcoming" as TierStatus };
-  });
-
-  const countdownTarget = activeTierIndex >= 0 ? PRICING_TIERS[activeTierIndex].end : null;
-
-  return { isExpired: false, activeTierIndex, tiers, countdownTarget };
+export function getPromotionState(_now: Date = new Date()): PromotionState {
+  return {
+    isExpired: false,
+    activeTierIndex: 0,
+    tiers: [{ tier: LAUNCH_TIER, status: "active" }],
+    countdownTarget: null,
+    mode: "launch",
+    seatsTotal: 30,
+  };
 }
