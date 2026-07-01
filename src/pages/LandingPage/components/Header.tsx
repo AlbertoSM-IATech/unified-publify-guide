@@ -77,17 +77,16 @@ export const Header = () => {
         <div className="hidden md:flex items-center gap-4">
           {currentPrice && (
             <div className="text-right">
-              <p className="text-xs font-semibold text-accent leading-tight">desde {currentPrice}€/mes</p>
-              <p className="text-[10px] text-muted-foreground leading-tight">Plazas limitadas</p>
+              <p className="text-xs font-semibold text-accent leading-tight">Acceso cerrado</p>
+              <p className="text-[10px] text-muted-foreground leading-tight">Apúntate a la lista</p>
             </div>
           )}
           <Button
             onClick={() => scrollToSection("waitlist")}
             size="sm"
             className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
-            disabled={promo.isExpired}
           >
-            {promo.isExpired ? "Inscripción cerrada" : "Bloquear precio"}
+            Únete a la lista
           </Button>
         </div>
         
@@ -122,9 +121,8 @@ export const Header = () => {
               <Button
                 onClick={() => scrollToSection("waitlist")}
                 className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
-                disabled={promo.isExpired}
               >
-                {promo.isExpired ? "Inscripción cerrada" : `Bloquear precio — desde ${currentPrice}€/mes`}
+                Únete a la lista de espera
               </Button>
             </div>
           </nav>

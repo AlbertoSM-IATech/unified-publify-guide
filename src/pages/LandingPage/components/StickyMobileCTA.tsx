@@ -18,12 +18,6 @@ export const StickyMobileCTA = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  if (promo.isExpired) return null;
-
-  const currentPrice = promo.activeTierIndex >= 0
-    ? promo.tiers[promo.activeTierIndex].tier.price
-    : "15";
-
   return (
     <>
       <AnimatePresence>
@@ -38,13 +32,13 @@ export const StickyMobileCTA = () => {
               onClick={openDialog}
               className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-3 text-sm"
             >
-              Bloquear precio — desde {currentPrice}€/mes
+              Únete a la lista de espera
               <ArrowRight className="ml-2" size={16} />
             </Button>
           </motion.div>
         )}
       </AnimatePresence>
-      <WaitlistDialog open={open} onOpenChange={setOpen} />
+      <WaitlistDialog open={open} onOpenChange={setOpen} source="sticky-mobile" />
     </>
   );
 };
