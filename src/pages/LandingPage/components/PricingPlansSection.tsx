@@ -66,7 +66,7 @@ export const PricingPlansSection = () => {
         "Onboarding personalizado",
         "Precio bloqueado de por vida",
       ],
-      ctaLabel: `Bloquear precio desde ${activePlusPrice}€/mes`,
+      ctaLabel: `Únete a la lista de espera`,
     },
     {
       id: "pro",

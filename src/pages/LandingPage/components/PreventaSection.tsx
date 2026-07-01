@@ -219,7 +219,7 @@ export const PreventaSection = () => {
 
               <div className="text-center pt-2 px-0">
                 <h3 className="font-heading font-bold mb-2 text-primary text-2xl">
-                  Bloquea tu precio ahora
+                  Únete a la lista de espera
                 </h3>
                 <p className="text-sm text-muted-foreground">
                   Regístrate gratis. Te enviaremos un email con los detalles y el proceso de pago.
@@ -241,7 +241,7 @@ export const PreventaSection = () => {
                   size="lg"
                   className="w-full font-bold text-base py-5 rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg shadow-primary/20"
                 >
-                  Bloquear mi precio — {currentPrice}€/mes
+                  Apuntarme a la lista de espera
                   <ArrowRight className="ml-2" size={20} />
                 </Button>
               </motion.div>
