@@ -73,7 +73,7 @@ export const PreventaSection = () => {
           </motion.div>
 
           <TextReveal as="h2" className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold mb-5">
-            {currentPrice}€/mes de por vida. Plazas limitadas a {seats}.
+            {`${currentPrice}€/mes de por vida. Plazas limitadas a ${seats}.`}
           </TextReveal>
 
           <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto">
