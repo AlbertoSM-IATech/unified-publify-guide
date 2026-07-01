@@ -2,7 +2,6 @@ import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { TypewriterURL } from "@/components/motion/TypewriterURL";
-import { CountdownTimer } from "./CountdownTimer";
 import dashboardImg from "@/assets/publify-dashboard-concept.jpg";
 import { WaitlistDialog, useWaitlistDialog } from "@/components/WaitlistDialog";
 
@@ -42,7 +41,7 @@ export const Hero = () => {
             <motion.div variants={fadeInUp} className="flex items-center gap-4">
               <span className="h-px w-12 bg-primary" />
               <span className="text-primary uppercase tracking-[0.2em] text-[11px] font-semibold">
-                Edición 2026 · Founders Only
+                Edición 2026 · Lista de espera abierta
               </span>
             </motion.div>
 
@@ -68,20 +67,15 @@ export const Hero = () => {
               escalar de publisher a CEO.
             </motion.p>
 
-            {/* Countdown */}
-            <motion.div variants={fadeInUp}>
-              <CountdownTimer />
-            </motion.div>
-
             {/* CTA */}
-            <motion.div variants={fadeInUp} className="flex flex-col gap-3">
+            <motion.div variants={fadeInUp} className="flex flex-col gap-3 pt-2">
               <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="w-fit">
                 <Button
                   onClick={openDialog}
                   size="lg"
                   className="h-12 px-7 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-sm shadow-lg shadow-primary/25 group"
                 >
-                  Bloquear precio desde 25€/mes
+                  Únete a la lista de espera
                   <ArrowRight
                     className="ml-2 transition-transform group-hover:translate-x-1"
                     size={18}
@@ -89,9 +83,9 @@ export const Hero = () => {
                 </Button>
               </motion.div>
               <p className="text-[11px] text-muted-foreground uppercase tracking-widest">
-                Limitado a las primeras 100 licencias
+                Acceso cerrado temporalmente · Te avisamos cuando volvamos a abrir
               </p>
-              <WaitlistDialog open={open} onOpenChange={setOpen} />
+              <WaitlistDialog open={open} onOpenChange={setOpen} source="hero" />
             </motion.div>
 
             {/* Process index */}

@@ -25,49 +25,29 @@ export const EarlyAdoptersSection = () => {
           viewport={{ once: true }}
           className="space-y-6"
         >
-          <div className={`inline-flex items-center gap-2 border px-4 py-2 rounded-full text-sm font-medium ${
-            promo.isExpired
-              ? "bg-muted/50 border-border text-muted-foreground"
-              : "bg-primary/10 border-primary/20 text-primary"
-          }`}>
-            {promo.isExpired ? <AlertCircle size={16} /> : <Sparkles size={16} />}
-            {promo.isExpired
-              ? "La preventa de founders ha finalizado"
-              : "Acceso exclusivo para los primeros 30 publishers"}
+          <div className="inline-flex items-center gap-2 border px-4 py-2 rounded-full text-sm font-medium bg-primary/10 border-primary/20 text-primary">
+            <Sparkles size={16} />
+            Lista de espera abierta
           </div>
           <h2 className="font-heading text-3xl font-bold text-primary md:text-5xl">
-            {promo.isExpired ? "Preventa finalizada" : "Acceso prioritario"}
+            Acceso cerrado temporalmente
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto text-2xl">
-            {promo.isExpired
-              ? "El periodo de inscripción para founders ha terminado. Consulta nuestros planes regulares."
-              : "Entra antes que nadie, bloquea el mejor precio para siempre y ayuda a dar forma a Publify."}
+            Estamos afinando el sistema con el primer grupo de publishers. Apúntate a la lista y te avisamos en cuanto reabramos el acceso.
           </p>
 
-          {!promo.isExpired && (
-            <div className="space-y-4 max-w-2xl mx-auto pt-2">
-              <p className="text-base text-foreground/80 leading-relaxed">
-                Publify está en fase de validación. Necesitamos a los primeros publishers que quieran dar forma al sistema desde dentro. A cambio, ofrecemos condiciones que no se repetirán.
-              </p>
-              <p className="text-base text-foreground/80 leading-relaxed">
-                Tu stack actual es un mosaico de herramientas genéricas: archivos en Drive, datos en Excel, tareas en Notion, finanzas a ojo. Publify nace para reemplazarlo por un Sistema Operativo Editorial — una sola pieza integrada para el negocio editorial.
-              </p>
-            </div>
-          )}
+          <div className="space-y-4 max-w-2xl mx-auto pt-2">
+            <p className="text-base text-foreground/80 leading-relaxed">
+              Tu stack actual es un mosaico de herramientas genéricas: archivos en Drive, datos en Excel, tareas en Notion, finanzas a ojo. Publify nace para reemplazarlo por un Sistema Operativo Editorial — una sola pieza integrada para el negocio editorial.
+            </p>
+          </div>
 
-          {!promo.isExpired && (
-            <>
-              <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }} className="inline-block pt-4">
-                <Button onClick={scrollToWaitlist} size="lg" className="text-base px-8 py-5 bg-primary hover:bg-primary/90 text-primary-foreground font-bold shadow-lg shadow-primary/25">
-                  Ver precios y bloquear mi precio
-                  <ArrowRight className="ml-2" size={18} />
-                </Button>
-              </motion.div>
-              <p className="text-sm text-accent">
-                desde {currentPrice}€/mes
-              </p>
-            </>
-          )}
+          <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }} className="inline-block pt-4">
+            <Button onClick={scrollToWaitlist} size="lg" className="text-base px-8 py-5 bg-primary hover:bg-primary/90 text-primary-foreground font-bold shadow-lg shadow-primary/25">
+              Únete a la lista de espera
+              <ArrowRight className="ml-2" size={18} />
+            </Button>
+          </motion.div>
         </motion.div>
       </div>
     </section>
