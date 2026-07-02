@@ -55,6 +55,7 @@ function getUtm() {
 export const WaitlistDialog = ({ open, onOpenChange, source }: WaitlistDialogProps) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [consent, setConsent] = useState(false);
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
@@ -62,7 +63,7 @@ export const WaitlistDialog = ({ open, onOpenChange, source }: WaitlistDialogPro
     e.preventDefault();
     setErrorMsg(null);
 
-    const parsed = waitlistSchema.safeParse({ name, email });
+    const parsed = waitlistSchema.safeParse({ name, email, consent });
     if (!parsed.success) {
       const first = Object.values(parsed.error.flatten().fieldErrors).flat()[0];
       setErrorMsg(first ?? "Revisa los datos.");
@@ -81,6 +82,9 @@ export const WaitlistDialog = ({ open, onOpenChange, source }: WaitlistDialogPro
       utm_source: utm.utm_source ?? null,
       utm_medium: utm.utm_medium ?? null,
       utm_campaign: utm.utm_campaign ?? null,
+      consent_accepted: true,
+      consent_accepted_at: new Date().toISOString(),
+      consent_version: CONSENT_VERSION,
     });
 
     if (error) {
