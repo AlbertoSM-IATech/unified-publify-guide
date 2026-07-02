@@ -105,6 +105,7 @@ export const WaitlistDialog = ({ open, onOpenChange, source }: WaitlistDialogPro
   const reset = () => {
     setName("");
     setEmail("");
+    setConsent(false);
     setStatus("idle");
     setErrorMsg(null);
   };
