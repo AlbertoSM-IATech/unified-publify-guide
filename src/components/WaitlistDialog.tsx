@@ -37,6 +37,9 @@ const waitlistSchema = z.object({
     .min(1, { message: "Añade tu email" })
     .email({ message: "Email no válido" })
     .max(255, { message: "Email demasiado largo" }),
+  consent: z.literal(true, {
+    errorMap: () => ({ message: "Debes aceptar la política de privacidad." }),
+  }),
 });
 
 function getUtm() {
