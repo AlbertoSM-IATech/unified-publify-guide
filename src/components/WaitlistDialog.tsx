@@ -12,7 +12,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
+
+const CONSENT_VERSION = "2026-07-v1";
 
 interface WaitlistDialogProps {
   open: boolean;
@@ -33,6 +37,9 @@ const waitlistSchema = z.object({
     .min(1, { message: "Añade tu email" })
     .email({ message: "Email no válido" })
     .max(255, { message: "Email demasiado largo" }),
+  consent: z.literal(true, {
+    errorMap: () => ({ message: "Debes aceptar la política de privacidad." }),
+  }),
 });
 
 function getUtm() {
@@ -48,6 +55,7 @@ function getUtm() {
 export const WaitlistDialog = ({ open, onOpenChange, source }: WaitlistDialogProps) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [consent, setConsent] = useState(false);
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
@@ -55,7 +63,7 @@ export const WaitlistDialog = ({ open, onOpenChange, source }: WaitlistDialogPro
     e.preventDefault();
     setErrorMsg(null);
 
-    const parsed = waitlistSchema.safeParse({ name, email });
+    const parsed = waitlistSchema.safeParse({ name, email, consent });
     if (!parsed.success) {
       const first = Object.values(parsed.error.flatten().fieldErrors).flat()[0];
       setErrorMsg(first ?? "Revisa los datos.");
@@ -74,6 +82,9 @@ export const WaitlistDialog = ({ open, onOpenChange, source }: WaitlistDialogPro
       utm_source: utm.utm_source ?? null,
       utm_medium: utm.utm_medium ?? null,
       utm_campaign: utm.utm_campaign ?? null,
+      consent_accepted: true,
+      consent_accepted_at: new Date().toISOString(),
+      consent_version: CONSENT_VERSION,
     });
 
     if (error) {
@@ -94,6 +105,7 @@ export const WaitlistDialog = ({ open, onOpenChange, source }: WaitlistDialogPro
   const reset = () => {
     setName("");
     setEmail("");
+    setConsent(false);
     setStatus("idle");
     setErrorMsg(null);
   };
@@ -173,6 +185,32 @@ export const WaitlistDialog = ({ open, onOpenChange, source }: WaitlistDialogPro
                     </div>
                   </div>
 
+
+                  <div className="flex items-start gap-2.5 pt-1">
+                    <Checkbox
+                      id="wl-consent"
+                      checked={consent}
+                      onCheckedChange={(v) => setConsent(v === true)}
+                      className="mt-0.5"
+                    />
+                    <Label
+                      htmlFor="wl-consent"
+                      className="text-[11px] leading-relaxed text-muted-foreground font-normal cursor-pointer select-none"
+                    >
+                      Acepto que Publify guarde mi email para avisarme cuando reabra el
+                      registro. He leído la{" "}
+                      <Link
+                        to="/privacidad"
+                        target="_blank"
+                        className="text-primary underline underline-offset-2 hover:text-primary/80"
+                      >
+                        política de privacidad
+                      </Link>
+                      . Puedo darme de baja escribiendo a{" "}
+                      <span className="text-foreground/80">hola@publify.io</span>.
+                    </Label>
+                  </div>
+
                   {errorMsg && (
                     <div className="flex items-start gap-2 text-xs text-destructive bg-destructive/10 border border-destructive/20 rounded-md p-2.5">
                       <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
@@ -183,8 +221,8 @@ export const WaitlistDialog = ({ open, onOpenChange, source }: WaitlistDialogPro
                   <Button
                     type="submit"
                     size="lg"
-                    disabled={status === "loading"}
-                    className="w-full h-12 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-lg shadow-primary/25 group"
+                    disabled={status === "loading" || !consent}
+                    className="w-full h-12 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-lg shadow-primary/25 group disabled:opacity-50"
                   >
                     {status === "loading" ? (
                       <>
@@ -198,10 +236,6 @@ export const WaitlistDialog = ({ open, onOpenChange, source }: WaitlistDialogPro
                       </>
                     )}
                   </Button>
-
-                  <p className="text-[11px] text-muted-foreground text-center leading-relaxed">
-                    Sin spam. Solo un aviso cuando abramos plazas.
-                  </p>
                 </motion.form>
               ) : (
                 <motion.div

@@ -299,6 +299,9 @@ export type Database = {
       }
       waitlist_signups: {
         Row: {
+          consent_accepted: boolean
+          consent_accepted_at: string | null
+          consent_version: string | null
           created_at: string
           email: string
           id: string
@@ -312,6 +315,9 @@ export type Database = {
           utm_source: string | null
         }
         Insert: {
+          consent_accepted?: boolean
+          consent_accepted_at?: string | null
+          consent_version?: string | null
           created_at?: string
           email: string
           id?: string
@@ -325,6 +331,9 @@ export type Database = {
           utm_source?: string | null
         }
         Update: {
+          consent_accepted?: boolean
+          consent_accepted_at?: string | null
+          consent_version?: string | null
           created_at?: string
           email?: string
           id?: string
