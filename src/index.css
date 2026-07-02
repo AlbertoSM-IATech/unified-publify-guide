@@ -305,3 +305,107 @@
     box-shadow: 0 0 15px rgba(251, 146, 60, 0.8), 0 0 20px rgba(251, 146, 60, 0.5);
   }
 }
+
+/* ============================================
+   EDITORIAL POLISH — Aurora, grain, gradients
+   ============================================ */
+
+@layer utilities {
+  /* Aurora background: soft, moving primary glow */
+  .bg-aurora {
+    background:
+      radial-gradient(60% 50% at 15% 20%, hsl(var(--primary) / 0.18) 0%, transparent 60%),
+      radial-gradient(50% 45% at 85% 15%, hsl(var(--accent) / 0.14) 0%, transparent 60%),
+      radial-gradient(70% 60% at 50% 100%, hsl(var(--primary) / 0.12) 0%, transparent 65%);
+  }
+
+  .bg-aurora-soft {
+    background:
+      radial-gradient(45% 40% at 20% 30%, hsl(var(--primary) / 0.08) 0%, transparent 60%),
+      radial-gradient(45% 40% at 80% 70%, hsl(var(--accent) / 0.06) 0%, transparent 60%);
+  }
+
+  /* Editorial grain overlay (SVG noise, no external asset) */
+  .grain::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.06;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.6 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+
+  /* Fine hairline grid, editorial magazine feel */
+  .bg-grid-editorial {
+    background-image:
+      linear-gradient(to right, hsl(var(--border) / 0.5) 1px, transparent 1px),
+      linear-gradient(to bottom, hsl(var(--border) / 0.5) 1px, transparent 1px);
+    background-size: 80px 80px;
+    mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+  }
+
+  /* Text gradient primary → accent */
+  .text-gradient-primary {
+    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(24 94% 70%) 50%, hsl(var(--accent)) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+
+  /* Editorial serif drop-cap helper */
+  .drop-cap::first-letter {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 3.5em;
+    float: left;
+    line-height: 0.85;
+    padding: 0.1em 0.12em 0 0;
+    color: hsl(var(--primary));
+  }
+
+  /* Subtle marquee-like reveal */
+  .reveal-underline {
+    background-image: linear-gradient(hsl(var(--primary)), hsl(var(--primary)));
+    background-size: 0% 2px;
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    transition: background-size 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .reveal-underline:hover { background-size: 100% 2px; }
+
+  /* Elevated glow ring for hero product mockups */
+  .ring-glow-primary {
+    box-shadow:
+      0 0 0 1px hsl(var(--border)),
+      0 30px 80px -20px hsl(var(--primary) / 0.35),
+      0 10px 40px -10px hsl(var(--accent) / 0.2);
+  }
+
+  /* Slow drift animation for aurora */
+  .animate-aurora {
+    animation: aurora-drift 18s ease-in-out infinite alternate;
+  }
+
+  /* Editorial rule / hairline separator */
+  .hairline {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, hsl(var(--border)) 20%, hsl(var(--border)) 80%, transparent);
+  }
+}
+
+@keyframes aurora-drift {
+  0%   { transform: translate3d(0, 0, 0) scale(1); }
+  50%  { transform: translate3d(-2%, 1%, 0) scale(1.05); }
+  100% { transform: translate3d(2%, -1%, 0) scale(1.02); }
+}
+
+/* Selection styled to brand */
+::selection {
+  background: hsl(var(--primary) / 0.25);
+  color: hsl(var(--foreground));
+}
+
+/* Smooth section scroll */
+html { scroll-behavior: smooth; }
+
