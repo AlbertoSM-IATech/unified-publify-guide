@@ -25,10 +25,15 @@ export const Hero = () => {
 
   return (
     <section
-      className="relative flex flex-col items-center px-4 pt-28 pb-20 md:pt-36 md:pb-28 overflow-hidden"
+      className="relative flex flex-col items-center px-4 pt-28 pb-20 md:pt-36 md:pb-28 overflow-hidden grain"
       style={sans}
     >
-      <div className="mx-auto w-[92%] max-w-7xl">
+      {/* Aurora background layers */}
+      <div className="pointer-events-none absolute inset-0 bg-aurora animate-aurora" aria-hidden />
+      <div className="pointer-events-none absolute inset-0 bg-grid-editorial opacity-40" aria-hidden />
+
+      <div className="relative mx-auto w-[92%] max-w-7xl">
+
         <motion.div
           initial="hidden"
           animate="visible"
