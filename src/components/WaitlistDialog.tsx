@@ -185,6 +185,32 @@ export const WaitlistDialog = ({ open, onOpenChange, source }: WaitlistDialogPro
                     </div>
                   </div>
 
+
+                  <div className="flex items-start gap-2.5 pt-1">
+                    <Checkbox
+                      id="wl-consent"
+                      checked={consent}
+                      onCheckedChange={(v) => setConsent(v === true)}
+                      className="mt-0.5"
+                    />
+                    <Label
+                      htmlFor="wl-consent"
+                      className="text-[11px] leading-relaxed text-muted-foreground font-normal cursor-pointer select-none"
+                    >
+                      Acepto que Publify guarde mi email para avisarme cuando reabra el
+                      registro. He leído la{" "}
+                      <Link
+                        to="/privacidad"
+                        target="_blank"
+                        className="text-primary underline underline-offset-2 hover:text-primary/80"
+                      >
+                        política de privacidad
+                      </Link>
+                      . Puedo darme de baja escribiendo a{" "}
+                      <span className="text-foreground/80">hola@publify.io</span>.
+                    </Label>
+                  </div>
+
                   {errorMsg && (
                     <div className="flex items-start gap-2 text-xs text-destructive bg-destructive/10 border border-destructive/20 rounded-md p-2.5">
                       <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
@@ -195,8 +221,8 @@ export const WaitlistDialog = ({ open, onOpenChange, source }: WaitlistDialogPro
                   <Button
                     type="submit"
                     size="lg"
-                    disabled={status === "loading"}
-                    className="w-full h-12 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-lg shadow-primary/25 group"
+                    disabled={status === "loading" || !consent}
+                    className="w-full h-12 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-lg shadow-primary/25 group disabled:opacity-50"
                   >
                     {status === "loading" ? (
                       <>
@@ -210,10 +236,6 @@ export const WaitlistDialog = ({ open, onOpenChange, source }: WaitlistDialogPro
                       </>
                     )}
                   </Button>
-
-                  <p className="text-[11px] text-muted-foreground text-center leading-relaxed">
-                    Sin spam. Solo un aviso cuando abramos plazas.
-                  </p>
                 </motion.form>
               ) : (
                 <motion.div
