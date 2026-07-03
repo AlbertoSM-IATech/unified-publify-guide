@@ -98,24 +98,25 @@ export const Hero = () => {
             {/* Process index */}
             <motion.div
               variants={fadeInUp}
-              className="grid grid-cols-4 gap-4 pt-10 border-t border-border/60"
+              className="grid grid-cols-4 gap-2 sm:gap-4 pt-8 sm:pt-10 border-t border-border/60"
             >
               {steps.map((step, i) => (
-                <div key={step} className="space-y-1.5">
+                <div key={step} className="space-y-1 sm:space-y-1.5">
                   <span
-                    className={`block text-sm font-bold ${
+                    className={`block text-xs sm:text-sm font-bold ${
                       i === 0 ? "text-primary not-italic" : "text-foreground/40 italic"
                     }`}
                     style={i === 0 ? sans : serif}
                   >
                     {String(i + 1).padStart(2, "0")}
                   </span>
-                  <span className="block text-[10px] uppercase tracking-[0.15em] text-muted-foreground">
+                  <span className="block text-[9px] sm:text-[10px] uppercase tracking-[0.12em] sm:tracking-[0.15em] text-muted-foreground">
                     {step}
                   </span>
                 </div>
               ))}
             </motion.div>
+
           </div>
 
           {/* Product Preview */}
