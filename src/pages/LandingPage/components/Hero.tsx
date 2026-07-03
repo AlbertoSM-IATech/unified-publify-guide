@@ -25,30 +25,31 @@ export const Hero = () => {
 
   return (
     <section
-      className="relative flex flex-col items-center px-4 pt-28 pb-20 md:pt-36 md:pb-28 overflow-hidden grain"
+      className="relative flex flex-col items-center px-4 sm:px-6 pt-24 pb-16 sm:pt-28 sm:pb-20 md:pt-36 md:pb-28 overflow-hidden grain"
       style={sans}
     >
       {/* Aurora background layers */}
       <div className="pointer-events-none absolute inset-0 bg-aurora animate-aurora" aria-hidden />
-      <div className="pointer-events-none absolute inset-0 bg-grid-editorial opacity-40" aria-hidden />
+      <div className="pointer-events-none absolute inset-0 bg-grid-editorial opacity-30 sm:opacity-40" aria-hidden />
 
-      <div className="relative mx-auto w-[92%] max-w-7xl">
+      <div className="relative mx-auto w-full max-w-7xl">
 
         <motion.div
           initial="hidden"
           animate="visible"
           variants={stagger}
-          className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center"
+          className="grid grid-cols-1 lg:grid-cols-12 gap-10 sm:gap-12 lg:gap-16 items-center"
         >
           {/* Editorial Content */}
-          <div className="lg:col-span-7 space-y-8 text-left">
+          <div className="lg:col-span-7 space-y-6 sm:space-y-8 text-left">
             {/* Kicker / masthead */}
-            <motion.div variants={fadeInUp} className="flex items-center gap-4">
-              <span className="h-px w-12 bg-primary" />
-              <span className="text-primary uppercase tracking-[0.2em] text-[11px] font-semibold">
+            <motion.div variants={fadeInUp} className="flex items-center gap-3 sm:gap-4 animate-kicker-in">
+              <span className="h-px w-8 sm:w-12 bg-primary" />
+              <span className="text-primary uppercase tracking-[0.2em] text-[10px] sm:text-[11px] font-semibold">
                 Edición 2026 · Lista de espera abierta
               </span>
             </motion.div>
+
 
             {/* Headline serif */}
             <motion.h1
