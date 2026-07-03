@@ -56,7 +56,7 @@ export const Hero = () => {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
-              className="text-foreground text-4xl md:text-6xl lg:text-7xl leading-[1.05] tracking-tight"
+              className="text-foreground text-[2rem] xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.08] md:leading-[1.05] tracking-tight"
               style={serif}
             >
               Gestiona tu negocio en Amazon KDP como una{" "}
@@ -66,7 +66,7 @@ export const Hero = () => {
             {/* Subline */}
             <motion.p
               variants={fadeInUp}
-              className="text-lg md:text-xl lg:text-2xl text-muted-foreground max-w-xl leading-relaxed font-light"
+              className="text-base sm:text-lg md:text-xl lg:text-2xl text-muted-foreground max-w-xl leading-relaxed font-light"
               style={sans}
             >
               Sin parches, sin improvisación. El primer Sistema Operativo Editorial diseñado para
@@ -75,11 +75,11 @@ export const Hero = () => {
 
             {/* CTA */}
             <motion.div variants={fadeInUp} className="flex flex-col gap-3 pt-2">
-              <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="w-fit">
+              <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="w-full sm:w-fit">
                 <Button
                   onClick={openDialog}
                   size="lg"
-                  className="h-12 px-7 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-sm shadow-lg shadow-primary/25 group"
+                  className="btn-shine w-full sm:w-auto h-12 sm:h-12 px-6 sm:px-7 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-sm shadow-lg shadow-primary/25 group"
                 >
                   Únete a la lista de espera
                   <ArrowRight
@@ -88,11 +88,12 @@ export const Hero = () => {
                   />
                 </Button>
               </motion.div>
-              <p className="text-[11px] text-muted-foreground uppercase tracking-widest">
+              <p className="text-[10px] sm:text-[11px] text-muted-foreground uppercase tracking-widest">
                 Acceso cerrado temporalmente · Te avisamos cuando volvamos a abrir
               </p>
               <WaitlistDialog open={open} onOpenChange={setOpen} source="hero" />
             </motion.div>
+
 
             {/* Process index */}
             <motion.div
