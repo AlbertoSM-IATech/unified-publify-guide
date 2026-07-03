@@ -59,6 +59,7 @@ export const WaitlistDialog = ({ open, onOpenChange, source }: WaitlistDialogPro
   const [email, setEmail] = useState("");
   const [consent, setConsent] = useState(false);
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [alreadyIn, setAlreadyIn] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -68,7 +69,7 @@ export const WaitlistDialog = ({ open, onOpenChange, source }: WaitlistDialogPro
     const parsed = waitlistSchema.safeParse({ name, email, consent });
     if (!parsed.success) {
       const first = Object.values(parsed.error.flatten().fieldErrors).flat()[0];
-      setErrorMsg(first ?? "Revisa los datos.");
+      setErrorMsg(first ?? "Revisa los datos del formulario.");
       return;
     }
 
@@ -92,16 +93,29 @@ export const WaitlistDialog = ({ open, onOpenChange, source }: WaitlistDialogPro
     if (error) {
       // Unique violation → already registered
       if (error.code === "23505") {
+        setAlreadyIn(true);
         setStatus("success");
+        toast.success("Ya estabas en la lista", {
+          description: "Te avisaremos en cuanto reabra el acceso.",
+        });
         return;
       }
       console.error("[waitlist] insert error", error);
       setStatus("error");
-      setErrorMsg("No hemos podido guardarte. Inténtalo de nuevo en unos segundos.");
+      setErrorMsg(
+        "No hemos podido guardar tu email. Revisa tu conexión e inténtalo de nuevo en unos segundos.",
+      );
+      toast.error("No se pudo guardar tu email", {
+        description: "Inténtalo de nuevo en unos segundos.",
+      });
       return;
     }
 
+    setAlreadyIn(false);
     setStatus("success");
+    toast.success("Estás dentro de la lista de espera", {
+      description: "Te avisaremos por email cuando reabra el acceso.",
+    });
   };
 
   const reset = () => {
@@ -109,8 +123,10 @@ export const WaitlistDialog = ({ open, onOpenChange, source }: WaitlistDialogPro
     setEmail("");
     setConsent(false);
     setStatus("idle");
+    setAlreadyIn(false);
     setErrorMsg(null);
   };
+
 
   return (
     <Dialog
