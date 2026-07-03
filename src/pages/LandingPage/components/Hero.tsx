@@ -25,37 +25,38 @@ export const Hero = () => {
 
   return (
     <section
-      className="relative flex flex-col items-center px-4 pt-28 pb-20 md:pt-36 md:pb-28 overflow-hidden grain"
+      className="relative flex flex-col items-center px-4 sm:px-6 pt-24 pb-16 sm:pt-28 sm:pb-20 md:pt-36 md:pb-28 overflow-hidden grain"
       style={sans}
     >
       {/* Aurora background layers */}
       <div className="pointer-events-none absolute inset-0 bg-aurora animate-aurora" aria-hidden />
-      <div className="pointer-events-none absolute inset-0 bg-grid-editorial opacity-40" aria-hidden />
+      <div className="pointer-events-none absolute inset-0 bg-grid-editorial opacity-30 sm:opacity-40" aria-hidden />
 
-      <div className="relative mx-auto w-[92%] max-w-7xl">
+      <div className="relative mx-auto w-full max-w-7xl">
 
         <motion.div
           initial="hidden"
           animate="visible"
           variants={stagger}
-          className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center"
+          className="grid grid-cols-1 lg:grid-cols-12 gap-10 sm:gap-12 lg:gap-16 items-center"
         >
           {/* Editorial Content */}
-          <div className="lg:col-span-7 space-y-8 text-left">
+          <div className="lg:col-span-7 space-y-6 sm:space-y-8 text-left">
             {/* Kicker / masthead */}
-            <motion.div variants={fadeInUp} className="flex items-center gap-4">
-              <span className="h-px w-12 bg-primary" />
-              <span className="text-primary uppercase tracking-[0.2em] text-[11px] font-semibold">
+            <motion.div variants={fadeInUp} className="flex items-center gap-3 sm:gap-4 animate-kicker-in">
+              <span className="h-px w-8 sm:w-12 bg-primary" />
+              <span className="text-primary uppercase tracking-[0.2em] text-[10px] sm:text-[11px] font-semibold">
                 Edición 2026 · Lista de espera abierta
               </span>
             </motion.div>
+
 
             {/* Headline serif */}
             <motion.h1
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
-              className="text-foreground text-4xl md:text-6xl lg:text-7xl leading-[1.05] tracking-tight"
+              className="text-foreground text-[2rem] xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.08] md:leading-[1.05] tracking-tight"
               style={serif}
             >
               Gestiona tu negocio en Amazon KDP como una{" "}
@@ -65,7 +66,7 @@ export const Hero = () => {
             {/* Subline */}
             <motion.p
               variants={fadeInUp}
-              className="text-lg md:text-xl lg:text-2xl text-muted-foreground max-w-xl leading-relaxed font-light"
+              className="text-base sm:text-lg md:text-xl lg:text-2xl text-muted-foreground max-w-xl leading-relaxed font-light"
               style={sans}
             >
               Sin parches, sin improvisación. El primer Sistema Operativo Editorial diseñado para
@@ -74,11 +75,11 @@ export const Hero = () => {
 
             {/* CTA */}
             <motion.div variants={fadeInUp} className="flex flex-col gap-3 pt-2">
-              <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="w-fit">
+              <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="w-full sm:w-fit">
                 <Button
                   onClick={openDialog}
                   size="lg"
-                  className="h-12 px-7 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-sm shadow-lg shadow-primary/25 group"
+                  className="btn-shine w-full sm:w-auto h-12 sm:h-12 px-6 sm:px-7 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-sm shadow-lg shadow-primary/25 group"
                 >
                   Únete a la lista de espera
                   <ArrowRight
@@ -87,33 +88,35 @@ export const Hero = () => {
                   />
                 </Button>
               </motion.div>
-              <p className="text-[11px] text-muted-foreground uppercase tracking-widest">
+              <p className="text-[10px] sm:text-[11px] text-muted-foreground uppercase tracking-widest">
                 Acceso cerrado temporalmente · Te avisamos cuando volvamos a abrir
               </p>
               <WaitlistDialog open={open} onOpenChange={setOpen} source="hero" />
             </motion.div>
 
+
             {/* Process index */}
             <motion.div
               variants={fadeInUp}
-              className="grid grid-cols-4 gap-4 pt-10 border-t border-border/60"
+              className="grid grid-cols-4 gap-2 sm:gap-4 pt-8 sm:pt-10 border-t border-border/60"
             >
               {steps.map((step, i) => (
-                <div key={step} className="space-y-1.5">
+                <div key={step} className="space-y-1 sm:space-y-1.5">
                   <span
-                    className={`block text-sm font-bold ${
+                    className={`block text-xs sm:text-sm font-bold ${
                       i === 0 ? "text-primary not-italic" : "text-foreground/40 italic"
                     }`}
                     style={i === 0 ? sans : serif}
                   >
                     {String(i + 1).padStart(2, "0")}
                   </span>
-                  <span className="block text-[10px] uppercase tracking-[0.15em] text-muted-foreground">
+                  <span className="block text-[9px] sm:text-[10px] uppercase tracking-[0.12em] sm:tracking-[0.15em] text-muted-foreground">
                     {step}
                   </span>
                 </div>
               ))}
             </motion.div>
+
           </div>
 
           {/* Product Preview */}

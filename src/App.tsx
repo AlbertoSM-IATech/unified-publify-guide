@@ -21,6 +21,8 @@ import { Perfil } from "@/pages/Perfil/Perfil";
 import { NotFound } from "@/pages/NotFound";
 import { useTheme } from "@/hooks/useTheme";
 import { Toaster } from "@/components/ui/toaster";
+import { Toaster as SonnerToaster } from "@/components/ui/sonner";
+
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import { ErrorState } from "@/components/common/ErrorState";
 import { Suspense } from "react";
@@ -70,6 +72,8 @@ function App() {
   return (
     <div className={clsx("relative min-h-screen", isDark && "dark-theme")}>
       <Toaster />
+      <SonnerToaster />
+
       
       <Routes>
         <Route path="/" element={<LandingPage />} />

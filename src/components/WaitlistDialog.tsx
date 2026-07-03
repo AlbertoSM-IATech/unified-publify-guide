@@ -14,7 +14,9 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Link } from "react-router-dom";
+import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
+
 
 const CONSENT_VERSION = "2026-07-v1";
 
@@ -57,6 +59,7 @@ export const WaitlistDialog = ({ open, onOpenChange, source }: WaitlistDialogPro
   const [email, setEmail] = useState("");
   const [consent, setConsent] = useState(false);
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [alreadyIn, setAlreadyIn] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -66,7 +69,7 @@ export const WaitlistDialog = ({ open, onOpenChange, source }: WaitlistDialogPro
     const parsed = waitlistSchema.safeParse({ name, email, consent });
     if (!parsed.success) {
       const first = Object.values(parsed.error.flatten().fieldErrors).flat()[0];
-      setErrorMsg(first ?? "Revisa los datos.");
+      setErrorMsg(first ?? "Revisa los datos del formulario.");
       return;
     }
 
@@ -90,16 +93,29 @@ export const WaitlistDialog = ({ open, onOpenChange, source }: WaitlistDialogPro
     if (error) {
       // Unique violation → already registered
       if (error.code === "23505") {
+        setAlreadyIn(true);
         setStatus("success");
+        toast.success("Ya estabas en la lista", {
+          description: "Te avisaremos en cuanto reabra el acceso.",
+        });
         return;
       }
       console.error("[waitlist] insert error", error);
       setStatus("error");
-      setErrorMsg("No hemos podido guardarte. Inténtalo de nuevo en unos segundos.");
+      setErrorMsg(
+        "No hemos podido guardar tu email. Revisa tu conexión e inténtalo de nuevo en unos segundos.",
+      );
+      toast.error("No se pudo guardar tu email", {
+        description: "Inténtalo de nuevo en unos segundos.",
+      });
       return;
     }
 
+    setAlreadyIn(false);
     setStatus("success");
+    toast.success("Estás dentro de la lista de espera", {
+      description: "Te avisaremos por email cuando reabra el acceso.",
+    });
   };
 
   const reset = () => {
@@ -107,8 +123,10 @@ export const WaitlistDialog = ({ open, onOpenChange, source }: WaitlistDialogPro
     setEmail("");
     setConsent(false);
     setStatus("idle");
+    setAlreadyIn(false);
     setErrorMsg(null);
   };
+
 
   return (
     <Dialog
@@ -222,12 +240,13 @@ export const WaitlistDialog = ({ open, onOpenChange, source }: WaitlistDialogPro
                     type="submit"
                     size="lg"
                     disabled={status === "loading" || !consent}
-                    className="w-full h-12 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-lg shadow-primary/25 group disabled:opacity-50"
+                    aria-busy={status === "loading"}
+                    className="btn-shine w-full h-12 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-lg shadow-primary/25 group disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {status === "loading" ? (
                       <>
                         <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                        Guardando…
+                        Guardando tu email…
                       </>
                     ) : (
                       <>
@@ -250,16 +269,16 @@ export const WaitlistDialog = ({ open, onOpenChange, source }: WaitlistDialogPro
                     <CheckCircle2 className="w-7 h-7 text-primary" />
                   </div>
                   <div className="space-y-1.5">
-                    <h3 className="font-heading text-xl font-bold">Estás dentro de la lista</h3>
-                    <p className="text-sm text-muted-foreground max-w-xs mx-auto">
-                      Te escribiremos al email en cuanto vuelvan a abrirse plazas de acceso a Publify.
+                    <h3 className="font-heading text-xl font-bold">
+                      {alreadyIn ? "Ya estabas en la lista" : "Estás dentro de la lista"}
+                    </h3>
+                    <p className="text-sm text-muted-foreground max-w-xs mx-auto leading-relaxed">
+                      {alreadyIn
+                        ? "Tu email ya estaba registrado. Te avisaremos en cuanto reabramos el acceso a Publify."
+                        : "Te escribiremos al email en cuanto vuelvan a abrirse plazas de acceso a Publify."}
                     </p>
                   </div>
-                  <Button
-                    variant="outline"
-                    onClick={() => onOpenChange(false)}
-                    className="mt-2"
-                  >
+                  <Button variant="outline" onClick={() => onOpenChange(false)} className="mt-2">
                     Cerrar
                   </Button>
                 </motion.div>
@@ -271,6 +290,7 @@ export const WaitlistDialog = ({ open, onOpenChange, source }: WaitlistDialogPro
     </Dialog>
   );
 };
+
 
 /** Hook helper to manage dialog state */
 export const useWaitlistDialog = () => {

@@ -84,10 +84,11 @@ export const Header = () => {
           <Button
             onClick={() => scrollToSection("waitlist")}
             size="sm"
-            className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
+            className="btn-shine bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
           >
             Únete a la lista
           </Button>
+
         </div>
         
         <button className="rounded-md p-2 md:hidden" onClick={() => setMenuOpen(!menuOpen)}>
@@ -120,11 +121,12 @@ export const Header = () => {
             <div className="pt-2">
               <Button
                 onClick={() => scrollToSection("waitlist")}
-                className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
+                className="btn-shine w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
               >
                 Únete a la lista de espera
               </Button>
             </div>
+
           </nav>
         </div>
       )}
