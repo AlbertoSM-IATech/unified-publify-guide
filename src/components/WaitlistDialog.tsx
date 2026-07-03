@@ -240,12 +240,13 @@ export const WaitlistDialog = ({ open, onOpenChange, source }: WaitlistDialogPro
                     type="submit"
                     size="lg"
                     disabled={status === "loading" || !consent}
-                    className="w-full h-12 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-lg shadow-primary/25 group disabled:opacity-50"
+                    aria-busy={status === "loading"}
+                    className="btn-shine w-full h-12 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-lg shadow-primary/25 group disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {status === "loading" ? (
                       <>
                         <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                        Guardando…
+                        Guardando tu email…
                       </>
                     ) : (
                       <>
@@ -268,16 +269,16 @@ export const WaitlistDialog = ({ open, onOpenChange, source }: WaitlistDialogPro
                     <CheckCircle2 className="w-7 h-7 text-primary" />
                   </div>
                   <div className="space-y-1.5">
-                    <h3 className="font-heading text-xl font-bold">Estás dentro de la lista</h3>
-                    <p className="text-sm text-muted-foreground max-w-xs mx-auto">
-                      Te escribiremos al email en cuanto vuelvan a abrirse plazas de acceso a Publify.
+                    <h3 className="font-heading text-xl font-bold">
+                      {alreadyIn ? "Ya estabas en la lista" : "Estás dentro de la lista"}
+                    </h3>
+                    <p className="text-sm text-muted-foreground max-w-xs mx-auto leading-relaxed">
+                      {alreadyIn
+                        ? "Tu email ya estaba registrado. Te avisaremos en cuanto reabramos el acceso a Publify."
+                        : "Te escribiremos al email en cuanto vuelvan a abrirse plazas de acceso a Publify."}
                     </p>
                   </div>
-                  <Button
-                    variant="outline"
-                    onClick={() => onOpenChange(false)}
-                    className="mt-2"
-                  >
+                  <Button variant="outline" onClick={() => onOpenChange(false)} className="mt-2">
                     Cerrar
                   </Button>
                 </motion.div>
@@ -289,6 +290,7 @@ export const WaitlistDialog = ({ open, onOpenChange, source }: WaitlistDialogPro
     </Dialog>
   );
 };
+
 
 /** Hook helper to manage dialog state */
 export const useWaitlistDialog = () => {
