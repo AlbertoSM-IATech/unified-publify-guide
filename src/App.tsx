@@ -72,6 +72,8 @@ function App() {
   return (
     <div className={clsx("relative min-h-screen", isDark && "dark-theme")}>
       <Toaster />
+      <SonnerToaster />
+
       
       <Routes>
         <Route path="/" element={<LandingPage />} />
