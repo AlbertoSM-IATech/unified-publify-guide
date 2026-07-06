@@ -25,8 +25,8 @@ export const EarlyAdoptersSection = () => {
           viewport={{ once: true }}
           className="space-y-6"
         >
-          <div className="inline-flex items-center gap-2 border px-4 py-2 rounded-full text-sm font-medium bg-primary/10 border-primary/20 text-primary">
-            <Sparkles size={16} />
+          <div className="inline-flex items-center gap-2 border px-4 py-2 rounded-full text-sm font-medium bg-primary/10 border-primary/20 text-primary animate-kicker-in">
+            <Sparkles size={16} className="animate-float-slow" />
             Lista de espera abierta
           </div>
           <h2 className="font-heading text-3xl font-bold text-primary md:text-5xl">
