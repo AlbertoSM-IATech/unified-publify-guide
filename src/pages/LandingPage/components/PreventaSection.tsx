@@ -239,7 +239,7 @@ export const PreventaSection = () => {
                 <Button
                   onClick={openDialog}
                   size="lg"
-                  className="w-full font-bold text-base py-5 rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg shadow-primary/20"
+                  className="btn-shine w-full font-bold text-base py-5 rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg shadow-primary/20"
                 >
                   Apuntarme a la lista de espera
                   <ArrowRight className="ml-2" size={20} />

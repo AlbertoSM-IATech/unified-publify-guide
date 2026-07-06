@@ -30,7 +30,7 @@ export const StickyMobileCTA = () => {
           >
             <Button
               onClick={openDialog}
-              className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-3 text-sm"
+              className="btn-shine w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-3 text-sm"
             >
               Únete a la lista de espera
               <ArrowRight className="ml-2" size={16} />

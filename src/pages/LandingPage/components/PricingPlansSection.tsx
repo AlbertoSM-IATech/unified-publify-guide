@@ -192,7 +192,7 @@ export const PricingPlansSection = () => {
                     plan.disabled
                       ? "bg-muted text-muted-foreground cursor-not-allowed"
                       : plan.highlighted
-                      ? "bg-primary hover:bg-primary/90 text-primary-foreground shadow-md shadow-primary/20"
+                      ? "btn-shine bg-primary hover:bg-primary/90 text-primary-foreground shadow-md shadow-primary/20"
                       : "bg-card border border-primary/30 text-primary hover:bg-primary/10"
                   }`}
                   variant={plan.highlighted && !plan.disabled ? "default" : "outline"}

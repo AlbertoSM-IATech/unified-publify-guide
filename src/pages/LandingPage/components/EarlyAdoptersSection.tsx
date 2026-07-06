@@ -25,8 +25,8 @@ export const EarlyAdoptersSection = () => {
           viewport={{ once: true }}
           className="space-y-6"
         >
-          <div className="inline-flex items-center gap-2 border px-4 py-2 rounded-full text-sm font-medium bg-primary/10 border-primary/20 text-primary">
-            <Sparkles size={16} />
+          <div className="inline-flex items-center gap-2 border px-4 py-2 rounded-full text-sm font-medium bg-primary/10 border-primary/20 text-primary animate-kicker-in">
+            <Sparkles size={16} className="animate-float-slow" />
             Lista de espera abierta
           </div>
           <h2 className="font-heading text-3xl font-bold text-primary md:text-5xl">
@@ -43,7 +43,7 @@ export const EarlyAdoptersSection = () => {
           </div>
 
           <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }} className="inline-block pt-4">
-            <Button onClick={scrollToWaitlist} size="lg" className="text-base px-8 py-5 bg-primary hover:bg-primary/90 text-primary-foreground font-bold shadow-lg shadow-primary/25">
+            <Button onClick={scrollToWaitlist} size="lg" className="btn-shine text-base px-8 py-5 bg-primary hover:bg-primary/90 text-primary-foreground font-bold shadow-lg shadow-primary/25">
               Únete a la lista de espera
               <ArrowRight className="ml-2" size={18} />
             </Button>
