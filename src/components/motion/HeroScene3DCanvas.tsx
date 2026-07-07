@@ -76,25 +76,11 @@ const GlassPrism = () => {
 };
 
 const Scene = () => {
-  const books = useMemo(
-    () => [
-      { pos: [-2.2, 0.9, 0.2] as [number, number, number], rot: [0.1, 0.4, -0.15] as [number, number, number], color: "#1E3A8A", size: [1.1, 1.5, 0.12] as [number, number, number], speed: 0.6 },
-      { pos: [2.3, -0.5, -0.4] as [number, number, number], rot: [-0.15, -0.5, 0.2] as [number, number, number], color: "#0F172A", size: [1.2, 1.6, 0.14] as [number, number, number], speed: 0.5 },
-      { pos: [-1.8, -1.4, 0.8] as [number, number, number], rot: [0.2, -0.3, 0.1] as [number, number, number], color: "#FF6A1A", size: [0.9, 1.3, 0.1] as [number, number, number], speed: 0.7 },
-      { pos: [1.9, 1.6, 0.5] as [number, number, number], rot: [-0.1, 0.6, -0.2] as [number, number, number], color: "#1E293B", size: [1.0, 1.4, 0.12] as [number, number, number], speed: 0.55 },
-    ],
-    []
-  );
-
   return (
     <>
       <ambientLight intensity={0.7} />
       <directionalLight position={[5, 5, 5]} intensity={0.9} color="#ffffff" />
-
       <GlassPrism />
-      {books.map((b, i) => (
-        <Book key={i} position={b.pos} rotation={b.rot} color={b.color} size={b.size} speed={b.speed} />
-      ))}
     </>
   );
 };
