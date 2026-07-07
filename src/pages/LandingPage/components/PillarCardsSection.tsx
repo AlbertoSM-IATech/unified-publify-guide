@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { FolderArchive, Lightbulb, ListChecks, TrendingUp } from "lucide-react";
 import { EditorialSectionHeader } from "./EditorialSectionHeader";
+import { useTilt } from "@/hooks/useTilt";
 
 const pillars = [
   {
