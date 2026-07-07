@@ -43,31 +43,51 @@ export const PillarCardsSection = () => {
 
         <div className="grid md:grid-cols-2 gap-0 border-t border-l border-border/60">
           {pillars.map((item, i) => (
-            <motion.article
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-40px" }}
-              transition={{ delay: i * 0.08, duration: 0.6 }}
-              className="group relative p-8 md:p-10 border-r border-b border-border/60 bg-card/40 hover:bg-card transition-colors"
-            >
-              <div className="flex items-baseline gap-4 mb-6">
-                <span className="font-heading italic text-primary text-2xl leading-none">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <span className="h-px flex-1 bg-border" />
-                <item.icon className="w-5 h-5 text-primary opacity-70 group-hover:opacity-100 transition-opacity" />
-              </div>
-              <h3 className="font-heading text-2xl md:text-3xl leading-tight text-foreground mb-4">
-                {item.title}
-              </h3>
-              <p className="text-sm md:text-base text-muted-foreground leading-relaxed font-light max-w-prose">
-                {item.desc}
-              </p>
-            </motion.article>
+            <PillarCard key={i} item={item} index={i} />
           ))}
         </div>
       </div>
     </section>
+  );
+};
+
+const PillarCard = ({ item, index }: { item: typeof pillars[number]; index: number }) => {
+  const { ref, style } = useTilt<HTMLDivElement>({ max: 4, scale: 1.005 });
+  return (
+    <motion.article
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ delay: index * 0.08, duration: 0.6 }}
+      className="group relative border-r border-b border-border/60"
+    >
+      <div
+        ref={ref}
+        style={style}
+        className="relative p-8 md:p-10 bg-card/40 hover:bg-card transition-colors overflow-hidden h-full"
+      >
+        <span
+          aria-hidden
+          className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+          style={{
+            background:
+              "radial-gradient(500px circle at 50% 0%, hsl(var(--primary) / 0.10), transparent 60%)",
+          }}
+        />
+        <div className="flex items-baseline gap-4 mb-6 relative">
+          <span className="font-heading italic text-primary text-2xl leading-none">
+            {String(index + 1).padStart(2, "0")}
+          </span>
+          <span className="h-px flex-1 bg-border" />
+          <item.icon className="w-5 h-5 text-primary opacity-70 group-hover:opacity-100 transition-opacity" />
+        </div>
+        <h3 className="font-heading text-2xl md:text-3xl leading-tight text-foreground mb-4 relative">
+          {item.title}
+        </h3>
+        <p className="text-sm md:text-base text-muted-foreground leading-relaxed font-light max-w-prose relative">
+          {item.desc}
+        </p>
+      </div>
+    </motion.article>
   );
 };
