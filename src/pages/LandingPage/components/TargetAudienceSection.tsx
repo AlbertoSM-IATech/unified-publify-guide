@@ -42,15 +42,26 @@ export const TargetAudienceSection = () => {
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="p-8 rounded-xl border border-accent/20 bg-accent/5">
-            
-            <h3 className="font-heading text-lg font-bold mb-6 text-accent">Publify Es para ti si…</h3>
-            <ul className="space-y-4">
+            className="p-8 rounded-xl border border-accent/20 bg-accent/5 relative overflow-hidden group">
+
+            <div
+              aria-hidden
+              className="pointer-events-none absolute -top-16 -right-16 w-56 h-56 rounded-full blur-3xl opacity-40 group-hover:opacity-70 transition-opacity duration-700"
+              style={{ background: "radial-gradient(circle, hsl(var(--accent) / 0.25), transparent 70%)" }}
+            />
+            <h3 className="font-heading text-lg font-bold mb-6 text-accent relative">Publify Es para ti si…</h3>
+            <ul className="space-y-4 relative">
               {isFor.map((item, i) =>
-              <li key={i} className="flex items-start gap-3">
-                  <Check className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
+              <motion.li
+                key={i}
+                initial={{ opacity: 0, x: -10 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.1 + i * 0.08, duration: 0.5 }}
+                className="flex items-start gap-3">
+                  <Check className="w-5 h-5 text-accent flex-shrink-0 mt-0.5 animate-float-slow" style={{ animationDelay: `${i * 0.3}s` }} />
                   <span className="text-foreground">{item}</span>
-                </li>
+                </motion.li>
               )}
             </ul>
           </motion.div>
@@ -60,15 +71,21 @@ export const TargetAudienceSection = () => {
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="p-8 rounded-xl border border-border bg-card">
-            
+            className="p-8 rounded-xl border border-border bg-card relative overflow-hidden">
+
             <h3 className="font-heading text-lg font-bold mb-6 text-destructive">No es para ti si…</h3>
             <ul className="space-y-4">
               {isNotFor.map((item, i) =>
-              <li key={i} className="flex items-start gap-3">
+              <motion.li
+                key={i}
+                initial={{ opacity: 0, x: 10 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.1 + i * 0.08, duration: 0.5 }}
+                className="flex items-start gap-3">
                   <X className="w-5 h-5 text-muted-foreground flex-shrink-0 mt-0.5" />
                   <span className="text-muted-foreground">{item}</span>
-                </li>
+                </motion.li>
               )}
             </ul>
           </motion.div>
