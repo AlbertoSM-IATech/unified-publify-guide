@@ -9,16 +9,26 @@ export const FinalCtaSection = () => {
   return (
     <section className="py-24 bg-muted dark:bg-secondary/40 border-y border-border/50 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-br from-primary/15 via-transparent to-primary/10 dark:from-primary/15 dark:to-primary/10 pointer-events-none" />
-      <div className="container mx-auto px-4 max-w-3xl text-center">
+
+      {/* Orbital rings backdrop */}
+      <div aria-hidden className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[540px] h-[540px] max-w-[90vw] max-h-[90vw] border border-primary/15 rounded-full animate-[spin_50s_linear_infinite]" />
+      <div aria-hidden className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[720px] h-[720px] max-w-[110vw] max-h-[110vw] border border-accent/10 rounded-full animate-[spin_80s_linear_infinite_reverse]" />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[380px] h-[380px] rounded-full blur-3xl opacity-40"
+        style={{ background: "radial-gradient(circle, hsl(var(--primary) / 0.35), transparent 70%)" }}
+      />
+
+      <div className="container mx-auto px-4 max-w-3xl text-center relative">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}>
-          
+
           <h2 className="font-heading text-3xl md:text-5xl font-bold mb-8 text-primary">
             Tu editorial merece un sistema. No más parches.
           </h2>
-          
+
           <div className="text-lg md:text-xl text-muted-foreground space-y-4 mb-10 max-w-2xl mx-auto text-left md:text-center leading-relaxed">
             <p>Empezaste en KDP para tener libertad.</p>
             <p>No para perder horas entre Excel, Notion y KDP Reports sin saber si tu negocio es rentable.</p>

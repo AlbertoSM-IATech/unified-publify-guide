@@ -42,7 +42,7 @@ export const Header = () => {
     : promo.tiers[promo.activeTierIndex]?.tier.price ?? "15";
 
   return (
-    <header className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrolled ? "bg-background/90 backdrop-blur-lg shadow-sm border-b border-border dark:bg-background/90" : "bg-foreground/5 backdrop-blur-sm dark:bg-transparent"}`}>
+    <header className={`fixed top-0 w-full z-50 transition-all duration-500 ${scrolled ? "bg-background/90 backdrop-blur-lg shadow-[0_8px_30px_-12px_hsl(var(--primary)/0.15)] border-b border-border dark:bg-background/90" : "bg-foreground/5 backdrop-blur-sm dark:bg-transparent"}`}>
       <div className="mx-auto flex w-full items-center justify-between px-4 py-3 md:px-8">
         <Link to="/" className="flex items-center">
           <img 
@@ -55,7 +55,7 @@ export const Header = () => {
         <nav className="hidden md:flex items-center gap-6">
           {navLinks.map((link) =>
             (link as any).isRoute ? (
-              <Link key={link.href} to={link.href} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              <Link key={link.href} to={link.href} className="text-sm text-muted-foreground hover:text-foreground transition-colors story-link">
                 {link.label}
               </Link>
             ) : (
@@ -63,7 +63,7 @@ export const Header = () => {
                 key={link.href}
                 href={link.href}
                 onClick={(e) => { e.preventDefault(); handleNavClick(link.href); }}
-                className={link.label === "Acceso Founders" ? "text-sm transition-colors text-accent font-semibold" : "text-sm text-muted-foreground hover:text-foreground transition-colors"}
+                className={link.label === "Acceso Founders" ? "text-sm transition-colors text-accent font-semibold story-link" : "text-sm text-muted-foreground hover:text-foreground transition-colors story-link"}
               >
                 {link.label}
               </a>
