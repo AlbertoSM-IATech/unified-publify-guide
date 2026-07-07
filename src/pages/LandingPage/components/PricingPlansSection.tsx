@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 import { WaitlistDialog, useWaitlistDialog } from "@/components/WaitlistDialog";
 import { getPromotionState, type PromotionState } from "../utils/pricingTiers";
+import { useTilt } from "@/hooks/useTilt";
 
 interface Plan {
   id: "starter" | "plus" | "pro";
