@@ -30,7 +30,7 @@ const Book = ({
     <Float speed={speed} rotationIntensity={0.15} floatIntensity={0.6}>
       <group ref={ref} position={position} rotation={rotation}>
         {/* Cover */}
-        <mesh castShadow>
+        <mesh>
           <boxGeometry args={size} />
           <meshStandardMaterial
             color={color}
@@ -61,16 +61,14 @@ const GlassPrism = () => {
     <Float speed={0.6} floatIntensity={1.2} rotationIntensity={0.3}>
       <mesh ref={ref} position={[0, 0, -1]}>
         <icosahedronGeometry args={[1.1, 0]} />
-        <MeshTransmissionMaterial
-          thickness={0.6}
-          roughness={0.15}
-          transmission={1}
-          ior={1.4}
-          chromaticAberration={0.06}
-          backside
+        <meshStandardMaterial
           color="#FF6A1A"
-          distortion={0.2}
-          distortionScale={0.3}
+          metalness={0.6}
+          roughness={0.2}
+          emissive="#FF6A1A"
+          emissiveIntensity={0.25}
+          transparent
+          opacity={0.55}
         />
       </mesh>
     </Float>
@@ -90,10 +88,8 @@ const Scene = () => {
 
   return (
     <>
-      <ambientLight intensity={0.6} />
-      <directionalLight position={[5, 5, 5]} intensity={0.8} color="#ffffff" />
-      <pointLight position={[-3, -2, 2]} intensity={1.2} color="#FF6A1A" />
-      <pointLight position={[3, 2, -2]} intensity={0.8} color="#1A3BFF" />
+      <ambientLight intensity={0.7} />
+      <directionalLight position={[5, 5, 5]} intensity={0.9} color="#ffffff" />
 
       <GlassPrism />
       {books.map((b, i) => (
@@ -105,10 +101,11 @@ const Scene = () => {
 
 const HeroScene3DCanvas = () => (
   <Canvas
-    dpr={[1, 1.5]}
+    dpr={[1, 1.25]}
     camera={{ position: [0, 0, 6], fov: 50 }}
     style={{ background: "transparent" }}
     gl={{ alpha: true, antialias: true, powerPreference: "high-performance" }}
+    shadows={false}
   >
     <Scene />
   </Canvas>
