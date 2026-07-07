@@ -3,52 +3,7 @@ import { Float } from "@react-three/drei";
 import { useRef } from "react";
 import * as THREE from "three";
 
-/** A stylized editorial "book" — extruded thin box with a spine accent */
-const Book = ({
-  position,
-  rotation,
-  color,
-  size,
-  speed,
-}: {
-  position: [number, number, number];
-  rotation: [number, number, number];
-  color: string;
-  size: [number, number, number];
-  speed: number;
-}) => {
-  const ref = useRef<THREE.Group>(null);
-
-  useFrame((state) => {
-    if (!ref.current) return;
-    const t = state.clock.elapsedTime;
-    ref.current.rotation.y = rotation[1] + Math.sin(t * speed * 0.4) * 0.25;
-    ref.current.rotation.x = rotation[0] + Math.cos(t * speed * 0.3) * 0.1;
-  });
-
-  return (
-    <Float speed={speed} rotationIntensity={0.15} floatIntensity={0.6}>
-      <group ref={ref} position={position} rotation={rotation}>
-        {/* Cover */}
-        <mesh>
-          <boxGeometry args={size} />
-          <meshStandardMaterial
-            color={color}
-            metalness={0.35}
-            roughness={0.4}
-            emissive={color}
-            emissiveIntensity={0.08}
-          />
-        </mesh>
-        {/* Spine highlight */}
-        <mesh position={[-size[0] / 2 - 0.005, 0, 0]}>
-          <boxGeometry args={[0.02, size[1] * 0.9, size[2] * 0.9]} />
-          <meshStandardMaterial color="#FF6A1A" emissive="#FF6A1A" emissiveIntensity={0.5} />
-        </mesh>
-      </group>
-    </Float>
-  );
-};
+/** Ambient prism only — books removed to keep scene calm */
 
 const GlassPrism = () => {
   const ref = useRef<THREE.Mesh>(null);
