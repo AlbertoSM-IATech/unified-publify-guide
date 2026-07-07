@@ -1,6 +1,6 @@
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Float } from "@react-three/drei";
-import { useRef, useMemo } from "react";
+import { useRef } from "react";
 import * as THREE from "three";
 
 /** A stylized editorial "book" — extruded thin box with a spine accent */
