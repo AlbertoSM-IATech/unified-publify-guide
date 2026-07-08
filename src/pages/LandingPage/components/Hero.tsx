@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { ArrowRight, TrendingUp, DollarSign, Sparkles } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { HeroScene3D } from "@/components/motion/HeroScene3D";
 import { WaitlistDialog, useWaitlistDialog } from "@/components/WaitlistDialog";
@@ -20,32 +20,47 @@ const sans = { fontFamily: "'Fira Sans', sans-serif" };
 
 const steps = ["Investiga", "Crea", "Analiza", "Escala"];
 
+// Base resting angles for the CSS 3D dashboard stack
+const BASE_TILT = { x: 15, y: -22, z: -4 };
+
 export const Hero = () => {
   const { open, setOpen, openDialog } = useWaitlistDialog();
   const tiltRef = useRef<HTMLDivElement>(null);
-  const [tilt, setTilt] = useState({ x: 15, y: -22, z: -4 });
 
-  // Cursor-driven parallax tilt on the 3D-mock stack
+  // Cursor-driven parallax tilt — rAF + direct DOM write to avoid React
+  // re-renders (which would repaint the WebGL Canvas and stacked blur layers
+  // on every mousemove and produce visible artefacts).
   useEffect(() => {
     const el = tiltRef.current;
     if (!el) return;
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduced) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    let raf = 0;
+    let targetDx = 0;
+    let targetDy = 0;
+
+    const apply = () => {
+      raf = 0;
+      const x = BASE_TILT.x - targetDy * 12;
+      const y = BASE_TILT.y - targetDx * 14;
+      const z = BASE_TILT.z + targetDx * 2;
+      el.style.transform = `rotateY(${y}deg) rotateX(${x}deg) rotateZ(${z}deg)`;
+    };
 
     const handle = (e: MouseEvent) => {
       const rect = el.getBoundingClientRect();
-      const cx = rect.left + rect.width / 2;
-      const cy = rect.top + rect.height / 2;
-      const dx = (e.clientX - cx) / rect.width;
-      const dy = (e.clientY - cy) / rect.height;
-      setTilt({
-        x: 15 - dy * 12,
-        y: -22 - dx * 14,
-        z: -4 + dx * 2,
-      });
+      // Skip work when the stack is fully out of viewport
+      if (rect.bottom < 0 || rect.top > window.innerHeight) return;
+      targetDx = (e.clientX - (rect.left + rect.width / 2)) / rect.width;
+      targetDy = (e.clientY - (rect.top + rect.height / 2)) / rect.height;
+      if (!raf) raf = requestAnimationFrame(apply);
     };
-    window.addEventListener("mousemove", handle);
-    return () => window.removeEventListener("mousemove", handle);
+
+    window.addEventListener("mousemove", handle, { passive: true });
+    return () => {
+      window.removeEventListener("mousemove", handle);
+      if (raf) cancelAnimationFrame(raf);
+    };
   }, []);
 
   return (
