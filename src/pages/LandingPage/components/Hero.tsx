@@ -176,8 +176,16 @@ export const Hero = () => {
             variants={fadeInUp}
             className="lg:col-span-6 relative flex justify-center items-center h-[440px] sm:h-[540px] lg:h-[620px]"
           >
-            {/* Real WebGL scene: floating editorial books + glass prism */}
-            <div className="absolute inset-0">
+            {/* Real WebGL scene: isolated compositor layer to prevent bleed with blurred siblings */}
+            <div
+              className="absolute inset-0"
+              style={{
+                isolation: "isolate",
+                contain: "paint",
+                transform: "translateZ(0)",
+                willChange: "transform",
+              }}
+            >
               <HeroScene3D />
             </div>
 
