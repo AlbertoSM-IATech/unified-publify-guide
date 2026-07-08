@@ -42,11 +42,21 @@ const Scene = () => {
 
 const HeroScene3DCanvas = () => (
   <Canvas
-    dpr={[1, 1.25]}
+    dpr={[1, 1.5]}
+    frameloop="always"
     camera={{ position: [0, 0, 6], fov: 50 }}
-    style={{ background: "transparent" }}
-    gl={{ alpha: true, antialias: true, powerPreference: "high-performance" }}
+    style={{ background: "transparent", display: "block" }}
+    gl={{
+      alpha: true,
+      antialias: true,
+      powerPreference: "high-performance",
+      preserveDrawingBuffer: false,
+      stencil: false,
+      depth: true,
+      premultipliedAlpha: true,
+    }}
     shadows={false}
+    flat
   >
     <Scene />
   </Canvas>

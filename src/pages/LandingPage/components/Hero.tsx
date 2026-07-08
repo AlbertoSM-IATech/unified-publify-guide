@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { ArrowRight, TrendingUp, DollarSign, Sparkles } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { HeroScene3D } from "@/components/motion/HeroScene3D";
 import { WaitlistDialog, useWaitlistDialog } from "@/components/WaitlistDialog";
@@ -20,32 +20,47 @@ const sans = { fontFamily: "'Fira Sans', sans-serif" };
 
 const steps = ["Investiga", "Crea", "Analiza", "Escala"];
 
+// Base resting angles for the CSS 3D dashboard stack
+const BASE_TILT = { x: 15, y: -22, z: -4 };
+
 export const Hero = () => {
   const { open, setOpen, openDialog } = useWaitlistDialog();
   const tiltRef = useRef<HTMLDivElement>(null);
-  const [tilt, setTilt] = useState({ x: 15, y: -22, z: -4 });
 
-  // Cursor-driven parallax tilt on the 3D-mock stack
+  // Cursor-driven parallax tilt — rAF + direct DOM write to avoid React
+  // re-renders (which would repaint the WebGL Canvas and stacked blur layers
+  // on every mousemove and produce visible artefacts).
   useEffect(() => {
     const el = tiltRef.current;
     if (!el) return;
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduced) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    let raf = 0;
+    let targetDx = 0;
+    let targetDy = 0;
+
+    const apply = () => {
+      raf = 0;
+      const x = BASE_TILT.x - targetDy * 12;
+      const y = BASE_TILT.y - targetDx * 14;
+      const z = BASE_TILT.z + targetDx * 2;
+      el.style.transform = `rotateY(${y}deg) rotateX(${x}deg) rotateZ(${z}deg)`;
+    };
 
     const handle = (e: MouseEvent) => {
       const rect = el.getBoundingClientRect();
-      const cx = rect.left + rect.width / 2;
-      const cy = rect.top + rect.height / 2;
-      const dx = (e.clientX - cx) / rect.width;
-      const dy = (e.clientY - cy) / rect.height;
-      setTilt({
-        x: 15 - dy * 12,
-        y: -22 - dx * 14,
-        z: -4 + dx * 2,
-      });
+      // Skip work when the stack is fully out of viewport
+      if (rect.bottom < 0 || rect.top > window.innerHeight) return;
+      targetDx = (e.clientX - (rect.left + rect.width / 2)) / rect.width;
+      targetDy = (e.clientY - (rect.top + rect.height / 2)) / rect.height;
+      if (!raf) raf = requestAnimationFrame(apply);
     };
-    window.addEventListener("mousemove", handle);
-    return () => window.removeEventListener("mousemove", handle);
+
+    window.addEventListener("mousemove", handle, { passive: true });
+    return () => {
+      window.removeEventListener("mousemove", handle);
+      if (raf) cancelAnimationFrame(raf);
+    };
   }, []);
 
   return (
@@ -161,8 +176,16 @@ export const Hero = () => {
             variants={fadeInUp}
             className="lg:col-span-6 relative flex justify-center items-center h-[440px] sm:h-[540px] lg:h-[620px]"
           >
-            {/* Real WebGL scene: floating editorial books + glass prism */}
-            <div className="absolute inset-0">
+            {/* Real WebGL scene: isolated compositor layer to prevent bleed with blurred siblings */}
+            <div
+              className="absolute inset-0"
+              style={{
+                isolation: "isolate",
+                contain: "paint",
+                transform: "translateZ(0)",
+                willChange: "transform",
+              }}
+            >
               <HeroScene3D />
             </div>
 
@@ -177,10 +200,12 @@ export const Hero = () => {
             >
               <div
                 ref={tiltRef}
-                className="relative w-full h-full transition-transform duration-500 ease-out"
+                className="relative w-full h-full"
                 style={{
                   transformStyle: "preserve-3d",
-                  transform: `rotateY(${tilt.y}deg) rotateX(${tilt.x}deg) rotateZ(${tilt.z}deg)`,
+                  transform: `rotateY(${BASE_TILT.y}deg) rotateX(${BASE_TILT.x}deg) rotateZ(${BASE_TILT.z}deg)`,
+                  willChange: "transform",
+                  transition: "transform 120ms ease-out",
                 }}
               >
                 {/* Main dashboard card */}
