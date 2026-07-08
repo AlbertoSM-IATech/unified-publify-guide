@@ -192,10 +192,12 @@ export const Hero = () => {
             >
               <div
                 ref={tiltRef}
-                className="relative w-full h-full transition-transform duration-500 ease-out"
+                className="relative w-full h-full"
                 style={{
                   transformStyle: "preserve-3d",
-                  transform: `rotateY(${tilt.y}deg) rotateX(${tilt.x}deg) rotateZ(${tilt.z}deg)`,
+                  transform: `rotateY(${BASE_TILT.y}deg) rotateX(${BASE_TILT.x}deg) rotateZ(${BASE_TILT.z}deg)`,
+                  willChange: "transform",
+                  transition: "transform 120ms ease-out",
                 }}
               >
                 {/* Main dashboard card */}
